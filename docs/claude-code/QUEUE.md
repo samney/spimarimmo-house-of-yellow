@@ -1,0 +1,101 @@
+# QUEUE — House of Yellow delivery queue
+
+Statuses: `PENDING` · `IN PROGRESS` · `BLOCKED` · `DONE (evidence)`. Never `DONE` without evidence paths. Dependencies must be `DONE` first unless a safe partial is recorded.
+
+## HOY-000 — Bootstrap control plane and repository quality gates — **IN PROGRESS**
+
+Depends: — (Session 0 gate passed)
+Tasks: git repo (done, Session 0); control files (done, Session 0); Next.js + TS strict + Tailwind + ESLint + Prettier scaffold; pnpm pinned; `.nvmrc`/`engines`; `.gitignore`; `.env.example` per environment contract; test runners (`@playwright/test`, unit runner) wired; scripts: `dev/build/lint/typecheck/test`; initial commit.
+Acceptance: `pnpm run typecheck`, `pnpm run lint`, `pnpm run build` all pass; control files exist; evidence = command outputs recorded in STATUS.md.
+
+## HOY-010 — Complete live-site discovery — PENDING
+
+Depends: HOY-000
+Tasks: crawl houseofyellow.nl via Playwright MCP: nav, footer, sitemap.xml, robots.txt, all 21+ project routes, cookies/legal, 404 behavior, redirects, canonical/hreflang; verify pre-audit evidence (routes table, fonts, tokens, tech stack); technology re-verification (lenis/swup classes, Vimeo IDs, Complianz).
+Acceptance: `docs/audit/ROUTE-INVENTORY.md`, `CONTENT-INVENTORY.md`, `ASSET-MANIFEST.md` (initial), `TECHNICAL-FORENSICS.md` (initial); every route responds & documented.
+
+## HOY-020 — Capture reference evidence — PENDING
+
+Depends: HOY-010
+Tasks: full-page + section screenshots for every route at all 8 viewports; nav open/closed; filters; grid/list; hover states; video play/pause; form states; cookie banner + preferences; 404; reduced motion; motion recordings for animated sequences; dynamic-region register.
+Acceptance: populated `qa/reference/{desktop,tablet,mobile}`, `qa/recordings/`; dynamic-region register in `docs/audit/`; VALIDATION-MATRIX reference column filled.
+
+## HOY-030 — Extract design and motion systems — PENDING
+
+Depends: HOY-020
+Tasks: tokens (colors, type scale + clamping, spacing, containers, grid, breakpoints, radii, shadows, z-index); Poppins font files downloaded + licensed use recorded; motion timelines per animation (trigger/duration/easing/stagger/scroll/pin/reduced-motion); component inventory.
+Acceptance: `docs/design-system/DESIGN-SYSTEM.md`, `COMPONENT-INVENTORY.md`, `MOTION-SYSTEM.md`; tokens as CSS vars + Tailwind theme in repo.
+
+## HOY-040 — Implement data model and migrations — PENDING
+
+Depends: HOY-030 (content shapes known)
+Tasks: schema per master-prompt domain model (identity, pages, projects, media, global config, operations); versioned migrations; RLS on all tables; seed data; `docs/architecture/DATA-MODEL.md`; RLS tests.
+Acceptance: migrations apply cleanly on local Supabase; RLS test evidence; DATA-MODEL.md justifies every table.
+
+## HOY-050 — Build global public shell — PENDING
+
+Depends: HOY-030
+Tasks: fixed header (z-12), mobile nav, footer, sticky WhatsApp (z-10), custom cursor (z-20) with Play/Video states, consent UI (z-99999) + preference management, page transitions, smooth scroll (verify Lenis), GSAP lifecycle, a11y (keyboard, focus, reduced motion).
+Acceptance: shell matches reference at all viewports; axe pass; interaction evidence in qa/.
+
+## HOY-060 — Build English homepage — PENDING
+
+Depends: HOY-050; HOY-040 for content-driven sections
+Tasks: all 15 observed homepage sections — hero video, Welcome intro, statement, yellow Who-are-we, CTAs, The works + 3 featured projects, client-logo marquee, Beyond the Screen, animated metrics, How-we-roll summary, service narratives, Let's connect, footer.
+Acceptance: full acceptance-criteria list per master prompt; visual diff < 1% target tracked in matrix.
+
+## HOY-070 — Build project index (Made by Yellow) — PENDING
+
+Depends: HOY-060 patterns
+Tasks: full project grid + list views, category filters + reset, animated video thumbnails, metadata display, responsive behavior, hover video.
+Acceptance: all filter/view states validated at all viewports with evidence.
+
+## HOY-080 — Build project template + all 21 projects — PENDING
+
+Depends: HOY-070, HOY-040
+Tasks: CMS-driven detail template (hero media, metadata, metrics, Client/Process/Project narratives, credits, next-project nav); validate one representative page fully; then import all 21 project records + assets.
+Acceptance: all 21 routes render from CMS data with evidence.
+
+## HOY-090 — Build Culture and How We Roll — PENDING
+
+Depends: HOY-050
+Acceptance: all observed content/sections/motion for both routes, validated at all viewports.
+
+## HOY-100 — Build Connect — PENDING
+
+Depends: HOY-050
+Tasks: editorial intro, Eindhoven/Dubai/Miami local times, email/phone, WhatsApp CTA, contact form (Zod + RHF, client+server validation, honeypot, rate limiting, storage, notification), loading/success/error states, Instagram/social presentation, featured work.
+Acceptance: working submissions stored + notified (or env-blocked with contract documented); all states evidenced.
+
+## HOY-110 — Implement localization — PENDING
+
+Depends: stable EN structures (HOY-060…100)
+Tasks: next-intl wiring, `/fr/...` routes, professional French translations (brand-faithful tone), language switcher, localized metadata/sitemap/hreflang, no homepage-reset on switch, translations in CMS.
+Acceptance: every public route works in FR with evidence; switcher preserves location.
+
+## HOY-120 — Build authentication and CMS — PENDING
+
+Depends: HOY-040; content models proven on public pages
+Tasks: `/admin` Supabase Auth (email/password, reset), roles Super Admin/Content Editor/Translator, RBAC server-side + RLS parity, CRUD for all CMS modules, drafts/scheduled/published/archived, preview, revalidation, media library, translation workflows, audit fields, rate limiting.
+Acceptance: role-permission matrix tests pass; all module CRUD evidenced.
+
+## HOY-130 — SEO and platform metadata — PENDING
+
+Depends: routes complete
+Tasks: per-route metadata, OG, structured data, canonical, hreflang, localized sitemap, robots, 404 fidelity.
+Acceptance: metadata audit per route recorded; sitemap/robots served correctly.
+
+## HOY-140 — Accessibility and performance pass — PENDING
+
+Depends: HOY-060…130
+Acceptance: Axe + manual keyboard evidence per route; Lighthouse report; fixes applied; trade-offs in DECISIONS.md; `docs/audit/ACCESSIBILITY-AUDIT.md` + `PERFORMANCE-AUDIT.md`.
+
+## HOY-150 — Visual-regression convergence — PENDING
+
+Depends: continuous from HOY-060; final pass after HOY-140
+Acceptance: reference vs implementation captures, overlays, pixel diffs for every route × viewport; static diff < 1% excluding documented dynamic regions; known-differences register.
+
+## HOY-160 — Production readiness — PENDING
+
+Depends: all prior
+Acceptance: passing build + full test suite; setup/deployment docs; CMS admin guide; `.env.example` final; final VALIDATION-MATRIX complete; handoff docs current.

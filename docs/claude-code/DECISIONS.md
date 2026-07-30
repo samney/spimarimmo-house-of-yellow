@@ -1,0 +1,24 @@
+# DECISIONS
+
+## D-001 — 2026-07-30 — Reuse owner's user-scope official plugins instead of project-scope reinstall
+
+Context: Bootstrap mandates project scope for installs, but `frontend-design`, `playwright`, `supabase`, and `vercel` plugins were already installed by the owner at user scope from the canonical Anthropic marketplace before Session 0.
+Alternatives: (a) uninstall + reinstall at project scope — mutates the owner's global setup, forbidden; (b) install duplicates at project scope — duplicate capability, forbidden; (c) record as "already present" with full provenance and restrict project usage via CLAUDE.md + PUBLIC-SKILLS-LOCK.md.
+Decision: (c). Consequence: provenance is recorded from the plugin manager's install records (git commit SHAs); the only Session 0 install (`web-design-guidelines`) is project-scoped and SHA-pinned.
+
+## D-002 — 2026-07-30 — Vendor `web-design-guidelines` from audited checkout instead of running the Vercel `skills` installer
+
+Context: The `npx skills` installer fetches from `main` (no immutable-revision support confirmed) and executes third-party installer code.
+Alternatives: (a) run installer, then diff against audit; (b) vendor the audited file directly.
+Decision: (b) — sparse checkout of `vercel-labs/agent-skills` at `7c180d9044c9ae2b442b567aad4e42a28dd5ed62`, byte-identical copy into `.claude/skills/web-design-guidelines/`, SHA-256 recorded. Consequence: install is genuinely pinned; refresh procedure documented in PUBLIC-SKILLS-LOCK.md.
+
+## D-003 — 2026-07-30 — Package manager: pnpm 10.15.0; Node 22 LTS pinned
+
+Context: Repository was uninitialized; master prompt pins nothing; pnpm and Node 22.14.0 already installed locally.
+Alternatives: npm (slower, no workspace benefits), yarn (not installed).
+Decision: pnpm, pinned via `packageManager` field; Node `>=22` via `engines` + `.nvmrc`. Consequence: lockfile is `pnpm-lock.yaml`; CI/docs must use pnpm.
+
+## D-004 — 2026-07-30 — `git init` performed in an empty directory
+
+Context: Bootstrap forbids initializing/overwriting an _existing_ repository; none existed. The master prompt explicitly assigns repository initialization to Claude Code ("Claude Code owns the repository initialization").
+Decision: initialize a fresh repo around the two prompt files, preserved byte-for-byte (hashes in MASTER.md / BOOTSTRAP-REPORT.md). Consequence: full auditable history from Session 0 onward.
