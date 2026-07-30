@@ -41,11 +41,11 @@ Built 2026-07-30 (verified against reference via local prod-server screenshots `
 - All reduced-motion aware. Gates pass (typecheck/lint/build).
 Remaining before DONE: page-transition choreography (from `qa/recordings/page-transition-*`), GSAP marquee refinement to exact px/s speeds, axe run + keyboard-focus evidence, per-viewport visual diff vs reference (converges during HOY-060 when real content sits behind the chrome).
 
-## HOY-060 — Build English homepage — PENDING
+## HOY-060 — Build English homepage — **IN PROGRESS (all 4 reference blocks built + verified)**
 
 Depends: HOY-050; HOY-040 for content-driven sections
-Tasks: all 15 observed homepage sections — hero video, Welcome intro, statement, yellow Who-are-we, CTAs, The works + 3 featured projects, client-logo marquee, Beyond the Screen, animated metrics, How-we-roll summary, service narratives, Let's connect, footer.
-Acceptance: full acceptance-criteria list per master prompt; visual diff < 1% target tracked in matrix.
+Built 2026-07-30 (commit d227e7b; evidence `qa/implementation/home3--*` vs reference captures): hero (local video, verbatim letter SVGs, exact content positions), yellow about/work block (grain, editorial reveals, CTA pills, 3 featured projects w/ downloaded media, 32-logo marquee), dark services block (Beyond the Screen, phone tiles, animated counters, How-we-roll intro, items 05–07), closing block. SplitText char reveals + counters + scroll-light header. All copy extracted verbatim from live DOM. Gates pass.
+Remaining before DONE: hero letter entrance/scroll animation + bottomContent parallax paths; phone tiles need the real looping videos (only stills downloaded — signed URLs to fetch); video play/pause overlay controls; project-tile hover state ("TAKE A LOOK" + video-on-hover behavior); verify metric finals + section index numbers against reference captures; smallTitle "Beyond the Screen" line copy verify; per-viewport pixel-diff convergence (<1%) across all 8 viewports; axe pass.
 
 ## HOY-070 — Build project index (Made by Yellow) — PENDING
 

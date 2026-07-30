@@ -3,7 +3,8 @@
 Updated: 2026-07-30 (Session 0)
 
 - **Active phase:** Product execution — implementation
-- **Active queue item:** `HOY-050` core shell BUILT + visually verified (see QUEUE.md for evidence + remaining polish items); next slice: `HOY-060` (English homepage) which will drive shell fidelity convergence, or `HOY-040` (data model, needs Supabase creds per BLOCKERS P-1 for anything beyond local migrations). `HOY-000`–`HOY-030` DONE.
+- **Active queue item:** `HOY-060` — all 4 homepage blocks built + visually verified at 1440/390 (commit d227e7b); remaining items listed in QUEUE.md (motion polish, phone videos, hover states, diff convergence). `HOY-050` core done (transitions/axe pending). `HOY-000`–`HOY-030` DONE.
+- **Next safe action:** either (a) HOY-060 polish pass — download phone-section videos via fresh signed URLs, hero letter animation from recordings, project hover states, then multi-viewport diff; or (b) start HOY-070 (Made by Yellow index) reusing the project-card patterns; or (c) HOY-040 data model (local migrations OK without creds).
 - **Model:** Claude Fable 5 (`claude-fable-5`), Claude Code 2.1.220
 - **Repository:** fresh git repo initialized 2026-07-30; scaffold committed
 - **Last verified commit:** `8426f59` — HOY-000 bootstrap + scaffold; typecheck/lint/format/build all passing at this commit
