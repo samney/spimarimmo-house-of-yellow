@@ -53,11 +53,11 @@ Depends: HOY-060 patterns
 Built 2026-07-31 (commit 9aeca2a; evidence `qa/implementation/works--*`): all 21 projects in masonry grid (reference landscape/portrait orientations), autoplaying local video tiles (all 21 videos downloaded, 63MB), hover tags + "Take a look" chip, 8-category multi-select filters + Reset (marquee), Grid/List toggle (verbatim reference SVGs), list view rows, fixed blurred filter dock, "[ 01 ] Who we are" closing + Culture pill. Canonical dataset in `lib/content/projects.ts` (future Supabase seed). Gates pass.
 Remaining before DONE: per-project full tag sets (only primary + 3 verified multi-tag sets; audit each detail page in HOY-080), grid/list morph + filter re-flow animation timing from `works-hover-filter-list--desktop.webm`, filter-state screenshots at all viewports, hover-video pause-others behavior verification, pixel-diff convergence, axe pass.
 
-## HOY-080 — Build project template + all 21 projects — PENDING
+## HOY-080 — Build project template + all 21 projects — **IN PROGRESS (all 21 routes live)**
 
 Depends: HOY-070, HOY-040
-Tasks: CMS-driven detail template (hero media, metadata, metrics, Client/Process/Project narratives, credits, next-project nav); validate one representative page fully; then import all 21 project records + assets.
-Acceptance: all 21 routes render from CMS data with evidence.
+Built 2026-07-31 (commit 024fb18; evidence `qa/implementation/project--*`, zero console errors): full crawl of all 21 detail pages → normalized content dataset (`lib/content/project-details.json`: summaries, complete category sets, stats, Client/Process/Project narratives, credits, related-next, 154-URL media manifest); template with header/stats-counters/narrative/media-pair/full-loop/credits/next blocks; all 21 routes × 2 locales statically generated; 41 local videos (165 MB) covering every detail hero + full oceanco media. Data layer is CMS-shaped (slug-keyed content records) ready to move into Supabase at HOY-040/120.
+Remaining before DONE: download remaining block media (~90 URLs in `qa/project-media-manifest.json`, disk-permitting) so non-hero media pairs stop rendering placeholders on 20 pages; block-order fidelity per page (template uses canonical order; some pages vary block sequence/counts); pinned/scroll motion for full-width loop; per-viewport pixel diff + axe.
 
 ## HOY-090 — Build Culture and How We Roll — PENDING
 
