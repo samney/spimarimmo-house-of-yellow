@@ -22,3 +22,8 @@ Decision: pnpm, pinned via `packageManager` field; Node `>=22` via `engines` + `
 
 Context: Bootstrap forbids initializing/overwriting an _existing_ repository; none existed. The master prompt explicitly assigns repository initialization to Claude Code ("Claude Code owns the repository initialization").
 Decision: initialize a fresh repo around the two prompt files, preserved byte-for-byte (hashes in MASTER.md / BOOTSTRAP-REPORT.md). Consequence: full auditable history from Session 0 onward.
+
+## D-005 - 2026-07-30 - Owner-requested third-party skills: audit-first outcome
+Context: Owner asked to install taste-skill, ai-website-cloner-template, awesome-agent-skills, context-mode, and to review a Snyk article on UI/UX skills.
+Decision: All four audited read-only by a research agent (full findings in PUBLIC-SKILLS-LOCK.md). None installed: taste-skill rejected as duplicate frontend capability (overridable by owner after a line-by-line pinned audit); cloner template rejected (would supplant mandated architecture; injection-surface dual-use pipeline already covered by our own QA pipeline); awesome-list is a catalog with nothing to install; context-mode rejected (global hooks + home-dir writes + ELv2 + unaudited npm artifact - multiple bootstrap violations).
+Consequence: Toolchain stays minimal and auditable; the Snyk checklist confirmed our Phase-2 audit procedure. Owner may override any rejection explicitly; the exact next gate per item is recorded in the lock file.
