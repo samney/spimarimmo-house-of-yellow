@@ -2,13 +2,13 @@
 
 Statuses: `PENDING` · `IN PROGRESS` · `BLOCKED` · `DONE (evidence)`. Never `DONE` without evidence paths. Dependencies must be `DONE` first unless a safe partial is recorded.
 
-## HOY-000 — Bootstrap control plane and repository quality gates — **IN PROGRESS**
+## HOY-000 — Bootstrap control plane and repository quality gates — **DONE (evidence below)**
 
 Depends: — (Session 0 gate passed)
 Tasks: git repo (done, Session 0); control files (done, Session 0); Next.js + TS strict + Tailwind + ESLint + Prettier scaffold; pnpm pinned; `.nvmrc`/`engines`; `.gitignore`; `.env.example` per environment contract; test runners (`@playwright/test`, unit runner) wired; scripts: `dev/build/lint/typecheck/test`; initial commit.
-Acceptance: `pnpm run typecheck`, `pnpm run lint`, `pnpm run build` all pass; control files exist; evidence = command outputs recorded in STATUS.md.
+Acceptance evidence (2026-07-30): `pnpm run typecheck` → clean exit; `pnpm run lint` → clean exit; `pnpm run format` applied; `pnpm run build` → Next.js 16.2.12 production build succeeded, routes `/` and `/_not-found` prerendered static. Control files present under `docs/claude-code/`. Initial commit `8426f59` (43 files). Stack deps installed: gsap 3.15, @gsap/react 2.1, next-intl 4.13, zod 4.4, react-hook-form 7.83, @supabase/supabase-js 2.111, @supabase/ssr 0.12; dev: prettier 3.9, vitest 4.1, @playwright/test 1.62, @axe-core/playwright 4.12.
 
-## HOY-010 — Complete live-site discovery — PENDING
+## HOY-010 — Complete live-site discovery — **IN PROGRESS**
 
 Depends: HOY-000
 Tasks: crawl houseofyellow.nl via Playwright MCP: nav, footer, sitemap.xml, robots.txt, all 21+ project routes, cookies/legal, 404 behavior, redirects, canonical/hreflang; verify pre-audit evidence (routes table, fonts, tokens, tech stack); technology re-verification (lenis/swup classes, Vimeo IDs, Complianz).
