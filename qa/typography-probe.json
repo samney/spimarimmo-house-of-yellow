@@ -1,0 +1,638 @@
+[
+  {
+    "width": 1920,
+    "body": {
+      "fontSize": "14.4px",
+      "lineHeight": "20.16px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "14.4px",
+      "lineHeight": "28.8px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "72px",
+      "lineHeight": "80.64px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "16.8px",
+      "lineHeight": "23.52px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "14.4px",
+      "lineHeight": "54px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "16.8px",
+      "lineHeight": "23.52px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 1440,
+    "body": {
+      "fontSize": "10.8px",
+      "lineHeight": "15.12px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "10.8px",
+      "lineHeight": "21.6px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "54px",
+      "lineHeight": "60.48px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "12.6px",
+      "lineHeight": "17.64px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "10.8px",
+      "lineHeight": "40.5px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "12.6px",
+      "lineHeight": "17.64px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 1280,
+    "body": {
+      "fontSize": "9.6px",
+      "lineHeight": "13.44px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "9.6px",
+      "lineHeight": "19.2px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "48px",
+      "lineHeight": "53.76px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "11.2px",
+      "lineHeight": "15.68px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "9.6px",
+      "lineHeight": "36px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "11.2px",
+      "lineHeight": "15.68px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 1100,
+    "body": {
+      "fontSize": "8.25px",
+      "lineHeight": "11.55px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "8.25px",
+      "lineHeight": "16.5px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "41.25px",
+      "lineHeight": "46.2px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "9.625px",
+      "lineHeight": "13.475px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "8.25px",
+      "lineHeight": "30.9375px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "9.625px",
+      "lineHeight": "13.475px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 1080,
+    "body": {
+      "fontSize": "11.9988px",
+      "lineHeight": "16.7983px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "11.9988px",
+      "lineHeight": "23.9976px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "40.0032px",
+      "lineHeight": "44.8036px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "13.9968px",
+      "lineHeight": "19.5955px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "11.9988px",
+      "lineHeight": "45.0036px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "13.9968px",
+      "lineHeight": "19.5955px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 1024,
+    "body": {
+      "fontSize": "11.3766px",
+      "lineHeight": "15.9273px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "11.3766px",
+      "lineHeight": "22.7533px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "37.929px",
+      "lineHeight": "42.4804px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "13.271px",
+      "lineHeight": "18.5795px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "11.3766px",
+      "lineHeight": "42.6701px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "13.271px",
+      "lineHeight": "18.5795px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 768,
+    "body": {
+      "fontSize": "8.53248px",
+      "lineHeight": "11.9455px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "8.53248px",
+      "lineHeight": "17.065px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "28.4467px",
+      "lineHeight": "31.8603px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "9.95328px",
+      "lineHeight": "13.9346px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "8.53248px",
+      "lineHeight": "32.0026px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "9.95328px",
+      "lineHeight": "13.9346px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 600,
+    "body": {
+      "fontSize": "6.666px",
+      "lineHeight": "9.3324px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "6.666px",
+      "lineHeight": "13.332px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "22.224px",
+      "lineHeight": "24.8909px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "7.776px",
+      "lineHeight": "10.8864px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "6.666px",
+      "lineHeight": "25.002px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "7.776px",
+      "lineHeight": "10.8864px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 580,
+    "body": {
+      "fontSize": "19.9984px",
+      "lineHeight": "27.9978px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "19.9984px",
+      "lineHeight": "12.8876px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "40.0026px",
+      "lineHeight": "44.8029px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "21.9994px",
+      "lineHeight": "30.7992px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "19.9984px",
+      "lineHeight": "65.0006px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "21.9994px",
+      "lineHeight": "30.7992px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 430,
+    "body": {
+      "fontSize": "14.8264px",
+      "lineHeight": "20.757px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "14.8264px",
+      "lineHeight": "9.5546px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "29.6571px",
+      "lineHeight": "33.216px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "16.3099px",
+      "lineHeight": "22.8339px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "14.8264px",
+      "lineHeight": "48.1901px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "16.3099px",
+      "lineHeight": "22.8339px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 390,
+    "body": {
+      "fontSize": "13.4472px",
+      "lineHeight": "18.8261px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "13.4472px",
+      "lineHeight": "8.6658px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "26.8983px",
+      "lineHeight": "30.1261px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "14.7927px",
+      "lineHeight": "20.7098px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "13.4472px",
+      "lineHeight": "43.7073px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "14.7927px",
+      "lineHeight": "20.7098px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  },
+  {
+    "width": 360,
+    "body": {
+      "fontSize": "12.4128px",
+      "lineHeight": "17.3779px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "navLink": {
+      "fontSize": "12.4128px",
+      "lineHeight": "7.9992px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "h1": {
+      "fontSize": "24.8292px",
+      "lineHeight": "27.8087px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "projectTitle": null,
+    "smallLabel": {
+      "fontSize": "13.6548px",
+      "lineHeight": "19.1167px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "connectCta": {
+      "fontSize": "12.4128px",
+      "lineHeight": "40.3452px",
+      "fontWeight": "500",
+      "letterSpacing": "normal",
+      "textTransform": "uppercase"
+    },
+    "footerText": {
+      "fontSize": "13.6548px",
+      "lineHeight": "19.1167px",
+      "fontWeight": "400",
+      "letterSpacing": "normal",
+      "textTransform": "none"
+    },
+    "headerHeight": 0,
+    "mainPad": {
+      "pl": "0px",
+      "pr": "0px",
+      "ml": "0px",
+      "mr": "0px"
+    }
+  }
+]

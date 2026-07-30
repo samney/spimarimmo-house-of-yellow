@@ -43,3 +43,10 @@ next-env.d.ts
 # claude/playwright artifacts
 .playwright-mcp/
 
+
+# Reference captures + recordings: regenerable evidence, disk-only (see DECISIONS D-006)
+qa/reference/**/*.png
+qa/reference/**/*.jpg
+qa/reference/**/*.jpeg
+qa/recordings/*.webm
+
