@@ -47,11 +47,11 @@ Depends: HOY-050; HOY-040 for content-driven sections
 Built 2026-07-30 (commit d227e7b; evidence `qa/implementation/home3--*` vs reference captures): hero (local video, verbatim letter SVGs, exact content positions), yellow about/work block (grain, editorial reveals, CTA pills, 3 featured projects w/ downloaded media, 32-logo marquee), dark services block (Beyond the Screen, phone tiles, animated counters, How-we-roll intro, items 05–07), closing block. SplitText char reveals + counters + scroll-light header. All copy extracted verbatim from live DOM. Gates pass.
 Remaining before DONE: hero letter entrance/scroll animation + bottomContent parallax paths; phone tiles need the real looping videos (only stills downloaded — signed URLs to fetch); video play/pause overlay controls; project-tile hover state ("TAKE A LOOK" + video-on-hover behavior); verify metric finals + section index numbers against reference captures; smallTitle "Beyond the Screen" line copy verify; per-viewport pixel-diff convergence (<1%) across all 8 viewports; axe pass.
 
-## HOY-070 — Build project index (Made by Yellow) — PENDING
+## HOY-070 — Build project index (Made by Yellow) — **IN PROGRESS (core built + verified)**
 
 Depends: HOY-060 patterns
-Tasks: full project grid + list views, category filters + reset, animated video thumbnails, metadata display, responsive behavior, hover video.
-Acceptance: all filter/view states validated at all viewports with evidence.
+Built 2026-07-31 (commit 9aeca2a; evidence `qa/implementation/works--*`): all 21 projects in masonry grid (reference landscape/portrait orientations), autoplaying local video tiles (all 21 videos downloaded, 63MB), hover tags + "Take a look" chip, 8-category multi-select filters + Reset (marquee), Grid/List toggle (verbatim reference SVGs), list view rows, fixed blurred filter dock, "[ 01 ] Who we are" closing + Culture pill. Canonical dataset in `lib/content/projects.ts` (future Supabase seed). Gates pass.
+Remaining before DONE: per-project full tag sets (only primary + 3 verified multi-tag sets; audit each detail page in HOY-080), grid/list morph + filter re-flow animation timing from `works-hover-filter-list--desktop.webm`, filter-state screenshots at all viewports, hover-video pause-others behavior verification, pixel-diff convergence, axe pass.
 
 ## HOY-080 — Build project template + all 21 projects — PENDING
 

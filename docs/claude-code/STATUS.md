@@ -3,8 +3,9 @@
 Updated: 2026-07-30 (Session 0)
 
 - **Active phase:** Product execution — implementation
-- **Active queue item:** `HOY-060` — all 4 homepage blocks built + visually verified at 1440/390 (commit d227e7b); remaining items listed in QUEUE.md (motion polish, phone videos, hover states, diff convergence). `HOY-050` core done (transitions/axe pending). `HOY-000`–`HOY-030` DONE.
-- **Next safe action:** either (a) HOY-060 polish pass — download phone-section videos via fresh signed URLs, hero letter animation from recordings, project hover states, then multi-viewport diff; or (b) start HOY-070 (Made by Yellow index) reusing the project-card patterns; or (c) HOY-040 data model (local migrations OK without creds).
+- **Active queue items:** `HOY-070` core built + verified (commit 9aeca2a, 2026-07-31); `HOY-060` and `HOY-050` core built with polish registers in QUEUE.md. `HOY-000`–`HOY-030` DONE.
+- **Updated:** 2026-07-31
+- **Next safe action:** HOY-080 — project detail template (extract one detail page's full structure/copy, e.g. oceanco-leviathan, build CMS-shaped template, validate, then populate all 21 from per-page extraction, which also completes the per-project tag audit). Alternatively HOY-040 (data model — `lib/content/projects.ts` now defines the project shape to formalize).
 - **Model:** Claude Fable 5 (`claude-fable-5`), Claude Code 2.1.220
 - **Repository:** fresh git repo initialized 2026-07-30; scaffold committed
 - **Last verified commit:** `8426f59` — HOY-000 bootstrap + scaffold; typecheck/lint/format/build all passing at this commit
