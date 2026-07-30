@@ -1,0 +1,358 @@
+/* Made by Yellow overview — reference projectsOverviewBlock geometry. */
+
+.projectsOverviewBlock {
+  padding-top: 8.75vw;
+  min-height: 100vh;
+}
+
+/* Masonry-style grid: landscape tiles span 2 columns, portrait 1. */
+.worksGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25vw;
+  grid-auto-flow: dense;
+  padding-bottom: 5vw;
+}
+.worksGrid .project {
+  display: block;
+  color: var(--hoy-ink);
+  text-decoration: none;
+}
+.worksGrid .project.landscape {
+  grid-column: span 2;
+}
+.worksGrid .project.portrait {
+  grid-column: span 1;
+}
+.worksGrid .project .media {
+  position: relative;
+  display: block;
+  border-radius: 0.5vw;
+  overflow: hidden;
+  background: var(--hoy-ink);
+}
+.worksGrid .project.landscape .media {
+  aspect-ratio: 16 / 10;
+}
+.worksGrid .project.portrait .media {
+  aspect-ratio: 3 / 4;
+}
+.worksGrid .project video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease-out;
+}
+.worksGrid .project:hover video {
+  transform: scale(1.03);
+}
+.worksGrid .project .tags {
+  position: absolute;
+  top: 0.75vw;
+  left: 0.75vw;
+  display: flex;
+  gap: 0.4vw;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+.worksGrid .project:hover .tags {
+  opacity: 1;
+}
+.worksGrid .project .tag {
+  font-size: 0.625vw;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--hoy-paper);
+  color: var(--hoy-ink);
+  border-radius: 1vw;
+  padding: 0.25vw 0.7vw;
+}
+.worksGrid .takeALook {
+  position: absolute;
+  right: 0.75vw;
+  bottom: 0.75vw;
+  font-size: 0.7vw;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+  border-radius: 1vw;
+  padding: 0.35vw 0.9vw;
+  opacity: 0;
+  transform: translateY(0.5vw);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.worksGrid .project:hover .takeALook {
+  opacity: 1;
+  transform: translateY(0);
+}
+.worksGrid .projectTitle {
+  display: block;
+  font-size: 0.875vw;
+  font-weight: 500;
+  margin-top: 0.75vw;
+}
+
+/* List view */
+.worksList {
+  padding-bottom: 5vw;
+}
+.worksList .projectList {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2vw;
+  border-top: 1px solid rgba(29, 29, 27, 0.2);
+  padding: 1.5vw 0;
+  color: var(--hoy-ink);
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+.worksList .projectList:last-child {
+  border-bottom: 1px solid rgba(29, 29, 27, 0.2);
+}
+.worksList .projectList:hover {
+  opacity: 0.6;
+}
+.worksList .rowMain {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5vw;
+}
+.worksList .year {
+  font-size: 0.75vw;
+  font-weight: 500;
+  min-width: 4vw;
+}
+.worksList .listTitle {
+  font-size: 1.852vw;
+  font-weight: 500;
+}
+.worksList .rowStats {
+  display: flex;
+  gap: 3vw;
+  font-size: 0.75vw;
+}
+.worksList .statLabel {
+  display: block;
+  font-weight: 500;
+}
+.noResults {
+  padding: 4vw 0;
+}
+
+/* Filter dock (reference: fixed bottom-center, blurred) */
+.filterWrapper {
+  position: fixed;
+  left: 50%;
+  bottom: 2.5vw;
+  transform: translateX(-50%);
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  backdrop-filter: blur(40px);
+  background: rgba(238, 238, 238, 0.55);
+  border-radius: 2.778vw;
+  padding: 0.5vw 1vw;
+}
+.filterWrapper .filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: var(--hoy-ink);
+  cursor: pointer;
+  font-weight: 500;
+}
+.filterWrapper .filter .icon svg {
+  width: 1vw;
+  height: 1vw;
+}
+.filterWrapper .textTitle {
+  font-size: 0.75vw;
+  font-weight: 500;
+}
+.filterPanel {
+  position: absolute;
+  bottom: calc(100% + 0.75vw);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5vw;
+  width: max-content;
+  max-width: 60vw;
+  background: rgba(238, 238, 238, 0.85);
+  backdrop-filter: blur(40px);
+  border-radius: 1.4vw;
+  padding: 0.9vw 1vw;
+}
+.filterPanel .filterCategory {
+  background: none;
+  border: 1px solid rgba(29, 29, 27, 0.35);
+  border-radius: 2vw;
+  padding: 0.35vw 0.9vw;
+  font: inherit;
+  font-size: 0.75vw;
+  font-weight: 500;
+  color: var(--hoy-ink);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.filterPanel .filterCategory.active {
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+  border-color: var(--hoy-ink);
+}
+.filterPanel .resetFilters {
+  position: relative;
+  background: var(--hoy-yellow);
+  border: 0;
+  border-radius: 2vw;
+  padding: 0.35vw 0.9vw;
+  font: inherit;
+  font-size: 0.75vw;
+  font-weight: 500;
+  color: var(--hoy-ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.filterPanel .resetFilters .innerLabel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.filterPanel .resetFilters:hover .fixedLabel {
+  opacity: 0;
+}
+.filterPanel .resetFilters:hover .innerLabel {
+  opacity: 1;
+}
+.viewBox {
+  display: inline-flex;
+  gap: 0.75vw;
+}
+.viewBoxItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vw;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: var(--hoy-ink);
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.3s;
+}
+.viewBoxItem.active,
+.viewBoxItem:hover {
+  opacity: 1;
+}
+.viewBoxIcon svg {
+  display: block;
+}
+
+@media (max-width: 1080px) {
+  .projectsOverviewBlock {
+    padding-top: 12.963vw;
+  }
+  .worksGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.852vw;
+  }
+  .worksGrid .projectTitle {
+    font-size: 1.296vw;
+  }
+  .worksGrid .project .tag {
+    font-size: 0.93vw;
+  }
+  .worksGrid .takeALook {
+    font-size: 1vw;
+  }
+  .filterWrapper {
+    bottom: 3.704vw;
+    padding: 0.9vw 1.6vw;
+    border-radius: 4vw;
+  }
+  .filterWrapper .textTitle,
+  .filterPanel .filterCategory,
+  .filterPanel .resetFilters {
+    font-size: 1.111vw;
+  }
+  .worksList .listTitle {
+    font-size: 2.778vw;
+  }
+  .worksList .year,
+  .worksList .rowStats {
+    font-size: 1.111vw;
+  }
+}
+
+@media (max-width: 580px) {
+  .projectsOverviewBlock {
+    padding-top: 24.138vw;
+  }
+  .worksGrid {
+    grid-template-columns: 1fr;
+    gap: 5.172vw;
+  }
+  .worksGrid .project.landscape,
+  .worksGrid .project.portrait {
+    grid-column: span 1;
+  }
+  .worksGrid .projectTitle {
+    font-size: 3.793vw;
+  }
+  .worksGrid .project .tag {
+    font-size: 2.4vw;
+    padding: 1vw 2.4vw;
+    border-radius: 4vw;
+  }
+  .worksGrid .takeALook {
+    font-size: 2.6vw;
+    padding: 1.2vw 3vw;
+    border-radius: 4vw;
+  }
+  .filterWrapper {
+    bottom: 5.172vw;
+    gap: 3vw;
+    padding: 2vw 4vw;
+    border-radius: 8vw;
+  }
+  .filterWrapper .textTitle,
+  .filterPanel .filterCategory,
+  .filterPanel .resetFilters {
+    font-size: 3.103vw;
+  }
+  .filterWrapper .filter .icon svg {
+    width: 3.4vw;
+    height: 3.4vw;
+  }
+  .filterPanel {
+    max-width: 92vw;
+    border-radius: 4vw;
+    padding: 2.5vw 3vw;
+    gap: 1.6vw;
+  }
+  .filterPanel .filterCategory,
+  .filterPanel .resetFilters {
+    padding: 1.2vw 3vw;
+    border-radius: 6vw;
+  }
+  .worksList .listTitle {
+    font-size: 5.517vw;
+  }
+  .worksList .year,
+  .worksList .rowStats {
+    font-size: 3.103vw;
+  }
+  .worksList .rowStats {
+    display: none;
+  }
+}
