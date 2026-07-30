@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { HoyHeaderLogo, HoyWordmark, PlusIcon } from "./logos";
 import { Marquee } from "./Marquee";
@@ -12,12 +12,28 @@ const NAV = [
   { href: "/how-we-roll", label: "How we roll" },
 ] as const;
 
-export function SiteHeader({ light = false }: { light?: boolean }) {
+export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [light, setLight] = useState(false);
+
+  // Reference behavior: header is "light" (transparent, paper text) while a
+  // dark fullscreen hero (.headerBigBlock) sits under it; reverts on scroll.
+  useEffect(() => {
+    const update = () => {
+      const hero = document.querySelector<HTMLElement>(".headerBigBlock");
+      setLight(hero ? window.scrollY < hero.offsetHeight - 80 : false);
+    };
+    const raf = requestAnimationFrame(update);
+    window.addEventListener("scroll", update, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", update);
+    };
+  }, [pathname]);
 
   return (
-    <header className={`${light ? "light " : ""}active${menuOpen ? " menuOpen" : ""}`}>
+    <header className={`${light && !menuOpen ? "light " : ""}active${menuOpen ? " menuOpen" : ""}`}>
       <div className="headerBar">
         <div className="contentWrapper">
           <div className="left">

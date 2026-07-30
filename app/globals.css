@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../components/public/global/shell.css";
+@import "../components/public/home/home.css";
 
 /* ---------------------------------------------------------------------------
    House of Yellow — extracted design tokens
