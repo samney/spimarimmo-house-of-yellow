@@ -30,11 +30,16 @@ Depends: HOY-030 (content shapes known)
 Tasks: schema per master-prompt domain model (identity, pages, projects, media, global config, operations); versioned migrations; RLS on all tables; seed data; `docs/architecture/DATA-MODEL.md`; RLS tests.
 Acceptance: migrations apply cleanly on local Supabase; RLS test evidence; DATA-MODEL.md justifies every table.
 
-## HOY-050 — Build global public shell — PENDING
+## HOY-050 — Build global public shell — **IN PROGRESS (core built + verified)**
 
 Depends: HOY-030
-Tasks: fixed header (z-12), mobile nav, footer, sticky WhatsApp (z-10), custom cursor (z-20) with Play/Video states, consent UI (z-99999) + preference management, page transitions, smooth scroll (verify Lenis), GSAP lifecycle, a11y (keyboard, focus, reduced motion).
-Acceptance: shell matches reference at all viewports; axe pass; interaction evidence in qa/.
+Built 2026-07-30 (verified against reference via local prod-server screenshots `qa/implementation/shell2--*`):
+- next-intl routing skeleton (EN default `/`, FR `/fr/...`), middleware, `app/[locale]/(public)` structure, `/en` + `/fr` prerender.
+- `SiteHeader` (fixed z-12, exact reference markup classes, HOY logo + HOUSE/OF/YELLOW wordmark SVGs verbatim, icomoon social glyphs, uppercase yellow Connect pill w/ reference .button rule + marquee hover, light-variant support, hamburger + full-screen mobile menu w/ Office/Contact cols).
+- `SiteFooter` — fixed yellow reveal-on-scroll (reference rule) w/ ResizeObserver-measured page margin; stacked 150×150 logo, 4 columns, bottom row.
+- `WhatsAppButton` (3.75vw circle at reference position), `CustomCursor` (z-20, quickTo-follow, Play/Video marquee states, dark-section inversion, pointer-fine only), `ConsentBanner` (Complianz-equivalent opt-in: Accept/Deny/View preferences, 4 categories, localStorage + `hoy:consent` event; locale-consistent EN strings), `SmoothScroll` (verbatim reference Lenis config + ScrollTrigger ticker), reusable `Marquee` (reference DOM structure, CSS loop first pass).
+- All reduced-motion aware. Gates pass (typecheck/lint/build).
+Remaining before DONE: page-transition choreography (from `qa/recordings/page-transition-*`), GSAP marquee refinement to exact px/s speeds, axe run + keyboard-focus evidence, per-viewport visual diff vs reference (converges during HOY-060 when real content sits behind the chrome).
 
 ## HOY-060 — Build English homepage — PENDING
 
