@@ -9,5 +9,6 @@ Updated: 2026-07-30 (Session 0)
 - **Last verified commit:** `8426f59` — HOY-000 bootstrap + scaffold; typecheck/lint/format/build all passing at this commit
 - **Setup gate:** `WORKFLOW_READY=true` (see `SETUP-VALIDATION.md`)
 - **Known failures:** none
-- **Side quest in flight:** owner requested audit of 4 additional third-party skill repos + a Snyk article; research agent dispatched; install/reject decisions will be appended to `PUBLIC-SKILLS-LOCK.md` when its report lands. Nothing installed from them yet.
-- **Next safe action:** HOY-010 — fetch robots.txt + sitemap.xml, verify the 21 project routes + core routes respond, re-verify tech evidence (lenis/swup classes, fonts, consent), write `docs/audit/ROUTE-INVENTORY.md`.
+- **HOY-010 progress:** route inventory frozen (27 routes, all 200; 404 verified); tech stack re-verified live — GSAP/ScrollTrigger/SplitText/MorphSVG, Lenis, Swup, Complianz, CF7+reCAPTCHA, Smash Balloon IG, GA4, WP 7.0.2 all now `Observed`; content inventory (initial) + asset manifest (initial) written; global shell, index filters (8 categories + grid/list), project template blocks, Connect form/clocks documented.
+- **Capture caveat:** local ad-blocker proxy (127.0.0.1:26514) injects CSS into pages — HOY-020 captures need a clean profile (see TECHNICAL-FORENSICS).
+- **Next safe action:** finish HOY-010 remainder (cookies page copy, 404 render via clean profile, homepage 15-section copy pass, culture team/discipline details, remaining 20 project pages' content + lazy video IDs) — most of it merges naturally into HOY-020 capture runs; then HOY-020 reference captures at all 8 viewports.
