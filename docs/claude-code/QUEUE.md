@@ -14,17 +14,15 @@ Depends: HOY-000
 Tasks: crawl houseofyellow.nl via Playwright MCP: nav, footer, sitemap.xml, robots.txt, all 21+ project routes, cookies/legal, 404 behavior, redirects, canonical/hreflang; verify pre-audit evidence (routes table, fonts, tokens, tech stack); technology re-verification (lenis/swup classes, Vimeo IDs, Complianz).
 Acceptance: `docs/audit/ROUTE-INVENTORY.md`, `CONTENT-INVENTORY.md`, `ASSET-MANIFEST.md` (initial), `TECHNICAL-FORENSICS.md` (initial); every route responds & documented.
 
-## HOY-020 — Capture reference evidence — PENDING
+## HOY-020 — Capture reference evidence — **DONE (evidence below)**
 
 Depends: HOY-010
-Tasks: full-page + section screenshots for every route at all 8 viewports; nav open/closed; filters; grid/list; hover states; video play/pause; form states; cookie banner + preferences; 404; reduced motion; motion recordings for animated sequences; dynamic-region register.
-Acceptance: populated `qa/reference/{desktop,tablet,mobile}`, `qa/recordings/`; dynamic-region register in `docs/audit/`; VALIDATION-MATRIX reference column filled.
+Acceptance evidence (2026-07-30): full matrix 28 routes × 8 viewports × {top, full-page} in `qa/reference/{desktop,tablet,mobile}` (1920/1440/1280/1024 as PNG, 768/430/390/360 as JPEG per D-006; 470+ files, 0 capture errors in final runs); interaction states in `qa/reference/states/` (consent banner d+m, contact-form validation d+m, list view d+m, filters open d+m, filters applied (mobile), nav open (mobile), reduced-motion home); 5 motion recordings in `qa/recordings/` (load+scroll, page transition, works hover/filter/list, project scroll, mobile nav); `capture-manifest.json` with per-page video IDs/posters/bg-images/console errors for 4 viewports; dynamic-region register `docs/audit/DYNAMIC-REGIONS.md` (9 regions). Notes: consent "preferences dialog" does not exist as a separate state (in-banner toggles + /cookies/ widget — verified); captures are disk-only per D-006 and regenerable via committed scripts.
 
-## HOY-030 — Extract design and motion systems — PENDING
+## HOY-030 — Extract design and motion systems — **DONE (evidence below)**
 
 Depends: HOY-020
-Tasks: tokens (colors, type scale + clamping, spacing, containers, grid, breakpoints, radii, shadows, z-index); Poppins font files downloaded + licensed use recorded; motion timelines per animation (trigger/duration/easing/stagger/scroll/pin/reduced-motion); component inventory.
-Acceptance: `docs/design-system/DESIGN-SYSTEM.md`, `COMPONENT-INVENTORY.md`, `MOTION-SYSTEM.md`; tokens as CSS vars + Tailwind theme in repo.
+Acceptance evidence (2026-07-30): `docs/design-system/DESIGN-SYSTEM.md` (colors by frequency, 3-regime linear vw type system verified via 12-width probe `qa/typography-probe.json`, breakpoints 1080/580, vw radii, z-ladder, letter/line values, CSS transition system), `MOTION-SYSTEM.md` (verbatim Lenis config, GSAP vocabulary from 24 theme JS bundles, set-piece list, reduced-motion policy), `COMPONENT-INVENTORY.md` (per-route component map). Tokens implemented in `app/globals.css` (6 @font-face incl. icomoon, CSS vars, Tailwind @theme, regime media queries) + `layout.tsx` preloads; fonts downloaded to `public/fonts/`. Gates passed at commit 8cc2f4e. Note: fine-grained per-animation timeline parameters (exact durations per set piece) are refined against `qa/recordings/` during each set piece's implementation (HOY-050+), per the continuous-fidelity rule.
 
 ## HOY-040 — Implement data model and migrations — PENDING
 

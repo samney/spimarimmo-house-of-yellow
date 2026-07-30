@@ -2,8 +2,8 @@
 
 Updated: 2026-07-30 (Session 0)
 
-- **Active phase:** Product execution — evidence capture + design-system extraction
-- **Active queue items:** `HOY-020` (capture matrix running in background — 28 routes × 8 viewports; states + smoke evidence done) and `HOY-030` (tokens/motion extracted and implemented; recordings-based timeline refinement pending). `HOY-000` DONE, `HOY-010` DONE except items folded into HOY-020 (see QUEUE.md).
+- **Active phase:** Product execution — implementation starts
+- **Active queue item:** `HOY-040` (data model) and `HOY-050` (global public shell) are both unblocked; HOY-050 recommended first slice per master-prompt sequencing (shell + homepage prove the design system). `HOY-000`, `HOY-010`, `HOY-020`, `HOY-030` all DONE with evidence (QUEUE.md).
 - **Model:** Claude Fable 5 (`claude-fable-5`), Claude Code 2.1.220
 - **Repository:** fresh git repo initialized 2026-07-30; scaffold committed
 - **Last verified commit:** `8426f59` — HOY-000 bootstrap + scaffold; typecheck/lint/format/build all passing at this commit

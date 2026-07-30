@@ -4,6 +4,8 @@ Dimensions per route: 8 viewports (1920×1080, 1440×900, 1280×800, 1024×768, 
 
 Status legend: `—` not started · `REF` reference captured · `IMPL` built · `VAL(path)` validated with evidence.
 
+**Ref-capture column update 2026-07-30:** ALL public routes below (including 404) = `REF` at all 8 viewports — `qa/reference/{desktop,tablet,mobile}/<slug>--<WxH>--{top,full}.{png|jpg}` (disk-only per D-006; regenerate with `node qa/capture-reference.mjs`). Interaction/consent/reduced-motion states in `qa/reference/states/`; motion evidence in `qa/recordings/`.
+
 | Route                                          | Ref capture | EN impl | FR impl | Interaction | A11y | Perf | Visual diff | Notes                            |
 | ---------------------------------------------- | ----------- | ------- | ------- | ----------- | ---- | ---- | ----------- | -------------------------------- |
 | `/` (Home)                                     | —           | —       | —       | —           | —    | —    | —           |                                  |

@@ -116,8 +116,16 @@ async function capturePage(page, route, vp, dir) {
     await page.waitForTimeout(1500);
     await autoScroll(page);
     const base = path.join(dir, `${s}--${vp.w}x${vp.h}`);
-    await page.screenshot({ path: `${base}--top.png` });
-    await page.screenshot({ path: `${base}--full.png`, fullPage: true, timeout: 60000 });
+    const shotOpts =
+      args.format === "jpeg" ? { type: "jpeg", quality: 85 } : { type: "png" };
+    const ext = args.format === "jpeg" ? "jpg" : "png";
+    await page.screenshot({ path: `${base}--top.${ext}`, ...shotOpts });
+    await page.screenshot({
+      path: `${base}--full.${ext}`,
+      fullPage: true,
+      timeout: 60000,
+      ...shotOpts,
+    });
     const media = await page.evaluate(() => ({
       videos: [...document.querySelectorAll("video")].map(
         (v) => (v.currentSrc || v.src || "").match(/playback\/(\d+)/)?.[1] || "no-src",
@@ -278,7 +286,7 @@ for (const vp of onlyVps) {
   }
   await ctx.close();
 }
-await captureStates(browser);
+if (!args["skip-states"]) await captureStates(browser);
 await browser.close();
 
 manifest.finishedAt = new Date().toISOString();
