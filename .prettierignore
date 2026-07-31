@@ -1,0 +1,8 @@
+node_modules
+.next
+pnpm-lock.yaml
+qa
+.playwright-mcp
+HOUSE-OF-YELLOW-CLAUDE-CODE-MASTER-PROMPT.md
+CLAUDE-CODE-PUBLIC-SKILLS-WORKFLOW-BOOTSTRAP.md
+.claude/skills

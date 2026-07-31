@@ -1,0 +1,614 @@
+[
+ {
+  "path": "/culture/",
+  "title": "Culture - HOY | House Of Yellow",
+  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+  "bodyCls": "cmplz-marketing cmplz-statistics cmplz-preferences cmplz-functional cmplz-eu cmplz-optin",
+  "blocks": [
+   {
+    "cls": "headerCultureBlock",
+    "text": "[ 01 ] Our Culture At House of Yellow , we mix hungry young creators with seasoned pros who’ve seen it all. That combo? It means we don’t just make things look good, we make them work. Top-of-their-game creators who speak the language of culture and feel what audiences respond to. Fast. Smart. With flavour.",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle",
+      "text": "At House of Yellow , we mix hungry young creators with seasoned pros who’ve seen it all. That combo? It means we don’t just make things look good, we make them work. Top-of-their-game creators who speak the language of culture and feel what audiences respond to."
+     }
+    ],
+    "paras": [],
+    "links": [],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "[ 01 ] Our Culture At House of Yellow , we mix hungry young creators with seasoned pros who’ve seen it all. That combo? It means we don’t just make things look good, we make them work. Top-of-their-ga"
+     }
+    ]
+   },
+   {
+    "cls": "cultureItemBlock",
+    "text": "Creative[ 02 ] Creative is where it all begins. From raw idea to refined concept, we shape stories that stick. We think, write, and build the blueprint, turning vision into something real before the first frame is even shot.",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188020746/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&signature=b01d482cba6ebcc5349d1f0413d746694c69718ec0798d77bab45ac44dffe3cb",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "Creative[ 02 ] Creative is where it all begins. From raw idea to refined concept, we shape stories that stick. We think, write, and build the blueprint, turning vision into something real before the f"
+     }
+    ]
+   },
+   {
+    "cls": "cultureItemBlock",
+    "text": "3d Animator[ 03 ] We bring ideas into motion. From static designs to dynamic worlds, our 3D animators shape visuals with depth, detail, and precision. Built to elevate every frame beyond the expected.",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188018691/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&signature=e0e37cb2987152bf8935e6b67f5e399327241c03dbe9a8cdb4bb168604370247",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "3d Animator[ 03 ] We bring ideas into motion. From static designs to dynamic worlds, our 3D animators shape visuals with depth, detail, and precision. Built to elevate every frame beyond the expected."
+     }
+    ]
+   },
+   {
+    "cls": "cultureItemBlock",
+    "text": "Editor[ 04 ] This is where it all comes together. Our editors shape the story in the final cut, refining every frame, every beat, and every transition into a seamless whole.",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1151544155/rendition/1080p/file.mp4%20%281080p%29.mp4?loc=external&signature=107201ada405ccb58320c161a9918c932c4dd165be656c8f2deb462a46b99546",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2025/10/353d5bb5-393f70ba.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "Editor[ 04 ] This is where it all comes together. Our editors shape the story in the final cut, refining every frame, every beat, and every transition into a seamless whole."
+     }
+    ]
+   },
+   {
+    "cls": "cultureQuoteBlock",
+    "text": "That combo? It means we don’t just make things look good, we make them work. We speak the language of culture, feel the pulse of the audience, and turn big ideas into bold content. Vinal Hindocha",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle split-applied active started",
+      "text": "That combo? It means we don’t just make things look good, we make them work. We speak the language of culture, feel the pulse of the audience, and turn big ideas into bold content."
+     }
+    ],
+    "paras": [],
+    "links": [],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "That combo? It means we don’t just make things look good, we make them work. We speak the language of culture, feel the pulse of the audience, and turn big ideas into bold content. Vinal Hindocha"
+     }
+    ]
+   },
+   {
+    "cls": "cultureItemBlock",
+    "text": "2d Animator[ 05 ] Every frame tells a story. From first sketch to final animation: we design, draw, and animate with precision, shaping movement that connects and captivates.",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188021523/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&signature=b23d380f7a41c8da2fee7083465e6e8c566965de1fa77f3526027d8d848918f5",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-1_3-800x1067.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "2d Animator[ 05 ] Every frame tells a story. From first sketch to final animation: we design, draw, and animate with precision, shaping movement that connects and captivates."
+     }
+    ]
+   },
+   {
+    "cls": "cultureItemBlock",
+    "text": "Director[ 06 ] Every story starts with vision. From concept to final cut: we direct, guide, and shape every frame with creative precision and cultural insight.",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1194133383/rendition/1080p/file.mp4%20%281080p%29.mp4?loc=external&signature=b9171ac9d1b05476f41d559adacf0a1363b6eaebabdc8d2c129876bda658abc7",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-1_26_7-800x1067.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "Director[ 06 ] Every story starts with vision. From concept to final cut: we direct, guide, and shape every frame with creative precision and cultural insight."
+     }
+    ]
+   },
+   {
+    "cls": "cultureQuoteAnimationBlock",
+    "text": "[ 07 ] For who? Bold. Original. Built for brands who want to lead, not follow. All under one roof. All for the bold. CONNECT CONNECTCONNECTCONNECTCONNECTCONNECT CONNECTCONNECTCONNECTCONNECTCONNECT",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle",
+      "text": "Bold. Original. Built for brands who want to lead, not follow. All under one roof. All for the bold."
+     }
+    ],
+    "paras": [],
+    "links": [
+     {
+      "href": "/connect/",
+      "cls": "button light",
+      "text": "CONNECT CONNECTCONNECTCONNECTCONNECTCONNECT CONNECTCONNECTCONNECTCONNECTCONNECT"
+     }
+    ],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "[ 07 ] For who? Bold. Original. Built for brands who want to lead, not follow. All under one roof. All for the bold. CONNECT CONNECTCONNECTCONNECTCONNECTCONNECT CONNECTCONNECTCONNECTCONNECTCONNECT"
+     }
+    ]
+   },
+   {
+    "cls": "cultureWorkBlock",
+    "text": "The works Every frame tells our story too, of passion, agility, and the pursuit of brilliance. This is Made by Yellow. A showcase of the work we proudly shaped together with our partners. [ 08 ] CORPORATECOMMERCIALS TAKE A LOOK Oceanco – Leviathan Views7.100.000Delivery time2 wks production + 2 wks post ARTISTSCOMMERCIALS TAKE A LOOK La Fuente x AMG Views5.800.000Delivery time1 week pre-production + 2 shoot days ARTISTSEVENTS+1 TAKE A LOOK Broederliefde – Rotterdam Ahoy Views1.900.000Delivery time8 days",
+    "headings": [],
+    "paras": [],
+    "links": [
+     {
+      "href": "https://houseofyellow.nl/project/oceanco-leviathan/",
+      "cls": "project inview",
+      "text": "CORPORATECOMMERCIALS TAKE A LOOK Oceanco – Leviathan Views7.100.000Delivery time2 wks production + 2 wks post"
+     },
+     {
+      "href": "https://houseofyellow.nl/project/la-fuente-x-amg/",
+      "cls": "project inview",
+      "text": "ARTISTSCOMMERCIALS TAKE A LOOK La Fuente x AMG Views5.800.000Delivery time1 week pre-production + 2 shoot days"
+     },
+     {
+      "href": "https://houseofyellow.nl/project/broederliefde-rotterdam-ahoy/",
+      "cls": "project inview",
+      "text": "ARTISTSEVENTS+1 TAKE A LOOK Broederliefde – Rotterdam Ahoy Views1.900.000Delivery time8 days"
+     }
+    ],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1196251477/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=70f9bc93e15bafe70bd44d18d4f5981eea77d1a20cb4ff13ac6ebc5af2c60fc7",
+      "poster": "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-3_11_33-600x439.jpg",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "innerImage playerBackground"
+     },
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1204605394/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=6f225ac4ed8b7012af0121ac7d6197687acfe18c46888a8d957d7d97cee94e28",
+      "poster": "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-3_11_36-600x439.jpg",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "innerImage playerBackground"
+     },
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1194133383/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&signature=12f23c73bf99c03452f3443dcc1a8994c00d1b1c466e9aa615002a31c6883c36",
+      "poster": "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-1_26_7-600x800.jpg",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "innerImage playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-3_11_33-600x439.jpg",
+     "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-3_11_36-600x439.jpg",
+     "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-1_26_7-600x800.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "The works Every frame tells our story too, of passion, agility, and the pursuit of brilliance. This is Made by Yellow. A showcase of the work we proudly shaped together with our partners. [ 08 ] CORPO"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "path": "/how-we-roll/",
+  "title": "How we roll - HOY | House Of Yellow",
+  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+  "bodyCls": "cmplz-marketing cmplz-statistics cmplz-preferences cmplz-functional cmplz-eu cmplz-optin",
+  "blocks": [
+   {
+    "cls": "headerHowWeRollBlock",
+    "text": "[ xx ] This is how we roll Behind every story we create lies a method: listen first, co-create boldly, and deliver with precision. Flexible, fast, and focused, this is what working with House of Yellow feels like. Fast. Smart. With flavour.",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle",
+      "text": "Behind every story we create lies a method: listen first, co-create boldly, and deliver with precision. Flexible, fast, and focused, this is what working with House of Yellow feels like."
+     }
+    ],
+    "paras": [],
+    "links": [],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "[ xx ] This is how we roll Behind every story we create lies a method: listen first, co-create boldly, and deliver with precision. Flexible, fast, and focused, this is what working with House of Yello"
+     }
+    ]
+   },
+   {
+    "cls": "projectTwoImagesBlock",
+    "text": "",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1196251479/rendition/1080p/file.mp4%20%281080p%29.mp4?loc=external&signature=f8ab0e5023250d8c6c432dcb555b2433328c34381004b441b04551aadc760e65",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     },
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188108650/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=9aef09489760072cdfa66804b7af840a7512a694e53b749e44251106d6a06f33",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": ""
+     }
+    ]
+   },
+   {
+    "cls": "howWeRollTitleBlock",
+    "text": "Phase 1: The Blueprint – Strategize & Design",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle",
+      "text": "Phase 1: The Blueprint – Strategize & Design"
+     }
+    ],
+    "paras": [],
+    "links": [],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "Phase 1: The Blueprint – Strategize & Design"
+     }
+    ]
+   },
+   {
+    "cls": "howWeRollTextItemsBlock",
+    "text": "[ 01 - 1 ] Concept & Storytelling We collaborate to define your core message, target audience, and the desired emotional impact. From this, we develop a powerful concept and refine it into a detailed script that forms the backbone of your story. [ 01 - 2 ] Visualizing the Narrative Our creative team translates the script into visual blueprints. Through detailed storyboards and comprehensive shot lists, we map out every scene, camera angle, and movement, ensuring a cohesive visual flow. [ 01 - 3 ] Pre-Production Mastery We handle all the essential groundwork: expert casting for actors and extras, selecting top-tier equipment (cameras, lighting, sound gear), scouting and securing ideal locations, and assembling a dedicated crew of industry professionals. Every detail is meticulously planned to guarantee a seamless production.",
+    "headings": [],
+    "paras": [
+     {
+      "cls": "",
+      "text": "We collaborate to define your core message, target audience, and the desired emotional impact. From this, we develop a powerful concept and refine it into a detailed script that forms the backbone of your story."
+     },
+     {
+      "cls": "",
+      "text": "Our creative team translates the script into visual blueprints. Through detailed storyboards and comprehensive shot lists, we map out every scene, camera angle, and movement, ensuring a cohesive visual flow."
+     },
+     {
+      "cls": "",
+      "text": "We handle all the essential groundwork: expert casting for actors and extras, selecting top-tier equipment (cameras, lighting, sound gear), scouting and securing ideal locations, and assembling a dedicated crew of industry professionals. Every detail is meticulously planned to guarantee a seamless production."
+     }
+    ],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188112895/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&signature=163eb1f3feea27ffeabb76ac040e700d67f18d10628cfe600221e2a15f7b5e43",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     },
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188108680/rendition/1080p/file.mp4%20%281080p%29.mp4?loc=external&signature=e4afc1395e97937890d329238c38b6bb29c652cd5ae4b3134e9beac57e81b932",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-3_11_4-600x439.jpg",
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-1_23-600x800.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "[ 01 - 1 ] Concept & Storytelling We collaborate to define your core message, target audience, and the desired emotional impact. From this, we develop a powerful concept and refine it into a detailed "
+     }
+    ]
+   },
+   {
+    "cls": "howWeRollTitleBlock",
+    "text": "Phase 2: The Studio – Capture & Create",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle",
+      "text": "Phase 2: The Studio – Capture & Create"
+     }
+    ],
+    "paras": [],
+    "links": [],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "Phase 2: The Studio – Capture & Create"
+     }
+    ]
+   },
+   {
+    "cls": "howWeRollTextItemsBlock",
+    "text": "[ 02 - 1 ] Precision Setup We meticulously set up the scene, optimizing lighting and sound environments to perfection. Our crew prepares the set, actors are briefed and styled, and every technical element is fine-tuned for optimal capture. [ 02 - 2 ] Dynamic Filming Under the expert guidance of our director, we capture the essence of your story. Our cinematographers masterfully frame each shot, while our audio engineers ensure pristine sound recording. We focus on securing diverse takes and maintaining absolute continuity across all scenes. [ 02 - 3 ] Quality Assurance Throughout filming, we rigorously monitor footage quality, ensuring technical excellence and confirming all planned shots are secured. Daily data backups safeguard every precious moment captured.",
+    "headings": [],
+    "paras": [
+     {
+      "cls": "",
+      "text": "We meticulously set up the scene, optimizing lighting and sound environments to perfection. Our crew prepares the set, actors are briefed and styled, and every technical element is fine-tuned for optimal capture."
+     },
+     {
+      "cls": "",
+      "text": "Under the expert guidance of our director, we capture the essence of your story. Our cinematographers masterfully frame each shot, while our audio engineers ensure pristine sound recording. We focus on securing diverse takes and maintaining absolute continuity across all scenes."
+     },
+     {
+      "cls": "",
+      "text": "Throughout filming, we rigorously monitor footage quality, ensuring technical excellence and confirming all planned shots are secured. Daily data backups safeguard every precious moment captured."
+     }
+    ],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188110341/rendition/1080p/file.mp4%20%281080p%29.mp4?loc=external&signature=38be46f7db372d0de60041ab1d8974b6ea29281d558523e3c71b67be6d14c824",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     },
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188110477/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=35e1772b17d328bd234b7705dd768a9ad3a6814c7f5a28de7b99e5ea020eb0a4",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-1_18-600x600.jpg",
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-1_27-600x600.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "[ 02 - 1 ] Precision Setup We meticulously set up the scene, optimizing lighting and sound environments to perfection. Our crew prepares the set, actors are briefed and styled, and every technical ele"
+     }
+    ]
+   },
+   {
+    "cls": "projectTwoImagesBlock",
+    "text": "",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188112929/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&signature=4e6d514330037fd23104a0bf1da9c5e7ee833ec7697a13a7e3838f5fec869f4f",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     },
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188108593/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=9c133d31a8884dbb60c7cc38a0843688b8cc18e4d6d7b39f6803f2fa1ec093b5",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-3_11_3-600x439.jpg",
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-1_26-600x800.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": ""
+     }
+    ]
+   },
+   {
+    "cls": "howWeRollDividerAnimationBlock",
+    "text": "",
+    "headings": [],
+    "paras": [],
+    "links": [],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": ""
+     }
+    ]
+   },
+   {
+    "cls": "howWeRollTitleBlock",
+    "text": "Phase 3: The Polish – Edit & Elevate",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle",
+      "text": "Phase 3: The Polish – Edit & Elevate"
+     }
+    ],
+    "paras": [],
+    "links": [],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "Phase 3: The Polish – Edit & Elevate"
+     }
+    ]
+   },
+   {
+    "cls": "howWeRollTextItemsBlock",
+    "text": "[ 03 - 1 ] Crafting the Narrative Our editors meticulously assemble the footage, starting with a logical assembly edit and progressively refining it into a compelling fine cut. This stage brings your story to life, ensuring optimal pacing and flow. [ 03 - 2 ] Sonic Excellence We elevate your video with professional sound design and audio mixing. Dialogues are clarified, immersive sound effects are integrated, and carefully selected music is layered to enhance the emotional resonance, creating a rich auditory experience. [ 03 - 3 ] Visual Perfection Our post-production specialists apply expert color correction for visual consistency and perform artistic color grading to establish the perfect mood and aesthetic. We seamlessly integrate visual effects (VFX) and dynamic motion graphics (titles, logos) to add a layer of sophistication and brand polish.",
+    "headings": [],
+    "paras": [
+     {
+      "cls": "",
+      "text": "Our editors meticulously assemble the footage, starting with a logical assembly edit and progressively refining it into a compelling fine cut. This stage brings your story to life, ensuring optimal pacing and flow."
+     },
+     {
+      "cls": "",
+      "text": "We elevate your video with professional sound design and audio mixing. Dialogues are clarified, immersive sound effects are integrated, and carefully selected music is layered to enhance the emotional resonance, creating a rich auditory experience."
+     },
+     {
+      "cls": "",
+      "text": "Our post-production specialists apply expert color correction for visual consistency and perform artistic color grading to establish the perfect mood and aesthetic. We seamlessly integrate visual effects (VFX) and dynamic motion graphics (titles, logos) to add a layer of sophistication and brand polish."
+     }
+    ],
+    "links": [],
+    "vids": [
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188112952/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=022846a2a76352dd8b76697cc3e900af988afc3d792a9a0b3ad80b81b5ef9333",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     },
+     {
+      "url": "https://player.vimeo.com/progressive_redirect/playback/1188108612/rendition/1080p/file.mp4%20%281080p%29.mp4?loc=external&signature=f9d3f6cd57eb95aaa11ec48eca6c69e3bb70b03ac869610de6fe8a61eb31d722",
+      "poster": "",
+      "cls": "video initVideoOnScroll playVideoOnScroll loaded",
+      "parentCls": "imageWrapper playerBackground"
+     }
+    ],
+    "imgs": [],
+    "bgs": [
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-3_11_2-600x439.jpg",
+     "https://houseofyellow.nl/wp-content/uploads/2026/04/Comp-1_25-600x800.jpg"
+    ],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "[ 03 - 1 ] Crafting the Narrative Our editors meticulously assemble the footage, starting with a logical assembly edit and progressively refining it into a compelling fine cut. This stage brings your "
+     }
+    ]
+   },
+   {
+    "cls": "cultureQuoteAnimationBlock howWeRoll removeDarkCursor",
+    "text": "[ 01 ] Ready to go? Working with House of Yellow feels like having an in-house team, but with outsider firepower. You’ll see it. You’ll feel it. And your audience will too. CONNECT CONNECTCONNECTCONNECTCONNECTCONNECT CONNECTCONNECTCONNECTCONNECTCONNECT",
+    "headings": [
+     {
+      "tag": "h1",
+      "cls": "normalTitle",
+      "text": "Working with House of Yellow feels like having an in-house team, but with outsider firepower. You’ll see it. You’ll feel it. And your audience will too."
+     }
+    ],
+    "paras": [],
+    "links": [
+     {
+      "href": "/connect/",
+      "cls": "button light",
+      "text": "CONNECT CONNECTCONNECTCONNECTCONNECTCONNECT CONNECTCONNECTCONNECTCONNECTCONNECT"
+     }
+    ],
+    "vids": [],
+    "imgs": [],
+    "bgs": [],
+    "outline": [
+     {
+      "tag": "div",
+      "cls": "contentWrapper",
+      "text": "[ 01 ] Ready to go? Working with House of Yellow feels like having an in-house team, but with outsider firepower. You’ll see it. You’ll feel it. And your audience will too. CONNECT CONNECTCONNECTCONNE"
+     }
+    ]
+   }
+  ]
+ }
+]

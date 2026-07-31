@@ -1,0 +1,157 @@
+@import "tailwindcss";
+@import "../components/public/global/shell.css";
+@import "../components/public/home/home.css";
+@import "../components/public/projects/works.css";
+@import "../components/public/projects/project-detail.css";
+@import "../components/public/pages/pages.css";
+
+/* ---------------------------------------------------------------------------
+   House of Yellow — extracted design tokens
+   Source of truth: docs/design-system/DESIGN-SYSTEM.md (observed values only).
+   The reference scales typography linearly with vw in three regimes switched
+   at 1080px and 580px — replicated verbatim (no clamp()).
+--------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Poppins-font";
+  src: url("/fonts/Poppins-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins-font";
+  src: url("/fonts/Poppins-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins-font";
+  src: url("/fonts/Poppins-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins-font";
+  src: url("/fonts/Poppins-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins-font";
+  src: url("/fonts/Poppins-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "icomoon";
+  src: url("/fonts/icomoon/icomoon.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Colors (observed) */
+  --hoy-ink: #1d1d1b;
+  --hoy-yellow: #f2efa3;
+  --hoy-yellow-hover: #e8e48a;
+  --hoy-yellow-deep: #f0eb7f;
+  --hoy-paper: #eeeeee;
+  --hoy-white: #ffffff;
+  --hoy-black: #000000;
+  --hoy-error: #cb4444;
+
+  /* Type scale — desktop regime (>1080px), linear vw as in reference */
+  --text-base: 0.75vw;
+  --text-support: 0.875vw;
+  --text-small-title: 1.5vw;
+  --text-heading-sm: 2.875vw;
+  --text-heading: 3.103vw;
+  --text-heading-lg: 3.448vw;
+  --text-h1: 3.75vw;
+  --text-mega: 5.517vw;
+  --leading-small-title: 1.8vw;
+  --leading-h1: 4.2vw;
+
+  /* Radii (observed vw scale) */
+  --radius-xs: 0.125vw;
+  --radius-sm: 0.345vw;
+  --radius-md: 0.5vw;
+  --radius-lg: 0.74074074vw;
+  --radius-xl: 1.37931034vw;
+  --radius-pill: 6.897vw;
+
+  /* Z-index ladder (observed) */
+  --z-behind: -1;
+  --z-content: 1;
+  --z-whatsapp: 10;
+  --z-header: 12;
+  --z-cursor: 20;
+  --z-menu: 98;
+  --z-overlay: 100;
+  --z-consent: 99999;
+
+  /* Motion vocabulary (observed) */
+  --dur-micro: 0.2s;
+  --dur-fade: 0.3s;
+  --dur-reveal: 0.45s;
+  --stagger-step: 0.15s;
+  --ease-out-ref: ease-out;
+}
+
+/* Tablet regime (<=1080px): 1080-based linear vw */
+@media (max-width: 1080px) {
+  :root {
+    --text-base: 1.111vw; /* 12px @ 1080 */
+    --text-h1: 3.7037vw; /* 40px @ 1080 */
+  }
+}
+
+/* Mobile regime (<=580px): 580-based linear vw */
+@media (max-width: 580px) {
+  :root {
+    --text-base: 3.448vw; /* 20px @ 580 */
+    --text-h1: 6.897vw; /* 40px @ 580 */
+  }
+}
+
+@theme inline {
+  --color-ink: var(--hoy-ink);
+  --color-yellow: var(--hoy-yellow);
+  --color-yellow-hover: var(--hoy-yellow-hover);
+  --color-yellow-deep: var(--hoy-yellow-deep);
+  --color-paper: var(--hoy-paper);
+  --color-error: var(--hoy-error);
+  --font-sans: "Poppins-font", sans-serif;
+}
+
+html {
+  background: var(--hoy-paper);
+}
+
+body {
+  background: var(--hoy-paper);
+  color: var(--hoy-ink);
+  font-family: "Poppins-font", sans-serif;
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Accessibility addition over the reference (recorded in DESIGN-SYSTEM.md):
+   real reduced-motion fallbacks for all animated content. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

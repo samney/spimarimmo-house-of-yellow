@@ -1,0 +1,18 @@
+# STATUS
+
+Updated: 2026-07-30 (Session 0)
+
+- **Active phase:** Product execution — implementation
+- **Active queue items:** `HOY-100` Connect live with verified form pipeline (2026-07-31); `HOY-050/060/070/080/090` cores built — polish registers per item in QUEUE.md. `HOY-000`–`HOY-030` DONE. CMS track (HOY-040/120) deferred to the end per owner direction (2026-07-31).
+- **Updated:** 2026-07-31
+- **Public routes now implemented:** ALL — `/`, `/made-by-yellow`, `/culture`, `/how-we-roll`, `/connect`, `/cookies`, all 21 `/project/[slug]`, and a real 404 (EN + FR shells; catch-all `[...rest]` + root branded not-found per D-007). Full static generation preserved (every route ● SSG). All 154 reference videos local (504 MB) — zero media placeholders (owner directive 2026-07-31).
+- **Next safe action:** fidelity convergence pass across HOY-050…100 remaining registers — GSAP set pieces (page transitions, hero letters, culture/hwr anim-1/2/3, parallax scroll-speeds), play-on-scroll video, per-viewport pixel diffs (<1%) at all 8 viewports, axe + keyboard evidence — then HOY-110 (FR), HOY-130 (SEO), and CMS (HOY-040/120) last per owner.
+- **Model:** Claude Fable 5 (`claude-fable-5`), Claude Code 2.1.220
+- **Repository:** fresh git repo initialized 2026-07-30; scaffold committed
+- **Last verified commit:** `8426f59` — HOY-000 bootstrap + scaffold; typecheck/lint/format/build all passing at this commit
+- **Setup gate:** `WORKFLOW_READY=true` (see `SETUP-VALIDATION.md`)
+- **Known failures:** none
+- **HOY-010 progress:** route inventory frozen (27 routes, all 200; 404 verified); tech stack re-verified live — GSAP/ScrollTrigger/SplitText/MorphSVG, Lenis, Swup, Complianz, CF7+reCAPTCHA, Smash Balloon IG, GA4, WP 7.0.2 all now `Observed`; content inventory (initial) + asset manifest (initial) written; global shell, index filters (8 categories + grid/list), project template blocks, Connect form/clocks documented.
+- **Capture caveat:** local ad-blocker proxy (127.0.0.1:26514) injects CSS into pages — HOY-020 captures need a clean profile (see TECHNICAL-FORENSICS).
+- **HOY-030 progress (2026-07-30):** full 452 KB theme CSS captured (Autoptimize inlines it — extracted via DOM); design tokens extracted with evidence: 2 breakpoints (1080/580), color frequencies, 3-regime linear vw type system (verified by 12-width computed probe → `qa/typography-probe.json`), z-index ladder, vw radius scale, CSS transition system (0.45s + 150ms stagger ladder); GSAP vocabulary + verbatim Lenis config extracted from 24 theme JS bundles; icomoon icon font discovered + downloaded; tokens implemented in `app/globals.css` (@font-face, CSS vars, Tailwind @theme) + layout.tsx font preloads mirroring reference. Reference has NO real reduced-motion support — our fallback is a recorded intentional addition.
+- **Next safe action:** when the HOY-020 matrix completes — run `node qa/record-motion.mjs`, review capture-manifest for errors, retry missed states (consent-preferences dialog, desktop filter-open), fill VALIDATION-MATRIX ref column, commit evidence; then map motion timelines from recordings into MOTION-SYSTEM.md; then HOY-040 (data model) or HOY-050 (shell) — shell can start immediately, it depends only on HOY-030.

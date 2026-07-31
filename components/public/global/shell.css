@@ -1,0 +1,661 @@
+/* ---------------------------------------------------------------------------
+   Global shell — geometry extracted from the reference theme CSS.
+   Desktop values are the >1080px regime; overrides at 1080/580 mirror the
+   reference's two breakpoints. All observed values; see DESIGN-SYSTEM.md.
+--------------------------------------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.contentWrapper {
+  margin: 0 auto;
+  padding: 0 2.5vw;
+}
+
+/* ===== Header ===== */
+header .headerBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-header);
+  background: var(--hoy-paper);
+  transition: background 0.3s, color 0.3s;
+}
+header.light .headerBar {
+  background: transparent;
+  color: var(--hoy-paper);
+}
+header.light .headerBar .menu a,
+header.light .headerBar #hamburger,
+header.light .headerBar .socialLink a {
+  color: var(--hoy-paper);
+}
+header.light .headerBar .logo svg {
+  color: var(--hoy-paper);
+}
+header .headerBar .contentWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 7.315vw;
+  position: relative;
+}
+header .left,
+header .right {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+}
+header .right {
+  justify-content: flex-end;
+  gap: 1.111vw;
+}
+header .menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.852vw;
+}
+header .menu a {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-weight: 500;
+  font-size: var(--text-base);
+  line-height: 2;
+  color: inherit;
+  text-decoration: none;
+}
+header .menu a.active::after,
+header .menu a.current-menu-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.1vw;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+}
+header .center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+header .logo a {
+  position: relative;
+  display: block;
+  color: var(--hoy-ink);
+}
+header .logo svg {
+  display: block;
+  width: 9.1vw;
+  height: auto;
+}
+header .logo .absoluteSVG {
+  position: absolute;
+  inset: 0;
+}
+header .logo .absoluteSVG .smallLogo {
+  position: absolute;
+  inset: 0;
+}
+
+/* Socials (icomoon glyphs) */
+.socialLink a {
+  color: var(--hoy-ink);
+  text-decoration: none;
+}
+.socialLink + .socialLink {
+  margin-left: 1.111vw;
+}
+.socialLink i {
+  font-family: "icomoon";
+  font-style: normal;
+  font-size: 1.157vw;
+  line-height: 1;
+}
+.icon-linkedin::before {
+  content: "\e907";
+}
+.icon-instagram::before {
+  content: "\e906";
+}
+
+/* Connect pill (reference .button rule, desktop regime) */
+.button {
+  display: inline-flex;
+  align-items: center;
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: var(--text-base);
+  text-transform: uppercase;
+  line-height: 2.8125vw;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 1.25vw;
+  overflow: hidden;
+  border-radius: 1.875vw;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, padding 0.3s;
+}
+.button:hover {
+  background: var(--hoy-yellow-hover);
+}
+.button .label {
+  position: relative;
+  display: block;
+  padding-right: 1.736vw;
+}
+.button .innerLabel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.button:hover .fixedLabel {
+  opacity: 0;
+}
+.button:hover .innerLabel {
+  opacity: 1;
+}
+.button .icon {
+  display: inline-flex;
+}
+.button .icon svg {
+  width: 1.215vw;
+  height: 1.215vw;
+}
+
+/* Hamburger (mobile only) */
+#hamburger {
+  display: none;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  align-items: center;
+  gap: 1.4vw;
+  cursor: pointer;
+}
+.hamburgerIcon {
+  position: relative;
+  display: inline-block;
+  width: 4.63vw;
+  height: 2.4vw;
+}
+.hamburgerIcon .bar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 1px;
+  background: var(--hoy-ink);
+  transition: transform 0.3s, width 0.3s, top 0.3s;
+}
+.hamburgerIcon .bar:nth-child(1) {
+  top: 0;
+}
+.hamburgerIcon .bar:nth-child(2) {
+  top: 50%;
+}
+.hamburgerIcon .bar:nth-child(3) {
+  top: 100%;
+}
+header.menuOpen .hamburgerIcon .bar:first-child {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+header.menuOpen .hamburgerIcon .bar:nth-child(2) {
+  width: 0;
+}
+header.menuOpen .hamburgerIcon .bar:nth-child(3) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Mobile slide-over menu */
+.hamburgerMenu {
+  display: none;
+}
+
+/* ===== Sticky WhatsApp (reference rule) ===== */
+.stickyWhatsappButton {
+  position: fixed;
+  width: 3.75vw;
+  height: 3.75vw;
+  left: calc(100vw - 6.25vw);
+  bottom: 2.5vw;
+  border-radius: 50%;
+  z-index: var(--z-whatsapp);
+  background: var(--hoy-yellow);
+  transition: opacity 0.3s;
+}
+.stickyWhatsappButton a {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.stickyWhatsappButton .icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stickyWhatsappButton .icon svg {
+  width: 2.5vw;
+  height: 2.5vw;
+  fill: var(--hoy-ink);
+}
+
+/* ===== Custom cursor ===== */
+.customCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0.925vw;
+  height: 0.925vw;
+  margin: -0.4625vw 0 0 -0.4625vw;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.customCursor.hidden {
+  opacity: 0;
+}
+.customCursor .background {
+  position: absolute;
+  inset: 0;
+  background: var(--hoy-yellow-hover);
+  border-radius: 0.185vw;
+  transition: transform 0.3s ease-out, border-radius 0.3s;
+}
+.customCursor .playCursor {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.customCursor.statePlay,
+.customCursor.stateVideo {
+  width: 6.5vw;
+  height: 6.5vw;
+  margin: -3.25vw 0 0 -3.25vw;
+}
+.customCursor.statePlay .background,
+.customCursor.stateVideo .background {
+  border-radius: 50%;
+}
+.customCursor.statePlay .playCursor,
+.customCursor.stateVideo .playCursor {
+  opacity: 1;
+}
+.customCursor .label {
+  font-size: 0.75vw;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--hoy-ink);
+  white-space: nowrap;
+}
+
+/* ===== Marquee (CSS loop; GSAP-refined per set piece) ===== */
+.marquees {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.marqueeWrapper,
+.marquee {
+  display: block;
+  height: 100%;
+}
+.marqueeScroll {
+  display: inline-flex;
+  white-space: nowrap;
+  height: 100%;
+  align-items: center;
+  animation: hoy-marquee var(--marquee-duration, 6s) linear infinite;
+}
+.marquee.dir-right .marqueeScroll {
+  animation-direction: reverse;
+}
+.itemsContainer {
+  display: inline-block;
+  padding-right: 0.6em;
+}
+@keyframes hoy-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-20%);
+  }
+}
+
+/* ===== Footer: fixed yellow reveal (reference rule) ===== */
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: auto;
+  background: var(--hoy-yellow);
+  z-index: 0;
+  color: var(--hoy-ink);
+}
+main.pageContent {
+  position: relative;
+  z-index: 1;
+  background: var(--hoy-paper);
+  margin-bottom: var(--footer-height, 0px);
+}
+footer .contentWrapper {
+  padding-top: 2.5vw;
+}
+footer .logo svg {
+  display: block;
+  width: 10.417vw;
+  height: auto;
+}
+footer .cols {
+  display: flex;
+  justify-content: space-between;
+  gap: 2.5vw;
+  padding: 4.375vw 0 7.5vw;
+}
+footer .col {
+  max-width: 15vw;
+}
+footer .colTitle {
+  font-weight: 500;
+  font-size: var(--text-base);
+  margin-bottom: 0.75vw;
+}
+footer .text,
+footer .text a {
+  font-size: var(--text-base);
+  color: var(--hoy-ink);
+  text-decoration: none;
+  line-height: 1.6;
+}
+footer .text a:hover {
+  text-decoration: underline;
+}
+footer .col .icon svg {
+  width: 1.389vw;
+  height: 1.389vw;
+  margin-bottom: 0.75vw;
+}
+footer .bottomFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25vw 0 2.5vw;
+  font-size: var(--text-base);
+}
+footer .bottomFooter a {
+  color: var(--hoy-ink);
+}
+
+/* ===== Consent banner (bottom-right opt-in dialog) ===== */
+.hoy-consent {
+  position: fixed;
+  right: 0.694vw;
+  bottom: 0.694vw;
+  width: min(526px, calc(100vw - 20px));
+  background: #fff;
+  color: #222;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  z-index: var(--z-consent);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.hoy-consent .cmplz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f2f2f2;
+}
+.hoy-consent .cmplz-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+.hoy-consent .cmplz-close {
+  background: none;
+  border: 0;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+.hoy-consent .cmplz-body {
+  padding: 12px 16px;
+  max-height: 50vh;
+  overflow: auto;
+}
+.hoy-consent .cmplz-categories {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+.hoy-consent .cmplz-category {
+  border: 1px solid #f2f2f2;
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+.hoy-consent .cmplz-category-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hoy-consent .cmplz-category-title {
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+}
+.hoy-consent .cmplz-always-active {
+  color: green;
+  font-size: 12px;
+}
+.hoy-consent .cmplz-category-toggle {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.hoy-consent .cmplz-description {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #444;
+}
+.hoy-consent .cmplz-buttons {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #f2f2f2;
+}
+.hoy-consent .cmplz-btn {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #f2f2f2;
+  background: #f9f9f9;
+  color: #222;
+  cursor: pointer;
+}
+.hoy-consent .cmplz-btn.cmplz-accept {
+  background: var(--hoy-ink);
+  border-color: var(--hoy-ink);
+  color: #fff;
+}
+.hoy-consent .cmplz-documents {
+  padding: 0 16px 12px;
+}
+.hoy-consent .cmplz-documents a {
+  font-size: 12px;
+  color: #222;
+}
+
+/* ===== Tablet regime (<=1080px) ===== */
+@media (max-width: 1080px) {
+  .contentWrapper {
+    padding: 0 3.704vw;
+  }
+  header .headerBar .contentWrapper {
+    line-height: 7.315vw;
+  }
+  .button {
+    line-height: 4.167vw;
+    padding: 0 1.852vw;
+    border-radius: 2.778vw;
+  }
+  header .logo svg {
+    width: 14.6vw;
+  }
+  .socialLink i {
+    font-size: 1.852vw;
+  }
+  .stickyWhatsappButton {
+    width: 5.556vw;
+    height: 5.556vw;
+    left: calc(100vw - 9.26vw);
+    bottom: 3.704vw;
+  }
+  .stickyWhatsappButton .icon svg {
+    width: 3.704vw;
+    height: 3.704vw;
+  }
+  footer .cols {
+    padding: 6.481vw 0 11.111vw;
+  }
+  footer .logo svg {
+    width: 13.889vw;
+  }
+  .customCursor {
+    display: none;
+  }
+}
+
+/* ===== Mobile regime (<=580px) ===== */
+@media (max-width: 580px) {
+  header .headerBar .contentWrapper {
+    line-height: 15.517vw;
+  }
+  header .left .mainMenuWrapper,
+  header .right .socials,
+  header .right .buttons {
+    display: none;
+  }
+  #hamburger {
+    display: inline-flex;
+    font-size: var(--text-base);
+    font-weight: 500;
+  }
+  .hamburgerIcon {
+    width: 6.897vw;
+    height: 3.448vw;
+  }
+  header .logo svg {
+    width: 27.586vw;
+  }
+  header .center {
+    left: 3.704vw;
+    transform: none;
+  }
+  .hamburgerMenu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    padding-top: 18.793vw;
+    z-index: 11;
+    background: var(--hoy-paper);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  header.menuOpen .hamburgerMenu {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .hamburgerMenu .innerContainer {
+    height: 100%;
+    overflow: auto;
+    padding: 0 3.704vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hamburgerMenu .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .hamburgerMenu .menu a {
+    display: block;
+    font-size: 6.897vw;
+    font-weight: 500;
+    line-height: 2;
+    color: var(--hoy-ink);
+    text-decoration: none;
+  }
+  .hamburgerMenu .footerCols {
+    display: flex;
+    gap: 6.897vw;
+    padding: 6.897vw 0;
+  }
+  .hamburgerMenu .colTitle {
+    font-weight: 500;
+    margin-bottom: 1.724vw;
+  }
+  .hamburgerMenu .text a {
+    color: var(--hoy-ink);
+    text-decoration: none;
+  }
+  .stickyWhatsappButton {
+    width: 10.345vw;
+    height: 10.345vw;
+    left: calc(100vw - 14.05vw);
+    bottom: 3.704vw;
+  }
+  .stickyWhatsappButton .icon svg {
+    width: 6.897vw;
+    height: 6.897vw;
+  }
+  footer {
+    position: relative;
+  }
+  main.pageContent {
+    margin-bottom: 0;
+  }
+  footer .cols {
+    flex-wrap: wrap;
+    gap: 6.897vw;
+  }
+  footer .col {
+    max-width: 40vw;
+  }
+  footer .logo svg {
+    width: 25.862vw;
+  }
+}
