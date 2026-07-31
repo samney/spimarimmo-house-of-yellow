@@ -33,3 +33,10 @@ Context: The full 28x8 PNG capture matrix (~800 MB+) filled the machine C: drive
 Alternatives: (a) commit all PNGs (master prompt keeps QA artifacts in repo) - doubles disk cost via git objects and re-risks a full disk; (b) keep captures disk-only, commit the deterministic capture script + manifest + probes; (c) shrink captures via JPEG.
 Decision: (b)+(c): qa/reference images and qa/recordings are gitignored (script `qa/capture-reference.mjs`, `capture-manifest.json`, and probe JSONs stay tracked - evidence is reproducible on demand); remaining viewports captured as JPEG q85. PNGs already in history (states/smoke, commit 26b2a91) are left untouched - no history rewrite.
 Consequence: Deviation from "keep every QA artifact in the repository" recorded here; HOY-150 visual diffs will use fresh targeted captures at diff time rather than the archived set. Owner should know C: remains tight (~3 GB free).
+
+## D-007 - 2026-07-31 - 404 page: reference serves an empty body; minimal on-brand page built instead
+
+Context: The live site returns HTTP 404 with a zero-byte body (verified via browser crawl + curl, evidence qa/notfound-data.json + blank HOY-020 404 captures). The master prompt requires a "404 page" as a deliverable and lists it among content/responsive states. Fidelity-to-reference and the master prompt conflict: there is no reference 404 UI to replicate.
+Alternatives: (a) replicate the blank body (faithful, but fails the master prompt deliverable and basic UX); (b) design a rich 404 set piece (invents unobserved UI, violates frontend-quality "no unobserved decoration"); (c) minimal 404 composed exclusively from existing observed patterns (dark block, grain, numIndex bracket, normalTitle, smallTitle, yellow Connect-style pill).
+Decision: (c). Master prompt wins over blank fidelity per the source-of-truth rule; the page introduces no new visual vocabulary. Copy is two short brand-voice lines; localized at HOY-110.
+Consequence: The 404 is a documented intentional addition (like reduced-motion support); visual-diff for 404 compares against this decision, not the blank reference capture.

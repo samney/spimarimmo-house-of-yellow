@@ -4,7 +4,7 @@ Updated: 2026-07-31 (HOY-090 + HOY-100 session)
 
 ## Where we are
 
-`HOY-090` (Culture, How We Roll) and `HOY-100` (Connect) cores are built: verbatim content, reference-extracted geometry at all three regimes, downloaded media, and a fully verified contact-form pipeline (client+server Zod, honeypot fake-success, 5/10min rate limit, JSONL storage substitute, notification contract). Owner direction 2026-07-31: **CMS track (HOY-040/120) goes last**; priority is 100% fidelity of the public site. Remaining public surface: `/cookies` + 404, then fidelity convergence (GSAP set pieces, pixel diffs, axe). See `STATUS.md` + per-item registers in `QUEUE.md`.
+The public route surface is COMPLETE: `HOY-090` (Culture, How We Roll), `HOY-100` (Connect, verified form pipeline), `/cookies` (verbatim Complianz doc + live consent widget on the shared `lib/consent.ts` store), and a real 404 (root `app/not-found.tsx` — see D-007: the reference serves an empty 404 body; ours is a minimal on-brand addition; a not-found boundary must stay OUT of the `[locale]` tree and must not import next-intl or the whole tree loses static generation). All 154 reference videos are local (504 MB) — zero media placeholders (owner: "no empty placeholders pre-CMS"; refresh via `qa/download-remaining-media.mjs`, which re-crawls expired signed URLs). Owner direction 2026-07-31: **CMS track (HOY-040/120) goes last**. Next: fidelity convergence (GSAP set pieces, pixel diffs, axe) per the registers in `QUEUE.md`.
 
 ## To resume
 

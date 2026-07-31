@@ -13,8 +13,8 @@ Status legend: `—` not started · `REF` reference captured · `IMPL` built · 
 | `/culture/`                                    | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/culture2--*`  |
 | `/how-we-roll/`                                | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/hwr2--*`      |
 | `/connect/`                                    | REF         | IMPL    | shell   | form ✓      | —    | —    | —           | `qa/implementation/connect--*`; form states evidenced (invalid/success/rate-limited); clocks = dynamic region |
-| `/cookies/`                                    | —           | —       | —       | —           | —    | —    | —           |                                  |
-| 404                                            | —           | —       | —       | —           | —    | —    | —           |                                  |
+| `/cookies/`                                    | REF         | IMPL    | shell   | widget ✓    | —    | —    | —           | `qa/implementation/cookies--*`; consent widget writes shared store (verified) |
+| 404                                            | REF (blank) | IMPL    | shell   | —           | —    | —    | —           | reference 404 body is empty — D-007; ours `qa/implementation/notfound--*`, real 404 status |
 | `/project/oceanco-leviathan/`                  | —           | —       | —       | —           | —    | —    | —           |                                  |
 | `/project/la-fuente-x-amg/`                    | —           | —       | —       | —           | —    | —    | —           |                                  |
 | `/project/broederliefde-rotterdam-ahoy/`       | —           | —       | —       | —           | —    | —    | —           |                                  |

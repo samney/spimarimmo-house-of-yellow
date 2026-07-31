@@ -57,7 +57,7 @@ Remaining before DONE: per-project full tag sets (only primary + 3 verified mult
 
 Depends: HOY-070, HOY-040
 Built 2026-07-31 (commit 024fb18; evidence `qa/implementation/project--*`, zero console errors): full crawl of all 21 detail pages → normalized content dataset (`lib/content/project-details.json`: summaries, complete category sets, stats, Client/Process/Project narratives, credits, related-next, 154-URL media manifest); template with header/stats-counters/narrative/media-pair/full-loop/credits/next blocks; all 21 routes × 2 locales statically generated; 41 local videos (165 MB) covering every detail hero + full oceanco media. Data layer is CMS-shaped (slug-keyed content records) ready to move into Supabase at HOY-040/120.
-Remaining before DONE: download remaining block media (~90 URLs in `qa/project-media-manifest.json`, disk-permitting) so non-hero media pairs stop rendering placeholders on 20 pages; block-order fidelity per page (template uses canonical order; some pages vary block sequence/counts); pinned/scroll motion for full-width loop; per-viewport pixel diff + axe.
+Remaining before DONE: ~~download remaining block media~~ **done 2026-07-31 (owner: "no empty placeholders pre-CMS") — all 101 remaining videos fetched via `qa/download-remaining-media.mjs`, 154 videos local (504 MB), zero `.mediaPlaceholder` renders (verified klibansky-superman + madunia-brand-launch: 7 videos, 0 placeholders each)**; block-order fidelity per page (template uses canonical order; some pages vary block sequence/counts); pinned/scroll motion for full-width loop; per-viewport pixel diff + axe.
 
 ## HOY-090 — Build Culture and How We Roll — **IN PROGRESS (both routes core built + verified)**
 

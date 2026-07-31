@@ -5,8 +5,8 @@ Updated: 2026-07-30 (Session 0)
 - **Active phase:** Product execution — implementation
 - **Active queue items:** `HOY-100` Connect live with verified form pipeline (2026-07-31); `HOY-050/060/070/080/090` cores built — polish registers per item in QUEUE.md. `HOY-000`–`HOY-030` DONE. CMS track (HOY-040/120) deferred to the end per owner direction (2026-07-31).
 - **Updated:** 2026-07-31
-- **Public routes now implemented:** `/`, `/made-by-yellow`, `/culture`, `/how-we-roll`, `/connect`, all 21 `/project/[slug]` — EN + FR shells. Missing: `/cookies`, 404 page.
-- **Next safe action:** finish the public surface (`/cookies` + 404 — small, content already crawled in part) then the fidelity convergence pass (GSAP set pieces, pixel diffs at all 8 viewports, axe) across HOY-050…100 remaining registers; CMS (HOY-040/120) last per owner.
+- **Public routes now implemented:** ALL — `/`, `/made-by-yellow`, `/culture`, `/how-we-roll`, `/connect`, `/cookies`, all 21 `/project/[slug]`, and a real 404 (EN + FR shells; catch-all `[...rest]` + root branded not-found per D-007). Full static generation preserved (every route ● SSG). All 154 reference videos local (504 MB) — zero media placeholders (owner directive 2026-07-31).
+- **Next safe action:** fidelity convergence pass across HOY-050…100 remaining registers — GSAP set pieces (page transitions, hero letters, culture/hwr anim-1/2/3, parallax scroll-speeds), play-on-scroll video, per-viewport pixel diffs (<1%) at all 8 viewports, axe + keyboard evidence — then HOY-110 (FR), HOY-130 (SEO), and CMS (HOY-040/120) last per owner.
 - **Model:** Claude Fable 5 (`claude-fable-5`), Claude Code 2.1.220
 - **Repository:** fresh git repo initialized 2026-07-30; scaffold committed
 - **Last verified commit:** `8426f59` — HOY-000 bootstrap + scaffold; typecheck/lint/format/build all passing at this commit

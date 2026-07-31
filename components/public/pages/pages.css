@@ -1171,6 +1171,141 @@
   height: auto;
 }
 
+/* ===== notFoundBlock (404 — deliberate addition, see DECISIONS D-007) ===== */
+.notFoundBlocks {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  flex: 1;
+}
+.notFoundBlock .notFoundLogo {
+  display: inline-block;
+  color: var(--hoy-paper);
+  margin-bottom: 3.75vw;
+}
+.notFoundBlock .notFoundLogo svg {
+  display: block;
+  width: 9.1vw;
+  height: auto;
+}
+.notFoundBlocks .innerBlocks {
+  width: 100%;
+}
+.notFoundBlock .text.medium {
+  margin-bottom: 1.25vw;
+}
+.notFoundBlock .normalTitle {
+  max-width: 52vw;
+}
+.notFoundBlock .smallTitle {
+  max-width: 34vw;
+  margin: 1.25vw 0 2.5vw;
+}
+@media (max-width: 580px) {
+  .notFoundBlock .normalTitle,
+  .notFoundBlock .smallTitle {
+    max-width: none;
+  }
+}
+
+/* ===== cookiesBlock (/cookies — dark policy document) ===== */
+.contentWrapper.small {
+  padding: 0 26.25vw;
+}
+.cookiesBlock {
+  color: var(--hoy-paper);
+  opacity: 0;
+  transition: opacity 0.3s 0.3s ease-out;
+}
+.cookiesBlock.inview {
+  opacity: 1;
+}
+.cookiesBlock .normalTitle {
+  margin-bottom: 1.25vw;
+}
+.cookiesBlock #cmplz-document {
+  max-width: 100%;
+  font-size: 0.875vw;
+  line-height: 1.5vw;
+}
+.cookiesBlock #cmplz-document h2 {
+  font-size: 1.5vw;
+  line-height: 1.5vw;
+  font-weight: 400;
+  margin: 1.5vw 0;
+  padding-bottom: 0;
+}
+.cookiesBlock #cmplz-document h3,
+.cookiesBlock #cmplz-document h4 {
+  font-size: 1.125vw;
+  line-height: 1.875vw;
+  font-weight: 600;
+  margin: 1.5vw 0 0.75vw;
+}
+.cookiesBlock #cmplz-document p {
+  font-size: 0.875vw;
+  line-height: 1.5vw;
+  margin: 0.75vw 0;
+}
+.cookiesBlock #cmplz-document a {
+  color: var(--hoy-yellow);
+  opacity: 1;
+  text-decoration: underline;
+  transition: opacity 0.3s ease-out;
+}
+.cookiesBlock #cmplz-document a:hover {
+  opacity: 0.4;
+}
+.cookiesBlock #cmplz-document ul {
+  margin-left: 0.875vw;
+  list-style: disc inside;
+}
+.cookiesBlock #cmplz-document ul li {
+  font-size: 0.875vw;
+  line-height: 1.5vw;
+}
+/* Embedded consent widget (reference Complianz manage-consent styling) */
+.cookiesBlock .cmplz-categories .cmplz-category-header {
+  display: flex;
+  align-items: center;
+  padding: 1.25vw;
+  margin: 0.625vw 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+.cookiesBlock .cmplz-categories .cmplz-category-title {
+  flex: 1;
+  font-weight: 500;
+}
+.cookiesBlock .cmplz-categories .cmplz-always-active {
+  font-size: 0.875vw;
+  line-height: 1.5vw;
+  margin-right: 1.25vw;
+}
+.cookiesBlock .cmplz-categories .cmplz-banner-checkbox {
+  display: block;
+  margin-top: 0.125vw;
+  margin-right: 1.25vw;
+}
+.cookiesBlock .cmplz-categories .cmplz-banner-checkbox input {
+  border-radius: 0;
+  appearance: auto;
+  margin-top: 0.125vw;
+  width: 1vw;
+  height: 1vw;
+  accent-color: var(--hoy-yellow);
+}
+.cookiesBlock .cmplz-categories .cmplz-category-toggle {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  width: 1.375vw;
+}
+.cookiesBlock .cmplz-categories .cmplz-description {
+  padding: 0 1.25vw 1.25vw;
+}
+
 /* Works block light variant (/connect: .project.dark = ink text on paper) */
 .cultureWorkBlock .projects .project.dark .projectContent {
   color: var(--hoy-ink);
@@ -1653,6 +1788,36 @@
   }
   .cultureWorkBlock .cols .col .buttons {
     bottom: 0.926vw;
+  }
+
+  .contentWrapper.small {
+    padding: 0 14.815vw;
+  }
+  .cookiesBlock .normalTitle {
+    margin-bottom: 1.852vw;
+  }
+  .cookiesBlock #cmplz-document,
+  .cookiesBlock #cmplz-document p,
+  .cookiesBlock #cmplz-document ul li {
+    font-size: 1.296vw;
+    line-height: 2.222vw;
+  }
+  .cookiesBlock #cmplz-document h2 {
+    font-size: 2.222vw;
+    line-height: 2.222vw;
+    margin: 2.222vw 0;
+  }
+  .cookiesBlock #cmplz-document h3,
+  .cookiesBlock #cmplz-document h4 {
+    font-size: 1.667vw;
+    line-height: 2.778vw;
+  }
+  .cookiesBlock .cmplz-categories .cmplz-banner-checkbox input {
+    width: 1.481vw;
+    height: 1.481vw;
+  }
+  .cookiesBlock .cmplz-categories .cmplz-category-toggle {
+    width: 2vw;
   }
 }
 
@@ -2236,5 +2401,45 @@
   }
   .contactBlock .extraIcon .icon {
     width: 6.724vw;
+  }
+
+  .contentWrapper.small {
+    padding: 0 6.897vw;
+  }
+  .cookiesBlock {
+    margin-top: 6.897vw !important;
+  }
+  .cookiesBlock .normalTitle {
+    margin-bottom: 3.448vw;
+  }
+  .cookiesBlock #cmplz-document,
+  .cookiesBlock #cmplz-document p,
+  .cookiesBlock #cmplz-document ul li {
+    font-size: 3.448vw;
+    line-height: 5.172vw;
+  }
+  .cookiesBlock #cmplz-document h2 {
+    font-size: 5.517vw;
+    line-height: 5.517vw;
+    margin: 4.138vw 0;
+  }
+  .cookiesBlock #cmplz-document h3,
+  .cookiesBlock #cmplz-document h4 {
+    font-size: 4.31vw;
+    line-height: 6.034vw;
+  }
+  .cookiesBlock .cmplz-categories .cmplz-category-header {
+    padding: 3.448vw;
+    margin: 1.724vw 0;
+  }
+  .cookiesBlock .cmplz-categories .cmplz-banner-checkbox input {
+    width: 3.448vw;
+    height: 3.448vw;
+  }
+  .cookiesBlock .cmplz-categories .cmplz-category-toggle {
+    width: 5vw;
+  }
+  .cookiesBlock .cmplz-categories .cmplz-description {
+    padding: 0 3.448vw 3.448vw;
   }
 }

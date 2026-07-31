@@ -2,64 +2,23 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { Link } from "@/i18n/navigation";
+import {
+  CONSENT_CATEGORIES as CATEGORIES,
+  CONSENT_STORAGE_KEY as STORAGE_KEY,
+  persistConsent as persist,
+  subscribeConsent as subscribeToConsent,
+  type ConsentCategories,
+} from "@/lib/consent";
 
 /* Consent UI replicating the reference's Complianz opt-in banner: bottom-right
    dialog, Accept / Deny / View preferences, four categories with toggles
    (functional always active). State is a first-party cookie-free localStorage
    record; a "hoy:consent" event lets consumers (analytics, embeds) react.
    The reference ships mixed EN/NL strings; we render locale-consistent EN
-   (FR via messages in HOY-110) — recorded in DECISIONS. */
+   (FR via messages in HOY-110) — recorded in DECISIONS. Shared model in
+   lib/consent.ts (also drives the /cookies preferences widget). */
 
-export type ConsentCategories = {
-  functional: true;
-  preferences: boolean;
-  statistics: boolean;
-  marketing: boolean;
-};
-
-const STORAGE_KEY = "hoy_consent_v1";
-
-const CATEGORIES: {
-  key: keyof ConsentCategories;
-  title: string;
-  description: string;
-  always?: boolean;
-}[] = [
-  {
-    key: "functional",
-    title: "Functional",
-    always: true,
-    description:
-      "The technical storage or access is strictly necessary for the legitimate purpose of enabling the use of a specific service explicitly requested by the subscriber or user, or for the sole purpose of carrying out the transmission of a communication over an electronic communications network.",
-  },
-  {
-    key: "preferences",
-    title: "Preferences",
-    description:
-      "The technical storage or access is necessary for the legitimate purpose of storing preferences that are not requested by the subscriber or user.",
-  },
-  {
-    key: "statistics",
-    title: "Statistics",
-    description: "The technical storage or access that is used exclusively for statistical purposes.",
-  },
-  {
-    key: "marketing",
-    title: "Marketing",
-    description:
-      "The technical storage or access is required to create user profiles to send advertising, or to track the user on a website or across several websites for similar marketing purposes.",
-  },
-];
-
-function persist(consent: ConsentCategories) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...consent, at: Date.now() }));
-  window.dispatchEvent(new CustomEvent("hoy:consent", { detail: consent }));
-}
-
-function subscribeToConsent(cb: () => void) {
-  window.addEventListener("hoy:consent", cb);
-  return () => window.removeEventListener("hoy:consent", cb);
-}
+export type { ConsentCategories };
 
 export function ConsentBanner() {
   // Server snapshot pretends consent exists so the banner never renders during
@@ -100,7 +59,9 @@ export function ConsentBanner() {
         <button
           className="cmplz-close"
           aria-label="Close dialog"
-          onClick={() => close({ functional: true, preferences: false, statistics: false, marketing: false })}
+          onClick={() =>
+            close({ functional: true, preferences: false, statistics: false, marketing: false })
+          }
         >
           ×
         </button>
@@ -151,13 +112,17 @@ export function ConsentBanner() {
       <div className="cmplz-buttons">
         <button
           className="cmplz-btn cmplz-accept"
-          onClick={() => close({ functional: true, preferences: true, statistics: true, marketing: true })}
+          onClick={() =>
+            close({ functional: true, preferences: true, statistics: true, marketing: true })
+          }
         >
           Accept
         </button>
         <button
           className="cmplz-btn cmplz-deny"
-          onClick={() => close({ functional: true, preferences: false, statistics: false, marketing: false })}
+          onClick={() =>
+            close({ functional: true, preferences: false, statistics: false, marketing: false })
+          }
         >
           Deny
         </button>
