@@ -59,10 +59,17 @@ Depends: HOY-070, HOY-040
 Built 2026-07-31 (commit 024fb18; evidence `qa/implementation/project--*`, zero console errors): full crawl of all 21 detail pages → normalized content dataset (`lib/content/project-details.json`: summaries, complete category sets, stats, Client/Process/Project narratives, credits, related-next, 154-URL media manifest); template with header/stats-counters/narrative/media-pair/full-loop/credits/next blocks; all 21 routes × 2 locales statically generated; 41 local videos (165 MB) covering every detail hero + full oceanco media. Data layer is CMS-shaped (slug-keyed content records) ready to move into Supabase at HOY-040/120.
 Remaining before DONE: download remaining block media (~90 URLs in `qa/project-media-manifest.json`, disk-permitting) so non-hero media pairs stop rendering placeholders on 20 pages; block-order fidelity per page (template uses canonical order; some pages vary block sequence/counts); pinned/scroll motion for full-width loop; per-viewport pixel diff + axe.
 
-## HOY-090 — Build Culture and How We Roll — PENDING
+## HOY-090 — Build Culture and How We Roll — **IN PROGRESS (both routes core built + verified)**
 
 Depends: HOY-050
-Acceptance: all observed content/sections/motion for both routes, validated at all viewports.
+Built 2026-07-31 (evidence `qa/implementation/culture2--*`, `hwr2--*` vs `qa/reference/desktop/{culture,how-we-roll}--*`; only 404s are prefetches of not-yet-built `/connect` + `/cookies`):
+
+- Fresh crawl of both live pages → `qa/pages-data.json` (verbatim copy, block sequence, media manifest), raw DOM in `qa/{culture,how-we-roll}-main.html`, block CSS extracted with media-query context into `qa/hoy090-blocks.css`, live computed-style probe `qa/probe-pages-styles.mjs` (index color = yellow/ink per page — the reddish tint in HOY-020 captures was a mid-animation state; section rhythm 10vw, first pt 7.1875vw, last pb 10vw).
+- Content dataset `lib/content/pages.ts` (CMS-shaped); 12 new videos (64 MB) + 18 posters downloaded (`qa/download-pages-media.mjs`), `local-videos.json` now 53 entries.
+- `/culture` (dark page): headerCultureBlock w/ verbatim anim-1 wireframe SVGs, 5 discipline cultureItemBlocks in all 3 reference column variants, cultureQuoteBlock (Vinal Hindocha), cultureQuoteAnimationBlock (squircle + sparkle + Connect marquee pill), cultureWorkBlock (3 featured cards, hover Take-a-look, divider fill, dark palette; touch-visible on mobile per reference).
+- `/how-we-roll` (yellow page): headerHowWeRollBlock (literal "[ xx ]" as observed), 2 projectTwoImagesBlocks, 3 howWeRollTitleBlocks (negative-margin pull), 3 howWeRollTextItemsBlocks (staggered + squares layouts, numbered squares), howWeRollDividerAnimationBlock (verbatim anim-2 paths), dark closing cultureQuoteAnimationBlock.howWeRoll (anim-3 nested-square stack).
+- Shared: `Inview` (IntersectionObserver → reference .inview reveal transitions, reduced-motion instant), `PageMedia`, `pages-art.tsx` (verbatim SVG paths), `pages.css` scoped under `.pageBlocks` (desktop + 1080 + 580 regimes from extracted CSS incl. table-group reorder tricks). Routes ×2 locales statically generated. Gates pass (typecheck/lint/build/prettier on touched files).
+  Remaining before DONE: GSAP set pieces (anim-1/2/3 draw/morph choreography, per-path data-scroll-speed parallax, SplitText letter reveals on titles — currently CSS reveals only), play/pause-on-scroll for videos, numIndex runtime numbering vs hardcoded audit, per-viewport pixel-diff convergence (<1%) at all 8 viewports, axe + keyboard evidence, FR translations (HOY-110).
 
 ## HOY-100 — Build Connect — PENDING
 

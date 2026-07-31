@@ -3,10 +3,10 @@
 Updated: 2026-07-30 (Session 0)
 
 - **Active phase:** Product execution — implementation
-- **Active queue items:** `HOY-080` all 21 project routes live (commit 024fb18, 2026-07-31); `HOY-050/060/070` cores built — polish registers per item in QUEUE.md. `HOY-000`–`HOY-030` DONE.
+- **Active queue items:** `HOY-090` Culture + How We Roll both live (2026-07-31); `HOY-050/060/070/080` cores built — polish registers per item in QUEUE.md. `HOY-000`–`HOY-030` DONE.
 - **Updated:** 2026-07-31
-- **Public routes now implemented:** `/`, `/made-by-yellow`, all 21 `/project/[slug]` — EN + FR shells. Missing: `/culture`, `/how-we-roll`, `/connect`, `/cookies`, 404 page.
-- **Next safe action:** HOY-090 (Culture + How We Roll — same extract→build→verify loop; content partially captured already) or HOY-100 (Connect — needs form backend decisions, see BLOCKERS P-2) or HOY-040 (formalize data model from lib/content shapes into Supabase migrations).
+- **Public routes now implemented:** `/`, `/made-by-yellow`, `/culture`, `/how-we-roll`, all 21 `/project/[slug]` — EN + FR shells. Missing: `/connect`, `/cookies`, 404 page.
+- **Next safe action:** HOY-100 (Connect — form backend contract can be built against local substitute per BLOCKERS P-2; live clocks + form states) or HOY-040 (formalize data model from lib/content shapes into Supabase migrations — needs owner Supabase credentials per P-1) or motion-polish pass across HOY-050…090 remaining registers.
 - **Model:** Claude Fable 5 (`claude-fable-5`), Claude Code 2.1.220
 - **Repository:** fresh git repo initialized 2026-07-30; scaffold committed
 - **Last verified commit:** `8426f59` — HOY-000 bootstrap + scaffold; typecheck/lint/format/build all passing at this commit

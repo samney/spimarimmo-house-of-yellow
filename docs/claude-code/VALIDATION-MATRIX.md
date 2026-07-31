@@ -10,8 +10,8 @@ Status legend: `—` not started · `REF` reference captured · `IMPL` built · 
 | ---------------------------------------------- | ----------- | ------- | ------- | ----------- | ---- | ---- | ----------- | -------------------------------- |
 | `/` (Home)                                     | —           | —       | —       | —           | —    | —    | —           |                                  |
 | `/made-by-yellow/`                             | —           | —       | —       | —           | —    | —    | —           | grid/list/filter states          |
-| `/culture/`                                    | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/how-we-roll/`                                | —           | —       | —       | —           | —    | —    | —           |                                  |
+| `/culture/`                                    | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/culture2--*`  |
+| `/how-we-roll/`                                | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/hwr2--*`      |
 | `/connect/`                                    | —           | —       | —       | —           | —    | —    | —           | form + times masked (dynamic)    |
 | `/cookies/`                                    | —           | —       | —       | —           | —    | —    | —           |                                  |
 | 404                                            | —           | —       | —       | —           | —    | —    | —           |                                  |

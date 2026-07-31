@@ -1,0 +1,1618 @@
+/* Culture + How We Roll pages — geometry extracted verbatim from the
+   reference theme CSS (qa/hoy090-blocks.css; probe qa/probe-pages-styles.mjs).
+   Scoped under .pageBlocks to avoid touching the homepage's simplified
+   .cultureQuoteAnimationBlock usage. Desktop regime values; 1080/580
+   overrides mirror the reference breakpoints. */
+
+/* ===== Page wrappers ===== */
+.pageBlocks {
+  position: relative;
+  min-height: 100vh;
+}
+.pageBlocks.dark {
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+}
+.pageBlocks.primary {
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+}
+.pageBlocks .grainBackground {
+  opacity: 0.3;
+  z-index: 0;
+}
+.pageBlocks .grainBackground.dark {
+  opacity: 0.2;
+}
+.pageBlocks .innerBlocks {
+  position: relative;
+  z-index: 1;
+}
+/* Reference: #pageContainer .blocks section{margin:10vw 0}; first/last spacing */
+.pageBlocks .innerBlocks > section {
+  margin: 10vw 0;
+}
+.pageBlocks .innerBlocks > section:first-child {
+  margin-top: 0;
+  padding-top: 7.1875vw;
+}
+.pageBlocks .innerBlocks > section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 10vw;
+}
+
+/* Media wrappers (reference .imageWrapper.playerBackground) */
+.pageBlocks .imageWrapper {
+  position: relative;
+  border-radius: 0.5vw;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.pageBlocks .imageWrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Decorative SVG colors follow the page palette (theme overrides inline fills) */
+.pageBlocks .animation .path svg,
+.pageBlocks .squareAnimation .square svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pageBlocks .animation .path svg path[fill="none"],
+.pageBlocks .squareAnimation .square svg path[fill="none"] {
+  stroke: currentColor;
+}
+.pageBlocks .animation .path svg path:not([fill]) {
+  fill: currentColor;
+}
+.pageBlocks .svgWrapper svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pageBlocks .svgWrapper svg path {
+  fill: currentColor;
+}
+.pageBlocks .icon svg path {
+  fill: currentColor;
+}
+
+/* Shared inview reveal (reference: translateY(1.25vw) + fade, .45s stagger) */
+.pageBlocks section .reveal,
+.pageBlocks section .cols .col .text,
+.pageBlocks section .cols .col .normalTitle,
+.pageBlocks section .cols .col .smallTitle,
+.pageBlocks section .cols .col .buttons,
+.pageBlocks section .cols .col .innerCol {
+  transform: translateY(1.25vw);
+  opacity: 0;
+  transition:
+    transform 0.45s 0.15s,
+    opacity 0.45s 0.15s;
+}
+.pageBlocks section.inview .reveal,
+.pageBlocks section.inview .cols .col .text,
+.pageBlocks section.inview .cols .col .normalTitle,
+.pageBlocks section.inview .cols .col .smallTitle,
+.pageBlocks section.inview .cols .col .buttons,
+.pageBlocks section.inview .cols .col .innerCol {
+  transform: translateY(0);
+  opacity: 1;
+}
+.pageBlocks section .cols .col:nth-child(2) .innerCol,
+.pageBlocks section .cols .col:last-child .text,
+.pageBlocks section .cols .col .normalTitle {
+  transition-delay: 0.3s;
+}
+.pageBlocks section .cols .col:nth-child(3) .innerCol,
+.pageBlocks section .cols .col .smallTitle,
+.pageBlocks section .cols .col .buttons {
+  transition-delay: 0.45s;
+}
+
+/* ===== headerCultureBlock / headerHowWeRollBlock ===== */
+.headerCultureBlock .cols,
+.headerHowWeRollBlock .cols {
+  display: flex;
+}
+.headerCultureBlock .cols .col,
+.headerHowWeRollBlock .cols .col {
+  position: relative;
+}
+.headerCultureBlock .cols .col:first-child,
+.headerHowWeRollBlock .cols .col:first-child {
+  width: 30.8125vw;
+  flex-shrink: 0;
+}
+.headerCultureBlock .cols .col:last-child,
+.headerHowWeRollBlock .cols .col:last-child {
+  width: calc(100% - 30.8125vw);
+  padding-left: 1.25vw;
+  padding-right: 8vw;
+}
+.headerCultureBlock .cols .col .text.number,
+.pageBlocks .cultureQuoteAnimationBlock .cols .col .text.number {
+  display: none;
+}
+.headerCultureBlock .normalTitle,
+.headerHowWeRollBlock .normalTitle {
+  margin: 1.875vw 0 2.5vw;
+}
+.headerCultureBlock .normalTitle .innerTitle:last-child:not(:first-child),
+.headerHowWeRollBlock .normalTitle .innerTitle:last-child:not(:first-child) {
+  margin-top: 3.125vw;
+}
+/* Culture header wireframe (anim-1) */
+.headerCultureBlock .animationContent {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14.75vw;
+}
+.headerCultureBlock .animationContent .animation .path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.headerCultureBlock .animationContent .animation .path:first-child {
+  position: relative;
+}
+/* How-we-roll header squircle */
+.headerHowWeRollBlock .cols .col .animation {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18.1875vw;
+  height: 18.1875vw;
+}
+.headerHowWeRollBlock .cols .col .animation:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4.375vw;
+  border: 1px solid currentColor;
+}
+.headerHowWeRollBlock .cols .col .animation .innerAnimation,
+.pageBlocks .cultureQuoteAnimationBlock .animation .innerAnimation {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+.headerHowWeRollBlock .svgWrapper,
+.pageBlocks .cultureQuoteAnimationBlock .svgWrapper {
+  position: absolute;
+  left: calc(50% - 1.21875vw);
+  top: calc(50% - 1.21875vw);
+  width: 2.4375vw;
+  pointer-events: none;
+}
+
+/* ===== cultureItemBlock ===== */
+.cultureItemBlock {
+  margin: 5vw 0 !important;
+}
+.cultureItemBlock .cols {
+  position: relative;
+}
+.cultureItemBlock .cols .col {
+  display: inline-block;
+  vertical-align: middle;
+  width: 8vw;
+  position: relative;
+}
+.cultureItemBlock .cols .col:nth-child(2) {
+  width: 46.875vw;
+  padding-right: 16vw;
+}
+.cultureItemBlock .cols .col:nth-child(2) .imageWrapper {
+  padding-bottom: 135.44303797468353%;
+}
+.cultureItemBlock .cols .col:nth-child(3) {
+  width: 40.125vw;
+  padding-left: 1.25vw;
+  padding-right: 8vw;
+}
+.cultureItemBlock .cols.style-2 .col:first-child {
+  width: 48.125vw;
+  padding-left: 8vw;
+  padding-right: 9.25vw;
+}
+.cultureItemBlock .cols.style-2 .col:nth-child(2) {
+  width: 30.8125vw;
+  padding-left: 0;
+  padding-right: 0;
+}
+.cultureItemBlock .cols.style-2 .col:nth-child(3) {
+  width: 16.0625vw;
+  text-align: right;
+  padding-left: 0;
+  padding-right: 0;
+}
+.cultureItemBlock .cols.style-3 .col:nth-child(2) {
+  padding-left: 16vw;
+  padding-right: 0;
+}
+.cultureItemBlock .cols.style-3 .col:nth-child(3) {
+  padding-left: 5.375vw;
+  padding-right: 4.125vw;
+}
+.cultureItemBlock .cols .col .icon {
+  display: inline-block;
+  width: 2.4375vw;
+}
+.cultureItemBlock .cols .col .icon svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.cultureItemBlock .cols .col .intro {
+  margin-bottom: 0.9375vw;
+}
+.cultureItemBlock .cols .col .intro .text {
+  display: inline-block;
+  vertical-align: top;
+  width: 80%;
+}
+.cultureItemBlock .cols .col .intro .text:last-child {
+  width: 20%;
+  text-align: right;
+}
+.cultureItemBlock .cols .col .smallTitle {
+  padding-right: 7.5vw;
+}
+
+/* ===== cultureQuoteBlock ===== */
+.cultureQuoteBlock {
+  margin: 5vw 0 !important;
+  text-align: center;
+}
+.cultureQuoteBlock .normalTitle {
+  padding: 0 8vw;
+}
+.cultureQuoteBlock .person {
+  margin-top: 0.625vw;
+}
+.pageBlocks section .cultureQuoteBlock .person,
+.pageBlocks .cultureQuoteBlock .normalTitle,
+.pageBlocks .cultureQuoteBlock .person {
+  transform: translateY(1.25vw);
+  opacity: 0;
+  transition:
+    transform 0.45s 0.15s,
+    opacity 0.45s 0.15s;
+}
+.pageBlocks .cultureQuoteBlock .person {
+  transition-delay: 1.2s;
+}
+.pageBlocks .cultureQuoteBlock.inview .normalTitle,
+.pageBlocks .cultureQuoteBlock.inview .person {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ===== cultureQuoteAnimationBlock (reference structure, overrides home.css) ===== */
+.pageBlocks .cultureQuoteAnimationBlock {
+  position: relative;
+  margin: 0 !important;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+.pageBlocks .cultureQuoteAnimationBlock.howWeRoll {
+  padding: 5vw 0;
+  color: var(--hoy-yellow);
+  background: var(--hoy-ink);
+}
+.pageBlocks .innerBlocks > section.cultureQuoteAnimationBlock.howWeRoll:last-child {
+  padding-bottom: 10vw;
+}
+.pageBlocks .cultureQuoteAnimationBlock .cols .col {
+  display: inline-block;
+  vertical-align: top;
+  width: 32.0625vw;
+}
+.pageBlocks .cultureQuoteAnimationBlock .cols .col:last-child {
+  width: calc(100% - 32.0625vw);
+}
+.pageBlocks .cultureQuoteAnimationBlock .cols .col .text {
+  margin-bottom: 1.875vw;
+}
+.pageBlocks .cultureQuoteAnimationBlock .animation {
+  display: block;
+  width: 18.1875vw;
+  height: 18.1875vw;
+  position: relative;
+  margin: 2.375vw auto 0;
+}
+.pageBlocks .cultureQuoteAnimationBlock .animation:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4.375vw;
+  border: 1px solid currentColor;
+}
+.pageBlocks .cultureQuoteAnimationBlock .animation.squareAnimation:after {
+  display: none;
+}
+.pageBlocks .squareAnimation .squares {
+  position: absolute;
+  inset: 0;
+}
+.pageBlocks .squareAnimation .squares .square {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.pageBlocks .cultureQuoteAnimationBlock .normalTitle {
+  max-width: none;
+  margin-bottom: 0;
+}
+.pageBlocks .cultureQuoteAnimationBlock .normalTitle .innerTitle {
+  padding-right: 6.75vw;
+}
+.pageBlocks .cultureQuoteAnimationBlock .normalTitle .innerTitle:last-child:not(:first-child) {
+  margin-top: 3.125vw;
+}
+.pageBlocks .cultureQuoteAnimationBlock .buttons {
+  margin-top: 1.25vw;
+}
+
+/* ===== cultureWorkBlock ===== */
+.cultureWorkBlock .cols {
+  margin-bottom: 3.75vw;
+  position: relative;
+}
+.cultureWorkBlock .cols .col {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+}
+.cultureWorkBlock .cols .col:first-child .smallTitle {
+  margin-top: 0.625vw;
+  width: 38.875vw;
+  padding-right: 0;
+}
+.cultureWorkBlock .cols .col:last-child {
+  text-align: right;
+  margin-top: 0.125vw;
+}
+.cultureWorkBlock .projects {
+  width: calc(100% + 1.25vw);
+  margin-left: -0.625vw;
+}
+.cultureWorkBlock .projects .project {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(33.3333% - 1.25vw);
+  margin: 0 0.625vw;
+  color: inherit;
+  text-decoration: none;
+}
+.cultureWorkBlock .projects .project .innerProject {
+  display: block;
+}
+.cultureWorkBlock .projects .project .imageWrapper {
+  display: block;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  border-radius: 0.5vw;
+  overflow: hidden;
+  position: relative;
+}
+.cultureWorkBlock .projects .project .imageWrapper:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hoy-ink);
+  opacity: 0.2;
+  transition: opacity 0.3s ease-out;
+}
+.cultureWorkBlock .projects .project:hover .imageWrapper:after {
+  opacity: 0.6;
+}
+.cultureWorkBlock .projects .project .innerImage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-size: cover;
+  background-position: center center;
+}
+.cultureWorkBlock .projects .project .innerImage video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cultureWorkBlock .projects .project .tags {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  padding: 1.25vw;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+}
+.cultureWorkBlock .projects .project:hover .tags {
+  transform: translateY(-0.625vw);
+  opacity: 0;
+}
+.cultureWorkBlock .projects .project .tag {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 2.1875vw;
+  background: var(--hoy-white);
+  color: var(--hoy-ink);
+  padding: 0 1.25vw;
+  margin-right: 0.625vw;
+  margin-bottom: 0.625vw;
+  border-radius: 1.25vw;
+  font-size: 0.75vw;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.cultureWorkBlock .projects .project .bottomButton {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  padding: 1.25vw;
+  transform: translateY(0.625vw);
+  opacity: 0;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+}
+.cultureWorkBlock .projects .project:hover .bottomButton {
+  transform: translateY(0);
+  opacity: 1;
+}
+.cultureWorkBlock .projects .project .bottomButton .button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+}
+.cultureWorkBlock .projects .project .bottomButton .button .icon {
+  width: 1.3125vw;
+  margin-left: 0;
+  flex-shrink: 0;
+}
+.cultureWorkBlock .projects .project .bottomButton .button .icon svg {
+  width: 100%;
+  height: auto;
+}
+.cultureWorkBlock .projects .project .bottomButton .button .icon svg path {
+  fill: var(--hoy-yellow);
+}
+.cultureWorkBlock .projects .project .bottomButton .button .label {
+  width: calc(100% - 2.6875vw);
+  padding: 0 1.25vw;
+}
+.cultureWorkBlock .projects .project .bottomButton .button:hover {
+  background: var(--hoy-white);
+  color: var(--hoy-ink);
+}
+.cultureWorkBlock .projects .project .bottomButton .button:hover .icon svg path {
+  fill: var(--hoy-ink);
+}
+.cultureWorkBlock .projects .project .projectContent {
+  display: block;
+  margin-top: 1.25vw;
+}
+.cultureWorkBlock .projects .project .projectContent .smallTitle {
+  padding-right: 0;
+}
+.cultureWorkBlock .projects .project .projectContent .divider {
+  display: block;
+  height: 1px;
+  margin: 1.25vw 0;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+.cultureWorkBlock .projects .project .projectContent .divider:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 0;
+  background: var(--hoy-yellow);
+  transition:
+    width 0.3s,
+    left 0.3s,
+    right 0.3s;
+}
+.cultureWorkBlock .projects .project:hover .projectContent .divider:after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+.cultureWorkBlock .projects .project .bottomContent .row {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 1.25vw;
+}
+.cultureWorkBlock .projects .project .bottomContent .row .label,
+.cultureWorkBlock .projects .project .bottomContent .row .info {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 0.75vw;
+}
+.cultureWorkBlock .projects .project .bottomContent .row .label {
+  opacity: 0.2;
+  margin-right: 0.625vw;
+}
+
+/* ===== projectTwoImagesBlock (page variant) ===== */
+.pageBlocks .projectTwoImagesBlock .cols {
+  position: relative;
+}
+.pageBlocks .projectTwoImagesBlock .cols .col {
+  display: inline-block;
+  vertical-align: middle;
+  width: 50%;
+  position: relative;
+}
+.pageBlocks .projectTwoImagesBlock .cols .col:first-child {
+  padding-right: 0.625vw;
+}
+.pageBlocks .projectTwoImagesBlock .cols .col:first-child .imageWrapper {
+  padding-bottom: 73.83966244725738%;
+}
+.pageBlocks .projectTwoImagesBlock .cols .col:nth-child(2) {
+  padding-left: 16.6875vw;
+  padding-right: 16.0625vw;
+}
+.pageBlocks .projectTwoImagesBlock .cols .col:nth-child(2) .imageWrapper {
+  padding-bottom: 135.44303797468353%;
+}
+.pageBlocks .projectTwoImagesBlock .cols .col:nth-child(3) {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: auto;
+  width: 2.4375vw;
+  height: 2.4375vw;
+  transform: translateY(-50%);
+}
+.pageBlocks .projectTwoImagesBlock .cols .col:nth-child(3) .icon svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pageBlocks .projectTwoImagesBlock .imageWrapper {
+  transform: translateY(1.25vw);
+  opacity: 0;
+  transition:
+    transform 0.45s 0.15s,
+    opacity 0.45s 0.15s;
+}
+.pageBlocks .projectTwoImagesBlock.inview .imageWrapper {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ===== howWeRollTitleBlock ===== */
+.howWeRollTitleBlock {
+  text-align: center;
+  margin-bottom: -7.5vw !important;
+}
+.howWeRollTitleBlock .icon {
+  display: inline-block;
+  width: 2.4375vw;
+  margin-bottom: 1.25vw;
+}
+.howWeRollTitleBlock .icon svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.howWeRollTitleBlock .titleWrapper {
+  max-width: 45vw;
+  margin: 0 auto;
+}
+.howWeRollTitleBlock .normalTitle,
+.howWeRollTitleBlock .titleWrapper {
+  margin-bottom: 0;
+}
+.pageBlocks .howWeRollTitleBlock .normalTitle {
+  transform: translateY(1.25vw);
+  opacity: 0;
+  transition:
+    transform 0.45s 0.15s,
+    opacity 0.45s 0.15s;
+}
+.pageBlocks .howWeRollTitleBlock.inview .normalTitle {
+  transform: translateY(0);
+  opacity: 1;
+  margin: 0 auto;
+}
+
+/* ===== howWeRollTextItemsBlock ===== */
+.howWeRollTextItemsBlock .textItems {
+  margin-bottom: 3.75vw;
+}
+.howWeRollTextItemsBlock .textItems .textItem {
+  width: 22.8125vw;
+  margin-left: 24.0625vw;
+  position: relative;
+}
+.howWeRollTextItemsBlock .textItems .textItem:last-child {
+  margin-left: 56.125vw;
+}
+.howWeRollTextItemsBlock .textItems .textItem .number {
+  position: absolute;
+  left: -24.0625vw;
+}
+.howWeRollTextItemsBlock .textItems .textItem:last-child .number {
+  left: auto;
+  right: -8.125vw;
+}
+.howWeRollTextItemsBlock .textItem {
+  transform: translateY(1.25vw);
+  opacity: 0;
+  transition:
+    transform 0.45s 0.15s,
+    opacity 0.45s 0.15s;
+}
+.howWeRollTextItemsBlock .textItem.inview {
+  transform: translateY(0);
+  opacity: 1;
+}
+.howWeRollTextItemsBlock .textItem .square {
+  position: absolute;
+  left: -2.125vw;
+  top: 0.125vw;
+  width: 1vw;
+  height: 1vw;
+  background: var(--hoy-ink);
+  border-radius: 0.125vw;
+  transform: translateX(-0.625vw);
+  opacity: 0;
+  transition:
+    opacity 0.3s 0.45s,
+    transform 0.3s 0.45s;
+}
+.howWeRollTextItemsBlock .textItem.inview .square {
+  transform: translateX(0);
+  opacity: 1;
+}
+.howWeRollTextItemsBlock .textItem .text.medium:not(.number) {
+  margin-bottom: 0.625vw;
+}
+.howWeRollTextItemsBlock .textItems.cols {
+  margin-bottom: 0;
+  margin-top: 3.75vw;
+}
+.howWeRollTextItemsBlock .textItems.cols .textItem {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 9.25vw;
+}
+.howWeRollTextItemsBlock .textItems.cols .textItem:first-child {
+  margin-left: 8vw;
+}
+.howWeRollTextItemsBlock .textItems.cols .textItem .number,
+.howWeRollTextItemsBlock .textItems.cols .textItem:last-child .number {
+  left: -8vw;
+  right: auto;
+}
+.howWeRollTextItemsBlock .imagesContainer {
+  position: relative;
+}
+.howWeRollTextItemsBlock .imagesContainer .imageContainer {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(50% + 0.625vw);
+}
+.howWeRollTextItemsBlock .imagesContainer .imageContainer:first-child {
+  padding: 2.5vw 9.25vw 0 8vw;
+}
+.howWeRollTextItemsBlock .imagesContainer .imageContainer:last-child {
+  width: calc(50% - 0.625vw);
+}
+.howWeRollTextItemsBlock .imagesContainer .imageContainer:last-child .imageWrapper {
+  padding-bottom: 135.44303797468353%;
+}
+.howWeRollTextItemsBlock .imagesContainer .imageContainer .imageWrapper {
+  padding-bottom: 73.83966244725738%;
+  transform: translateY(1.25vw);
+  opacity: 0;
+  transition:
+    transform 0.45s 0.15s,
+    opacity 0.45s 0.15s;
+}
+.howWeRollTextItemsBlock.inview .imagesContainer .imageContainer .imageWrapper {
+  transform: translateY(0);
+  opacity: 1;
+}
+.howWeRollTextItemsBlock .imagesContainer .imageContainer .textItem {
+  width: 22.8125vw;
+  margin-bottom: 9.375vw;
+  position: relative;
+}
+.howWeRollTextItemsBlock .imagesContainer .imageContainer .textItem .number {
+  position: absolute;
+  left: auto;
+  right: -8.125vw;
+}
+/* squares variant (Phase 2) */
+.howWeRollTextItemsBlock .imagesContainer.squares .imageContainer {
+  vertical-align: bottom;
+}
+.howWeRollTextItemsBlock .imagesContainer.squares .imageContainer.first {
+  width: 62.9375vw;
+  padding: 0 0 0 16.0625vw;
+}
+.howWeRollTextItemsBlock .imagesContainer.squares .imageContainer.second {
+  width: 32.0625vw;
+  padding: 0 0 0 17.25vw;
+  margin-bottom: 3.125vw;
+}
+.howWeRollTextItemsBlock .imagesContainer.squares .imageContainer .imageWrapper {
+  padding-bottom: 100% !important;
+}
+.howWeRollTextItemsBlock .imagesContainer.squares .iconWrapper {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 2.4375vw;
+  height: 2.4375vw;
+  transform: translateY(-50%);
+}
+.howWeRollTextItemsBlock .imagesContainer.squares .iconWrapper .icon svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ===== howWeRollDividerAnimationBlock ===== */
+.howWeRollDividerAnimationBlock .cols .col {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: 8vw;
+}
+.howWeRollDividerAnimationBlock .cols .col:nth-child(2) {
+  width: calc(100% - 16vw);
+}
+.howWeRollDividerAnimationBlock .cols .col:last-child {
+  text-align: right;
+}
+.howWeRollDividerAnimationBlock .cols .col .animationContent {
+  width: 47.0625vw;
+  position: relative;
+  margin: 0 auto;
+}
+.howWeRollDividerAnimationBlock .cols .col .animationContent .animation .path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.howWeRollDividerAnimationBlock .cols .col .animationContent .animation .path:first-child {
+  position: relative;
+}
+.howWeRollDividerAnimationBlock .cols .col .icon {
+  display: inline-block;
+  width: 2.4375vw;
+}
+.howWeRollDividerAnimationBlock .cols .col .icon svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* =========================================================================
+   Tablet regime (<=1080px)
+========================================================================= */
+@media (max-width: 1080px) {
+  .pageBlocks .innerBlocks > section {
+    margin: 14.815vw 0;
+  }
+  .pageBlocks .innerBlocks > section:first-child {
+    margin-top: 0;
+    padding-top: 10.648vw;
+  }
+  .pageBlocks .innerBlocks > section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 14.815vw;
+  }
+  .pageBlocks .imageWrapper {
+    border-radius: 0.74074074vw;
+  }
+
+  .headerCultureBlock .cols .col:first-child {
+    width: 21.852vw;
+  }
+  .headerCultureBlock .cols .col:last-child {
+    width: calc(100% - 21.852vw);
+    padding-left: 7.407vw;
+    padding-right: 0;
+  }
+  .headerCultureBlock .animationContent {
+    width: 21.852vw;
+  }
+  .headerCultureBlock .normalTitle,
+  .headerHowWeRollBlock .normalTitle {
+    margin: 2.778vw 0 3.704vw;
+  }
+  .headerCultureBlock .normalTitle .innerTitle:last-child:not(:first-child),
+  .headerHowWeRollBlock .normalTitle .innerTitle:last-child:not(:first-child) {
+    margin-top: 4.63vw;
+  }
+  .headerHowWeRollBlock .cols .col:first-child {
+    width: 29.259vw;
+  }
+  .headerHowWeRollBlock .cols .col:last-child {
+    width: calc(100% - 29.259vw);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .headerHowWeRollBlock .cols .col .animation {
+    position: relative;
+    transform: none;
+    left: 0;
+    top: 0;
+    width: 22.222vw;
+    height: 22.222vw;
+    margin-top: 3.519vw;
+  }
+  .headerHowWeRollBlock .cols .col .animation:after {
+    border-radius: 3.704vw;
+  }
+  .headerHowWeRollBlock .svgWrapper,
+  .pageBlocks .cultureQuoteAnimationBlock .svgWrapper {
+    left: calc(50% - 1.8055vw);
+    top: calc(50% - 1.8055vw);
+    width: 3.611vw;
+  }
+
+  .cultureItemBlock {
+    margin: 7.407vw 0 !important;
+  }
+  .cultureItemBlock .cols .col {
+    width: 12.963vw;
+  }
+  .cultureItemBlock .cols .col:nth-child(2) {
+    width: 46.297vw;
+    padding-right: 14.815vw;
+  }
+  .cultureItemBlock .cols .col:nth-child(3) {
+    width: calc(100% - 59.26vw);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cultureItemBlock .cols.style-2 .col:first-child {
+    width: calc(100% - 59.26vw);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cultureItemBlock .cols.style-2 .col:nth-child(2) {
+    width: 46.297vw;
+    padding-left: 14.815vw;
+    padding-right: 0;
+  }
+  .cultureItemBlock .cols.style-2 .col:nth-child(3) {
+    width: 12.963vw;
+  }
+  .cultureItemBlock .cols.style-3 .col:nth-child(2) {
+    padding-left: 11.111vw;
+    padding-right: 3.704vw;
+  }
+  .cultureItemBlock .cols.style-3 .col:nth-child(3) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cultureItemBlock .cols .col .icon {
+    width: 3.611vw;
+  }
+  .cultureItemBlock .cols .col .intro {
+    margin-bottom: 1.389vw;
+  }
+  .cultureItemBlock .cols .col .smallTitle {
+    padding-right: 3.704vw;
+  }
+
+  .cultureQuoteBlock {
+    margin: 7.407vw 0 !important;
+  }
+  .cultureQuoteBlock .normalTitle {
+    padding: 0 3.704vw;
+  }
+  .cultureQuoteBlock .person {
+    margin-top: 0.926vw;
+  }
+
+  .pageBlocks .cultureQuoteAnimationBlock.howWeRoll {
+    padding: 7.407vw 0;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col {
+    width: 29.259vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col:last-child {
+    width: calc(100% - 29.259vw);
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col .text {
+    margin-bottom: 2.778vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .animation {
+    width: 22.222vw;
+    height: 22.222vw;
+    margin: 3.519vw 0 0;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .animation:after {
+    border-radius: 3.704vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .normalTitle .innerTitle {
+    padding-right: 3.704vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .normalTitle .innerTitle:last-child:not(:first-child) {
+    margin-top: 4.63vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .buttons {
+    margin-top: 1.852vw;
+  }
+
+  .cultureWorkBlock .cols {
+    margin-bottom: 5.556vw;
+  }
+  .cultureWorkBlock .cols .col:first-child .smallTitle {
+    margin-top: 0.926vw;
+    width: 57.593vw;
+  }
+  .cultureWorkBlock .projects {
+    width: calc(100% + 1.852vw);
+    margin-left: -0.926vw;
+  }
+  .cultureWorkBlock .projects .project {
+    width: calc(50% - 1.852vw);
+    margin: 0 0.926vw;
+  }
+  .cultureWorkBlock .projects .project:last-child {
+    display: none;
+  }
+  .cultureWorkBlock .projects .project .imageWrapper {
+    border-radius: 0.74074074vw;
+  }
+  .cultureWorkBlock .projects .project .tags {
+    padding: 1.852vw;
+  }
+  .cultureWorkBlock .projects .project .tag {
+    line-height: 3.241vw;
+    padding: 0 1.852vw;
+    margin-right: 0.926vw;
+    margin-bottom: 0.926vw;
+    border-radius: 1.852vw;
+    font-size: 1.111vw;
+  }
+  .cultureWorkBlock .projects .project .bottomButton {
+    padding: 1.852vw;
+  }
+  .cultureWorkBlock .projects .project .bottomButton .button .icon {
+    width: 1.944vw;
+  }
+  .cultureWorkBlock .projects .project .bottomButton .button .label {
+    width: calc(100% - 3.889vw);
+    padding: 0 1.852vw;
+  }
+  .cultureWorkBlock .projects .project .projectContent {
+    margin-top: 1.852vw;
+  }
+  .cultureWorkBlock .projects .project .projectContent .divider {
+    margin: 1.852vw 0;
+  }
+  .cultureWorkBlock .projects .project .bottomContent .row {
+    margin-right: 1.852vw;
+  }
+  .cultureWorkBlock .projects .project .bottomContent .row .label,
+  .cultureWorkBlock .projects .project .bottomContent .row .info {
+    font-size: 1.111vw;
+  }
+
+  .pageBlocks .projectTwoImagesBlock .cols .col:first-child {
+    padding-right: 0.926vw;
+  }
+  .pageBlocks .projectTwoImagesBlock .cols .col:nth-child(2) {
+    padding-left: 16.667vw;
+    padding-right: 16.667vw;
+  }
+  .pageBlocks .projectTwoImagesBlock .cols .col:nth-child(3) {
+    width: 3.611vw;
+    height: 3.611vw;
+  }
+
+  .howWeRollTitleBlock {
+    margin-bottom: -11.111vw !important;
+  }
+  .howWeRollTitleBlock .icon {
+    width: 3.611vw;
+    margin-bottom: 1.852vw;
+  }
+  .howWeRollTitleBlock .titleWrapper {
+    max-width: 55.556vw;
+  }
+
+  .howWeRollTextItemsBlock .textItems {
+    margin-bottom: 10.648vw;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+    margin-left: 0;
+    padding-right: 4.63vw;
+    padding-left: 11.111vw;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem:last-child {
+    margin-left: 0;
+    padding-left: 4.63vw;
+    padding-right: 11.111vw;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem .number {
+    left: 0;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem:last-child .number {
+    right: 0;
+    left: auto;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem .square {
+    left: 7.963vw;
+    top: 0.185vw;
+    width: 1.481vw;
+    height: 1.481vw;
+    border-radius: 0.185vw;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem:last-child .square {
+    left: 1.481vw;
+  }
+  .howWeRollTextItemsBlock .textItem .text.medium:not(.number) {
+    margin-bottom: 0.926vw;
+  }
+  .howWeRollTextItemsBlock .textItems.cols {
+    margin-top: 10.648vw;
+  }
+  .howWeRollTextItemsBlock .textItems.cols .textItem {
+    width: calc(33.3333% - 3.14814815vw);
+    padding-left: 0 !important;
+    padding-right: 3.704vw !important;
+    margin-left: 3.14814815vw !important;
+  }
+  .howWeRollTextItemsBlock .textItems.cols .textItem .square {
+    left: -3.14814815vw !important;
+  }
+  .howWeRollTextItemsBlock .textItems.cols .textItem .text.medium:not(.number) {
+    padding-right: 5.556vw;
+  }
+  .howWeRollTextItemsBlock .textItems.cols .textItem .number,
+  .howWeRollTextItemsBlock .textItems.cols .textItem:last-child .number {
+    left: auto;
+    right: 3.704vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer {
+    width: calc(50% + 0.926vw);
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer:first-child {
+    padding: 3.704vw 3.14814815vw 0;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer:last-child {
+    width: calc(50% - 0.926vw);
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer .textItem {
+    width: 100%;
+    padding-right: 9.259vw;
+    margin-bottom: 3.704vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer .textItem .number {
+    right: 0;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer .textItem .square {
+    left: -3.14814815vw;
+    top: 0.185vw;
+    width: 1.481vw;
+    height: 1.481vw;
+    border-radius: 0.185vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer.squares .imageContainer.first {
+    width: 65%;
+    padding-left: 12.963vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer.squares .imageContainer.second {
+    width: 35%;
+    padding-left: 12.963vw;
+    margin-bottom: 4.63vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer.squares .iconWrapper {
+    width: 3.611vw;
+    height: 3.611vw;
+  }
+
+  .howWeRollDividerAnimationBlock .cols .col {
+    width: 11.852vw;
+  }
+  .howWeRollDividerAnimationBlock .cols .col:nth-child(2) {
+    width: calc(100% - 23.704vw);
+  }
+  .howWeRollDividerAnimationBlock .cols .col .animationContent {
+    width: 69.723vw;
+  }
+  .howWeRollDividerAnimationBlock .cols .col .icon {
+    width: 3.611vw;
+  }
+}
+
+/* =========================================================================
+   Mobile regime (<=580px)
+========================================================================= */
+@media (max-width: 580px) {
+  .pageBlocks .innerBlocks > section {
+    margin: 27.586vw 0;
+  }
+  .pageBlocks .innerBlocks > section:first-child {
+    margin-top: 0;
+    padding-top: 19.828vw;
+  }
+  .pageBlocks .innerBlocks > section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 27.586vw;
+  }
+  .pageBlocks .imageWrapper {
+    border-radius: 1.37931034vw;
+  }
+
+  .headerCultureBlock {
+    margin-top: 6.897vw !important;
+  }
+  .headerCultureBlock .cols {
+    display: table;
+    width: 100%;
+  }
+  .headerCultureBlock .cols .col:first-child {
+    width: 100%;
+    display: table-footer-group;
+  }
+  .headerCultureBlock .cols .col:first-child > .text {
+    display: none;
+  }
+  .headerCultureBlock .cols .col:last-child {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 24.138vw;
+    display: block;
+  }
+  .headerCultureBlock .cols .col .text.number {
+    margin-bottom: 1.724vw;
+    font-size: 3.103vw;
+    display: block;
+  }
+  .headerCultureBlock .animationContent {
+    position: relative;
+    width: 40.69vw;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .headerCultureBlock .normalTitle,
+  .headerHowWeRollBlock .normalTitle {
+    margin: 6.034vw 0 6.897vw;
+  }
+  .headerCultureBlock .normalTitle .innerTitle:last-child:not(:first-child),
+  .headerHowWeRollBlock .normalTitle .innerTitle:last-child:not(:first-child) {
+    margin-top: 8.621vw;
+  }
+  .headerHowWeRollBlock {
+    margin-top: 6.897vw !important;
+  }
+  .headerHowWeRollBlock .cols {
+    display: block;
+    width: 100%;
+  }
+  .headerHowWeRollBlock .cols .col:first-child {
+    width: 100%;
+  }
+  .headerHowWeRollBlock .cols .col:first-child .text {
+    margin-bottom: 1.724vw;
+    font-size: 3.103vw;
+  }
+  .headerHowWeRollBlock .cols .col:last-child {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .headerHowWeRollBlock .cols .col .animation {
+    display: none;
+  }
+
+  .cultureItemBlock {
+    margin: 13.793vw 0 !important;
+  }
+  .cultureItemBlock .cols {
+    position: relative;
+    display: table;
+    width: 100%;
+  }
+  .cultureItemBlock .cols .col:first-child {
+    position: absolute;
+    top: auto;
+    bottom: 38.966vw;
+    right: 0;
+    left: auto;
+    width: 24.138vw;
+    height: auto;
+    text-align: right;
+  }
+  .cultureItemBlock .cols .col:nth-child(2) {
+    display: table-footer-group;
+    padding-right: 0;
+    width: 100%;
+  }
+  .cultureItemBlock .cols .col:nth-child(2) .innerCol {
+    width: calc(100% - 24.138vw);
+  }
+  .cultureItemBlock .cols .col:nth-child(3) {
+    margin-bottom: 6.897vw !important;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cultureItemBlock .cols.style-2 .col:first-child {
+    position: relative;
+    bottom: auto;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    margin-bottom: 6.897vw;
+  }
+  .cultureItemBlock .cols.style-2 .col:nth-child(2) {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cultureItemBlock .cols.style-2 .col:nth-child(2) .innerCol {
+    width: calc(100% - 24.138vw);
+    margin-left: 24.138vw;
+  }
+  .cultureItemBlock .cols.style-2 .col:nth-child(3) {
+    position: absolute;
+    bottom: 38.966vw;
+    width: 24.138vw;
+    height: auto;
+    left: auto;
+    text-align: left;
+    margin-bottom: 0;
+  }
+  .cultureItemBlock .cols .col .innerCol .animImageContainer {
+    transform: none !important;
+  }
+  .cultureItemBlock .cols .col .icon {
+    width: 6.724vw;
+  }
+  .cultureItemBlock .cols .col .intro {
+    margin-bottom: 6.034vw;
+    display: table;
+    width: 100%;
+  }
+  .cultureItemBlock .cols .col .intro .text {
+    width: 100%;
+    margin-top: 1.724vw;
+  }
+  .cultureItemBlock .cols .col .intro .text:last-child {
+    margin-top: 0;
+    display: table-header-group;
+    width: 100%;
+    text-align: left;
+    font-size: 3.103vw;
+  }
+  .cultureItemBlock .cols .col .smallTitle {
+    padding-right: 0;
+  }
+
+  .cultureQuoteBlock {
+    margin: 13.793vw 0 !important;
+  }
+  .cultureQuoteBlock .normalTitle {
+    padding: 0;
+  }
+  .cultureQuoteBlock .person {
+    margin-top: 3.448vw;
+  }
+
+  .pageBlocks .cultureQuoteAnimationBlock.howWeRoll {
+    padding: 13.793vw 0;
+  }
+  .pageBlocks .innerBlocks > section.cultureQuoteAnimationBlock.howWeRoll:last-child {
+    padding-bottom: 27.586vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols {
+    display: table;
+    width: 100%;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col {
+    width: 100%;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col:first-child {
+    display: table-footer-group;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col:first-child > .text {
+    display: none;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col:last-child {
+    width: 100%;
+    margin-bottom: 6.897vw;
+    display: block;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col .text {
+    margin-bottom: 6.034vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .cols .col .text.number {
+    margin-bottom: 1.724vw;
+    font-size: 3.103vw;
+    display: block;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .animation {
+    width: 37.931vw;
+    height: 37.931vw;
+    margin-left: 47.931vw;
+    margin-top: -19.31vw;
+    margin-bottom: 0;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .animation:after {
+    border-radius: 6.897vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .svgWrapper {
+    left: calc(50% - 3.362vw);
+    top: calc(50% - 3.362vw);
+    width: 6.724vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .normalTitle .innerTitle {
+    padding-right: 6.897vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .normalTitle .innerTitle:last-child:not(:first-child) {
+    margin-top: 8.621vw;
+  }
+  .pageBlocks .cultureQuoteAnimationBlock .buttons {
+    margin-top: 6.897vw;
+  }
+
+  .cultureWorkBlock .cols {
+    display: table;
+    width: 100%;
+    margin-bottom: 6.897vw;
+  }
+  .cultureWorkBlock .cols .col {
+    width: 100%;
+  }
+  .cultureWorkBlock .cols .col:first-child {
+    margin-top: 1.724vw;
+  }
+  .cultureWorkBlock .cols .col:first-child .smallTitle {
+    margin-top: 6.034vw;
+    width: 100%;
+  }
+  .cultureWorkBlock .cols .col:last-child {
+    text-align: left;
+    display: table-header-group;
+  }
+  .cultureWorkBlock .cols .col:last-child .text {
+    font-size: 3.103vw;
+  }
+  .cultureWorkBlock .projects {
+    width: calc(100% + 3.448vw);
+    margin-left: -1.724vw;
+  }
+  .cultureWorkBlock .projects .project {
+    width: calc(100% - 3.448vw);
+    margin: 0 1.724vw 10.345vw;
+  }
+  .cultureWorkBlock .projects .project:nth-child(2) {
+    margin-bottom: 0;
+  }
+  .cultureWorkBlock .projects .project:last-child {
+    display: none;
+  }
+  .cultureWorkBlock .projects .project .imageWrapper {
+    border-radius: 1.37931034vw;
+  }
+  .cultureWorkBlock .projects .project .tags {
+    padding: 3.448vw;
+  }
+  .cultureWorkBlock .projects .project .tag {
+    line-height: 7.759vw;
+    padding: 0 5.172vw;
+    margin-right: 1.724vw;
+    margin-bottom: 1.724vw;
+    border-radius: 3.448vw;
+    font-size: 3.103vw;
+  }
+  .cultureWorkBlock .projects .project .bottomButton {
+    padding: 3.448vw;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .cultureWorkBlock .projects .project .imageWrapper:after {
+    opacity: 0.4;
+  }
+  .cultureWorkBlock .projects .project .tags {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .cultureWorkBlock .projects .project .bottomButton .button .icon {
+    width: 7.069vw;
+  }
+  .cultureWorkBlock .projects .project .bottomButton .button .label {
+    width: calc(100% - 14.138vw);
+    padding: 0 5.172vw;
+  }
+  .cultureWorkBlock .projects .project .projectContent {
+    margin-top: 3.448vw;
+  }
+  .cultureWorkBlock .projects .project .projectContent .divider {
+    margin: 3.448vw 0;
+  }
+  .cultureWorkBlock .projects .project .bottomContent .row {
+    margin-right: 3.448vw;
+  }
+  .cultureWorkBlock .projects .project .bottomContent .row .label,
+  .cultureWorkBlock .projects .project .bottomContent .row .info {
+    font-size: 3.103vw;
+  }
+
+  .pageBlocks .projectTwoImagesBlock .cols .col {
+    width: 100%;
+  }
+  .pageBlocks .projectTwoImagesBlock .cols .col:first-child {
+    padding-right: 13.793vw;
+  }
+  .pageBlocks .projectTwoImagesBlock .cols .col:nth-child(2) {
+    display: none;
+  }
+  .pageBlocks .projectTwoImagesBlock .cols .col:nth-child(3) {
+    width: 6.724vw;
+    height: 6.724vw;
+  }
+
+  .howWeRollTitleBlock {
+    text-align: left;
+    margin-bottom: -6.897vw !important;
+  }
+  .howWeRollTitleBlock .icon {
+    width: 6.724vw;
+    margin-bottom: 3.448vw;
+  }
+  .howWeRollTitleBlock .titleWrapper {
+    max-width: 100%;
+  }
+
+  .howWeRollTextItemsBlock .textItems {
+    margin-bottom: 13.793vw;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(100% - 5.86206897vw);
+    margin-left: 5.86206897vw;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 13.793vw;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem:last-child {
+    margin-left: 5.86206897vw;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 0;
+  }
+  .howWeRollTextItemsBlock .textItem .square {
+    left: -5.86206897vw;
+    top: 7.241vw;
+    width: 2.759vw;
+    height: 2.759vw;
+    border-radius: 0.345vw;
+  }
+  .howWeRollTextItemsBlock .textItems .textItem:last-child .square {
+    left: -5.86206897vw;
+  }
+  .howWeRollTextItemsBlock .textItem .text.medium:not(.number) {
+    margin-bottom: 6.034vw;
+  }
+  .howWeRollTextItemsBlock .textItem .text.number {
+    position: relative;
+    margin-bottom: 1.724vw;
+    left: 0;
+    right: auto !important;
+    top: 0;
+    font-size: 3.103vw;
+  }
+  .howWeRollTextItemsBlock .textItems.cols {
+    margin-top: 19.828vw;
+  }
+  .howWeRollTextItemsBlock .textItems.cols .textItem {
+    width: calc(100% - 5.86206897vw);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 5.86206897vw !important;
+  }
+  .howWeRollTextItemsBlock .textItems.cols .textItem .square {
+    left: -5.86206897vw !important;
+  }
+  .howWeRollTextItemsBlock .textItems.cols .textItem .text.medium:not(.number) {
+    padding-right: 10.345vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer {
+    width: 100%;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer:first-child {
+    width: calc(100% - 5.86206897vw);
+    margin-left: 5.86206897vw;
+    padding: 0;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer:first-child .imageWrapper {
+    display: none;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer:last-child {
+    width: 100%;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer .textItem {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 13.793vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer .imageContainer .textItem .square {
+    left: -5.86206897vw;
+    top: 7.241vw;
+    width: 2.759vw;
+    height: 2.759vw;
+    border-radius: 0.345vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer.squares .imageContainer.first {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 13.793vw;
+  }
+  .howWeRollTextItemsBlock .imagesContainer.squares .imageContainer.second {
+    display: none;
+  }
+  .howWeRollTextItemsBlock .imagesContainer.squares .iconWrapper {
+    left: auto;
+    right: 0;
+    width: 6.724vw;
+    height: 6.724vw;
+  }
+
+  .howWeRollDividerAnimationBlock .cols .col {
+    display: none;
+  }
+  .howWeRollDividerAnimationBlock .cols .col:nth-child(2) {
+    display: inline-block;
+    width: 100%;
+  }
+  .howWeRollDividerAnimationBlock .cols .col .animationContent {
+    width: 100%;
+  }
+}
