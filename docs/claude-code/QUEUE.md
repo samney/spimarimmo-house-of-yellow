@@ -71,11 +71,15 @@ Built 2026-07-31 (evidence `qa/implementation/culture2--*`, `hwr2--*` vs `qa/ref
 - Shared: `Inview` (IntersectionObserver → reference .inview reveal transitions, reduced-motion instant), `PageMedia`, `pages-art.tsx` (verbatim SVG paths), `pages.css` scoped under `.pageBlocks` (desktop + 1080 + 580 regimes from extracted CSS incl. table-group reorder tricks). Routes ×2 locales statically generated. Gates pass (typecheck/lint/build/prettier on touched files).
   Remaining before DONE: GSAP set pieces (anim-1/2/3 draw/morph choreography, per-path data-scroll-speed parallax, SplitText letter reveals on titles — currently CSS reveals only), play/pause-on-scroll for videos, numIndex runtime numbering vs hardcoded audit, per-viewport pixel-diff convergence (<1%) at all 8 viewports, axe + keyboard evidence, FR translations (HOY-110).
 
-## HOY-100 — Build Connect — PENDING
+## HOY-100 — Build Connect — **IN PROGRESS (core built + form pipeline verified)**
 
 Depends: HOY-050
 Tasks: editorial intro, Eindhoven/Dubai/Miami local times, email/phone, WhatsApp CTA, contact form (Zod + RHF, client+server validation, honeypot, rate limiting, storage, notification), loading/success/error states, Instagram/social presentation, featured work.
-Acceptance: working submissions stored + notified (or env-blocked with contract documented); all states evidenced.
+Built 2026-07-31 (evidence `qa/implementation/connect--*`, `connect-form-{invalid,success,ratelimited}.png`; crawl `qa/connect-data.json` + `qa/connect-main.html` + `qa/hoy100-blocks.css` + live clock double-sample):
+
+- contactBlock verbatim: intro H1, `[ 01 ]`, ticking HH:MM:SS clocks (`Clocks.tsx`, IANA zones from reference `data-timezone`, SSR-empty like reference — documented dynamic region), How-to-connect email/tel, round socials, green WhatsApp marquee pill, floating-label form, 6-tile Instagram snapshot (images mirrored locally from the reference's own self-hosted copies — no CDN hotlinking), extra sparkle; light works block (`.project.dark` ink variant) + Made by Yellow dark button. `WorksBlock` extracted and shared with /culture.
+- Form pipeline (all behaviors evidenced against local prod server): client Zod (RHF resolver, reference `.invalid` red states) + server Zod (same schema in the server action); honeypot `website` field → fake success, nothing stored (verified); fixed-window rate limit 5/10min per hashed client → correct user-facing message, not stored (verified: 6th+7th rejected); submissions persisted to gitignored `.data/contact-submissions.jsonl` with `{id, createdAt, nameVisitor, email, message, locale, ipHash}` (Supabase-shaped for HOY-040/120); notification adapter logs redacted line until `EMAIL_PROVIDER_API_KEY` + provider are supplied (P-2 contract in `lib/contact/store.ts`).
+  Remaining before DONE: reCAPTCHA/Turnstile decision + real email provider (owner, P-2); `.env.example` sync (file is deny-listed for agent access this session — owner must add `EMAIL_PROVIDER_API_KEY`, `CONTACT_NOTIFY_TO`); loading-state capture (sub-300ms locally — needs throttled capture); per-viewport pixel diff + axe; FR translations (HOY-110); works-block hover/marquee refinement shared with HOY-090 register.
 
 ## HOY-110 — Implement localization — PENDING
 

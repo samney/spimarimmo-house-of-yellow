@@ -119,6 +119,84 @@ export const CULTURE = {
   },
 };
 
+/* ===== /connect/ ===== */
+
+export const CONNECT = {
+  title: "Connect - HOY | House Of Yellow",
+  metaDesc:
+    "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+  intro: {
+    label: "Let’s connect",
+    titles: [
+      "Your move. Whether you’ve got a wild idea, a tight deadline or just want to explore what’s possible we’re all ears.",
+      "Drop us a line. Or better yet: let’s meet.",
+    ],
+  },
+  index: "01",
+  /* Labels verbatim from reference; IANA zones from data-timezone attributes */
+  clocks: [
+    { label: "Eindhoven (CEST)", timeZone: "Europe/Amsterdam" },
+    { label: "Dubai (GMT+4)", timeZone: "Asia/Dubai" },
+    { label: "Miami (GMT-5)", timeZone: "America/New_York" },
+  ],
+  contact: {
+    heading: "How to connect",
+    email: "info@houseofyellow.nl",
+    phoneDisplay: "+31 6 20002644",
+    phoneHref: "tel:+31620002644",
+    linkedin: "https://www.linkedin.com/company/houseofyellow/",
+    instagram: "https://www.instagram.com/hoy/",
+    whatsapp: "https://api.whatsapp.com/send?phone=31620002644",
+    whatsappLabel: "Send us a message",
+  },
+  form: {
+    title: "Fill in our form:",
+    fields: {
+      name: "Name",
+      email: "Email address",
+      message: "Your message",
+    },
+    submit: "Submit message",
+    successTitle: "Thanks for your message!",
+    successText: "We’ll be in touch shortly.",
+  },
+  /* Smash Balloon feed snapshot (crawled 2026-07-31); images self-hosted by
+     the reference site and mirrored locally under /images/instagram */
+  feed: [
+    {
+      href: "https://www.instagram.com/p/DWUHeAMjD5q/",
+      image: "658146087_18540199234067304_8230938069231233851_nlow.webp",
+      alt: "Sold out Ahoy, packed from front to back 🔥 We captured the night with a full multi camera setup and delivered the final video within 48 hours.",
+    },
+    {
+      href: "https://www.instagram.com/reel/DJeOfpMtGkw/",
+      image: "497005579_1224965355686347_548266337378109635_nlow.webp",
+      alt: "Team HOY back on the road with StreetGasm in Spain 🇪🇸 Capturing the madness 🔥 HOY x StreetGasm.",
+    },
+    {
+      href: "https://www.instagram.com/reel/DIDy46FtOOj/",
+      image: "488756439_1186453836490893_3065902587404372197_nlow.webp",
+      alt: "New gorilla in town 👀 made for @josephklibansky #3d #artwork",
+    },
+    {
+      href: "https://www.instagram.com/p/DEe58t-sSAu/",
+      image: "472436246_18456528322067304_2201999254957078804_nlow.webp",
+      alt: "Some Philips HUE x HOY fun. Loved working with you guys @philipshue 💡🍀❤️",
+    },
+    {
+      href: "https://www.instagram.com/reel/C94YfortjS4/",
+      image: "628458263_25409749618725886_4244813579454029329_nlow.webp",
+      alt: "Working on a new amazing project together with @oceancoyacht super excited!!",
+    },
+    {
+      href: "https://www.instagram.com/reel/C9FVjw4NBfn/",
+      image: "502748375_689909777173012_7895818995744332711_nlow.webp",
+      alt: "Someone is getting ready for tonight ❤️‍🔥 A new hoy video which we made for @donyellmalen.",
+    },
+  ],
+  worksIndex: "02",
+};
+
 /* ===== /how-we-roll/ ===== */
 
 export type HwrTextItem = {

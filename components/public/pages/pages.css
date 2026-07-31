@@ -829,6 +829,367 @@
   height: auto;
 }
 
+/* ===== contactBlock (/connect) ===== */
+.contactBlock .intro {
+  padding-right: 21.25vw;
+}
+.contactBlock .intro .normalTitle {
+  margin-top: 1.875vw;
+}
+.contactBlock .intro .normalTitle .innerTitle:last-child:not(:first-child) {
+  margin-top: 3.125vw;
+}
+.contactBlock .cols {
+  margin-top: 3.125vw;
+}
+.contactBlock .cols .col {
+  display: inline-block;
+  vertical-align: top;
+  width: 16.0625vw;
+  padding-right: 1.25vw;
+}
+.contactBlock .cols .col:nth-child(2) {
+  width: 24vw;
+}
+.contactBlock .cols .col:last-child {
+  padding-right: 0;
+  width: 30.8125vw;
+}
+.contactBlock .cols .col:last-child .formTitle {
+  margin-bottom: 0.9375vw;
+}
+.contactBlock .cols .col .text.number {
+  margin-bottom: 0;
+  display: block;
+}
+.contactBlock .timeZones {
+  margin-bottom: 1.25vw;
+}
+.contactBlock .timeZones .timeZoneWrapper {
+  margin-bottom: 0.3125vw;
+}
+.contactBlock .timeZones .timeZoneWrapper .text {
+  display: inline-block;
+  vertical-align: top;
+  width: 9.0625vw;
+}
+.contactBlock .cols .col .text a {
+  text-decoration: none;
+  color: inherit;
+}
+.contactBlock .socials {
+  margin-top: 1.25vw;
+}
+.contactBlock .socials .socialLink {
+  display: inline-block;
+  vertical-align: top;
+  background: #d9d9d9;
+  color: var(--hoy-ink);
+  text-decoration: none;
+  height: 2.8125vw;
+  line-height: 3.0625vw;
+  width: 2.8125vw;
+  font-size: 1.25vw;
+  font-weight: 500;
+  margin-right: 0.625vw;
+  border-radius: 50%;
+  text-align: center;
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+.contactBlock .socials .socialLink:hover {
+  background: var(--hoy-ink);
+  color: var(--hoy-paper);
+}
+.contactBlock .socials .socialLink i {
+  font-size: inherit;
+  line-height: inherit;
+}
+.contactBlock .cols .col .buttons {
+  margin-top: 1.25vw;
+}
+
+/* WhatsApp pill (reference .button.whatsappButton) */
+.button.whatsappButton {
+  padding-right: 0.625vw;
+  background: #53c95b;
+  color: var(--hoy-white);
+  box-shadow: inset 0 0 0 1px transparent;
+}
+.button.whatsappButton .icon {
+  width: 1.75vw;
+  transform: translateY(0.5vw);
+}
+.button.whatsappButton .icon svg {
+  width: 100%;
+  height: auto;
+}
+.button.whatsappButton .icon svg path {
+  fill: var(--hoy-white);
+}
+.button.whatsappButton:hover {
+  background: transparent;
+  color: var(--hoy-ink);
+  box-shadow: inset 0 0 0 1px var(--hoy-ink);
+}
+.button.whatsappButton:hover .icon svg path {
+  fill: var(--hoy-ink);
+}
+
+/* Form (reference .formWrapper / CF7 geometry) */
+.contactBlock .formWrapper {
+  position: relative;
+}
+.contactBlock .formWrapper form {
+  transition: opacity 0.3s;
+}
+.contactBlock .formWrapper.disabled form {
+  pointer-events: none;
+  opacity: 0.2;
+}
+.contactBlock .formWrapper.sended .formTitle,
+.pageBlocks section.inview .cols .col .formWrapper.sended .formTitle,
+.contactBlock .formWrapper.sended form {
+  pointer-events: none;
+  opacity: 0;
+}
+.contactBlock .formWrapper form .fields .field {
+  position: relative;
+  width: calc(100% - 1vw);
+  margin: 0 0.5vw 1vw;
+  display: inline-block;
+  vertical-align: top;
+}
+.contactBlock .formWrapper form .fields .field p {
+  margin: 0;
+}
+.contactBlock .formWrapper form .fields .field label.fixedLabel {
+  height: auto;
+  left: 0.625vw;
+  position: absolute;
+  top: 1.25vw;
+  width: 100%;
+  line-height: 1.25vw;
+  font-size: 0.875vw;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+  transition:
+    font-size 0.3s,
+    top 0.3s,
+    opacity 0.3s;
+}
+.contactBlock .formWrapper form .fields .field.focus label.fixedLabel,
+.contactBlock .formWrapper form .fields .field.filled label.fixedLabel {
+  opacity: 0.6;
+  font-size: 0.625vw;
+  top: 0.1875vw;
+}
+.contactBlock .formWrapper form .fields .field input,
+.contactBlock .formWrapper form .fields .field textarea {
+  display: block;
+  color: var(--hoy-ink);
+  font-family: "Poppins-font", sans-serif;
+  font-size: 0.875vw;
+  line-height: 2.5vw;
+  padding: 0.625vw 0.625vw 0.5vw;
+  background: var(--hoy-paper);
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--hoy-ink);
+  border-radius: 0;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+}
+.contactBlock .formWrapper form .fields .field textarea {
+  line-height: 2.5vw;
+  padding-top: 0.6875vw;
+  padding-bottom: 0.6875vw;
+  height: 7.5vw;
+  resize: none;
+}
+.contactBlock .formWrapper form .fields .field input:focus,
+.contactBlock .formWrapper form .fields .field textarea:focus {
+  outline: none;
+}
+.contactBlock .formWrapper form .fields .field input:focus-visible,
+.contactBlock .formWrapper form .fields .field textarea:focus-visible {
+  border-bottom-width: 2px;
+}
+.contactBlock .formWrapper form .fields .field.invalid input,
+.contactBlock .formWrapper form .fields .field.invalid textarea {
+  border-color: var(--hoy-error) !important;
+}
+.contactBlock .formWrapper .honeypotField {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.contactBlock .formWrapper .submitWrapper .buttonWrapper .submitButton {
+  font-family: "Poppins-font", sans-serif;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 2.8125vw;
+  font-size: 0.75vw;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 1.25vw;
+  overflow: hidden;
+  border-radius: 1.875vw !important;
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+  transition:
+    background 0.3s,
+    color 0.3s,
+    box-shadow 0.3s,
+    padding 0.3s;
+}
+.contactBlock .formWrapper .submitWrapper .buttonWrapper .submitButton:hover {
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+}
+.contactBlock .formWrapper .formStatus .errorText {
+  color: var(--hoy-error);
+  font-size: 0.875vw;
+  margin-top: 0.75vw;
+}
+.contactBlock .formWrapper .loader {
+  height: auto;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  width: 5vw;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.3s 0.3s,
+    transform 0.3s 0.3s;
+}
+.contactBlock .formWrapper.disabled .loader {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.contactBlock .formWrapper.sended .loader {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  transition:
+    opacity 0.3s 0s,
+    transform 0.3s 0s;
+}
+.contactBlock .formWrapper .loader img {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.2;
+}
+.contactBlock .formWrapper .successContainer {
+  border-radius: 0.5vw;
+  height: auto;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1.875vw;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.3s 0.3s,
+    transform 0.3s 0.3s;
+}
+.contactBlock .formWrapper.sended .successContainer {
+  pointer-events: inherit;
+  opacity: 1;
+}
+.contactBlock .formWrapper .successContainer .smallTitle {
+  margin-bottom: 0.625vw;
+}
+
+/* Instagram feed (reference Smash Balloon geometry, snapshot rendered locally) */
+.contactBlock .instagramWrapper {
+  margin-top: 3.125vw;
+  border-radius: 0.5vw;
+  opacity: 0;
+  transform: translateY(1.25vw);
+  transition:
+    transform 0.45s 0.15s,
+    opacity 0.45s 0.15s;
+}
+.contactBlock .instagramWrapper.inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+.contactBlock .instagramWrapper .sbGrid {
+  display: block;
+  width: calc(100% + 1vw);
+  margin-left: -0.5vw;
+}
+.contactBlock .instagramWrapper .sbGrid .sbi_photo {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(16.6666% - 1vw);
+  margin: 0 0.5vw;
+  border-radius: 0.625vw;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+.contactBlock .instagramWrapper .sbGrid .sbi_photo img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1) translate3d(0, 0, 0);
+  transition: transform 0.3s 0s ease-out;
+}
+.contactBlock .instagramWrapper .sbGrid .sbi_photo:hover img {
+  transform: scale(1.05) translate3d(0, 0, 0);
+}
+.contactBlock .extraIcon {
+  margin-top: 10vw;
+}
+.contactBlock .extraIcon .icon {
+  margin: 0 auto;
+  width: 2.4375vw;
+}
+.contactBlock .extraIcon .icon svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Works block light variant (/connect: .project.dark = ink text on paper) */
+.cultureWorkBlock .projects .project.dark .projectContent {
+  color: var(--hoy-ink);
+}
+.cultureWorkBlock .projects .project.dark .projectContent .divider {
+  background: rgba(0, 0, 0, 0.2);
+}
+.cultureWorkBlock .projects .project.dark .projectContent .divider:after {
+  background: var(--hoy-ink);
+}
+.cultureWorkBlock .cols .col .buttons {
+  position: absolute;
+  right: 0;
+  bottom: 0.625vw;
+}
+.cultureWorkBlock .cols .col .buttons .button {
+  display: inline-flex;
+}
+
 /* =========================================================================
    Tablet regime (<=1080px)
 ========================================================================= */
@@ -1164,6 +1525,134 @@
   }
   .howWeRollDividerAnimationBlock .cols .col .icon {
     width: 3.611vw;
+  }
+
+  .contactBlock .intro {
+    padding-right: 20.37vw;
+  }
+  .contactBlock .intro .normalTitle {
+    margin-top: 2.778vw;
+  }
+  .contactBlock .intro .normalTitle .innerTitle:last-child:not(:first-child) {
+    margin-top: 4.63vw;
+  }
+  .contactBlock .cols {
+    margin-top: 4.63vw;
+  }
+  .contactBlock .cols .col {
+    width: 12.963vw;
+    padding-right: 1.852vw;
+  }
+  .contactBlock .cols .col:nth-child(2) {
+    width: 37.037vw;
+  }
+  .contactBlock .cols .col:last-child {
+    width: calc(100% - 50vw);
+    padding-right: 9.259vw;
+  }
+  .contactBlock .cols .col:last-child .formTitle {
+    margin-bottom: 1.389vw;
+  }
+  .contactBlock .timeZones {
+    margin-bottom: 1.852vw;
+  }
+  .contactBlock .timeZones .timeZoneWrapper {
+    margin-bottom: 0.463vw;
+  }
+  .contactBlock .timeZones .timeZoneWrapper .text {
+    width: 13.426vw;
+  }
+  .contactBlock .socials {
+    margin-top: 1.852vw;
+  }
+  .contactBlock .socials .socialLink {
+    height: 4.167vw;
+    line-height: 4.537vw;
+    width: 4.167vw;
+    font-size: 1.852vw;
+    margin-right: 0.926vw;
+  }
+  .contactBlock .cols .col .buttons {
+    margin-top: 1.852vw;
+  }
+  .button.whatsappButton {
+    padding-right: 0.926vw;
+  }
+  .button.whatsappButton .icon {
+    width: 2.593vw;
+    transform: translateY(0.74074074vw);
+  }
+  .contactBlock .formWrapper form .fields .field {
+    width: calc(100% - 1.481vw);
+    margin: 0 0.7405vw 2.593vw;
+  }
+  .contactBlock .formWrapper form .fields .field label.fixedLabel {
+    left: 0.926vw;
+    top: 1.852vw;
+    line-height: 1.852vw;
+    font-size: 1.296vw;
+  }
+  .contactBlock .formWrapper form .fields .field.focus label.fixedLabel,
+  .contactBlock .formWrapper form .fields .field.filled label.fixedLabel {
+    font-size: 0.926vw;
+    top: 0.278vw;
+  }
+  .contactBlock .formWrapper form .fields .field input,
+  .contactBlock .formWrapper form .fields .field textarea {
+    font-size: 1.296vw;
+    line-height: 3.704vw;
+    padding: 0.926vw 0.926vw 0.74074074vw;
+  }
+  .contactBlock .formWrapper form .fields .field textarea {
+    line-height: 3.704vw;
+    padding-top: 1.019vw;
+    padding-bottom: 1.019vw;
+    height: 11.111vw;
+  }
+  .contactBlock .formWrapper .submitWrapper .buttonWrapper .submitButton {
+    line-height: 4.63vw;
+    font-size: 1.296vw;
+    border-radius: 4.63vw !important;
+    padding: 0 2.315vw;
+  }
+  .contactBlock .formWrapper .formStatus .errorText {
+    font-size: 1.296vw;
+  }
+  .contactBlock .formWrapper .loader {
+    width: 7.407vw;
+  }
+  .contactBlock .formWrapper .successContainer {
+    border-radius: 0.74074074vw;
+    padding: 2.778vw;
+  }
+  .contactBlock .formWrapper .successContainer .smallTitle {
+    margin-bottom: 0.926vw;
+  }
+  .contactBlock .instagramWrapper {
+    margin-top: 4.63vw;
+    border-radius: 0.74074074vw;
+  }
+  .contactBlock .instagramWrapper .sbGrid {
+    width: calc(100% + 1.481vw);
+    margin-left: -0.74074074vw;
+    white-space: nowrap;
+  }
+  .contactBlock .instagramWrapper .sbGrid .sbi_photo {
+    width: calc(20% - 1.481vw);
+    margin: 0 0.74074074vw;
+    border-radius: 0.926vw;
+  }
+  .contactBlock .instagramWrapper .sbGrid .sbi_photo:last-child {
+    display: none;
+  }
+  .contactBlock .extraIcon {
+    margin-top: 7.407vw;
+  }
+  .contactBlock .extraIcon .icon {
+    width: 3.611vw;
+  }
+  .cultureWorkBlock .cols .col .buttons {
+    bottom: 0.926vw;
   }
 }
 
@@ -1614,5 +2103,138 @@
   }
   .howWeRollDividerAnimationBlock .cols .col .animationContent {
     width: 100%;
+  }
+
+  .contactBlock {
+    margin-top: 6.897vw !important;
+    margin-bottom: -13.793vw !important;
+  }
+  .contactBlock .intro {
+    padding-right: 0;
+  }
+  .contactBlock .intro .normalTitle {
+    margin-top: 5.172vw;
+  }
+  .contactBlock .intro .normalTitle .innerTitle:last-child:not(:first-child) {
+    margin-top: 6.034vw;
+  }
+  .contactBlock .cols {
+    margin-top: 6.897vw;
+  }
+  .contactBlock .cols .col {
+    width: 100% !important;
+    padding-right: 3.448vw;
+  }
+  .contactBlock .cols .col:last-child {
+    margin-top: 6.897vw;
+    padding-right: 0;
+  }
+  .contactBlock .cols .col:last-child .formTitle {
+    margin-bottom: 2.586vw;
+  }
+  .contactBlock .cols .col .text.number {
+    font-size: 3.103vw;
+    margin-bottom: 1.724vw;
+  }
+  .contactBlock .timeZones {
+    margin-bottom: 6.897vw;
+  }
+  .contactBlock .timeZones .timeZoneWrapper {
+    margin-bottom: 0.862vw;
+    white-space: nowrap;
+  }
+  .contactBlock .timeZones .timeZoneWrapper .text {
+    width: 42.241vw;
+  }
+  .contactBlock .socials {
+    margin-top: 3.448vw;
+  }
+  .contactBlock .socials .socialLink {
+    height: 11.207vw;
+    line-height: 12.069vw;
+    width: 11.207vw;
+    font-size: 5.172vw;
+    margin-right: 1.724vw;
+  }
+  .contactBlock .cols .col .buttons {
+    margin-top: 3.448vw;
+  }
+  .button.whatsappButton {
+    padding-right: 3.103vw;
+  }
+  .button.whatsappButton .icon {
+    margin-top: 1.724vw;
+    width: 4.828vw;
+    transform: translateY(1.37931034vw);
+  }
+  .contactBlock .formWrapper form .fields .field {
+    width: calc(100% - 2.759vw);
+    margin: 0 1.3795vw 4.828vw;
+  }
+  .contactBlock .formWrapper form .fields .field label.fixedLabel {
+    left: 1.724vw;
+    top: 3.448vw;
+    line-height: 3.448vw;
+    font-size: 2.759vw;
+  }
+  .contactBlock .formWrapper form .fields .field.focus label.fixedLabel,
+  .contactBlock .formWrapper form .fields .field.filled label.fixedLabel {
+    font-size: 2.069vw;
+    top: 0.517vw;
+  }
+  .contactBlock .formWrapper form .fields .field input,
+  .contactBlock .formWrapper form .fields .field textarea {
+    font-size: 16px;
+    line-height: 6.897vw;
+    padding: 1.724vw 1.724vw 1.37931034vw;
+  }
+  .contactBlock .formWrapper form .fields .field textarea {
+    line-height: 6.897vw;
+    padding-top: 1.897vw;
+    padding-bottom: 1.897vw;
+    height: 20.69vw;
+  }
+  .contactBlock .formWrapper .submitWrapper .buttonWrapper .submitButton {
+    min-width: 51.724vw;
+    line-height: 10.345vw;
+    font-size: 3.448vw;
+    border-radius: 8.621vw !important;
+    padding: 0 4.31vw;
+  }
+  .contactBlock .formWrapper .formStatus .errorText {
+    font-size: 3.103vw;
+  }
+  .contactBlock .formWrapper .loader {
+    width: 13.793vw;
+  }
+  .contactBlock .formWrapper .successContainer {
+    border-radius: 1.37931034vw;
+    padding: 5.172vw;
+  }
+  .contactBlock .instagramWrapper {
+    margin-top: 6.897vw;
+    border-radius: 1.37931034vw;
+  }
+  .contactBlock .instagramWrapper .sbGrid {
+    width: calc(100% + 2.759vw);
+    margin-left: -1.37931034vw;
+    white-space: normal;
+  }
+  .contactBlock .instagramWrapper .sbGrid .sbi_photo {
+    width: calc(50% - 2.759vw);
+    margin: 0 1.37931034vw 2.759vw;
+    border-radius: 1.724vw;
+  }
+  .contactBlock .instagramWrapper .sbGrid .sbi_photo:last-child {
+    display: inline-block;
+  }
+  .contactBlock .instagramWrapper .sbGrid .sbi_photo:nth-child(5) {
+    display: none;
+  }
+  .contactBlock .extraIcon {
+    margin-top: 13.793vw;
+  }
+  .contactBlock .extraIcon .icon {
+    width: 6.724vw;
   }
 }

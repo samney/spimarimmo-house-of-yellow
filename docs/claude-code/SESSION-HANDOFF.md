@@ -1,10 +1,10 @@
 # SESSION HANDOFF
 
-Updated: 2026-07-31 (HOY-090 session)
+Updated: 2026-07-31 (HOY-090 + HOY-100 session)
 
 ## Where we are
 
-`HOY-090` core is built: `/culture` and `/how-we-roll` are live in EN + FR shells with verbatim content, all block layouts, downloaded media, and reference-extracted geometry at all three responsive regimes. `HOY-000`–`HOY-030` DONE; `HOY-050/060/070/080/090` cores built with per-item remaining registers in `QUEUE.md`. See `STATUS.md` for the live position.
+`HOY-090` (Culture, How We Roll) and `HOY-100` (Connect) cores are built: verbatim content, reference-extracted geometry at all three regimes, downloaded media, and a fully verified contact-form pipeline (client+server Zod, honeypot fake-success, 5/10min rate limit, JSONL storage substitute, notification contract). Owner direction 2026-07-31: **CMS track (HOY-040/120) goes last**; priority is 100% fidelity of the public site. Remaining public surface: `/cookies` + 404, then fidelity convergence (GSAP set pieces, pixel diffs, axe). See `STATUS.md` + per-item registers in `QUEUE.md`.
 
 ## To resume
 
@@ -25,6 +25,8 @@ claude --model fable
 - The reddish "[ 01 ]" header index in HOY-020 captures is a mid-animation state — live computed color is yellow (culture) / ink (how-we-roll).
 - 404s on local runs for `/connect` + `/cookies` are Next prefetches of not-yet-built routes (HOY-100 + cookies page) — not media failures.
 - Pending owner gates (not blockers): Supabase credentials (HOY-040), email/anti-spam keys (HOY-100) — `BLOCKERS.md`.
+- HOY-100 contact stack: `lib/contact/{schema,store,rate-limit}.ts` + `app/actions/contact.ts` + `components/public/pages/{ContactForm,Clocks,ConnectPage,WorksBlock}.tsx`. Submissions land in gitignored `.data/contact-submissions.jsonl` (contains QA probe entries — safe to delete). Env contract for the owner: `EMAIL_PROVIDER_API_KEY`, `CONTACT_NOTIFY_TO`.
+- `.env.example` is deny-listed for agent file access in this session's permission settings — it could not be read or updated; the owner should sync the two contact env names above into it (or loosen the deny rule to `.env` / `.env.local` only).
 - Repo-wide `prettier --check` fails on some pre-existing files (older sessions' drift); gates were enforced on files touched this session. A dedicated format-sync commit is a candidate chore.
 
 ## Completion goal (persistent)

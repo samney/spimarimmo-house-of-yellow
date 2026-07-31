@@ -1,0 +1,212 @@
+{
+ "title": "Connect - HOY | House Of Yellow",
+ "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+ "bodyCls": "cmplz-marketing cmplz-statistics cmplz-preferences cmplz-functional cmplz-eu cmplz-optin",
+ "blocks": [
+  {
+   "cls": "contactBlock",
+   "text": "Let’s connect Your move. Whether you’ve got a wild idea, a tight deadline or just want to explore what’s possible we’re all ears. Drop us a line. Or better yet: let’s meet. [ 01 ] Eindhoven (CEST)03:24:29 Dubai (GMT+4)05:24:29 Miami (GMT-5)21:24:29 How to connect info@houseofyellow.nl +31 6 20002644 SEND US A MESSAGE SEND US A MESSAGESEND US A MESSAGESEND US A MESSAGESEND US A MESSAGESEND US A MESSAGE SEND US A MESSAGESEND US A MESSAGESEND US A MESSAGESEND US A MESSAGESEND US A MESSAGE Fill in our form: Name Email address Your message Thanks for your message! We’ll be in touch shortly. Sold out Ahoy, packed from front to back 🔥 We cap Team HOY back on the road with StreetGasm in Spain New gorilla in town 👀 made for @josephklibansky #3 Some Philips HUE x HOY fun. Loved working with you Working on a new amazing project together with @oc Someone is getting ready for tonight ❤️‍🔥 A new ho",
+   "headings": [
+    {
+     "tag": "h1",
+     "cls": "normalTitle",
+     "text": "Your move. Whether you’ve got a wild idea, a tight deadline or just want to explore what’s possible we’re all ears. Drop us a line. Or better yet: let’s meet."
+    }
+   ],
+   "links": [
+    {
+     "href": "mailto:info@houseofyellow.nl",
+     "cls": "",
+     "text": "info@houseofyellow.nl"
+    },
+    {
+     "href": "tel:+31620002644",
+     "cls": "",
+     "text": "+31 6 20002644"
+    },
+    {
+     "href": "https://www.linkedin.com/company/houseofyellow/",
+     "cls": "socialLink",
+     "text": ""
+    },
+    {
+     "href": "https://www.instagram.com/hoy/",
+     "cls": "socialLink",
+     "text": ""
+    },
+    {
+     "href": "https://api.whatsapp.com/send?phone=31620002644",
+     "cls": "button whatsappButton",
+     "text": "SEND US A MESSAGE SEND US A MESSAGESEND US A MESSAGESEND US A MESSAGESEND US A MESSAGESEND US A MESS"
+    },
+    {
+     "href": "https://www.instagram.com/p/DWUHeAMjD5q/",
+     "cls": "sbi_photo",
+     "text": "Sold out Ahoy, packed from front to back 🔥 We cap"
+    },
+    {
+     "href": "https://www.instagram.com/reel/DJeOfpMtGkw/",
+     "cls": "sbi_photo",
+     "text": "Team HOY back on the road with StreetGasm in Spain"
+    },
+    {
+     "href": "https://www.instagram.com/reel/DIDy46FtOOj/",
+     "cls": "sbi_photo",
+     "text": "New gorilla in town 👀 made for @josephklibansky #3"
+    },
+    {
+     "href": "https://www.instagram.com/p/DEe58t-sSAu/",
+     "cls": "sbi_photo",
+     "text": "Some Philips HUE x HOY fun. Loved working with you"
+    },
+    {
+     "href": "https://www.instagram.com/reel/C94YfortjS4/",
+     "cls": "sbi_photo",
+     "text": "Working on a new amazing project together with @oc"
+    },
+    {
+     "href": "https://www.instagram.com/reel/C9FVjw4NBfn/",
+     "cls": "sbi_photo",
+     "text": "Someone is getting ready for tonight ❤️‍🔥 A new ho"
+    }
+   ],
+   "vids": [],
+   "imgs": [
+    {
+     "src": "https://houseofyellow.nl/wp-content/themes/hoy/assets/img/load.gif",
+     "alt": "loader",
+     "cls": "",
+     "w": 72,
+     "h": 72
+    },
+    {
+     "src": "https://houseofyellow.nl/wp-content/uploads/sb-instagram-feed-images/658146087_18540199234067304_8230938069231233851_nlow.webp",
+     "alt": "Sold out Ahoy, packed from front to back 🔥  We captured the night with a full multi camera setup and delivered the final video within 48 hours.  Broederliefde delivered a powerful show that had the entire room moving from the first beat to the last.  Posting this a bit late after some busy months at HOY with big projects, but we’re back.  More coming soon. Stay tuned 🫶 📸 - @nikkivantoorn 📸 - @byjohnhnry",
+     "cls": "",
+     "w": 216,
+     "h": 216
+    },
+    {
+     "src": "https://houseofyellow.nl/wp-content/uploads/sb-instagram-feed-images/497005579_1224965355686347_548266337378109635_nlow.webp",
+     "alt": "Team HOY back on the road with StreetGasm in Spain 🇪🇸 Capturing the madness 🔥 HOY x StreetGasm. Trailer is loading...",
+     "cls": "",
+     "w": 216,
+     "h": 216
+    },
+    {
+     "src": "https://houseofyellow.nl/wp-content/uploads/sb-instagram-feed-images/488756439_1186453836490893_3065902587404372197_nlow.webp",
+     "alt": "New gorilla in town 👀 made for @josephklibansky #3d #artwork",
+     "cls": "",
+     "w": 216,
+     "h": 216
+    },
+    {
+     "src": "https://houseofyellow.nl/wp-content/uploads/sb-instagram-feed-images/472436246_18456528322067304_2201999254957078804_nlow.webp",
+     "alt": "Some Philips HUE x HOY fun. Loved working with you guys @philipshue 💡🍀❤️",
+     "cls": "",
+     "w": 216,
+     "h": 216
+    },
+    {
+     "src": "https://houseofyellow.nl/wp-content/uploads/sb-instagram-feed-images/628458263_25409749618725886_4244813579454029329_nlow.webp",
+     "alt": "Working on a new amazing project together with @oceancoyacht super excited!! Hope you guys like the behind the scenes video.. more coming soon..  Special thanks to @florisvanbergen 💛🙏🏼",
+     "cls": "",
+     "w": 216,
+     "h": 216
+    },
+    {
+     "src": "https://houseofyellow.nl/wp-content/uploads/sb-instagram-feed-images/502748375_689909777173012_7895818995744332711_nlow.webp",
+     "alt": "Someone is getting ready for tonight ❤️‍🔥\nA new hoy video which we made for @donyellmalen . May the best team win👌🏽 🇳🇱vs🇹🇷  @euro2024 @oranje @onsoranje \n#oranje #turkiye #hoy #3d #3dmax #football \n#euro2024",
+     "cls": "",
+     "w": 216,
+     "h": 216
+    }
+   ],
+   "bgs": []
+  },
+  {
+   "cls": "cultureWorkBlock",
+   "text": "The works Every frame tells our story too, of passion, agility, and the pursuit of brilliance. This is Made by Yellow. A showcase of the work we proudly shaped together with our partners. [ 02 ] MADE BY YELLOW MADE BY YELLOWMADE BY YELLOWMADE BY YELLOWMADE BY YELLOWMADE BY YELLOW MADE BY YELLOWMADE BY YELLOWMADE BY YELLOWMADE BY YELLOWMADE BY YELLOW CORPORATECOMMERCIALS TAKE A LOOK Oceanco – Leviathan Views7.100.000Delivery time2 wks production + 2 wks post ARTISTSCOMMERCIALS TAKE A LOOK La Fuente x AMG Views5.800.000Delivery time1 week pre-production + 2 shoot days ARTISTSEVENTS+1 TAKE A LOOK Broederliefde – Rotterdam Ahoy Views1.900.000Delivery time8 days",
+   "headings": [],
+   "links": [
+    {
+     "href": "/made-by-yellow/",
+     "cls": "button dark",
+     "text": "MADE BY YELLOW MADE BY YELLOWMADE BY YELLOWMADE BY YELLOWMADE BY YELLOWMADE BY YELLOW MADE BY YELLOW"
+    },
+    {
+     "href": "https://houseofyellow.nl/project/oceanco-leviathan/",
+     "cls": "project dark inview",
+     "text": "CORPORATECOMMERCIALS TAKE A LOOK Oceanco – Leviathan Views7.100.000Delivery time2 wks production + 2"
+    },
+    {
+     "href": "https://houseofyellow.nl/project/la-fuente-x-amg/",
+     "cls": "project dark inview",
+     "text": "ARTISTSCOMMERCIALS TAKE A LOOK La Fuente x AMG Views5.800.000Delivery time1 week pre-production + 2 "
+    },
+    {
+     "href": "https://houseofyellow.nl/project/broederliefde-rotterdam-ahoy/",
+     "cls": "project dark inview",
+     "text": "ARTISTSEVENTS+1 TAKE A LOOK Broederliefde – Rotterdam Ahoy Views1.900.000Delivery time8 days"
+    }
+   ],
+   "vids": [
+    {
+     "url": "https://player.vimeo.com/progressive_redirect/playback/1196251477/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=70f9bc93e15bafe70bd44d18d4f5981eea77d1a20cb4ff13ac6ebc5af2c60fc7",
+     "poster": "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-3_11_33-600x439.jpg",
+     "parentCls": "innerImage playerBackground"
+    },
+    {
+     "url": "https://player.vimeo.com/progressive_redirect/playback/1204605394/rendition/540p/file.mp4%20%28540p%29.mp4?loc=external&signature=6f225ac4ed8b7012af0121ac7d6197687acfe18c46888a8d957d7d97cee94e28",
+     "poster": "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-3_11_36-600x439.jpg",
+     "parentCls": "innerImage playerBackground"
+    },
+    {
+     "url": "https://player.vimeo.com/progressive_redirect/playback/1194133383/rendition/720p/file.mp4%20%28720p%29.mp4?loc=external&signature=12f23c73bf99c03452f3443dcc1a8994c00d1b1c466e9aa615002a31c6883c36",
+     "poster": "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-1_26_7-600x800.jpg",
+     "parentCls": "innerImage playerBackground"
+    }
+   ],
+   "imgs": [],
+   "bgs": [
+    "https://houseofyellow.nl/wp-content/uploads/2026/05/Comp-3_11_33-600x439.jpg"
+   ]
+  }
+ ],
+ "clockEls": [
+  {
+   "cls": "text timeZone",
+   "tag": "div",
+   "text": "03:24:29"
+  },
+  {
+   "cls": "text timeZone",
+   "tag": "div",
+   "text": "05:24:29"
+  },
+  {
+   "cls": "text timeZone",
+   "tag": "div",
+   "text": "21:24:29"
+  }
+ ],
+ "formHTML": "<form action=\"/connect/#wpcf7-f6-o1\" method=\"post\" class=\"wpcf7-form init\" aria-label=\"Contactformulier\" novalidate=\"novalidate\" data-status=\"init\"><fieldset class=\"hidden-fields-container\"><input type=\"hidden\" name=\"_wpcf7\" value=\"6\"><input type=\"hidden\" name=\"_wpcf7_version\" value=\"6.1.6\"><input type=\"hidden\" name=\"_wpcf7_locale\" value=\"nl_NL\"><input type=\"hidden\" name=\"_wpcf7_unit_tag\" value=\"wpcf7-f6-o1\"><input type=\"hidden\" name=\"_wpcf7_container_post\" value=\"0\"><input type=\"hidden\" name=\"_wpcf7_posted_data_hash\" value=\"\"><input type=\"hidden\" name=\"_wpcf7_recaptcha_response\" value=\"\"></fieldset><div class=\"fields\"><div class=\"field\"><p><label for=\"name\" class=\"fixedLabel\">Name</label><br> <span class=\"wpcf7-form-control-wrap\" data-name=\"nameVisitor\"><input size=\"40\" maxlength=\"400\" class=\"wpcf7-form-control wpcf7-text wpcf7-validates-as-required\" id=\"name\" aria-required=\"true\" aria-invalid=\"false\" value=\"\" type=\"text\" name=\"nameVisitor\" required=\"required\"></span></p></div><div class=\"field\"><p><label for=\"email\" class=\"fixedLabel\">Email address</label><br> <span class=\"wpcf7-form-control-wrap\" data-name=\"email\"><input size=\"40\" maxlength=\"400\" class=\"wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email\" id=\"email\" aria-required=\"true\" aria-invalid=\"false\" value=\"\" type=\"email\" name=\"email\" required=\"required\"></span></p></div><div class=\"field\"><p><label for=\"message\" class=\"fixedLabel\">Your message</label><br> <span class=\"wpcf7-form-control-wrap\" data-name=\"message\"><textarea cols=\"40\" rows=\"10\" maxlength=\"2000\" class=\"wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required\" id=\"message\" aria-required=\"true\" aria-invalid=\"false\" name=\"message\" required=\"required\"></textarea></span></p></div><div class=\"submitWrapper\"><div class=\"buttonWrapper\"><p><input class=\"wpcf7-form-control wpcf7-submit has-spinner submitButton button hoverLink\" type=\"submit\" value=\"Submit message\"></p></div></div></div><div class=\"wpcf7-response-output\" aria-hidden=\"true\"></div></form>",
+ "sbiCount": 31,
+ "clockSampleLater": [
+  {
+   "cls": "text timeZone",
+   "tag": "div",
+   "text": "03:24:31"
+  },
+  {
+   "cls": "text timeZone",
+   "tag": "div",
+   "text": "05:24:31"
+  },
+  {
+   "cls": "text timeZone",
+   "tag": "div",
+   "text": "21:24:31"
+  }
+ ]
+}

@@ -50,3 +50,6 @@ qa/reference/**/*.jpg
 qa/reference/**/*.jpeg
 qa/recordings/*.webm
 
+# Local contact-submission store (substitute until Supabase, HOY-100)
+/.data/
+

@@ -12,7 +12,7 @@ Status legend: `—` not started · `REF` reference captured · `IMPL` built · 
 | `/made-by-yellow/`                             | —           | —       | —       | —           | —    | —    | —           | grid/list/filter states          |
 | `/culture/`                                    | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/culture2--*`  |
 | `/how-we-roll/`                                | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/hwr2--*`      |
-| `/connect/`                                    | —           | —       | —       | —           | —    | —    | —           | form + times masked (dynamic)    |
+| `/connect/`                                    | REF         | IMPL    | shell   | form ✓      | —    | —    | —           | `qa/implementation/connect--*`; form states evidenced (invalid/success/rate-limited); clocks = dynamic region |
 | `/cookies/`                                    | —           | —       | —       | —           | —    | —    | —           |                                  |
 | 404                                            | —           | —       | —       | —           | —    | —    | —           |                                  |
 | `/project/oceanco-leviathan/`                  | —           | —       | —       | —           | —    | —    | —           |                                  |
