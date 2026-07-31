@@ -50,6 +50,13 @@ qa/reference/**/*.jpg
 qa/reference/**/*.jpeg
 qa/recordings/*.webm
 
+# Large local video corpus: keep out of Git; deploy through external object/CDN storage.
+/public/videos/
+
+# Codex-generated audit evidence and local runtime output.
+/qa/codex/
+/.codex-server.*.log
+/test-results/
+
 # Local contact-submission store (substitute until Supabase, HOY-100)
 /.data/
-
