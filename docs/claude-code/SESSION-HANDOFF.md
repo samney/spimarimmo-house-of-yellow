@@ -4,10 +4,10 @@ Updated: 2026-08-01
 
 ## Checkpoint
 
-- `main@4ee1131f9e325dd4ce865d4036238bdccb38a626`
+- `main@a8847a5039f347babc2fec2dc48bc39d3d8810c4`
 - PR #4 / ENG-014B: merged
-- MIG-000: active
-- OPS-001: next after migration merge
+- PR #5 / MIG-000: merged; migration commit `d29776d9e4e1269e809fd2c118d8fc27100a2556`
+- OPS-001: implemented on `claude/ops-001`; draft PR open, pending independent review and owner merge
 - ENG-014C–015: pending
 - SPIMAR transformation: gated by ENG-015
 
@@ -15,19 +15,15 @@ Updated: 2026-08-01
 
 Read `CLAUDE.md` and its required files. Work only on the active queue item.
 
-For MIG-000:
+For OPS-001 review:
 
-- documentation/control-plane paths only;
-- local corpus validation passed: 165 files, phase counts 8/8/13/3, valid YAML,
-  zero active broken links, zero empty/temp files, and a valid checksum manifest;
-- preserve the 31 disclosed historical archive link exceptions without inventing targets;
-- close or explicitly carry blockers MIG-1, MIG-2 and MIG-3;
-- prove zero application-source or lockfile changes;
-- publish a draft PR and stop;
-- require a fresh independent Claude review before owner merge.
+- review the real diff of `.github/workflows/quality-gates.yml`, `qa/verify-migration-manifest.mjs`, `package.json` and the control-plane updates;
+- verify workflow security: `permissions: contents: read`, `pull_request` (not `pull_request_target`), no secret usage, SHA-pinned actions, `pnpm install --frozen-lockfile`, lockfile-keyed pnpm store cache, per-ref concurrency;
+- confirm the migration-manifest gate verifies against commit `d29776d` and tolerates only the one documented archival line-ending exception (`ba2b9903…` LF blob);
+- confirm real green GitHub Actions runs on the PR before approval.
 
-After MIG-000 merge, start a new branch/session for OPS-001. After OPS-001 merge, start ENG-014C directly from latest `origin/main`.
+After OPS-001 merge, start ENG-014C on a fresh branch/session directly from latest `origin/main`.
 
 ## Persistent constraints
 
-Claude is the sole source-code implementer from ENG-014C. Hero remains poster-only through ENG-015. No SPIMAR transformation before the baseline freeze. Historical patches are provenance only.
+Claude is the sole source-code implementer from ENG-014C. Hero remains poster-only through ENG-015. No SPIMAR transformation before the baseline freeze. Historical patches are provenance only. Portability blockers MIG-1, MIG-2 and MIG-3 remain open in `BLOCKERS.md`.

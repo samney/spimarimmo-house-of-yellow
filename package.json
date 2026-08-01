@@ -16,6 +16,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "validate:media": "node qa/validate-media.mjs",
+    "verify:migration": "node qa/verify-migration-manifest.mjs",
     "test": "vitest run",
     "test:routes": "node qa/validate-routes.mjs",
     "test:e2e": "playwright test"
