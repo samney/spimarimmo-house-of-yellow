@@ -37,7 +37,12 @@ checks the MIG-000 manifest against the immutable migration commit `d29776d`;
 it accepts exactly one documented line-ending exception (the archival
 `HOUSE-OF-YELLOW-CLAUDE-CODE-MASTER-PROMPT.md`, whose manifest hash records the
 original mixed CRLF/LF bytes while Git stores the LF-normalized blob
-`ba2b9903…`). Any other mismatch fails the gate.
+`ba2b9903…`). Any other mismatch fails the gate. From the post-OPS-001
+control-plane hardening changeset, the verifier additionally requires exactly
+164 manifest entries and rejects duplicate paths and identical duplicate
+entries; distinct files sharing a content hash remain accepted, and the
+documented exception stays self-invalidating (it fails the gate if it stops
+matching its pinned conditions).
 
 Run applicable gates for source-affecting tasks. Documentation-only MIG-000 must at minimum prove unchanged application tree and may reuse the merged ENG-014B gate evidence plus a clean build/test run from the migration branch.
 
@@ -45,7 +50,7 @@ Run applicable gates for source-affecting tasks. Documentation-only MIG-000 must
 
 | Item | Required evidence |
 |---|---|
-| `OPS-001` | Workflow YAML, trigger/permissions/concurrency/cache review, successful Actions run, no secret exposure — implemented as `.github/workflows/quality-gates.yml` (three jobs: migration-manifest, static-gates, build-and-browser; `permissions: contents: read`; `pull_request`/`push: main` triggers; per-ref concurrency; SHA-pinned actions; frozen-lockfile install); Actions evidence recorded on the OPS-001 PR |
+| `OPS-001` | Workflow YAML, trigger/permissions/concurrency/cache review, successful Actions run, no secret exposure — implemented as `.github/workflows/quality-gates.yml` (three jobs: migration-manifest, static-gates, build-and-browser; `permissions: contents: read`; `pull_request`/`push: main` triggers; per-ref concurrency; SHA-pinned actions; frozen-lockfile install); Actions evidence recorded on PR #6; merged at `f57a87f`; post-merge Quality Gates run `30689774539` on `main` succeeded |
 | `ENG-014C` | All 21 project routes mapped; representative desktop/mobile captures; block order, hero offsets, statistics, narratives, media pairs, credits and next-project states |
 | `ENG-014D` | Approved-media manifest, fallbacks, request success, rights/source record, no broken media, hero poster-only |
 | `ENG-014E` | Motion, focus, keyboard, reduced motion, axe, overflow, browser and visual-diff evidence at eight viewports |

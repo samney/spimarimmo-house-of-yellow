@@ -17,15 +17,30 @@ const MIGRATION_COMMIT = "d29776d9e4e1269e809fd2c118d8fc27100a2556";
  * The manifest was generated from a Windows working tree (core.autocrlf=input).
  * Exactly one archival file contained mixed CRLF/LF line endings on disk, so
  * its manifest hash records the original byte stream while Git stores the
- * LF-normalized blob. Both hashes identify the same accepted content; any
- * other mismatch is a genuine integrity failure.
+ * LF-normalized blob. Both hashes identify the same accepted content and both
+ * are pinned: the exception applies only while the manifest still records
+ * exactly the documented mixed-line-ending hash and the migration commit still
+ * stores exactly the documented LF blob. Any drift on either side is a genuine
+ * integrity failure.
  */
 const LINE_ENDING_EXCEPTIONS = new Map([
   [
     "docs/spimar/archive/early-gpt-work/90-House-of-Yellow-Reference-Foundation/HOUSE-OF-YELLOW-CLAUDE-CODE-MASTER-PROMPT.md",
-    "ba2b99032f8f98bc8a9fe7478c4c8cfab580f6ecd4706bf0da59df85ab3dd0ed",
+    {
+      manifestHash: "ada7e41eb38de80599c3408b8a5e70cf56040e90bc34ae340cc0d207ea9bc4e2",
+      blobHash: "ba2b99032f8f98bc8a9fe7478c4c8cfab580f6ecd4706bf0da59df85ab3dd0ed",
+    },
   ],
 ]);
+
+/*
+ * MIG-000 migrated exactly 164 checksummed overlay files (the manifest itself
+ * is self-excluded). The manifest is immutable evidence: a changed entry
+ * count, a duplicated path or an identical duplicated line is an integrity
+ * failure. Distinct files may legitimately share a content hash (archive copy
+ * plus canonical copy), so duplicate hashes alone are not defects.
+ */
+const EXPECTED_ENTRY_COUNT = 164;
 
 const repositoryRoot = join(fileURLToPath(new URL("..", import.meta.url)));
 const manifestPath = join(repositoryRoot, "docs/migration/MIGRATION-MANIFEST.sha256");
@@ -55,6 +70,25 @@ const entries = readFileSync(manifestPath, "utf8")
   });
 
 const errors = [];
+
+if (entries.length !== EXPECTED_ENTRY_COUNT) {
+  errors.push(
+    `manifest entry count changed: expected ${EXPECTED_ENTRY_COUNT}, found ${entries.length}`,
+  );
+}
+
+const seenPaths = new Map();
+for (const { hash, path } of entries) {
+  const previousHash = seenPaths.get(path);
+  if (previousHash === undefined) {
+    seenPaths.set(path, hash);
+  } else if (previousHash === hash) {
+    errors.push(`identical duplicate manifest entry: ${path}`);
+  } else {
+    errors.push(`duplicate manifest path with conflicting hashes: ${path}`);
+  }
+}
+
 let exactMatches = 0;
 const documentedExceptions = [];
 
@@ -68,9 +102,14 @@ for (const { hash, path } of entries) {
   }
 
   const actual = createHash("sha256").update(blob).digest("hex");
+  const exception = LINE_ENDING_EXCEPTIONS.get(path);
   if (actual === hash) {
     exactMatches += 1;
-  } else if (LINE_ENDING_EXCEPTIONS.get(path) === actual) {
+  } else if (
+    exception !== undefined &&
+    hash === exception.manifestHash &&
+    actual === exception.blobHash
+  ) {
     documentedExceptions.push(path);
   } else {
     errors.push(`checksum mismatch: ${path} manifest=${hash} blob=${actual}`);
