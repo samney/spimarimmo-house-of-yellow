@@ -1,0 +1,341 @@
+<div id="spimar-ds-review">
+  <style>
+    #spimar-ds-review {
+      width: 100%;
+      color: var(--foreground);
+    }
+
+    #spimar-ds-review .ds-stack {
+      display: grid;
+      gap: 24px;
+    }
+
+    #spimar-ds-review .ds-header {
+      display: grid;
+      gap: 12px;
+    }
+
+    #spimar-ds-review .ds-heading-row,
+    #spimar-ds-review .ds-meta-row,
+    #spimar-ds-review .ds-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    #spimar-ds-review .ds-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    #spimar-ds-review .ds-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    #spimar-ds-review .ds-section {
+      display: grid;
+      gap: 16px;
+    }
+
+    #spimar-ds-review .ds-swatch {
+      min-height: 64px;
+      display: flex;
+      align-items: end;
+      padding: 12px;
+    }
+
+    #spimar-ds-review .ds-swatch-primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+    }
+
+    #spimar-ds-review .ds-swatch-ink {
+      background: var(--foreground);
+      color: var(--background);
+    }
+
+    #spimar-ds-review .ds-swatch-neutral {
+      background: var(--muted);
+      color: var(--muted-foreground);
+    }
+
+    #spimar-ds-review .ds-type-scale {
+      display: grid;
+      gap: 12px;
+    }
+
+    #spimar-ds-review .ds-campaign {
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    #spimar-ds-review .ds-rule {
+      height: 2px;
+      background: var(--border);
+      width: 100%;
+    }
+
+    #spimar-ds-review .ds-rule-primary {
+      background: var(--primary);
+      width: 42%;
+    }
+
+    #spimar-ds-review .ds-preview {
+      min-height: 300px;
+      display: grid;
+      gap: 20px;
+      align-content: start;
+    }
+
+    #spimar-ds-review .ds-hero-signal {
+      height: 8px;
+      background: var(--primary);
+    }
+
+    #spimar-ds-review .ds-fact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    #spimar-ds-review .ds-fact {
+      display: grid;
+      gap: 4px;
+    }
+
+    #spimar-ds-review .ds-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding-inline-start: 20px;
+    }
+
+    #spimar-ds-review .ds-proof-value {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    #spimar-ds-review .ds-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    #spimar-ds-review .ds-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    #spimar-ds-review .ds-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    #spimar-ds-review [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 720px) {
+      #spimar-ds-review .ds-grid,
+      #spimar-ds-review .ds-two,
+      #spimar-ds-review .ds-fact-grid,
+      #spimar-ds-review .ds-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #spimar-ds-review .ds-action-row {
+        align-items: stretch;
+      }
+    }
+  </style>
+
+  <div class="ds-stack">
+    <div class="ds-header">
+      <div class="ds-heading-row">
+        <div>
+          <div class="text-small">SPIMARIMMO · Phase 07</div>
+          <h2>Design system review</h2>
+        </div>
+        <span class="viz-badge">Gate 7 ready</span>
+      </div>
+      <div class="ds-meta-row text-small">
+        <span>IDT-01A · Signal + Moroccan editorial depth</span>
+        <span>17 templates · 48 UXF targets · 144 states</span>
+      </div>
+    </div>
+
+    <div class="viz-controls" aria-label="Design system review sections">
+      <button type="button" class="btn btn-primary" data-ds-view="foundations" aria-pressed="true">Foundations</button>
+      <button type="button" class="btn" data-ds-view="components" aria-pressed="false">Components</button>
+      <button type="button" class="btn" data-ds-view="states" aria-pressed="false">States</button>
+      <button type="button" class="btn" data-ds-view="coverage" aria-pressed="false">Coverage</button>
+    </div>
+
+    <section data-ds-panel="foundations" class="ds-section" aria-label="Foundations">
+      <div class="ds-grid">
+        <div class="card ds-section">
+          <h3>Color roles</h3>
+          <div class="ds-swatch ds-swatch-primary"><code>#EFC337 · signal/action</code></div>
+          <div class="ds-swatch ds-swatch-ink"><code>#000000 · ink/stage</code></div>
+          <div class="ds-swatch ds-swatch-neutral"><code>white/gray · support</code></div>
+        </div>
+
+        <div class="card ds-section">
+          <h3>Type hierarchy</h3>
+          <div class="ds-type-scale">
+            <h1 class="ds-campaign">PARIS 2026</h1>
+            <h2>Moroccan property, present.</h2>
+            <p>Alexandria for multilingual body and UI. Barlow Condensed is the Latin display candidate.</p>
+            <div class="text-small">Source · period · definition · caveat</div>
+          </div>
+        </div>
+
+        <div class="card ds-section">
+          <h3>Geometry</h3>
+          <div class="ds-rule ds-rule-primary"></div>
+          <div class="ds-rule"></div>
+          <ul class="ds-list">
+            <li>4px spacing foundation</li>
+            <li>12px primary control radius</li>
+            <li>44px minimum primary target</li>
+            <li>12 / 8 / 6 / 4-column grid</li>
+            <li>Rare functional elevation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section data-ds-panel="components" class="ds-section" aria-label="Representative components" hidden>
+      <label class="form-label" for="ds-component-select">Representative component
+        <select class="form-select" id="ds-component-select">
+          <option value="hero">Campaign hero</option>
+          <option value="event">Canonical event card</option>
+          <option value="proof">Proof block</option>
+          <option value="form">Durable form outcome</option>
+          <option value="rtl">Arabic RTL event header</option>
+        </select>
+      </label>
+      <div class="ds-two">
+        <div id="ds-component-preview" class="card ds-preview" aria-live="polite"></div>
+        <div class="card ds-section">
+          <h3>Invariant anatomy</h3>
+          <ul id="ds-component-anatomy" class="ds-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section data-ds-panel="states" class="ds-section" aria-label="State system" hidden>
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
+            <tr><th>Domain</th><th>Explicit states</th><th>Truth guard</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Event lifecycle</td><td>Undated, scheduled, live, completed, archived, postponed, cancelled</td><td>Never controls both audience actions automatically</td></tr>
+            <tr><td>Exhibitor availability</td><td>Planned, open, limited, sold out, closed</td><td>Never closes visitor registration</td></tr>
+            <tr><td>Visitor registration</td><td>Planned, open, waitlist, full, closed</td><td>Never closes exhibitor sales</td></tr>
+            <tr><td>Form</td><td>Idle, invalid, submitting, durable success, duplicate, delayed, recoverable, terminal, rate limited, closed</td><td>Provider success is separate from durable submission</td></tr>
+            <tr><td>Media</td><td>Poster, ready, loading, denied, constrained, failed, withdrawn, reduced motion</td><td>No blank hero; meaning and action remain</td></tr>
+            <tr><td>Content</td><td>Default, partial, empty, stale, replaced, expired, withdrawn, locale unavailable</td><td>No invented filler, metric, logo, date, or quote</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section data-ds-panel="coverage" class="ds-section" aria-label="Coverage" hidden>
+      <div class="viz-grid">
+        <div class="card viz-stat"><div>Template families</div><div class="viz-stat-value">17 / 17</div><div class="text-small">Complete component contract</div></div>
+        <div class="card viz-stat"><div>Wireframe targets</div><div class="viz-stat-value">48 / 48</div><div class="text-small">All UXF IDs mapped</div></div>
+        <div class="card viz-stat"><div>Identity invariants</div><div class="viz-stat-value">11 / 11</div><div class="text-small">Black/gold and truth controls</div></div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead><tr><th>Surface range</th><th>Targets</th><th>Primary system families</th></tr></thead>
+          <tbody>
+            <tr><td>Homepage</td><td>UXF-001–004</td><td>Shell, signal hero, events, proof, media, actions</td></tr>
+            <tr><td>Exhibitor and proof</td><td>UXF-005–012</td><td>Method, evidence, cases, offers, status</td></tr>
+            <tr><td>Events</td><td>UXF-013–024</td><td>Destination, canonical event, programme, participants, practical, gallery</td></tr>
+            <tr><td>Conversion</td><td>UXF-025–034</td><td>Visitor, forms, consent, confirmation, provider recovery</td></tr>
+            <tr><td>Content and trust</td><td>UXF-035–042</td><td>Resources, editorial, institutional, contact, legal</td></tr>
+            <tr><td>System</td><td>UXF-043–048</td><td>Confirmation, recovery, locale, shell, states, preview</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById("spimar-ds-review");
+      if (!root) return;
+
+      const views = root.querySelectorAll("[data-ds-view]");
+      const panels = root.querySelectorAll("[data-ds-panel]");
+      const select = root.querySelector("#ds-component-select");
+      const preview = root.querySelector("#ds-component-preview");
+      const anatomy = root.querySelector("#ds-component-anatomy");
+
+      const specimens = {
+        hero: {
+          html: '<div class="ds-hero-signal"></div><div class="text-small">SPIMARIMMO · PARIS · 2026</div><h1>Moroccan property, present in the markets that matter.</h1><p>Meet international audiences through one clear edition, method, and commercial path.</p><div class="ds-action-row"><button type="button" class="btn btn-primary">Request a proposal</button><a href="#" class="btn">Explore the event</a></div>',
+          anatomy: ["Parent identity", "City / edition / date", "Event lifecycle", "Audience proposition", "Documentary media or poster fallback", "Truthful primary action"]
+        },
+        event: {
+          html: '<div class="ds-hero-signal"></div><div class="ds-meta-row"><span class="viz-badge">Scheduled</span><span class="text-small">Updated 31 July 2026</span></div><h2>SPIMARIMMO — Paris</h2><div class="ds-fact-grid"><div class="ds-fact"><strong>Date</strong><span>To be confirmed</span></div><div class="ds-fact"><strong>Exhibitors</strong><span>Requests open</span></div><div class="ds-fact"><strong>Visitors</strong><span>Registration planned</span></div></div><div class="ds-action-row"><a href="#" class="btn btn-primary">View the event</a><a href="#" class="btn">Exhibitor information</a></div>',
+          anatomy: ["Canonical event link", "City and edition identity", "Lifecycle and verified date state", "Independent exhibitor availability", "Independent visitor availability", "Context-derived next action"]
+        },
+        proof: {
+          html: '<div class="text-small">ACTUAL RESULT · APPROVAL REQUIRED</div><h2>Evidence stays beside the promise.</h2><div class="ds-proof-value"><h1>—</h1><span>No approved value published</span></div><p>Definition, population, period, source, caveat, approval state, and related event remain part of the component.</p><a href="#" class="btn">Review the method</a>',
+          anatomy: ["Claim or mechanism", "Expected / actual / qualitative status", "Value and unit when approved", "Definition and scope", "Source and period", "Caveat and related action"]
+        },
+        form: {
+          html: '<div class="text-small">EXHIBITOR ENQUIRY · DURABLY STORED</div><h2>We received your request.</h2><p>The commercial team has your event context. Email delivery is delayed; your submission is not lost.</p><form class="ds-form"><div class="ds-form-grid"><div class="ds-field"><label class="form-label" for="ds-name">Name</label><input class="form-control" id="ds-name" value="Example contact" readonly></div><div class="ds-field"><label class="form-label" for="ds-event">Event</label><input class="form-control" id="ds-event" value="Paris" readonly></div></div><div class="ds-action-row"><button type="button" class="btn btn-primary">Continue</button><button type="button" class="btn">Use another contact route</button></div></form>',
+          anatomy: ["Retained event / audience context", "Purpose and recipient", "Durable outcome", "Separate provider status", "Privacy-safe displayed facts", "Approved fallback and next step"]
+        },
+        rtl: {
+          html: '<div dir="rtl" class="ds-section"><div class="ds-hero-signal"></div><div class="text-small">سبــيماريمو · باريس · 2026</div><h1>العقار المغربي حاضر في الأسواق الأكثر أهمية.</h1><div class="ds-fact-grid"><div class="ds-fact"><strong>حالة الحدث</strong><span>مُعلن</span></div><div class="ds-fact"><strong>العارضون</strong><span>الطلبات مفتوحة</span></div><div class="ds-fact"><strong>الزوار</strong><span>التسجيل قريباً</span></div></div><div class="ds-action-row"><button type="button" class="btn btn-primary">اطلبوا عرضاً</button><a href="#" class="btn">تفاصيل الحدث</a></div></div>',
+          anatomy: ["Real RTL document direction", "Unmirrored wordmark and media", "Script-composed headline", "Direction-isolated dates and Latin names", "Logical focus and visual order", "Outcome-equivalent Arabic actions"]
+        }
+      };
+
+      function showView(name) {
+        panels.forEach(function (panel) {
+          panel.hidden = panel.getAttribute("data-ds-panel") !== name;
+        });
+        views.forEach(function (button) {
+          const active = button.getAttribute("data-ds-view") === name;
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+          button.classList.toggle("btn-primary", active);
+        });
+      }
+
+      function renderSpecimen(name) {
+        const specimen = specimens[name] || specimens.hero;
+        preview.innerHTML = specimen.html;
+        anatomy.innerHTML = specimen.anatomy.map(function (item) {
+          return "<li>" + item + "</li>";
+        }).join("");
+      }
+
+      views.forEach(function (button) {
+        button.addEventListener("click", function () {
+          showView(button.getAttribute("data-ds-view"));
+        });
+      });
+
+      select.addEventListener("change", function () {
+        renderSpecimen(select.value);
+      });
+
+      renderSpecimen("hero");
+    })();
+  </script>
+</div>

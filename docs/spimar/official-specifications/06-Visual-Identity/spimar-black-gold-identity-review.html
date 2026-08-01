@@ -1,0 +1,311 @@
+<div id="spimar-black-gold-review">
+  <style>
+    #spimar-black-gold-review {
+      --spm-gold: #efc337;
+      --spm-black: #000000;
+      --spm-graphite: #444444;
+      --spm-gray: #878787;
+      --spm-rule: #cccccc;
+      --spm-white: #ffffff;
+      color: var(--foreground);
+      font-size: var(--font-size-base);
+      width: 100%;
+    }
+    #spimar-black-gold-review .spm-controls {
+      margin-bottom: 0.75rem;
+    }
+    #spimar-black-gold-review .spm-status {
+      color: var(--muted-foreground);
+      margin: 0 0 0.75rem;
+    }
+    #spimar-black-gold-review .spm-stage {
+      background: var(--spm-black);
+      color: var(--spm-white);
+      overflow: hidden;
+    }
+    #spimar-black-gold-review .spm-header {
+      align-items: center;
+      border-bottom: 1px solid var(--spm-graphite);
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      padding: 0.9rem 1rem;
+    }
+    #spimar-black-gold-review .spm-brand {
+      color: var(--spm-gold);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+    #spimar-black-gold-review .spm-nav {
+      color: var(--spm-rule);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    #spimar-black-gold-review .spm-cta {
+      background: var(--spm-gold);
+      color: var(--spm-black);
+      font-weight: 500;
+      padding: 0.55rem 0.8rem;
+    }
+    #spimar-black-gold-review .spm-hero {
+      display: grid;
+      gap: 0;
+      grid-template-columns: minmax(0, 1.05fr) minmax(14rem, 0.95fr);
+      min-height: 22rem;
+    }
+    #spimar-black-gold-review .spm-copy {
+      align-content: center;
+      display: grid;
+      gap: 0.8rem;
+      padding: 1.25rem;
+    }
+    #spimar-black-gold-review .spm-kicker {
+      color: var(--spm-gold);
+      font-weight: 500;
+    }
+    #spimar-black-gold-review .spm-headline {
+      font-size: calc(var(--font-size-base) * 2.25);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      margin: 0;
+      max-width: 14ch;
+    }
+    #spimar-black-gold-review .spm-lead {
+      color: var(--spm-rule);
+      margin: 0;
+      max-width: 46ch;
+    }
+    #spimar-black-gold-review .spm-meta {
+      border-inline-start: 3px solid var(--spm-gold);
+      color: var(--spm-white);
+      padding-inline-start: 0.6rem;
+    }
+    #spimar-black-gold-review .spm-media {
+      align-content: end;
+      background: var(--spm-graphite);
+      display: grid;
+      min-height: 18rem;
+      padding: 1rem;
+      position: relative;
+    }
+    #spimar-black-gold-review .spm-media::before {
+      background: var(--spm-gold);
+      content: "";
+      inset: 12% 10% 35% 42%;
+      position: absolute;
+    }
+    #spimar-black-gold-review .spm-media-label {
+      background: var(--spm-gold);
+      color: var(--spm-black);
+      font-weight: 500;
+      padding: 0.5rem;
+      position: relative;
+      width: fit-content;
+      z-index: 1;
+    }
+    #spimar-black-gold-review .spm-proof-grid {
+      background: var(--spm-rule);
+      display: grid;
+      gap: 1px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    #spimar-black-gold-review .spm-proof-cell {
+      align-content: end;
+      background: var(--spm-white);
+      color: var(--spm-black);
+      display: grid;
+      min-height: 9rem;
+      padding: 0.8rem;
+    }
+    #spimar-black-gold-review .spm-proof-cell:first-child {
+      background: var(--spm-gold);
+    }
+    #spimar-black-gold-review .spm-proof-label {
+      color: var(--spm-graphite);
+    }
+    #spimar-black-gold-review .spm-proof-value {
+      font-size: calc(var(--font-size-base) * 1.45);
+      font-weight: 500;
+    }
+    #spimar-black-gold-review .spm-rail {
+      background: var(--spm-white);
+      color: var(--spm-black);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    #spimar-black-gold-review .spm-rail-item {
+      padding: 0.9rem 1rem;
+    }
+    #spimar-black-gold-review .spm-rail-item + .spm-rail-item {
+      border-inline-start: 1px solid var(--spm-rule);
+    }
+    #spimar-black-gold-review .spm-rail-label {
+      color: var(--spm-gray);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    #spimar-black-gold-review .spm-palette {
+      display: grid;
+      gap: 0.5rem;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      margin-top: 0.75rem;
+    }
+    #spimar-black-gold-review .spm-swatch {
+      min-width: 0;
+    }
+    #spimar-black-gold-review .spm-swatch-color {
+      display: block;
+      height: 2.5rem;
+    }
+    #spimar-black-gold-review .spm-swatch-label {
+      display: block;
+      margin-top: 0.25rem;
+      overflow-wrap: anywhere;
+    }
+    #spimar-black-gold-review .spm-gold { background: var(--spm-gold); }
+    #spimar-black-gold-review .spm-black { background: var(--spm-black); }
+    #spimar-black-gold-review .spm-graphite { background: var(--spm-graphite); }
+    #spimar-black-gold-review .spm-gray { background: var(--spm-gray); }
+    #spimar-black-gold-review .spm-rule { background: var(--spm-rule); }
+    #spimar-black-gold-review .spm-white { background: var(--spm-white); border: 1px solid var(--border); }
+    #spimar-black-gold-review .spm-rtl .spm-headline {
+      letter-spacing: 0;
+      max-width: 17ch;
+    }
+    @media (max-width: 560px) {
+      #spimar-black-gold-review .spm-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      #spimar-black-gold-review .spm-nav {
+        display: none;
+      }
+      #spimar-black-gold-review .spm-hero {
+        grid-template-columns: 1fr;
+      }
+      #spimar-black-gold-review .spm-headline {
+        font-size: calc(var(--font-size-base) * 1.75);
+      }
+      #spimar-black-gold-review .spm-rail,
+      #spimar-black-gold-review .spm-palette {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      #spimar-black-gold-review .spm-rail-item + .spm-rail-item {
+        border-inline-start: 0;
+        border-top: 1px solid var(--spm-rule);
+      }
+    }
+  </style>
+
+  <div class="viz-controls spm-controls" aria-label="Representative identity surface">
+    <button type="button" class="btn" data-surface="home" aria-pressed="true">Homepage</button>
+    <button type="button" class="btn" data-surface="event" aria-pressed="false">Event</button>
+    <button type="button" class="btn" data-surface="proof" aria-pressed="false">Proof</button>
+    <button type="button" class="btn" data-surface="rtl" aria-pressed="false">Arabic RTL</button>
+  </div>
+
+  <p class="spm-status" aria-live="polite"></p>
+
+  <section class="card" aria-label="SPIMARIMMO black and gold identity application">
+    <div class="spm-stage"></div>
+  </section>
+
+  <div class="spm-palette" aria-label="Fixed digital palette">
+    <div class="spm-swatch"><span class="spm-swatch-color spm-gold"></span><span class="spm-swatch-label">Gold · #EFC337</span></div>
+    <div class="spm-swatch"><span class="spm-swatch-color spm-black"></span><span class="spm-swatch-label">Black · #000000</span></div>
+    <div class="spm-swatch"><span class="spm-swatch-color spm-graphite"></span><span class="spm-swatch-label">Graphite · #444444</span></div>
+    <div class="spm-swatch"><span class="spm-swatch-color spm-gray"></span><span class="spm-swatch-label">Gray · #878787</span></div>
+    <div class="spm-swatch"><span class="spm-swatch-color spm-rule"></span><span class="spm-swatch-label">Rule · #CCCCCC</span></div>
+    <div class="spm-swatch"><span class="spm-swatch-color spm-white"></span><span class="spm-swatch-label">White · #FFFFFF</span></div>
+  </div>
+
+  <script>
+    (() => {
+      const root = document.getElementById("spimar-black-gold-review");
+      const stage = root.querySelector(".spm-stage");
+      const status = root.querySelector(".spm-status");
+      const buttons = [...root.querySelectorAll("[data-surface]")];
+
+      const surfaces = {
+        home: {
+          kicker: "GLOBAL PLATFORM · EXHIBITOR FIRST",
+          headline: "Moroccan property, present in the markets that matter.",
+          lead: "One international network for editions, evidence, market access and qualified conversations.",
+          action: "Become an exhibitor",
+          media: "Real event + property media",
+          facts: [["Next edition", "City · date · status"], ["Evidence", "Approved case cue"], ["Visitor path", "Discover and pre-register"]]
+        },
+        event: {
+          kicker: "CANONICAL EVENT · TWO AUDIENCE PATHS",
+          headline: "One edition. Clear facts. The right next step.",
+          lead: "Event lifecycle, exhibitor availability and visitor registration remain independent and explicit.",
+          action: "Request a proposal",
+          media: "Edition documentary stage",
+          facts: [["Exhibitors", "Sales state + offer"], ["Visitors", "Registration state"], ["Shared truth", "Venue · programme · access"]]
+        },
+        proof: {
+          kicker: "PROOF · DEFINED, DATED, SOURCED",
+          headline: "The promise matters. Evidence decides.",
+          lead: "Expected delivery, actual outcome, definition, period, source and caveat stay visibly connected.",
+          action: "Review a case",
+          media: "Evidence anatomy",
+          facts: [["Expected", "Approved objective"], ["Delivered", "Verified artifact"], ["Measured", "Source + period + caveat"]]
+        },
+        rtl: {
+          kicker: "المنصة الدولية · الأولوية للعارضين",
+          headline: "العقار المغربي حاضر في الأسواق الأكثر أهمية.",
+          lead: "شبكة دولية واحدة للمعارض والأدلة والوصول إلى الأسواق واللقاءات المؤهلة.",
+          action: "طلب المشاركة كعارض",
+          media: "وسائط حقيقية للمعرض والعقار",
+          facts: [["الدورة المقبلة", "المدينة · التاريخ · الحالة"], ["الأدلة", "حالة موثقة ومعتمدة"], ["مسار الزوار", "الاكتشاف والتسجيل المسبق"]]
+        }
+      };
+
+      function media(surface, selected) {
+        if (selected !== "proof") {
+          return `<div class="spm-media" aria-label="${surface.media}"><span class="spm-media-label">${surface.media}</span></div>`;
+        }
+        return `<div class="spm-proof-grid" aria-label="${surface.media}">
+          <div class="spm-proof-cell"><span class="spm-proof-label">EXPECTED</span><span class="spm-proof-value">Defined</span></div>
+          <div class="spm-proof-cell"><span class="spm-proof-label">DELIVERED</span><span class="spm-proof-value">Verified</span></div>
+          <div class="spm-proof-cell"><span class="spm-proof-label">MEASURED</span><span class="spm-proof-value">Sourced</span></div>
+          <div class="spm-proof-cell"><span class="spm-proof-label">CAVEAT</span><span class="spm-proof-value">Visible</span></div>
+        </div>`;
+      }
+
+      function render(selected) {
+        const surface = surfaces[selected];
+        const rtl = selected === "rtl";
+        const rail = surface.facts.map((fact) => `<div class="spm-rail-item"><span class="spm-rail-label">${fact[0]}</span><span>${fact[1]}</span></div>`).join("");
+        stage.innerHTML = `<div class="${rtl ? "spm-rtl" : ""}"${rtl ? " dir=\"rtl\" lang=\"ar\"" : ""}>
+          <header class="spm-header">
+            <span class="spm-brand">SPIMARIMMO</span>
+            <nav class="spm-nav" aria-label="Preview navigation"><span>Events</span><span>Exhibit</span><span>Proof</span><span>Resources</span><span>Visitors</span></nav>
+            <span class="spm-cta">${surface.action}</span>
+          </header>
+          <div class="spm-hero">
+            <div class="spm-copy">
+              <span class="spm-kicker">${surface.kicker}</span>
+              <h2 class="spm-headline">${surface.headline}</h2>
+              <p class="spm-lead">${surface.lead}</p>
+              <div class="spm-meta">CITY · DATE · STATE</div>
+            </div>
+            ${media(surface, selected)}
+          </div>
+          <div class="spm-rail">${rail}</div>
+        </div>`;
+        status.textContent = "Fixed palette: SPIMAR Gold and Black. The surface changes; the brand colors do not.";
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+          render(button.dataset.surface);
+        });
+      });
+
+      render("home");
+    })();
+  </script>
+</div>

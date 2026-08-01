@@ -1,0 +1,344 @@
+diff --git a/components/public/home/HeroSection.tsx b/components/public/home/HeroSection.tsx
+index 4d96f7c..2cdb252 100644
+--- a/components/public/home/HeroSection.tsx
++++ b/components/public/home/HeroSection.tsx
+@@ -9,7 +9,7 @@ export function HeroSection() {
+       <div className="innerAnimContainer">
+         <div className="background playerBackground">
+           <ResilientVideo
+-            className="mediaPlane--fill"
++            className="mediaPlane--fill heroMediaPlane"
+             videoClassName="video playVideoOnScroll"
+             src={null}
+             poster={MEDIA_POSTERS.heroDesktop}
+diff --git a/components/public/home/home.css b/components/public/home/home.css
+index 412ae95..6f0179e 100644
+--- a/components/public/home/home.css
++++ b/components/public/home/home.css
+@@ -12,6 +12,24 @@
+ .headerBigBlock .background {
+   position: absolute;
+   inset: 0;
++  z-index: 0;
++}
++.headerBigBlock .heroMediaPlane::after {
++  content: "";
++  position: absolute;
++  inset: 0;
++  z-index: 1;
++  pointer-events: none;
++  background:
++    linear-gradient(
++      90deg,
++      rgb(8 13 15 / 78%) 0%,
++      rgb(8 13 15 / 26%) 31%,
++      transparent 48%,
++      rgb(8 13 15 / 22%) 69%,
++      rgb(8 13 15 / 72%) 100%
++    ),
++    linear-gradient(180deg, rgb(8 13 15 / 10%) 0%, transparent 58%, rgb(8 13 15 / 34%) 100%);
+ }
+ .headerBigBlock video {
+   width: 100%;
+@@ -24,6 +42,7 @@
+   top: 50%;
+   transform: translateY(-50%);
+   width: 22.8125vw;
++  z-index: 1;
+ }
+ .headerBigBlock .rightContent {
+   position: absolute;
+@@ -32,6 +51,7 @@
+   transform: translateY(-50%);
+   width: 14.8125vw;
+   text-align: right;
++  z-index: 1;
+ }
+ .headerBigBlock .centerContent {
+   position: absolute;
+@@ -41,6 +61,7 @@
+   width: 13.75vw;
+   height: 13.75vw;
+   color: var(--hoy-yellow);
++  z-index: 1;
+ }
+ .headerBigBlock .centerContent svg {
+   position: absolute;
+@@ -407,6 +428,15 @@
+ 
+ /* ===== Mobile regime ===== */
+ @media (max-width: 580px) {
++  .headerBigBlock .heroMediaPlane::after {
++    background: linear-gradient(
++      180deg,
++      rgb(8 13 15 / 18%) 0%,
++      rgb(8 13 15 / 8%) 38%,
++      rgb(8 13 15 / 30%) 58%,
++      rgb(8 13 15 / 84%) 100%
++    );
++  }
+   .headerBigBlock .leftContent {
+     left: 6.897vw;
+     top: auto;
+diff --git a/middleware.ts b/middleware.ts
+deleted file mode 100644
+index ee82945..0000000
+--- a/middleware.ts
++++ /dev/null
+@@ -1,9 +0,0 @@
+-import createMiddleware from "next-intl/middleware";
+-import { routing } from "./i18n/routing";
+-
+-export default createMiddleware(routing);
+-
+-export const config = {
+-  // Skip API routes, Next internals, and files with extensions (assets).
+-  matcher: "/((?!api|admin|_next|_vercel|.*\\..*).*)",
+-};
+diff --git a/package.json b/package.json
+index dd2724c..f6af54f 100644
+--- a/package.json
++++ b/package.json
+@@ -17,6 +17,7 @@
+     "format:check": "prettier --check .",
+     "validate:media": "node qa/validate-media.mjs",
+     "test": "vitest run",
++    "test:routes": "node qa/validate-routes.mjs",
+     "test:e2e": "playwright test"
+   },
+   "dependencies": {
+diff --git a/playwright.config.ts b/playwright.config.ts
+new file mode 100644
+index 0000000..e50e317
+--- /dev/null
++++ b/playwright.config.ts
+@@ -0,0 +1,22 @@
++import { defineConfig } from "@playwright/test";
++
++const port = Number(process.env.E2E_PORT ?? 3212);
++
++export default defineConfig({
++  testDir: "./tests/e2e",
++  testMatch: "**/*.spec.ts",
++  fullyParallel: false,
++  forbidOnly: Boolean(process.env.CI),
++  retries: process.env.CI ? 1 : 0,
++  workers: 1,
++  use: {
++    baseURL: `http://127.0.0.1:${port}`,
++    trace: "retain-on-failure",
++  },
++  webServer: {
++    command: `node node_modules/next/dist/bin/next start -H 127.0.0.1 -p ${port}`,
++    url: `http://127.0.0.1:${port}`,
++    reuseExistingServer: !process.env.CI,
++    timeout: 60_000,
++  },
++});
+diff --git a/proxy.ts b/proxy.ts
+new file mode 100644
+index 0000000..c689f66
+--- /dev/null
++++ b/proxy.ts
+@@ -0,0 +1,25 @@
++import createMiddleware from "next-intl/middleware";
++import { NextRequest, NextResponse } from "next/server";
++import { routing } from "./i18n/routing";
++
++const handleI18nRouting = createMiddleware(routing);
++
++export default function proxy(request: NextRequest) {
++  const internallyResolvedLocale = request.headers.get("x-next-intl-locale");
++  const firstPathSegment = request.nextUrl.pathname.split("/")[1];
++
++  // Next.js 16 can re-enter Proxy for next-intl's internal default-locale
++  // rewrite during `next dev`/`next start`. Let that already-resolved request
++  // reach the `[locale]` route instead of canonicalizing `/en` back to `/`
++  // and creating a self-redirect response.
++  if (internallyResolvedLocale && firstPathSegment === internallyResolvedLocale) {
++    return NextResponse.next();
++  }
++
++  return handleI18nRouting(request);
++}
++
++export const config = {
++  // Skip API routes, Next internals, and files with extensions (assets).
++  matcher: "/((?!api|admin|_next|_vercel|.*\\..*).*)",
++};
+diff --git a/qa/validate-routes.mjs b/qa/validate-routes.mjs
+new file mode 100644
+index 0000000..7b0455f
+--- /dev/null
++++ b/qa/validate-routes.mjs
+@@ -0,0 +1,118 @@
++import { spawn } from "node:child_process";
++import { setTimeout as delay } from "node:timers/promises";
++import { fileURLToPath } from "node:url";
++import path from "node:path";
++import process from "node:process";
++import projectDetails from "../lib/content/project-details.json" with { type: "json" };
++
++const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
++const port = Number(process.env.ROUTE_TEST_PORT ?? 3211);
++const origin = `http://127.0.0.1:${port}`;
++const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "next");
++
++const coreRoutes = ["/", "/made-by-yellow", "/culture", "/how-we-roll", "/connect", "/cookies"];
++const projectRoutes = projectDetails.map(({ slug }) => `/project/${slug}`);
++const publicRoutes = [...coreRoutes, ...projectRoutes];
++
++async function waitForServer(server) {
++  for (let attempt = 0; attempt < 120; attempt += 1) {
++    if (server.exitCode !== null) {
++      throw new Error(`next start exited before becoming ready (code ${server.exitCode})`);
++    }
++
++    try {
++      const response = await fetch(origin, { redirect: "manual" });
++      if (response.status > 0) return;
++    } catch {
++      // The server is still starting.
++    }
++
++    await delay(250);
++  }
++
++  throw new Error(`next start did not become ready at ${origin}`);
++}
++
++async function inspectRoute(route, expectedStatus) {
++  const response = await fetch(`${origin}${route}`, {
++    redirect: "manual",
++    headers: { "accept-language": "en-US,en;q=0.9" },
++  });
++  const body = await response.text();
++  const errors = [];
++
++  if (response.status !== expectedStatus) {
++    errors.push(`expected ${expectedStatus}, received ${response.status}`);
++  }
++  if (expectedStatus === 200 && response.headers.get("x-robots-tag") !== "noindex, nofollow, noarchive") {
++    errors.push("missing preview/staging X-Robots-Tag protection");
++  }
++  if (expectedStatus === 200 && body.includes("/videos/")) {
++    errors.push("rendered HTML contains an unavailable /videos/ request");
++  }
++
++  return errors.map((error) => `${route}: ${error}`);
++}
++
++const server = spawn(process.execPath, [nextBin, "start", "-H", "127.0.0.1", "-p", String(port)], {
++  cwd: projectRoot,
++  env: {
++    ...process.env,
++    VERCEL_ENV: "preview",
++    NEXT_PUBLIC_SITE_URL: "",
++  },
++  stdio: ["ignore", "pipe", "pipe"],
++});
++
++let serverOutput = "";
++server.stdout.on("data", (chunk) => {
++  serverOutput += chunk;
++});
++server.stderr.on("data", (chunk) => {
++  serverOutput += chunk;
++});
++
++try {
++  await waitForServer(server);
++
++  const checks = [
++    ...publicRoutes.map((route) => [route, 200]),
++    ...publicRoutes.map((route) => [`/fr${route === "/" ? "" : route}`, 200]),
++    ["/this-route-does-not-exist", 404],
++    ["/fr/this-route-does-not-exist", 404],
++  ];
++  const results = await Promise.all(checks.map(([route, status]) => inspectRoute(route, status)));
++  const errors = results.flat();
++
++  for (const [route, location] of [
++    ["/en", "/"],
++    ["/en/culture", "/culture"],
++  ]) {
++    const response = await fetch(`${origin}${route}`, { redirect: "manual" });
++    if (response.status !== 307 || response.headers.get("location") !== location) {
++      errors.push(
++        `${route}: expected 307 to ${location}, received ${response.status} to ${response.headers.get("location")}`,
++      );
++    }
++  }
++
++  if (errors.length > 0) {
++    console.error(`Route validation failed with ${errors.length} defect(s):`);
++    for (const error of errors) console.error(`- ${error}`);
++    process.exitCode = 1;
++  } else {
++    console.log(
++      `Route validation passed: ${publicRoutes.length} English routes, ${publicRoutes.length} French-prefixed routes, two localized 404s, and canonical /en redirects.`,
++    );
++  }
++} catch (error) {
++  console.error(error instanceof Error ? error.message : error);
++  if (serverOutput.trim()) console.error(serverOutput.trim());
++  process.exitCode = 1;
++} finally {
++  server.kill("SIGTERM");
++  await Promise.race([
++    new Promise((resolve) => server.once("exit", resolve)),
++    delay(2_000).then(() => server.kill("SIGKILL")),
++  ]);
++}
+diff --git a/tests/e2e/routes.spec.ts b/tests/e2e/routes.spec.ts
+new file mode 100644
+index 0000000..9c9aa6a
+--- /dev/null
++++ b/tests/e2e/routes.spec.ts
+@@ -0,0 +1,33 @@
++import { expect, test } from "@playwright/test";
++
++const coreRoutes = ["/", "/made-by-yellow", "/culture", "/how-we-roll", "/connect", "/cookies"];
++
++for (const route of coreRoutes) {
++  test(`${route} renders without unavailable video requests`, async ({ request }) => {
++    const response = await request.get(route, { maxRedirects: 0 });
++    expect(response.status()).toBe(200);
++    expect(response.headers()["x-robots-tag"]).toBe("noindex, nofollow, noarchive");
++    expect(await response.text()).not.toContain("/videos/");
++  });
++}
++
++test("French-prefixed route renders", async ({ request }) => {
++  const response = await request.get("/fr/culture", { maxRedirects: 0 });
++  expect(response.status()).toBe(200);
++});
++
++test("explicit English prefix redirects to the canonical route", async ({ request }) => {
++  const response = await request.get("/en/culture", { maxRedirects: 0 });
++  expect(response.status()).toBe(307);
++  expect(response.headers().location).toBe("/culture");
++});
++
++test("hero remains poster-only", async ({ page }) => {
++  await page.goto("/");
++  await expect(page.locator(".headerBigBlock .heroMediaPlane")).toHaveAttribute(
++    "data-media-state",
++    "unavailable",
++  );
++  await expect(page.locator(".headerBigBlock .heroMediaPlane picture")).toBeVisible();
++  await expect(page.locator(".headerBigBlock video")).toHaveCount(0);
++});
+diff --git a/vitest.config.mjs b/vitest.config.mjs
+new file mode 100644
+index 0000000..ef8a8ef
+--- /dev/null
++++ b/vitest.config.mjs
+@@ -0,0 +1,7 @@
++import { configDefaults, defineConfig } from "vitest/config";
++
++export default defineConfig({
++  test: {
++    exclude: [...configDefaults.exclude, "tests/e2e/**"],
++  },
++});
