@@ -5,7 +5,7 @@ Updated: 2026-08-01
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current verified `main`: the PR #10 merge commit. Per `D-015` no further closeout PR is created, so the exact merge SHA and post-merge check evidence are carried into the first SPIMAR transformation commit on `claude/spimar-transformation-phase-1`
+- Accepted application baseline: `main@e048fdde7bdf52992ff258870147bf70c64295e9`, the PR #10 merge commit, tagged `hoy-clone-baseline-eng-015`
 - Latest merged item: `ENG-015` accelerated foundation closure, PR #10; Stage A closed under `D-015`
 - ENG-014C control-plane closeout: merged through PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba` (reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent)
 - ENG-014C: merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
@@ -29,7 +29,8 @@ Updated: 2026-08-01
 - `ENG-014D`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. House of Yellow non-hero media delivery is no longer a foundation blocker; the requirements move to the SPIMAR content/media phase and SPIMAR-owned media replaces reference media.
 - `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. Motion, header, footer, responsive-shell and visual-convergence requirements move to `SPI-030`/`SPI-040`, with the accessibility, browser and regression sweep in `QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed; the whole-page ≤2% criterion **did not pass**.
 - `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`. Authoritative gates and a live smoke review passed; accepted limitations L1–L9 are recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. Stage A is closed.
-- SPIMAR transformation: **active**. `SPI-000` is the current item, executed as SPIMAR Transformation Phase 1 — Brand, UX Architecture and Global Experience.
+- SPIMAR strategy contract: documentation normalization in review under `D-016`.
+- SPIMAR application implementation: **not started**. First eligible Claude Code item after owner merge is `SPI-000 / P1.0 / TRF-000`.
 - `D-013` is in effect: no historical patch may be applied. `D-012` expired by its own terms at ENG-015 acceptance; this does not authorize enabling video.
 - Portability blockers MIG-1, MIG-2 and MIG-3 remain disclosed in `BLOCKERS.md`.
 
@@ -47,11 +48,10 @@ Updated: 2026-08-01
 
 ## Next safe action
 
-Work `SPI-000` on branch `claude/spimar-transformation-phase-1`, branched from
-the ENG-015 `main`. Begin with the fresh repository/residue/conflict audit, then
-proceed through SPIMAR tokens and identity, header/navigation/footer, IA from
-the approved specifications, homepage content structure, responsive foundations
-and motion direction.
+Independently review and owner-merge the bounded Phase 1 documentation
+normalization. Then start `SPI-000 / P1.0 / TRF-000` in Claude Code from the
+latest approved `origin/main`, using
+`docs/spimar/transformation-phase-1/20-CLAUDE-CODE-EXECUTION-HANDOFF.md`.
 
 Do not continue polishing the House of Yellow clone, do not reconstruct or
 source House of Yellow media, and do not start a later `SPI-*` item early.

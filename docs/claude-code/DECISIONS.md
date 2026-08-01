@@ -213,3 +213,41 @@ replaced outright rather than re-measured against House of Yellow.
 - Accepted limitations transferred to SPIMAR are enumerated in
   `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
 - Immutable `ENG-014B` and `ENG-014C` evidence is untouched.
+
+## D-016 — 2026-08-01 — Canonical SPIMAR Phase 1 documentation system and PDF traceability before implementation
+
+**Authority.** Explicit repository-owner instruction to finish the complete
+SPIMAR/360 Agency strategy planning package, normalize the real repository
+documentation, cover the earlier specification-PDF work, and then continue
+implementation in Claude Code.
+
+**Decision.**
+
+1. The normalized 22-file package under
+   `docs/spimar/transformation-phase-1/` is the active Stage B implementation
+   contract.
+2. `docs/spimar/governance/` controls source identity, documentation
+   lifecycle, terminology, the single Stage/SPI/TRF/Gate dependency graph,
+   CMS/CRM acceptance levels, and PDF-to-implementation traceability.
+3. The original 20-page specification PDF, redesigned 24-page PDF, and editable
+   PPTX remain source/presentation artifacts. Implementable requirements must
+   resolve to Markdown, a bounded `TRF-*` package, and an evidence gate.
+4. The redesigned PDF's editorial presentation system does not override the
+   approved SPIMAR website identity or the `PUBLIC_EDITORIAL`,
+   `CMS_EDITORIAL`, and `CRM_OPERATIONAL` design-system modes.
+5. `SPI-*` identifiers remain the repository queue. `TRF-*` identifiers are
+   nested bounded work packages, not a competing queue.
+6. Historical `CMS_POC_ACCEPTED` and `CRM_POC_ACCEPTED` wording means
+   capability only. Production integration and release readiness require
+   separate acceptance flags.
+7. The byte-identical active-root copy of
+   `SPIMAR_HOY_PARITY_RECOVERY_CMS_CRM_MASTER_PLAN.md` is removed. Its
+   archived copy remains immutable provenance.
+8. This normalization is documentation-only. It does not start or claim
+   application, CMS, CRM, media, or production implementation.
+
+**Consequence.** After this documentation PR is independently reviewed and
+owner-merged, Claude Code starts only `SPI-000 / P1.0 / TRF-000` from the
+latest approved `origin/main`. `ENG-014D` and `ENG-014E` remain
+superseded/transferred under `D-015`; their useful requirements remain
+absorbed into SPIMAR-native work.

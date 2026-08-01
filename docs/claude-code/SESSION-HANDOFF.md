@@ -4,7 +4,7 @@ Updated: 2026-08-01
 
 ## Checkpoint
 
-- `main@17b697430a55fa3a5835c9c25fef927301b9ec87`
+- Accepted application baseline: `main@e048fdde7bdf52992ff258870147bf70c64295e9`, tagged `hoy-clone-baseline-eng-015`
 - PR #4 / ENG-014B: merged
 - PR #5 / MIG-000: merged; migration commit `d29776d9e4e1269e809fd2c118d8fc27100a2556`
 - PR #6 / OPS-001: merged; post-merge Quality Gates run `30689774539` succeeded
@@ -16,22 +16,25 @@ Updated: 2026-08-01
 - PR #10 / ENG-015: accelerated foundation acceptance under `D-015`; Stage A closed; accepted limitations L1–L9 in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`; baseline tag `hoy-clone-baseline-eng-015`
 - `D-014` / `PAR-P1-004`: preserved and carried forward **unmet**. The whole-page ≤2% criterion did not pass. It transfers to `SPI-040`
 - SPIMAR transformation: **active** at `SPI-000`
+- Phase 1 strategy package: normalized in a bounded documentation-only review under `D-016`; application implementation has not started
 
 ## Resume rule
 
 Read `CLAUDE.md` and its required files. Work only on the active queue item.
 
-Stage A is closed. The active item is `SPI-000` — SPIMAR Transformation Phase 1,
-brand, UX architecture and global experience — on branch
-`claude/spimar-transformation-phase-1`.
+Stage A is closed. Independently review and owner-merge the Phase 1
+documentation normalization. Then start `SPI-000 / P1.0 / TRF-000` on a fresh
+`claude/spimar-transformation-phase-1` branch from the latest approved
+`origin/main`.
 
-To work `SPI-000`:
+To begin implementation after that merge:
 
 - read the approved specifications under
   `docs/spimar/official-specifications/` before changing any surface;
-- start with the fresh repository/residue/conflict audit, then SPIMAR tokens and
-  identity, header/navigation/footer, IA, homepage content structure, responsive
-  foundations and motion direction;
+- read `docs/spimar/README.md`, the governance preflight, and the Phase 1
+  handoff;
+- execute `TRF-000` only: verify the factual baseline, inventories, gates,
+  limitations, and proposed file ownership;
 - replace House of Yellow reference identity and content rather than polishing
   it; the clone is a starting point, not a target;
 - do not reconstruct or source House of Yellow media. `lib/media/video-manifest.json`

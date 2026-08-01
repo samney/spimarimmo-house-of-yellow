@@ -11,13 +11,15 @@ Claude Code is the sole source-code implementer from `ENG-014C` onward. GPT/Code
 3. `docs/claude-code/QUEUE.md`
 4. `docs/claude-code/DECISIONS.md`
 5. `docs/claude-code/BLOCKERS.md`
-6. `docs/spimar/IMPLEMENTATION-ORDER.md`
-7. `docs/spimar/DECISION-SUPERSESSION.md`
-8. `docs/claude-code/VALIDATION-MATRIX.md`
-9. `docs/migration/MIGRATION-COVERAGE.md`
-10. Specification files linked by the active queue item
+6. `docs/spimar/README.md`
+7. `docs/spimar/governance/DELIVERY-MAP.md`
+8. `docs/spimar/transformation-phase-1/00-START-HERE.md`
+9. `docs/spimar/IMPLEMENTATION-ORDER.md`
+10. `docs/spimar/DECISION-SUPERSESSION.md`
+11. `docs/claude-code/VALIDATION-MATRIX.md`
+12. Specification files linked by the active queue/work-package item
 
-Update `STATUS.md`, `QUEUE.md`, `VALIDATION-MATRIX.md`, and `SESSION-HANDOFF.md` before ending a work session.
+Update only the control documents whose facts changed. The lifecycle and DRY policy is `docs/spimar/governance/DOCUMENT-CONTROL.md`.
 
 ## Authority order
 
@@ -36,7 +38,8 @@ Historical chats and archives are provenance, not automatic authority. Unknown i
 - Stage A is **closed**. `ENG-014B` (PR #4), `MIG-000` (PR #5), `OPS-001` (PR #6), control-plane hardening (PR #7), `ENG-014C` (PR #8), the ENG-014C control-plane closeout (PR #9) and `ENG-015` (PR #10) are merged.
 - `ENG-014D` and `ENG-014E` are **SUPERSEDED / TRANSFERRED** under `D-015` — never completed, never passed. Their requirements moved to the SPIMAR phases.
 - The House of Yellow foundation is accepted for transformation with the limitations recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. The whole-page ≤2% criterion did **not** pass; `D-014` and `PAR-P1-004` are preserved, not closed.
-- Active item: `SPI-000` — SPIMAR Transformation Phase 1 (brand, UX architecture, global experience). Do not continue polishing the House of Yellow clone.
+- The normalized SPIMAR Transformation Phase 1 strategy contract is under `docs/spimar/transformation-phase-1/` with exact source, PDF, dependency, and acceptance governance under `docs/spimar/governance/`.
+- Application implementation has not started. After the documentation PR is independently reviewed and owner-merged, the first Claude Code item is `SPI-000 / P1.0 / TRF-000`. Do not continue polishing the House of Yellow clone.
 - `D-013` is in effect: no historical patch may be applied. `D-012` has expired by its own terms, which does not authorize enabling video — media activation is a SPIMAR decision and `lib/media/video-manifest.json` still declares 0 deployable assets.
 - Do not reconstruct or source House of Yellow media. SPIMAR-owned content replaces reference content.
 - The canonical `main` SHA and post-merge check evidence are carried in `docs/claude-code/STATUS.md`.
@@ -59,4 +62,3 @@ Historical chats and archives are provenance, not automatic authority. Unknown i
 ## Historical artifacts
 
 Archive files are immutable evidence. Do not apply a historical patch unless the active pre-freeze contract explicitly authorizes it. After `ENG-015`, no historical patch may be applied.
-

@@ -2,15 +2,15 @@
 
 Updated: 2026-08-01
 
-| ID | Current decision | Supersedes |
-|---|---|---|
-| DS-001 | Claude Code is the sole source-code implementer from ENG-014C | Mixed GPT/Codex/Claude implementation |
-| DS-002 | ENG-014B is complete and merged through PR #4 at `4ee1131…` | Candidate/pending ENG-014B status |
-| DS-003 | MIG-000 then OPS-001 precede ENG-014C | Old migration → ENG-014B queue |
-| DS-004 | After ENG-015, restart SPIMAR transformation from approved specs while retaining the frozen baseline | Reapplying old patches or layering SPIMAR over stale clone paths |
-| DS-005 | SPIMAR identity/content/IA/CMS/CRM remain outside clone convergence | Mixed clone/product adaptation |
-| DS-006 | Hero remains poster-only through ENG-015 | Early hero-video activation |
-| DS-007 | Historical patches/packages are provenance and permanently non-executable after ENG-015 | Patch-driven post-freeze implementation |
-| DS-008 | Repository-native approved files control; raw chats are provenance only | Depending on hidden GPT memory or chat summaries |
-| DS-009 | `IDT-01A` and black/gold remain canonical; August logo boards are direction-in-review | Treating a generated logo board as implicit approval |
-
+| ID     | Current decision                                                                                                                                              | Supersedes                                                                           |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| DS-001 | Claude Code is the sole source-code implementer from ENG-014C                                                                                                 | Mixed GPT/Codex/Claude implementation                                                |
+| DS-002 | ENG-014B is complete and merged through PR #4 at `4ee1131…`                                                                                                   | Candidate/pending ENG-014B status                                                    |
+| DS-003 | MIG-000 then OPS-001 precede ENG-014C                                                                                                                         | Old migration → ENG-014B queue                                                       |
+| DS-004 | After ENG-015, restart SPIMAR transformation from approved specs while retaining the frozen baseline                                                          | Reapplying old patches or layering SPIMAR over stale clone paths                     |
+| DS-005 | SPIMAR identity/content/IA/CMS/CRM remain outside clone convergence                                                                                           | Mixed clone/product adaptation                                                       |
+| DS-006 | Hero remains poster-only through ENG-015                                                                                                                      | Early hero-video activation                                                          |
+| DS-007 | Historical patches/packages are provenance and permanently non-executable after ENG-015                                                                       | Patch-driven post-freeze implementation                                              |
+| DS-008 | Repository-native approved files control; raw chats are provenance only                                                                                       | Depending on hidden GPT memory or chat summaries                                     |
+| DS-009 | `IDT-01A` and black/gold remain canonical; August logo boards are direction-in-review                                                                         | Treating a generated logo board as implicit approval                                 |
+| DS-010 | The normalized `transformation-phase-1/` package plus `governance/` controls Stage B execution; the archived parity-first master plan remains provenance only | Using the duplicate active-root parity plan or the transfer ZIP as current authority |
