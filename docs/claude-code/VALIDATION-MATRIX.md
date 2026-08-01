@@ -72,3 +72,44 @@ Requirements traceability; exact scope; desktop/tablet/mobile; FR/EN/Arabic/RTL;
 - All active relative Markdown links resolve; archive exceptions remain untouched.
 - `pnpm verify:migration`, `pnpm validate:media`, `git diff --check`, and documentation-format baseline protection pass.
 - No application implementation starts in the documentation PR.
+
+Merged as PR #11 at `643b912f2ff8bd128f857481a2f2427544b5c1c9`; post-merge
+Quality Gates run `30723261546` and Vercel deployment
+`DgsTqUuJiwU2Jzv9Biz8jYXv6viW` passed. **PR #11 carries no GitHub-native review
+record** — `reviews` and `reviewDecision` are both empty. Disclosed, not
+resolved.
+
+## SPI-000 / P1.0 / TRF-000 — foundation baseline freeze
+
+Full record: [`../spimar-phase-1/FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md).
+Entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; branch
+`claude/spi-000-trf-000-baseline-freeze` (`D-017`). All gates were run locally
+on the entry tree with zero tracked modifications.
+
+| Gate                               |  Exit | Result                                                                                                                                                         |
+| ---------------------------------- | ----: | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install --frozen-lockfile`   |     0 | lockfile up to date; no dependency or lockfile change                                                                                                          |
+| `pnpm verify:migration`            |     0 | 164 entries, 163 exact matches, 1 documented line-ending exception                                                                                             |
+| `pnpm validate:media`              |     0 | 0 deployable assets; 154 audited mappings fall back safely                                                                                                     |
+| `pnpm test`                        |     0 | 5 files, 63 tests passed                                                                                                                                       |
+| `pnpm typecheck`                   |     0 | `tsc --noEmit` clean under strict                                                                                                                              |
+| `pnpm lint`                        |     0 | 0 errors, 1 pre-existing warning (limitation `L7`)                                                                                                             |
+| `pnpm format:check`                | **2** | **pre-existing** Prettier debt: 148 tracked files at the entry SHA, plus untracked owner files. Not a CI gate; not a regression; repository not mass-formatted |
+| `pnpm build`                       |     0 | 58 static pages; 10 route entries + middleware                                                                                                                 |
+| `pnpm test:routes`                 |     0 | 27 EN routes, 27 FR routes, 2 localized 404s, canonical `/en` redirect                                                                                         |
+| `pnpm exec playwright test --list` |     0 | 31 tests across 3 spec files                                                                                                                                   |
+| `pnpm test:e2e`                    |     0 | 31 passed                                                                                                                                                      |
+| `git diff --check`                 |     0 | clean                                                                                                                                                          |
+
+- No divergence from the `ENG-015` gate figures. `format:check` is newly
+  reported with an explicit exit code where `ENG-015` recorded a qualitative
+  note; the underlying condition is unchanged.
+- Inventories captured: routes/locales, layouts, 28 components, 15 lib modules,
+  forms, motion/media primitives, 5 unit suites, 3 Playwright specs, media
+  manifests, CI workflow, Vercel deployment.
+- Accepted limitations `L1`–`L9` reconfirmed **open and transferred**; none
+  closed or reinterpreted. `PAR-P1-004` and the unmet whole-page ≤2% criterion
+  are preserved.
+- Untracked evidence preserved; `MIG-3` ZIP re-verified at 1,875,071 bytes and
+  SHA-256 `6d47f7df…357ee51c`. No destructive Git command was run.
+- Application tree unchanged: documentation and control plane only.

@@ -1,6 +1,6 @@
 # SESSION HANDOFF
 
-Updated: 2026-08-01
+Updated: 2026-08-02
 
 ## Checkpoint
 
@@ -15,26 +15,30 @@ Updated: 2026-08-01
 - ENG-014D and ENG-014E: **SUPERSEDED / TRANSFERRED** under `D-015`. Neither ran; neither passed. Never record them as implemented or validated
 - PR #10 / ENG-015: accelerated foundation acceptance under `D-015`; Stage A closed; accepted limitations L1–L9 in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`; baseline tag `hoy-clone-baseline-eng-015`
 - `D-014` / `PAR-P1-004`: preserved and carried forward **unmet**. The whole-page ≤2% criterion did not pass. It transfers to `SPI-040`
-- SPIMAR transformation: **active** at `SPI-000`
-- Phase 1 strategy package: normalized in a bounded documentation-only review under `D-016`; application implementation has not started
+- SPIMAR transformation: **active** at `SPI-000`, status `IN PROGRESS`
+- PR #11 / `D-016`: Phase 1 documentation normalization **merged** at `643b912f2ff8bd128f857481a2f2427544b5c1c9` (reviewed head `cc4e0f29ab59ef907c161a4818e89985cc3ff16f` preserved as the second parent); post-merge Quality Gates run `30723261546` and Vercel deployment `DgsTqUuJiwU2Jzv9Biz8jYXv6viW` passed. **No GitHub-native review record exists on PR #11** — disclosed, not resolved
+- `TRF-000`: foundation baseline frozen at entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; record in `docs/spimar-phase-1/FOUNDATION-BASELINE.md`; all gates green except the pre-existing, non-CI Prettier baseline (`format:check` exit 2, 148 tracked files, unchanged by this work). Awaiting independent review and owner merge
+- `D-017`: branch `claude/spimar-transformation-phase-1` at `478ffc1538ae882e6102df5d23a92b69fa895335` is **abandoned** — branched from the pre-PR-#11 baseline, superseded package path, contains `TRF-001` scope, never reviewed. Retained on `origin` as provenance; must not receive further development. Phase 1 runs on `claude/spi-000-trf-000-baseline-freeze`
+- Application implementation has not started
 
 ## Resume rule
 
 Read `CLAUDE.md` and its required files. Work only on the active queue item.
 
-Stage A is closed. Independently review and owner-merge the Phase 1
-documentation normalization. Then start `SPI-000 / P1.0 / TRF-000` on a fresh
-`claude/spimar-transformation-phase-1` branch from the latest approved
-`origin/main`.
+Stage A is closed and the Phase 1 documentation normalization is merged.
+`TRF-000` is implemented on `claude/spi-000-trf-000-baseline-freeze` and awaits
+independent review and owner merge. Do not start `TRF-001` before that merge.
 
-To begin implementation after that merge:
+To continue after that merge:
 
 - read the approved specifications under
   `docs/spimar/official-specifications/` before changing any surface;
 - read `docs/spimar/README.md`, the governance preflight, and the Phase 1
   handoff;
-- execute `TRF-000` only: verify the factual baseline, inventories, gates,
-  limitations, and proposed file ownership;
+- execute `TRF-001` only: Phase 1 repository control files and the traceability
+  map. Take the frozen entry SHA, inventories, gates, limitations and proposed
+  file-ownership map from `docs/spimar-phase-1/FOUNDATION-BASELINE.md` rather
+  than re-deriving them;
 - replace House of Yellow reference identity and content rather than polishing
   it; the clone is a starting point, not a target;
 - do not reconstruct or source House of Yellow media. `lib/media/video-manifest.json`

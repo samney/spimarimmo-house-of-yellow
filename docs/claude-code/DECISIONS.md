@@ -251,3 +251,45 @@ owner-merged, Claude Code starts only `SPI-000 / P1.0 / TRF-000` from the
 latest approved `origin/main`. `ENG-014D` and `ENG-014E` remain
 superseded/transferred under `D-015`; their useful requirements remain
 absorbed into SPIMAR-native work.
+
+## D-017 — 2026-08-02 — Abandon the pre-existing `claude/spimar-transformation-phase-1` branch; `TRF-000` starts clean from the entry SHA
+
+**Authority.** Explicit repository-owner decision during `TRF-000` kickoff,
+after the session stopped and reported the conflict rather than reusing the
+branch.
+
+**Context.** `20-CLAUDE-CODE-EXECUTION-HANDOFF.md` line 44 instructs Claude Code
+to create `claude/spimar-transformation-phase-1` from the latest approved
+`origin/main`. That branch already existed locally and on `origin` at
+`478ffc1538ae882e6102df5d23a92b69fa895335`, with unexpected provenance:
+
+1. it was branched from `e048fdde7bdf52992ff258870147bf70c64295e9` (PR #10), so
+   it predates the `D-016` normalization and `origin/main` is not an ancestor
+   of it;
+2. it adopts the Phase 1 package at the superseded path
+   `docs/SPIMAR-Transformation-Phase-1/` and lacks the normalized
+   `docs/spimar/transformation-phase-1/` that `D-016` § 1 made canonical;
+3. it already contains a `docs/spimar-phase-1/FOUNDATION-BASELINE.md` recording
+   the **pre-PR-#11** entry SHA, plus `TRF-001` scope;
+4. it authors a competing `D-016` text;
+5. it has no pull request and was never independently reviewed or merged.
+
+**Decision.**
+
+1. `478ffc1` is **abandoned**. It is not reset, deleted, force-updated or
+   reused, and it remains on `origin` as provenance pending a separate owner
+   action.
+2. `TRF-000` executes on a new branch, `claude/spi-000-trf-000-baseline-freeze`,
+   created from the entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`.
+3. The `FOUNDATION-BASELINE.md` content on `478ffc1` carries no authority. The
+   canonical baseline is the freshly measured
+   `docs/spimar-phase-1/FOUNDATION-BASELINE.md` produced by this work package.
+4. `20-CLAUDE-CODE-EXECUTION-HANDOFF.md` is left unedited. It is a static
+   strategy document; this decision supersedes its branch name under the
+   `CLAUDE.md` authority order, which places the latest explicit owner decision
+   first.
+
+**Consequence.** The contracted branch name is superseded for Phase 1 execution.
+Any later session must take the branch name from `STATUS.md` and this decision,
+not from the handoff document. No history was rewritten and no owner-visible
+work was discarded.
