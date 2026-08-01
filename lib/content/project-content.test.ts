@@ -7,6 +7,7 @@ import {
   getAllProjects,
   getNextProject,
   getProject,
+  validateProjectDetails,
   type ProjectBlock,
 } from "./project-content";
 
@@ -358,5 +359,150 @@ describe("generator reproducibility", () => {
     );
 
     expect(() => buildProjectDetails(raw, contract)).toThrow(/no audited page record/);
+  });
+});
+
+/* A cast alone would let a malformed record reach the renderer, where an
+   unsupported block type renders as a silently missing section. These prove the
+   load-time validator turns each such record into a loud failure. */
+describe("project-details.json runtime validation", () => {
+  const clone = () => structuredClone(PROJECT_DETAILS) as unknown as Record<string, unknown>[];
+  const mutate = (change: (data: Record<string, unknown>[]) => void) => {
+    const data = clone();
+    change(data);
+    return () => validateProjectDetails(data);
+  };
+
+  it("accepts the committed model unchanged", () => {
+    expect(() => validateProjectDetails(clone())).not.toThrow();
+  });
+
+  it("rejects a non-array payload", () => {
+    expect(() => validateProjectDetails({ slug: "oceanco-leviathan" })).toThrow(
+      /expected an array/,
+    );
+  });
+
+  it("rejects an unsupported block class", () => {
+    expect(
+      mutate((data) => {
+        (data[0].blocks as { cls: string }[])[3].cls = "projectThreeImagesBlock";
+      }),
+    ).toThrow(/unsupported block class "projectThreeImagesBlock"/);
+  });
+
+  it("rejects a block whose type disagrees with its class", () => {
+    expect(
+      mutate((data) => {
+        (data[0].blocks as { type: string }[])[1].type = "fullLoop";
+      }),
+    ).toThrow(/requires type "stats"/);
+  });
+
+  it("rejects an unsupported surface shape", () => {
+    expect(
+      mutate((data) => {
+        (data[0].blocks as { surfaces?: { shape: string }[] }[])[0].surfaces![0].shape = "diamond";
+      }),
+    ).toThrow(/unsupported shape "diamond"/);
+  });
+
+  it("rejects an unsupported surface kind", () => {
+    expect(
+      mutate((data) => {
+        (data[0].blocks as { surfaces?: { kind: string }[] }[])[0].surfaces![0].kind = "audio";
+      }),
+    ).toThrow(/unsupported kind "audio"/);
+  });
+
+  it("rejects a media block with the wrong surface count", () => {
+    expect(
+      mutate((data) => {
+        const blocks = data[0].blocks as { cls: string; surfaces?: unknown[] }[];
+        const pair = blocks.find((block) => block.cls === "projectTwoImagesBlock")!;
+        pair.surfaces = pair.surfaces!.slice(0, 1);
+      }),
+    ).toThrow(/needs 2 surface\(s\), got 1/);
+  });
+
+  it("rejects an image surface that still carries a video id", () => {
+    expect(
+      mutate((data) => {
+        const porsche = data.find((record) => record.slug === "porsche-employer-branding")!;
+        (porsche.blocks as { surfaces?: { videoId: string | null }[] }[])[0].surfaces![0].videoId =
+          "1196251480";
+      }),
+    ).toThrow(/image surfaces must not carry a videoId/);
+  });
+
+  it("rejects a narrative block with no paragraphs", () => {
+    expect(
+      mutate((data) => {
+        const blocks = data[0].blocks as { type: string; paragraphs?: string[] }[];
+        blocks.find((block) => block.type === "text")!.paragraphs = [];
+      }),
+    ).toThrow(/needs a non-empty paragraphs array/);
+  });
+
+  it("rejects a duplicate slug", () => {
+    expect(
+      mutate((data) => {
+        data.push(structuredClone(data[0]));
+      }),
+    ).toThrow(/duplicate slug/);
+  });
+
+  it("rejects a related target that is not a known route", () => {
+    expect(
+      mutate((data) => {
+        data[0].relatedNext = "no-such-project";
+      }),
+    ).toThrow(/is not a known route/);
+  });
+
+  it("rejects a related block whose target disagrees with relatedNext", () => {
+    expect(
+      mutate((data) => {
+        const blocks = data[0].blocks as { type: string; targetSlug?: string }[];
+        blocks.find((block) => block.type === "related")!.targetSlug = "htc";
+      }),
+    ).toThrow(/targetSlug disagrees with relatedNext/);
+  });
+
+  it("rejects an empty statistics array", () => {
+    expect(
+      mutate((data) => {
+        data[0].stats = [];
+      }),
+    ).toThrow(/stats must be a non-empty array/);
+  });
+});
+
+describe("quote narrative paragraphs", () => {
+  it("stores every audited quote paragraph separately", () => {
+    for (const route of contract.routes) {
+      const detail = PROJECT_DETAILS.find((d) => d.slug === route.slug);
+      route.blocks.forEach((audited, position) => {
+        if (audited.cls !== "projectTitleQuoteBlock" || !audited.paragraphs?.length) return;
+        const block = detail?.blocks[position] as { paragraphs?: string[] };
+        expect(block.paragraphs, route.slug).toEqual(audited.paragraphs);
+      });
+    }
+  });
+
+  it("keeps a multi-paragraph quote as distinct paragraphs through validation", () => {
+    const data = structuredClone(PROJECT_DETAILS) as unknown as Record<string, unknown>[];
+    const blocks = data[0].blocks as { type: string; paragraphs?: string[] }[];
+    const quote = blocks.find((block) => block.type === "quote")!;
+    quote.paragraphs = ["First audited sentence.", "Second audited sentence."];
+
+    const validated = validateProjectDetails(data);
+    const stored = validated[0].blocks.find((block) => block.type === "quote") as {
+      paragraphs: string[];
+    };
+    /* Two audited paragraphs must stay two. Collapsing them into one string is
+       exactly the reflow defect this item removed elsewhere. */
+    expect(stored.paragraphs).toHaveLength(2);
+    expect(stored.paragraphs.join(" ")).not.toBe(stored.paragraphs[0]);
   });
 });

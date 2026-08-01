@@ -22,8 +22,8 @@ Updated: 2026-08-01
 - `MIG-000`: merged through PR #5 at `a8847a5`; portability blockers MIG-1, MIG-2 and MIG-3 remain explicitly carried in `BLOCKERS.md`.
 - `OPS-001`: merged and closed through PR #6 at `f57a87f`; post-merge Quality Gates run `30689774539` succeeded.
 - Control-plane hardening (no ticket ID): independently reviewed and merged through PR #7 at `b1854dc`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
-- `ENG-014C`: implemented on `claude/eng-014c-project-detail-parity` from `b1854dc`; all local gates pass; draft PR open pending independent review and owner merge.
-- `ENG-014D`–`ENG-015`: not started.
+- `ENG-014C`: implemented on `claude/eng-014c-project-detail-parity` from `b1854dc`; all local gates pass; independently reviewed, review corrections applied; draft PR open pending final independent review and owner merge. Accepted against project-composition parity under `D-014`; the raw whole-page scroll-height criterion (≤2%) is recorded as an **authorized unmet exception**, not a passed measurement — 3.3–6.3% delta, constant +203px desktop / +193px mobile from the pre-existing unchanged shared global shell, assigned to `PAR-P1-004` under `ENG-014E`.
+- `ENG-014D`–`ENG-015`: not started. `ENG-014E` additionally owns the `D-014` global-shell whole-page height exception (`PAR-P1-004`) and must resolve or formally reassess it before `ENG-015` freeze.
 - SPIMAR transformation: not authorized until `ENG-015` is frozen.
 - Portability blockers MIG-1, MIG-2 and MIG-3 remain disclosed in `BLOCKERS.md`.
 
@@ -41,6 +41,7 @@ Updated: 2026-08-01
 
 ## Next safe action
 
-Independently review the `ENG-014C` draft PR against the real diff, the audited
-block contract, the parity matrix and the deployed preview, then owner-merge it.
-Do not begin `ENG-014D` before that merge.
+Run the final independent review of the `ENG-014C` draft PR against the real
+diff, the audited block contract, the parity matrix, the `D-014` exception and
+the deployed preview, then owner-merge it. Do not begin `ENG-014D` before that
+merge.

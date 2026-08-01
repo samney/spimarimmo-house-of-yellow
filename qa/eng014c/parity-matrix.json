@@ -2,7 +2,7 @@
  "summary": {
   "routes": 21,
   "records": 42,
-  "incompleteCaptures": [],
+  "expectedRecords": 42,
   "blockSequenceMismatches": [],
   "statsMismatches": [],
   "relatedMismatches": [],
@@ -11,7 +11,17 @@
   "blockSpanOutOfTolerance": [],
   "horizontalOverflow": [],
   "consoleErrors": [],
-  "failedRequests": []
+  "failedRequests": [],
+  "wholePageScrollHeightException": {
+   "criterion": "raw whole-page scroll-height delta <= 2%",
+   "status": "UNMET — authorized exception D-014, not a passing measurement",
+   "owner": "PAR-P1-004 under ENG-014E",
+   "cause": "pre-existing, unchanged shared global shell (footer.setDarkCursor)",
+   "recordsExceedingTwoPercent": 42,
+   "minDeltaPercent": 3.18,
+   "maxDeltaPercent": 6.25
+  },
+  "validationFailures": []
  },
  "rows": [
   {

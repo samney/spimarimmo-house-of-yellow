@@ -24,11 +24,13 @@ Context: Bootstrap forbids initializing/overwriting an _existing_ repository; no
 Decision: initialize a fresh repo around the two prompt files, preserved byte-for-byte (hashes in MASTER.md / BOOTSTRAP-REPORT.md). Consequence: full auditable history from Session 0 onward.
 
 ## D-005 - 2026-07-30 - Owner-requested third-party skills: audit-first outcome
+
 Context: Owner asked to install taste-skill, ai-website-cloner-template, awesome-agent-skills, context-mode, and to review a Snyk article on UI/UX skills.
 Decision: All four audited read-only by a research agent (full findings in PUBLIC-SKILLS-LOCK.md). None installed: taste-skill rejected as duplicate frontend capability (overridable by owner after a line-by-line pinned audit); cloner template rejected (would supplant mandated architecture; injection-surface dual-use pipeline already covered by our own QA pipeline); awesome-list is a catalog with nothing to install; context-mode rejected (global hooks + home-dir writes + ELv2 + unaudited npm artifact - multiple bootstrap violations).
 Consequence: Toolchain stays minimal and auditable; the Snyk checklist confirmed our Phase-2 audit procedure. Owner may override any rejection explicitly; the exact next gate per item is recorded in the lock file.
 
 ## D-006 - 2026-07-30 - Reference captures stored on disk, not in git; JPEG for remaining viewports
+
 Context: The full 28x8 PNG capture matrix (~800 MB+) filled the machine C: drive to 0 bytes free mid-run, failing the capture task and a git commit. pnpm store prune recovered ~3.3 GB.
 Alternatives: (a) commit all PNGs (master prompt keeps QA artifacts in repo) - doubles disk cost via git objects and re-risks a full disk; (b) keep captures disk-only, commit the deterministic capture script + manifest + probes; (c) shrink captures via JPEG.
 Decision: (b)+(c): qa/reference images and qa/recordings are gitignored (script `qa/capture-reference.mjs`, `capture-manifest.json`, and probe JSONs stay tracked - evidence is reproducible on demand); remaining viewports captured as JPEG q85. PNGs already in history (states/smoke, commit 26b2a91) are left untouched - no history rewrite.
@@ -73,3 +75,39 @@ Consequence: Hero video activation is out of scope for the remaining clone-conve
 Decision: Historical patches and transport ZIPs are provenance only. After ENG-015, no historical patch may be applied.
 Consequence: SPIMAR transformation begins from the accepted tagged baseline and fresh branches only.
 
+## D-014 — 2026-08-01 — ENG-014C accepted on project-composition parity; raw whole-page height recorded as an authorized unmet exception
+
+Context: The ENG-014C acceptance criterion required a representative route
+scroll-height delta no greater than 2%. Independent review measured the raw
+whole-page delta at 3.3–6.3% on all 42 audited records (21 routes × 1440×900 and
+390×844) — it is **not** met. The excess is a constant +203px desktop / +193px
+mobile and was isolated to a single box, the shared global `footer.setDarkCursor`
+(318px reference versus 521px implementation). Delta above the first block is 0px
+on every route and viewport. The project composition itself matches: the last
+section bottom is 5911px in both documents on `oceanco-leviathan` at 1440×900,
+and the block-composition span delta is 0.00% desktop / 0.03–0.06% mobile.
+`components/public/global/SiteFooter.tsx` and both layouts are unchanged by
+ENG-014C and predate its base; `components/public/projects/project-detail.css` is
+scoped to `.projectDetail` and explicitly zeroes the trailing section margin.
+ENG-014C therefore introduced no part of the excess, and no change confined to
+project composition can remove it.
+
+Alternatives: (a) widen ENG-014C to modify the site-wide header/footer shell —
+changes pages outside the item's scope and contradicts the bounded-queue rule;
+(b) restate the criterion against project-composition span and report it as
+passed — misrepresents an unmet criterion; (c) accept ENG-014C on
+project-composition parity while recording the raw whole-page requirement as an
+explicitly authorized, transparently unmet exception owned by a later item.
+
+Decision: (c), by explicit repository-owner authorization. ENG-014C is accepted
+against project-composition parity. The raw whole-page height requirement remains
+recorded as **unmet** — 3.3–6.3% delta, +203px desktop, +193px mobile — caused by
+the pre-existing, unchanged shared global shell, and is assigned to `PAR-P1-004`
+under `ENG-014E`. No new ticket is created.
+
+Consequence: The original whole-page ≤2% criterion must never be described as
+passed in any control document, report or PR description; it is an authorized
+exception, not a successful measurement. `ENG-014E` must resolve or formally
+reassess the global-shell discrepancy before `ENG-015` freeze. This decision
+scopes only the unchanged global shell; project-composition parity remains a
+hard ENG-014C requirement.

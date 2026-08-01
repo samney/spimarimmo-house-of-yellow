@@ -1,16 +1,27 @@
 import { readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
-type Detail = {
+/* The oracle is the independent audited reference contract, not the generated
+   implementation model. Asserting the rendered DOM against the data the renderer
+   is built from would only prove the renderer agrees with itself. */
+type ContractRoute = {
   slug: string;
   title: string;
+  infoTags: string[];
   stats: { label: string; value: string }[];
-  relatedNext: string;
+  relatedSlug: string;
   blocks: { cls: string }[];
 };
 
-const DETAILS = JSON.parse(readFileSync("lib/content/project-details.json", "utf8")) as Detail[];
-const bySlug = (slug: string) => DETAILS.find((detail) => detail.slug === slug)!;
+const CONTRACT = JSON.parse(readFileSync("qa/eng014c/reference-block-contract.json", "utf8")) as {
+  routes: ContractRoute[];
+};
+const ROUTES = CONTRACT.routes;
+const bySlug = (slug: string) => {
+  const route = ROUTES.find((candidate) => candidate.slug === slug);
+  if (!route) throw new Error(`${slug} is not in the audited reference contract`);
+  return route;
+};
 
 async function openProject(page: Page, slug: string, locale = "") {
   await page.goto(`${locale}/project/${slug}`);
@@ -30,27 +41,32 @@ const blockSequence = (page: Page) =>
   );
 
 test.describe("project-detail route inventory", () => {
+  test("the audited contract itself covers all 21 unique routes", () => {
+    expect(ROUTES).toHaveLength(21);
+    expect(new Set(ROUTES.map((route) => route.slug)).size).toBe(21);
+  });
+
   test("every default-locale project route renders its audited block sequence", async ({
     request,
   }) => {
-    for (const detail of DETAILS) {
-      const response = await request.get(`/project/${detail.slug}`, { maxRedirects: 0 });
-      expect(response.status(), detail.slug).toBe(200);
+    for (const route of ROUTES) {
+      const response = await request.get(`/project/${route.slug}`, { maxRedirects: 0 });
+      expect(response.status(), route.slug).toBe(200);
 
       const body = await response.text();
-      expect(body, `${detail.slug} requested an undeliverable video`).not.toContain("/videos/");
+      expect(body, `${route.slug} requested an undeliverable video`).not.toContain("/videos/");
 
       const rendered = [...body.matchAll(/<section class="([^"]*(?:Block)[^"]*)"/g)].map(
         (match) => match[1],
       );
-      expect(rendered, detail.slug).toEqual(detail.blocks.map((block) => block.cls));
+      expect(rendered, route.slug).toEqual(route.blocks.map((block) => block.cls));
     }
   });
 
   test("every French-prefixed project route renders", async ({ request }) => {
-    for (const detail of DETAILS) {
-      const response = await request.get(`/fr/project/${detail.slug}`, { maxRedirects: 0 });
-      expect(response.status(), detail.slug).toBe(200);
+    for (const route of ROUTES) {
+      const response = await request.get(`/fr/project/${route.slug}`, { maxRedirects: 0 });
+      expect(response.status(), route.slug).toBe(200);
       expect(await response.text()).not.toContain("/videos/");
     }
   });
@@ -114,14 +130,25 @@ test.describe("statistics", () => {
     }
   });
 
+  test("renders one quote body per audited paragraph rather than one joined string", async ({
+    page,
+  }) => {
+    for (const slug of ["oceanco-leviathan", "ansu-fati-arriba-nutrition"]) {
+      const route = bySlug(slug);
+      const position = route.blocks.findIndex((b) => b.cls === "projectTitleQuoteBlock");
+      const audited = (route.blocks[position] as { paragraphs?: string[] }).paragraphs ?? [];
+      if (!audited.length) continue;
+      await openProject(page, slug);
+      await expect(page.locator(".projectTitleQuoteBlock .quoteBody"), slug).toHaveCount(
+        audited.length,
+      );
+    }
+  });
+
   test("shows no metadata label the reference does not use", async ({ page }) => {
     await openProject(page, "oceanco-leviathan");
     const header = page.locator(".headerProjectBlock");
-    await expect(header.locator(".infoTag")).toHaveText([
-      "'26",
-      "Luxury & yachting",
-      "Corporate, Commercials",
-    ]);
+    await expect(header.locator(".infoTag")).toHaveText(bySlug("oceanco-leviathan").infoTags);
     await expect(header).not.toContainText("Year");
     await expect(header).not.toContainText("Sector");
     await expect(header).not.toContainText("Services");
@@ -173,9 +200,9 @@ test.describe("related project", () => {
     for (const slug of ["oceanco-leviathan", "hotek-brand-video", "madunia-brand-launch"]) {
       await openProject(page, slug);
       const link = page.locator(".projectRelatedBlock .relatedProjectItem");
-      await expect(link).toHaveAttribute("href", `/project/${bySlug(slug).relatedNext}`);
+      await expect(link).toHaveAttribute("href", `/project/${bySlug(slug).relatedSlug}`);
       await expect(link.locator(".relatedTitle")).toHaveText(
-        bySlug(bySlug(slug).relatedNext).title,
+        bySlug(bySlug(slug).relatedSlug).title,
       );
     }
   });

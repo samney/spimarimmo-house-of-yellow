@@ -1,7 +1,9 @@
 # ENG-014C — Project Detail Structure and Variant Convergence
 
 **Document ID:** `SPM-ENG-014C-001`
-**Status:** `IMPLEMENTATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`
+**Status:** `REVIEW_CORRECTIONS_APPLIED_PENDING_FINAL_INDEPENDENT_REVIEW`
+**Acceptance:** project-composition parity, with the raw whole-page
+scroll-height criterion recorded as the authorized unmet exception `D-014`
 **Date:** 1 August 2026
 **Repository:** `samney/spimarimmo-house-of-yellow`
 **Branch:** `claude/eng-014c-project-detail-parity`
@@ -231,30 +233,85 @@ Representative routes:
 | `ansu-fati-arriba-nutrition`   | 390×844  |           2837 |                2838 | 0.04% |          4px |
 | `madunia-brand-launch`         | 390×844  |           3266 |                3267 | 0.03% |          4px |
 
-**Whole-page scroll height differs by 3.3–6.3%, and this is disclosed rather
-than met.** The difference is a constant 203px on desktop and 193px on mobile on
-every one of the 21 routes — it is the shared global header/footer shell, not
-the project composition, which matches at 0.00%/0.06%. That shell is common to
-all public routes and was set by earlier queue items; changing it here would be
-an unrelated modification to pages outside this item's scope. It is carried
-forward as an input to `ENG-014E` route-rhythm work (`PAR-P1-004`).
+**The raw whole-page scroll-height criterion (≤2%) is NOT met. It is an
+authorized exception under `D-014`, not a successful measurement.** The delta is
+3.3–6.3% on all 42 records — a constant +203px desktop and +193px mobile on every
+one of the 21 routes.
 
-Full data in `qa/eng014c/parity-matrix.json`.
+Independent review isolated the excess to a single box: the shared global
+`footer.setDarkCursor`, 318px in the reference against 521px in the
+implementation, exactly the 203px desktop difference. The delta _above_ the first
+block is 0px on every route and viewport, and the project composition itself
+matches — the last section bottom is 5911px in both documents on
+`oceanco-leviathan` at 1440×900, and the block-composition span delta is 0.00%
+desktop / 0.03–0.06% mobile.
+
+`components/public/global/SiteFooter.tsx` and both layouts are unchanged by this
+item and predate its base; `components/public/projects/project-detail.css` is
+scoped to `.projectDetail` and explicitly zeroes the trailing section margin.
+ENG-014C therefore introduced no part of the excess, and no change confined to
+project composition can remove it — correcting it means editing the site-wide
+shell, which is outside this item.
+
+The repository owner explicitly authorized accepting ENG-014C on
+project-composition parity while recording this requirement as transparently
+unmet (`D-014`). It is assigned to `PAR-P1-004` under `ENG-014E`, which must
+resolve or formally reassess it before the `ENG-015` freeze. This criterion must
+never be described as passed.
+
+Full data in `qa/eng014c/parity-matrix.json` (`scrollHeightDeltaPercent` per
+record).
 
 ## 8. Validation and evidence package
 
 All commands were run on the branch with their real exit codes recorded in the
-PR description and in `qa/eng014c/validation-log.md`.
+PR description and in `qa/eng014c/validation-log.md`. After the independent
+review, the suite is 63/63 unit tests across 5 files and 31/31 Playwright tests
+across 3 files, and `node qa/eng014c-compare.mjs` is itself a gate that exits 0
+only on 42/42 complete records with zero in-scope parity failures.
+
+### Review corrections
+
+The first independent review returned `CHANGES_REQUIRED`. The following were
+applied on this branch:
+
+| Correction                                                     | Where                                                                        |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Owner decision recorded in the canonical decision system       | `docs/claude-code/DECISIONS.md` — `D-014`                                    |
+| Control plane records the unmet criterion, never a pass        | VALIDATION-MATRIX, STATUS, QUEUE, SESSION-HANDOFF, this report               |
+| Prettier carried-over control documents corrected to four      | `qa/eng014c/validation-log.md`                                               |
+| Comparison tool hardened from a report into a gate             | `qa/eng014c-compare.mjs` + 14 tests in `qa/eng014c-compare.test.ts`          |
+| Runtime validation of the generated model                      | `validateProjectDetails` in `lib/content/project-content.ts` + 13 unit tests |
+| Unsupported block types now throw instead of rendering nothing | `components/public/projects/ProjectDetail.tsx` exhaustive guard              |
+| Quote paragraphs preserved separately, never joined            | renderer maps paragraphs; unit + Playwright coverage                         |
+| Playwright oracle switched to the independent audited contract | `tests/e2e/project-detail.spec.ts`                                           |
+| Stale evidence-package validation log replaced                 | refreshed package, new hash below                                            |
+
+The hardened comparison tool now requires exactly 42 complete reference records
+and 42 complete implementation records, rejects missing, unmatched, duplicated or
+errored records, treats null, undefined and non-finite measurements as failures
+rather than zeros, and exits non-zero on any validation or in-scope parity
+failure. Fourteen focused tests drive the real script as a child process and
+assert its real exit code for each failure mode.
 
 Per `D-006`, deterministic scripts, manifests and numeric evidence are tracked;
 the capture corpus and its archive stay on disk.
 
-| Field    | Value                                                                                                         |
-| -------- | ------------------------------------------------------------------------------------------------------------- |
-| Path     | `C:\work\spimar\qa\implementation\ENG-014C-EVIDENCE-PACKAGE.zip`                                              |
-| Size     | 41,534,162 bytes                                                                                              |
-| SHA-256  | `1DE4190CC409A2666AC6939295934CEE14F7414EC4359CE3AC98CB01223F5E26`                                            |
-| Contents | 12 reference captures, 12 implementation captures, both audit JSONs, the block contract and the parity matrix |
+| Field    | Value                                                                                                                             |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Path     | `C:\work\spimar\qa\implementation\ENG-014C-EVIDENCE-PACKAGE.zip`                                                                  |
+| Size     | 41,536,096 bytes                                                                                                                  |
+| SHA-256  | `2B95663EE30BC6648AE1B161B5DFBC24CCE537623606C70A05ECC64E101D5FD2`                                                                |
+| Contents | 12 reference captures, 12 implementation captures, both audit JSONs, the block contract, the parity matrix and the validation log |
+
+Refreshed during review corrections: the package previously carried a stale draft
+of `validation-log.md` and the pre-hardening parity matrix. Both were replaced
+with the committed versions; all 24 captures are unchanged, and a spot re-measure
+of `oceanco-leviathan`, `ansu-fati-arriba-nutrition` and
+`porsche-employer-branding` at both viewports reproduced the recorded
+implementation scroll heights exactly, so the captures still correspond to the
+head. The superseded package was `41,534,162` bytes,
+SHA-256 `1DE4190CC409A2666AC6939295934CEE14F7414EC4359CE3AC98CB01223F5E26`.
 
 This package is separate from the ENG-014B evidence package and does not
 include, move or modify any of its files.
@@ -282,10 +339,14 @@ include, move or modify any of its files.
    pre-reveal transform to narrative elements. Motion is `ENG-014E`; the
    implementation renders the settled composition.
 6. **Whole-page scroll height remains 203px (desktop) / 193px (mobile) taller
-   than the reference on every route.** This is the shared global shell, not the
-   project composition, which matches at 0.00%/0.06%. Correcting it means
-   changing the site-wide header/footer, which is outside this item and belongs
-   to the `PAR-P1-004` route-rhythm work in `ENG-014E`.
+   than the reference on every route — the ≤2% criterion is unmet, authorized as
+   an exception under `D-014` and never claimed as passed.** The excess is
+   isolated to the shared global `footer.setDarkCursor` (318px reference vs 521px
+   implementation); delta above the first block is 0px everywhere and the project
+   composition matches at 0.00% desktop / 0.03–0.06% mobile. Correcting it means
+   changing the site-wide shell, which is outside this item and belongs to the
+   `PAR-P1-004` route-rhythm work in `ENG-014E`, which must resolve or formally
+   reassess it before `ENG-015`.
 
 ## 10. Scope statement
 

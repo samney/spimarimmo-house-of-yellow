@@ -87,7 +87,12 @@ function Block({ project, block }: { project: FullProject; block: ProjectBlock }
             <div className="cols">
               <div className="col">
                 <h2 className="text medium quoteTitle">{block.heading}</h2>
-                <SplitTitle className="smallTitle quoteBody" text={block.paragraphs.join(" ")} />
+                {/* One reveal per audited paragraph. Joining them into a single
+                    string would silently reflow a multi-paragraph quote — the
+                    same collapse this item removed from the narrative blocks. */}
+                {block.paragraphs.map((paragraph, position) => (
+                  <SplitTitle className="smallTitle quoteBody" text={paragraph} key={position} />
+                ))}
               </div>
               <div className="col numCol">
                 <NumIndex index={block.index} />
@@ -184,7 +189,9 @@ function Block({ project, block }: { project: FullProject; block: ProjectBlock }
 
     case "related": {
       const next = getNextProject(project.slug);
-      if (!next) return null;
+      if (!next) {
+        throw new Error(`${project.slug}: related block has no resolvable next project`);
+      }
       return (
         <section className={block.cls}>
           <div className="contentWrapper">
@@ -210,6 +217,14 @@ function Block({ project, block }: { project: FullProject; block: ProjectBlock }
           </div>
         </section>
       );
+    }
+
+    /* An unsupported block type must never render as a silently missing
+       section. PROJECT_DETAILS is validated at load, so reaching here means the
+       union and the data have diverged. */
+    default: {
+      const unsupported: never = block;
+      throw new Error(`Unsupported project block: ${JSON.stringify(unsupported).slice(0, 120)}`);
     }
   }
 }
