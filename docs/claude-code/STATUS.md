@@ -5,8 +5,9 @@ Updated: 2026-08-01
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current verified `main`: `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`
-- Latest merged item: control-plane hardening (no ticket ID), PR #7; merge `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` passed; post-merge Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed
+- Current verified `main`: `17b697430a55fa3a5835c9c25fef927301b9ec87`
+- Latest merged item: `ENG-014C`, PR #8; merge `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
+- Control-plane hardening (no ticket ID): merged through PR #7 at `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed
 - OPS-001: merged through PR #6 at `f57a87f`; post-merge Quality Gates run `30689774539` succeeded
 - MIG-000: merged through PR #5; migration commit `d29776d9e4e1269e809fd2c118d8fc27100a2556`
 - ENG-014B implementation: `6136057b4be06ffc5da1cbb0d773643896a7350e`, merged through PR #4
@@ -22,8 +23,9 @@ Updated: 2026-08-01
 - `MIG-000`: merged through PR #5 at `a8847a5`; portability blockers MIG-1, MIG-2 and MIG-3 remain explicitly carried in `BLOCKERS.md`.
 - `OPS-001`: merged and closed through PR #6 at `f57a87f`; post-merge Quality Gates run `30689774539` succeeded.
 - Control-plane hardening (no ticket ID): independently reviewed and merged through PR #7 at `b1854dc`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
-- `ENG-014C`: implemented on `claude/eng-014c-project-detail-parity` from `b1854dc`; all local gates pass; independently reviewed, review corrections applied; draft PR open pending final independent review and owner merge. Accepted against project-composition parity under `D-014`; the raw whole-page scroll-height criterion (≤2%) is recorded as an **authorized unmet exception**, not a passed measurement — 3.3–6.3% delta, constant +203px desktop / +193px mobile from the pre-existing unchanged shared global shell, assigned to `PAR-P1-004` under `ENG-014E`.
-- `ENG-014D`–`ENG-015`: not started. `ENG-014E` additionally owns the `D-014` global-shell whole-page height exception (`PAR-P1-004`) and must resolve or formally reassess it before `ENG-015` freeze.
+- `ENG-014C`: `DONE`. Implemented on `claude/eng-014c-project-detail-parity` from `b1854dc`; independently reviewed twice, review corrections applied, final review returned `APPROVED_FOR_OWNER_MERGE`; owner-merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`, with the exact reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent of the merge commit. Post-merge Quality Gates run `30715826793` and Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed. Accepted against project-composition parity under `D-014`; the raw whole-page scroll-height criterion (≤2%) is recorded as an **authorized unmet exception**, not a passed measurement, and is assigned to `PAR-P1-004` under `ENG-014E`. For the corrected figures see the measurement erratum in `DECISIONS.md` under `D-014`: 3.2–6.3% delta (measured 3.18%–6.25%), desktop excess 203px on 20 records and 202px on 1, mobile excess 194px on 18 records and 195px on 3 — never 193px.
+- `ENG-014D`: next eligible item; **not started**.
+- `ENG-014E`–`ENG-015`: pending. `ENG-014E` additionally owns the `D-014` global-shell whole-page height exception (`PAR-P1-004`) and must re-measure it and resolve or formally reassess it before `ENG-015` freeze.
 - SPIMAR transformation: not authorized until `ENG-015` is frozen.
 - Portability blockers MIG-1, MIG-2 and MIG-3 remain disclosed in `BLOCKERS.md`.
 
@@ -41,7 +43,7 @@ Updated: 2026-08-01
 
 ## Next safe action
 
-Run the final independent review of the `ENG-014C` draft PR against the real
-diff, the audited block contract, the parity matrix, the `D-014` exception and
-the deployed preview, then owner-merge it. Do not begin `ENG-014D` before that
-merge.
+Begin `ENG-014D` on a fresh branch from `main@17b697430a55fa3a5835c9c25fef927301b9ec87`:
+integrate approved non-hero media and documented fallbacks. The hero remains
+poster-only through `ENG-015`. Do not start `ENG-014E`, `ENG-015` or any SPIMAR
+transformation work before `ENG-014D` is reviewed and owner-merged.

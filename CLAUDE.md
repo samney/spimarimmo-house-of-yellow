@@ -33,9 +33,9 @@ Historical chats and archives are provenance, not automatic authority. Unknown i
 
 ## Current execution boundary
 
-- `ENG-014B` is merged through PR #4 at `main@4ee1131f9e325dd4ce865d4036238bdccb38a626`.
-- Complete and merge `MIG-000`, then `OPS-001`, before `ENG-014C`.
-- Remaining clone convergence: `ENG-014C → ENG-014D → ENG-014E → ENG-015`.
+- `ENG-014B` (PR #4), `MIG-000` (PR #5), `OPS-001` (PR #6), control-plane hardening (PR #7) and `ENG-014C` (PR #8) are merged.
+- Current canonical `main`: `17b697430a55fa3a5835c9c25fef927301b9ec87`.
+- Remaining clone convergence: `ENG-014D → ENG-014E → ENG-015`. `ENG-014D` is the next eligible item and has not started.
 - Hero remains poster-only through `ENG-015`.
 - Do not introduce SPIMAR identity, copy, IA, CMS, CRM or localization into clone-convergence work.
 - After `ENG-015`, tag/freeze the accepted baseline and begin the top-down SPIMAR transformation from the approved specifications.

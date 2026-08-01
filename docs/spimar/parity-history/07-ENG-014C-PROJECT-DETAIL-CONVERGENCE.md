@@ -262,6 +262,25 @@ never be described as passed.
 Full data in `qa/eng014c/parity-matrix.json` (`scrollHeightDeltaPercent` per
 record).
 
+> **Measurement erratum — 2026-08-01 (post-merge, PR #8 closeout).** The two
+> paragraphs above are preserved as written at implementation time; these figures
+> in them are inaccurate. Re-derived per record from
+> `qa/eng014c/parity-matrix.json`: the delta range is **3.18%–6.25%** (rounded
+> **3.2–6.3%**, not 3.3–6.3%); the desktop excess is **203px on 20 records and
+> 202px on 1**, and the mobile excess is **194px on 18 records and 195px on 3 —
+> never 193px**, so it is not "a constant +203px desktop and +193px mobile on
+> every one of the 21 routes". The 318px reference footer figure is not carried in
+> any committed audit record (the audit schema captures no footer box); the
+> implementation side was re-measured directly at review and confirmed at 521px.
+> Everything else in this section was independently confirmed: 42 of 42 records
+> exceed the criterion, the absolute first-block top is identical on all 42
+> records, the last-block bottom differs by at most 2px, and the
+> `oceanco-leviathan` 1440×900 last-section bottom is 5911px in both documents.
+> The `D-014` authorization, scope and ownership are unchanged: the exception
+> remains unmet-by-authorization and belongs to `PAR-P1-004` under `ENG-014E`,
+> which must re-measure it. Canonical erratum: `docs/claude-code/DECISIONS.md`,
+> `D-014 — measurement erratum`.
+
 ## 8. Validation and evidence package
 
 All commands were run on the branch with their real exit codes recorded in the
@@ -350,15 +369,19 @@ include, move or modify any of its files.
 5. **Scroll-reveal offsets are not applied.** The reference applies an 18px
    pre-reveal transform to narrative elements. Motion is `ENG-014E`; the
    implementation renders the settled composition.
-6. **Whole-page scroll height remains 203px (desktop) / 193px (mobile) taller
-   than the reference on every route — the ≤2% criterion is unmet, authorized as
-   an exception under `D-014` and never claimed as passed.** The excess is
-   isolated to the shared global `footer.setDarkCursor` (318px reference vs 521px
-   implementation); delta above the first block is 0px everywhere and the project
-   composition matches at 0.00% desktop / 0.03–0.06% mobile. Correcting it means
-   changing the site-wide shell, which is outside this item and belongs to the
-   `PAR-P1-004` route-rhythm work in `ENG-014E`, which must resolve or formally
-   reassess it before `ENG-015`.
+6. **Whole-page scroll height remains taller than the reference on every route —
+   the ≤2% criterion is unmet, authorized as an exception under `D-014` and never
+   claimed as passed.** Measured excess: desktop **203px on 20 records, 202px on
+   1**; mobile **194px on 18 records, 195px on 3**; delta range **3.18%–6.25%**.
+   _(Corrected 2026-08-01 post-merge; this item previously read "203px (desktop) /
+   193px (mobile)" — see the measurement erratum in this document and in
+   `docs/claude-code/DECISIONS.md` under `D-014`.)_ The excess is isolated to the
+   shared global `footer.setDarkCursor` (318px reference vs 521px implementation);
+   delta above the first block is 0px everywhere and the project composition
+   matches at 0.00% desktop / 0.03–0.06% mobile. Correcting it means changing the
+   site-wide shell, which is outside this item and belongs to the `PAR-P1-004`
+   route-rhythm work in `ENG-014E`, which must re-measure it and resolve or
+   formally reassess it before `ENG-015`.
 
 ## 10. Scope statement
 
