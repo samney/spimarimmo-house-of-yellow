@@ -20,6 +20,7 @@ Every pass requires an evidence path or URL. Skipped, blocked or timed-out comma
 ## Standard repository gates
 
 ```bash
+pnpm verify:migration
 pnpm validate:media
 pnpm test
 pnpm typecheck
@@ -30,13 +31,21 @@ pnpm exec playwright test --list
 pnpm test:e2e
 ```
 
+From OPS-001, `.github/workflows/quality-gates.yml` runs these gates on every
+pull request into `main` and every push to `main`. `pnpm verify:migration`
+checks the MIG-000 manifest against the immutable migration commit `d29776d`;
+it accepts exactly one documented line-ending exception (the archival
+`HOUSE-OF-YELLOW-CLAUDE-CODE-MASTER-PROMPT.md`, whose manifest hash records the
+original mixed CRLF/LF bytes while Git stores the LF-normalized blob
+`ba2b9903…`). Any other mismatch fails the gate.
+
 Run applicable gates for source-affecting tasks. Documentation-only MIG-000 must at minimum prove unchanged application tree and may reuse the merged ENG-014B gate evidence plus a clean build/test run from the migration branch.
 
 ## Remaining Stage A
 
 | Item | Required evidence |
 |---|---|
-| `OPS-001` | Workflow YAML, trigger/permissions/concurrency/cache review, successful Actions run, no secret exposure |
+| `OPS-001` | Workflow YAML, trigger/permissions/concurrency/cache review, successful Actions run, no secret exposure — implemented as `.github/workflows/quality-gates.yml` (three jobs: migration-manifest, static-gates, build-and-browser; `permissions: contents: read`; `pull_request`/`push: main` triggers; per-ref concurrency; SHA-pinned actions; frozen-lockfile install); Actions evidence recorded on the OPS-001 PR |
 | `ENG-014C` | All 21 project routes mapped; representative desktop/mobile captures; block order, hero offsets, statistics, narratives, media pairs, credits and next-project states |
 | `ENG-014D` | Approved-media manifest, fallbacks, request success, rights/source record, no broken media, hero poster-only |
 | `ENG-014E` | Motion, focus, keyboard, reduced motion, axe, overflow, browser and visual-diff evidence at eight viewports |

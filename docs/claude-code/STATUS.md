@@ -5,9 +5,9 @@ Updated: 2026-08-01
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current verified `main`: `4ee1131f9e325dd4ce865d4036238bdccb38a626`
-- Latest merged item: `ENG-014B`, PR #4
-- ENG-014B implementation: `6136057b4be06ffc5da1cbb0d773643896a7350e`
+- Current verified `main`: `a8847a5039f347babc2fec2dc48bc39d3d8810c4`
+- Latest merged item: `MIG-000`, PR #5; migration commit `d29776d9e4e1269e809fd2c118d8fc27100a2556`
+- ENG-014B implementation: `6136057b4be06ffc5da1cbb0d773643896a7350e`, merged through PR #4
 - Ownership from ENG-014C: Claude Code only
 - Merge authority: repository owner
 
@@ -17,8 +17,8 @@ Updated: 2026-08-01
 - P0 repair: merged through PR #2.
 - `ENG-014A`: merged through PR #3.
 - `ENG-014B`: independently reviewed, evidence 23/23, merged through PR #4.
-- `MIG-000`: local corpus repaired and integrity-validated; raw portability blockers remain; documentation-only PR preparation active.
-- `OPS-001`: pending migration merge.
+- `MIG-000`: merged through PR #5 at `a8847a5`; portability blockers MIG-1, MIG-2 and MIG-3 remain explicitly carried in `BLOCKERS.md`.
+- `OPS-001`: implemented on `claude/ops-001`; draft PR open, pending independent review and owner merge.
 - `ENG-014C`–`ENG-015`: not started.
 - SPIMAR transformation: not authorized until `ENG-015` is frozen.
 
@@ -31,10 +31,11 @@ Updated: 2026-08-01
 - Phase 11: README, intake status and baseline/P0 gap report present.
 - Zero-byte temporary files: none.
 - Early Markdown work, audits and redesigned documents: preserved.
-- Raw ChatGPT export and large raw visual/archive portability: open migration blockers.
+- Raw ChatGPT export and large raw visual/archive portability: open migration blockers (MIG-1, MIG-2, MIG-3).
+- Migration manifest: verifiable against `d29776d` with exactly one documented archival line-ending exception (`pnpm verify:migration`).
 
 ## Next safe action
 
-Close or explicitly carry the disclosed raw-portability blockers, then publish the
-documentation-only `MIG-000` draft PR. Do not begin `OPS-001` or `ENG-014C` before
-independent migration review and owner merge.
+Independently review the OPS-001 draft PR (workflow security, permissions, gate
+coverage, real Actions evidence), then owner-merge it. Do not begin `ENG-014C`
+before the OPS-001 PR is reviewed and merged.

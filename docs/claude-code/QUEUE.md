@@ -7,8 +7,8 @@ Statuses: `PENDING` · `IN PROGRESS` · `BLOCKED` · `PR REVIEW` · `DONE (merge
 | ID | Status | Objective | Depends on |
 |---|---|---|---|
 | `ENG-014B` | `DONE (PR #4 / 4ee1131)` | Work-index constellation, Grid/List, filters, responsive and browser-state convergence | — |
-| `MIG-000` | `IN PROGRESS` | Repository-native specifications, decisions, history, manifests and Claude control plane | `ENG-014B` |
-| `OPS-001` | `PENDING` | Add GitHub Actions quality gates for validation, test, typecheck, lint, build, routes and browser discovery | `MIG-000` |
+| `MIG-000` | `DONE (PR #5 / a8847a5)` | Repository-native specifications, decisions, history, manifests and Claude control plane | `ENG-014B` |
+| `OPS-001` | `PR REVIEW` | Add GitHub Actions quality gates for validation, test, typecheck, lint, build, routes and browser discovery | `MIG-000` |
 | `ENG-014C` | `PENDING` | Converge all 21 project-page block orders, hero placement, statistics, spacing and media rhythm | `OPS-001` |
 | `ENG-014D` | `PENDING` | Integrate approved non-hero media and documented fallbacks; hero remains poster-only | `ENG-014C` |
 | `ENG-014E` | `PENDING` | Motion, responsive, accessibility, browser and visual-regression convergence | `ENG-014D` |
