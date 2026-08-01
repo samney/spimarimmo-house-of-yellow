@@ -6,6 +6,8 @@ import { PROJECTS } from "@/lib/content/projects";
 import { getProject, getNextProject, localVideo } from "@/lib/content/project-content";
 import { SplitTitle } from "@/components/public/home/SplitTitle";
 import { Counter } from "@/components/public/home/Counter";
+import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { getProjectPoster } from "@/lib/media/posters";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -42,12 +44,17 @@ function StatCell({ label, raw }: { label: string; raw: string | null }) {
   );
 }
 
-function BlockVideo({ id, className }: { id: string | null | undefined; className?: string }) {
+function BlockVideo({
+  id,
+  poster,
+  className,
+}: {
+  id: string | null | undefined;
+  poster: string;
+  className?: string;
+}) {
   const src = localVideo(id);
-  if (!src) return <div className={`mediaPlaceholder ${className ?? ""}`} aria-hidden="true" />;
-  return (
-    <video className={className} src={src} muted loop playsInline autoPlay preload="metadata" data-cursor="video" />
-  );
+  return <ResilientVideo className={className} src={src} poster={poster} data-cursor="video" />;
 }
 
 export default async function ProjectPage({
@@ -60,6 +67,7 @@ export default async function ProjectPage({
   const p = getProject(slug);
   if (!p) notFound();
   const next = getNextProject(slug);
+  const projectPoster = getProjectPoster(p);
   const twoImageBlocks = p.detail.blocks.filter((b) => b.cls.includes("projectTwoImagesBlock"));
   const fullLoop = p.detail.blocks.find((b) => b.cls.includes("projectFullWidthLoopBlock"));
 
@@ -82,7 +90,11 @@ export default async function ProjectPage({
           </div>
         </div>
         <div className="heroMedia">
-          <BlockVideo id={p.detail.heroVideoId ?? undefined} />
+          <BlockVideo
+            id={p.detail.heroVideoId ?? undefined}
+            poster={projectPoster}
+            className="projectHeroMedia"
+          />
         </div>
       </section>
 
@@ -119,7 +131,7 @@ export default async function ProjectPage({
             {(twoImageBlocks[0].vidIds.length ? twoImageBlocks[0].vidIds : [null, null])
               .slice(0, 2)
               .map((id, i) => (
-                <BlockVideo key={i} id={id} className="pairItem" />
+                <BlockVideo key={i} id={id} poster={projectPoster} className="pairItem" />
               ))}
           </div>
         </section>
@@ -141,7 +153,7 @@ export default async function ProjectPage({
           {twoImageBlocks[1] && twoImageBlocks[1].vidIds.length > 0 && (
             <div className="mediaPair">
               {twoImageBlocks[1].vidIds.slice(0, 2).map((id, i) => (
-                <BlockVideo key={i} id={id} className="pairItem" />
+                <BlockVideo key={i} id={id} poster={projectPoster} className="pairItem" />
               ))}
             </div>
           )}
@@ -166,7 +178,7 @@ export default async function ProjectPage({
 
       {fullLoop && (
         <section className="projectFullWidthLoopBlock">
-          <BlockVideo id={fullLoop.vidIds[0]} className="fullLoop" />
+          <BlockVideo id={fullLoop.vidIds[0]} poster={projectPoster} className="fullLoop" />
         </section>
       )}
 
@@ -184,7 +196,11 @@ export default async function ProjectPage({
             <Link className="relatedLink" href={`/project/${next.slug}`} data-cursor="play">
               <span className="relatedTitle">{next.title}</span>
               <span className="relatedMedia">
-                <video src={next.video} poster={next.poster} muted loop playsInline autoPlay preload="metadata" />
+                <ResilientVideo
+                  className="relatedMediaPlane"
+                  src={localVideo(next.detail.heroVideoId)}
+                  poster={getProjectPoster(next)}
+                />
               </span>
             </Link>
           </div>

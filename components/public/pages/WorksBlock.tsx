@@ -3,6 +3,7 @@ import { CULTURE } from "@/lib/content/pages";
 import { localVideo } from "@/lib/content/project-content";
 import { PlusIcon } from "@/components/public/global/logos";
 import { Marquee } from "@/components/public/global/Marquee";
+import { ResilientVideo } from "@/components/public/media/ResilientVideo";
 import { Inview } from "./Inview";
 
 /* Reference cultureWorkBlock — featured-work cards shared by /culture (dark
@@ -81,17 +82,11 @@ export function WorksBlock({
                       className="innerImage playerBackground"
                       style={{ backgroundImage: `url('/images/${p.video.poster}')` }}
                     >
-                      {src && (
-                        <video
-                          className="video"
-                          src={src}
-                          muted
-                          loop
-                          playsInline
-                          autoPlay
-                          preload="metadata"
-                        />
-                      )}
+                      <ResilientVideo
+                        className="mediaPlane--fill"
+                        src={src}
+                        poster={`/images/${p.video.poster}`}
+                      />
                     </span>
                   </span>
                   <span className="projectContent">

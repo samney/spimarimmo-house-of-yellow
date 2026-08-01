@@ -1,5 +1,6 @@
 import { PROJECTS, type Project } from "./projects";
 import detailsJson from "./project-details.json";
+import { resolveVideoId } from "@/lib/media/video-registry";
 
 export type ProjectDetail = {
   slug: string;
@@ -45,11 +46,7 @@ export function getNextProject(slug: string): FullProject | undefined {
   return all[(i + 1) % all.length];
 }
 
-/* Map a Vimeo playback id to a locally served file if we have it. */
-import fsVideos from "./local-videos.json";
-const LOCAL: Record<string, string> = fsVideos;
-
+/* Resolve only assets admitted by the rights-aware deployment manifest. */
 export function localVideo(id: string | null | undefined): string | null {
-  if (!id) return null;
-  return LOCAL[id] ?? null;
+  return resolveVideoId(id);
 }

@@ -8,12 +8,14 @@
   },
   "scripts": {
     "dev": "next dev",
+    "prebuild": "pnpm validate:media",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "validate:media": "node qa/validate-media.mjs",
     "test": "vitest run",
     "test:e2e": "playwright test"
   },

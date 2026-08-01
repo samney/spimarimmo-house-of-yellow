@@ -1,6 +1,9 @@
 import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/public/global/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
+import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { MEDIA_POSTERS } from "@/lib/media/posters";
+import { resolveLegacyVideoPath } from "@/lib/media/video-registry";
 import { SplitTitle } from "./SplitTitle";
 
 const FEATURED = [
@@ -34,15 +37,49 @@ const FEATURED = [
 ];
 
 const CLIENT_LOGOS = [
-  "XXL-nutrition", "Team-Eiffel", "SuperOffice", "Streetgasm", "srg-international",
-  "Qbuzz", "psv", "la-fuente", "KPN", "joseph-klibansky", "IMA-benelux", "Hotek",
-  "high-tech-campus", "Glow-eindhoven", "Edco", "De-klerk", "Buddha-to-Buddha",
-  "Broederliefde", "AbrahamArt", "femaletechheroes", "philipshue", "etos", "mentech",
-  "cbbe", "rd-dubai", "lymph-co", "marco-schuitmaker", "tmc", "groenontwikkelfonds",
-  "CBBE_logo", "nextlevelcars", "o2life",
+  "XXL-nutrition",
+  "Team-Eiffel",
+  "SuperOffice",
+  "Streetgasm",
+  "srg-international",
+  "Qbuzz",
+  "psv",
+  "la-fuente",
+  "KPN",
+  "joseph-klibansky",
+  "IMA-benelux",
+  "Hotek",
+  "high-tech-campus",
+  "Glow-eindhoven",
+  "Edco",
+  "De-klerk",
+  "Buddha-to-Buddha",
+  "Broederliefde",
+  "AbrahamArt",
+  "femaletechheroes",
+  "philipshue",
+  "etos",
+  "mentech",
+  "cbbe",
+  "rd-dubai",
+  "lymph-co",
+  "marco-schuitmaker",
+  "tmc",
+  "groenontwikkelfonds",
+  "CBBE_logo",
+  "nextlevelcars",
+  "o2life",
 ];
 
-function PillButton({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
+function PillButton({
+  href,
+  label,
+  dark = false,
+}: {
+  href: string;
+  label: string;
+  dark?: boolean;
+}) {
   return (
     <Link className={`button${dark ? " dark" : ""}`} href={href} title={label}>
       <span className="label">
@@ -113,17 +150,17 @@ export function AboutWorkSection() {
             </div>
             <div className="projects">
               {FEATURED.map((p) => (
-                <Link key={p.slug} className="project" href={`/project/${p.slug}`} data-cursor="play">
+                <Link
+                  key={p.slug}
+                  className="project"
+                  href={`/project/${p.slug}`}
+                  data-cursor="play"
+                >
                   <span className="media">
-                    <video
-                      className="video"
-                      src={p.video}
-                      poster={p.poster ?? undefined}
-                      muted
-                      loop
-                      playsInline
-                      autoPlay
-                      preload="metadata"
+                    <ResilientVideo
+                      className="mediaPlane--fill"
+                      src={resolveLegacyVideoPath(p.video)}
+                      poster={p.poster ?? MEDIA_POSTERS.landscape}
                     />
                     <span className="tags">
                       {p.tags.map((t) => (
