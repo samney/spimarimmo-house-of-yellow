@@ -12,7 +12,7 @@ Statuses: `PENDING` · `IN PROGRESS` · `BLOCKED` · `PR REVIEW` · `DONE (merge
 | `ENG-014C` | `DONE (PR #8 / 17b6974)` | Converge all 21 project-page block orders, hero placement, statistics, spacing and media rhythm | `OPS-001` |
 | `ENG-014D` | `SUPERSEDED / TRANSFERRED (D-015)` | Non-hero reference media and fallbacks — **never implemented, never passed**; requirements moved to the SPIMAR content/media phase | `ENG-014C` |
 | `ENG-014E` | `SUPERSEDED / TRANSFERRED (D-015)` | Motion, responsive, accessibility and visual convergence — **never implemented, never passed**; requirements moved to `SPI-030`/`SPI-040`/`QA-110`. `PAR-P1-004` is preserved, not closed, and transfers to `SPI-040` | `ENG-014C` |
-| `ENG-015` | `DONE (PR #10 / accelerated closure)` | Accelerated final foundation acceptance under `D-015`: authoritative gates, live smoke review, accepted-limitation register, Stage A closed | `ENG-014C` |
+| `ENG-015` | `DONE (PR #10 / e048fdd)` | Accelerated final foundation acceptance under `D-015`: authoritative gates, live smoke review, accepted-limitation register, baseline tag `hoy-clone-baseline-eng-015`, Stage A closed | `ENG-014C` |
 
 Post-OPS-001 control-plane hardening (no ticket ID): merged through PR #7 at
 `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run

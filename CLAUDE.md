@@ -39,7 +39,7 @@ Historical chats and archives are provenance, not automatic authority. Unknown i
 - Active item: `SPI-000` — SPIMAR Transformation Phase 1 (brand, UX architecture, global experience). Do not continue polishing the House of Yellow clone.
 - `D-013` is in effect: no historical patch may be applied. `D-012` has expired by its own terms, which does not authorize enabling video — media activation is a SPIMAR decision and `lib/media/video-manifest.json` still declares 0 deployable assets.
 - Do not reconstruct or source House of Yellow media. SPIMAR-owned content replaces reference content.
-- The canonical `main` SHA and post-merge check evidence are carried in `docs/claude-code/STATUS.md`.
+- Current canonical `main`: `e048fdde7bdf52992ff258870147bf70c64295e9`, tagged `hoy-clone-baseline-eng-015` as the accepted foundation baseline.
 
 ## Branch and PR discipline
 

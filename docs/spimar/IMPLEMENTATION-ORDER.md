@@ -14,7 +14,7 @@ Completed:
 - ENG-014C — all 21 project-page structures and route-specific variants, PR #8, merge `17b697430a55fa3a5835c9c25fef927301b9ec87` (reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent); accepted on project-composition parity under `D-014`, with the raw whole-page height criterion recorded as an authorized unmet exception owned by `PAR-P1-004` under ENG-014E.
 
 - ENG-014C control-plane closeout — PR #9, merge `6961705e657c1fa65f71a5a8099c9e77f6c89cba`.
-- ENG-015 — accelerated final foundation acceptance under `D-015`, PR #10. Stage A closed.
+- ENG-015 — accelerated final foundation acceptance under `D-015`, PR #10, merge `e048fdde7bdf52992ff258870147bf70c64295e9`, tag `hoy-clone-baseline-eng-015`. Stage A closed.
 
 Superseded, never run:
 

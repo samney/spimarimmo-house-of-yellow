@@ -5,8 +5,9 @@ Updated: 2026-08-01
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current verified `main`: the PR #10 merge commit. Per `D-015` no further closeout PR is created, so the exact merge SHA and post-merge check evidence are carried into the first SPIMAR transformation commit on `claude/spimar-transformation-phase-1`
-- Latest merged item: `ENG-015` accelerated foundation closure, PR #10; Stage A closed under `D-015`
+- Current verified `main`: `e048fdde7bdf52992ff258870147bf70c64295e9`
+- Accepted foundation baseline tag: `hoy-clone-baseline-eng-015` → `e048fdde7bdf52992ff258870147bf70c64295e9`
+- Latest merged item: `ENG-015` accelerated foundation closure, PR #10; merge `e048fdde7bdf52992ff258870147bf70c64295e9`; reviewed head `4be32cf7c371464d6888a3d663ea850646d04208` preserved as the second parent (first parent `6961705e657c1fa65f71a5a8099c9e77f6c89cba`); post-merge Quality Gates run `30720104648` passed; post-merge Vercel deployment `3HLKBd3oBtK99sZSRghXh55THT7s` passed. Stage A closed under `D-015`
 - ENG-014C control-plane closeout: merged through PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba` (reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent)
 - ENG-014C: merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
 - Control-plane hardening (no ticket ID): merged through PR #7 at `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed
@@ -48,7 +49,8 @@ Updated: 2026-08-01
 ## Next safe action
 
 Work `SPI-000` on branch `claude/spimar-transformation-phase-1`, branched from
-the ENG-015 `main`. Begin with the fresh repository/residue/conflict audit, then
+`main@e048fdde7bdf52992ff258870147bf70c64295e9` (tag
+`hoy-clone-baseline-eng-015`). Begin with the fresh repository/residue/conflict audit, then
 proceed through SPIMAR tokens and identity, header/navigation/footer, IA from
 the approved specifications, homepage content structure, responsive foundations
 and motion direction.

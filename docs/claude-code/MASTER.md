@@ -18,7 +18,8 @@ Claude Code is the sole source-code implementer from `ENG-014C`.
 - `ENG-014C`: `DONE`; merged and closed through PR #8; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent of merge `17b697430a55fa3a5835c9c25fef927301b9ec87` (first parent `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`); post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed.
 - ENG-014C control-plane closeout: merged and closed through PR #9; merge `6961705e657c1fa65f71a5a8099c9e77f6c89cba`; reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent.
 - `ENG-014D` and `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Neither ran, neither passed. Media delivery moves to the SPIMAR content/media phase; motion, shell, responsive and visual convergence move to `SPI-030`/`SPI-040`/`QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed.
-- `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`; accepted limitations recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
+- `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`; merge `e048fdde7bdf52992ff258870147bf70c64295e9` (reviewed head `4be32cf7c371464d6888a3d663ea850646d04208` preserved as the second parent); post-merge Quality Gates run `30720104648` and Vercel deployment `3HLKBd3oBtK99sZSRghXh55THT7s` passed; accepted baseline tag `hoy-clone-baseline-eng-015`; accepted limitations recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
+- Current canonical `main`: `e048fdde7bdf52992ff258870147bf70c64295e9`.
 - SPIMAR transformation: **active** at `SPI-000` (Phase 1 — brand, UX architecture and global experience).
 
 ## Stage A — Close and freeze the reference foundation (CLOSED)
