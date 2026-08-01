@@ -17,6 +17,7 @@
     "format:check": "prettier --check .",
     "validate:media": "node qa/validate-media.mjs",
     "test": "vitest run",
+    "test:routes": "node qa/validate-routes.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

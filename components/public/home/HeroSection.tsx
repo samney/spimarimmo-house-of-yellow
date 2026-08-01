@@ -9,7 +9,7 @@ export function HeroSection() {
       <div className="innerAnimContainer">
         <div className="background playerBackground">
           <ResilientVideo
-            className="mediaPlane--fill"
+            className="mediaPlane--fill heroMediaPlane"
             videoClassName="video playVideoOnScroll"
             src={null}
             poster={MEDIA_POSTERS.heroDesktop}
