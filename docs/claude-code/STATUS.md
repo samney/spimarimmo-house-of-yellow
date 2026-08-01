@@ -28,9 +28,9 @@ Updated: 2026-08-01
 - Control-plane hardening (no ticket ID): independently reviewed and merged through PR #7 at `b1854dc`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
 - `ENG-014C`: `DONE`. Implemented on `claude/eng-014c-project-detail-parity` from `b1854dc`; independently reviewed twice, review corrections applied, final review returned `APPROVED_FOR_OWNER_MERGE`; owner-merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`, with the exact reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent of the merge commit. Post-merge Quality Gates run `30715826793` and Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed. Accepted against project-composition parity under `D-014`; the raw whole-page scroll-height criterion (≤2%) is recorded as an **authorized unmet exception**, not a passed measurement, and is assigned to `PAR-P1-004` under `ENG-014E`. For the corrected figures see the measurement erratum in `DECISIONS.md` under `D-014`: 3.2–6.3% delta (measured 3.18%–6.25%), desktop excess 203px on 20 records and 202px on 1, mobile excess 194px on 18 records and 195px on 3 — never 193px.
 - `ENG-014D`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. House of Yellow non-hero media delivery is no longer a foundation blocker; the requirements move to the SPIMAR content/media phase and SPIMAR-owned media replaces reference media.
-- `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. Motion, header, footer, responsive-shell and visual-convergence requirements move to `SPI-030`/`SPI-040`, with the accessibility, browser and regression sweep in `QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed; the whole-page ≤2% criterion **did not pass**.
+- `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. Motion, header, footer, responsive-shell and visual-convergence requirements move to `TRF-010`–`TRF-019`, with the accessibility, browser and regression sweep in `TRF-081`–`TRF-087`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed; the whole-page ≤2% criterion **did not pass**.
 - `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`. Authoritative gates and a live smoke review passed; accepted limitations L1–L9 are recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. Stage A is closed.
-- SPIMAR transformation: **active**. `SPI-000` is the current item, executed as SPIMAR Transformation Phase 1 — Brand, UX Architecture and Global Experience.
+- SPIMAR transformation: **active**. Controlling contract is `docs/SPIMAR-Transformation-Phase-1/`, adopted by `D-016`; canonical backlog `TRF-000`–`TRF-090`. `TRF-000` (foundation freeze, `docs/spimar-phase-1/FOUNDATION-BASELINE.md`) and `TRF-001` (control files and traceability) are `DONE`; the current item is `TRF-002` — reference residue inventory.
 - `D-013` is in effect: no historical patch may be applied. `D-012` expired by its own terms at ENG-015 acceptance; this does not authorize enabling video.
 - Portability blockers MIG-1, MIG-2 and MIG-3 remain disclosed in `BLOCKERS.md`.
 
@@ -48,7 +48,7 @@ Updated: 2026-08-01
 
 ## Next safe action
 
-Work `SPI-000` on branch `claude/spimar-transformation-phase-1`, branched from
+Work `TRF-002` on branch `claude/spimar-transformation-phase-1`, branched from
 `main@e048fdde7bdf52992ff258870147bf70c64295e9` (tag
 `hoy-clone-baseline-eng-015`). Begin with the fresh repository/residue/conflict audit, then
 proceed through SPIMAR tokens and identity, header/navigation/footer, IA from
@@ -56,4 +56,4 @@ the approved specifications, homepage content structure, responsive foundations
 and motion direction.
 
 Do not continue polishing the House of Yellow clone, do not reconstruct or
-source House of Yellow media, and do not start a later `SPI-*` item early.
+source House of Yellow media, and do not start a later `TRF-*` item early.

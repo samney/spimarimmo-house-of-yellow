@@ -213,3 +213,68 @@ replaced outright rather than re-measured against House of Yellow.
 - Accepted limitations transferred to SPIMAR are enumerated in
   `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
 - Immutable `ENG-014B` and `ENG-014C` evidence is untouched.
+
+## D-016 — 2026-08-01 — Adopt the SPIMAR-Transformation-Phase-1 package; `TRF-*` replaces `SPI-*`; reconcile precedence and project rules
+
+**Context.** The owner delivered
+`docs/SPIMAR-Transformation-Phase-1/` (22 documents, extracted from an archive
+with SHA-256 `ad04e47a63582135ab795f8b4292ce0b420f8727d3ef8b8a710e775a28f538aa`)
+after `D-015` was recorded and `ENG-015` merged. The package independently
+reaches the same conclusions as `D-015` — do not reopen `ENG-014D`/`ENG-014E`,
+classify the deferred parity items as
+`DEFERRED_FROM_REFERENCE_PARITY` / `ABSORBED_INTO_SPIMAR_NATIVE_IMPLEMENTATION`,
+and never mark them passed — but it carries its own identifier scheme and
+contradicts several standing project rules. This decision reconciles them.
+
+**Decision.**
+
+1. **The package is the controlling Phase 1 contract** for scope, architecture,
+   design system, CMS/CRM, governance, backlog, acceptance and handoff.
+   Repository and runtime evidence remain controlling for current
+   implementation facts, per the existing authority order.
+2. **`TRF-000`–`TRF-090` replace `SPI-*` as the canonical Phase 1 backlog
+   scheme.** `SPI-*` was provisional: it existed only as a placeholder table in
+   `QUEUE.md` and was activated under `D-015` because no other scheme was
+   defined at the time. The package defines 67 `TRF` items with dependencies,
+   epics and gates, and never references `SPI-*`. Superseding the weaker scheme
+   is cheaper than maintaining two. The mapping is recorded in
+   `docs/claude-code/SPIMAR-TRACEABILITY.md`; `SPI-*` must not be used again.
+3. **Precedence.** For Phase 1 execution the package outranks
+   `docs/spimar/official-specifications/`, which remains the canonical
+   product/UX/content specification corpus and the authority for anything the
+   package does not cover. The package is a Phase 1 execution contract derived
+   from that corpus, not a replacement for it. `CLAUDE.md` authority order is
+   amended accordingly: latest owner decision → `CLAUDE.md` and
+   `docs/claude-code/` → accepted decision registers → the Phase 1 package →
+   `docs/spimar/official-specifications/` → repository evidence.
+4. **`AGENTS.md` does not exist in this repository.** Where the package
+   instructs Claude to read `AGENTS.md`, read `CLAUDE.md` and `.claude/rules/`.
+   No `AGENTS.md` is created; one contract file is correct.
+5. **Project rules are updated, not silently contradicted.**
+   `.claude/rules/frontend-quality.md` previously required fidelity to the
+   House of Yellow reference and pinned its tokens (`#EEEEEE`, `#1D1D1B`,
+   `#F2EFA3`, Poppins). That directly contradicts the package's SPIMAR identity
+   (`#000000`, `#EFC337`, licensed Latin/Arabic families) and would misdirect
+   every future session. It is rewritten for SPIMAR.
+   `.claude/rules/architecture.md` previously fixed EN/FR only; it is rewritten
+   for FR/EN/AR with true RTL, host/tenant/locale resolution and typed
+   repository interfaces.
+6. **`D-009` two-pass review is restored in full** for all Phase 1 work. Its
+   relaxation was scoped to `ENG-015` alone.
+7. **The package is committed to the repository; the archive is not.** Tracking
+   both the `.zip` and its expansion would duplicate 92 KB of identical content
+   and repeat the `MIG-3` portability problem. The extracted Markdown is the
+   durable form; the archive SHA-256 is recorded here for provenance.
+
+**Consequences.**
+
+- `TRF-000` (foundation freeze) is satisfied by the `ENG-015` evidence and is
+  recorded at `docs/spimar-phase-1/FOUNDATION-BASELINE.md`.
+- `TRF-001` (Phase 1 control files and traceability map) is delivered by this
+  changeset and becomes the first closed implementation item.
+- `TRF-002` (reference residue inventory) is the next eligible item.
+- Delivery topology follows the package: integration branch
+  `claude/spimar-transformation-phase-1` with isolated worktrees
+  `claude/spimar-experience-shell` and `claude/spimar-media-content`.
+- Nothing in this decision reopens reference parity, and none of the deferred
+  parity items becomes passed.

@@ -17,10 +17,10 @@ Claude Code is the sole source-code implementer from `ENG-014C`.
 - Control-plane hardening (no ticket ID): merged and closed through PR #7; merge `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` passed; post-merge Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
 - `ENG-014C`: `DONE`; merged and closed through PR #8; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent of merge `17b697430a55fa3a5835c9c25fef927301b9ec87` (first parent `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`); post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed.
 - ENG-014C control-plane closeout: merged and closed through PR #9; merge `6961705e657c1fa65f71a5a8099c9e77f6c89cba`; reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent.
-- `ENG-014D` and `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Neither ran, neither passed. Media delivery moves to the SPIMAR content/media phase; motion, shell, responsive and visual convergence move to `SPI-030`/`SPI-040`/`QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed.
+- `ENG-014D` and `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Neither ran, neither passed. Media delivery moves to the SPIMAR content/media phase; motion, shell, responsive and visual convergence move to `TRF-010`–`TRF-019` and `TRF-081`–`TRF-087`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed.
 - `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`; merge `e048fdde7bdf52992ff258870147bf70c64295e9` (reviewed head `4be32cf7c371464d6888a3d663ea850646d04208` preserved as the second parent); post-merge Quality Gates run `30720104648` and Vercel deployment `3HLKBd3oBtK99sZSRghXh55THT7s` passed; accepted baseline tag `hoy-clone-baseline-eng-015`; accepted limitations recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
 - Current canonical `main`: `e048fdde7bdf52992ff258870147bf70c64295e9`.
-- SPIMAR transformation: **active** at `SPI-000` (Phase 1 — brand, UX architecture and global experience).
+- SPIMAR transformation: **active** at `TRF-002` under the Phase 1 package adopted by `D-016`.
 
 ## Stage A — Close and freeze the reference foundation (CLOSED)
 
@@ -32,7 +32,7 @@ Stage A is closed. The foundation is accepted for transformation with the limita
 
 `ENG-015` established the accepted clone baseline. Claude now performs a fresh top-down audit, removes House of Yellow residue, consolidates one canonical architecture, and implements SPIMAR from the approved specification order. Restarting the transformation does not discard the accepted baseline.
 
-Active item: `SPI-000` — SPIMAR Transformation Phase 1, brand, UX architecture and global experience.
+Controlling contract: `docs/SPIMAR-Transformation-Phase-1/` (22 documents, `D-016`). Canonical backlog `TRF-000`–`TRF-090`; traceability in `docs/claude-code/SPIMAR-TRACEABILITY.md`. `TRF-000` and `TRF-001` are closed; active item is `TRF-002`.
 
 ## Definition of done
 

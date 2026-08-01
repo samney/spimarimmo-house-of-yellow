@@ -97,3 +97,35 @@ authorize enabling video; media activation is a SPIMAR decision.
 The next active item is `SPI-000`, the first canonical SPIMAR transformation
 identifier, executed as **SPIMAR Transformation Phase 1 — Brand, UX Architecture
 and Global Experience**.
+
+## 7. Addendum — backlog scheme superseded (2026-08-01, post-merge)
+
+> Sections 1–6 above are preserved exactly as merged in PR #10. This addendum
+> records only that the **identifier scheme changed after merge**; no measurement,
+> limitation, gate result or acceptance statement above is altered or withdrawn.
+>
+> The owner subsequently delivered `docs/SPIMAR-Transformation-Phase-1/`, adopted
+> by **`D-016`**. Its `TRF-000`–`TRF-090` backlog supersedes the provisional
+> `SPI-*` / `OPS-*` / `CMS-*` / `CRM-*` / `LOC-*` / `QA-*` placeholders that this
+> document's "Transfers to" column and section 6 reference. **`SPI-*` is retired
+> and must not be used again.** The complete mapping is in
+> `docs/claude-code/SPIMAR-TRACEABILITY.md`. For the limitations above:
+>
+> | Limitation | Was                 | Now                            |
+> | ---------- | ------------------- | ------------------------------ |
+> | L1         | `SPI-040`           | `TRF-015`–`TRF-017`            |
+> | L2         | `CMS-080`           | `TRF-022`–`TRF-023`, `TRF-055` |
+> | L3         | `SPI-040`           | `TRF-012`, `TRF-017`           |
+> | L4         | `LOC-100`           | `TRF-080`                      |
+> | L5         | `SPI-030`, `QA-110` | `TRF-011`, `TRF-082`           |
+> | L6         | `SPI-030`           | `TRF-018`                      |
+> | L7         | `CRM-090`           | `TRF-061`                      |
+> | L8         | `QA-110`            | `TRF-081`                      |
+> | L9         | `BLOCKERS.md`       | `BLOCKERS.md` (unchanged)      |
+>
+> The active item is `TRF-002`, not `SPI-000`. `TRF-000` is closed by this
+> document plus `docs/spimar-phase-1/FOUNDATION-BASELINE.md`.
+>
+> **L1 remains unmet.** The raw whole-page ≤2% criterion did not pass, was never
+> re-measured, and is carried forward as an accepted limitation — the change of
+> owning identifier does not change its status.

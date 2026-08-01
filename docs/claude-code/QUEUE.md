@@ -11,7 +11,7 @@ Statuses: `PENDING` · `IN PROGRESS` · `BLOCKED` · `PR REVIEW` · `DONE (merge
 | `OPS-001` | `DONE (PR #6 / f57a87f)` | Add GitHub Actions quality gates for validation, test, typecheck, lint, build, routes and browser discovery | `MIG-000` |
 | `ENG-014C` | `DONE (PR #8 / 17b6974)` | Converge all 21 project-page block orders, hero placement, statistics, spacing and media rhythm | `OPS-001` |
 | `ENG-014D` | `SUPERSEDED / TRANSFERRED (D-015)` | Non-hero reference media and fallbacks — **never implemented, never passed**; requirements moved to the SPIMAR content/media phase | `ENG-014C` |
-| `ENG-014E` | `SUPERSEDED / TRANSFERRED (D-015)` | Motion, responsive, accessibility and visual convergence — **never implemented, never passed**; requirements moved to `SPI-030`/`SPI-040`/`QA-110`. `PAR-P1-004` is preserved, not closed, and transfers to `SPI-040` | `ENG-014C` |
+| `ENG-014E` | `SUPERSEDED / TRANSFERRED (D-015)` | Motion, responsive, accessibility and visual convergence — **never implemented, never passed**; requirements moved to `TRF-010`–`TRF-019` and `TRF-081`–`TRF-087`. `PAR-P1-004` is preserved, not closed, and transfers to `TRF-015`–`TRF-017` | `ENG-014C` |
 | `ENG-015` | `DONE (PR #10 / e048fdd)` | Accelerated final foundation acceptance under `D-015`: authoritative gates, live smoke review, accepted-limitation register, baseline tag `hoy-clone-baseline-eng-015`, Stage A closed | `ENG-014C` |
 
 Post-OPS-001 control-plane hardening (no ticket ID): merged through PR #7 at
@@ -29,14 +29,14 @@ PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba`.
 transferred — they were never implemented and must never be recorded as passed.
 `ENG-015` accepted the foundation through an accelerated closure; its accepted
 limitations are enumerated in
-`docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. The
-active item is now `SPI-000`.
+`docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. Phase 1
+execution follows the `TRF-*` backlog below.
 
 `ENG-014C` is accepted against project-composition parity under `D-014`. Its raw
 whole-page scroll-height criterion (≤2%) is an **authorized unmet exception**,
 never a passed measurement, caused by the pre-existing unchanged shared global
 shell. Under `D-015` this exception is **carried forward unresolved** as an
-accepted limitation of the foundation and transfers to `SPI-040`, where the
+accepted limitation of the foundation and transfers to `TRF-015`–`TRF-017`, where the
 global shell is replaced rather than re-measured against House of Yellow. It is
 still not a passed measurement.
 
@@ -48,30 +48,37 @@ delta range **3.18%–6.25%** (rounded **3.2–6.3%**, not 3.3–6.3%); desktop 
 **194px on 18 records and 195px on 3 — never 193px**. The `D-014` authorization,
 scope and ownership are unchanged.
 
-## SPIMAR controlled restart
+## SPIMAR Transformation Phase 1
 
-| ID | Status | Objective | Depends on |
-|---|---|---|---|
-| `SPI-000` | `IN PROGRESS` | **Active — SPIMAR Transformation Phase 1: brand, UX architecture and global experience.** Fresh repository/residue/conflict audit from the ENG-015 baseline, then SPIMAR tokens and identity, header/navigation/footer, IA from the approved specifications, homepage content structure, responsive foundations, motion direction, replacement of House of Yellow reference identity and content, and preparation for SPIMAR-owned CMS media | `ENG-015` |
-| `SPI-010` | `PENDING` | Neutralize House of Yellow and consolidate one canonical architecture | `SPI-000` |
-| `SPI-020` | `PENDING` | Revalidate product foundation, PRD, IA, sitemap, content and journeys | `SPI-010` |
-| `SPI-030` | `PENDING` | Implement SPIMAR identity, tokens, components, motion, responsive and RTL foundations | `SPI-020` |
-| `SPI-040` | `PENDING` | Global shell, navigation, locale routing, metadata, consent and shared states | `SPI-030` |
-| `SPI-050` | `PENDING` | Homepage top-to-bottom | `SPI-040` |
-| `SPI-060` | `PENDING` | Remaining public route families | `SPI-050` |
-| `OPS-070` | `PENDING` | Data architecture, migrations, seed, RLS and tenant boundaries | `SPI-060` |
-| `CMS-080` | `PENDING` | Auth, roles, CMS lifecycle, media, translations and audit history | `OPS-070` |
-| `CRM-090` | `PENDING` | Forms, leads, assignment, tasks, appointments, delivery, retries and reporting | `OPS-070` |
-| `LOC-100` | `PENDING` | Professional FR/EN/Arabic content and RTL parity | `CMS-080`, `CRM-090` |
-| `QA-110` | `PENDING` | SEO, analytics, security, privacy, performance, accessibility and regression | `LOC-100` |
-| `AUD-120` | `PENDING` | Post-implementation requirements and residue audit | `QA-110` |
-| `REL-130` | `PENDING` | Production release, rollback, operations and owner handoff | `AUD-120` |
+Canonical backlog: `TRF-000`–`TRF-090`, defined in
+`docs/SPIMAR-Transformation-Phase-1/17-IMPLEMENTATION-BACKLOG.md` and adopted by
+`D-016`. The former `SPI-*` / `OPS-070` / `CMS-080` / `CRM-090` / `LOC-100` /
+`QA-110` / `AUD-120` / `REL-130` placeholders are **retired**; the mapping is in
+`docs/claude-code/SPIMAR-TRACEABILITY.md`.
+
+| Epic | IDs | Status | Objective | Exit gate |
+|---|---|---|---|---|
+| A | `TRF-000`–`TRF-005` | `TRF-000` `DONE`, `TRF-001` `DONE`, `TRF-002` **next** | Baseline freeze, residue inventory, neutral primitives, reference-residue removal, rollback verification | `GATE-0`, `GATE-1` |
+| B | `TRF-010`–`TRF-019` | `PENDING` | Token layers, Latin/Arabic typography, three contextual modes, global/local shell, footer, motion, RTL | `GATE-2` |
+| C | `TRF-020`–`TRF-027` | `PENDING` | Domain types, repository interfaces, media records and rights, asset register, host/locale resolver, route scaffolding, metadata | `GATE-3`, `GATE-4` |
+| D | `TRF-030`–`TRF-040` | `PENDING` | Homepage 19-chapter narrative, event/exhibitor experience, visitor experience, legal and recovery states | `GATE-5`–`GATE-7` |
+| E | `TRF-050`–`TRF-059` | `PENDING` | CMS: roles, schema, editors, media library, locale matrix, review, publish, revalidation | `GATE-8` |
+| F | `TRF-060`–`TRF-070` | `PENDING` | CRM: operational schema and RLS, durable submissions, outbox, lead workspace, appointments, exports | `GATE-9` |
+| G | `TRF-080`–`TRF-090` | `PENDING` | FR/EN/AR and RTL, a11y, performance, SEO, security, analytics, observability, regression, release | `GATE-10`–`GATE-12` |
+
+Active item: **`TRF-002`** — inventory House of Yellow brand, content, media and
+analytics residue. The measured residue baseline is in
+`docs/spimar-phase-1/FOUNDATION-BASELINE.md`.
+
+Delivery topology: integration branch `claude/spimar-transformation-phase-1`,
+with isolated worktrees `claude/spimar-experience-shell` and
+`claude/spimar-media-content`. No two sessions in the same worktree; assign
+shared-file ownership before parallel work.
 
 Expand only the active item into bounded tasks. Never start a later item early.
 
-Phase 1 groups `SPI-000` through `SPI-050` under one owner-approved theme, but
-only `SPI-000` is active. `ENG-014D` and `ENG-014E` requirements arrive here
-under `D-015`: media delivery into the SPIMAR content/media phase (`CMS-080`),
-animation and responsive-shell convergence into `SPI-030`/`SPI-040`, and the
-cross-cutting accessibility, browser and regression sweep into `QA-110`.
+`ENG-014D` and `ENG-014E` requirements arrive here under `D-015`: media delivery
+into `TRF-022`–`TRF-023` and `TRF-055`, animation and responsive-shell
+convergence into `TRF-012`, `TRF-015`–`TRF-018`, and the cross-cutting
+accessibility, browser and regression sweep into `TRF-081`–`TRF-087`.
 

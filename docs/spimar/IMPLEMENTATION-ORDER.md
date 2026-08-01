@@ -19,13 +19,13 @@ Completed:
 Superseded, never run:
 
 - ENG-014D — **SUPERSEDED / TRANSFERRED (`D-015`)**. Not implemented, not passed. Non-hero media delivery is no longer a foundation blocker; requirements move to the SPIMAR content/media phase against SPIMAR-owned media.
-- ENG-014E — **SUPERSEDED / TRANSFERRED (`D-015`)**. Not implemented, not passed. Motion, shell, responsive and visual-convergence requirements move to `SPI-030`/`SPI-040`/`QA-110`. The `D-014` / `PAR-P1-004` whole-page height exception is preserved and carried forward unmet.
+- ENG-014E — **SUPERSEDED / TRANSFERRED (`D-015`)**. Not implemented, not passed. Motion, shell, responsive and visual-convergence requirements move to `TRF-010`–`TRF-019` and `TRF-081`–`TRF-087`. The `D-014` / `PAR-P1-004` whole-page height exception is preserved and carried forward unmet.
 
 ## Stage B — Controlled SPIMAR restart (ACTIVE)
 
 Start from the accepted `hoy-clone-baseline-eng-015` tag and latest clean main. Exclude old patches, experimental worktrees, stale branches and unmerged artifacts.
 
-Active item: `SPI-000`, executed as SPIMAR Transformation Phase 1 — Brand, UX Architecture and Global Experience, on branch `claude/spimar-transformation-phase-1`.
+Controlling Phase 1 contract: `docs/SPIMAR-Transformation-Phase-1/`, adopted by `D-016`. Canonical backlog `TRF-000`–`TRF-090` replaces the retired `SPI-*` placeholders; see `docs/claude-code/SPIMAR-TRACEABILITY.md`. `TRF-000` and `TRF-001` are closed; the active item is `TRF-002`, on branch `claude/spimar-transformation-phase-1`.
 
 1. Audit House of Yellow dependencies, residue, duplication, reusable primitives and obsolete paths.
 2. Neutralize the clone and establish one canonical architecture.

@@ -6,3 +6,6 @@ qa
 HOUSE-OF-YELLOW-CLAUDE-CODE-MASTER-PROMPT.md
 CLAUDE-CODE-PUBLIC-SKILLS-WORKFLOW-BOOTSTRAP.md
 .claude/skills
+# Owner-delivered Phase 1 contract package (D-016). Kept byte-identical to the
+# archive it was extracted from; formatting it would break that provenance.
+docs/SPIMAR-Transformation-Phase-1

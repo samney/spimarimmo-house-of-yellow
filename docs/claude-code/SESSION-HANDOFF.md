@@ -14,18 +14,22 @@ Updated: 2026-08-01
 - PR #9 / ENG-014C control-plane closeout: merged at `6961705e657c1fa65f71a5a8099c9e77f6c89cba`; reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent
 - ENG-014D and ENG-014E: **SUPERSEDED / TRANSFERRED** under `D-015`. Neither ran; neither passed. Never record them as implemented or validated
 - PR #10 / ENG-015: accelerated foundation acceptance under `D-015`; merged at `e048fdde7bdf52992ff258870147bf70c64295e9` with reviewed head `4be32cf7c371464d6888a3d663ea850646d04208` preserved as the second parent; post-merge Quality Gates run `30720104648` and Vercel deployment `3HLKBd3oBtK99sZSRghXh55THT7s` passed; Stage A closed; accepted limitations L1–L9 in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`; baseline tag `hoy-clone-baseline-eng-015`
-- `D-014` / `PAR-P1-004`: preserved and carried forward **unmet**. The whole-page ≤2% criterion did not pass. It transfers to `SPI-040`
-- SPIMAR transformation: **active** at `SPI-000`
+- `D-014` / `PAR-P1-004`: preserved and carried forward **unmet**. The whole-page ≤2% criterion did not pass. It transfers to `TRF-015`–`TRF-017`
+- SPIMAR transformation: **active** at `TRF-002`. Controlling contract `docs/SPIMAR-Transformation-Phase-1/` (`D-016`); backlog `TRF-000`–`TRF-090`; `TRF-000` and `TRF-001` closed
 
 ## Resume rule
 
 Read `CLAUDE.md` and its required files. Work only on the active queue item.
 
-Stage A is closed. The active item is `SPI-000` — SPIMAR Transformation Phase 1,
-brand, UX architecture and global experience — on branch
-`claude/spimar-transformation-phase-1`.
+Stage A is closed. Read every file in `docs/SPIMAR-Transformation-Phase-1/` in
+numeric order before editing anything — it is the controlling Phase 1 contract
+under `D-016`. Where it says to read `AGENTS.md`, read `CLAUDE.md` and
+`.claude/rules/`; no `AGENTS.md` exists in this repository.
 
-To work `SPI-000`:
+The active item is `TRF-002` — inventory House of Yellow brand, content, media
+and analytics residue — on branch `claude/spimar-transformation-phase-1`.
+
+To work `TRF-002`:
 
 - read the approved specifications under
   `docs/spimar/official-specifications/` before changing any surface;
@@ -39,7 +43,7 @@ To work `SPI-000`:
   in the content/media phase;
 - keep the existing gate suite green; it is now the regression net for the
   transformation;
-- do not start a later `SPI-*` item early.
+- do not start a later `TRF-*` item early.
 
 Accepted foundation limitations L1–L9 — including the unmet whole-page height
 criterion — are in
