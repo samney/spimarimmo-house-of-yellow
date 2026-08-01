@@ -1,45 +1,49 @@
-# VALIDATION MATRIX
+# VALIDATION MATRIX — Migration, Parity and SPIMAR
 
-Dimensions per route: 8 viewports (1920×1080, 1440×900, 1280×800, 1024×768, 768×1024, 430×932, 390×844, 360×800) × locales (EN, FR) × checks (content ✚ interaction ✚ accessibility ✚ performance ✚ visual-diff ✚ regression). Cells hold evidence paths, never bare "pass".
+Every pass requires an evidence path or URL. Skipped, blocked or timed-out commands are not passes.
 
-Status legend: `—` not started · `REF` reference captured · `IMPL` built · `VAL(path)` validated with evidence.
+## MIG-000
 
-**Ref-capture column update 2026-07-30:** ALL public routes below (including 404) = `REF` at all 8 viewports — `qa/reference/{desktop,tablet,mobile}/<slug>--<WxH>--{top,full}.{png|jpg}` (disk-only per D-006; regenerate with `node qa/capture-reference.mjs`). Interaction/consent/reduced-motion states in `qa/reference/states/`; motion evidence in `qa/recordings/`.
+- Documentation/control-plane diff only.
+- Phase coverage: 08 = 8 files, 09 = 8, 10 = 13, 11 = 3.
+- Zero missing referenced canonical files.
+- Zero unexpected empty/temp files.
+- SHA-256 manifest verifies every overlay file except the manifest itself.
+- YAML parses.
+- Active/current relative Markdown links resolve. The untouched historical early-work
+  archive has exactly 31 disclosed missing-target references recorded in
+  `docs/migration/ARCHIVE-LINK-EXCEPTIONS.md`; do not fabricate their targets.
+- No application source, test, dependency, lockfile or runtime configuration change.
+- Current checkpoint and queue match GitHub.
+- Raw-archive portability blockers remain explicit; no false completion claim.
 
-| Route                                          | Ref capture | EN impl | FR impl | Interaction | A11y | Perf | Visual diff | Notes                            |
-| ---------------------------------------------- | ----------- | ------- | ------- | ----------- | ---- | ---- | ----------- | -------------------------------- |
-| `/` (Home)                                     | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/made-by-yellow/`                             | —           | —       | —       | —           | —    | —    | —           | grid/list/filter states          |
-| `/culture/`                                    | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/culture2--*`  |
-| `/how-we-roll/`                                | REF         | IMPL    | shell   | —           | —    | —    | —           | `qa/implementation/hwr2--*`      |
-| `/connect/`                                    | REF         | IMPL    | shell   | form ✓      | —    | —    | —           | `qa/implementation/connect--*`; form states evidenced (invalid/success/rate-limited); clocks = dynamic region |
-| `/cookies/`                                    | REF         | IMPL    | shell   | widget ✓    | —    | —    | —           | `qa/implementation/cookies--*`; consent widget writes shared store (verified) |
-| 404                                            | REF (blank) | IMPL    | shell   | —           | —    | —    | —           | reference 404 body is empty — D-007; ours `qa/implementation/notfound--*`, real 404 status |
-| `/project/oceanco-leviathan/`                  | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/la-fuente-x-amg/`                    | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/broederliefde-rotterdam-ahoy/`       | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/srg-international-reeses/`           | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/klibansky-superman/`                 | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/xxl-nutrition-festival-activations/` | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/qbuzz-smiley-campaign/`              | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/porsche-employer-branding/`          | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/glow-eindhoven-light-festival/`      | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/de-hollandse-100-lymphco/`           | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/streetgasm/`                         | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/de-klerk-employer-branding/`         | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/buddha-to-buddha-los-angeles/`       | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/the-space-dubai/`                    | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/htc/`                                | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/salvia-bioelectronics/`              | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/ansu-fati-arriba-nutrition/`         | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/eiffel-employer-branding/`           | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/tmc-fundamentals/`                   | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/hotek-brand-video/`                  | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/project/madunia-brand-launch/`               | —           | —       | —       | —           | —    | —    | —           |                                  |
-| `/admin` (CMS, per module)                     | n/a         | —       | n/a     | —           | —    | —    | n/a         | functional validation, not pixel |
+## Standard repository gates
 
-Route list is provisional until HOY-010 freezes the inventory (sitemap/robots/redirects/legal routes still to verify). Global states (nav open/closed, consent banner/preferences, WhatsApp, cursor, reduced-motion, transitions) are validated per-route and summarized here when rows gain evidence.
+```bash
+pnpm validate:media
+pnpm test
+pnpm typecheck
+pnpm lint
+pnpm build
+pnpm test:routes
+pnpm exec playwright test --list
+pnpm test:e2e
+```
 
-## Dynamic-region register (visual-diff exclusions)
+Run applicable gates for source-affecting tasks. Documentation-only MIG-000 must at minimum prove unchanged application tree and may reuse the merged ENG-014B gate evidence plus a clean build/test run from the migration branch.
 
-To be populated in HOY-020: live local times (Connect), video frames, social feeds, any randomized content. Every exclusion documented with a mask rationale.
+## Remaining Stage A
+
+| Item | Required evidence |
+|---|---|
+| `OPS-001` | Workflow YAML, trigger/permissions/concurrency/cache review, successful Actions run, no secret exposure |
+| `ENG-014C` | All 21 project routes mapped; representative desktop/mobile captures; block order, hero offsets, statistics, narratives, media pairs, credits and next-project states |
+| `ENG-014D` | Approved-media manifest, fallbacks, request success, rights/source record, no broken media, hero poster-only |
+| `ENG-014E` | Motion, focus, keyboard, reduced motion, axe, overflow, browser and visual-diff evidence at eight viewports |
+| `ENG-015` | Clean main, every PR merged, full gates, tag `hoy-clone-baseline-eng-015`, baseline SHA/deployment/screenshots/state inventory/known differences |
+
+Standard viewports: 1920×1080, 1440×900, 1280×800, 1024×768, 768×1024, 430×932, 390×844, 360×800.
+
+## Stage B universal acceptance
+
+Requirements traceability; exact scope; desktop/tablet/mobile; FR/EN/Arabic/RTL; complete loading/empty/success/error/recovery states; keyboard/focus/semantics/contrast/reduced motion; no House of Yellow residue; no duplicate architecture/token systems; CMS/CRM/RLS/transaction/audit behavior; SEO/analytics/consent/security/performance/privacy; deployment evidence; rollback for release-affecting work.

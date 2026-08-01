@@ -1,0 +1,1118 @@
+diff --git a/app/[locale]/(public)/project/[slug]/page.tsx b/app/[locale]/(public)/project/[slug]/page.tsx
+index d6d974e..2f594ea 100644
+--- a/app/[locale]/(public)/project/[slug]/page.tsx
++++ b/app/[locale]/(public)/project/[slug]/page.tsx
+@@ -6,6 +6,8 @@ import { PROJECTS } from "@/lib/content/projects";
+ import { getProject, getNextProject, localVideo } from "@/lib/content/project-content";
+ import { SplitTitle } from "@/components/public/home/SplitTitle";
+ import { Counter } from "@/components/public/home/Counter";
++import { ResilientVideo } from "@/components/public/media/ResilientVideo";
++import { getProjectPoster } from "@/lib/media/posters";
+ 
+ export function generateStaticParams() {
+   return PROJECTS.map((p) => ({ slug: p.slug }));
+@@ -42,12 +44,17 @@ function StatCell({ label, raw }: { label: string; raw: string | null }) {
+   );
+ }
+ 
+-function BlockVideo({ id, className }: { id: string | null | undefined; className?: string }) {
++function BlockVideo({
++  id,
++  poster,
++  className,
++}: {
++  id: string | null | undefined;
++  poster: string;
++  className?: string;
++}) {
+   const src = localVideo(id);
+-  if (!src) return <div className={`mediaPlaceholder ${className ?? ""}`} aria-hidden="true" />;
+-  return (
+-    <video className={className} src={src} muted loop playsInline autoPlay preload="metadata" data-cursor="video" />
+-  );
++  return <ResilientVideo className={className} src={src} poster={poster} data-cursor="video" />;
+ }
+ 
+ export default async function ProjectPage({
+@@ -60,6 +67,7 @@ export default async function ProjectPage({
+   const p = getProject(slug);
+   if (!p) notFound();
+   const next = getNextProject(slug);
++  const projectPoster = getProjectPoster(p);
+   const twoImageBlocks = p.detail.blocks.filter((b) => b.cls.includes("projectTwoImagesBlock"));
+   const fullLoop = p.detail.blocks.find((b) => b.cls.includes("projectFullWidthLoopBlock"));
+ 
+@@ -82,7 +90,11 @@ export default async function ProjectPage({
+           </div>
+         </div>
+         <div className="heroMedia">
+-          <BlockVideo id={p.detail.heroVideoId ?? undefined} />
++          <BlockVideo
++            id={p.detail.heroVideoId ?? undefined}
++            poster={projectPoster}
++            className="projectHeroMedia"
++          />
+         </div>
+       </section>
+ 
+@@ -119,7 +131,7 @@ export default async function ProjectPage({
+             {(twoImageBlocks[0].vidIds.length ? twoImageBlocks[0].vidIds : [null, null])
+               .slice(0, 2)
+               .map((id, i) => (
+-                <BlockVideo key={i} id={id} className="pairItem" />
++                <BlockVideo key={i} id={id} poster={projectPoster} className="pairItem" />
+               ))}
+           </div>
+         </section>
+@@ -141,7 +153,7 @@ export default async function ProjectPage({
+           {twoImageBlocks[1] && twoImageBlocks[1].vidIds.length > 0 && (
+             <div className="mediaPair">
+               {twoImageBlocks[1].vidIds.slice(0, 2).map((id, i) => (
+-                <BlockVideo key={i} id={id} className="pairItem" />
++                <BlockVideo key={i} id={id} poster={projectPoster} className="pairItem" />
+               ))}
+             </div>
+           )}
+@@ -166,7 +178,7 @@ export default async function ProjectPage({
+ 
+       {fullLoop && (
+         <section className="projectFullWidthLoopBlock">
+-          <BlockVideo id={fullLoop.vidIds[0]} className="fullLoop" />
++          <BlockVideo id={fullLoop.vidIds[0]} poster={projectPoster} className="fullLoop" />
+         </section>
+       )}
+ 
+@@ -184,7 +196,11 @@ export default async function ProjectPage({
+             <Link className="relatedLink" href={`/project/${next.slug}`} data-cursor="play">
+               <span className="relatedTitle">{next.title}</span>
+               <span className="relatedMedia">
+-                <video src={next.video} poster={next.poster} muted loop playsInline autoPlay preload="metadata" />
++                <ResilientVideo
++                  className="relatedMediaPlane"
++                  src={localVideo(next.detail.heroVideoId)}
++                  poster={getProjectPoster(next)}
++                />
+               </span>
+             </Link>
+           </div>
+diff --git a/app/[locale]/layout.tsx b/app/[locale]/layout.tsx
+index e2befe8..84a3235 100644
+--- a/app/[locale]/layout.tsx
++++ b/app/[locale]/layout.tsx
+@@ -3,12 +3,17 @@ import { notFound } from "next/navigation";
+ import { hasLocale, NextIntlClientProvider } from "next-intl";
+ import { setRequestLocale } from "next-intl/server";
+ import { routing } from "@/i18n/routing";
++import { getCanonicalProductionUrl, getRobotsMetadata } from "@/lib/seo/robots";
+ import "../globals.css";
+ 
++const canonicalProductionUrl = getCanonicalProductionUrl();
++
+ export const metadata: Metadata = {
+   title: "HOY | House Of Yellow",
+   description:
+     "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
++  robots: getRobotsMetadata(),
++  ...(canonicalProductionUrl ? { metadataBase: canonicalProductionUrl } : {}),
+ };
+ 
+ export function generateStaticParams() {
+diff --git a/app/globals.css b/app/globals.css
+index 50f0f05..aa8633e 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -143,6 +143,43 @@ body {
+   line-height: 1.4;
+ }
+ 
++/* Deployment-safe media plane: the poster is always present and the video
++   fades in only after it can play. Missing, failed, reduced-motion and
++   data-saving states intentionally remain on the poster. */
++.mediaPlane {
++  position: relative;
++  display: block;
++  overflow: hidden;
++  background: var(--hoy-ink);
++}
++
++.mediaPlane--fill {
++  position: absolute;
++  inset: 0;
++  width: 100%;
++  height: 100%;
++}
++
++.mediaPlane__poster,
++.mediaPlane__poster img,
++.mediaPlane__video {
++  position: absolute;
++  inset: 0;
++  display: block;
++  width: 100%;
++  height: 100%;
++  object-fit: cover;
++}
++
++.mediaPlane__video {
++  opacity: 0;
++  transition: opacity 240ms ease-out;
++}
++
++.mediaPlane[data-media-state="ready"] .mediaPlane__video {
++  opacity: 1;
++}
++
+ /* Accessibility addition over the reference (recorded in DESIGN-SYSTEM.md):
+    real reduced-motion fallbacks for all animated content. */
+ @media (prefers-reduced-motion: reduce) {
+@@ -154,4 +191,8 @@ body {
+     transition-duration: 0.01ms !important;
+     scroll-behavior: auto !important;
+   }
++
++  .mediaPlane__video {
++    display: none !important;
++  }
+ }
+diff --git a/components/public/home/AboutWorkSection.tsx b/components/public/home/AboutWorkSection.tsx
+index 3db08df..75f72c5 100644
+--- a/components/public/home/AboutWorkSection.tsx
++++ b/components/public/home/AboutWorkSection.tsx
+@@ -1,6 +1,9 @@
+ import { Link } from "@/i18n/navigation";
+ import { Marquee } from "@/components/public/global/Marquee";
+ import { PlusIcon } from "@/components/public/global/logos";
++import { ResilientVideo } from "@/components/public/media/ResilientVideo";
++import { MEDIA_POSTERS } from "@/lib/media/posters";
++import { resolveLegacyVideoPath } from "@/lib/media/video-registry";
+ import { SplitTitle } from "./SplitTitle";
+ 
+ const FEATURED = [
+@@ -34,15 +37,49 @@ const FEATURED = [
+ ];
+ 
+ const CLIENT_LOGOS = [
+-  "XXL-nutrition", "Team-Eiffel", "SuperOffice", "Streetgasm", "srg-international",
+-  "Qbuzz", "psv", "la-fuente", "KPN", "joseph-klibansky", "IMA-benelux", "Hotek",
+-  "high-tech-campus", "Glow-eindhoven", "Edco", "De-klerk", "Buddha-to-Buddha",
+-  "Broederliefde", "AbrahamArt", "femaletechheroes", "philipshue", "etos", "mentech",
+-  "cbbe", "rd-dubai", "lymph-co", "marco-schuitmaker", "tmc", "groenontwikkelfonds",
+-  "CBBE_logo", "nextlevelcars", "o2life",
++  "XXL-nutrition",
++  "Team-Eiffel",
++  "SuperOffice",
++  "Streetgasm",
++  "srg-international",
++  "Qbuzz",
++  "psv",
++  "la-fuente",
++  "KPN",
++  "joseph-klibansky",
++  "IMA-benelux",
++  "Hotek",
++  "high-tech-campus",
++  "Glow-eindhoven",
++  "Edco",
++  "De-klerk",
++  "Buddha-to-Buddha",
++  "Broederliefde",
++  "AbrahamArt",
++  "femaletechheroes",
++  "philipshue",
++  "etos",
++  "mentech",
++  "cbbe",
++  "rd-dubai",
++  "lymph-co",
++  "marco-schuitmaker",
++  "tmc",
++  "groenontwikkelfonds",
++  "CBBE_logo",
++  "nextlevelcars",
++  "o2life",
+ ];
+ 
+-function PillButton({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
++function PillButton({
++  href,
++  label,
++  dark = false,
++}: {
++  href: string;
++  label: string;
++  dark?: boolean;
++}) {
+   return (
+     <Link className={`button${dark ? " dark" : ""}`} href={href} title={label}>
+       <span className="label">
+@@ -113,17 +150,17 @@ export function AboutWorkSection() {
+             </div>
+             <div className="projects">
+               {FEATURED.map((p) => (
+-                <Link key={p.slug} className="project" href={`/project/${p.slug}`} data-cursor="play">
++                <Link
++                  key={p.slug}
++                  className="project"
++                  href={`/project/${p.slug}`}
++                  data-cursor="play"
++                >
+                   <span className="media">
+-                    <video
+-                      className="video"
+-                      src={p.video}
+-                      poster={p.poster ?? undefined}
+-                      muted
+-                      loop
+-                      playsInline
+-                      autoPlay
+-                      preload="metadata"
++                    <ResilientVideo
++                      className="mediaPlane--fill"
++                      src={resolveLegacyVideoPath(p.video)}
++                      poster={p.poster ?? MEDIA_POSTERS.landscape}
+                     />
+                     <span className="tags">
+                       {p.tags.map((t) => (
+diff --git a/components/public/home/HeroSection.tsx b/components/public/home/HeroSection.tsx
+index 6fe40a2..4d96f7c 100644
+--- a/components/public/home/HeroSection.tsx
++++ b/components/public/home/HeroSection.tsx
+@@ -1,19 +1,21 @@
+ import { HeroLetters } from "./HeroLetters";
+ import { SplitTitle } from "./SplitTitle";
++import { ResilientVideo } from "@/components/public/media/ResilientVideo";
++import { MEDIA_POSTERS } from "@/lib/media/posters";
+ 
+ export function HeroSection() {
+   return (
+     <section className="headerBigBlock noMargin scrollSection" data-cursor="video">
+       <div className="innerAnimContainer">
+         <div className="background playerBackground">
+-          <video
+-            className="video playVideoOnScroll"
+-            src="/videos/home-hero-1202811863-1080p.mp4"
+-            muted
+-            loop
+-            playsInline
+-            autoPlay
+-            aria-label="House of Yellow showreel"
++          <ResilientVideo
++            className="mediaPlane--fill"
++            videoClassName="video playVideoOnScroll"
++            src={null}
++            poster={MEDIA_POSTERS.heroDesktop}
++            mobilePoster={MEDIA_POSTERS.heroMobile}
++            label="House of Yellow hero artwork"
++            priority
+           />
+         </div>
+         <HeroLetters />
+diff --git a/components/public/pages/PageMedia.tsx b/components/public/pages/PageMedia.tsx
+index cf7e15b..b86a64e 100644
+--- a/components/public/pages/PageMedia.tsx
++++ b/components/public/pages/PageMedia.tsx
+@@ -1,5 +1,6 @@
+ import { localVideo } from "@/lib/content/project-content";
+ import type { PageVideo } from "@/lib/content/pages";
++import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+ 
+ /* Reference .imageWrapper.playerBackground: poster as cover background,
+    autoplaying muted loop video on top (play-on-scroll refinement pending). */
+@@ -10,18 +11,12 @@ export function PageMedia({ media, className = "" }: { media: PageVideo; classNa
+       className={`imageWrapper playerBackground ${className}`.trim()}
+       style={{ backgroundImage: `url('/images/${media.poster}')` }}
+     >
+-      {src && (
+-        <video
+-          className="video"
+-          src={src}
+-          muted
+-          loop
+-          playsInline
+-          autoPlay
+-          preload="metadata"
+-          data-cursor="video"
+-        />
+-      )}
++      <ResilientVideo
++        className="mediaPlane--fill"
++        src={src}
++        poster={`/images/${media.poster}`}
++        data-cursor="video"
++      />
+     </div>
+   );
+ }
+diff --git a/components/public/pages/WorksBlock.tsx b/components/public/pages/WorksBlock.tsx
+index 03a56a9..0587ac5 100644
+--- a/components/public/pages/WorksBlock.tsx
++++ b/components/public/pages/WorksBlock.tsx
+@@ -3,6 +3,7 @@ import { CULTURE } from "@/lib/content/pages";
+ import { localVideo } from "@/lib/content/project-content";
+ import { PlusIcon } from "@/components/public/global/logos";
+ import { Marquee } from "@/components/public/global/Marquee";
++import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+ import { Inview } from "./Inview";
+ 
+ /* Reference cultureWorkBlock — featured-work cards shared by /culture (dark
+@@ -81,17 +82,11 @@ export function WorksBlock({
+                       className="innerImage playerBackground"
+                       style={{ backgroundImage: `url('/images/${p.video.poster}')` }}
+                     >
+-                      {src && (
+-                        <video
+-                          className="video"
+-                          src={src}
+-                          muted
+-                          loop
+-                          playsInline
+-                          autoPlay
+-                          preload="metadata"
+-                        />
+-                      )}
++                      <ResilientVideo
++                        className="mediaPlane--fill"
++                        src={src}
++                        poster={`/images/${p.video.poster}`}
++                      />
+                     </span>
+                   </span>
+                   <span className="projectContent">
+diff --git a/components/public/projects/WorksOverview.tsx b/components/public/projects/WorksOverview.tsx
+index 8bff434..d669d1f 100644
+--- a/components/public/projects/WorksOverview.tsx
++++ b/components/public/projects/WorksOverview.tsx
+@@ -5,6 +5,9 @@ import { Link } from "@/i18n/navigation";
+ import { Marquee } from "@/components/public/global/Marquee";
+ import { PlusIcon } from "@/components/public/global/logos";
+ import { CATEGORIES, PROJECTS, type Project } from "@/lib/content/projects";
++import { ResilientVideo } from "@/components/public/media/ResilientVideo";
++import { getProjectPoster } from "@/lib/media/posters";
++import { resolveLegacyVideoPath } from "@/lib/media/video-registry";
+ 
+ /* Made by Yellow overview replicating the reference projectsOverviewBlock:
+    masonry-style grid of landscape/portrait autoplaying tiles, "+ filter works"
+@@ -13,7 +16,14 @@ import { CATEGORIES, PROJECTS, type Project } from "@/lib/content/projects";
+ 
+ function GridIcon() {
+   return (
+-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
++    <svg
++      width="13"
++      height="13"
++      viewBox="0 0 13 13"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      aria-hidden="true"
++    >
+       <path d="M0 0H6V3C6 4.65685 4.65685 6 3 6H0V0Z" fill="currentColor" />
+       <path d="M0 7H3C4.65685 7 6 8.34315 6 10V13H0V7Z" fill="currentColor" />
+       <path d="M7 0H13V6H10C8.34315 6 7 4.65685 7 3V0Z" fill="currentColor" />
+@@ -24,7 +34,14 @@ function GridIcon() {
+ 
+ function ListIcon() {
+   return (
+-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
++    <svg
++      width="13"
++      height="13"
++      viewBox="0 0 13 13"
++      fill="none"
++      xmlns="http://www.w3.org/2000/svg"
++      aria-hidden="true"
++    >
+       {[0.5, 2.5, 4.5, 6.5, 8.5, 10.5, 12.5].map((y) => (
+         <line key={y} y1={y} x2="13" y2={y} stroke="currentColor" />
+       ))}
+@@ -34,9 +51,17 @@ function ListIcon() {
+ 
+ function ProjectTile({ p }: { p: Project }) {
+   return (
+-    <Link className={`project visible ${p.orientation}`} href={`/project/${p.slug}`} data-cursor="play">
++    <Link
++      className={`project visible ${p.orientation}`}
++      href={`/project/${p.slug}`}
++      data-cursor="play"
++    >
+       <span className="media">
+-        <video src={p.video} poster={p.poster} muted loop playsInline autoPlay preload="metadata" />
++        <ResilientVideo
++          className="mediaPlane--fill"
++          src={resolveLegacyVideoPath(p.video)}
++          poster={getProjectPoster(p)}
++        />
+         <span className="tags">
+           {p.categories.map((c) => (
+             <span className="tag" key={c}>
+@@ -104,7 +129,9 @@ export function WorksOverview() {
+             ))}
+           </div>
+         )}
+-        {filtered.length === 0 && <div className="noResults text">No works match these filters.</div>}
++        {filtered.length === 0 && (
++          <div className="noResults text">No works match these filters.</div>
++        )}
+       </div>
+ 
+       <div className="filterWrapper">
+diff --git a/components/public/projects/project-detail.css b/components/public/projects/project-detail.css
+index 7d21f70..6c60ace 100644
+--- a/components/public/projects/project-detail.css
++++ b/components/public/projects/project-detail.css
+@@ -23,11 +23,9 @@
+   font-weight: 500;
+   display: block;
+ }
+-.projectDetail .heroMedia video,
+-.projectDetail .heroMedia .mediaPlaceholder {
++.projectDetail .heroMedia .projectHeroMedia {
+   width: 100%;
+   aspect-ratio: 16 / 9;
+-  object-fit: cover;
+   display: block;
+   background: var(--hoy-ink);
+ }
+@@ -75,11 +73,9 @@
+ .projectDetail .projectTwoImagesBlock.text .mediaPair {
+   padding: 2.5vw 0 0;
+ }
+-.projectFullWidthLoopBlock .fullLoop,
+-.projectFullWidthLoopBlock .mediaPlaceholder {
++.projectFullWidthLoopBlock .fullLoop {
+   width: 100%;
+   aspect-ratio: 21 / 9;
+-  object-fit: cover;
+   display: block;
+   background: var(--hoy-ink);
+   margin: 3vw 0;
+@@ -109,10 +105,9 @@
+   font-weight: 500;
+   margin-bottom: 1.5vw;
+ }
+-.projectRelatedBlock .relatedMedia video {
++.projectRelatedBlock .relatedMediaPlane {
+   width: 100%;
+   aspect-ratio: 16 / 7;
+-  object-fit: cover;
+   border-radius: 0.5vw;
+   display: block;
+ }
+diff --git a/components/public/projects/works.css b/components/public/projects/works.css
+index eece571..8ec7828 100644
+--- a/components/public/projects/works.css
++++ b/components/public/projects/works.css
+@@ -37,7 +37,8 @@
+ .worksGrid .project.portrait .media {
+   aspect-ratio: 3 / 4;
+ }
+-.worksGrid .project video {
++.worksGrid .project .mediaPlane__video,
++.worksGrid .project .mediaPlane__poster img {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+@@ -45,7 +46,8 @@
+   object-fit: cover;
+   transition: transform 0.45s ease-out;
+ }
+-.worksGrid .project:hover video {
++.worksGrid .project:hover .mediaPlane__video,
++.worksGrid .project:hover .mediaPlane__poster img {
+   transform: scale(1.03);
+ }
+ .worksGrid .project .tags {
+@@ -82,7 +84,9 @@
+   padding: 0.35vw 0.9vw;
+   opacity: 0;
+   transform: translateY(0.5vw);
+-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
++  transition:
++    opacity 0.3s ease-out,
++    transform 0.3s ease-out;
+ }
+ .worksGrid .project:hover .takeALook {
+   opacity: 1;
+@@ -203,7 +207,9 @@
+   font-weight: 500;
+   color: var(--hoy-ink);
+   cursor: pointer;
+-  transition: background 0.3s, color 0.3s;
++  transition:
++    background 0.3s,
++    color 0.3s;
+ }
+ .filterPanel .filterCategory.active {
+   background: var(--hoy-ink);
+diff --git a/lib/content/project-content.ts b/lib/content/project-content.ts
+index 8486013..9d7f21c 100644
+--- a/lib/content/project-content.ts
++++ b/lib/content/project-content.ts
+@@ -1,5 +1,6 @@
+ import { PROJECTS, type Project } from "./projects";
+ import detailsJson from "./project-details.json";
++import { resolveVideoId } from "@/lib/media/video-registry";
+ 
+ export type ProjectDetail = {
+   slug: string;
+@@ -45,11 +46,7 @@ export function getNextProject(slug: string): FullProject | undefined {
+   return all[(i + 1) % all.length];
+ }
+ 
+-/* Map a Vimeo playback id to a locally served file if we have it. */
+-import fsVideos from "./local-videos.json";
+-const LOCAL: Record<string, string> = fsVideos;
+-
++/* Resolve only assets admitted by the rights-aware deployment manifest. */
+ export function localVideo(id: string | null | undefined): string | null {
+-  if (!id) return null;
+-  return LOCAL[id] ?? null;
++  return resolveVideoId(id);
+ }
+diff --git a/next.config.ts b/next.config.ts
+index 2abcfdf..c74b931 100644
+--- a/next.config.ts
++++ b/next.config.ts
+@@ -1,8 +1,22 @@
+ import type { NextConfig } from "next";
+ import createNextIntlPlugin from "next-intl/plugin";
++import { getRobotsHeader } from "./lib/seo/robots";
+ 
+ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+ 
+-const nextConfig: NextConfig = {};
++const robotsHeader = getRobotsHeader();
++
++const nextConfig: NextConfig = {
++  async headers() {
++    if (!robotsHeader) return [];
++
++    return [
++      {
++        source: "/:path*",
++        headers: [{ key: "X-Robots-Tag", value: robotsHeader }],
++      },
++    ];
++  },
++};
+ 
+ export default withNextIntl(nextConfig);
+diff --git a/package.json b/package.json
+index b96ad26..dd2724c 100644
+--- a/package.json
++++ b/package.json
+@@ -8,12 +8,14 @@
+   },
+   "scripts": {
+     "dev": "next dev",
++    "prebuild": "pnpm validate:media",
+     "build": "next build",
+     "start": "next start",
+     "lint": "eslint",
+     "typecheck": "tsc --noEmit",
+     "format": "prettier --write .",
+     "format:check": "prettier --check .",
++    "validate:media": "node qa/validate-media.mjs",
+     "test": "vitest run",
+     "test:e2e": "playwright test"
+   },
+diff --git a/app/robots.ts b/app/robots.ts
+new file mode 100644
+index 0000000..40c97d1
+--- /dev/null
++++ b/app/robots.ts
+@@ -0,0 +1,6 @@
++import type { MetadataRoute } from "next";
++import { getRobotsRoute } from "@/lib/seo/robots";
++
++export default function robots(): MetadataRoute.Robots {
++  return getRobotsRoute();
++}
+diff --git a/components/public/media/ResilientVideo.tsx b/components/public/media/ResilientVideo.tsx
+new file mode 100644
+index 0000000..928869f
+--- /dev/null
++++ b/components/public/media/ResilientVideo.tsx
+@@ -0,0 +1,129 @@
++"use client";
++
++import { useState, useSyncExternalStore, type VideoHTMLAttributes } from "react";
++
++type PlaybackPolicy = "allowed" | "poster" | "reduced-motion" | "save-data";
++
++type NetworkInformation = EventTarget & {
++  saveData?: boolean;
++};
++
++type NavigatorWithConnection = Navigator & {
++  connection?: NetworkInformation;
++};
++
++function getPlaybackPolicy(): PlaybackPolicy {
++  if (typeof window === "undefined") return "poster";
++  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
++    return "reduced-motion";
++  }
++  if ((navigator as NavigatorWithConnection).connection?.saveData) {
++    return "save-data";
++  }
++  return "allowed";
++}
++
++function subscribeToPlaybackPolicy(onStoreChange: () => void): () => void {
++  if (typeof window === "undefined") return () => undefined;
++
++  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
++  const connection = (navigator as NavigatorWithConnection).connection;
++  motionQuery.addEventListener("change", onStoreChange);
++  connection?.addEventListener("change", onStoreChange);
++
++  return () => {
++    motionQuery.removeEventListener("change", onStoreChange);
++    connection?.removeEventListener("change", onStoreChange);
++  };
++}
++
++type ResilientVideoProps = Omit<
++  VideoHTMLAttributes<HTMLVideoElement>,
++  "children" | "className" | "poster" | "src"
++> & {
++  src: string | null | undefined;
++  poster: string;
++  mobilePoster?: string;
++  className?: string;
++  videoClassName?: string;
++  label?: string;
++  priority?: boolean;
++};
++
++export function ResilientVideo({
++  src,
++  poster,
++  mobilePoster,
++  className = "",
++  videoClassName = "video",
++  label,
++  priority = false,
++  muted = true,
++  loop = true,
++  playsInline = true,
++  autoPlay = true,
++  preload = "metadata",
++  ...videoProps
++}: ResilientVideoProps) {
++  const playbackPolicy = useSyncExternalStore(
++    subscribeToPlaybackPolicy,
++    getPlaybackPolicy,
++    () => "poster",
++  );
++  const [ready, setReady] = useState(false);
++  const [failed, setFailed] = useState(false);
++  const shouldLoadVideo = Boolean(src) && playbackPolicy === "allowed" && !failed;
++  const mediaState = !src
++    ? "unavailable"
++    : failed
++      ? "error"
++      : playbackPolicy === "allowed"
++        ? ready
++          ? "ready"
++          : "loading"
++        : playbackPolicy;
++
++  return (
++    <span
++      className={`mediaPlane ${className}`.trim()}
++      data-media-state={mediaState}
++      role={label ? "img" : undefined}
++      aria-label={label}
++      aria-hidden={label ? undefined : true}
++    >
++      <picture className="mediaPlane__poster">
++        {mobilePoster && <source media="(max-width: 580px)" srcSet={mobilePoster} />}
++        <img
++          src={poster}
++          alt=""
++          draggable={false}
++          loading={priority ? "eager" : "lazy"}
++          fetchPriority={priority ? "high" : "auto"}
++        />
++      </picture>
++      {shouldLoadVideo && (
++        <video
++          {...videoProps}
++          className={`mediaPlane__video ${videoClassName}`.trim()}
++          src={src ?? undefined}
++          muted={muted}
++          loop={loop}
++          playsInline={playsInline}
++          autoPlay={autoPlay}
++          preload={preload}
++          aria-hidden="true"
++          tabIndex={-1}
++          onCanPlay={(event) => {
++            setReady(true);
++            videoProps.onCanPlay?.(event);
++          }}
++          onError={(event) => {
++            setFailed(true);
++            setReady(false);
++            videoProps.onError?.(event);
++          }}
++        />
++      )}
++    </span>
++  );
++}
+diff --git a/lib/media/posters.ts b/lib/media/posters.ts
+new file mode 100644
+index 0000000..5cab361
+--- /dev/null
++++ b/lib/media/posters.ts
+@@ -0,0 +1,12 @@
++import type { Project } from "../content/projects";
++
++export const MEDIA_POSTERS = {
++  heroDesktop: "/images/posters/Comp-3_11_33-600x439.jpg",
++  heroMobile: "/images/posters/Comp-1_26_7-600x800.jpg",
++  landscape: "/images/posters/Comp-3_11_36-600x439.jpg",
++  portrait: "/images/posters/Comp-1_26_7-600x800.jpg",
++} as const;
++
++export function getProjectPoster(project: Pick<Project, "orientation" | "poster">): string {
++  return project.poster ?? MEDIA_POSTERS[project.orientation];
++}
+diff --git a/lib/media/video-manifest.json b/lib/media/video-manifest.json
+new file mode 100644
+index 0000000..6f5992e
+--- /dev/null
++++ b/lib/media/video-manifest.json
+@@ -0,0 +1,5 @@
++{
++  "schemaVersion": 1,
++  "deliveryPolicy": "Only rights-approved, deployment-safe assets may be added. Reference mappings that are not listed here render their poster fallback and make no video request.",
++  "assets": []
++}
+diff --git a/lib/media/video-registry.test.ts b/lib/media/video-registry.test.ts
+new file mode 100644
+index 0000000..30be954
+--- /dev/null
++++ b/lib/media/video-registry.test.ts
+@@ -0,0 +1,45 @@
++import { existsSync } from "node:fs";
++import { join } from "node:path";
++import { describe, expect, it } from "vitest";
++import legacyVideoMap from "../content/local-videos.json";
++import { PROJECTS } from "../content/projects";
++import { getProjectPoster } from "./posters";
++import { getVideoDeliveryAssets, resolveLegacyVideoPath, resolveVideoId } from "./video-registry";
++
++describe("video delivery registry", () => {
++  it("publishes only unique, approved and traceable assets", () => {
++    const assets = getVideoDeliveryAssets();
++    const ids = new Set<string>();
++    const paths = new Set<string>();
++    const sources = new Set<string>();
++
++    for (const asset of assets) {
++      expect(asset.rightsStatus).toBe("approved");
++      expect(asset.sourceProvenance.trim()).not.toBe("");
++      expect(asset.rightsOwner.trim()).not.toBe("");
++      expect(ids.has(asset.id)).toBe(false);
++      expect(paths.has(asset.legacyPath)).toBe(false);
++      expect(sources.has(asset.src)).toBe(false);
++      expect(legacyVideoMap[asset.id as keyof typeof legacyVideoMap]).toBe(asset.legacyPath);
++
++      ids.add(asset.id);
++      paths.add(asset.legacyPath);
++      sources.add(asset.src);
++      expect(resolveVideoId(asset.id)).toBe(asset.src);
++      expect(resolveLegacyVideoPath(asset.legacyPath)).toBe(asset.src);
++    }
++  });
++
++  it("does not publish an unapproved reference mapping", () => {
++    expect(resolveVideoId("not-approved")).toBeNull();
++    expect(resolveLegacyVideoPath("/videos/not-approved.mp4")).toBeNull();
++  });
++
++  it("provides a deployable poster for every project card", () => {
++    for (const project of PROJECTS) {
++      const poster = getProjectPoster(project);
++      expect(poster.startsWith("/images/")).toBe(true);
++      expect(existsSync(join(process.cwd(), "public", poster))).toBe(true);
++    }
++  });
++});
+diff --git a/lib/media/video-registry.ts b/lib/media/video-registry.ts
+new file mode 100644
+index 0000000..05d021b
+--- /dev/null
++++ b/lib/media/video-registry.ts
+@@ -0,0 +1,36 @@
++import manifestJson from "./video-manifest.json";
++
++export type VideoDeliveryAsset = {
++  id: string;
++  legacyPath: string;
++  src: string;
++  delivery: "repository" | "cdn";
++  sourceProvenance: string;
++  rightsOwner: string;
++  rightsStatus: "approved";
++  expiresAt: string | null;
++};
++
++type VideoManifest = {
++  schemaVersion: number;
++  deliveryPolicy: string;
++  assets: VideoDeliveryAsset[];
++};
++
++const manifest = manifestJson as VideoManifest;
++const byId = new Map(manifest.assets.map((asset) => [asset.id, asset]));
++const byLegacyPath = new Map(manifest.assets.map((asset) => [asset.legacyPath, asset]));
++
++export function resolveVideoId(id: string | null | undefined): string | null {
++  if (!id) return null;
++  return byId.get(id)?.src ?? null;
++}
++
++export function resolveLegacyVideoPath(path: string | null | undefined): string | null {
++  if (!path) return null;
++  return byLegacyPath.get(path)?.src ?? null;
++}
++
++export function getVideoDeliveryAssets(): readonly VideoDeliveryAsset[] {
++  return manifest.assets;
++}
+diff --git a/lib/seo/robots.test.ts b/lib/seo/robots.test.ts
+new file mode 100644
+index 0000000..6e6717e
+--- /dev/null
++++ b/lib/seo/robots.test.ts
+@@ -0,0 +1,47 @@
++import { describe, expect, it } from "vitest";
++import {
++  getCanonicalProductionUrl,
++  getRobotsHeader,
++  getRobotsRoute,
++  isIndexingAllowed,
++} from "./robots";
++
++describe("deployment indexing policy", () => {
++  it.each(["preview", "development"])("blocks the %s environment", (vercelEnv) => {
++    const environment = {
++      VERCEL_ENV: vercelEnv,
++      NEXT_PUBLIC_SITE_URL: "https://spimarimmo.com",
++    };
++
++    expect(isIndexingAllowed(environment)).toBe(false);
++    expect(getRobotsHeader(environment)).toBe("noindex, nofollow, noarchive");
++    expect(getRobotsRoute(environment)).toEqual({
++      rules: [{ userAgent: "*", disallow: "/" }],
++    });
++  });
++
++  it("blocks production until an approved canonical domain is configured", () => {
++    expect(isIndexingAllowed({ VERCEL_ENV: "production" })).toBe(false);
++    expect(
++      isIndexingAllowed({
++        VERCEL_ENV: "production",
++        NEXT_PUBLIC_SITE_URL: "https://project-preview.vercel.app",
++      }),
++    ).toBe(false);
++  });
++
++  it("allows indexing only for production on an HTTPS custom domain", () => {
++    const environment = {
++      VERCEL_ENV: "production",
++      NEXT_PUBLIC_SITE_URL: "https://spimarimmo.com/some-path?preview=1",
++    };
++
++    expect(isIndexingAllowed(environment)).toBe(true);
++    expect(getRobotsHeader(environment)).toBeNull();
++    expect(getCanonicalProductionUrl(environment)?.toString()).toBe("https://spimarimmo.com/");
++    expect(getRobotsRoute(environment)).toEqual({
++      rules: [{ userAgent: "*", allow: "/" }],
++      host: "https://spimarimmo.com/",
++    });
++  });
++});
+diff --git a/lib/seo/robots.ts b/lib/seo/robots.ts
+new file mode 100644
+index 0000000..7c81545
+--- /dev/null
++++ b/lib/seo/robots.ts
+@@ -0,0 +1,70 @@
++import type { Metadata, MetadataRoute } from "next";
++
++export type DeploymentEnvironment = Record<string, string | undefined>;
++
++const BLOCKED_ROBOTS_HEADER = "noindex, nofollow, noarchive";
++
++function parseApprovedProductionUrl(rawUrl: string | undefined): URL | null {
++  if (!rawUrl) return null;
++
++  try {
++    const url = new URL(rawUrl);
++    const hostname = url.hostname.toLowerCase();
++    const isPreviewHost = hostname === "localhost" || hostname.endsWith(".vercel.app");
++    if (url.protocol !== "https:" || isPreviewHost) return null;
++    url.pathname = "/";
++    url.search = "";
++    url.hash = "";
++    return url;
++  } catch {
++    return null;
++  }
++}
++
++export function getCanonicalProductionUrl(
++  environment: DeploymentEnvironment = process.env,
++): URL | null {
++  if (environment.VERCEL_ENV !== "production") return null;
++  return parseApprovedProductionUrl(environment.NEXT_PUBLIC_SITE_URL);
++}
++
++export function isIndexingAllowed(environment: DeploymentEnvironment = process.env): boolean {
++  return getCanonicalProductionUrl(environment) !== null;
++}
++
++export function getRobotsHeader(environment: DeploymentEnvironment = process.env): string | null {
++  return isIndexingAllowed(environment) ? null : BLOCKED_ROBOTS_HEADER;
++}
++
++export function getRobotsMetadata(
++  environment: DeploymentEnvironment = process.env,
++): Metadata["robots"] {
++  if (isIndexingAllowed(environment)) {
++    return { index: true, follow: true };
++  }
++
++  return {
++    index: false,
++    follow: false,
++    nocache: true,
++    googleBot: {
++      index: false,
++      follow: false,
++      noimageindex: true,
++    },
++  };
++}
++
++export function getRobotsRoute(
++  environment: DeploymentEnvironment = process.env,
++): MetadataRoute.Robots {
++  const canonicalUrl = getCanonicalProductionUrl(environment);
++  if (!canonicalUrl) {
++    return { rules: [{ userAgent: "*", disallow: "/" }] };
++  }
++
++  return {
++    rules: [{ userAgent: "*", allow: "/" }],
++    host: canonicalUrl.toString(),
++  };
++}
+diff --git a/qa/validate-media.mjs b/qa/validate-media.mjs
+new file mode 100644
+index 0000000..a85021d
+--- /dev/null
++++ b/qa/validate-media.mjs
+@@ -0,0 +1,96 @@
++import { execFileSync } from "node:child_process";
++import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
++import { join, relative } from "node:path";
++import { fileURLToPath } from "node:url";
++
++const repositoryRoot = join(fileURLToPath(new URL("..", import.meta.url)));
++const manifestPath = join(repositoryRoot, "lib/media/video-manifest.json");
++const legacyMapPath = join(repositoryRoot, "lib/content/local-videos.json");
++const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
++const legacyMap = JSON.parse(readFileSync(legacyMapPath, "utf8"));
++const errors = [];
++
++if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.assets)) {
++  errors.push("video-manifest.json must use schemaVersion 1 with an assets array");
++}
++
++const ids = new Set();
++const legacyPaths = new Set();
++const sources = new Set();
++
++for (const asset of manifest.assets ?? []) {
++  for (const field of ["id", "legacyPath", "src", "delivery", "sourceProvenance", "rightsOwner"]) {
++    if (typeof asset[field] !== "string" || asset[field].trim() === "") {
++      errors.push(`media asset ${asset.id ?? "<unknown>"} is missing ${field}`);
++    }
++  }
++  if (asset.rightsStatus !== "approved") {
++    errors.push(`media asset ${asset.id} is not rights-approved`);
++  }
++  if (ids.has(asset.id) || legacyPaths.has(asset.legacyPath) || sources.has(asset.src)) {
++    errors.push(`media asset ${asset.id} duplicates an id, legacy path or source`);
++  }
++  ids.add(asset.id);
++  legacyPaths.add(asset.legacyPath);
++  sources.add(asset.src);
++
++  if (legacyMap[asset.id] !== asset.legacyPath) {
++    errors.push(`media asset ${asset.id} does not match the audited legacy mapping`);
++  }
++
++  if (asset.delivery === "repository") {
++    const publicPath = join(repositoryRoot, "public", asset.src.replace(/^\//, ""));
++    if (!existsSync(publicPath)) {
++      errors.push(`repository media is missing: ${asset.src}`);
++    } else {
++      try {
++        execFileSync("git", ["ls-files", "--error-unmatch", relative(repositoryRoot, publicPath)], {
++          cwd: repositoryRoot,
++          stdio: "ignore",
++        });
++      } catch {
++        errors.push(`repository media is not tracked by Git: ${asset.src}`);
++      }
++    }
++  } else if (asset.delivery === "cdn") {
++    try {
++      const url = new URL(asset.src);
++      if (url.protocol !== "https:") errors.push(`CDN media must use HTTPS: ${asset.src}`);
++    } catch {
++      errors.push(`CDN media has an invalid URL: ${asset.src}`);
++    }
++  } else {
++    errors.push(`media asset ${asset.id} has an unsupported delivery mode`);
++  }
++}
++
++function sourceFiles(directory) {
++  if (!existsSync(directory)) return [];
++  return readdirSync(directory).flatMap((entry) => {
++    const path = join(directory, entry);
++    if (statSync(path).isDirectory()) return sourceFiles(path);
++    return path.endsWith(".tsx") ? [path] : [];
++  });
++}
++
++const resilientVideoPath = join(repositoryRoot, "components/public/media/ResilientVideo.tsx");
++for (const sourcePath of [
++  ...sourceFiles(join(repositoryRoot, "app")),
++  ...sourceFiles(join(repositoryRoot, "components")),
++]) {
++  if (sourcePath === resilientVideoPath) continue;
++  if (/<video\b/.test(readFileSync(sourcePath, "utf8"))) {
++    errors.push(
++      `${relative(repositoryRoot, sourcePath)} bypasses the resilient media component with a raw <video>`,
++    );
++  }
++}
++
++if (errors.length > 0) {
++  console.error(errors.map((error) => `- ${error}`).join("\n"));
++  process.exit(1);
++}
++
++console.log(
++  `Media manifest valid: ${manifest.assets.length} deployable asset(s); ${Object.keys(legacyMap).length} audited reference mapping(s) safely fall back when unavailable.`,
++);
+

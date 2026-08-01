@@ -1,0 +1,1538 @@
+diff --git a/components/public/projects/WorksOverview.tsx b/components/public/projects/WorksOverview.tsx
+index d669d1f..429fbcc 100644
+--- a/components/public/projects/WorksOverview.tsx
++++ b/components/public/projects/WorksOverview.tsx
+@@ -1,18 +1,18 @@
+ "use client";
+ 
+-import { useMemo, useState } from "react";
++import { useEffect, useMemo, useState } from "react";
+ import { Link } from "@/i18n/navigation";
+ import { Marquee } from "@/components/public/global/Marquee";
+ import { PlusIcon } from "@/components/public/global/logos";
++import { HeroLetters } from "@/components/public/home/HeroLetters";
+ import { CATEGORIES, PROJECTS, type Project } from "@/lib/content/projects";
+ import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+ import { getProjectPoster } from "@/lib/media/posters";
+ import { resolveLegacyVideoPath } from "@/lib/media/video-registry";
+ 
+ /* Made by Yellow overview replicating the reference projectsOverviewBlock:
+-   masonry-style grid of landscape/portrait autoplaying tiles, "+ filter works"
+-   panel with 8 categories + Reset filters, Grid/List view toggle (reference
+-   viewBox markup), list view with year/title/views/delivery rows. */
++   a six-position floating-media constellation around the HOY letterform,
++   a full-viewport filter state, and animated Grid/List state convergence. */
+ 
+ function GridIcon() {
+   return (
+@@ -49,39 +49,43 @@ function ListIcon() {
+   );
+ }
+ 
+-function ProjectTile({ p }: { p: Project }) {
++function ProjectTile({ p, index }: { p: Project; index: number }) {
+   return (
+     <Link
+       className={`project visible ${p.orientation}`}
+       href={`/project/${p.slug}`}
++      aria-label={p.title}
+       data-cursor="play"
++      data-layout-slot={(index % 6) + 1}
++      data-scroll-speed={[6, 3, 2, 4, 1, 3][index % 6]}
+     >
+-      <span className="media">
++      <span className="innerProject">
+         <ResilientVideo
+           className="mediaPlane--fill"
+           src={resolveLegacyVideoPath(p.video)}
+           poster={getProjectPoster(p)}
+         />
+-        <span className="tags">
+-          {p.categories.map((c) => (
+-            <span className="tag" key={c}>
+-              {c}
+-            </span>
+-          ))}
++        <span className="projectHover" aria-hidden="true">
++          <span className="projectHoverMarker" />
++          <span className="smallTitle">{p.title}</span>
+         </span>
+-        <span className="takeALook textTitle">Take a look</span>
+       </span>
+-      <span className="projectTitle">{p.title}</span>
+     </Link>
+   );
+ }
+ 
+ function ProjectRow({ p }: { p: Project }) {
+   return (
+-    <Link className={`projectList ${p.orientation}`} href={`/project/${p.slug}`}>
++    <Link
++      className={`projectList ${p.orientation}`}
++      href={`/project/${p.slug}`}
++      aria-label={`${p.title}, ${p.year}, ${p.sector}`}
++    >
+       <span className="rowMain">
+         <span className="year">{p.year}</span>
+         <span className="listTitle">{p.title}</span>
++        <span className="listSector">{p.sector}</span>
++        <span className="listCategory">{p.categories[0]}</span>
+       </span>
+       <span className="rowStats">
+         <span>
+@@ -102,6 +106,17 @@ export function WorksOverview() {
+   const [filtersOpen, setFiltersOpen] = useState(false);
+   const [active, setActive] = useState<string[]>([]);
+ 
++  useEffect(() => {
++    if (!filtersOpen) return;
++
++    const closeOnEscape = (event: KeyboardEvent) => {
++      if (event.key === "Escape") setFiltersOpen(false);
++    };
++
++    window.addEventListener("keydown", closeOnEscape);
++    return () => window.removeEventListener("keydown", closeOnEscape);
++  }, [filtersOpen]);
++
+   const filtered = useMemo(
+     () =>
+       active.length === 0
+@@ -114,29 +129,55 @@ export function WorksOverview() {
+     setActive((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]));
+ 
+   return (
+-    <div className="projectsOverviewBlock">
+-      <div className="contentWrapper">
+-        {view === "grid" ? (
+-          <div className="worksGrid">
+-            {filtered.map((p) => (
+-              <ProjectTile p={p} key={p.slug} />
+-            ))}
+-          </div>
+-        ) : (
+-          <div className="worksList">
+-            {filtered.map((p) => (
+-              <ProjectRow p={p} key={p.slug} />
+-            ))}
+-          </div>
+-        )}
++    <div
++      className="projectsOverviewBlock"
++      data-view={view}
++      data-filter-open={filtersOpen ? "true" : "false"}
++      data-active-filter-count={active.length}
++    >
++      <div className="worksLetterform" data-testid="works-letterform" aria-hidden="true">
++        <div className="worksLetterformSticky">
++          <HeroLetters />
++        </div>
++      </div>
++
++      <div className="projectsStage contentWrapper" data-view={view}>
++        <div
++          className={`worksGrid${view === "grid" ? " active" : ""}`}
++          data-testid="works-grid"
++          data-project-count={filtered.length}
++          aria-hidden={view !== "grid"}
++          inert={filtersOpen || view !== "grid"}
++        >
++          {filtered.map((p, index) => (
++            <ProjectTile p={p} index={index} key={p.slug} />
++          ))}
++        </div>
++        <div
++          className={`worksList${view === "list" ? " active" : ""}`}
++          data-testid="works-list"
++          data-project-count={filtered.length}
++          aria-hidden={view !== "list"}
++          inert={filtersOpen || view !== "list"}
++        >
++          {filtered.map((p) => (
++            <ProjectRow p={p} key={p.slug} />
++          ))}
++        </div>
+         {filtered.length === 0 && (
+           <div className="noResults text">No works match these filters.</div>
+         )}
+       </div>
+ 
+-      <div className="filterWrapper">
+-        {filtersOpen && (
+-          <div className="filterPanel">
++      {filtersOpen && (
++        <div
++          className="worksFilterOverlay"
++          id="work-filters"
++          role="dialog"
++          aria-modal="true"
++          aria-label="Filter works"
++        >
++          <div className="filterPanel" role="group" aria-label="Work categories">
+             {CATEGORIES.map((c) => (
+               <button
+                 key={c}
+@@ -144,28 +185,35 @@ export function WorksOverview() {
+                 onClick={() => toggleCategory(c)}
+                 aria-pressed={active.includes(c)}
+               >
+-                {c}
++                <span>{c}</span>
++                <span className="filterCategoryIcon" aria-hidden="true">
++                  <PlusIcon size={12} />
++                </span>
+               </button>
+             ))}
+             {active.length > 0 && (
+               <button className="resetFilters textTitle" onClick={() => setActive([])}>
+                 <span className="fixedLabel">Reset filters</span>
+-                <span className="innerLabel">
++                <span className="innerLabel" aria-hidden="true">
+                   <Marquee text="Reset filters" direction="left" speed={45} />
+                 </span>
+               </button>
+             )}
+           </div>
+-        )}
++        </div>
++      )}
++
++      <div className="filterWrapper">
+         <button
+-          className="filter hoverLink"
++          className={`filter hoverLink${filtersOpen ? " active" : ""}`}
+           onClick={() => setFiltersOpen((v) => !v)}
+           aria-expanded={filtersOpen}
++          aria-controls="work-filters"
+         >
+           <span className="icon">
+             <PlusIcon />
+           </span>
+-          <span className="label textTitle"> + filter works</span>
++          <span className="label textTitle">+ filter works</span>
+         </button>
+         <div className="viewBox" role="group" aria-label="View style">
+           <button
+diff --git a/components/public/projects/works.css b/components/public/projects/works.css
+index 8ec7828..132ee28 100644
+--- a/components/public/projects/works.css
++++ b/components/public/projects/works.css
+@@ -1,364 +1,706 @@
+-/* Made by Yellow overview — reference projectsOverviewBlock geometry. */
++/* Made by Yellow — measured against the live 1363×936 reference composition.
++   The desktop grid deliberately uses the reference six-position inline rhythm:
++   three cards per line, alternating offsets, and a sticky HOY letterform below. */
+ 
+ .projectsOverviewBlock {
+-  padding-top: 8.75vw;
++  position: relative;
++  isolation: isolate;
+   min-height: 100vh;
++  padding-top: 7.1875vw;
+ }
+ 
+-/* Masonry-style grid: landscape tiles span 2 columns, portrait 1. */
+-.worksGrid {
+-  display: grid;
+-  grid-template-columns: repeat(4, 1fr);
+-  gap: 1.25vw;
+-  grid-auto-flow: dense;
+-  padding-bottom: 5vw;
++.projectsStage {
++  position: relative;
++  z-index: 2;
+ }
+-.worksGrid .project {
+-  display: block;
++
++.worksLetterform {
++  position: absolute;
++  inset: 0;
++  z-index: 0;
++  pointer-events: none;
+   color: var(--hoy-ink);
+-  text-decoration: none;
+-}
+-.worksGrid .project.landscape {
+-  grid-column: span 2;
++  transition: opacity 0.9s var(--ease-out-ref);
+ }
+-.worksGrid .project.portrait {
+-  grid-column: span 1;
++
++.worksLetterformSticky {
++  position: sticky;
++  top: 0;
++  display: grid;
++  width: 100%;
++  height: 100vh;
++  height: 100svh;
++  place-items: center;
+ }
+-.worksGrid .project .media {
++
++.worksLetterform .centerContent,
++.worksLetterform .innerContent,
++.worksLetterform .rotateContainer {
+   position: relative;
+-  display: block;
+-  border-radius: 0.5vw;
+-  overflow: hidden;
+-  background: var(--hoy-ink);
+-}
+-.worksGrid .project.landscape .media {
+-  aspect-ratio: 16 / 10;
++  width: 25.3125vw;
++  height: 25.3125vw;
+ }
+-.worksGrid .project.portrait .media {
+-  aspect-ratio: 3 / 4;
++
++.worksLetterform .innerContent,
++.worksLetterform .rotateContainer {
++  width: 100%;
++  height: 100%;
+ }
+-.worksGrid .project .mediaPlane__video,
+-.worksGrid .project .mediaPlane__poster img {
++
++.worksLetterform .animContainer {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+-  object-fit: cover;
+-  transition: transform 0.45s ease-out;
++  overflow: visible;
++  fill: currentColor;
+ }
+-.worksGrid .project:hover .mediaPlane__video,
+-.worksGrid .project:hover .mediaPlane__poster img {
+-  transform: scale(1.03);
++
++.projectsOverviewBlock[data-view="list"] .worksLetterform {
++  opacity: 0.08;
+ }
+-.worksGrid .project .tags {
++
++.worksGrid,
++.worksList {
++  width: 100%;
++  transition:
++    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
++    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
++}
++
++.worksGrid.active,
++.worksList.active {
++  position: relative;
++  opacity: 1;
++  transform: translateX(0);
++  pointer-events: auto;
++}
++
++.worksGrid:not(.active),
++.worksList:not(.active) {
+   position: absolute;
+-  top: 0.75vw;
+-  left: 0.75vw;
+-  display: flex;
+-  gap: 0.4vw;
++  inset: 0;
+   opacity: 0;
+-  transition: opacity 0.3s ease-out;
++  pointer-events: none;
+ }
+-.worksGrid .project:hover .tags {
+-  opacity: 1;
++
++.worksGrid:not(.active) {
++  transform: translateX(-50vw);
+ }
+-.worksGrid .project .tag {
+-  font-size: 0.625vw;
+-  font-weight: 500;
+-  text-transform: uppercase;
+-  background: var(--hoy-paper);
++
++.worksList:not(.active) {
++  transform: translateX(50vw);
++}
++
++/* Floating project constellation. */
++.worksGrid {
++  top: -3.75vw;
++  padding-bottom: 10vw;
++  font-size: 0;
++  line-height: 0;
++}
++
++.worksGrid .project {
++  position: relative;
++  display: inline-block;
++  vertical-align: top;
+   color: var(--hoy-ink);
+-  border-radius: 1vw;
+-  padding: 0.25vw 0.7vw;
++  text-decoration: none;
++}
++
++.worksGrid .project[data-layout-slot="1"] {
++  width: 14.8125vw;
++  margin-top: 13.375vw;
++  margin-left: 7.9375vw;
++}
++
++.worksGrid .project[data-layout-slot="2"] {
++  width: 20vw;
++  margin-top: 3.75vw;
++  margin-left: 25.3125vw;
++}
++
++.worksGrid .project[data-layout-slot="3"] {
++  width: 22.8125vw;
++  margin-top: 20.5vw;
++  margin-left: 4.0625vw;
++}
++
++.worksGrid .project[data-layout-slot="4"] {
++  width: 20vw;
++  margin-top: -2.3125vw;
++  margin-left: 0;
++}
++
++.worksGrid .project[data-layout-slot="5"] {
++  width: 22.8125vw;
++  margin-top: -12.6875vw;
++  margin-left: 4.0625vw;
++}
++
++.worksGrid .project[data-layout-slot="6"] {
++  width: 14.8125vw;
++  margin-top: 13.0625vw;
++  margin-left: 17.1875vw;
+ }
+-.worksGrid .takeALook {
++
++.worksGrid .innerProject {
++  position: relative;
++  display: block;
++  width: 100%;
++  overflow: hidden;
++  border-radius: var(--radius-md);
++  background: var(--hoy-ink);
++  box-shadow: 0 0 0 1px rgb(29 29 27 / 3%);
++}
++
++.worksGrid .project.landscape .innerProject {
++  aspect-ratio: 1.3547 / 1;
++}
++
++.worksGrid .project.portrait .innerProject {
++  aspect-ratio: 0.7383 / 1;
++}
++
++.worksGrid .mediaPlane__video,
++.worksGrid .mediaPlane__poster img {
++  transition: transform 0.45s ease-out;
++}
++
++.worksGrid .projectHover {
+   position: absolute;
+-  right: 0.75vw;
+-  bottom: 0.75vw;
+-  font-size: 0.7vw;
+-  font-weight: 500;
+-  text-transform: uppercase;
+-  background: var(--hoy-yellow);
+-  color: var(--hoy-ink);
+-  border-radius: 1vw;
+-  padding: 0.35vw 0.9vw;
++  inset: 0;
++  z-index: 2;
++  display: flex;
++  align-items: flex-end;
++  gap: 0.65vw;
++  padding: 1vw;
++  background: rgb(238 238 238 / 93%);
+   opacity: 0;
+-  transform: translateY(0.5vw);
++  transform: scale(0.92);
+   transition:
+     opacity 0.3s ease-out,
+-    transform 0.3s ease-out;
++    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+ }
+-.worksGrid .project:hover .takeALook {
+-  opacity: 1;
+-  transform: translateY(0);
++
++.worksGrid .projectHoverMarker {
++  width: 0.65vw;
++  height: 0.65vw;
++  flex: 0 0 auto;
++  margin-bottom: 0.25vw;
++  border-radius: 0.14vw;
++  background: var(--hoy-ink);
+ }
+-.worksGrid .projectTitle {
+-  display: block;
+-  font-size: 0.875vw;
+-  font-weight: 500;
+-  margin-top: 0.75vw;
++
++.worksGrid .projectHover .smallTitle {
++  max-width: 85%;
++  font-size: 1.05vw;
++  line-height: 1.12;
++}
++
++.worksGrid .project:hover .mediaPlane__video,
++.worksGrid .project:hover .mediaPlane__poster img,
++.worksGrid .project:focus-visible .mediaPlane__video,
++.worksGrid .project:focus-visible .mediaPlane__poster img {
++  transform: scale(1.035);
++}
++
++.worksGrid .project:hover .projectHover,
++.worksGrid .project:focus-visible .projectHover {
++  opacity: 1;
++  transform: scale(1);
+ }
+ 
+-/* List view */
++/* List state — compact 43px rows at the audited desktop viewport. */
+ .worksList {
+-  padding-bottom: 5vw;
++  padding-bottom: 15vw;
+ }
++
+ .worksList .projectList {
++  position: relative;
+   display: flex;
+-  justify-content: space-between;
+-  align-items: baseline;
+-  gap: 2vw;
+-  border-top: 1px solid rgba(29, 29, 27, 0.2);
+-  padding: 1.5vw 0;
++  min-height: 3.125vw;
++  align-items: stretch;
++  overflow: hidden;
++  border-top: 1px solid rgb(29 29 27 / 18%);
+   color: var(--hoy-ink);
++  font-size: 0.75vw;
++  line-height: 1.15;
+   text-decoration: none;
+-  transition: opacity 0.3s;
+ }
++
+ .worksList .projectList:last-child {
+-  border-bottom: 1px solid rgba(29, 29, 27, 0.2);
+-}
+-.worksList .projectList:hover {
+-  opacity: 0.6;
++  border-bottom: 1px solid rgb(29 29 27 / 18%);
+ }
++
+ .worksList .rowMain {
+-  display: flex;
+-  align-items: baseline;
+-  gap: 1.5vw;
++  display: grid;
++  width: 100%;
++  grid-template-columns: 7vw 26vw 20vw minmax(0, 1fr);
++  align-items: center;
++  gap: 1vw;
++  transition:
++    opacity 0.3s ease-out,
++    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+ }
+-.worksList .year {
+-  font-size: 0.75vw;
+-  font-weight: 500;
+-  min-width: 4vw;
++
++.worksList .year,
++.worksList .listTitle,
++.worksList .listSector,
++.worksList .listCategory {
++  overflow: hidden;
++  text-overflow: ellipsis;
++  white-space: nowrap;
+ }
++
+ .worksList .listTitle {
+-  font-size: 1.852vw;
+   font-weight: 500;
+ }
++
+ .worksList .rowStats {
++  position: absolute;
++  inset: 0 0 0 auto;
+   display: flex;
+-  gap: 3vw;
+-  font-size: 0.75vw;
++  width: 38vw;
++  align-items: center;
++  justify-content: flex-end;
++  gap: 3.5vw;
++  padding-right: 1vw;
++  background: linear-gradient(90deg, rgb(238 238 238 / 0%), var(--hoy-yellow) 20%);
++  opacity: 0;
++  transform: translateY(100%);
++  transition:
++    opacity 0.3s ease-out,
++    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+ }
++
+ .worksList .statLabel {
+   display: block;
+   font-weight: 500;
+ }
+-.noResults {
+-  padding: 4vw 0;
+-}
+ 
+-/* Filter dock (reference: fixed bottom-center, blurred) */
+-.filterWrapper {
+-  position: fixed;
+-  left: 50%;
+-  bottom: 2.5vw;
+-  transform: translateX(-50%);
+-  z-index: 7;
+-  display: flex;
+-  align-items: center;
+-  gap: 1vw;
+-  backdrop-filter: blur(40px);
+-  background: rgba(238, 238, 238, 0.55);
+-  border-radius: 2.778vw;
+-  padding: 0.5vw 1vw;
++.worksList .projectList:hover .rowMain,
++.worksList .projectList:focus-visible .rowMain {
++  opacity: 0.38;
++  transform: translateY(-8%);
+ }
+-.filterWrapper .filter {
+-  display: inline-flex;
+-  align-items: center;
+-  gap: 0.5vw;
+-  background: none;
+-  border: 0;
+-  font: inherit;
+-  color: var(--hoy-ink);
+-  cursor: pointer;
+-  font-weight: 500;
++
++.worksList .projectList:hover .rowStats,
++.worksList .projectList:focus-visible .rowStats {
++  opacity: 1;
++  transform: translateY(0);
+ }
+-.filterWrapper .filter .icon svg {
+-  width: 1vw;
+-  height: 1vw;
++
++.noResults {
++  position: relative;
++  z-index: 2;
++  padding: 4vw 0 40vw;
+ }
+-.filterWrapper .textTitle {
+-  font-size: 0.75vw;
+-  font-weight: 500;
++
++/* Full-viewport category state. The translucent wash keeps the current
++   constellation and letterform visible, as on the reference. */
++.worksFilterOverlay {
++  position: fixed;
++  inset: 0;
++  z-index: 8;
++  background: rgb(238 238 238 / 86%);
++  backdrop-filter: blur(2px);
++  animation: worksFilterFade 0.3s ease-out both;
+ }
++
+ .filterPanel {
+   position: absolute;
+-  bottom: calc(100% + 0.75vw);
++  bottom: 7.35vw;
+   left: 50%;
+-  transform: translateX(-50%);
+   display: flex;
++  width: 42vw;
+   flex-wrap: wrap;
+   justify-content: center;
+-  gap: 0.5vw;
+-  width: max-content;
+-  max-width: 60vw;
+-  background: rgba(238, 238, 238, 0.85);
+-  backdrop-filter: blur(40px);
+-  border-radius: 1.4vw;
+-  padding: 0.9vw 1vw;
++  gap: 0.65vw;
++  transform: translateX(-50%);
+ }
+-.filterPanel .filterCategory {
+-  background: none;
+-  border: 1px solid rgba(29, 29, 27, 0.35);
+-  border-radius: 2vw;
+-  padding: 0.35vw 0.9vw;
++
++.filterPanel .filterCategory,
++.filterPanel .resetFilters {
++  position: relative;
++  display: inline-flex;
++  min-height: 2.2vw;
++  align-items: center;
++  justify-content: center;
++  border: 1px solid rgb(29 29 27 / 26%);
++  border-radius: var(--radius-pill);
++  background: transparent;
++  color: var(--hoy-ink);
+   font: inherit;
+-  font-size: 0.75vw;
++  font-size: 0.69vw;
+   font-weight: 500;
+-  color: var(--hoy-ink);
++  line-height: 1;
++  text-transform: uppercase;
+   cursor: pointer;
+   transition:
+-    background 0.3s,
+-    color 0.3s;
++    color 0.3s ease-out,
++    background 0.3s ease-out,
++    border-color 0.3s ease-out,
++    transform 0.3s ease-out;
++}
++
++.filterPanel .filterCategory {
++  padding: 0.45vw 1.35vw;
++}
++
++.filterCategoryIcon {
++  position: absolute;
++  top: 50%;
++  right: 0.6vw;
++  display: grid;
++  width: 0.75vw;
++  height: 0.75vw;
++  place-items: center;
++  opacity: 0;
++  transform: translateY(-50%) rotate(0deg);
++  transition:
++    opacity 0.3s,
++    transform 0.3s;
++}
++
++.filterCategoryIcon svg {
++  width: 100%;
++  height: 100%;
+ }
++
++.filterPanel .filterCategory:hover,
++.filterPanel .filterCategory:focus-visible,
+ .filterPanel .filterCategory.active {
++  padding-right: 2vw;
++  border-color: var(--hoy-ink);
+   background: var(--hoy-ink);
+   color: var(--hoy-yellow);
+-  border-color: var(--hoy-ink);
+ }
++
++.filterPanel .filterCategory:hover .filterCategoryIcon,
++.filterPanel .filterCategory:focus-visible .filterCategoryIcon,
++.filterPanel .filterCategory.active .filterCategoryIcon {
++  opacity: 1;
++}
++
++.filterPanel .filterCategory.active .filterCategoryIcon {
++  transform: translateY(-50%) rotate(45deg);
++}
++
+ .filterPanel .resetFilters {
+-  position: relative;
+-  background: var(--hoy-yellow);
+-  border: 0;
+-  border-radius: 2vw;
+-  padding: 0.35vw 0.9vw;
+-  font: inherit;
+-  font-size: 0.75vw;
+-  font-weight: 500;
+-  color: var(--hoy-ink);
+-  cursor: pointer;
++  min-width: 7.75vw;
+   overflow: hidden;
++  padding: 0.45vw 1vw;
++  border-color: var(--hoy-yellow);
++  background: var(--hoy-yellow);
+ }
++
+ .filterPanel .resetFilters .innerLabel {
+   position: absolute;
+   inset: 0;
+   opacity: 0;
+ }
+-.filterPanel .resetFilters:hover .fixedLabel {
++
++.filterPanel .resetFilters:hover .fixedLabel,
++.filterPanel .resetFilters:focus-visible .fixedLabel {
+   opacity: 0;
+ }
+-.filterPanel .resetFilters:hover .innerLabel {
++
++.filterPanel .resetFilters:hover .innerLabel,
++.filterPanel .resetFilters:focus-visible .innerLabel {
+   opacity: 1;
+ }
++
++/* Reference bottom-centre frosted dock. */
++.filterWrapper {
++  position: fixed;
++  bottom: 2.5vw;
++  left: 50%;
++  z-index: 9;
++  display: flex;
++  min-height: 2.8125vw;
++  align-items: center;
++  gap: 0.75vw;
++  padding: 0.3125vw 0.9375vw;
++  border-radius: 1.875vw;
++  background: rgb(189 189 189 / 20%);
++  backdrop-filter: blur(40px);
++  transform: translateX(-50%);
++}
++
++.filterWrapper .filter {
++  display: inline-flex;
++  align-items: center;
++  gap: 0.5vw;
++  padding: 0 0.85vw 0 0;
++  border: 0;
++  border-right: 1px solid rgb(29 29 27 / 22%);
++  background: none;
++  color: var(--hoy-ink);
++  font: inherit;
++  font-weight: 500;
++  cursor: pointer;
++}
++
++.filterWrapper .filter .icon {
++  display: grid;
++  width: 1.1vw;
++  height: 1.1vw;
++  place-items: center;
++  transition: transform 0.3s ease-out;
++}
++
++.filterWrapper .filter.active .icon {
++  transform: rotate(45deg);
++}
++
++.filterWrapper .filter .icon svg {
++  width: 100%;
++  height: 100%;
++}
++
++.filterWrapper .textTitle {
++  font-size: 0.69vw;
++  font-weight: 500;
++  line-height: 1;
++  text-transform: uppercase;
++  white-space: nowrap;
++}
++
+ .viewBox {
+   display: inline-flex;
+   gap: 0.75vw;
+ }
++
+ .viewBoxItem {
+   display: inline-flex;
+   align-items: center;
+   gap: 0.4vw;
+-  background: none;
++  padding: 0;
+   border: 0;
+-  font: inherit;
++  background: none;
+   color: var(--hoy-ink);
++  font: inherit;
+   cursor: pointer;
+-  opacity: 0.45;
+-  transition: opacity 0.3s;
++  opacity: 0.22;
++  transition: opacity 0.3s ease-out;
+ }
++
+ .viewBoxItem.active,
+-.viewBoxItem:hover {
++.viewBoxItem:hover,
++.viewBoxItem:focus-visible {
+   opacity: 1;
+ }
++
+ .viewBoxIcon svg {
+   display: block;
++  width: 0.85vw;
++  height: 0.85vw;
++}
++
++@keyframes worksFilterFade {
++  from {
++    opacity: 0;
++  }
++  to {
++    opacity: 1;
++  }
+ }
+ 
+ @media (max-width: 1080px) {
++  .filterWrapper .textTitle,
++  .filterPanel .filterCategory,
++  .filterPanel .resetFilters,
++  .worksList .projectList {
++    font-size: 1.05vw;
++  }
++
++  .filterPanel {
++    width: 58vw;
++  }
++}
++
++@media (max-width: 580px) {
+   .projectsOverviewBlock {
+-    padding-top: 12.963vw;
++    padding-top: 15.517vw;
++  }
++
++  .worksLetterform .centerContent {
++    width: 58vw;
++    height: 58vw;
+   }
++
+   .worksGrid {
+-    grid-template-columns: repeat(2, 1fr);
+-    gap: 1.852vw;
++    top: 0;
++    display: grid;
++    margin-top: 4vw;
++    padding: 8vw 0 28vw;
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    gap: 24vw 4vw;
++    line-height: normal;
+   }
+-  .worksGrid .projectTitle {
+-    font-size: 1.296vw;
++
++  .worksGrid .project[data-layout-slot] {
++    width: auto;
++    margin: 0;
+   }
+-  .worksGrid .project .tag {
+-    font-size: 0.93vw;
++
++  .worksGrid .project[data-layout-slot="1"] {
++    width: 78%;
++    align-self: end;
++    justify-self: start;
++    transform: translateY(12vw);
+   }
+-  .worksGrid .takeALook {
+-    font-size: 1vw;
++
++  .worksGrid .project[data-layout-slot="2"] {
++    width: 100%;
++    justify-self: end;
+   }
+-  .filterWrapper {
+-    bottom: 3.704vw;
+-    padding: 0.9vw 1.6vw;
+-    border-radius: 4vw;
++
++  .worksGrid .project[data-layout-slot="3"] {
++    width: 68%;
++    grid-column: span 2;
++    justify-self: end;
++    transform: translateY(-4vw);
+   }
+-  .filterWrapper .textTitle,
+-  .filterPanel .filterCategory,
+-  .filterPanel .resetFilters {
+-    font-size: 1.111vw;
++
++  .worksGrid .project[data-layout-slot="4"] {
++    width: 96%;
++    justify-self: start;
+   }
+-  .worksList .listTitle {
+-    font-size: 2.778vw;
++
++  .worksGrid .project[data-layout-slot="5"] {
++    width: 78%;
++    justify-self: end;
++    transform: translateY(15vw);
++  }
++
++  .worksGrid .project[data-layout-slot="6"] {
++    width: 72%;
++    grid-column: span 2;
++    justify-self: center;
++  }
++
++  .worksGrid .innerProject {
++    border-radius: 1.25vw;
++  }
++
++  .worksGrid .projectHover {
++    gap: 2vw;
++    padding: 3vw;
++  }
++
++  .worksGrid .projectHoverMarker {
++    width: 2vw;
++    height: 2vw;
++    margin-bottom: 0.8vw;
++  }
++
++  .worksGrid .projectHover .smallTitle {
++    font-size: 3.45vw;
++  }
++
++  .worksList {
++    padding-bottom: 30vw;
+   }
+-  .worksList .year,
++
++  .worksList .projectList {
++    min-height: 15vw;
++    padding: 2.5vw 0;
++    font-size: 2.9vw;
++  }
++
++  .worksList .rowMain {
++    grid-template-columns: 13vw minmax(0, 1fr);
++    gap: 2vw;
++  }
++
++  .worksList .listSector,
++  .worksList .listCategory {
++    display: none;
++  }
++
+   .worksList .rowStats {
+-    font-size: 1.111vw;
++    display: none;
+   }
+-}
+ 
+-@media (max-width: 580px) {
+-  .projectsOverviewBlock {
+-    padding-top: 24.138vw;
++  .worksFilterOverlay {
++    background: rgb(238 238 238 / 91%);
+   }
+-  .worksGrid {
+-    grid-template-columns: 1fr;
+-    gap: 5.172vw;
++
++  .filterPanel {
++    bottom: 22vw;
++    width: 92vw;
++    gap: 2vw;
+   }
+-  .worksGrid .project.landscape,
+-  .worksGrid .project.portrait {
+-    grid-column: span 1;
++
++  .filterPanel .filterCategory,
++  .filterPanel .resetFilters {
++    min-height: 8.5vw;
++    padding: 2vw 4vw;
++    font-size: 2.45vw;
+   }
+-  .worksGrid .projectTitle {
+-    font-size: 3.793vw;
++
++  .filterPanel .filterCategory:hover,
++  .filterPanel .filterCategory:focus-visible,
++  .filterPanel .filterCategory.active {
++    padding-right: 7vw;
+   }
+-  .worksGrid .project .tag {
+-    font-size: 2.4vw;
+-    padding: 1vw 2.4vw;
+-    border-radius: 4vw;
++
++  .filterCategoryIcon {
++    right: 2.3vw;
++    width: 2.8vw;
++    height: 2.8vw;
+   }
+-  .worksGrid .takeALook {
+-    font-size: 2.6vw;
+-    padding: 1.2vw 3vw;
+-    border-radius: 4vw;
++
++  .filterPanel .resetFilters {
++    min-width: 29vw;
+   }
++
+   .filterWrapper {
+     bottom: 5.172vw;
+-    gap: 3vw;
+-    padding: 2vw 4vw;
++    min-height: 11vw;
++    gap: 2.5vw;
++    padding: 1.7vw 3vw;
+     border-radius: 8vw;
+   }
+-  .filterWrapper .textTitle,
+-  .filterPanel .filterCategory,
+-  .filterPanel .resetFilters {
+-    font-size: 3.103vw;
++
++  .filterWrapper .filter {
++    gap: 1.7vw;
++    padding-right: 2.8vw;
+   }
+-  .filterWrapper .filter .icon svg {
+-    width: 3.4vw;
+-    height: 3.4vw;
++
++  .filterWrapper .filter .icon {
++    width: 3.8vw;
++    height: 3.8vw;
+   }
+-  .filterPanel {
+-    max-width: 92vw;
+-    border-radius: 4vw;
+-    padding: 2.5vw 3vw;
+-    gap: 1.6vw;
++
++  .filterWrapper .textTitle {
++    font-size: 2.55vw;
+   }
+-  .filterPanel .filterCategory,
+-  .filterPanel .resetFilters {
+-    padding: 1.2vw 3vw;
+-    border-radius: 6vw;
++
++  .viewBox {
++    gap: 2.7vw;
+   }
+-  .worksList .listTitle {
+-    font-size: 5.517vw;
++
++  .viewBoxItem {
++    gap: 1.2vw;
+   }
+-  .worksList .year,
+-  .worksList .rowStats {
+-    font-size: 3.103vw;
++
++  .viewBoxIcon svg {
++    width: 3vw;
++    height: 3vw;
+   }
+-  .worksList .rowStats {
+-    display: none;
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .worksGrid,
++  .worksList,
++  .worksGrid .projectHover,
++  .worksList .rowMain,
++  .worksList .rowStats,
++  .worksFilterOverlay {
++    animation: none;
++    transition: none;
+   }
+ }
+diff --git a/lib/content/projects.test.ts b/lib/content/projects.test.ts
+new file mode 100644
+index 0000000..721505f
+--- /dev/null
++++ b/lib/content/projects.test.ts
+@@ -0,0 +1,24 @@
++import { describe, expect, it } from "vitest";
++import { CATEGORIES, PROJECTS } from "./projects";
++
++describe("Made by Yellow project contract", () => {
++  it("keeps the audited 21-project order unique", () => {
++    expect(PROJECTS).toHaveLength(21);
++    expect(new Set(PROJECTS.map((project) => project.slug)).size).toBe(PROJECTS.length);
++  });
++
++  it("uses only the eight audited filters", () => {
++    const allowed = new Set<string>(CATEGORIES);
++
++    for (const project of PROJECTS) {
++      expect(project.categories.length).toBeGreaterThan(0);
++      expect(project.categories.every((category) => allowed.has(category))).toBe(true);
++    }
++  });
++
++  it("keeps every filter connected to at least one project", () => {
++    for (const category of CATEGORIES) {
++      expect(PROJECTS.some((project) => project.categories.includes(category))).toBe(true);
++    }
++  });
++});
+diff --git a/lib/content/projects.ts b/lib/content/projects.ts
+index a9452fc..e98c208 100644
+--- a/lib/content/projects.ts
++++ b/lib/content/projects.ts
+@@ -1,8 +1,5 @@
+-/* Canonical project data, extracted from the live reference (HOY-010/070 audits).
+-   Order matches the reference index page. Becomes Supabase seed data in HOY-040.
+-   Categories: primary from the audited table; full multi-tag sets verified for
+-   the first three (homepage cards); the rest carry the primary category until
+-   the per-project tag audit in HOY-080 (tracked in QUEUE). */
++/* Canonical project data, extracted from the live reference (HOY-010/070 and
++   ENG-014B audits). Order and category sets match the reference index page. */
+ 
+ export type Project = {
+   slug: string;
+@@ -29,25 +26,237 @@ export const CATEGORIES = [
+ ] as const;
+ 
+ export const PROJECTS: Project[] = [
+-  { slug: "oceanco-leviathan", title: "Oceanco – Leviathan", year: "'26", sector: "Luxury & yachting", categories: ["Corporate", "Commercials"], views: "7.100.000", delivery: "2 wks production + 2 wks post", orientation: "landscape", video: "/videos/featured-oceanco-1196251477-540p.mp4", poster: "/images/posters/Comp-3_11_33-600x439.jpg" },
+-  { slug: "la-fuente-x-amg", title: "La Fuente x AMG", year: "'26", sector: "Music", categories: ["Artists", "Commercials"], views: "5.800.000", delivery: "1 week pre-production + 2 shoot days", orientation: "landscape", video: "/videos/featured-lafuente-1204605394-540p.mp4", poster: "/images/posters/Comp-3_11_36-600x439.jpg" },
+-  { slug: "broederliefde-rotterdam-ahoy", title: "Broederliefde – Rotterdam Ahoy", year: "'26", sector: "Live music event", categories: ["Artists", "Events"], views: "1.900.000", delivery: "8 days", orientation: "portrait", video: "/videos/featured-broederliefde-1194133383-720p.mp4" },
+-  { slug: "srg-international-reeses", title: "SRG International – Reeses", year: "'26", sector: "FMCG brands", categories: ["Launches"], views: "3.500.000", delivery: "6 days", orientation: "portrait", video: "/videos/vid-1194285750-720p.mp4" },
+-  { slug: "klibansky-superman", title: "Klibansky – Superman", year: "'26", sector: "Art", categories: ["Commercials"], views: "2.800.000", delivery: "3 days", orientation: "portrait", video: "/videos/vid-1188024122-720p.mp4" },
+-  { slug: "xxl-nutrition-festival-activations", title: "XXL Nutrition – Festival Activations", year: "'26", sector: "Sport nutrition", categories: ["Commercials"], views: "2.600.000", delivery: "3 days", orientation: "portrait", video: "/videos/vid-1188098568-720p.mp4" },
+-  { slug: "qbuzz-smiley-campaign", title: "Qbuzz – Smiley Campaign", year: "'26", sector: "Public transport", categories: ["Social campaigns"], views: "2.200.000", delivery: "2 weeks", orientation: "landscape", video: "/videos/vid-1188074581-720p.mp4" },
+-  { slug: "porsche-employer-branding", title: "Porsche Employer Branding", year: "'23", sector: "Automotive", categories: ["Employer branding"], views: "3.600.000", delivery: "10 days", orientation: "portrait", video: "/videos/vid-1151543609-720p.mp4" },
+-  { slug: "glow-eindhoven-light-festival", title: "GLOW Eindhoven Light Festival", year: "'21 - '25", sector: "Light festival", categories: ["Aftermovies"], views: "9.500.000", delivery: "9 days", orientation: "portrait", video: "/videos/vid-1151558347-720p.mp4" },
+-  { slug: "de-hollandse-100-lymphco", title: "De Hollandse 100 – Lymph&Co", year: "'26", sector: "Sport event", categories: ["Events"], views: "1.100.000", delivery: "2 days", orientation: "landscape", video: "/videos/vid-1188086313-720p.mp4" },
+-  { slug: "streetgasm", title: "StreetGasm", year: "'25", sector: "Automotive", categories: ["Aftermovies"], views: "1.600.000", delivery: "6 days", orientation: "landscape", video: "/videos/vid-1188069712-720p.mp4" },
+-  { slug: "de-klerk-employer-branding", title: "De Klerk – Employer Branding", year: "'24", sector: "Green environments", categories: ["Employer branding"], views: "1.400.000", delivery: "3-4 weeks", orientation: "landscape", video: "/videos/vid-1194265974-720p.mp4" },
+-  { slug: "buddha-to-buddha-los-angeles", title: "Buddha to Buddha – Los Angeles", year: "'25", sector: "Lifestyle", categories: ["Commercials"], views: "1.300.000", delivery: "5 days", orientation: "landscape", video: "/videos/vid-1188638365-720p.mp4" },
+-  { slug: "the-space-dubai", title: "The Space Dubai", year: "'22", sector: "Event venue", categories: ["Commercials"], views: "1.200.000", delivery: "6 days", orientation: "landscape", video: "/videos/vid-1151544155-720p.mp4" },
+-  { slug: "htc", title: "HTC", year: "'25", sector: "Campus", categories: ["Corporate"], views: "950.000", delivery: "5 days", orientation: "landscape", video: "/videos/vid-1188043705-720p.mp4" },
+-  { slug: "salvia-bioelectronics", title: "Salvia BioElectronics", year: "'25", sector: "Medtech", categories: ["Commercials"], views: "780.000", delivery: "6 days", orientation: "landscape", video: "/videos/vid-1188055326-720p.mp4" },
+-  { slug: "ansu-fati-arriba-nutrition", title: "Ansu Fati – Arriba Nutrition", year: "'22", sector: "Brand ambassador", categories: ["Commercials"], views: "5.200.000", delivery: "3 days", orientation: "landscape", video: "/videos/vid-1148957680-720p.mp4" },
+-  { slug: "eiffel-employer-branding", title: "Eiffel Employer Branding", year: "'23", sector: "Employer Branding", categories: ["Employer branding"], views: "2.100.000", delivery: "9 days", orientation: "portrait", video: "/videos/vid-1151597998-720p.mp4" },
+-  { slug: "tmc-fundamentals", title: "TMC FUNdamentals", year: "'24 - '25", sector: "High-tech consultancy", categories: ["Social campaigns"], views: "1.800.000", delivery: "Ongoing / 4 days", orientation: "portrait", video: "/videos/vid-1194280833-720p.mp4" },
+-  { slug: "hotek-brand-video", title: "HOTEK Brand Video", year: "'23", sector: "Access control solutions", categories: ["Commercials"], views: "2.400.000", delivery: "6 days", orientation: "landscape", video: "/videos/vid-1151544468-540p.mp4" },
+-  { slug: "madunia-brand-launch", title: "Madunia Brand Launch", year: "'24", sector: "Restaurant", categories: ["Launches"], views: "3.200.000", delivery: "8 days", orientation: "landscape", video: "/videos/vid-1148957309-540p.mp4" },
++  {
++    slug: "oceanco-leviathan",
++    title: "Oceanco – Leviathan",
++    year: "'26",
++    sector: "Luxury & yachting",
++    categories: ["Corporate", "Commercials"],
++    views: "7.100.000",
++    delivery: "2 wks production + 2 wks post",
++    orientation: "landscape",
++    video: "/videos/featured-oceanco-1196251477-540p.mp4",
++    poster: "/images/posters/Comp-3_11_33-600x439.jpg",
++  },
++  {
++    slug: "la-fuente-x-amg",
++    title: "La Fuente x AMG",
++    year: "'26",
++    sector: "Music",
++    categories: ["Artists", "Commercials"],
++    views: "5.800.000",
++    delivery: "1 week pre-production + 2 shoot days",
++    orientation: "landscape",
++    video: "/videos/featured-lafuente-1204605394-540p.mp4",
++    poster: "/images/posters/Comp-3_11_36-600x439.jpg",
++  },
++  {
++    slug: "broederliefde-rotterdam-ahoy",
++    title: "Broederliefde – Rotterdam Ahoy",
++    year: "'26",
++    sector: "Live music event",
++    categories: ["Artists", "Events", "Social campaigns"],
++    views: "1.900.000",
++    delivery: "8 days",
++    orientation: "portrait",
++    video: "/videos/featured-broederliefde-1194133383-720p.mp4",
++  },
++  {
++    slug: "srg-international-reeses",
++    title: "SRG International – Reeses",
++    year: "'26",
++    sector: "FMCG brands",
++    categories: ["Commercials", "Launches"],
++    views: "3.500.000",
++    delivery: "6 days",
++    orientation: "portrait",
++    video: "/videos/vid-1194285750-720p.mp4",
++  },
++  {
++    slug: "klibansky-superman",
++    title: "Klibansky – Superman",
++    year: "'26",
++    sector: "Art",
++    categories: ["Commercials", "Social campaigns"],
++    views: "2.800.000",
++    delivery: "3 days",
++    orientation: "portrait",
++    video: "/videos/vid-1188024122-720p.mp4",
++  },
++  {
++    slug: "xxl-nutrition-festival-activations",
++    title: "XXL Nutrition – Festival Activations",
++    year: "'26",
++    sector: "Sport nutrition",
++    categories: ["Events", "Commercials"],
++    views: "2.600.000",
++    delivery: "3 days",
++    orientation: "portrait",
++    video: "/videos/vid-1188098568-720p.mp4",
++  },
++  {
++    slug: "qbuzz-smiley-campaign",
++    title: "Qbuzz – Smiley Campaign",
++    year: "'26",
++    sector: "Public transport",
++    categories: ["Corporate", "Social campaigns"],
++    views: "2.200.000",
++    delivery: "2 weeks",
++    orientation: "landscape",
++    video: "/videos/vid-1188074581-720p.mp4",
++  },
++  {
++    slug: "porsche-employer-branding",
++    title: "Porsche Employer Branding",
++    year: "'23",
++    sector: "Automotive",
++    categories: ["Corporate", "Employer branding"],
++    views: "3.600.000",
++    delivery: "10 days",
++    orientation: "portrait",
++    video: "/videos/vid-1151543609-720p.mp4",
++  },
++  {
++    slug: "glow-eindhoven-light-festival",
++    title: "GLOW Eindhoven Light Festival",
++    year: "'21 - '25",
++    sector: "Light festival",
++    categories: ["Events", "Aftermovies"],
++    views: "9.500.000",
++    delivery: "9 days",
++    orientation: "portrait",
++    video: "/videos/vid-1151558347-720p.mp4",
++  },
++  {
++    slug: "de-hollandse-100-lymphco",
++    title: "De Hollandse 100 – Lymph&Co",
++    year: "'26",
++    sector: "Sport event",
++    categories: ["Events", "Aftermovies"],
++    views: "1.100.000",
++    delivery: "2 days",
++    orientation: "landscape",
++    video: "/videos/vid-1188086313-720p.mp4",
++  },
++  {
++    slug: "streetgasm",
++    title: "StreetGasm",
++    year: "'25",
++    sector: "Automotive",
++    categories: ["Events", "Aftermovies"],
++    views: "1.600.000",
++    delivery: "6 days",
++    orientation: "landscape",
++    video: "/videos/vid-1188069712-720p.mp4",
++  },
++  {
++    slug: "de-klerk-employer-branding",
++    title: "De Klerk – Employer Branding",
++    year: "'24",
++    sector: "Green environments",
++    categories: ["Corporate", "Employer branding"],
++    views: "1.400.000",
++    delivery: "3-4 weeks",
++    orientation: "landscape",
++    video: "/videos/vid-1194265974-720p.mp4",
++  },
++  {
++    slug: "buddha-to-buddha-los-angeles",
++    title: "Buddha to Buddha – Los Angeles",
++    year: "'25",
++    sector: "Lifestyle",
++    categories: ["Commercials", "Social campaigns"],
++    views: "1.300.000",
++    delivery: "5 days",
++    orientation: "landscape",
++    video: "/videos/vid-1188638365-720p.mp4",
++  },
++  {
++    slug: "the-space-dubai",
++    title: "The Space Dubai",
++    year: "'22",
++    sector: "Event venue",
++    categories: ["Corporate", "Commercials"],
++    views: "1.200.000",
++    delivery: "6 days",
++    orientation: "landscape",
++    video: "/videos/vid-1151544155-720p.mp4",
++  },
++  {
++    slug: "htc",
++    title: "HTC",
++    year: "'25",
++    sector: "Campus",
++    categories: ["Corporate", "Events"],
++    views: "950.000",
++    delivery: "5 days",
++    orientation: "landscape",
++    video: "/videos/vid-1188043705-720p.mp4",
++  },
++  {
++    slug: "salvia-bioelectronics",
++    title: "Salvia BioElectronics",
++    year: "'25",
++    sector: "Medtech",
++    categories: ["Corporate", "Commercials"],
++    views: "780.000",
++    delivery: "6 days",
++    orientation: "landscape",
++    video: "/videos/vid-1188055326-720p.mp4",
++  },
++  {
++    slug: "ansu-fati-arriba-nutrition",
++    title: "Ansu Fati – Arriba Nutrition",
++    year: "'22",
++    sector: "Brand ambassador",
++    categories: ["Commercials", "Social campaigns"],
++    views: "5.200.000",
++    delivery: "3 days",
++    orientation: "landscape",
++    video: "/videos/vid-1148957680-720p.mp4",
++  },
++  {
++    slug: "eiffel-employer-branding",
++    title: "Eiffel Employer Branding",
++    year: "'23",
++    sector: "Employer Branding",
++    categories: ["Corporate", "Employer branding"],
++    views: "2.100.000",
++    delivery: "9 days",
++    orientation: "portrait",
++    video: "/videos/vid-1151597998-720p.mp4",
++  },
++  {
++    slug: "tmc-fundamentals",
++    title: "TMC FUNdamentals",
++    year: "'24 - '25",
++    sector: "High-tech consultancy",
++    categories: ["Corporate", "Social campaigns"],
++    views: "1.800.000",
++    delivery: "Ongoing / 4 days",
++    orientation: "portrait",
++    video: "/videos/vid-1194280833-720p.mp4",
++  },
++  {
++    slug: "hotek-brand-video",
++    title: "HOTEK Brand Video",
++    year: "'23",
++    sector: "Access control solutions",
++    categories: ["Corporate", "Commercials"],
++    views: "2.400.000",
++    delivery: "6 days",
++    orientation: "landscape",
++    video: "/videos/vid-1151544468-540p.mp4",
++  },
++  {
++    slug: "madunia-brand-launch",
++    title: "Madunia Brand Launch",
++    year: "'24",
++    sector: "Restaurant",
++    categories: ["Commercials", "Launches"],
++    views: "3.200.000",
++    delivery: "8 days",
++    orientation: "landscape",
++    video: "/videos/vid-1148957309-540p.mp4",
++  },
+ ];
+diff --git a/tests/e2e/works.spec.ts b/tests/e2e/works.spec.ts
+new file mode 100644
+index 0000000..dab0dde
+--- /dev/null
++++ b/tests/e2e/works.spec.ts
+@@ -0,0 +1,76 @@
++import { expect, test } from "@playwright/test";
++
++test.describe("Made by Yellow state convergence", () => {
++  test("opens as the 21-project HOY constellation", async ({ page }) => {
++    await page.goto("/made-by-yellow");
++
++    const overview = page.locator(".projectsOverviewBlock");
++    const grid = page.getByTestId("works-grid");
++
++    await expect(overview).toHaveAttribute("data-view", "grid");
++    await expect(page.getByTestId("works-letterform")).toBeVisible();
++    await expect(grid).toHaveAttribute("data-project-count", "21");
++    await expect(grid.locator(".project")).toHaveCount(21);
++
++    for (let index = 0; index < 6; index += 1) {
++      await expect(grid.locator(".project").nth(index)).toHaveAttribute(
++        "data-layout-slot",
++        String(index + 1),
++      );
++    }
++  });
++
++  test("filters, resets, and closes the overlay from the keyboard", async ({ page }) => {
++    await page.goto("/made-by-yellow");
++
++    await page.getByRole("button", { name: /filter works/i }).click();
++    const dialog = page.getByRole("dialog", { name: "Filter works" });
++    await expect(dialog).toBeVisible();
++
++    await dialog.getByRole("button", { name: "Artists" }).click();
++    await expect(page.getByTestId("works-grid")).toHaveAttribute("data-project-count", "2");
++    await expect(page.locator(".projectsOverviewBlock")).toHaveAttribute(
++      "data-active-filter-count",
++      "1",
++    );
++
++    await dialog.getByRole("button", { name: /reset filters/i }).click();
++    await expect(page.getByTestId("works-grid")).toHaveAttribute("data-project-count", "21");
++
++    await page.keyboard.press("Escape");
++    await expect(dialog).toBeHidden();
++    await expect(page.getByRole("button", { name: /filter works/i })).toHaveAttribute(
++      "aria-expanded",
++      "false",
++    );
++  });
++
++  test("switches between grid and list without duplicating the active tab order", async ({
++    page,
++  }) => {
++    await page.goto("/made-by-yellow");
++
++    await page.getByRole("button", { name: "List" }).click();
++    await expect(page.locator(".projectsOverviewBlock")).toHaveAttribute("data-view", "list");
++    await expect(page.getByTestId("works-grid")).toHaveAttribute("aria-hidden", "true");
++    await expect(page.getByTestId("works-list")).toHaveAttribute("aria-hidden", "false");
++    await expect(page.getByTestId("works-list").locator(".projectList")).toHaveCount(21);
++
++    await page.getByRole("button", { name: "Grid" }).click();
++    await expect(page.locator(".projectsOverviewBlock")).toHaveAttribute("data-view", "grid");
++    await expect(page.getByTestId("works-grid")).toHaveAttribute("aria-hidden", "false");
++  });
++
++  test("keeps the mobile composition inside the viewport", async ({ page }) => {
++    await page.setViewportSize({ width: 390, height: 844 });
++    await page.goto("/made-by-yellow");
++
++    await expect(page.getByTestId("works-grid").locator(".project").first()).toBeVisible();
++    await expect(page.locator(".filterWrapper")).toBeVisible();
++
++    const overflow = await page.evaluate(
++      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
++    );
++    expect(overflow).toBeLessThanOrEqual(1);
++  });
++});

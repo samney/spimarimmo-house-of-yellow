@@ -1,0 +1,110 @@
+contract_id: SPM-TECH-CONTRACT-001
+version: 1.1.0
+date: 2026-07-31
+status: gate_10_approved_read_only_intake_access_blocked
+owner: Samney
+
+product:
+  release: 1
+  primary_audience: exhibitor_decision_unit
+  secondary_audience: visitor
+  public_scope:
+    - marketing
+    - exhibitor_lead_generation
+    - visitor_pre_registration
+  excluded:
+    - payment
+    - contractual_stand_reservation
+    - ticketing_and_check_in
+    - private_customer_portal
+    - public_search
+    - user_accounts
+
+architecture:
+  application: one_host_aware_nextjs_typescript_application
+  rendering: server_first_progressive_enhancement
+  locales: [fr, en, ar]
+  rtl: true
+  hosts: [global, local_single_event, local_multi_event]
+  content_boundary: typed_content_repository
+  operational_truth: durable_relational_store
+  integration_pattern: transactional_outbox_and_provider_adapters
+  clone_strategy: repair_neutralize_merge_and_expand
+
+repository_intake:
+  repository: https://github.com/samney/spimarimmo-house-of-yellow
+  branch: main
+  deployment: https://spimarimmo-house-of-yellow.vercel.app/
+  environment_contract: names_only_supplied
+  repository_access: blocked_not_found_from_connected_github_workflow
+  immutable_commit: unknown
+  deployment_build_identity: unknown
+  source_claims_verified: false
+
+event_state:
+  independent_axes:
+    lifecycle:
+      - draft
+      - announced_undated
+      - scheduled
+      - live
+      - completed
+      - archived
+      - postponed
+      - cancelled
+    exhibitor_sales: [planned, open, limited, sold_out, closed]
+    visitor_registration: [planned, open, waitlist, full, closed]
+
+conversion_truth:
+  ordered_outcomes:
+    - clicked
+    - form_started
+    - server_validated
+    - durably_submitted
+    - crm_synchronized
+    - delivered
+    - provider_booked
+    - business_outcome
+  success_boundary: durably_submitted
+  booking_boundary: provider_booked
+
+coverage:
+  cto_source_requirements: 40
+  prd_requirements: 276
+  route_surface_ids: 50
+  template_families: 17
+  uxf_targets: 48
+  hif_targets: 48
+  controlled_states: 144
+  component_responsibilities: 58
+  prototype_contracts: 6
+  motion_contracts: 24
+  qa09_cases: 16
+  q10_cases: 25
+  engineering_tasks: 57
+
+quality:
+  homepage_client_js_gzip_kb_max: 170
+  initial_mobile_transfer_mb_max_excluding_optional_video: 1.5
+  mobile_hero_poster_kb_target: 250
+  desktop_hero_poster_kb_target: 450
+  production_font_families_max: 2
+  core_web_vitals_p75:
+    lcp_seconds_max: 2.5
+    inp_ms_max: 200
+    cls_max: 0.1
+
+phase_11_entry_blockers:
+  - clone_repository_access
+  - clone_commit_and_deployment_build_identity
+  - ref_p0_001_missing_media
+  - ref_p0_002_missing_poster_fallback
+  - ref_p0_003_staging_indexing_safety
+  - full_reference_parity_gate
+  - neutral_primitive_inventory
+  - story_specific_provider_and_legal_decisions
+
+next_authorized_action_after_gate_10:
+  id: ENG-001-004
+  mode: read_only_repository_intake
+  code_changes: false

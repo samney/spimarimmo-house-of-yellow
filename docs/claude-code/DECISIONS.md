@@ -40,3 +40,36 @@ Context: The live site returns HTTP 404 with a zero-byte body (verified via brow
 Alternatives: (a) replicate the blank body (faithful, but fails the master prompt deliverable and basic UX); (b) design a rich 404 set piece (invents unobserved UI, violates frontend-quality "no unobserved decoration"); (c) minimal 404 composed exclusively from existing observed patterns (dark block, grain, numIndex bracket, normalTitle, smallTitle, yellow Connect-style pill).
 Decision: (c). Master prompt wins over blank fidelity per the source-of-truth rule; the page introduces no new visual vocabulary. Copy is two short brand-voice lines; localized at HOY-110.
 Consequence: The 404 is a documented intentional addition (like reduced-motion support); visual-diff for 404 compares against this decision, not the blank reference capture.
+
+## D-008 — 2026-08-01 — Claude-only implementation ownership from ENG-014C
+
+Context: Mixed GPT/Codex/Claude source implementation created avoidable handoff and conflict risk.
+Decision: Claude Code is the sole source-code implementer from ENG-014C onward. GPT/Codex artifacts after this point are limited to specifications, contracts, review findings, and historical evidence.
+Consequence: No new GPT/Codex implementation patch may be created or applied for ENG-014C or later work.
+
+## D-009 — 2026-08-01 — Two-pass Claude review and owner-only merge
+
+Context: Implementation-session conclusions must not substitute for independent review.
+Decision: Each implementation PR receives one implementation pass and one fresh Claude review pass. The repository owner remains the only merge authority.
+Consequence: Claude stops before merge unless the owner explicitly authorizes a bounded merge action.
+
+## D-010 — 2026-08-01 — Migration and quality-gate order
+
+Decision: After ENG-014B merge, complete MIG-000, independently review and merge it, then execute OPS-001 before ENG-014C.
+Consequence: The remaining queue is MIG-000 → OPS-001 → ENG-014C → ENG-014D → ENG-014E → ENG-015.
+
+## D-011 — 2026-08-01 — Repository-native authority, chat as provenance only
+
+Decision: Approved specifications, decisions, repository state, and validation evidence control implementation. Raw ChatGPT transcripts are supporting provenance and never override canonical documents.
+Consequence: Missing transcript material may not be reconstructed from memory. Any chat-only fact remains UNRESOLVED until an original export is supplied or an explicit owner decision records it.
+
+## D-012 — 2026-08-01 — Poster-only hero through ENG-015
+
+Decision: The House of Yellow hero remains poster-only through ENG-015. Non-hero media may be added only under the approved ENG-014D media contract.
+Consequence: Hero video activation is out of scope for the remaining clone-convergence queue.
+
+## D-013 — 2026-08-01 — Historical patches become permanently non-executable after freeze
+
+Decision: Historical patches and transport ZIPs are provenance only. After ENG-015, no historical patch may be applied.
+Consequence: SPIMAR transformation begins from the accepted tagged baseline and fresh branches only.
+

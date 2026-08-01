@@ -1,0 +1,783 @@
+<div id="spm-hif-atlas">
+  <div class="viz-controls" aria-label="High-fidelity atlas controls">
+    <label class="form-label" for="spm-hif-frame">Screen
+      <select class="form-select" id="spm-hif-frame"></select>
+    </label>
+    <label class="form-label" for="spm-hif-state">State
+      <select class="form-select" id="spm-hif-state"></select>
+    </label>
+    <label class="form-label" for="spm-hif-mode">Review mode
+      <select class="form-select" id="spm-hif-mode">
+        <option value="target">Target mode</option>
+        <option value="desktop">Desktop</option>
+        <option value="mobile">Mobile</option>
+        <option value="rtl">Arabic RTL</option>
+      </select>
+    </label>
+  </div>
+  <p id="spm-hif-meta" class="text-small text-muted" aria-live="polite"></p>
+  <div id="spm-hif-stage"></div>
+</div>
+
+<style>
+  #spm-hif-atlas {
+    --spm-gold: #efc337;
+    --spm-black: #000000;
+    --spm-white: #ffffff;
+    --spm-ink: #171717;
+    --spm-gray: #66625b;
+    --spm-pale: #f2efe8;
+    --spm-rule: #d8d4cb;
+    width: 100%;
+    color: var(--foreground);
+  }
+  #spm-hif-atlas .viz-controls {
+    margin-block-end: 10px;
+  }
+  #spm-hif-meta {
+    margin: 0 0 12px;
+  }
+  #spm-hif-stage {
+    display: grid;
+    place-items: start center;
+    width: 100%;
+  }
+  #spm-hif-atlas .site {
+    width: 100%;
+    max-width: 1180px;
+    overflow: hidden;
+    color: var(--spm-ink);
+    background: var(--spm-white);
+    border: 1px solid color-mix(in srgb, var(--border) 62%, transparent);
+    border-radius: 16px;
+    box-shadow: 0 26px 70px color-mix(in srgb, var(--foreground) 14%, transparent);
+  }
+  #spm-hif-atlas .site.mobile {
+    max-width: 390px;
+    border-radius: 24px;
+  }
+  #spm-hif-atlas .site.rtl {
+    direction: rtl;
+    font-family: "Noto Sans Arabic", "Segoe UI", Arial, sans-serif;
+  }
+  #spm-hif-atlas .topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 22px;
+    color: var(--spm-black);
+    background: var(--spm-gold);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .site-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 28px;
+    min-height: 70px;
+    padding: 0 28px;
+    color: var(--spm-white);
+    background: var(--spm-black);
+  }
+  #spm-hif-atlas .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: .08em;
+  }
+  #spm-hif-atlas .brand-mark {
+    width: 19px;
+    height: 19px;
+    background: var(--spm-gold);
+    clip-path: polygon(0 0, 100% 0, 100% 58%, 58% 58%, 58% 100%, 0 100%);
+  }
+  #spm-hif-atlas .nav {
+    display: flex;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 28px);
+    color: color-mix(in srgb, var(--spm-white) 75%, transparent);
+    font-size: 12px;
+  }
+  #spm-hif-atlas .nav .active {
+    color: var(--spm-gold);
+  }
+  #spm-hif-atlas .head-action,
+  #spm-hif-atlas .action-primary,
+  #spm-hif-atlas .action-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  #spm-hif-atlas .head-action,
+  #spm-hif-atlas .action-primary {
+    color: var(--spm-black);
+    background: var(--spm-gold);
+  }
+  #spm-hif-atlas .action-secondary {
+    color: inherit;
+    border-color: currentColor;
+    background: transparent;
+  }
+  #spm-hif-atlas .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+    min-height: 500px;
+    color: var(--spm-white);
+    background: var(--spm-black);
+  }
+  #spm-hif-atlas .hero-copy {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 18px;
+    padding: clamp(38px, 7vw, 86px) clamp(28px, 6vw, 72px);
+  }
+  #spm-hif-atlas .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--spm-gold);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .eyebrow::before {
+    content: "";
+    width: 34px;
+    height: 2px;
+    background: var(--spm-gold);
+  }
+  #spm-hif-atlas .display {
+    max-width: 780px;
+    margin: 0;
+    font-family: "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: clamp(50px, 8vw, 112px);
+    font-stretch: condensed;
+    font-weight: 500;
+    letter-spacing: -.055em;
+    line-height: .82;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .site.rtl .display {
+    font-family: "Noto Sans Arabic", "Segoe UI", sans-serif;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+  }
+  #spm-hif-atlas .hero-lead {
+    max-width: 610px;
+    margin: 0;
+    color: color-mix(in srgb, var(--spm-white) 76%, transparent);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  #spm-hif-atlas .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  #spm-hif-atlas .poster {
+    position: relative;
+    min-height: 420px;
+    overflow: hidden;
+    color: var(--spm-black);
+    background: var(--spm-gold);
+  }
+  #spm-hif-atlas .poster::before,
+  #spm-hif-atlas .poster::after {
+    content: "";
+    position: absolute;
+    background: var(--spm-black);
+  }
+  #spm-hif-atlas .poster::before {
+    inset: 0 0 auto auto;
+    width: 54%;
+    height: 42%;
+  }
+  #spm-hif-atlas .poster::after {
+    inset: auto auto 0 0;
+    width: 42%;
+    height: 34%;
+  }
+  #spm-hif-atlas .poster-city {
+    position: absolute;
+    inset: 45% 20px auto 20px;
+    z-index: 1;
+    font-family: "Arial Narrow", sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 500;
+    letter-spacing: -.06em;
+    line-height: .8;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .poster-note {
+    position: absolute;
+    inset: auto 20px 18px auto;
+    z-index: 2;
+    max-width: 44%;
+    padding: 8px;
+    color: var(--spm-gold);
+    background: var(--spm-black);
+    font-size: 10px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .state-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-block: 1px solid var(--spm-rule);
+    background: var(--spm-white);
+  }
+  #spm-hif-atlas .state-cell {
+    min-width: 0;
+    padding: 18px 22px;
+    border-inline-end: 1px solid var(--spm-rule);
+  }
+  #spm-hif-atlas .state-cell:last-child {
+    border-inline-end: 0;
+  }
+  #spm-hif-atlas .kicker {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--spm-gray);
+    font-size: 10px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .state-value {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  #spm-hif-atlas .section {
+    padding: clamp(38px, 6vw, 76px) clamp(26px, 6vw, 72px);
+  }
+  #spm-hif-atlas .section.dark {
+    color: var(--spm-white);
+    background: var(--spm-black);
+  }
+  #spm-hif-atlas .section.pale {
+    background: var(--spm-pale);
+  }
+  #spm-hif-atlas .section.gold {
+    color: var(--spm-black);
+    background: var(--spm-gold);
+  }
+  #spm-hif-atlas .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+    gap: 36px;
+    align-items: end;
+    margin-bottom: 28px;
+  }
+  #spm-hif-atlas .section-index {
+    color: var(--spm-gray);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .section.dark .section-index {
+    color: var(--spm-gold);
+  }
+  #spm-hif-atlas .section-title {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 500;
+    letter-spacing: -.035em;
+    line-height: 1;
+  }
+  #spm-hif-atlas .grid-3,
+  #spm-hif-atlas .grid-2 {
+    display: grid;
+    gap: 14px;
+  }
+  #spm-hif-atlas .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  #spm-hif-atlas .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  #spm-hif-atlas .object {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+    border-radius: 12px;
+  }
+  #spm-hif-atlas .object.signal {
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--spm-white);
+    background: var(--spm-black);
+  }
+  #spm-hif-atlas .object.signal.active {
+    color: var(--spm-black);
+    background: var(--spm-gold);
+  }
+  #spm-hif-atlas .object h3 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  #spm-hif-atlas .object p,
+  #spm-hif-atlas .reading p {
+    margin: 0;
+    color: color-mix(in srgb, currentColor 70%, transparent);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  #spm-hif-atlas .micro {
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .rows {
+    border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  }
+  #spm-hif-atlas .row {
+    display: grid;
+    grid-template-columns: minmax(120px, .5fr) minmax(0, 1.5fr) auto;
+    gap: 22px;
+    align-items: start;
+    padding: 18px 0;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  }
+  #spm-hif-atlas .row strong {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  #spm-hif-atlas .row span {
+    color: color-mix(in srgb, currentColor 68%, transparent);
+    font-size: 12px;
+  }
+  #spm-hif-atlas .notice {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 15px;
+    align-items: start;
+    padding: 18px;
+    color: var(--spm-ink);
+    background: color-mix(in srgb, var(--spm-gold) 25%, var(--spm-white));
+    border-inline-start: 5px solid var(--spm-gold);
+  }
+  #spm-hif-atlas .notice-mark {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    color: var(--spm-black);
+    background: var(--spm-gold);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  #spm-hif-atlas .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    max-width: 780px;
+  }
+  #spm-hif-atlas .mock-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 11px;
+  }
+  #spm-hif-atlas .mock-input {
+    min-height: 47px;
+    padding: 13px 14px;
+    color: var(--spm-gray);
+    background: var(--spm-white);
+    border: 1px solid var(--spm-rule);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  #spm-hif-atlas .mock-field.wide {
+    grid-column: 1 / -1;
+  }
+  #spm-hif-atlas .status-panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 26px;
+    color: var(--spm-white);
+    background: var(--spm-black);
+    border-bottom: 7px solid var(--spm-gold);
+  }
+  #spm-hif-atlas .status-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    color: var(--spm-black);
+    background: var(--spm-gold);
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  #spm-hif-atlas .table-wrap {
+    overflow-x: auto;
+  }
+  #spm-hif-atlas .matrix {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  #spm-hif-atlas .matrix th,
+  #spm-hif-atlas .matrix td {
+    padding: 14px;
+    border-bottom: 1px solid var(--spm-rule);
+    text-align: start;
+  }
+  #spm-hif-atlas .matrix th {
+    color: var(--spm-gray);
+    font-size: 10px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .reading {
+    max-width: 720px;
+  }
+  #spm-hif-atlas .reading h3 {
+    margin: 28px 0 10px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  #spm-hif-atlas .footer {
+    display: grid;
+    grid-template-columns: 1.2fr repeat(3, 1fr);
+    gap: 24px;
+    padding: 42px 36px;
+    color: color-mix(in srgb, var(--spm-white) 68%, transparent);
+    background: var(--spm-black);
+    font-size: 11px;
+  }
+  #spm-hif-atlas .footer strong {
+    color: var(--spm-white);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  #spm-hif-atlas .footer .gold { color: var(--spm-gold); }
+  #spm-hif-atlas .preview-banner {
+    padding: 10px 20px;
+    color: var(--spm-black);
+    background: repeating-linear-gradient(135deg, var(--spm-gold) 0 12px, color-mix(in srgb, var(--spm-gold) 70%, var(--spm-white)) 12px 24px);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  #spm-hif-atlas .site.mobile .topline {
+    padding-inline: 14px;
+  }
+  #spm-hif-atlas .site.mobile .site-head {
+    grid-template-columns: 1fr auto;
+    min-height: 62px;
+    padding: 0 16px;
+  }
+  #spm-hif-atlas .site.mobile .nav,
+  #spm-hif-atlas .site.mobile .head-action {
+    display: none;
+  }
+  #spm-hif-atlas .site.mobile .site-head::after {
+    content: "MENU";
+    color: var(--spm-gold);
+    font-size: 10px;
+    letter-spacing: .08em;
+  }
+  #spm-hif-atlas .site.mobile .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  #spm-hif-atlas .site.mobile .hero-copy {
+    min-height: 430px;
+    padding: 48px 22px 34px;
+  }
+  #spm-hif-atlas .site.mobile .display {
+    font-size: clamp(48px, 15vw, 66px);
+  }
+  #spm-hif-atlas .site.mobile .poster {
+    min-height: 310px;
+  }
+  #spm-hif-atlas .site.mobile .poster-city {
+    font-size: 54px;
+  }
+  #spm-hif-atlas .site.mobile .state-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+  #spm-hif-atlas .site.mobile .state-cell:nth-child(2) {
+    border-inline-end: 0;
+  }
+  #spm-hif-atlas .site.mobile .state-cell:nth-child(-n+2) {
+    border-bottom: 1px solid var(--spm-rule);
+  }
+  #spm-hif-atlas .site.mobile .section {
+    padding: 40px 20px;
+  }
+  #spm-hif-atlas .site.mobile .section-head,
+  #spm-hif-atlas .site.mobile .grid-3,
+  #spm-hif-atlas .site.mobile .grid-2,
+  #spm-hif-atlas .site.mobile .form-grid,
+  #spm-hif-atlas .site.mobile .footer {
+    grid-template-columns: 1fr;
+  }
+  #spm-hif-atlas .site.mobile .row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  #spm-hif-atlas .site.mobile .mock-field.wide {
+    grid-column: auto;
+  }
+  #spm-hif-atlas .site.mobile .footer {
+    padding: 38px 22px;
+  }
+  #spm-hif-atlas .site.rtl .eyebrow::before {
+    order: 2;
+  }
+  @media (max-width: 650px) {
+    #spm-hif-atlas .site:not(.mobile) .nav { display: none; }
+    #spm-hif-atlas .site:not(.mobile) .hero { grid-template-columns: 1fr; }
+    #spm-hif-atlas .site:not(.mobile) .grid-3 { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById("spm-hif-atlas");
+  const frameSelect = root.querySelector("#spm-hif-frame");
+  const stateSelect = root.querySelector("#spm-hif-state");
+  const modeSelect = root.querySelector("#spm-hif-mode");
+  const meta = root.querySelector("#spm-hif-meta");
+  const stage = root.querySelector("#spm-hif-stage");
+
+  const data = [
+    [1,"Global B2B","RT-HOME","TPL-01","desktop","Accueil — signal exposant","Devenir exposant","Explorer les salons",["events","proof","method"]],
+    [2,"Global B2B","RT-HOME","TPL-01","mobile","Accueil — hiérarchie mobile","Devenir exposant","Voir les salons",["events","proof"]],
+    [3,"Global B2B","RT-HOME","TPL-01","rtl","الرئيسية — العربية","طلب المشاركة","استكشاف المعارض",["events","proof","method"]],
+    [4,"Global B2B","RT-HOME","TPL-01","desktop","Accueil — contenu partiel","Explorer les salons","Nous contacter",["notice","events","method"]],
+    [5,"Exposants","RT-EXP-HUB","TPL-06","desktop","Espace exposants","Choisir un salon","Recevoir la brochure",["roles","proof","events"]],
+    [6,"Exposants","RT-EXP-WHY · RT-EXP-METHOD","TPL-06","desktop","Pourquoi exposer","Évaluer un salon","Voir les preuves",["method","proof","artifacts"]],
+    [7,"Exposants","RT-EXP-VISIBILITY","TPL-06","desktop","Visibilité et activation","Demander l’activation","Voir un exemple",["artifacts","proof","notice"]],
+    [8,"Offres","RT-EXP-OFFERS","TPL-09","desktop","Comparer les offres","Demander une proposition","Comparer les salons",["offers"]],
+    [9,"Offres","RT-EXP-OFFERS","TPL-09","mobile","Offres — mobile","Choisir cette offre","Voir les détails",["offers"]],
+    [10,"Offres","RT-EXP-OFFERS","TPL-09","desktop","Offres — états commerciaux","Demander une proposition","Voir une alternative",["notice","offers"]],
+    [11,"Preuves","RT-PRF-HUB","TPL-07","desktop","Preuves et résultats","Ouvrir une preuve","Réinitialiser",["filters","proofcards","notice"]],
+    [12,"Preuves","RT-CASE-DETAIL","TPL-08","desktop","Cas et attribution","Voir le salon associé","Parler à l’équipe",["case","proof","notice"]],
+    [13,"Salons","RT-EVT-INDEX","TPL-02","desktop","Salons internationaux","Ouvrir le salon","Voir les éditions passées",["filters","events","notice"]],
+    [14,"Salons","RT-EVT-INDEX","TPL-02","mobile","Salons — filtres mobiles","Réinitialiser","Voir tous les salons",["filters","notice","events"]],
+    [15,"Salons","RT-DST-DETAIL","TPL-03","desktop","Destination et marché","Ouvrir l’édition","Discuter du marché",["notice","events","proof"]],
+    [16,"Salon","RT-EVT-DETAIL","TPL-04","desktop","Salon canonique","Demander un stand","Préinscription visiteur",["audiences","proof","eventcontent"]],
+    [17,"Salon","RT-EVT-DETAIL","TPL-04","mobile","Salon — états mobiles","Action disponible","Voir l’alternative",["notice","audiences","eventcontent"]],
+    [18,"Salon","RT-EVT-DETAIL","TPL-04","rtl","المعرض — العربية","طلب المشاركة","التسجيل المسبق",["audiences","proof","eventcontent"]],
+    [19,"Salon","RT-EVT-DETAIL","TPL-04","desktop","Salon reporté ou annulé","Recevoir les mises à jour","Voir une alternative",["notice","events"]],
+    [20,"Salon","RT-EVT-DETAIL","TPL-04","desktop","Édition terminée","Voir la prochaine édition","Consulter les résultats",["proof","gallery","events"]],
+    [21,"Salon","RT-EVT-PROGRAMME","TPL-05","desktop","Programme","Préparer ma visite","Retour au salon",["timeline","notice"]],
+    [22,"Salon","RT-EVT-EXHIBITORS","TPL-05","desktop","Exposants participants","Préinscription visiteur","Retour au salon",["filters","participants","notice"]],
+    [23,"Salon","RT-EVT-PRACTICAL","TPL-05","desktop","Informations pratiques","Ajouter au calendrier","Préinscription visiteur",["practical","notice"]],
+    [24,"Salon","RT-EVT-GALLERY","TPL-05","desktop","Galerie documentaire","Voir la preuve associée","Voir le prochain salon",["gallery","notice"]],
+    [25,"Visiteurs","RT-VIS-HUB","TPL-12","desktop","Espace visiteurs","Choisir un salon","Préparer ma visite",["events","preparation","eventcontent"]],
+    [26,"Visiteurs","RT-VIS-HUB","TPL-12","mobile","Visiteurs — aucun salon ouvert","Recevoir les mises à jour","Voir les éditions passées",["notice","preparation","events"]],
+    [27,"Conversion","RT-EVT-REGISTER","TPL-14","mobile","Préinscription visiteur","Envoyer ma préinscription","Retour au salon",["form"]],
+    [28,"Conversion","RT-EVT-REGISTER","TPL-14","mobile","Récupération du formulaire","Corriger et renvoyer","Contacter l’équipe",["error","form"]],
+    [29,"Conversion","RT-EVT-REGISTER","TPL-14","mobile","Inscription indisponible","Rejoindre la liste d’attente","Voir un autre salon",["notice","form","events"]],
+    [30,"Conversion","RT-EVT-REG-CONFIRM","TPL-15","mobile","Préinscription enregistrée","Retour au salon","Réessayer l’accusé",["status","notice"]],
+    [31,"Conversion","RT-EVT-EXHIBIT · RT-CONV-EXHIBIT","TPL-14","desktop","Demande exposant","Envoyer la demande","Planifier un échange",["form"]],
+    [32,"Conversion","RT-CONV-EXHIBIT","TPL-14","desktop","Demande — récupération","Corriger et renvoyer","Utiliser le contact alternatif",["error","form","notice"]],
+    [33,"Conversion","RT-EVT-ENQ-CONFIRM","TPL-15","desktop","Demande enregistrée","Planifier un échange","Télécharger la brochure",["status","notice"]],
+    [34,"Conversion","RT-CONV-MEETING","TPL-14/15","desktop","Planifier un échange","Confirmer ce créneau","Envoyer une demande",["calendar","status","notice"]],
+    [35,"Ressources","RT-RES-HUB","TPL-10A","desktop","Ressources","Ouvrir la ressource","Réinitialiser",["filters","resources","notice"]],
+    [36,"Ressources","RT-RES-DETAIL","TPL-10B","desktop","Ressource — version et accès","Télécharger","Recevoir par e-mail",["resource","form"]],
+    [37,"Ressources","RT-RES-DETAIL","TPL-10B/15","desktop","Ressource indisponible","Accéder au remplacement","Demander de l’aide",["notice","resource"]],
+    [38,"Éditorial","RT-INS-INDEX · RT-TOPIC","TPL-11A/B","desktop","Analyses et conseils","Lire l’analyse","Voir les ressources",["editorial","resources","notice"]],
+    [39,"Éditorial","RT-ARTICLE","TPL-11C","desktop","Article et sources","Voir la ressource associée","Évaluer un salon",["article","sources","notice"]],
+    [40,"Institutionnel","RT-ABOUT · RT-TEAM · RT-PARTNERS · RT-PRESS","TPL-13","desktop","SPIMARIMMO et ses équipes","Contacter la bonne équipe","Ressources presse",["people","notice","resources"]],
+    [41,"Contact","RT-CONTACT","TPL-14","desktop","Contact orienté","Envoyer le message","Utiliser une autre voie",["routing","form","notice"]],
+    [42,"Politiques","RT-LEGAL · RT-PRIVACY · RT-COOKIES · RT-ACCESSIBILITY","TPL-16","rtl","السياسات والخصوصية","Gérer mes préférences","Contacter le responsable",["article","sources","notice"]],
+    [43,"Système","Confirmation surfaces","TPL-15","mobile","Lien invalide ou expiré","Recommencer l’action","Retour au salon",["status","notice"]],
+    [44,"Système","RT-404 · RT-500 · RT-MAINTENANCE","TPL-17","desktop","Page indisponible","Retour à l’accueil","Voir les salons",["recovery","events"]],
+    [45,"Locale","RT-LOCALE-ROOT","TPL-15","rtl","اختيار اللغة","Continuer en français","العربية · English",["locale","notice"]],
+    [46,"Shell","Global + local shell","Shell","desktop","Navigation globale et locale","Devenir exposant","Espace visiteurs",["shell","notice"]],
+    [47,"États","Event/action state board","State contract","desktop","Matrice des états et actions","Action dérivée","Alternative dérivée",["stateboard"]],
+    [48,"Preview","RT-PREVIEW","Representative templates","desktop","Aperçu protégé","Quitter l’aperçu","Copier la référence",["preview","notice"]]
+  ].map(item => ({id:item[0], group:item[1], route:item[2], tpl:item[3], mode:item[4], title:item[5], primary:item[6], secondary:item[7], sections:item[8]}));
+
+  const variants = {
+    1:["Desktop default"],2:["Mobile default"],3:["Arabic RTL + reduced motion"],
+    4:["Poster fallback","No approved metric","Future/undated event","No approved case","Offers hidden"],
+    5:["Desktop default","Mobile recomposition"],6:["Why exhibit","Before/during/after method","Evidence pending"],
+    7:["Artifact available","Artifact pending"],8:["Desktop equal comparison"],9:["Mobile comparison","200%/400% reflow"],
+    10:["Proposal-only","Limited","Sold out","Closed","Capability unavailable"],
+    11:["Default collection","Filtered results","Zero results","Evidence withdrawn","Evidence expired"],
+    12:["Default case","Partial outcomes","No media","Permission withdrawn","Related event unavailable"],
+    13:["Current/upcoming default","Archive","Postponed/cancelled ordering"],14:["Mobile filters","No results"],
+    15:["One edition","Multiple editions","Undated edition","Historical only","No approved statistic"],
+    16:["Scheduled · both audiences open"],17:["Exhibitor open · visitor closed","Exhibitor closed · visitor open"],
+    18:["Arabic RTL + reduced motion"],19:["Postponed","Cancelled"],20:["Completed","Archived · next edition unavailable"],
+    21:["Programme default","Programme pending","Session changed","Session cancelled"],
+    22:["Exhibitors default","List pending","Participant withdrawn"],
+    23:["Practical default","Venue/access changed","Accessibility input missing"],24:["Gallery default","No media rights","Poster/media fallback"],
+    25:["Desktop default","Mobile recomposition"],26:["No current event","Planned/undated event"],27:["Registration open · mobile"],
+    28:["Invalid fields","Consent required","Duplicate","Rate limited"],29:["Waitlist","Full","Closed"],
+    30:["Durable success","Acknowledgement delayed"],31:["Event-specific enquiry","Generic enquiry"],
+    32:["Invalid fields","Rate limited","CRM/email delayed","Action closed"],33:["Durable success","CRM delayed","Email delayed"],
+    34:["Provider slots","Booked","Provider unavailable","Lead fallback"],35:["Default library","Sparse inventory","Empty inventory","Filter reset"],
+    36:["Ungated access","Gated access"],37:["Broken file","Approved replacement","Locale unavailable","Delivery delayed"],
+    38:["Default index","Sparse index","Topic below publication threshold"],39:["Long sources","Statistic under review","No media"],
+    40:["Approved default","Conditional page absent","Relationship expired","Media missing"],41:["Audience routing default","Invalid fields","Delivery delayed"],
+    42:["Long policy","Policy table","Update notice","Arabic RTL","Preference tool unavailable"],
+    43:["Expired link","Invalid direct access","Fallback re-entry"],44:["Localized 404","Safe 500","Maintenance","Host inactive","Offline"],
+    45:["Neutral chooser","Saved choice","Equivalent locale missing"],
+    46:["Global desktop shell","Local event shell","Mobile drawer","Arabic RTL","Keyboard/focus path"],
+    47:["Lifecycle axis","Exhibitor-sales axis","Visitor-registration axis","Provider-readiness axis","Combined precedence"],
+    48:["Protected draft","Host variant","Locale variant","Event/action state variant"]
+  };
+
+  const escapeHtml = value => String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+
+  const titleFor = frame => frame.mode === "rtl" ? frame.title : frame.title;
+  const isException = state => /cancel|postpon|closed|sold out|full|expired|invalid|unavailable|broken|withdrawn|missing|delayed|error|offline|maintenance/i.test(state);
+  const isSuccess = state => /success|booked|open|available|default/i.test(state) && !isException(state);
+
+  const sectionHead = (index, title) => `<div class="section-head"><span class="section-index">${String(index).padStart(2,"0")} / SPIMAR</span><h2 class="section-title">${escapeHtml(title)}</h2></div>`;
+  const eventObjects = () => `<div class="grid-3">
+    <article class="object signal active"><span class="micro">Édition internationale · ouverture à confirmer</span><div><h3>PARIS</h3><p>Date et disponibilité publiées après validation.</p></div></article>
+    <article class="object signal"><span class="micro">Édition internationale · planifiée</span><div><h3>MONTRÉAL</h3><p>Une seule vérité d’événement pour les deux audiences.</p></div></article>
+    <article class="object signal"><span class="micro">Édition internationale · information en préparation</span><div><h3>BRUXELLES</h3><p>Aucune fausse date ni fausse inscription.</p></div></article>
+  </div>`;
+  const proofRows = () => `<div class="rows">
+    <div class="row"><strong>Valeur à démontrer</strong><span>Donnée ou résultat visible uniquement après validation de la définition, de la période et de la source.</span><b>À valider</b></div>
+    <div class="row"><strong>Portée</strong><span>Marché, édition et audience concernés restent adjacents à la preuve.</span><b>Définie</b></div>
+    <div class="row"><strong>Limite</strong><span>Le contexte et la réserve méthodologique ne sont jamais masqués par la composition.</span><b>Visible</b></div>
+  </div>`;
+  const methodObjects = () => `<div class="grid-3">
+    <article class="object"><span class="micro">01 · Avant</span><h3>Préparer</h3><p>Cadrage, visibilité, argumentaire et qualification du salon.</p></article>
+    <article class="object"><span class="micro">02 · Pendant</span><h3>Activer</h3><p>Présence, rencontres, contenus et collecte structurée.</p></article>
+    <article class="object"><span class="micro">03 · Après</span><h3>Prolonger</h3><p>Suivi, preuve, ressources et prochaines opportunités.</p></article>
+  </div>`;
+  const notice = state => `<div class="notice"><span class="notice-mark">!</span><div><strong>${escapeHtml(state)}</strong><p>État contrôlé : l’interface conserve le contexte, supprime toute action devenue invalide et propose une récupération honnête.</p></div></div>`;
+  const offerTable = () => `<div class="table-wrap"><table class="matrix"><thead><tr><th>Capacité</th><th>Présence</th><th>Visibilité</th><th>Accompagnement</th></tr></thead><tbody>
+    <tr><td>Stand / espace</td><td>Sur proposition</td><td>Selon activation</td><td>Cadre défini</td></tr>
+    <tr><td>Contenus campagne</td><td>En option</td><td>Sur demande</td><td>Livrables précisés</td></tr>
+    <tr><td>Suivi commercial</td><td>À confirmer</td><td>À confirmer</td><td>Résultat non garanti</td></tr>
+  </tbody></table></div>`;
+  const form = error => `${error ? notice("Des corrections sont nécessaires — les valeurs sûres sont conservées") : ""}<div class="form-grid">
+    <label class="mock-field"><span>Société / organisation</span><span class="mock-input">Nom de la société</span></label>
+    <label class="mock-field"><span>Rôle</span><span class="mock-input">Sélectionner un rôle</span></label>
+    <label class="mock-field"><span>Adresse e-mail professionnelle</span><span class="mock-input">nom@entreprise.com</span></label>
+    <label class="mock-field"><span>Téléphone</span><span class="mock-input">Indicatif et numéro</span></label>
+    <label class="mock-field wide"><span>Objectif de la demande</span><span class="mock-input">Décrivez brièvement votre besoin et le salon concerné.</span></label>
+    <label class="mock-field wide"><span>Consentement</span><span class="mock-input">□ J’accepte le traitement de cette demande selon la politique indiquée.</span></label>
+  </div>`;
+  const status = state => `<div class="status-panel"><span class="status-icon">${isException(state) ? "!" : "✓"}</span><div><span class="micro">Résultat vérifié</span><h3>${escapeHtml(state)}</h3><p>La soumission durable, la synchronisation CRM, l’e-mail, la réservation et la qualification restent des résultats distincts.</p></div></div>`;
+  const timeline = () => `<div class="rows"><div class="row"><strong>09:30</strong><span>Session ou accueil — contenu en validation</span><b>Salle à confirmer</b></div><div class="row"><strong>11:00</strong><span>Rencontres et présentations — détails publiés après validation</span><b>Programme</b></div><div class="row"><strong>15:00</strong><span>Échange thématique — changement visible si nécessaire</span><b>Mis à jour</b></div></div>`;
+  const gallery = () => `<div class="grid-3"><div class="object signal"><span class="micro">Média documentaire</span><h3>01</h3><p>Droits, légende, édition et texte alternatif requis.</p></div><div class="object signal active"><span class="micro">Poster typographique</span><h3>02</h3><p>Fallback approuvé sans fausse photographie.</p></div><div class="object signal"><span class="micro">Vidéo</span><h3>03</h3><p>Poster, sous-titres, transcription et état d’erreur.</p></div></div>`;
+  const resources = () => `<div class="rows"><div class="row"><strong>Guide exposant</strong><span>Version, locale, événement et propriétaire visibles avant accès.</span><b>PDF · à valider</b></div><div class="row"><strong>Préparer sa visite</strong><span>Ressource visiteur actuelle, sans promesse d’admission.</span><b>Guide</b></div><div class="row"><strong>Analyse marché</strong><span>Sources, date de révision et périmètre obligatoires.</span><b>Article</b></div></div>`;
+  const article = () => `<article class="reading"><p>La réponse principale apparaît avant l’argumentation longue. Les affirmations sensibles restent reliées à leur source, période, définition et relecteur.</p><h3>Une structure conçue pour la décision</h3><p>Le contenu distingue le contexte du marché, la proposition du salon, la méthode de SPIMARIMMO et la preuve disponible. Une statistique expirée est retirée ou signalée avant publication.</p><h3>Sources et responsabilité</h3><p>La date de révision, le propriétaire éditorial et les sources approuvées clôturent l’article avant un prochain pas contextuel.</p></article>`;
+  const stateboard = () => `<div class="table-wrap"><table class="matrix"><thead><tr><th>Axe</th><th>États</th><th>Effet sur l’action</th></tr></thead><tbody><tr><td>Cycle de vie</td><td>Planifié · live · terminé · reporté · annulé</td><td>L’exception supprime toute action obsolète</td></tr><tr><td>Vente exposant</td><td>Planifiée · ouverte · limitée · complète · fermée</td><td>Demande, alternative ou mise à jour</td></tr><tr><td>Inscription visiteur</td><td>Planifiée · ouverte · attente · complète · fermée</td><td>Préinscription, attente ou alternative</td></tr><tr><td>Prestataire</td><td>Prêt · retardé · indisponible</td><td>Le résultat durable reste indépendant</td></tr></tbody></table></div>`;
+
+  const renderSection = (type, frame, state, index) => {
+    const heading = {
+      events:"Les prochains signaux internationaux",proof:"La preuve reste à côté de la promesse",method:"Avant, pendant et après le salon",
+      notice:"Information contrôlée",roles:"Une proposition adaptée au rôle de décision",artifacts:"Des livrables visibles et attribuables",
+      offers:"Des capacités comparables, sans prix inventé",filters:"Trouver sans perdre le contexte",proofcards:"Cas, résultats et témoignages approuvés",
+      case:"Objectif, intervention et résultat attribuable",audiences:"Deux parcours, une seule vérité événementielle",eventcontent:"Programme, exposants et informations pratiques",
+      timeline:"Programme actuel et changements visibles",participants:"Participations approuvées",practical:"Informations pratiques vérifiées",gallery:"Médias documentaires et droits",
+      preparation:"Préparer une visite utile",form:"Une demande claire avant chaque champ",error:"Récupérer sans perdre les données",status:"Ce qui a réellement réussi",
+      calendar:"Créneaux, fuseau et confirmation du prestataire",resources:"Ressources actuelles et versionnées",resource:"Version, portée et accès",
+      editorial:"Analyses relues et actuelles",article:"Réponse, contexte et sources",sources:"Sources, version et propriétaire",people:"Personnes et relations autorisées",
+      routing:"Le bon message vers la bonne équipe",recovery:"Une indisponibilité sûre et utile",locale:"Choisir la langue sans redirection forcée",shell:"Navigation globale et contexte local",
+      stateboard:"Un modèle d’action sans contradiction",preview:"Prévisualiser sans effets de production"
+    }[type] || "Section";
+    let body = "";
+    if (type === "events") body = eventObjects();
+    else if (type === "proof") body = proofRows();
+    else if (type === "method" || type === "preparation") body = methodObjects();
+    else if (type === "notice" || type === "error") body = notice(state);
+    else if (type === "offers") body = offerTable();
+    else if (type === "form") body = form(isException(state));
+    else if (type === "status") body = status(state);
+    else if (type === "timeline" || type === "calendar" || type === "practical") body = timeline();
+    else if (type === "gallery" || type === "artifacts") body = gallery();
+    else if (type === "resources" || type === "resource") body = resources();
+    else if (type === "article" || type === "sources" || type === "editorial") body = article();
+    else if (type === "stateboard") body = stateboard();
+    else if (type === "audiences") body = `<div class="grid-2"><article class="object signal active"><span class="micro">Espace exposants</span><h3>${escapeHtml(frame.primary)}</h3><p>Disponibilité et résultat commercial explicités.</p></article><article class="object signal"><span class="micro">Espace visiteurs</span><h3>${escapeHtml(frame.secondary)}</h3><p>Préinscription distincte d’un billet ou d’une admission.</p></article></div>`;
+    else if (type === "filters") body = `<div class="rows"><div class="row"><strong>Destination</strong><span>Paris · Montréal · Bruxelles · autres destinations approuvées</span><b>Filtrer</b></div><div class="row"><strong>État</strong><span>Ouvert · à venir · terminé · reporté</span><b>Effacer</b></div></div>`;
+    else if (type === "proofcards" || type === "participants" || type === "people") body = `<div class="grid-3"><article class="object"><span class="micro">Approbation requise</span><h3>Objet 01</h3><p>Identité, rôle, portée et validité contrôlés.</p></article><article class="object"><span class="micro">Source visible</span><h3>Objet 02</h3><p>Aucune relation ou participation implicite.</p></article><article class="object"><span class="micro">État de contenu</span><h3>Objet 03</h3><p>Retiré automatiquement si expiré.</p></article></div>`;
+    else if (type === "roles" || type === "eventcontent") body = `<div class="grid-3"><article class="object"><span class="micro">Direction</span><h3>Valeur</h3><p>Pourquoi cette présence mérite une évaluation.</p></article><article class="object"><span class="micro">Commercial</span><h3>Opportunités</h3><p>Qualification et suivi, sans garantie inventée.</p></article><article class="object"><span class="micro">Marketing</span><h3>Visibilité</h3><p>Livrables et activation explicitement cadrés.</p></article></div>`;
+    else if (type === "case") body = `<div class="grid-2"><article class="object"><span class="micro">Contexte et objectif</span><h3>Besoin validé</h3><p>Identité et problème ne sont publiés qu’avec permission.</p></article><article class="object"><span class="micro">Intervention et résultat</span><h3>Attribution honnête</h3><p>Source, période, définition et réserve visibles.</p></article></div>`;
+    else if (type === "routing" || type === "locale" || type === "shell" || type === "preview" || type === "recovery") body = `<div class="grid-2"><article class="object signal active"><span class="micro">Chemin principal</span><h3>${escapeHtml(frame.primary)}</h3><p>Contexte conservé et résultat explicite.</p></article><article class="object signal"><span class="micro">Récupération</span><h3>${escapeHtml(frame.secondary)}</h3><p>Aucune donnée personnelle ou détail technique exposé.</p></article></div>`;
+    return `<section class="section ${index % 3 === 0 ? "dark" : index % 3 === 1 ? "pale" : ""}">${sectionHead(index, heading)}${body}</section>`;
+  };
+
+  const populateStates = frame => {
+    stateSelect.innerHTML = "";
+    (variants[frame.id] || ["Default"]).forEach(label => {
+      const option = document.createElement("option");
+      option.value = label;
+      option.textContent = label;
+      stateSelect.appendChild(option);
+    });
+  };
+
+  const render = () => {
+    const frame = data.find(item => item.id === Number(frameSelect.value)) || data[0];
+    const state = stateSelect.value || variants[frame.id][0];
+    const requestedMode = modeSelect.value === "target" ? frame.mode : modeSelect.value;
+    const rtl = requestedMode === "rtl";
+    const mobile = requestedMode === "mobile";
+    const headline = rtl ? (frame.id === 3 || frame.id === 18 ? frame.title : "تجربة سبـيماريمو الدولية") : titleFor(frame);
+    const lead = rtl ? "منصة واضحة للعارضين والزوار، بمعلومات موثقة ومسارات مستقلة حسب حالة كل معرض." : "Une plateforme B2B qui transforme chaque salon international en décision claire, preuve contrôlée et action honnête.";
+    const exceptionBanner = isException(state) ? `<div class="preview-banner">État exceptionnel · toute action obsolète est supprimée</div>` : frame.id === 48 ? `<div class="preview-banner">Aperçu protégé · noindex · analytics et prestataires désactivés</div>` : "";
+    const primary = rtl && (frame.id === 3 || frame.id === 18) ? frame.primary : frame.primary;
+    const secondary = rtl && (frame.id === 3 || frame.id === 18) ? frame.secondary : frame.secondary;
+    const sections = frame.sections.map((type,index) => renderSection(type,frame,state,index + 1)).join("");
+    stage.innerHTML = `<div class="site ${mobile ? "mobile" : ""} ${rtl ? "rtl" : ""}" dir="${rtl ? "rtl" : "ltr"}">
+      ${exceptionBanner}
+      <div class="topline"><span>SPIMARIMMO · HIGH-FIDELITY SPECIFICATION</span><span>CONTROLLED FIXTURE</span></div>
+      <header class="site-head"><div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>SPIMARIMMO</span></div><nav class="nav" aria-label="Navigation preview"><span class="active">Salons</span><span>Exposer</span><span>Preuves</span><span>Ressources</span><span>Visiteurs</span></nav><span class="head-action">${escapeHtml(primary)}</span></header>
+      <main>
+        <section class="hero"><div class="hero-copy"><span class="eyebrow">${escapeHtml(frame.group)} · ${escapeHtml(state)}</span><h1 class="display">${escapeHtml(headline)}</h1><p class="hero-lead">${escapeHtml(lead)}</p><div class="actions"><span class="action-primary">${escapeHtml(primary)}</span><span class="action-secondary">${escapeHtml(secondary)}</span></div></div><div class="poster"><span class="poster-city">SPIMAR<br>GLOBAL</span><span class="poster-note">Media fallback · city/date poster · no invented documentary image</span></div></section>
+        <div class="state-strip"><div class="state-cell"><span class="kicker">Route</span><span class="state-value">${escapeHtml(frame.route)}</span></div><div class="state-cell"><span class="kicker">Template</span><span class="state-value">${escapeHtml(frame.tpl)}</span></div><div class="state-cell"><span class="kicker">State</span><span class="state-value">${escapeHtml(state)}</span></div><div class="state-cell"><span class="kicker">Outcome</span><span class="state-value">${isSuccess(state) ? "Disponible et explicite" : "Contrôlé avec récupération"}</span></div></div>
+        ${sections}
+        <section class="section gold">${sectionHead(frame.sections.length + 1, rtl ? "خطوتك التالية واضحة" : "Un prochain pas clair, jamais une fausse promesse")}<div class="actions"><span class="action-secondary">${escapeHtml(primary)}</span><span class="action-secondary">${escapeHtml(secondary)}</span></div></section>
+      </main>
+      <footer class="footer"><div><strong>SPIMARIMMO</strong><p class="gold">Maroc · Salons internationaux · Exposants · Visiteurs</p></div><div><strong>Découvrir</strong><p>Salons<br>Destinations<br>Preuves</p></div><div><strong>Agir</strong><p>Demande exposant<br>Préinscription<br>Contact orienté</p></div><div><strong>Confiance</strong><p>Confidentialité<br>Accessibilité<br>Préférences</p></div></footer>
+    </div>`;
+    meta.textContent = `HIF-${String(frame.id).padStart(3,"0")} · UXF-${String(frame.id).padStart(3,"0")} · ${frame.route} · ${frame.tpl} · ${requestedMode} · ${state}`;
+  };
+
+  data.forEach(frame => {
+    const option = document.createElement("option");
+    option.value = String(frame.id);
+    option.textContent = `HIF-${String(frame.id).padStart(3,"0")} · ${frame.title}`;
+    frameSelect.appendChild(option);
+  });
+  frameSelect.addEventListener("change", () => {
+    const frame = data.find(item => item.id === Number(frameSelect.value)) || data[0];
+    populateStates(frame);
+    render();
+  });
+  stateSelect.addEventListener("change", render);
+  modeSelect.addEventListener("change", render);
+  populateStates(data[0]);
+  render();
+})();
+</script>

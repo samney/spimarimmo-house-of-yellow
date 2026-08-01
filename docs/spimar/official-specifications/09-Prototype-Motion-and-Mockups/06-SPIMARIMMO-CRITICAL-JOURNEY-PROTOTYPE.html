@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Spimar Phase 09 Prototype</title>
+<style>:root {
+  color-scheme: light dark;
+  background-color: transparent !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --main-surface-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --red: light-dark(rgb(186 38 35), rgb(250 66 62));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 10px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-visualize-standalone] {
+  background-color: var(--background) !important;
+}
+
+/* Generic mobile code-block hosts provide light/dark mode but no series palette.
+   AppBlock hosts set all six variables themselves. */
+:root:not([data-app-block-surface]) {
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(#f3883b, #f59a56);
+  --viz-series-3: light-dark(#5dc977, #74d58b);
+  --viz-series-4: light-dark(#eb77b1, #f08fc0);
+  --viz-series-5: light-dark(#9b79ec, #aa91ef);
+  --viz-series-6: light-dark(#3ab9b1, #5acbc2);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+:root:not([data-app-block-surface]) > body {
+  padding: 12px;
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive > .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align="right"]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align="center"]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget > :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The bundled tooltip runtime owns [data-tooltip]. AppBlock's CSS-only
+   pseudo-tooltip can widen dense grids even while hidden. */
+main [data-tooltip]::after {
+  content: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--interactive-label-primary-default, var(--primary-foreground));
+  background: var(--interactive-bg-primary-default, var(--foreground));
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(
+    in srgb,
+    var(--interactive-label-primary-default, var(--primary-foreground)) 50%,
+    transparent
+  );
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type="file"] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type="file"]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type="file"]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type="color"] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed="true"],
+    [aria-selected="true"],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+</style>
+</head>
+<body>
+<div id="spimar-phase09" role="region" aria-label="SPIMAR critical journey prototype">
+  <div class="viz-controls" aria-label="Prototype controls">
+    <label class="form-label" for="sp09-journey">Journey
+      <select class="form-select" id="sp09-journey">
+        <option value="exhibitor">Exhibitor decision and enquiry</option>
+        <option value="visitor">Visitor discovery and registration</option>
+        <option value="meeting">Provider-backed meeting</option>
+        <option value="recovery">Exception and recovery</option>
+      </select>
+    </label>
+    <label class="form-label" for="sp09-scenario">Scenario
+      <select class="form-select" id="sp09-scenario">
+        <option value="default">Default</option>
+        <option value="closed">Closed action</option>
+        <option value="delayed">Provider delayed</option>
+        <option value="failure">Provider/media failure</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="viz-controls" aria-label="Review mode">
+    <button type="button" class="btn btn-primary" data-mode="desktop" aria-pressed="true">Desktop</button>
+    <button type="button" class="btn" data-mode="mobile" aria-pressed="false">Mobile</button>
+    <button type="button" class="btn" data-mode="rtl" aria-pressed="false">Arabic RTL</button>
+    <button type="button" class="btn" data-mode="reduced" aria-pressed="false">Reduced motion</button>
+  </div>
+
+  <div class="sp09-progress" aria-live="polite">
+    <span id="sp09-step-label"></span>
+    <span id="sp09-contract-label" class="text-muted"></span>
+  </div>
+
+  <div class="sp09-stage" id="sp09-stage">
+    <div class="card sp09-preview" id="sp09-preview"></div>
+  </div>
+
+  <div class="viz-controls sp09-nav" aria-label="Prototype navigation">
+    <button type="button" class="btn" id="sp09-prev"><i data-lucide="arrow-left" aria-hidden="true"></i> Previous</button>
+    <button type="button" class="btn btn-primary" id="sp09-next">Next <i data-lucide="arrow-right" aria-hidden="true"></i></button>
+  </div>
+
+  <p class="text-small text-muted" id="sp09-outcome" aria-live="polite"></p>
+</div>
+
+<style>
+  #spimar-phase09 {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  #spimar-phase09 .sp09-progress,
+  #spimar-phase09 .sp09-topline,
+  #spimar-phase09 .sp09-header,
+  #spimar-phase09 .sp09-actions,
+  #spimar-phase09 .sp09-meta,
+  #spimar-phase09 .sp09-state-row,
+  #spimar-phase09 .sp09-form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  #spimar-phase09 .sp09-stage {
+    display: grid;
+    place-items: start center;
+    width: 100%;
+  }
+
+  #spimar-phase09 .sp09-preview {
+    width: 100%;
+    overflow: hidden;
+    transition: width 220ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  #spimar-phase09 .sp09-preview.is-mobile {
+    max-width: 390px;
+  }
+
+  #spimar-phase09 .sp09-screen {
+    background: var(--foreground);
+    color: var(--background);
+    min-height: 34rem;
+    padding: 1rem;
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+  }
+
+  #spimar-phase09 .sp09-screen.is-entering {
+    animation: sp09-enter 360ms cubic-bezier(.16,1,.3,1);
+  }
+
+  #spimar-phase09 .sp09-screen[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+  }
+
+  #spimar-phase09 .sp09-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  #spimar-phase09 .sp09-mark {
+    width: 1rem;
+    height: 1rem;
+    background: var(--primary);
+    display: inline-block;
+  }
+
+  #spimar-phase09 .sp09-local-nav,
+  #spimar-phase09 .sp09-chip-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  #spimar-phase09 .sp09-local-nav span,
+  #spimar-phase09 .sp09-chip {
+    border-bottom: 1px solid color-mix(in srgb, var(--background) 35%, transparent);
+    padding-block: 0.25rem;
+  }
+
+  #spimar-phase09 .sp09-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(13rem, 0.75fr);
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  #spimar-phase09 .sp09-copy {
+    display: grid;
+    align-content: center;
+    gap: 0.75rem;
+    padding-block: 1rem;
+  }
+
+  #spimar-phase09 .sp09-copy h2,
+  #spimar-phase09 .sp09-copy h3,
+  #spimar-phase09 .sp09-copy p {
+    margin: 0;
+  }
+
+  #spimar-phase09 .sp09-media {
+    min-height: 16rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #spimar-phase09 .sp09-media.is-fallback {
+    background: var(--muted);
+    color: var(--muted-foreground);
+  }
+
+  #spimar-phase09 .sp09-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  #spimar-phase09 .sp09-panel {
+    padding-block: 0.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--background) 28%, transparent);
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  #spimar-phase09 .sp09-panel.is-selected {
+    border-top-color: var(--primary);
+  }
+
+  #spimar-phase09 .sp09-panel h3,
+  #spimar-phase09 .sp09-panel p {
+    margin: 0;
+  }
+
+  #spimar-phase09 .sp09-status {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.3rem 0.6rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 500;
+  }
+
+  #spimar-phase09 .sp09-status.is-muted {
+    background: var(--muted);
+    color: var(--muted-foreground);
+  }
+
+  #spimar-phase09 .sp09-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding-block: 0.75rem;
+    border-block: 1px solid color-mix(in srgb, var(--background) 28%, transparent);
+  }
+
+  #spimar-phase09 .sp09-fact strong,
+  #spimar-phase09 .sp09-fact span {
+    display: block;
+  }
+
+  #spimar-phase09 .sp09-form {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 44rem;
+  }
+
+  #spimar-phase09 .sp09-form .form-label {
+    flex: 1 1 14rem;
+  }
+
+  #spimar-phase09 .sp09-notice {
+    padding: 0.75rem;
+    border-inline-start: 0.3rem solid var(--primary);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+
+  #spimar-phase09 .sp09-nav {
+    justify-content: space-between;
+  }
+
+  #spimar-phase09 .is-reduced .sp09-screen,
+  #spimar-phase09 .is-reduced .sp09-preview {
+    animation: none;
+    transition: none;
+  }
+
+  @keyframes sp09-enter {
+    from { opacity: 0.25; transform: translateY(0.5rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #spimar-phase09 .sp09-screen,
+    #spimar-phase09 .sp09-preview {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  @media (max-width: 620px) {
+    #spimar-phase09 .sp09-hero,
+    #spimar-phase09 .sp09-grid,
+    #spimar-phase09 .sp09-facts {
+      grid-template-columns: 1fr;
+    }
+
+    #spimar-phase09 .sp09-screen {
+      min-height: 30rem;
+    }
+  }
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById('spimar-phase09');
+  const journeySelect = document.getElementById('sp09-journey');
+  const scenarioSelect = document.getElementById('sp09-scenario');
+  const preview = document.getElementById('sp09-preview');
+  const stepLabel = document.getElementById('sp09-step-label');
+  const contractLabel = document.getElementById('sp09-contract-label');
+  const outcome = document.getElementById('sp09-outcome');
+  const prev = document.getElementById('sp09-prev');
+  const next = document.getElementById('sp09-next');
+
+  const journeys = {
+    exhibitor: [
+      { id: 'PRT-01.1', trace: 'HIF-001 · UXF-001 · JRN-P01', type: 'home', eyebrow: 'Global B2B platform', heading: 'Turn international exhibitions into qualified commercial opportunity.', summary: 'Select a market, inspect the method and proof, then choose the right commitment level.', state: 'Exhibitor path active', primary: 'Explore events', secondary: 'Get the brochure', facts: ['Event opportunity', 'Verified evidence', 'Qualified request'] },
+      { id: 'PRT-01.2', trace: 'HIF-013 · UXF-013 · JRN-P01', type: 'events', eyebrow: 'Current and upcoming', heading: 'Choose the market and edition that fits.', summary: 'Lifecycle and audience availability are separate, so each card keeps its actions truthful.', state: 'Scheduled editions', primary: 'Open selected event', secondary: 'Discuss a market', facts: ['Paris · scheduled', 'Brussels · scheduled', 'Amsterdam · completed'] },
+      { id: 'PRT-01.3', trace: 'HIF-016/047 · UXF-016/047', type: 'event', eyebrow: 'Canonical event', heading: 'One event. Two audience journeys. Independent availability.', summary: 'Verified event facts stay shared while exhibitor and visitor actions resolve separately.', state: 'Scheduled · Exhibitor open · Visitor open', primary: 'Become an exhibitor', secondary: 'Visitor information', facts: ['City and venue', 'Edition timing', 'Approved evidence'] },
+      { id: 'PRT-01.4', trace: 'HIF-008/010 · UXF-008/010', type: 'offers', eyebrow: 'Offer comparison', heading: 'Compare capabilities without inventing price or inventory.', summary: 'Every option uses the same capability order, with applicability and availability made explicit.', state: 'Proposal only', primary: 'Request a proposal', secondary: 'Book a discussion', facts: ['Visibility', 'Stand support', 'Campaign activation'] },
+      { id: 'PRT-01.5', trace: 'HIF-031/032 · UXF-031/032', type: 'form', eyebrow: 'Qualified exhibitor enquiry', heading: 'Tell us which event and objective matter.', summary: 'The selected event, offer, host, locale, and source remain visible before submission.', state: 'No reservation or payment', primary: 'Submit request', secondary: 'Return to event', facts: ['Work contact', 'Company and role', 'Market objective'] },
+      { id: 'PRT-01.6', trace: 'HIF-033 · UXF-033', type: 'confirmation', eyebrow: 'Durable acknowledgement', heading: 'Your exhibitor request has been received.', summary: 'The record is stored. CRM sync and acknowledgement delivery are reported independently.', state: 'Submitted · provider status separate', primary: 'View relevant event', secondary: 'Contact the team', facts: ['Submission stored', 'Owner/queue assigned', 'Email status visible'] }
+    ],
+    visitor: [
+      { id: 'PRT-04.1', trace: 'HIF-025/026 · UXF-025/026 · JRN-P06', type: 'home', eyebrow: 'Visitor experience', heading: 'Find the event that matches your city and plans.', summary: 'Visitor discovery is separate from the exhibitor sales journey.', state: 'Visitor path active', primary: 'Explore visitor events', secondary: 'Practical information', facts: ['City and date', 'Registration state', 'Programme readiness'] },
+      { id: 'PRT-04.2', trace: 'HIF-016/017 · UXF-016/017', type: 'event', eyebrow: 'Event overview', heading: 'Understand the edition before registering.', summary: 'Programme, exhibitors, practical facts, and registration status use the same canonical event.', state: 'Visitor registration open', primary: 'Pre-register', secondary: 'View programme', facts: ['Verified venue', 'Published programme', 'Registration open'] },
+      { id: 'PRT-04.3', trace: 'HIF-021/022/023 · UXF-021/022/023', type: 'events', eyebrow: 'Prepare your visit', heading: 'Programme, participants and access remain truthful.', summary: 'Pending or changed information is labeled and does not fabricate certainty.', state: 'Programme published · access verified', primary: 'Continue to registration', secondary: 'Return to event', facts: ['Programme status', 'Participant status', 'Venue/access update'] },
+      { id: 'PRT-04.4', trace: 'HIF-027/028/029 · UXF-027/028/029', type: 'form', eyebrow: 'Short pre-registration', heading: 'Register for this event.', summary: 'Necessary registration processing is separate from optional marketing consent.', state: 'Open registration', primary: 'Submit registration', secondary: 'Return to event', facts: ['Name and contact', 'Selected event', 'Separate consent'] },
+      { id: 'PRT-04.5', trace: 'HIF-030 · UXF-030', type: 'confirmation', eyebrow: 'Registration acknowledgement', heading: 'Your pre-registration has been recorded.', summary: 'This acknowledgement does not imply a ticket, badge, admission guarantee, or attendance.', state: 'Registered · email status separate', primary: 'View practical information', secondary: 'Explore another event', facts: ['Durable record', 'Event facts', 'Next step stated'] }
+    ],
+    meeting: [
+      { id: 'PRT-03.1', trace: 'HIF-016/008/012 · JRN-P04', type: 'event', eyebrow: 'High-intent context', heading: 'Keep the selected event and offer in the meeting request.', summary: 'A scheduler never opens as an uncontextualized external page.', state: 'Context retained', primary: 'Choose a meeting time', secondary: 'Submit an enquiry', facts: ['Event', 'Offer interest', 'Source placement'] },
+      { id: 'PRT-03.2', trace: 'HIF-034 · UXF-034', type: 'meeting', eyebrow: 'Provider-backed availability', heading: 'Choose an available time in the stated timezone.', summary: 'Availability is provisional until the provider accepts the booking.', state: 'Provider slots available', primary: 'Confirm selected time', secondary: 'Return to event', facts: ['Tue 10:00', 'Wed 14:30', 'Thu 16:00'] },
+      { id: 'PRT-03.3', trace: 'HIF-034/043 · UXF-034/043', type: 'confirmation', eyebrow: 'Provider confirmation', heading: 'Your meeting is confirmed.', summary: 'Verified date, time, timezone, and calendar details appear only after provider acceptance.', state: 'Booked by provider', primary: 'Return to event', secondary: 'Contact the team', facts: ['Verified time', 'Timezone', 'Calendar reference'] }
+    ],
+    recovery: [
+      { id: 'PRT-05.1', trace: 'HIF-019/047 · UXF-019/047', type: 'event', eyebrow: 'Event exception', heading: 'This edition has been postponed.', summary: 'Exception status precedes promotion and suppresses invalid exhibitor and visitor actions.', state: 'Postponed', primary: 'View updates', secondary: 'Explore another event', facts: ['Status first', 'Actions suppressed', 'Alternative retained'] },
+      { id: 'PRT-05.2', trace: 'HIF-032/034/037 · UXF-032/034/037', type: 'recovery', eyebrow: 'Provider recovery', heading: 'Your request is safe; the provider is delayed.', summary: 'Durable storage remains true while CRM, email, resource, or scheduler outcomes are recovered separately.', state: 'Stored · integration delayed', primary: 'Continue safely', secondary: 'Contact support', facts: ['No blind resubmit', 'Correlation preserved', 'Fallback available'] },
+      { id: 'PRT-05.3', trace: 'HIF-045 · UXF-045', type: 'recovery', eyebrow: 'Locale equivalence', heading: 'This page is not yet available in the selected language.', summary: 'Keep the current valid page or choose an explicit approved equivalent. Critical languages are never mixed silently.', state: 'Equivalent missing', primary: 'Keep current language', secondary: 'Return to parent route', facts: ['Semantic route', 'Locale status', 'Explicit fallback'] },
+      { id: 'PRT-05.4', trace: 'HIF-043/044 · UXF-043/044', type: 'recovery', eyebrow: 'Privacy-safe recovery', heading: 'This confirmation link is invalid or expired.', summary: 'No personal data or object existence is exposed. The user can restart the relevant journey safely.', state: 'Invalid confirmation', primary: 'Restart journey', secondary: 'Go to homepage', facts: ['No enumeration', 'Host-aware route', 'Safe contact fallback'] }
+    ]
+  };
+
+  let activeJourney = 'exhibitor';
+  let activeStep = 0;
+  let activeMode = 'desktop';
+
+  const scenarioCopy = {
+    default: '',
+    closed: 'The active conversion is closed. The interface removes the invalid action and provides an approved next edition, resource, or contact route.',
+    delayed: 'The durable record is preserved while the named provider outcome remains pending. The user is not asked to resubmit blindly.',
+    failure: 'The media or provider failed. A poster, type-led composition, preserved lead, retry, or safe contact route replaces the dependency.'
+  };
+
+  function renderFacts(items) {
+    return items.map((item, index) => '<div class="sp09-fact"><strong>0' + (index + 1) + '</strong><span>' + item + '</span></div>').join('');
+  }
+
+  function renderPanels(screen) {
+    return screen.facts.map((item, index) => '<div class="sp09-panel' + (index === 0 ? ' is-selected' : '') + '"><span class="text-small">0' + (index + 1) + '</span><h3>' + item + '</h3><p class="text-small">Controlled content shape with source and readiness.</p></div>').join('');
+  }
+
+  function renderForm(screen, scenario) {
+    const notice = scenario === 'closed'
+      ? '<div class="sp09-notice">This action is closed. Continue with an approved alternative.</div>'
+      : scenario === 'failure'
+        ? '<div class="sp09-notice">A safe provider fallback is active. No false success will be shown.</div>'
+        : '';
+    return '<div class="sp09-form">' + notice +
+      '<div class="sp09-form-row"><label class="form-label">Work email<input class="form-control" type="email" value="name@company.example"></label><label class="form-label">Company<input class="form-control" type="text" value="Company name"></label></div>' +
+      '<div class="sp09-form-row"><label class="form-label">Selected context<select class="form-select"><option>Selected event and offer</option></select></label><label class="form-label">Objective<select class="form-select"><option>Explore participation</option></select></label></div>' +
+      '<label class="form-check"><input class="form-check-input" type="checkbox"><span class="form-check-label">Optional marketing consent — separate from processing this request</span></label>' +
+      '</div>';
+  }
+
+  function screenBody(screen, scenario) {
+    if (screen.type === 'form') return renderForm(screen, scenario);
+    if (screen.type === 'offers') return '<div class="sp09-grid">' + renderPanels(screen) + '</div>';
+    if (screen.type === 'meeting') return '<div class="sp09-grid">' + screen.facts.map((item, index) => '<button type="button" class="btn' + (index === 0 ? ' btn-primary' : '') + '">' + item + '</button>').join('') + '</div>';
+    if (screen.type === 'recovery') return '<div class="sp09-notice">' + (scenarioCopy[scenario] || screen.summary) + '</div><div class="sp09-facts">' + renderFacts(screen.facts) + '</div>';
+    if (screen.type === 'confirmation') return '<div class="sp09-notice">' + (scenario === 'delayed' ? scenarioCopy.delayed : screen.summary) + '</div><div class="sp09-facts">' + renderFacts(screen.facts) + '</div>';
+    if (screen.type === 'events') return '<div class="sp09-grid">' + renderPanels(screen) + '</div>';
+    return '<div class="sp09-hero"><div class="sp09-copy"><span class="sp09-status">' + screen.state + '</span><h2>' + screen.heading + '</h2><p>' + screen.summary + '</p><div class="sp09-actions"><button type="button" class="btn btn-primary" data-prototype-next>' + screen.primary + '</button><button type="button" class="btn">' + screen.secondary + '</button></div></div><div class="sp09-media' + (scenario === 'failure' ? ' is-fallback' : '') + '"><span>' + (scenario === 'failure' ? 'Poster/type fallback' : 'Approved media plane') + '</span><strong>' + screen.eyebrow + '</strong><span class="text-small">Media never carries the only meaning.</span></div></div><div class="sp09-facts">' + renderFacts(screen.facts) + '</div>';
+  }
+
+  function render() {
+    const screens = journeys[activeJourney];
+    const screen = screens[activeStep];
+    const scenario = scenarioSelect.value;
+    const rtl = activeMode === 'rtl';
+    const reduced = activeMode === 'reduced';
+    preview.classList.toggle('is-mobile', activeMode === 'mobile');
+    root.classList.toggle('is-reduced', reduced);
+    stepLabel.textContent = screen.id + ' · Step ' + (activeStep + 1) + ' of ' + screens.length;
+    contractLabel.textContent = screen.trace;
+    outcome.textContent = scenarioCopy[scenario] || 'Review focus: context, state, action and outcome remain explicit.';
+    const heading = rtl ? 'تجربة سبيمار المهنية للمعارض العقارية' : screen.heading;
+    const summary = rtl ? 'نفس المعنى والأولوية والإجراء مع تخطيط عربي من اليمين إلى اليسار وحركة مخفّضة.' : screen.summary;
+    const adjusted = Object.assign({}, screen, { heading: heading, summary: summary });
+    const scenarioStatus = scenario === 'closed' ? 'Action closed' : scenario === 'delayed' ? 'Provider delayed' : scenario === 'failure' ? 'Fallback active' : screen.state;
+    adjusted.state = scenarioStatus;
+    preview.innerHTML = '<div class="sp09-screen is-entering"' + (rtl ? ' dir="rtl" lang="ar"' : '') + '>' +
+      '<div class="sp09-topline"><span>' + screen.id + '</span><span>' + screen.trace + '</span></div>' +
+      '<div class="sp09-header"><span class="sp09-brand"><span class="sp09-mark" aria-hidden="true"></span>SPIMARIMMO</span><div class="sp09-local-nav"><span>Events</span><span>Exhibit</span><span>Proof</span><span>Visitors</span></div></div>' +
+      '<div class="sp09-meta"><span>' + screen.eyebrow + '</span><span class="sp09-status' + (scenario !== 'default' ? ' is-muted' : '') + '">' + scenarioStatus + '</span></div>' +
+      (screen.type === 'home' || screen.type === 'event' ? screenBody(adjusted, scenario) : '<div class="sp09-copy"><h2>' + heading + '</h2><p>' + summary + '</p></div>' + screenBody(adjusted, scenario)) +
+      '<div class="sp09-actions"><button type="button" class="btn btn-primary" data-prototype-next>' + (scenario === 'closed' ? 'View approved alternative' : screen.primary) + '</button><button type="button" class="btn">' + screen.secondary + '</button></div>' +
+      '</div>';
+    prev.disabled = activeStep === 0;
+    next.textContent = activeStep === screens.length - 1 ? 'Restart journey' : 'Next';
+    preview.querySelectorAll('[data-prototype-next]').forEach((button) => button.addEventListener('click', goNext));
+    if (window.lucide) window.lucide.createIcons({ attrs: { width: 16, height: 16 } });
+  }
+
+  function goNext() {
+    const screens = journeys[activeJourney];
+    activeStep = activeStep === screens.length - 1 ? 0 : activeStep + 1;
+    render();
+  }
+
+  function goPrevious() {
+    activeStep = Math.max(0, activeStep - 1);
+    render();
+  }
+
+  journeySelect.addEventListener('change', () => {
+    activeJourney = journeySelect.value;
+    activeStep = 0;
+    render();
+  });
+
+  scenarioSelect.addEventListener('change', render);
+  prev.addEventListener('click', goPrevious);
+  next.addEventListener('click', goNext);
+
+  root.querySelectorAll('[data-mode]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activeMode = button.dataset.mode;
+      root.querySelectorAll('[data-mode]').forEach((candidate) => {
+        const selected = candidate === button;
+        candidate.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        candidate.classList.toggle('btn-primary', selected);
+      });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+
+<script id="codex-visualization-floating-ui-core" src="https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js"></script>
+<script id="codex-visualization-floating-ui-dom" src="https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js"></script>
+<script id="codex-visualization-lucide" async src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js"></script>
+<script id="codex-visualization-tooltip">/* oxlint-disable typescript/no-unsafe-argument, typescript/no-unsafe-call, typescript/no-unsafe-return */
+// Runs inside the visualization sandbox, not the host webview.
+(() => {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set(["top", "right", "bottom", "left"]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =>
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest("[data-tooltip]")
+      : null;
+  const containsTarget = (trigger, target) =>
+    target?.nodeType != null && trigger.contains(target);
+  const getContent = (trigger) =>
+    trigger.getAttribute("data-tooltip")?.trim() ?? "";
+  const getPlacement = (trigger) => {
+    const placement = trigger.getAttribute("data-tooltip-placement");
+    return tooltipPlacements.has(placement) ? placement : "top";
+  };
+  const getTooltip = () => {
+    if (tooltip == null) {
+      tooltip = document.createElement("div");
+      tooltip.id = tooltipId;
+      tooltip.className = "tooltip";
+      tooltip.setAttribute("role", "tooltip");
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) => {
+    const ids = new Set(
+      (trigger.getAttribute("aria-describedby") ?? "")
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute("aria-describedby");
+    } else {
+      trigger.setAttribute("aria-describedby", [...ids].join(" "));
+    }
+  };
+  const clearOpenTimeout = () => {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) => {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) => {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              "--tooltip-available-width",
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              "--tooltip-available-height",
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: "fixed",
+    })
+      .then(({ x, y }) => {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = "visible";
+      })
+      .catch(() => {
+        if (activeTrigger === trigger && request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) => {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = "hidden";
+    floating.style.transform = "translate(0, 0)";
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () => {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) => {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() < skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() => {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(":focus-visible")) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) => {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () => {
+    closeTooltip(false);
+    document.removeEventListener("pointerover", handlePointerOpen);
+    document.removeEventListener("pointerout", handleLeave);
+    document.removeEventListener("focusin", handleFocusIn);
+    document.removeEventListener("focusout", handleLeave);
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("contextmenu", handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener("pointerover", handlePointerOpen);
+  document.addEventListener("pointerout", handleLeave);
+  document.addEventListener("focusin", handleFocusIn);
+  document.addEventListener("focusout", handleLeave);
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("contextmenu", handleContextMenu);
+  window.addEventListener("pagehide", destroy, { once: true });
+})();
+</script>
+<script id="codex-visualization-lucide-initialization">(() => {
+  const initialize = () => {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById("codex-visualization-lucide")
+    ?.addEventListener("load", initialize, { once: true });
+})();
+</script>
+</body>
+</html>

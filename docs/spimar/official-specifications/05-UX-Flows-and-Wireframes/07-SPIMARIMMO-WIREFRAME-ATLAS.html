@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Spimarimmo Wireframe Atlas</title>
+<style>:root {
+  color-scheme: light dark;
+  background-color: transparent !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --main-surface-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --red: light-dark(rgb(186 38 35), rgb(250 66 62));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 10px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-visualize-standalone] {
+  background-color: var(--background) !important;
+}
+
+/* Generic mobile code-block hosts provide light/dark mode but no series palette.
+   AppBlock hosts set all six variables themselves. */
+:root:not([data-app-block-surface]) {
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(#f3883b, #f59a56);
+  --viz-series-3: light-dark(#5dc977, #74d58b);
+  --viz-series-4: light-dark(#eb77b1, #f08fc0);
+  --viz-series-5: light-dark(#9b79ec, #aa91ef);
+  --viz-series-6: light-dark(#3ab9b1, #5acbc2);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+:root:not([data-app-block-surface]) > body {
+  padding: 12px;
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive > .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align="right"]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align="center"]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget > :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The bundled tooltip runtime owns [data-tooltip]. AppBlock's CSS-only
+   pseudo-tooltip can widen dense grids even while hidden. */
+main [data-tooltip]::after {
+  content: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--interactive-label-primary-default, var(--primary-foreground));
+  background: var(--interactive-bg-primary-default, var(--foreground));
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(
+    in srgb,
+    var(--interactive-label-primary-default, var(--primary-foreground)) 50%,
+    transparent
+  );
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type="file"] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type="file"]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type="file"]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type="color"] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed="true"],
+    [aria-selected="true"],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+</style>
+</head>
+<body>
+<div id="spimarimmo-wireframe-atlas">
+  <div class="viz-controls" aria-label="Wireframe controls">
+    <label class="form-label" for="spm-frame-select">Frame
+      <select class="form-select" id="spm-frame-select"></select>
+    </label>
+    <label class="form-label" for="spm-mode-select">Composition
+      <select class="form-select" id="spm-mode-select">
+        <option value="target">Target composition</option>
+        <option value="desktop">Desktop</option>
+        <option value="mobile">Mobile</option>
+        <option value="rtl">Arabic RTL</option>
+      </select>
+    </label>
+    <label class="form-label" for="spm-state-select">Visible state
+      <select class="form-select" id="spm-state-select"></select>
+    </label>
+  </div>
+  <p id="spm-frame-meta" class="text-small text-muted" aria-live="polite"></p>
+  <svg id="spm-wireframe" role="img" aria-labelledby="spm-svg-title spm-svg-desc"></svg>
+</div>
+
+<style>
+  #spimarimmo-wireframe-atlas {
+    color: var(--foreground);
+    width: 100%;
+  }
+  #spimarimmo-wireframe-atlas .viz-controls {
+    margin-bottom: 12px;
+  }
+  #spimarimmo-wireframe-atlas .form-label {
+    min-width: 220px;
+  }
+  #spm-frame-meta {
+    margin: 0 0 12px;
+  }
+  #spm-wireframe {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--foreground);
+  }
+  #spm-wireframe .screen {
+    fill: var(--background);
+    stroke: var(--border);
+    stroke-width: 2;
+  }
+  #spm-wireframe .bar,
+  #spm-wireframe .module {
+    fill: var(--muted);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+  #spm-wireframe .subtle {
+    fill: var(--card);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+  #spm-wireframe .action {
+    fill: var(--primary);
+    stroke: var(--primary);
+    stroke-width: 1;
+  }
+  #spm-wireframe .notice {
+    fill: color-mix(in srgb, var(--viz-series-1) 12%, var(--background));
+    stroke: var(--viz-series-1);
+    stroke-width: 1.5;
+  }
+  #spm-wireframe .error {
+    fill: color-mix(in srgb, var(--destructive) 10%, var(--background));
+    stroke: var(--destructive);
+    stroke-width: 1.5;
+  }
+  #spm-wireframe .line {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+  #spm-wireframe text {
+    fill: var(--foreground);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  #spm-wireframe .label {
+    font-weight: 500;
+  }
+  #spm-wireframe .small {
+    fill: var(--muted-foreground);
+    font-size: 13px;
+  }
+  #spm-wireframe .action-text {
+    fill: var(--primary-foreground);
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("spimarimmo-wireframe-atlas");
+    const frameSelect = root.querySelector("#spm-frame-select");
+    const modeSelect = root.querySelector("#spm-mode-select");
+    const stateSelect = root.querySelector("#spm-state-select");
+    const meta = root.querySelector("#spm-frame-meta");
+    const svg = root.querySelector("#spm-wireframe");
+
+    const M = (type, label, detail = "") => ({ type, label, detail });
+    const frames = [
+      { id:"UXF-001", group:"Global B2B", route:"RT-HOME", tpl:"TPL-01", mode:"desktop", title:"Homepage — default", state:"Desktop · default", question:"Why should our company evaluate SPIMARIMMO?", primary:"Devenir exposant", secondary:"Explorer les salons", modules:[M("hero","B2B value proposition","Audience entry · verified trust signal"),M("cards","International event opportunities","Country/city · date · state · audience actions"),M("proof","Proof beside the promise","Definitions · source · caveat"),M("split","Method before / during / after","Mechanism paired with evidence"),M("cards","Offers and resources","Proposal mode · current resources"),M("cta","Qualified exhibitor request","Real outcome and next step")] },
+      { id:"UXF-002", group:"Global B2B", route:"RT-HOME", tpl:"TPL-01", mode:"mobile", title:"Homepage — mobile", state:"Mobile · default", question:"Can I understand value and reach an event without desktop?", primary:"Devenir exposant", secondary:"Voir les salons", modules:[M("hero","Condensed value proposition","Poster-first media · no covered copy"),M("cards","Event cards","One-column · state before CTA"),M("proof","Verified proof","Readable source disclosure"),M("steps","Method","Stacked phases"),M("cta","Contextual action","One safe persistent action")] },
+      { id:"UXF-003", group:"Global B2B", route:"RT-HOME", tpl:"TPL-01", mode:"rtl", title:"Homepage — Arabic RTL", state:"Arabic RTL · reduced motion", question:"Is the Arabic experience semantically equivalent?", primary:"طلب المشاركة", secondary:"استكشاف المعارض", modules:[M("hero","قيمة واضحة للعارضين","وسائط ثابتة · اتجاه منطقي"),M("cards","فرص المعارض الدولية","المدينة · التاريخ · الحالة"),M("proof","دليل موثّق","تعريف · مصدر · توضيح"),M("steps","المنهجية","قبل · أثناء · بعد"),M("cta","طلب تجاري مؤهل","نتيجة واضحة")] },
+      { id:"UXF-004", group:"Global B2B", route:"RT-HOME", tpl:"TPL-01", mode:"desktop", title:"Homepage — partial content", state:"Poster · no metric/case · offers hidden", question:"Does the homepage remain coherent with unapproved content removed?", primary:"Explorer les salons", secondary:"Nous contacter", modules:[M("hero","Approved claim + poster","No autoplay dependency"),M("cards","Known event opportunities","Future/undated states are explicit"),M("notice","Evidence not published","No invented metric or case filler"),M("steps","Method","Approved operational explanation"),M("cta","Low-commitment contact","No hidden offer promise")] },
+      { id:"UXF-005", group:"Exhibitor", route:"RT-EXP-HUB", tpl:"TPL-06", mode:"desktop", title:"Exhibitor hub", state:"Desktop + mobile default", question:"How does SPIMARIMMO address my decision role?", primary:"Choisir un salon", secondary:"Recevoir la brochure", modules:[M("hero","Role-led exhibitor promise","Direction · commercial · marketing"),M("tabs","Decision concerns","Value · leads · visibility · operations"),M("proof","Adjacent evidence","Applicable market and period"),M("cards","Relevant events","Open sales first"),M("cta","Progressive commitment","Resource → meeting → enquiry")] },
+      { id:"UXF-006", group:"Exhibitor", route:"RT-EXP-WHY · RT-EXP-METHOD", tpl:"TPL-06", mode:"desktop", title:"Why exhibit + method", state:"Mechanism/evidence variants", question:"How does the service create value before, during and after?", primary:"Évaluer un salon", secondary:"Voir les preuves", modules:[M("hero","Objection and answer","Why international exhibitions"),M("steps","Before · during · after","Inputs · actions · outputs"),M("proof","Evidence at each phase","No detached vanity metric"),M("cards","Operational artifacts","Approved examples or pending state"),M("cta","Continue with relevant event","Context preserved")] },
+      { id:"UXF-007", group:"Exhibitor", route:"RT-EXP-VISIBILITY", tpl:"TPL-06", mode:"desktop", title:"Visibility services", state:"Artifact available/pending", question:"What visibility work is included and what evidence exists?", primary:"Demander l’activation", secondary:"Voir un exemple", modules:[M("hero","Visibility proposition","Applicability and exclusions"),M("split","Campaign artifact","Preview · owner · period"),M("proof","Metric definition","Actual/expected · source · caveat"),M("notice","Artifact pending variant","Do not imply delivered work"),M("cta","Activation request","Not automatic entitlement")] },
+      { id:"UXF-008", group:"Offers", route:"RT-EXP-OFFERS", tpl:"TPL-09", mode:"desktop", title:"Offers comparison", state:"Desktop comparison", question:"What is included, applicable and available?", primary:"Demander une proposition", secondary:"Comparer les salons", modules:[M("hero","Offer applicability","Event · market · audience"),M("table","Equal capability comparison","Included · optional · unavailable · on request"),M("notice","Price mode and terms","Proposal-only or approved public price"),M("cta","Selected offer context","Selection survives enquiry handoff")] },
+      { id:"UXF-009", group:"Offers", route:"RT-EXP-OFFERS", tpl:"TPL-09", mode:"mobile", title:"Offers comparison — mobile", state:"Mobile · zoom/reflow", question:"Can I compare offers without a squeezed table?", primary:"Choisir cette offre", secondary:"Voir les détails", modules:[M("hero","Applicability summary","Event and offer context"),M("cards","One offer at a time","Same capability order across cards"),M("table","Capability disclosure","Label + state + explanation"),M("cta","Persistent selection","No horizontal meaning loss")] },
+      { id:"UXF-010", group:"Offers", route:"RT-EXP-OFFERS", tpl:"TPL-09", mode:"desktop", title:"Offers — commercial states", state:"Proposal-only · limited/sold-out/closed", question:"Are price, availability and capability states honest?", primary:"Demander une proposition", secondary:"Voir une alternative", modules:[M("hero","Proposal-only mode","No invented price"),M("cards","Availability states","Available · limited · sold out · closed"),M("table","Capability states","Included · option · request · unavailable"),M("notice","No recommendation without rule","Terms and owner visible"),M("cta","State-derived next action","Alternative when closed")] },
+      { id:"UXF-011", group:"Proof", route:"RT-PRF-HUB", tpl:"TPL-07", mode:"desktop", title:"Proof collection", state:"Default · filtered · empty", question:"What evidence exists and where does it apply?", primary:"Ouvrir une preuve", secondary:"Réinitialiser les filtres", modules:[M("hero","Evidence definitions","Scope · period · market · source"),M("filters","Useful filters","Only when inventory supports them"),M("cards","Cases · results · testimonials","Approval and applicability visible"),M("notice","Zero-result recovery","Reset or related evidence"),M("cta","Related event or enquiry","No generic dead end")] },
+      { id:"UXF-012", group:"Proof", route:"RT-CASE-DETAIL", tpl:"TPL-08", mode:"desktop", title:"Case detail", state:"Default · partial · no media · withdrawn", question:"What outcome can legitimately be attributed?", primary:"Voir le salon associé", secondary:"Parler à l’équipe", modules:[M("hero","Client context and objective","Permission-safe identity"),M("steps","Delivery","What SPIMARIMMO actually did"),M("proof","Approved outcome","Definition · source · caveat"),M("notice","Partial/withdrawn variant","Suppress unauthorized media/claim"),M("cta","Applicable next step","Related event preserved")] },
+      { id:"UXF-013", group:"Events", route:"RT-EVT-INDEX", tpl:"TPL-02", mode:"desktop", title:"Event directory", state:"Desktop · default + archive", question:"Which relevant edition exists and what is its state?", primary:"Ouvrir le salon", secondary:"Voir les éditions passées", modules:[M("hero","International salons","Current inventory and context"),M("filters","Destination + lifecycle","No public search"),M("cards","Open and upcoming events","Explicit date/state/action"),M("cards","Completed archive","Results/proof, not registration"),M("notice","Postponed/cancelled precedence","Old actions suppressed")] },
+      { id:"UXF-014", group:"Events", route:"RT-EVT-INDEX", tpl:"TPL-02", mode:"mobile", title:"Event directory — mobile", state:"Mobile filters · no results", question:"Can I recover from a filter with no matching event?", primary:"Réinitialiser", secondary:"Voir tous les salons", modules:[M("hero","Event discovery","Current inventory count"),M("filters","Touch-safe filter controls","Destination · lifecycle"),M("notice","No matching events","Applied filters named"),M("cards","Suggested current inventory","No fake result"),M("cta","Clear filters","Focus returns to results heading")] },
+      { id:"UXF-015", group:"Events", route:"RT-DST-DETAIL", tpl:"TPL-03", mode:"desktop", title:"Destination detail", state:"One/multiple/undated/historical-only", question:"Is this market relevant and which edition should I choose?", primary:"Ouvrir l’édition", secondary:"Discuter du marché", modules:[M("hero","Market proposition","Approved context only"),M("notice","No approved statistic variant","Qualitative claim with owner"),M("cards","Current/future editions","One · multiple · undated"),M("proof","Destination evidence","Not copied event facts"),M("cards","Historical editions/resources","No future CTA when archive-only")] },
+      { id:"UXF-016", group:"Event detail", route:"RT-EVT-DETAIL", tpl:"TPL-04", mode:"desktop", title:"Canonical event", state:"Scheduled · sales open · registration open", question:"What is this event, is it relevant, and what can I do?", primary:"Demander un stand", secondary:"Préinscription visiteur", modules:[M("hero","Canonical event facts","Destination · date · venue · lifecycle"),M("split","Two explicit audience paths","Independent state and outcome"),M("proof","Applicable value and proof","Definitions beside claims"),M("cards","Programme + exhibitors","Approved previews"),M("split","Practical + resources","Verified access facts"),M("cta","State-derived actions","One truth, two funnels")] },
+      { id:"UXF-017", group:"Event detail", route:"RT-EVT-DETAIL", tpl:"TPL-04", mode:"mobile", title:"Canonical event — mobile states", state:"Sales open/registration closed; inverse", question:"Do independent audience states remain clear on mobile?", primary:"State-derived action", secondary:"Available alternative", modules:[M("hero","Event identity and state","Facts before action"),M("notice","Audience availability","Exhibitor and visitor states separate"),M("cards","Open path","Full label and real outcome"),M("cards","Closed path","Reason · update route · alternative"),M("cta","One contextual persistent action","Never two competing sticky CTAs")] },
+      { id:"UXF-018", group:"Event detail", route:"RT-EVT-DETAIL", tpl:"TPL-04", mode:"rtl", title:"Canonical event — Arabic RTL", state:"Arabic RTL · reduced motion", question:"Is the full event structure equivalent in RTL?", primary:"طلب المشاركة", secondary:"التسجيل المسبق", modules:[M("hero","معلومات المعرض","المدينة · التاريخ · المكان · الحالة"),M("split","مسارا العارض والزائر","حالتان مستقلتان"),M("proof","القيمة والدليل","المصدر والتعريف"),M("cards","البرنامج والعارضون","معاينة معتمدة"),M("cta","إجراءات حسب الحالة","وسائط ثابتة")] },
+      { id:"UXF-019", group:"Event detail", route:"RT-EVT-DETAIL", tpl:"TPL-04", mode:"desktop", title:"Event exception", state:"Postponed + cancelled", question:"Can an event change without leaving invalid actions?", primary:"Recevoir les mises à jour", secondary:"Voir une alternative", modules:[M("notice","Postponed/cancelled alert","New status precedes old date"),M("hero","Event identity retained","Reason and verified update only"),M("split","Old actions suppressed","No stand/registration CTA"),M("cards","Alternative event or resource","Relevant, not generic"),M("cta","Update preference","Explicit outcome")] },
+      { id:"UXF-020", group:"Event detail", route:"RT-EVT-DETAIL", tpl:"TPL-04", mode:"desktop", title:"Completed event", state:"Completed + archived", question:"Does an archived edition stop implying future participation?", primary:"Voir la prochaine édition", secondary:"Consulter les résultats", modules:[M("hero","Completed event facts","Past tense and actual date"),M("proof","Approved actual results","Unavailable result stays absent"),M("gallery","Documentary media","Rights and captions"),M("cards","Next edition/related event","Only if real"),M("cta","Proof or future edition","No old registration CTA")] },
+      { id:"UXF-021", group:"Event support", route:"RT-EVT-PROGRAMME", tpl:"TPL-05", mode:"desktop", title:"Programme", state:"Default · pending · item changed/cancelled", question:"Which schedule information is current?", primary:"Préparer ma visite", secondary:"Retour au salon", modules:[M("hero","Programme identity","Event state and updated time"),M("timeline","Day/session schedule","Timezone · speaker · room"),M("notice","Changed/cancelled item","Old value + current value"),M("notice","Pending programme variant","No empty fake schedule"),M("cta","Current event action","State-derived")] },
+      { id:"UXF-022", group:"Event support", route:"RT-EVT-EXHIBITORS", tpl:"TPL-05", mode:"desktop", title:"Exhibitors directory", state:"Default · pending · withdrawn", question:"Which participation claims are approved?", primary:"Préinscription visiteur", secondary:"Retour au salon", modules:[M("hero","Participating exhibitors","Approval/status disclaimer"),M("filters","Category filter","Conditional on inventory"),M("cards","Approved exhibitor profiles","Logo/media rights visible"),M("notice","Withdrawn participant","Removed without stale claim"),M("cta","Visitor continuation","Only when registration open")] },
+      { id:"UXF-023", group:"Event support", route:"RT-EVT-PRACTICAL", tpl:"TPL-05", mode:"desktop", title:"Practical information", state:"Default · venue change · missing accessibility", question:"Can I trust venue and access information?", primary:"Ajouter au calendrier", secondary:"Préinscription visiteur", modules:[M("hero","Verified practical facts","Venue · date · hours · timezone"),M("notice","Venue/access change","Updated at · previous fact suppressed"),M("split","Access + transport","Map is enhancement, not sole source"),M("notice","Accessibility input pending","Owner and contact alternative"),M("cta","Calendar/registration","Correct current facts")] },
+      { id:"UXF-024", group:"Event support", route:"RT-EVT-GALLERY", tpl:"TPL-05", mode:"desktop", title:"Event gallery", state:"Default · no rights · fallback", question:"Is media documentary, authorized and useful?", primary:"Voir la preuve associée", secondary:"Voir le prochain salon", modules:[M("hero","Event documentary media","Edition and rights context"),M("gallery","Images/video with captions","Alt text · poster · transcript"),M("notice","No-media-rights variant","No generated documentary substitute"),M("cards","Related case/proof","Context preserved"),M("cta","Next evidence or event","No media dead end")] },
+      { id:"UXF-025", group:"Visitor", route:"RT-VIS-HUB", tpl:"TPL-12", mode:"desktop", title:"Visitor hub", state:"Desktop + mobile default", question:"Which event should I visit and how do I prepare?", primary:"Choisir un salon", secondary:"Comment préparer ma visite", modules:[M("hero","Visitor-specific promise","Separate from global B2B proposition"),M("cards","Visitor-relevant events","Registration state visible"),M("steps","Why visit + preparation","Practical expectations"),M("cards","Programme/exhibitor previews","Approved and current"),M("cta","Open event or register","Event context required")] },
+      { id:"UXF-026", group:"Visitor", route:"RT-VIS-HUB", tpl:"TPL-12", mode:"mobile", title:"Visitor hub — no current event", state:"No current event · planned", question:"Is the visitor path useful without open registration?", primary:"Recevoir les mises à jour", secondary:"Voir les éditions passées", modules:[M("hero","No current open event","Plain status"),M("notice","Planned/undated events","No fake registration"),M("steps","Prepare in advance","Documents · questions · travel"),M("cards","Resources/archive","Current useful content"),M("cta","Update preference","No admission promise")] },
+      { id:"UXF-027", group:"Visitor conversion", route:"RT-EVT-REGISTER", tpl:"TPL-14", mode:"mobile", title:"Visitor registration", state:"Mobile · open", question:"What am I registering for and what happens next?", primary:"Envoyer ma préinscription", secondary:"Retour au salon", modules:[M("context","Event context","Name · date · city · registration state"),M("notice","Outcome explanation","Pre-registration, not ticket/admission"),M("form","Minimum required fields","Purpose · recipient · optional fields marked"),M("form","Consent","Specific and unbundled"),M("cta","Durable submission","Status announced and focus moved")] },
+      { id:"UXF-028", group:"Visitor conversion", route:"RT-EVT-REGISTER", tpl:"TPL-14", mode:"mobile", title:"Visitor form recovery", state:"Invalid · consent · duplicate · rate limited", question:"Can I recover without losing entered data?", primary:"Corriger et renvoyer", secondary:"Contacter l’équipe", modules:[M("context","Event context retained","No personal data in URL"),M("error","Error summary","Focus first invalid field"),M("form","Retained values","Inline errors and instructions"),M("notice","Duplicate/rate-limit privacy-safe state","No account disclosure"),M("cta","Retry or alternative","No false success")] },
+      { id:"UXF-029", group:"Visitor conversion", route:"RT-EVT-REGISTER", tpl:"TPL-14", mode:"mobile", title:"Registration availability", state:"Waitlist · full · closed", question:"Is the correct alternative offered for each availability state?", primary:"Rejoindre la liste d’attente", secondary:"Voir un autre salon", modules:[M("context","Event facts","Current registration state"),M("notice","Waitlist/full/closed explanation","Owner-approved language"),M("form","Waitlist variant","Only when operationally enabled"),M("cards","Alternative event/resource","Relevant and current"),M("cta","State-derived action","No hidden registration endpoint")] },
+      { id:"UXF-030", group:"Visitor conversion", route:"RT-EVT-REG-CONFIRM", tpl:"TPL-15", mode:"mobile", title:"Registration confirmation", state:"Durable success · acknowledgement delayed", question:"What succeeded and what remains pending?", primary:"Retour au salon", secondary:"Réessayer l’accusé", modules:[M("status","Préinscription enregistrée","Durable record confirmed"),M("context","Safe event facts","No personal details exposed"),M("notice","Email acknowledgement delayed","Delivery is separate outcome"),M("notice","No ticket/admission promise","Next operational step stated"),M("cta","One safe next step","Status survives refresh safely")] },
+      { id:"UXF-031", group:"Exhibitor conversion", route:"RT-EVT-EXHIBIT · RT-CONV-EXHIBIT", tpl:"TPL-14", mode:"desktop", title:"Exhibitor enquiry", state:"Event-specific + generic", question:"What commercial request am I making?", primary:"Envoyer la demande", secondary:"Planifier un échange", modules:[M("context","Event or generic context","Audience · destination · offer when known"),M("notice","Qualified request meaning","Not purchase, reservation or contract"),M("form","Minimum qualification","Company · role · objective · contact"),M("form","Consent and recipient","Purpose-specific"),M("cta","Durable submission","Context included in handoff")] },
+      { id:"UXF-032", group:"Exhibitor conversion", route:"RT-CONV-EXHIBIT", tpl:"TPL-14", mode:"desktop", title:"Exhibitor form recovery", state:"Invalid · rate limited · CRM delayed · action closed", question:"Does the enquiry survive provider failure?", primary:"Corriger et renvoyer", secondary:"Utiliser le contact alternatif", modules:[M("context","Commercial context retained","Safe, non-personal attribution"),M("error","Validation summary","Focus and retained input"),M("notice","CRM/email delayed","Durable submission still succeeds"),M("notice","Action closed","Form suppressed with alternative"),M("cta","Retry or fallback","No duplicate promises")] },
+      { id:"UXF-033", group:"Exhibitor conversion", route:"RT-EVT-ENQ-CONFIRM", tpl:"TPL-15", mode:"desktop", title:"Exhibitor confirmation", state:"Durable success · CRM/email delayed", question:"What did the website accept versus what did a provider deliver?", primary:"Planifier un échange", secondary:"Télécharger la brochure", modules:[M("status","Demande enregistrée","Durable website outcome"),M("context","Event/offer context","Safe summary"),M("notice","CRM assignment delayed","Internal sync is separate"),M("notice","Email delayed","Acknowledgement is separate"),M("cta","Meeting or brochure fallback","No qualification promise")] },
+      { id:"UXF-034", group:"Meeting", route:"RT-CONV-MEETING", tpl:"TPL-14/15", mode:"desktop", title:"Meeting booking", state:"Slots · booked · unavailable · fallback", question:"Is a meeting shown as confirmed only when the provider confirms it?", primary:"Confirmer ce créneau", secondary:"Envoyer une demande", modules:[M("context","Commercial context","Event · topic · timezone"),M("calendar","Provider slot selection","Timezone explicit"),M("status","Confirmed booking variant","Provider confirmation reference"),M("notice","Unavailable/provider failure","Lead preserved"),M("cta","Fallback enquiry","No false booked state")] },
+      { id:"UXF-035", group:"Resources", route:"RT-RES-HUB", tpl:"TPL-10A", mode:"desktop", title:"Resource library", state:"Default · sparse · empty", question:"Which current approved resource is relevant?", primary:"Ouvrir la ressource", secondary:"Réinitialiser les filtres", modules:[M("hero","Resource context","Current approved materials"),M("filters","Type/topic/event","Only if useful inventory"),M("cards","Active resources","Version · locale · applicability"),M("notice","Sparse/empty recovery","Related event/contact"),M("cta","Relevant resource","Expired items absent")] },
+      { id:"UXF-036", group:"Resources", route:"RT-RES-DETAIL", tpl:"TPL-10B", mode:"desktop", title:"Resource detail", state:"Ungated + gated", question:"Is this the correct version and how do I access it?", primary:"Télécharger", secondary:"Recevoir par e-mail", modules:[M("hero","Resource summary/preview","Title · format · version"),M("context","Applicability and owner","Event · market · locale · updated date"),M("split","Ungated/gated access","Minimum data request"),M("notice","Purpose and delivery outcome","No hidden subscription"),M("cta","Access/request","Context preserved")] },
+      { id:"UXF-037", group:"Resources", route:"RT-RES-DETAIL", tpl:"TPL-10B/15", mode:"desktop", title:"Resource recovery", state:"Broken · replaced · locale missing · delivery delayed", question:"Can a resource fail without false delivery?", primary:"Accéder au remplacement", secondary:"Demander de l’aide", modules:[M("context","Requested resource","Version and locale"),M("notice","Replaced/expired state","Approved replacement only"),M("notice","Locale unavailable","Semantic fallback explained"),M("error","Download/delivery failure","No success label"),M("cta","Replacement or contact","Safe recovery")] },
+      { id:"UXF-038", group:"Editorial", route:"RT-INS-INDEX · RT-TOPIC", tpl:"TPL-11A/B", mode:"desktop", title:"Insights collection", state:"Default · sparse · below threshold", question:"Is there enough substantive content to publish this topic?", primary:"Lire l’analyse", secondary:"Voir les ressources", modules:[M("hero","Editorial promise","Question-led context"),M("cards","Current reviewed articles","Date · reviewer · topic"),M("notice","Sparse/below-threshold state","Suppress thin topic route"),M("cards","Related resources/events","No generic dead end"),M("cta","Relevant next step","Contextual, not universal")] },
+      { id:"UXF-039", group:"Editorial", route:"RT-ARTICLE", tpl:"TPL-11C", mode:"desktop", title:"Article detail", state:"Long sources · outdated stat · no media", question:"Does this answer the question with current sources?", primary:"Voir la ressource associée", secondary:"Évaluer un salon", modules:[M("hero","Question and direct answer","Updated/reviewed date"),M("article","Substantive content","Scannable sections and tables"),M("notice","Statistic review warning","Outdated claim suppressed/pending"),M("sources","Sources and reviewer","Long citations remain readable"),M("cta","Contextual next step","No media dependency")] },
+      { id:"UXF-040", group:"Institutional", route:"RT-ABOUT · RT-TEAM · RT-PARTNERS · RT-PRESS", tpl:"TPL-13", mode:"desktop", title:"Institutional pages", state:"Approved · conditional · expired · missing media", question:"Who is responsible and which relationships are approved?", primary:"Contacter la bonne équipe", secondary:"Voir les ressources presse", modules:[M("hero","Institutional identity","Approved history only"),M("cards","People/relationships","Role · permission · validity"),M("notice","Conditional route threshold","Suppress thin page"),M("notice","Expired relationship/media","Remove stale logo or image"),M("cta","Routed contact/resource","Correct recipient")] },
+      { id:"UXF-041", group:"Contact", route:"RT-CONTACT", tpl:"TPL-14", mode:"desktop", title:"Contact routing", state:"Default · invalid · delayed", question:"Who receives this message and what happens next?", primary:"Envoyer le message", secondary:"Utiliser une autre voie", modules:[M("context","Audience and purpose selector","Exhibitor · visitor · partner · press"),M("notice","Recipient and expected response","SLA only when approved"),M("form","Purpose-specific fields","No generic lost enquiry"),M("error","Invalid/provider delayed states","Durable-first semantics"),M("cta","Submit or fallback","Correct queue context")] },
+      { id:"UXF-042", group:"Legal", route:"RT-LEGAL · RT-PRIVACY · RT-COOKIES · RT-ACCESSIBILITY", tpl:"TPL-16", mode:"rtl", title:"Legal and policies", state:"Long · table · update · RTL · tool unavailable", question:"Which version applies and how do I exercise a choice or right?", primary:"Gérer mes préférences", secondary:"Contacter le responsable", modules:[M("hero","Policy title and version","Effective/updated date"),M("article","Structured policy content","Headings · lists · tables · RTL"),M("context","Controller/owner/contact","Approved legal identity"),M("notice","Preference tool unavailable","Fallback control remains"),M("cta","Right/preference action","No dead control")] },
+      { id:"UXF-043", group:"System", route:"Confirmation surfaces", tpl:"TPL-15", mode:"mobile", title:"Invalid confirmation access", state:"Expired · invalid · fallback", question:"Can direct access fail without exposing personal data?", primary:"Recommencer l’action", secondary:"Retour au salon", modules:[M("status","Lien invalide ou expiré","No existence/account disclosure"),M("context","Safe public context only","Host · locale · event when public"),M("notice","What can be retried","No false submission state"),M("cta","Route re-entry","One appropriate recovery")] },
+      { id:"UXF-044", group:"System", route:"RT-404 · RT-500 · RT-MAINTENANCE", tpl:"TPL-17", mode:"desktop", title:"Recovery surfaces", state:"Localized · host inactive · offline", question:"Why is this unavailable and where can I safely go?", primary:"Retour à l’accueil", secondary:"Voir les salons", modules:[M("status","Plain unavailability reason","No stack/provider/tenant leak"),M("notice","Host/locale-aware recovery","Relevant destination"),M("cards","Safe alternatives","Home · salons · contact"),M("cta","Retry when appropriate","No endless loop")] },
+      { id:"UXF-045", group:"Locale", route:"RT-LOCALE-ROOT", tpl:"TPL-15", mode:"rtl", title:"Locale choice and fallback", state:"Neutral chooser · saved choice · incomplete translation", question:"Can I choose language without an IP-only forced redirect?", primary:"Continuer en français", secondary:"العربية · English", modules:[M("context","Neutral language choice","Saved preference is visible"),M("cards","Available locale options","Host support declared"),M("notice","Equivalent page unavailable","Semantic fallback, not silent homepage jump"),M("cta","Continue in chosen locale","Direction updates correctly")] },
+      { id:"UXF-046", group:"Shell", route:"Global + local shell", tpl:"Shell", mode:"desktop", title:"Global/local shell", state:"Desktop · mobile · RTL · keyboard", question:"Can users navigate by audience, event and locale in every mode?", primary:"Devenir exposant", secondary:"Espace visiteurs", modules:[M("shell","Global parent header","Salons · Exposer · Preuves · Ressources · Visiteurs"),M("shell","Local event header","Event identity · programme · exhibitors · practical"),M("drawer","Mobile navigation","Focus trap · close · locale · audience actions"),M("shell","RTL logical order","No physical left/right assumptions"),M("cta","Keyboard focus path","Skip link → nav → page → footer")] },
+      { id:"UXF-047", group:"State system", route:"Event/action state board", tpl:"State contract", mode:"desktop", title:"Event action state board", state:"Lifecycle × sales × registration × providers", question:"Can every event state produce one non-contradictory action model?", primary:"Derived by state", secondary:"Derived alternative", modules:[M("table","Lifecycle axis","Scheduled · live · completed · postponed · cancelled"),M("table","Exhibitor-sales axis","Planned · open · limited · sold out · closed"),M("table","Visitor-registration axis","Planned · open · waitlist · full · closed"),M("table","Provider readiness","Ready · delayed · unavailable"),M("notice","Precedence rules","Exception suppresses stale action"),M("cta","Deterministic label/outcome","No duplicated event page")] },
+      { id:"UXF-048", group:"Preview", route:"RT-PREVIEW", tpl:"Representative templates", mode:"desktop", title:"Protected preview", state:"Draft · state · host · locale", question:"Can editors inspect draft truth without causing production effects?", primary:"Exit preview", secondary:"Copy review reference", modules:[M("notice","Protected preview banner","Draft · host · locale · state · expiry"),M("hero","Representative page preview","Watermarked non-production context"),M("context","Fixture and approval labels","Missing inputs remain visible"),M("notice","Noindex · no analytics · no side effects","Forms/providers disabled"),M("cta","Exit to safe route","No publish action in public shell")] }
+    ];
+
+    const variantMap = {
+      "UXF-001":["Desktop default"], "UXF-002":["Mobile default"], "UXF-003":["Arabic RTL + reduced motion"],
+      "UXF-004":["Poster fallback","No approved metric","Future/undated event","No approved case","Offers hidden"],
+      "UXF-005":["Desktop default","Mobile recomposition"], "UXF-006":["Why exhibit","Before/during/after method","Evidence pending"],
+      "UXF-007":["Artifact available","Artifact pending"], "UXF-008":["Desktop equal comparison"],
+      "UXF-009":["Mobile comparison","200%/400% reflow"], "UXF-010":["Proposal-only","Limited","Sold out","Closed","Capability unavailable"],
+      "UXF-011":["Default collection","Filtered results","Zero results","Evidence withdrawn","Evidence expired"],
+      "UXF-012":["Default case","Partial outcomes","No media","Permission withdrawn","Related event unavailable"],
+      "UXF-013":["Current/upcoming default","Archive","Postponed/cancelled ordering"], "UXF-014":["Mobile filters","No results"],
+      "UXF-015":["One edition","Multiple editions","Undated edition","Historical only","No approved statistic"],
+      "UXF-016":["Scheduled · both audiences open"], "UXF-017":["Exhibitor open · visitor closed","Exhibitor closed · visitor open"],
+      "UXF-018":["Arabic RTL + reduced motion"], "UXF-019":["Postponed","Cancelled"], "UXF-020":["Completed","Archived · next edition unavailable"],
+      "UXF-021":["Programme default","Programme pending","Session changed","Session cancelled"],
+      "UXF-022":["Exhibitors default","List pending","Participant withdrawn"],
+      "UXF-023":["Practical default","Venue/access changed","Accessibility input missing"],
+      "UXF-024":["Gallery default","No media rights","Poster/media fallback"],
+      "UXF-025":["Desktop default","Mobile recomposition"], "UXF-026":["No current event","Planned/undated event"],
+      "UXF-027":["Registration open · mobile"], "UXF-028":["Invalid fields","Consent required","Duplicate","Rate limited"],
+      "UXF-029":["Waitlist","Full","Closed"], "UXF-030":["Durable success","Acknowledgement delayed"],
+      "UXF-031":["Event-specific enquiry","Generic enquiry"], "UXF-032":["Invalid fields","Rate limited","CRM/email delayed","Action closed"],
+      "UXF-033":["Durable success","CRM delayed","Email delayed"], "UXF-034":["Provider slots","Booked","Provider unavailable","Lead fallback"],
+      "UXF-035":["Default library","Sparse inventory","Empty inventory","Filter reset"], "UXF-036":["Ungated access","Gated access"],
+      "UXF-037":["Broken file","Approved replacement","Locale unavailable","Delivery delayed"],
+      "UXF-038":["Default index","Sparse index","Topic below publication threshold"],
+      "UXF-039":["Long sources","Statistic under review","No media"],
+      "UXF-040":["Approved default","Conditional page absent","Relationship expired","Media missing"],
+      "UXF-041":["Audience routing default","Invalid fields","Delivery delayed"],
+      "UXF-042":["Long policy","Policy table","Update notice","Arabic RTL","Preference tool unavailable"],
+      "UXF-043":["Expired link","Invalid direct access","Fallback re-entry"],
+      "UXF-044":["Localized 404","Safe 500","Maintenance","Host inactive","Offline"],
+      "UXF-045":["Neutral chooser","Saved choice","Equivalent locale missing"],
+      "UXF-046":["Global desktop shell","Local event shell","Mobile drawer","Arabic RTL","Keyboard/focus path"],
+      "UXF-047":["Lifecycle axis","Exhibitor-sales axis","Visitor-registration axis","Provider-readiness axis","Combined precedence"],
+      "UXF-048":["Protected draft","Host variant","Locale variant","Event/action state variant"]
+    };
+
+    const escapeText = (value) => String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+
+    const append = (name, attrs = {}, textValue = null) => {
+      const element = document.createElementNS("http://www.w3.org/2000/svg", name);
+      Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, String(value)));
+      if (textValue !== null) element.textContent = textValue;
+      svg.appendChild(element);
+      return element;
+    };
+
+    const wrapLines = (textValue, maxChars) => {
+      const words = String(textValue).split(/\s+/);
+      const lines = [];
+      let line = "";
+      words.forEach((word) => {
+        const candidate = line ? `${line} ${word}` : word;
+        if (candidate.length > maxChars && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = candidate;
+        }
+      });
+      if (line) lines.push(line);
+      return lines.slice(0, 3);
+    };
+
+    const addText = (x, y, value, cls = "", anchor = "start", maxChars = 56) => {
+      const lines = wrapLines(value, maxChars);
+      const textNode = append("text", { x, y, class: cls, "text-anchor": anchor });
+      lines.forEach((line, index) => {
+        const span = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+        span.setAttribute("x", String(x));
+        span.setAttribute("dy", index === 0 ? "0" : "18");
+        span.textContent = line;
+        textNode.appendChild(span);
+      });
+      return lines.length;
+    };
+
+    const rect = (x, y, width, height, cls = "module", rx = 3) => append("rect", { x, y, width, height, rx, class: cls });
+
+    const drawCards = (x, y, width, height, count, mobile) => {
+      const gap = mobile ? 8 : 12;
+      const columns = mobile ? 1 : Math.min(count, 3);
+      const cardWidth = (width - gap * (columns - 1)) / columns;
+      for (let i = 0; i < columns; i += 1) {
+        rect(x + i * (cardWidth + gap), y, cardWidth, height, "subtle", 2);
+        append("line", { x1:x + i * (cardWidth + gap) + 10, y1:y + 20, x2:x + i * (cardWidth + gap) + cardWidth - 10, y2:y + 20, class:"line" });
+        append("line", { x1:x + i * (cardWidth + gap) + 10, y1:y + 34, x2:x + i * (cardWidth + gap) + cardWidth * 0.72, y2:y + 34, class:"line" });
+      }
+    };
+
+    const drawModule = (module, x, y, width, mobile, rtl) => {
+      const type = module.type;
+      const heights = { hero:128, cards:126, proof:112, split:116, steps:112, cta:92, notice:92, error:108, tabs:94, table:140, filters:84, timeline:148, gallery:134, context:92, form:150, status:110, calendar:148, article:170, sources:122, shell:104, drawer:130 };
+      const height = heights[type] || 108;
+      const frameClass = type === "notice" || type === "status" ? "notice" : type === "error" ? "error" : "module";
+      rect(x, y, width, height, frameClass, 3);
+      const pad = 16;
+      const tx = rtl ? x + width - pad : x + pad;
+      const anchor = rtl ? "end" : "start";
+      addText(tx, y + 27, module.label, "label", anchor, mobile ? 30 : 60);
+      if (module.detail) addText(tx, y + 50, module.detail, "small", anchor, mobile ? 34 : 74);
+
+      if (type === "hero") {
+        const mediaWidth = mobile ? width - pad * 2 : width * 0.36;
+        const mediaX = mobile ? x + pad : (rtl ? x + pad : x + width - mediaWidth - pad);
+        rect(mediaX, y + 70, mediaWidth, height - 84, "subtle", 2);
+      } else if (type === "cards") {
+        drawCards(x + pad, y + 68, width - pad * 2, height - 82, 3, mobile);
+      } else if (type === "table") {
+        for (let row = 0; row < 4; row += 1) append("line", { x1:x + pad, y1:y + 72 + row * 15, x2:x + width - pad, y2:y + 72 + row * 15, class:"line" });
+      } else if (["split","proof","steps","tabs","filters","context","shell"].includes(type)) {
+        const gap = 10;
+        const cols = mobile ? 1 : (type === "steps" || type === "tabs" ? 3 : 2);
+        const blockWidth = (width - pad * 2 - gap * (cols - 1)) / cols;
+        for (let i = 0; i < cols; i += 1) rect(x + pad + i * (blockWidth + gap), y + 72, blockWidth, height - 86, "subtle", 2);
+      } else if (["form","calendar","article","timeline","sources","drawer"].includes(type)) {
+        for (let row = 0; row < (type === "article" ? 6 : 4); row += 1) {
+          const lineWidth = row % 3 === 2 ? width * 0.58 : width - pad * 2;
+          append("line", { x1:x + pad, y1:y + 76 + row * 17, x2:x + pad + lineWidth, y2:y + 76 + row * 17, class:"line" });
+        }
+      } else if (type === "gallery") {
+        const gap = 8;
+        const cellWidth = (width - pad * 2 - gap * 2) / 3;
+        for (let i = 0; i < 3; i += 1) rect(x + pad + i * (cellWidth + gap), y + 72, cellWidth, height - 86, "subtle", 2);
+      }
+      return height;
+    };
+
+    const render = () => {
+      const frame = frames.find((item) => item.id === frameSelect.value) || frames[0];
+      const selectedVariant = stateSelect.value || variantMap[frame.id][0];
+      const selectedMode = modeSelect.value === "target" ? frame.mode : modeSelect.value;
+      const mobile = selectedMode === "mobile";
+      const rtl = selectedMode === "rtl";
+      const canvasWidth = mobile ? 390 : 980;
+      const screenWidth = mobile ? 340 : 900;
+      const screenX = (canvasWidth - screenWidth) / 2;
+      const gap = mobile ? 12 : 16;
+      const headerHeight = mobile ? 78 : 68;
+      const contentX = screenX + (mobile ? 16 : 28);
+      const contentWidth = screenWidth - (mobile ? 32 : 56);
+      let y = 28 + headerHeight + gap;
+      const moduleHeights = frame.modules.map((module) => ({ module, height: ({ hero:128, cards:126, proof:112, split:116, steps:112, cta:92, notice:92, error:108, tabs:94, table:140, filters:84, timeline:148, gallery:134, context:92, form:150, status:110, calendar:148, article:170, sources:122, shell:104, drawer:130 })[module.type] || 108 }));
+      const contentHeight = moduleHeights.reduce((sum, item) => sum + item.height, 0) + gap * (moduleHeights.length - 1);
+      const stateHeight = 54;
+      const totalHeight = 28 + headerHeight + gap + stateHeight + gap + contentHeight + gap + 92 + 28;
+
+      svg.replaceChildren();
+      svg.setAttribute("viewBox", `0 0 ${canvasWidth} ${totalHeight}`);
+      svg.setAttribute("dir", rtl ? "rtl" : "ltr");
+      append("title", { id:"spm-svg-title" }, `${frame.id} ${frame.title}`);
+      append("desc", { id:"spm-svg-desc" }, `${frame.question} ${frame.state}. Primary action: ${frame.primary}.`);
+      rect(screenX, 12, screenWidth, totalHeight - 24, "screen", 5);
+      rect(screenX + 1, 13, screenWidth - 2, headerHeight, "bar", 4);
+
+      const logoX = rtl ? screenX + screenWidth - 24 : screenX + 24;
+      addText(logoX, 44, "SPIMARIMMO", "label", rtl ? "end" : "start", 18);
+      if (!mobile) {
+        const navX = rtl ? screenX + 24 : screenX + screenWidth - 24;
+        addText(navX, 44, "Salons  ·  Exposer  ·  Preuves  ·  Ressources  ·  Visiteurs", "small", rtl ? "start" : "end", 74);
+      } else {
+        const menuX = rtl ? screenX + 24 : screenX + screenWidth - 24;
+        addText(menuX, 44, "MENU", "small", rtl ? "start" : "end", 8);
+      }
+
+      rect(contentX, y, contentWidth, stateHeight, selectedVariant.toLowerCase().includes("invalid") || selectedVariant.toLowerCase().includes("broken") ? "error" : "notice", 3);
+      addText(rtl ? contentX + contentWidth - 14 : contentX + 14, y + 32, `Visible proof state: ${selectedVariant}`, "label", rtl ? "end" : "start", mobile ? 34 : 80);
+      y += stateHeight + gap;
+
+      moduleHeights.forEach(({ module }) => {
+        const height = drawModule(module, contentX, y, contentWidth, mobile, rtl);
+        y += height + gap;
+      });
+
+      rect(contentX, y, contentWidth, 66, "subtle", 3);
+      const actionWidth = mobile ? contentWidth - 32 : Math.min(230, contentWidth * 0.32);
+      const actionX = rtl ? contentX + contentWidth - actionWidth - 16 : contentX + 16;
+      rect(actionX, y + 15, actionWidth, 36, "action", 3);
+      addText(actionX + actionWidth / 2, y + 38, frame.primary, "action-text", "middle", mobile ? 28 : 34);
+
+      meta.textContent = `${frame.id} · ${frame.route} · ${frame.tpl} · ${selectedVariant} · ${frame.question}`;
+    };
+
+    const populateStates = () => {
+      const variants = variantMap[frameSelect.value] || ["Default"];
+      stateSelect.replaceChildren();
+      variants.forEach((variant) => {
+        const option = document.createElement("option");
+        option.value = variant;
+        option.textContent = variant;
+        stateSelect.appendChild(option);
+      });
+    };
+
+    frames.forEach((frame) => {
+      const option = document.createElement("option");
+      option.value = frame.id;
+      option.textContent = `${frame.id} — ${frame.title}`;
+      frameSelect.appendChild(option);
+    });
+    frameSelect.value = "UXF-001";
+    populateStates();
+    frameSelect.addEventListener("change", () => {
+      populateStates();
+      render();
+    });
+    modeSelect.addEventListener("change", render);
+    stateSelect.addEventListener("change", render);
+    render();
+  })();
+</script>
+
+<script id="codex-visualization-floating-ui-core" src="https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js"></script>
+<script id="codex-visualization-floating-ui-dom" src="https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js"></script>
+<script id="codex-visualization-lucide" async src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js"></script>
+<script id="codex-visualization-tooltip">/* oxlint-disable typescript/no-unsafe-argument, typescript/no-unsafe-call, typescript/no-unsafe-return */
+// Runs inside the visualization sandbox, not the host webview.
+(() => {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set(["top", "right", "bottom", "left"]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =>
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest("[data-tooltip]")
+      : null;
+  const containsTarget = (trigger, target) =>
+    target?.nodeType != null && trigger.contains(target);
+  const getContent = (trigger) =>
+    trigger.getAttribute("data-tooltip")?.trim() ?? "";
+  const getPlacement = (trigger) => {
+    const placement = trigger.getAttribute("data-tooltip-placement");
+    return tooltipPlacements.has(placement) ? placement : "top";
+  };
+  const getTooltip = () => {
+    if (tooltip == null) {
+      tooltip = document.createElement("div");
+      tooltip.id = tooltipId;
+      tooltip.className = "tooltip";
+      tooltip.setAttribute("role", "tooltip");
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) => {
+    const ids = new Set(
+      (trigger.getAttribute("aria-describedby") ?? "")
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute("aria-describedby");
+    } else {
+      trigger.setAttribute("aria-describedby", [...ids].join(" "));
+    }
+  };
+  const clearOpenTimeout = () => {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) => {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) => {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              "--tooltip-available-width",
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              "--tooltip-available-height",
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: "fixed",
+    })
+      .then(({ x, y }) => {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = "visible";
+      })
+      .catch(() => {
+        if (activeTrigger === trigger && request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) => {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = "hidden";
+    floating.style.transform = "translate(0, 0)";
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () => {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) => {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() < skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() => {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(":focus-visible")) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) => {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () => {
+    closeTooltip(false);
+    document.removeEventListener("pointerover", handlePointerOpen);
+    document.removeEventListener("pointerout", handleLeave);
+    document.removeEventListener("focusin", handleFocusIn);
+    document.removeEventListener("focusout", handleLeave);
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("contextmenu", handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener("pointerover", handlePointerOpen);
+  document.addEventListener("pointerout", handleLeave);
+  document.addEventListener("focusin", handleFocusIn);
+  document.addEventListener("focusout", handleLeave);
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("contextmenu", handleContextMenu);
+  window.addEventListener("pagehide", destroy, { once: true });
+})();
+</script>
+<script id="codex-visualization-lucide-initialization">(() => {
+  const initialize = () => {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById("codex-visualization-lucide")
+    ?.addEventListener("load", initialize, { once: true });
+})();
+</script>
+</body>
+</html>

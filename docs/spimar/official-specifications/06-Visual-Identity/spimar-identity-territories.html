@@ -1,0 +1,369 @@
+<div id="spimar-identity-territories">
+  <style>
+    #spimar-identity-territories {
+      color: var(--foreground);
+      font-size: var(--font-size-base);
+      width: 100%;
+    }
+    #spimar-identity-territories .sid-controls {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    #spimar-identity-territories .sid-control-label {
+      color: var(--muted-foreground);
+      margin-inline-end: 0.25rem;
+    }
+    #spimar-identity-territories .sid-detail {
+      color: var(--muted-foreground);
+      margin: 0 0 0.75rem;
+    }
+    #spimar-identity-territories .sid-preview {
+      overflow: hidden;
+    }
+    #spimar-identity-territories .sid-screen {
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 28rem;
+    }
+    #spimar-identity-territories .sid-header {
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      padding: 0.9rem 1rem;
+    }
+    #spimar-identity-territories .sid-brand {
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+    #spimar-identity-territories .sid-nav {
+      color: var(--muted-foreground);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    #spimar-identity-territories .sid-action {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      padding: 0.5rem 0.75rem;
+    }
+    #spimar-identity-territories .sid-hero {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: minmax(0, 1.1fr) minmax(12rem, 0.9fr);
+      padding: 1rem;
+    }
+    #spimar-identity-territories .sid-copy {
+      align-content: center;
+      display: grid;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+    #spimar-identity-territories .sid-kicker {
+      color: var(--muted-foreground);
+    }
+    #spimar-identity-territories .sid-display {
+      font-size: calc(var(--font-size-base) * 2.35);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      margin: 0;
+      max-width: 14ch;
+    }
+    #spimar-identity-territories .sid-lead {
+      color: var(--muted-foreground);
+      margin: 0;
+      max-width: 46ch;
+    }
+    #spimar-identity-territories .sid-meta {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    #spimar-identity-territories .sid-chip {
+      border-inline-start: 3px solid var(--sid-series);
+      padding-inline-start: 0.5rem;
+    }
+    #spimar-identity-territories .sid-media {
+      align-content: end;
+      background: color-mix(in srgb, var(--sid-series) 18%, var(--muted));
+      display: grid;
+      min-height: 17rem;
+      overflow: hidden;
+      padding: 1rem;
+      position: relative;
+    }
+    #spimar-identity-territories .sid-media::before,
+    #spimar-identity-territories .sid-media::after {
+      content: "";
+      position: absolute;
+    }
+    #spimar-identity-territories .sid-media::before {
+      background: color-mix(in srgb, var(--sid-series) 36%, transparent);
+      inset: 12% 10% 34% 42%;
+    }
+    #spimar-identity-territories .sid-media::after {
+      border: 1px solid color-mix(in srgb, var(--foreground) 30%, transparent);
+      inset: 42% 36% 10% 8%;
+    }
+    #spimar-identity-territories .sid-media-label {
+      background: var(--background);
+      color: var(--foreground);
+      padding: 0.5rem;
+      position: relative;
+      width: fit-content;
+      z-index: 1;
+    }
+    #spimar-identity-territories .sid-strip {
+      border-top: 1px solid var(--border);
+      display: grid;
+      gap: 0;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    #spimar-identity-territories .sid-strip-item {
+      min-width: 0;
+      padding: 0.85rem 1rem;
+    }
+    #spimar-identity-territories .sid-strip-item + .sid-strip-item {
+      border-inline-start: 1px solid var(--border);
+    }
+    #spimar-identity-territories .sid-strip-label {
+      color: var(--muted-foreground);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    #spimar-identity-territories .sid-cities .sid-hero {
+      grid-template-columns: minmax(12rem, 0.9fr) minmax(0, 1.1fr);
+    }
+    #spimar-identity-territories .sid-cities .sid-media {
+      order: -1;
+    }
+    #spimar-identity-territories .sid-cities .sid-media::before {
+      border-radius: 50%;
+      inset: 10% 35% 38% 8%;
+    }
+    #spimar-identity-territories .sid-cities .sid-media::after {
+      border: 0;
+      border-top: 2px solid var(--sid-series);
+      inset: 65% 10% auto 10%;
+      transform: rotate(-8deg);
+    }
+    #spimar-identity-territories .sid-proof .sid-hero {
+      grid-template-columns: minmax(0, 0.8fr) minmax(14rem, 1.2fr);
+    }
+    #spimar-identity-territories .sid-proof .sid-media {
+      background: var(--muted);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      padding: 1px;
+    }
+    #spimar-identity-territories .sid-proof-cell {
+      align-content: end;
+      background: var(--background);
+      display: grid;
+      min-height: 8rem;
+      padding: 0.75rem;
+    }
+    #spimar-identity-territories .sid-proof-cell:first-child {
+      background: color-mix(in srgb, var(--sid-series) 18%, var(--background));
+    }
+    #spimar-identity-territories .sid-proof-value {
+      font-size: calc(var(--font-size-base) * 1.65);
+      font-weight: 500;
+    }
+    #spimar-identity-territories .sid-ar {
+      font-family: inherit;
+    }
+    #spimar-identity-territories .sid-ar .sid-display {
+      letter-spacing: 0;
+      max-width: 17ch;
+    }
+    #spimar-identity-territories .sid-ar .sid-chip {
+      border-inline-start: 3px solid var(--sid-series);
+    }
+    @media (max-width: 520px) {
+      #spimar-identity-territories .sid-screen {
+        min-height: 0;
+      }
+      #spimar-identity-territories .sid-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      #spimar-identity-territories .sid-nav {
+        display: none;
+      }
+      #spimar-identity-territories .sid-hero,
+      #spimar-identity-territories .sid-cities .sid-hero,
+      #spimar-identity-territories .sid-proof .sid-hero {
+        grid-template-columns: 1fr;
+      }
+      #spimar-identity-territories .sid-cities .sid-media {
+        order: 0;
+      }
+      #spimar-identity-territories .sid-display {
+        font-size: calc(var(--font-size-base) * 1.8);
+      }
+      #spimar-identity-territories .sid-strip {
+        grid-template-columns: 1fr;
+      }
+      #spimar-identity-territories .sid-strip-item + .sid-strip-item {
+        border-inline-start: 0;
+        border-top: 1px solid var(--border);
+      }
+    }
+  </style>
+
+  <div class="sid-controls">
+    <div class="viz-controls" aria-label="Identity territory">
+      <span class="sid-control-label">Territory</span>
+      <button type="button" class="btn" data-territory="signal" aria-pressed="true">01 · Exhibition signal</button>
+      <button type="button" class="btn" data-territory="cities" aria-pressed="false">02 · Across cities</button>
+      <button type="button" class="btn" data-territory="proof" aria-pressed="false">03 · Proof of presence</button>
+    </div>
+    <div class="viz-controls" aria-label="Representative surface">
+      <span class="sid-control-label">Surface</span>
+      <button type="button" class="btn" data-surface="home" aria-pressed="true">Homepage</button>
+      <button type="button" class="btn" data-surface="event" aria-pressed="false">Event</button>
+      <button type="button" class="btn" data-surface="evidence" aria-pressed="false">Proof</button>
+      <button type="button" class="btn" data-surface="rtl" aria-pressed="false">Arabic RTL</button>
+    </div>
+  </div>
+
+  <p class="sid-detail" aria-live="polite"></p>
+
+  <section class="card sid-preview" aria-label="Selected SPIMARIMMO identity application">
+    <div class="sid-stage"></div>
+  </section>
+
+  <script>
+    (() => {
+      const root = document.getElementById("spimar-identity-territories");
+      const stage = root.querySelector(".sid-stage");
+      const detail = root.querySelector(".sid-detail");
+      const territoryButtons = [...root.querySelectorAll("[data-territory]")];
+      const surfaceButtons = [...root.querySelectorAll("[data-surface]")];
+
+      const territoryData = {
+        signal: {
+          name: "Global Exhibition Signal",
+          role: "Recommended master layer — event, campaign, navigation and conversion",
+          className: "sid-signal",
+          series: "var(--viz-series-1)"
+        },
+        cities: {
+          name: "Morocco Across Cities",
+          role: "Supporting layer — place, visitor orientation and human warmth",
+          className: "sid-cities",
+          series: "var(--viz-series-2)"
+        },
+        proof: {
+          name: "Proof of Presence",
+          role: "Specialized layer — method, evidence, cases, offers and resources",
+          className: "sid-proof",
+          series: "var(--viz-series-3)"
+        }
+      };
+
+      const surfaceData = {
+        home: {
+          kicker: "GLOBAL PLATFORM · EXHIBITOR FIRST",
+          headline: "Moroccan property, present in the markets that matter.",
+          lead: "One international network for editions, evidence, market access and qualified conversations.",
+          media: "Real event + property media",
+          action: "Become an exhibitor",
+          facts: [["Next edition", "City · date · status"], ["Evidence", "Approved case cue"], ["Visitor path", "Discover and pre-register"]]
+        },
+        event: {
+          kicker: "CANONICAL EVENT · TWO AUDIENCE PATHS",
+          headline: "One edition. Clear facts. The right next step.",
+          lead: "Event lifecycle, exhibitor availability and visitor registration remain independent and explicit.",
+          media: "Edition documentary stage",
+          action: "Request a proposal",
+          facts: [["Exhibitors", "Sales status + offer"], ["Visitors", "Registration status"], ["Shared truth", "Venue · programme · access"]]
+        },
+        evidence: {
+          kicker: "PROOF · DEFINED, DATED, SOURCED",
+          headline: "The promise matters. Evidence decides.",
+          lead: "Expected delivery, actual outcome, definition, period, source and caveat stay visibly connected.",
+          media: "Evidence anatomy",
+          action: "Review a case",
+          facts: [["Expected", "Approved objective"], ["Delivered", "Verified artifact"], ["Measured", "Source + period + caveat"]]
+        },
+        rtl: {
+          kicker: "المنصة الدولية · الأولوية للعارضين",
+          headline: "العقار المغربي حاضر في الأسواق الأكثر أهمية.",
+          lead: "شبكة دولية واحدة للمعارض والأدلة والوصول إلى الأسواق واللقاءات المؤهلة.",
+          media: "وسائط حقيقية للمعرض والعقار",
+          action: "طلب المشاركة كعارض",
+          facts: [["الدورة المقبلة", "المدينة · التاريخ · الحالة"], ["الأدلة", "حالة موثقة ومعتمدة"], ["مسار الزوار", "الاكتشاف والتسجيل المسبق"]]
+        }
+      };
+
+      let selectedTerritory = "signal";
+      let selectedSurface = "home";
+
+      function proofGrid(surface) {
+        return `<div class="sid-media" aria-label="${surface.media}">
+          <div class="sid-proof-cell"><span class="sid-kicker">EXPECTED</span><span class="sid-proof-value">Defined</span></div>
+          <div class="sid-proof-cell"><span class="sid-kicker">DELIVERED</span><span class="sid-proof-value">Verified</span></div>
+          <div class="sid-proof-cell"><span class="sid-kicker">MEASURED</span><span class="sid-proof-value">Sourced</span></div>
+          <div class="sid-proof-cell"><span class="sid-kicker">CAVEAT</span><span class="sid-proof-value">Visible</span></div>
+        </div>`;
+      }
+
+      function mediaField(surface, territory) {
+        if (territory === "proof") return proofGrid(surface);
+        return `<div class="sid-media" aria-label="${surface.media}"><span class="sid-media-label">${surface.media}</span></div>`;
+      }
+
+      function render() {
+        const territory = territoryData[selectedTerritory];
+        const surface = surfaceData[selectedSurface];
+        const rtl = selectedSurface === "rtl";
+        const strip = surface.facts.map((fact) => `<div class="sid-strip-item"><span class="sid-strip-label">${fact[0]}</span><span>${fact[1]}</span></div>`).join("");
+        stage.innerHTML = `<div class="sid-screen ${territory.className}${rtl ? " sid-ar" : ""}" style="--sid-series:${territory.series}"${rtl ? " dir=\"rtl\" lang=\"ar\"" : ""}>
+          <header class="sid-header">
+            <span class="sid-brand">SPIMARIMMO</span>
+            <nav class="sid-nav" aria-label="Preview navigation"><span>Events</span><span>Exhibit</span><span>Proof</span><span>Resources</span><span>Visitors</span></nav>
+            <span class="sid-action">${surface.action}</span>
+          </header>
+          <div class="sid-hero">
+            <div class="sid-copy">
+              <span class="sid-kicker">${surface.kicker}</span>
+              <p class="sid-display">${surface.headline}</p>
+              <p class="sid-lead">${surface.lead}</p>
+              <div class="sid-meta"><span class="sid-chip">CITY · DATE · STATE</span><span>Brochure · Meeting · Enquiry</span></div>
+            </div>
+            ${mediaField(surface, selectedTerritory)}
+          </div>
+          <div class="sid-strip">${strip}</div>
+        </div>`;
+        detail.textContent = `${territory.name} — ${territory.role}. Candidate palette values and production rules are documented separately.`;
+      }
+
+      function select(buttons, activeButton) {
+        buttons.forEach((button) => button.setAttribute("aria-pressed", String(button === activeButton)));
+      }
+
+      territoryButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedTerritory = button.dataset.territory;
+          select(territoryButtons, button);
+          render();
+        });
+      });
+
+      surfaceButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedSurface = button.dataset.surface;
+          select(surfaceButtons, button);
+          render();
+        });
+      });
+
+      render();
+    })();
+  </script>
+</div>

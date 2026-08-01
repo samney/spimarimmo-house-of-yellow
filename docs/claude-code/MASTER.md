@@ -1,23 +1,38 @@
-# MASTER — Immutable Mission Reference
+# MASTER — SPIMAR Mission and Claude Ownership
 
-## Product source of truth
-
-- File: `HOUSE-OF-YELLOW-CLAUDE-CODE-MASTER-PROMPT.md` (repository root)
-- SHA-256: `ADA7E41EB38DE80599C3408B8A5E70CF56040E90BC34AE340CC0D207EA9BC4E2`
-- Size: 48,611 bytes
-- Verified: 2026-07-30 (Session 0, `Get-FileHash`)
-- The file is never edited. Any session must re-hash it before product execution and stop with a blocker if the hash changed.
+Updated: 2026-08-01
 
 ## Mission
 
-Pixel-accurate, production-quality reconstruction of `https://houseofyellow.nl/` — all public routes, interactions, motion, responsive variants, consent, contact, SEO — plus a functional bilingual (EN/FR) CMS at `/admin` on Next.js App Router + TypeScript strict + Tailwind + GSAP + next-intl + Supabase (Postgres/Auth/Storage), validated by Playwright, Axe, and <1% visual difference per route/viewport excluding documented dynamic regions.
+Finish and freeze the measured House of Yellow reference foundation, then transform that verified baseline into the SPIMAR website and operational platform defined by the approved product, IA, UX, identity, design-system, localization, CMS, CRM, security, performance, accessibility and release specifications.
+
+Claude Code is the sole source-code implementer from `ENG-014C`.
+
+## Current checkpoint
+
+- `ENG-014A`: merged through PR #3.
+- `ENG-014B`: merged through PR #4; implementation `6136057b4be06ffc5da1cbb0d773643896a7350e`, merge `4ee1131f9e325dd4ce865d4036238bdccb38a626`.
+- `MIG-000`: active documentation/control-plane migration.
+- `OPS-001`: next after migration merge.
+- `ENG-014C`–`ENG-015`: not started.
+- SPIMAR transformation: gated by `ENG-015`.
+
+## Stage A — Close and freeze the reference foundation
+
+`MIG-000 → OPS-001 → ENG-014C → ENG-014D → ENG-014E → ENG-015`.
+
+No SPIMAR transformation is authorized during Stage A. The hero remains poster-only.
+
+## Stage B — Controlled SPIMAR restart
+
+`ENG-015` creates the protected clone baseline. Claude then performs a fresh top-down audit, removes House of Yellow residue, consolidates one canonical architecture, and implements SPIMAR from the approved specification order. Restarting the transformation does not discard the accepted baseline.
 
 ## Definition of done
 
-The acceptance criteria and deliverables sections of the master prompt, tracked item-by-item in `QUEUE.md` (HOY-000…HOY-160) and `VALIDATION-MATRIX.md`, all satisfied with recorded evidence — or a genuine owner-decision blocker recorded in `BLOCKERS.md`.
+- Every active queue item is merged with evidence.
+- FR, EN and Arabic/RTL contracts are implemented and validated.
+- CMS/CRM and operational workflows pass permission, transaction, failure and audit tests.
+- No House of Yellow brand, copy, contact, metadata or legal residue remains in SPIMAR.
+- Accessibility, security, performance, SEO, analytics, browser, responsive and visual gates pass.
+- Deployment, rollback, operating documentation and owner handoff are complete.
 
-## Bootstrap governance
-
-- Session 0 bootstrap: `CLAUDE-CODE-PUBLIC-SKILLS-WORKFLOW-BOOTSTRAP.md`, SHA-256 `3802804ACC16D4F4294E3A5E862F2E3582A64E2A5B819E77ED402AE513376711`
-- Skill governance: `PUBLIC-SKILLS-LOCK.md` (only audited public skills; none custom)
-- Model: Fable 5 primary; Opus 5 sole automatic fallback
