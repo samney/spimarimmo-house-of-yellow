@@ -1,173 +1,347 @@
-/* Project detail template — reference block sequence geometry. */
+/* Project detail template — geometry measured from the live reference project
+   routes at 1440x900 and 390x844 (qa/eng014c-audit.mjs, computed-style probes).
+   Desktop values are vw at the 1440 design width; the mobile regime mirrors the
+   reference 580 design width. Scroll-reveal and parallax choreography stay with
+   ENG-014E: this file describes the static composition only. */
 
-.projectDetail {
-  padding-top: 8.75vw;
+/* ===== Block rhythm ===== */
+.projectDetail .innerBlocks > section {
+  margin: 5vw 0;
+  position: relative;
 }
-.projectDetail .projectH1 {
-  font-size: var(--text-h1);
-  font-weight: 500;
-  line-height: 1.1;
-  margin-bottom: 1.5vw;
+.projectDetail .innerBlocks > section:first-child {
+  margin-top: 0;
+  padding-top: 7.1875vw;
 }
-.projectDetail .summary {
-  max-width: 38vw;
-  margin-bottom: 2vw;
+.projectDetail .innerBlocks > section:last-child {
+  margin-bottom: 0;
 }
-.projectDetail .metaRow {
-  display: flex;
-  gap: 3vw;
-  font-size: 0.75vw;
-  margin-bottom: 2.5vw;
+
+/* ===== Project header ===== */
+.projectDetail .projectTitle {
+  font-size: 0.875vw;
+  line-height: 1.4;
 }
-.projectDetail .metaLabel {
-  font-weight: 500;
-  display: block;
+.projectDetail .projectSummary {
+  margin: 1.875vw 16.0625vw 0 0;
 }
-.projectDetail .heroMedia .projectHeroMedia {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  display: block;
-  background: var(--hoy-ink);
+.projectDetail .infoTags {
+  margin-top: 7.5vw;
 }
-.projectStatsBlock .metrics {
-  display: flex;
-  justify-content: space-between;
-  gap: 2vw;
-  border-bottom: 1px solid rgba(29, 29, 27, 0.2);
-  padding: 3vw 0;
+.projectDetail .infoTag {
+  display: inline-block;
+  width: 16.0625vw;
 }
-.projectStatsBlock .metric {
-  flex: 1;
+.headerProjectBlock .imageWrapper {
+  margin-top: 1.25vw;
 }
-.projectStatsBlock .metricLabel {
-  font-size: 0.75vw;
-  font-weight: 500;
-  margin-bottom: 0.5vw;
-}
-.projectStatsBlock .metricValue {
-  font-size: 2.5vw;
-  font-weight: 500;
-}
-.projectDetail .sectionTitle {
-  font-size: var(--text-base);
-  font-weight: 500;
-  margin-bottom: 1.5vw;
-}
-.projectDetail .smallTitle {
-  max-width: 44vw;
-}
-.projectDetail .mediaPair {
-  display: flex;
-  gap: 1.25vw;
-  padding: 2.5vw 2.5vw 0;
-}
-.projectDetail .mediaPair .pairItem {
-  flex: 1;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+
+/* ===== Media surfaces ===== */
+.projectDetail .imageWrapper {
   border-radius: 0.5vw;
-  background: var(--hoy-ink);
-  display: block;
-  min-width: 0;
 }
-.projectDetail .projectTwoImagesBlock.text .mediaPair {
-  padding: 2.5vw 0 0;
+.projectDetail .imageWrapper.is-wide {
+  aspect-ratio: 16 / 9;
 }
-.projectFullWidthLoopBlock .fullLoop {
-  width: 100%;
-  aspect-ratio: 21 / 9;
-  display: block;
-  background: var(--hoy-ink);
-  margin: 3vw 0;
+.projectDetail .imageWrapper.is-landscape {
+  aspect-ratio: 1.35434;
 }
-.projectCreditsBlock {
-  padding: 3vw 0;
+.projectDetail .imageWrapper.is-portrait {
+  aspect-ratio: 0.73831;
 }
-.projectCreditsBlock .creditsText {
-  max-width: 30vw;
+.projectDetail .imageWrapper.is-square {
+  aspect-ratio: 1;
 }
+
+/* ===== Statistics ===== */
+.projectStatsBlock .contentWrapper {
+  text-align: right;
+}
+.projectStatsBlock .stat {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  padding: 0 2.5vw 0 1.25vw;
+}
+.projectStatsBlock .stat:last-child {
+  padding-right: 0;
+}
+.projectStatsBlock .statValue {
+  margin-top: 0.625vw;
+}
+
+/* ===== Shared narrative columns =====
+   The reference lays these out as bottom-aligned inline blocks; flex reproduces
+   the same measured geometry without the inline strut and whitespace
+   sensitivity, and keeps the per-variant cross-axis alignment explicit. */
+.projectDetail .cols {
+  display: flex;
+  align-items: flex-start;
+}
+.projectDetail .cols > .col {
+  width: 50%;
+}
+.projectDetail .quoteTitle,
+.projectDetail .title {
+  margin-bottom: 0.625vw;
+}
+/* Reference paragraph rhythm: one blank line between paragraphs, none after
+   the last one. */
+.projectDetail .text p + p {
+  margin-top: 1.4em;
+}
+
+.projectTitleQuoteBlock .cols > .col {
+  padding-right: 8.625vw;
+}
+.projectTitleQuoteBlock .cols > .col.numCol {
+  padding-right: 0;
+  margin-top: 0.125vw;
+  text-align: right;
+}
+
+/* ===== Media pair ===== */
+.projectTwoImagesBlock:not(.text):not(.sqaures) .cols {
+  align-items: center;
+}
+.projectTwoImagesBlock:not(.text):not(.sqaures) .cols > .col:first-child {
+  padding: 0 0.625vw 0 0;
+}
+.projectTwoImagesBlock:not(.text):not(.sqaures) .cols > .col:nth-child(2) {
+  padding: 0 16.0625vw 0 16.6875vw;
+}
+
+/* ===== Media pair with narrative ===== */
+.projectTwoImagesBlock.text .cols {
+  align-items: center;
+}
+.projectTwoImagesBlock.text .cols > .col:first-child {
+  padding: 0 8.625vw 0 8vw;
+}
+.projectTwoImagesBlock.text .cols > .col:nth-child(2) {
+  padding: 0 0 0 1.25vw;
+}
+.projectTwoImagesBlock.text .subCols {
+  display: flex;
+  align-items: flex-start;
+}
+.projectTwoImagesBlock.text .subCol {
+  width: 22.8125vw;
+  flex: none;
+}
+.projectTwoImagesBlock.text .subCol.numCol {
+  flex: 1;
+  width: auto;
+  margin-top: 0.125vw;
+  text-align: right;
+}
+.projectTwoImagesBlock.text .animImageContainer .imageWrapper {
+  margin-top: 11.875vw;
+}
+
+/* ===== Square media pair ===== */
+.projectTwoImagesBlock.sqaures .cols {
+  align-items: flex-end;
+}
+.projectTwoImagesBlock.sqaures .cols > .col:first-child {
+  width: 66.25%;
+  padding: 0 0 0 16.0625vw;
+}
+.projectTwoImagesBlock.sqaures .cols > .col:nth-child(2) {
+  width: 33.75%;
+  padding: 0 0 0 17.25vw;
+  margin-bottom: 3.125vw;
+}
+
+/* ===== Closing narrative ===== */
+.projectTextBlock .cols > .col {
+  width: 72.1875vw;
+  margin-top: 0.125vw;
+}
+.projectTextBlock .cols > .col:last-child {
+  width: 22.8125vw;
+  flex: none;
+  margin-top: 0;
+}
+
+/* ===== Credits ===== */
+.projectCreditsBlock .cols > .col {
+  width: 22.8125vw;
+}
+
+/* ===== Related project ===== */
 .projectRelatedBlock {
-  background: var(--hoy-ink);
-  color: var(--hoy-paper);
-  padding: 4vw 0 6vw;
+  padding-bottom: 10vw;
 }
-.projectRelatedBlock .relatedLabel {
-  margin-bottom: 2vw;
+.projectRelatedBlock .relatedProject {
+  position: relative;
 }
-.projectRelatedBlock .relatedLink {
+.projectRelatedBlock .relatedProjectItem {
   display: block;
   color: inherit;
   text-decoration: none;
 }
-.projectRelatedBlock .relatedTitle {
-  display: block;
-  font-size: var(--text-heading-lg);
-  font-weight: 500;
-  margin-bottom: 1.5vw;
+.projectRelatedBlock .innerProjectItem {
+  display: flex;
+  align-items: center;
 }
-.projectRelatedBlock .relatedMediaPlane {
-  width: 100%;
-  aspect-ratio: 16 / 7;
-  border-radius: 0.5vw;
-  display: block;
+.projectRelatedBlock .relatedTitle {
+  display: inline-block;
+  width: 59.078%;
+  margin-bottom: 0;
+  padding-right: 18.75vw;
+}
+.projectRelatedBlock .imageWrapper {
+  width: 32.04%;
+  flex: none;
+}
+/* The reference renders this label as an out-of-flow hover marquee, so it takes
+   no layout space at rest. The words stay in the document for assistive tech
+   and for the ENG-014E cursor choreography. */
+.projectRelatedBlock .textItems {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
-@media (max-width: 1080px) {
-  .projectDetail {
-    padding-top: 12.963vw;
+/* ===== Mobile regime (reference 580 design width) ===== */
+@media (max-width: 580px) {
+  .projectDetail .contentWrapper {
+    padding: 0 6.8966vw;
   }
-  .projectDetail .summary {
-    max-width: 55vw;
+  .projectDetail .innerBlocks > section {
+    margin: 13.7931vw 0;
   }
-  .projectDetail .metaRow {
-    font-size: 1.111vw;
+  .projectDetail .innerBlocks > section:first-child {
+    margin-top: 6.8966vw;
+    padding-top: 19.8276vw;
   }
-  .projectStatsBlock .metricLabel {
-    font-size: 1.111vw;
-  }
-  .projectStatsBlock .metricValue {
-    font-size: 3.7vw;
+  .projectDetail .text {
+    font-size: 3.7931vw;
   }
   .projectDetail .smallTitle {
-    max-width: 60vw;
+    font-size: 4.1379vw;
   }
-  .projectCreditsBlock .creditsText {
-    max-width: 45vw;
+  .projectDetail .projectTitle {
+    font-size: 3.7931vw;
   }
-}
+  .projectDetail .projectSummary {
+    margin: 6.8966vw 0 0;
+  }
+  /* The reference drops the info tags on mobile rather than wrapping them. */
+  .projectDetail .infoTags {
+    display: none;
+  }
+  .headerProjectBlock .imageWrapper {
+    margin-top: 6.8966vw;
+  }
+  .projectDetail .imageWrapper {
+    border-radius: 1.3793vw;
+  }
 
-@media (max-width: 580px) {
-  .projectDetail {
-    padding-top: 24.138vw;
+  .projectStatsBlock .contentWrapper {
+    text-align: left;
   }
-  .projectDetail .summary,
-  .projectDetail .smallTitle,
-  .projectCreditsBlock .creditsText {
-    max-width: none;
+  .projectStatsBlock .stats {
+    margin-bottom: -0.8621vw;
   }
-  .projectDetail .metaRow {
-    flex-wrap: wrap;
-    gap: 4vw;
-    font-size: 3.103vw;
+  .projectStatsBlock .stat {
+    width: 50%;
+    padding: 0 6.8966vw 0 3.4483vw;
+    margin-bottom: 0.8621vw;
   }
-  .projectStatsBlock .metrics {
-    flex-wrap: wrap;
-    gap: 4vw;
+  .projectStatsBlock .statValue {
+    margin-top: 1.7241vw;
   }
-  .projectStatsBlock .metric {
-    flex: 1 1 40%;
-  }
-  .projectStatsBlock .metricLabel {
-    font-size: 3.103vw;
-  }
-  .projectStatsBlock .metricValue {
-    font-size: 6.897vw;
-  }
-  .projectDetail .mediaPair {
+
+  .projectDetail .cols,
+  .projectTwoImagesBlock:not(.text):not(.sqaures) .cols,
+  .projectTwoImagesBlock.text .cols,
+  .projectTwoImagesBlock.sqaures .cols,
+  .projectTwoImagesBlock.text .subCols {
     flex-direction: column;
-    gap: 3.448vw;
+    align-items: stretch;
+  }
+  .projectDetail .cols > .col {
+    width: 100%;
+    padding: 0;
+    margin-top: 0;
+  }
+  .projectDetail .cols > .col.numCol {
+    order: -1;
+    text-align: left;
+  }
+  .projectDetail .quoteTitle,
+  .projectDetail .title {
+    margin-bottom: 6.0345vw;
+  }
+  .projectTitleQuoteBlock .cols > .col:not(.numCol) {
+    margin-top: 1.7241vw;
+  }
+
+  .projectTwoImagesBlock:not(.text):not(.sqaures) .cols > .col:nth-child(2),
+  .projectTwoImagesBlock.sqaures .cols > .col:nth-child(2),
+  .projectTwoImagesBlock.text .animImageContainer {
+    display: none;
+  }
+  .projectTwoImagesBlock:not(.text):not(.sqaures) .cols > .col:first-child {
+    padding: 0 13.7931vw 0 0;
+  }
+  .projectTwoImagesBlock.sqaures .cols > .col:first-child {
+    width: 100%;
+    padding: 0 0 0 13.7931vw;
+  }
+  .projectTwoImagesBlock.text .cols > .col:first-child {
+    padding: 0;
+    margin-bottom: 6.8966vw;
+  }
+  .projectTwoImagesBlock.text .cols > .col:nth-child(2) {
+    padding: 0;
+  }
+  .projectTwoImagesBlock.text .subCol,
+  .projectTwoImagesBlock.text .subCol.numCol {
+    width: 100%;
+    margin-top: 0;
+    text-align: left;
+  }
+  .projectTwoImagesBlock.text .subCol.numCol {
+    order: -1;
+  }
+
+  .projectTextBlock .cols > .col,
+  .projectTextBlock .cols > .col:last-child,
+  .projectCreditsBlock .cols > .col {
+    width: 100%;
+  }
+  .projectTextBlock .cols > .col:first-child {
+    margin-bottom: 1.7241vw;
+  }
+
+  .projectRelatedBlock {
+    padding-bottom: 27.5862vw;
+  }
+  .projectRelatedBlock .innerProjectItem {
+    display: block;
+    padding-bottom: 10.3448vw;
   }
   .projectRelatedBlock .relatedTitle {
-    font-size: 5.517vw;
+    display: block;
+    width: 100%;
+    padding: 13.7931vw 6.8966vw 3.4483vw;
+    text-align: center;
+  }
+  .projectRelatedBlock .imageWrapper {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .projectRelatedBlock .textItems {
+    display: block;
+    padding-left: 0;
+    text-align: center;
+  }
+  .projectRelatedBlock .textItem {
+    display: inline;
   }
 }

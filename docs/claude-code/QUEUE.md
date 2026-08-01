@@ -9,15 +9,21 @@ Statuses: `PENDING` · `IN PROGRESS` · `BLOCKED` · `PR REVIEW` · `DONE (merge
 | `ENG-014B` | `DONE (PR #4 / 4ee1131)` | Work-index constellation, Grid/List, filters, responsive and browser-state convergence | — |
 | `MIG-000` | `DONE (PR #5 / a8847a5)` | Repository-native specifications, decisions, history, manifests and Claude control plane | `ENG-014B` |
 | `OPS-001` | `DONE (PR #6 / f57a87f)` | Add GitHub Actions quality gates for validation, test, typecheck, lint, build, routes and browser discovery | `MIG-000` |
-| `ENG-014C` | `PENDING` | Converge all 21 project-page block orders, hero placement, statistics, spacing and media rhythm | `OPS-001` |
+| `ENG-014C` | `PR REVIEW` | Converge all 21 project-page block orders, hero placement, statistics, spacing and media rhythm | `OPS-001` |
 | `ENG-014D` | `PENDING` | Integrate approved non-hero media and documented fallbacks; hero remains poster-only | `ENG-014C` |
-| `ENG-014E` | `PENDING` | Motion, responsive, accessibility, browser and visual-regression convergence | `ENG-014D` |
+| `ENG-014E` | `PENDING` | Motion, responsive, accessibility, browser and visual-regression convergence; owns the `D-014` global-shell whole-page height exception (`PAR-P1-004`) | `ENG-014D` |
 | `ENG-015` | `PENDING` | Freeze accepted House of Yellow baseline with tag, SHA, deployment, screenshots and validation | `ENG-014E` |
 
-Post-OPS-001 control-plane hardening (no ticket ID; branch
-`claude/control-plane-hardening`): manifest-verifier structural checks and
-control-plane checkpoint refresh; in PR review. `ENG-014C` does not start
-before this PR is reviewed and owner-merged.
+Post-OPS-001 control-plane hardening (no ticket ID): merged through PR #7 at
+`b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run
+`30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
+`ENG-014C` is now the active item.
+
+`ENG-014C` is accepted against project-composition parity under `D-014`. Its raw
+whole-page scroll-height criterion (≤2%) is an **authorized unmet exception**,
+never a passed measurement: 3.3–6.3% delta, a constant +203px desktop / +193px
+mobile from the pre-existing unchanged shared global shell. `ENG-014E` must
+resolve or formally reassess it under `PAR-P1-004` before `ENG-015` freeze.
 
 ## SPIMAR controlled restart
 

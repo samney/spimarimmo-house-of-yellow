@@ -4,27 +4,38 @@ Updated: 2026-08-01
 
 ## Checkpoint
 
-- `main@f57a87fdd55a5bc65fa9e85d83860defbf19a9b1`
+- `main@b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`
 - PR #4 / ENG-014B: merged
 - PR #5 / MIG-000: merged; migration commit `d29776d9e4e1269e809fd2c118d8fc27100a2556`
 - PR #6 / OPS-001: merged; post-merge Quality Gates run `30689774539` succeeded
-- Control-plane hardening (no ticket ID): implemented on `claude/control-plane-hardening`; draft PR open, pending independent review and owner merge
-- ENG-014C–015: pending; ENG-014C is next and explicitly not started
+- PR #7 / control-plane hardening (no ticket ID): merged at `b1854dc`; post-merge Quality Gates run `30694095590` passed; post-merge Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed
+- ENG-014C: implemented on `claude/eng-014c-project-detail-parity` from `b1854dc`; independently reviewed, review corrections applied; draft PR open, pending final independent review and owner merge
+- ENG-014C acceptance: accepted on project-composition parity under `D-014`. The raw whole-page scroll-height criterion (≤2%) is an **authorized unmet exception**, not a passed measurement — 3.3–6.3% delta, constant +203px desktop / +193px mobile, caused by the pre-existing unchanged shared global shell; assigned to `PAR-P1-004` under `ENG-014E`
+- ENG-014D–015: pending and not started; `ENG-014E` must resolve or formally reassess the `D-014` exception before `ENG-015` freeze
 - SPIMAR transformation: gated by ENG-015
 
 ## Resume rule
 
 Read `CLAUDE.md` and its required files. Work only on the active queue item.
 
-For the control-plane hardening review:
+For the ENG-014C review:
 
-- review the real diff of `qa/verify-migration-manifest.mjs` and the control-plane document refresh (`MASTER`, `STATUS`, `QUEUE`, `SESSION-HANDOFF`, `VALIDATION-MATRIX`, `IMPLEMENTATION-ORDER`);
-- confirm the verifier still checks against immutable commit `d29776d` and still tolerates only the one documented archival line-ending exception (`ba2b9903…` LF blob) with its self-invalidating re-audit behavior;
-- confirm the added structural checks: exactly 164 manifest entries, duplicate paths rejected, identical duplicate entries rejected, while distinct files sharing a content hash remain accepted;
-- confirm no application source, dependency, lockfile, workflow, archived-file or ENG-014B-evidence change;
-- confirm real green GitHub Actions runs on the PR before approval.
-
-After the hardening merge, start ENG-014C on a fresh branch/session directly from latest `origin/main`.
+- review the real diff of the project-detail model, renderer, generator and CSS
+  against `b1854dc`;
+- confirm `lib/content/project-details.json` is reproducible from
+  `qa/projects-data.json` plus `qa/eng014c/reference-block-contract.json`
+  (`node qa/build-project-details.mjs` leaves the tree clean);
+- confirm the parity matrix in `qa/eng014c/parity-matrix.json` reports zero
+  block-sequence, statistics, optional-variant, surface-count and next-project
+  mismatches across all 42 records;
+- confirm the hero is still poster-only, no `/videos/` request is introduced and
+  the media manifest is unchanged (154 mappings, 0 deployable);
+- confirm no existing test was weakened and real green Actions runs exist on
+  the PR before approval;
+- confirm the raw whole-page scroll-height criterion is still presented as the
+  `D-014` authorized unmet exception and is nowhere described as passed;
+- confirm `node qa/eng014c-compare.mjs` exits 0 on the real 42-record audit and
+  exits non-zero on missing, unmatched, duplicate or non-finite records.
 
 ## Persistent constraints
 
