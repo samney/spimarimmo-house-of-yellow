@@ -33,12 +33,13 @@ Historical chats and archives are provenance, not automatic authority. Unknown i
 
 ## Current execution boundary
 
-- `ENG-014B` (PR #4), `MIG-000` (PR #5), `OPS-001` (PR #6), control-plane hardening (PR #7) and `ENG-014C` (PR #8) are merged.
-- Current canonical `main`: `17b697430a55fa3a5835c9c25fef927301b9ec87`.
-- Remaining clone convergence: `ENG-014D → ENG-014E → ENG-015`. `ENG-014D` is the next eligible item and has not started.
-- Hero remains poster-only through `ENG-015`.
-- Do not introduce SPIMAR identity, copy, IA, CMS, CRM or localization into clone-convergence work.
-- After `ENG-015`, tag/freeze the accepted baseline and begin the top-down SPIMAR transformation from the approved specifications.
+- Stage A is **closed**. `ENG-014B` (PR #4), `MIG-000` (PR #5), `OPS-001` (PR #6), control-plane hardening (PR #7), `ENG-014C` (PR #8), the ENG-014C control-plane closeout (PR #9) and `ENG-015` (PR #10) are merged.
+- `ENG-014D` and `ENG-014E` are **SUPERSEDED / TRANSFERRED** under `D-015` — never completed, never passed. Their requirements moved to the SPIMAR phases.
+- The House of Yellow foundation is accepted for transformation with the limitations recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. The whole-page ≤2% criterion did **not** pass; `D-014` and `PAR-P1-004` are preserved, not closed.
+- Active item: `SPI-000` — SPIMAR Transformation Phase 1 (brand, UX architecture, global experience). Do not continue polishing the House of Yellow clone.
+- `D-013` is in effect: no historical patch may be applied. `D-012` has expired by its own terms, which does not authorize enabling video — media activation is a SPIMAR decision and `lib/media/video-manifest.json` still declares 0 deployable assets.
+- Do not reconstruct or source House of Yellow media. SPIMAR-owned content replaces reference content.
+- The canonical `main` SHA and post-merge check evidence are carried in `docs/claude-code/STATUS.md`.
 
 ## Branch and PR discipline
 
