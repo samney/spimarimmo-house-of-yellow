@@ -1,364 +1,709 @@
-/* Made by Yellow overview — reference projectsOverviewBlock geometry. */
+/* Made by Yellow — measured against the live 1363×936 reference composition.
+   The desktop grid deliberately uses the reference six-position inline rhythm:
+   three cards per line, alternating offsets, and a sticky HOY letterform below. */
 
 .projectsOverviewBlock {
-  padding-top: 8.75vw;
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
+  padding-top: 7.1875vw;
 }
 
-/* Masonry-style grid: landscape tiles span 2 columns, portrait 1. */
-.worksGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25vw;
-  grid-auto-flow: dense;
-  padding-bottom: 5vw;
-}
-.worksGrid .project {
-  display: block;
-  color: var(--hoy-ink);
-  text-decoration: none;
-}
-.worksGrid .project.landscape {
-  grid-column: span 2;
-}
-.worksGrid .project.portrait {
-  grid-column: span 1;
-}
-.worksGrid .project .media {
+.projectsStage {
   position: relative;
-  display: block;
-  border-radius: 0.5vw;
-  overflow: hidden;
-  background: var(--hoy-ink);
+  z-index: 2;
+  /* The inactive grid/list panel parks at ±50vw; clip it so the convergence
+     animation never widens the document (no horizontal scroll). */
+  overflow-x: clip;
 }
-.worksGrid .project.landscape .media {
-  aspect-ratio: 16 / 10;
+
+.worksLetterform {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  color: var(--hoy-ink);
+  transition: opacity 0.9s var(--ease-out-ref);
 }
-.worksGrid .project.portrait .media {
-  aspect-ratio: 3 / 4;
+
+.worksLetterformSticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  place-items: center;
 }
-.worksGrid .project .mediaPlane__video,
-.worksGrid .project .mediaPlane__poster img {
+
+.worksLetterform .centerContent,
+.worksLetterform .innerContent,
+.worksLetterform .rotateContainer {
+  position: relative;
+  width: 25.3125vw;
+  height: 25.3125vw;
+}
+
+.worksLetterform .innerContent,
+.worksLetterform .rotateContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.worksLetterform .animContainer {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.45s ease-out;
-}
-.worksGrid .project:hover .mediaPlane__video,
-.worksGrid .project:hover .mediaPlane__poster img {
-  transform: scale(1.03);
-}
-.worksGrid .project .tags {
-  position: absolute;
-  top: 0.75vw;
-  left: 0.75vw;
-  display: flex;
-  gap: 0.4vw;
-  opacity: 0;
-  transition: opacity 0.3s ease-out;
-}
-.worksGrid .project:hover .tags {
-  opacity: 1;
-}
-.worksGrid .project .tag {
-  font-size: 0.625vw;
-  font-weight: 500;
-  text-transform: uppercase;
-  background: var(--hoy-paper);
-  color: var(--hoy-ink);
-  border-radius: 1vw;
-  padding: 0.25vw 0.7vw;
-}
-.worksGrid .takeALook {
-  position: absolute;
-  right: 0.75vw;
-  bottom: 0.75vw;
-  font-size: 0.7vw;
-  font-weight: 500;
-  text-transform: uppercase;
-  background: var(--hoy-yellow);
-  color: var(--hoy-ink);
-  border-radius: 1vw;
-  padding: 0.35vw 0.9vw;
-  opacity: 0;
-  transform: translateY(0.5vw);
-  transition:
-    opacity 0.3s ease-out,
-    transform 0.3s ease-out;
-}
-.worksGrid .project:hover .takeALook {
-  opacity: 1;
-  transform: translateY(0);
-}
-.worksGrid .projectTitle {
-  display: block;
-  font-size: 0.875vw;
-  font-weight: 500;
-  margin-top: 0.75vw;
+  overflow: visible;
+  fill: currentColor;
 }
 
-/* List view */
-.worksList {
-  padding-bottom: 5vw;
+.projectsOverviewBlock[data-view="list"] .worksLetterform {
+  opacity: 0.08;
 }
-.worksList .projectList {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 2vw;
-  border-top: 1px solid rgba(29, 29, 27, 0.2);
-  padding: 1.5vw 0;
+
+.worksGrid,
+.worksList {
+  width: 100%;
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.worksGrid.active,
+.worksList.active {
+  position: relative;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.worksGrid:not(.active),
+.worksList:not(.active) {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.worksGrid:not(.active) {
+  transform: translateX(-50vw);
+}
+
+.worksList:not(.active) {
+  transform: translateX(50vw);
+}
+
+/* Floating project constellation. */
+.worksGrid {
+  top: -3.75vw;
+  padding-bottom: 10vw;
+  font-size: 0;
+  line-height: 0;
+}
+
+.worksGrid .project {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
   color: var(--hoy-ink);
   text-decoration: none;
-  transition: opacity 0.3s;
 }
+
+.worksGrid .project[data-layout-slot="1"] {
+  width: 14.8125vw;
+  margin-top: 13.375vw;
+  margin-left: 7.9375vw;
+}
+
+.worksGrid .project[data-layout-slot="2"] {
+  width: 20vw;
+  margin-top: 3.75vw;
+  margin-left: 25.3125vw;
+}
+
+.worksGrid .project[data-layout-slot="3"] {
+  width: 22.8125vw;
+  margin-top: 20.5vw;
+  margin-left: 4.0625vw;
+}
+
+.worksGrid .project[data-layout-slot="4"] {
+  width: 20vw;
+  margin-top: -2.3125vw;
+  margin-left: 0;
+}
+
+.worksGrid .project[data-layout-slot="5"] {
+  width: 22.8125vw;
+  margin-top: -12.6875vw;
+  margin-left: 4.0625vw;
+}
+
+.worksGrid .project[data-layout-slot="6"] {
+  width: 14.8125vw;
+  margin-top: 13.0625vw;
+  margin-left: 17.1875vw;
+}
+
+.worksGrid .innerProject {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--hoy-ink);
+  box-shadow: 0 0 0 1px rgb(29 29 27 / 3%);
+}
+
+.worksGrid .project.landscape .innerProject {
+  aspect-ratio: 1.3547 / 1;
+}
+
+.worksGrid .project.portrait .innerProject {
+  aspect-ratio: 0.7383 / 1;
+}
+
+.worksGrid .mediaPlane__video,
+.worksGrid .mediaPlane__poster img {
+  transition: transform 0.45s ease-out;
+}
+
+.worksGrid .projectHover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.65vw;
+  padding: 1vw;
+  background: rgb(238 238 238 / 93%);
+  opacity: 0;
+  transform: scale(0.92);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.worksGrid .projectHoverMarker {
+  width: 0.65vw;
+  height: 0.65vw;
+  flex: 0 0 auto;
+  margin-bottom: 0.25vw;
+  border-radius: 0.14vw;
+  background: var(--hoy-ink);
+}
+
+.worksGrid .projectHover .smallTitle {
+  max-width: 85%;
+  font-size: 1.05vw;
+  line-height: 1.12;
+}
+
+.worksGrid .project:hover .mediaPlane__video,
+.worksGrid .project:hover .mediaPlane__poster img,
+.worksGrid .project:focus-visible .mediaPlane__video,
+.worksGrid .project:focus-visible .mediaPlane__poster img {
+  transform: scale(1.035);
+}
+
+.worksGrid .project:hover .projectHover,
+.worksGrid .project:focus-visible .projectHover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* List state — compact 43px rows at the audited desktop viewport. */
+.worksList {
+  padding-bottom: 15vw;
+}
+
+.worksList .projectList {
+  position: relative;
+  display: flex;
+  min-height: 3.125vw;
+  align-items: stretch;
+  overflow: hidden;
+  border-top: 1px solid rgb(29 29 27 / 18%);
+  color: var(--hoy-ink);
+  font-size: 0.75vw;
+  line-height: 1.15;
+  text-decoration: none;
+}
+
 .worksList .projectList:last-child {
-  border-bottom: 1px solid rgba(29, 29, 27, 0.2);
+  border-bottom: 1px solid rgb(29 29 27 / 18%);
 }
-.worksList .projectList:hover {
-  opacity: 0.6;
-}
+
 .worksList .rowMain {
-  display: flex;
-  align-items: baseline;
-  gap: 1.5vw;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 7vw 26vw 20vw minmax(0, 1fr);
+  align-items: center;
+  gap: 1vw;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.worksList .year {
-  font-size: 0.75vw;
-  font-weight: 500;
-  min-width: 4vw;
+
+.worksList .year,
+.worksList .listTitle,
+.worksList .listSector,
+.worksList .listCategory {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
 .worksList .listTitle {
-  font-size: 1.852vw;
   font-weight: 500;
 }
+
 .worksList .rowStats {
+  position: absolute;
+  inset: 0 0 0 auto;
   display: flex;
-  gap: 3vw;
-  font-size: 0.75vw;
+  width: 38vw;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3.5vw;
+  padding-right: 1vw;
+  background: linear-gradient(90deg, rgb(238 238 238 / 0%), var(--hoy-yellow) 20%);
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .worksList .statLabel {
   display: block;
   font-weight: 500;
 }
-.noResults {
-  padding: 4vw 0;
+
+.worksList .projectList:hover .rowMain,
+.worksList .projectList:focus-visible .rowMain {
+  opacity: 0.38;
+  transform: translateY(-8%);
 }
 
-/* Filter dock (reference: fixed bottom-center, blurred) */
-.filterWrapper {
+.worksList .projectList:hover .rowStats,
+.worksList .projectList:focus-visible .rowStats {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.noResults {
+  position: relative;
+  z-index: 2;
+  padding: 4vw 0 40vw;
+}
+
+/* Full-viewport category state. The translucent wash keeps the current
+   constellation and letterform visible, as on the reference. */
+.worksFilterOverlay {
   position: fixed;
-  left: 50%;
-  bottom: 2.5vw;
-  transform: translateX(-50%);
-  z-index: 7;
-  display: flex;
-  align-items: center;
-  gap: 1vw;
-  backdrop-filter: blur(40px);
-  background: rgba(238, 238, 238, 0.55);
-  border-radius: 2.778vw;
-  padding: 0.5vw 1vw;
+  inset: 0;
+  z-index: 8;
+  background: rgb(238 238 238 / 86%);
+  backdrop-filter: blur(2px);
+  animation: worksFilterFade 0.3s ease-out both;
 }
-.filterWrapper .filter {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5vw;
-  background: none;
-  border: 0;
-  font: inherit;
-  color: var(--hoy-ink);
-  cursor: pointer;
-  font-weight: 500;
-}
-.filterWrapper .filter .icon svg {
-  width: 1vw;
-  height: 1vw;
-}
-.filterWrapper .textTitle {
-  font-size: 0.75vw;
-  font-weight: 500;
-}
+
 .filterPanel {
   position: absolute;
-  bottom: calc(100% + 0.75vw);
+  bottom: 7.35vw;
   left: 50%;
-  transform: translateX(-50%);
   display: flex;
+  width: 42vw;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5vw;
-  width: max-content;
-  max-width: 60vw;
-  background: rgba(238, 238, 238, 0.85);
-  backdrop-filter: blur(40px);
-  border-radius: 1.4vw;
-  padding: 0.9vw 1vw;
+  gap: 0.65vw;
+  transform: translateX(-50%);
 }
-.filterPanel .filterCategory {
-  background: none;
-  border: 1px solid rgba(29, 29, 27, 0.35);
-  border-radius: 2vw;
-  padding: 0.35vw 0.9vw;
-  font: inherit;
-  font-size: 0.75vw;
-  font-weight: 500;
-  color: var(--hoy-ink);
-  cursor: pointer;
-  transition:
-    background 0.3s,
-    color 0.3s;
-}
-.filterPanel .filterCategory.active {
-  background: var(--hoy-ink);
-  color: var(--hoy-yellow);
-  border-color: var(--hoy-ink);
-}
+
+.filterPanel .filterCategory,
 .filterPanel .resetFilters {
   position: relative;
-  background: var(--hoy-yellow);
-  border: 0;
-  border-radius: 2vw;
-  padding: 0.35vw 0.9vw;
-  font: inherit;
-  font-size: 0.75vw;
-  font-weight: 500;
+  display: inline-flex;
+  min-height: 2.2vw;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(29 29 27 / 26%);
+  border-radius: var(--radius-pill);
+  background: transparent;
   color: var(--hoy-ink);
+  font: inherit;
+  font-size: 0.69vw;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
   cursor: pointer;
-  overflow: hidden;
+  transition:
+    color 0.3s ease-out,
+    background 0.3s ease-out,
+    border-color 0.3s ease-out,
+    transform 0.3s ease-out;
 }
+
+.filterPanel .filterCategory {
+  padding: 0.45vw 1.35vw;
+}
+
+.filterCategoryIcon {
+  position: absolute;
+  top: 50%;
+  right: 0.6vw;
+  display: grid;
+  width: 0.75vw;
+  height: 0.75vw;
+  place-items: center;
+  opacity: 0;
+  transform: translateY(-50%) rotate(0deg);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.filterCategoryIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.filterPanel .filterCategory:hover,
+.filterPanel .filterCategory:focus-visible,
+.filterPanel .filterCategory.active {
+  padding-right: 2vw;
+  border-color: var(--hoy-ink);
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+}
+
+.filterPanel .filterCategory:hover .filterCategoryIcon,
+.filterPanel .filterCategory:focus-visible .filterCategoryIcon,
+.filterPanel .filterCategory.active .filterCategoryIcon {
+  opacity: 1;
+}
+
+.filterPanel .filterCategory.active .filterCategoryIcon {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.filterPanel .resetFilters {
+  min-width: 7.75vw;
+  overflow: hidden;
+  padding: 0.45vw 1vw;
+  border-color: var(--hoy-yellow);
+  background: var(--hoy-yellow);
+}
+
 .filterPanel .resetFilters .innerLabel {
   position: absolute;
   inset: 0;
   opacity: 0;
 }
-.filterPanel .resetFilters:hover .fixedLabel {
+
+.filterPanel .resetFilters:hover .fixedLabel,
+.filterPanel .resetFilters:focus-visible .fixedLabel {
   opacity: 0;
 }
-.filterPanel .resetFilters:hover .innerLabel {
+
+.filterPanel .resetFilters:hover .innerLabel,
+.filterPanel .resetFilters:focus-visible .innerLabel {
   opacity: 1;
 }
+
+/* Reference bottom-centre frosted dock. */
+.filterWrapper {
+  position: fixed;
+  bottom: 2.5vw;
+  left: 50%;
+  z-index: 9;
+  display: flex;
+  min-height: 2.8125vw;
+  align-items: center;
+  gap: 0.75vw;
+  padding: 0.3125vw 0.9375vw;
+  border-radius: 1.875vw;
+  background: rgb(189 189 189 / 20%);
+  backdrop-filter: blur(40px);
+  transform: translateX(-50%);
+}
+
+.filterWrapper .filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  padding: 0 0.85vw 0 0;
+  border: 0;
+  border-right: 1px solid rgb(29 29 27 / 22%);
+  background: none;
+  color: var(--hoy-ink);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filterWrapper .filter .icon {
+  display: grid;
+  width: 1.1vw;
+  height: 1.1vw;
+  place-items: center;
+  transition: transform 0.3s ease-out;
+}
+
+.filterWrapper .filter.active .icon {
+  transform: rotate(45deg);
+}
+
+.filterWrapper .filter .icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.filterWrapper .textTitle {
+  font-size: 0.69vw;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .viewBox {
   display: inline-flex;
   gap: 0.75vw;
 }
+
 .viewBoxItem {
   display: inline-flex;
   align-items: center;
   gap: 0.4vw;
-  background: none;
+  padding: 0;
   border: 0;
-  font: inherit;
+  background: none;
   color: var(--hoy-ink);
+  font: inherit;
   cursor: pointer;
-  opacity: 0.45;
-  transition: opacity 0.3s;
+  opacity: 0.22;
+  transition: opacity 0.3s ease-out;
 }
+
 .viewBoxItem.active,
-.viewBoxItem:hover {
+.viewBoxItem:hover,
+.viewBoxItem:focus-visible {
   opacity: 1;
 }
+
 .viewBoxIcon svg {
   display: block;
+  width: 0.85vw;
+  height: 0.85vw;
+}
+
+@keyframes worksFilterFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1080px) {
-  .projectsOverviewBlock {
-    padding-top: 12.963vw;
-  }
-  .worksGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.852vw;
-  }
-  .worksGrid .projectTitle {
-    font-size: 1.296vw;
-  }
-  .worksGrid .project .tag {
-    font-size: 0.93vw;
-  }
-  .worksGrid .takeALook {
-    font-size: 1vw;
-  }
-  .filterWrapper {
-    bottom: 3.704vw;
-    padding: 0.9vw 1.6vw;
-    border-radius: 4vw;
-  }
   .filterWrapper .textTitle,
   .filterPanel .filterCategory,
-  .filterPanel .resetFilters {
-    font-size: 1.111vw;
+  .filterPanel .resetFilters,
+  .worksList .projectList {
+    font-size: 1.05vw;
   }
-  .worksList .listTitle {
-    font-size: 2.778vw;
-  }
-  .worksList .year,
-  .worksList .rowStats {
-    font-size: 1.111vw;
+
+  .filterPanel {
+    width: 58vw;
   }
 }
 
 @media (max-width: 580px) {
   .projectsOverviewBlock {
-    padding-top: 24.138vw;
+    padding-top: 15.517vw;
   }
+
+  .worksLetterform .centerContent {
+    width: 58vw;
+    height: 58vw;
+  }
+
   .worksGrid {
-    grid-template-columns: 1fr;
-    gap: 5.172vw;
+    top: 0;
+    display: grid;
+    margin-top: 4vw;
+    padding: 8vw 0 28vw;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24vw 4vw;
+    line-height: normal;
   }
-  .worksGrid .project.landscape,
-  .worksGrid .project.portrait {
-    grid-column: span 1;
+
+  .worksGrid .project[data-layout-slot] {
+    width: auto;
+    margin: 0;
   }
-  .worksGrid .projectTitle {
-    font-size: 3.793vw;
+
+  .worksGrid .project[data-layout-slot="1"] {
+    width: 78%;
+    align-self: end;
+    justify-self: start;
+    transform: translateY(12vw);
   }
-  .worksGrid .project .tag {
-    font-size: 2.4vw;
-    padding: 1vw 2.4vw;
-    border-radius: 4vw;
+
+  .worksGrid .project[data-layout-slot="2"] {
+    width: 100%;
+    justify-self: end;
   }
-  .worksGrid .takeALook {
-    font-size: 2.6vw;
-    padding: 1.2vw 3vw;
-    border-radius: 4vw;
+
+  .worksGrid .project[data-layout-slot="3"] {
+    width: 68%;
+    grid-column: span 2;
+    justify-self: end;
+    transform: translateY(-4vw);
   }
-  .filterWrapper {
-    bottom: 5.172vw;
-    gap: 3vw;
-    padding: 2vw 4vw;
-    border-radius: 8vw;
+
+  .worksGrid .project[data-layout-slot="4"] {
+    width: 96%;
+    justify-self: start;
   }
-  .filterWrapper .textTitle,
-  .filterPanel .filterCategory,
-  .filterPanel .resetFilters {
-    font-size: 3.103vw;
+
+  .worksGrid .project[data-layout-slot="5"] {
+    width: 78%;
+    justify-self: end;
+    transform: translateY(15vw);
   }
-  .filterWrapper .filter .icon svg {
-    width: 3.4vw;
-    height: 3.4vw;
+
+  .worksGrid .project[data-layout-slot="6"] {
+    width: 72%;
+    grid-column: span 2;
+    justify-self: center;
   }
-  .filterPanel {
-    max-width: 92vw;
-    border-radius: 4vw;
-    padding: 2.5vw 3vw;
-    gap: 1.6vw;
+
+  .worksGrid .innerProject {
+    border-radius: 1.25vw;
   }
-  .filterPanel .filterCategory,
-  .filterPanel .resetFilters {
-    padding: 1.2vw 3vw;
-    border-radius: 6vw;
+
+  .worksGrid .projectHover {
+    gap: 2vw;
+    padding: 3vw;
   }
-  .worksList .listTitle {
-    font-size: 5.517vw;
+
+  .worksGrid .projectHoverMarker {
+    width: 2vw;
+    height: 2vw;
+    margin-bottom: 0.8vw;
   }
-  .worksList .year,
-  .worksList .rowStats {
-    font-size: 3.103vw;
+
+  .worksGrid .projectHover .smallTitle {
+    font-size: 3.45vw;
   }
+
+  .worksList {
+    padding-bottom: 30vw;
+  }
+
+  .worksList .projectList {
+    min-height: 15vw;
+    padding: 2.5vw 0;
+    font-size: 2.9vw;
+  }
+
+  .worksList .rowMain {
+    grid-template-columns: 13vw minmax(0, 1fr);
+    gap: 2vw;
+  }
+
+  .worksList .listSector,
+  .worksList .listCategory {
+    display: none;
+  }
+
   .worksList .rowStats {
     display: none;
+  }
+
+  .worksFilterOverlay {
+    background: rgb(238 238 238 / 91%);
+  }
+
+  .filterPanel {
+    bottom: 22vw;
+    width: 92vw;
+    gap: 2vw;
+  }
+
+  .filterPanel .filterCategory,
+  .filterPanel .resetFilters {
+    min-height: 8.5vw;
+    padding: 2vw 4vw;
+    font-size: 2.45vw;
+  }
+
+  .filterPanel .filterCategory:hover,
+  .filterPanel .filterCategory:focus-visible,
+  .filterPanel .filterCategory.active {
+    padding-right: 7vw;
+  }
+
+  .filterCategoryIcon {
+    right: 2.3vw;
+    width: 2.8vw;
+    height: 2.8vw;
+  }
+
+  .filterPanel .resetFilters {
+    min-width: 29vw;
+  }
+
+  .filterWrapper {
+    bottom: 5.172vw;
+    min-height: 11vw;
+    gap: 2.5vw;
+    padding: 1.7vw 3vw;
+    border-radius: 8vw;
+  }
+
+  .filterWrapper .filter {
+    gap: 1.7vw;
+    padding-right: 2.8vw;
+  }
+
+  .filterWrapper .filter .icon {
+    width: 3.8vw;
+    height: 3.8vw;
+  }
+
+  .filterWrapper .textTitle {
+    font-size: 2.55vw;
+  }
+
+  .viewBox {
+    gap: 2.7vw;
+  }
+
+  .viewBoxItem {
+    gap: 1.2vw;
+  }
+
+  .viewBoxIcon svg {
+    width: 3vw;
+    height: 3vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .worksGrid,
+  .worksList,
+  .worksGrid .projectHover,
+  .worksList .rowMain,
+  .worksList .rowStats,
+  .worksFilterOverlay {
+    animation: none;
+    transition: none;
   }
 }
