@@ -27,6 +27,15 @@ const LINE_ENDING_EXCEPTIONS = new Map([
   ],
 ]);
 
+/*
+ * MIG-000 migrated exactly 164 checksummed overlay files (the manifest itself
+ * is self-excluded). The manifest is immutable evidence: a changed entry
+ * count, a duplicated path or an identical duplicated line is an integrity
+ * failure. Distinct files may legitimately share a content hash (archive copy
+ * plus canonical copy), so duplicate hashes alone are not defects.
+ */
+const EXPECTED_ENTRY_COUNT = 164;
+
 const repositoryRoot = join(fileURLToPath(new URL("..", import.meta.url)));
 const manifestPath = join(repositoryRoot, "docs/migration/MIGRATION-MANIFEST.sha256");
 
@@ -55,6 +64,25 @@ const entries = readFileSync(manifestPath, "utf8")
   });
 
 const errors = [];
+
+if (entries.length !== EXPECTED_ENTRY_COUNT) {
+  errors.push(
+    `manifest entry count changed: expected ${EXPECTED_ENTRY_COUNT}, found ${entries.length}`,
+  );
+}
+
+const seenPaths = new Map();
+for (const { hash, path } of entries) {
+  const previousHash = seenPaths.get(path);
+  if (previousHash === undefined) {
+    seenPaths.set(path, hash);
+  } else if (previousHash === hash) {
+    errors.push(`identical duplicate manifest entry: ${path}`);
+  } else {
+    errors.push(`duplicate manifest path with conflicting hashes: ${path}`);
+  }
+}
+
 let exactMatches = 0;
 const documentedExceptions = [];
 
