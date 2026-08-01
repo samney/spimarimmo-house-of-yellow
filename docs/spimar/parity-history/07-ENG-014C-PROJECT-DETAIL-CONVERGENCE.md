@@ -300,18 +300,30 @@ the capture corpus and its archive stay on disk.
 | Field    | Value                                                                                                                             |
 | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Path     | `C:\work\spimar\qa\implementation\ENG-014C-EVIDENCE-PACKAGE.zip`                                                                  |
-| Size     | 41,536,096 bytes                                                                                                                  |
-| SHA-256  | `2B95663EE30BC6648AE1B161B5DFBC24CCE537623606C70A05ECC64E101D5FD2`                                                                |
+| Size     | 41,536,164 bytes                                                                                                                  |
+| SHA-256  | `7C4DF5FF789AE45A1DC9D6D96A15C51244A2F8259B31A2847AAC36579D417FCD`                                                                |
 | Contents | 12 reference captures, 12 implementation captures, both audit JSONs, the block contract, the parity matrix and the validation log |
 
-Refreshed during review corrections: the package previously carried a stale draft
-of `validation-log.md` and the pre-hardening parity matrix. Both were replaced
-with the committed versions; all 24 captures are unchanged, and a spot re-measure
-of `oceanco-leviathan`, `ansu-fati-arriba-nutrition` and
+All five non-capture evidence files in the package are byte-identical to their
+committed counterparts under `qa/eng014c/`, verified by SHA-256 after newline
+normalisation. All 24 captures are unchanged from the original build, and a spot
+re-measure of `oceanco-leviathan`, `ansu-fati-arriba-nutrition` and
 `porsche-employer-branding` at both viewports reproduced the recorded
 implementation scroll heights exactly, so the captures still correspond to the
-head. The superseded package was `41,534,162` bytes,
-SHA-256 `1DE4190CC409A2666AC6939295934CEE14F7414EC4359CE3AC98CB01223F5E26`.
+head.
+
+Supersession chain:
+
+| Package       | Size         | SHA-256                                                            | Why superseded                                                         |
+| ------------- | ------------ | ------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| Original      | 41,534,162 B | `1DE4190CC409A2666AC6939295934CEE14F7414EC4359CE3AC98CB01223F5E26` | Carried a stale draft `validation-log.md` and the pre-hardening matrix |
+| First refresh | 41,536,096 B | `2B95663EE30BC6648AE1B161B5DFBC24CCE537623606C70A05ECC64E101D5FD2` | Built before the final Prettier-tally edit to `validation-log.md`      |
+| **Current**   | 41,536,164 B | `7C4DF5FF789AE45A1DC9D6D96A15C51244A2F8259B31A2847AAC36579D417FCD` | —                                                                      |
+
+The first refresh was flagged by the final independent review: its archived
+`validation-log.md` still read `156` head-violating files and `1` file leaving the
+set, where the committed log records `155` and `2`. Only that one table hunk was
+stale; the package now carries the committed log verbatim.
 
 This package is separate from the ENG-014B evidence package and does not
 include, move or modify any of its files.
