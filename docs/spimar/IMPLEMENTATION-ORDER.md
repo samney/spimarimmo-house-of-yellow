@@ -13,17 +13,19 @@ Completed:
 - Control-plane hardening (no ticket ID) — manifest-verifier structural checks and checkpoint refresh, PR #7, merge `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`.
 - ENG-014C — all 21 project-page structures and route-specific variants, PR #8, merge `17b697430a55fa3a5835c9c25fef927301b9ec87` (reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent); accepted on project-composition parity under `D-014`, with the raw whole-page height criterion recorded as an authorized unmet exception owned by `PAR-P1-004` under ENG-014E.
 
-Current canonical `main`: `17b697430a55fa3a5835c9c25fef927301b9ec87`.
+- ENG-014C control-plane closeout — PR #9, merge `6961705e657c1fa65f71a5a8099c9e77f6c89cba`.
+- ENG-015 — accelerated final foundation acceptance under `D-015`, PR #10. Stage A closed.
 
-Remaining mandatory order:
+Superseded, never run:
 
-1. ENG-014D — approved non-hero media and fallbacks; hero poster-only. Next eligible item; **not started**.
-2. ENG-014E — motion, responsive, accessibility, browser and visual QA; also re-measures and closes the `D-014` / `PAR-P1-004` global-shell height exception.
-3. ENG-015 — merge, validate, record and tag `hoy-clone-baseline-eng-015`.
+- ENG-014D — **SUPERSEDED / TRANSFERRED (`D-015`)**. Not implemented, not passed. Non-hero media delivery is no longer a foundation blocker; requirements move to the SPIMAR content/media phase against SPIMAR-owned media.
+- ENG-014E — **SUPERSEDED / TRANSFERRED (`D-015`)**. Not implemented, not passed. Motion, shell, responsive and visual-convergence requirements move to `SPI-030`/`SPI-040`/`QA-110`. The `D-014` / `PAR-P1-004` whole-page height exception is preserved and carried forward unmet.
 
-## Stage B — Controlled SPIMAR restart
+## Stage B — Controlled SPIMAR restart (ACTIVE)
 
-Start from the accepted tag and latest clean main. Exclude old patches, experimental worktrees, stale branches and unmerged artifacts.
+Start from the accepted `hoy-clone-baseline-eng-015` tag and latest clean main. Exclude old patches, experimental worktrees, stale branches and unmerged artifacts.
+
+Active item: `SPI-000`, executed as SPIMAR Transformation Phase 1 — Brand, UX Architecture and Global Experience, on branch `claude/spimar-transformation-phase-1`.
 
 1. Audit House of Yellow dependencies, residue, duplication, reusable primitives and obsolete paths.
 2. Neutralize the clone and establish one canonical architecture.

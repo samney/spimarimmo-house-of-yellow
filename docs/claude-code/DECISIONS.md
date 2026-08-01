@@ -149,3 +149,67 @@ Not corrected here, by design: `qa/eng014c/validation-log.md` and the
 the original figures. Those are immutable merged evidence and are deliberately
 left byte-identical to what PR #8 recorded; this erratum supersedes them for all
 forward-looking purposes.
+
+## D-015 — 2026-08-01 — Owner acceleration: foundation accepted as sufficient; ENG-014D and ENG-014E superseded and transferred to SPIMAR; ENG-015 closes the foundation
+
+**Authority.** Explicit repository-owner decision, recorded on the day it was
+made. It is an owner-authorized change to the previously recorded execution
+order and it outranks the prior sequencing in `MASTER.md`, `QUEUE.md`,
+`IMPLEMENTATION-ORDER.md` and `CLAUDE.md`.
+
+**Context.** The House of Yellow reference foundation is technically sufficient
+for the SPIMAR transformation. Continuing reference-template parity has reached
+diminishing returns and must not consume another full implementation cycle.
+
+**Decision.**
+
+1. The existing foundation is accepted as technically sufficient for the SPIMAR
+   transformation.
+2. `ENG-014D` and `ENG-014E` will **not** run as separate implementation
+   phases. They are **superseded and transferred**, not completed. They must
+   never be recorded as passed, implemented or validated.
+3. `ENG-015` runs once, as an accelerated final foundation acceptance, and
+   closes Stage A.
+4. For `ENG-015` only, the two-pass review chain of `D-009` is relaxed: the
+   authoritative existing gate suite plus a live smoke review substitutes for a
+   separate fresh-session review, on the owner's explicit instruction. `D-009`
+   remains in force for all subsequent SPIMAR work.
+
+**Disposition of `ENG-014D` — SUPERSEDED / TRANSFERRED.** House of Yellow
+non-hero reference media delivery is no longer a foundation blocker.
+SPIMAR-owned images, videos and content will replace reference media. The media
+delivery requirements — approved-media manifest, fallbacks, request success,
+rights and source provenance, no broken media — transfer to the SPIMAR
+content/media phase (`CMS-080`, with the manifest contract carried from
+`SPI-030`/`SPI-040` onward). No House of Yellow media is to be reconstructed or
+sourced.
+
+**Disposition of `ENG-014E` — SUPERSEDED / TRANSFERRED.** Remaining House of
+Yellow motion, global-shell and pixel-parity convergence is no longer a
+foundation blocker. Animation, header, footer, responsive-shell and
+visual-convergence requirements transfer to SPIMAR design implementation
+(`SPI-030` identity/motion/responsive foundations and `SPI-040` global shell),
+with the cross-cutting accessibility, browser and regression sweep landing in
+`QA-110`.
+
+**`PAR-P1-004` and `D-014` are preserved, not closed.** The `D-014` measurement
+erratum and the whole-page height exception remain exactly as recorded. The raw
+whole-page scroll-height criterion (≤2%) **did not pass and is not claimed to
+have passed**. It was never satisfied, and it is not satisfied now; it is
+carried forward as an accepted, documented limitation of the accepted
+foundation. `PAR-P1-004` transfers to `SPI-040`, where the global shell is
+replaced outright rather than re-measured against House of Yellow.
+
+**Consequences.**
+
+- Stage A ends at `ENG-015`. Its order becomes
+  `MIG-000 → OPS-001 → ENG-014C → ENG-015`.
+- `D-012` (poster-only hero) expires by its own terms at `ENG-015` acceptance.
+  This does **not** authorize enabling video: media activation is a SPIMAR
+  decision under the SPIMAR content/media phase, and
+  `lib/media/video-manifest.json` still declares 0 deployable assets.
+- `D-013` takes effect at `ENG-015` acceptance: no historical patch may be
+  applied from this point.
+- Accepted limitations transferred to SPIMAR are enumerated in
+  `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
+- Immutable `ENG-014B` and `ENG-014C` evidence is untouched.
