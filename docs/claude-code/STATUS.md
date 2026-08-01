@@ -5,8 +5,9 @@ Updated: 2026-08-01
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current verified `main`: `f57a87fdd55a5bc65fa9e85d83860defbf19a9b1`
-- Latest merged item: `OPS-001`, PR #6; post-merge Quality Gates run `30689774539` succeeded
+- Current verified `main`: `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`
+- Latest merged item: control-plane hardening (no ticket ID), PR #7; merge `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` passed; post-merge Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed
+- OPS-001: merged through PR #6 at `f57a87f`; post-merge Quality Gates run `30689774539` succeeded
 - MIG-000: merged through PR #5; migration commit `d29776d9e4e1269e809fd2c118d8fc27100a2556`
 - ENG-014B implementation: `6136057b4be06ffc5da1cbb0d773643896a7350e`, merged through PR #4
 - Ownership from ENG-014C: Claude Code only
@@ -20,10 +21,11 @@ Updated: 2026-08-01
 - `ENG-014B`: independently reviewed, evidence 23/23, merged through PR #4.
 - `MIG-000`: merged through PR #5 at `a8847a5`; portability blockers MIG-1, MIG-2 and MIG-3 remain explicitly carried in `BLOCKERS.md`.
 - `OPS-001`: merged and closed through PR #6 at `f57a87f`; post-merge Quality Gates run `30689774539` succeeded.
-- Control-plane hardening (no ticket ID; this changeset): manifest-verifier structural checks and control-plane checkpoint refresh on `claude/control-plane-hardening`; draft PR pending independent review and owner merge.
-- `ENG-014C`: next engineering item; explicitly not started.
+- Control-plane hardening (no ticket ID): independently reviewed and merged through PR #7 at `b1854dc`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
+- `ENG-014C`: implemented on `claude/eng-014c-project-detail-parity` from `b1854dc`; all local gates pass; draft PR open pending independent review and owner merge.
 - `ENG-014D`–`ENG-015`: not started.
 - SPIMAR transformation: not authorized until `ENG-015` is frozen.
+- Portability blockers MIG-1, MIG-2 and MIG-3 remain disclosed in `BLOCKERS.md`.
 
 ## Corpus status
 
@@ -39,8 +41,6 @@ Updated: 2026-08-01
 
 ## Next safe action
 
-Independently review the control-plane hardening draft PR (verifier structural
-checks, control-plane checkpoint refresh, real Actions evidence), then
-owner-merge it. Then begin `ENG-014C` on a fresh branch from latest
-`origin/main`. Do not begin `ENG-014C` before the hardening PR is reviewed and
-merged.
+Independently review the `ENG-014C` draft PR against the real diff, the audited
+block contract, the parity matrix and the deployed preview, then owner-merge it.
+Do not begin `ENG-014D` before that merge.

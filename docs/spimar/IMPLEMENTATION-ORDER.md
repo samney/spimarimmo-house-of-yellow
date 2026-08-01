@@ -10,10 +10,11 @@ Completed:
 - ENG-014B — work-index convergence, PR #4, merge `4ee1131f9e325dd4ce865d4036238bdccb38a626`.
 - MIG-000 — repository-native knowledge/control migration, PR #5, merge `a8847a5039f347babc2fec2dc48bc39d3d8810c4`.
 - OPS-001 — GitHub Actions quality gates, PR #6, merge `f57a87fdd55a5bc65fa9e85d83860defbf19a9b1`.
+- Control-plane hardening (no ticket ID) — manifest-verifier structural checks and checkpoint refresh, PR #7, merge `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`.
 
 Remaining mandatory order:
 
-1. ENG-014C — all 21 project-page structures and route-specific variants.
+1. ENG-014C — all 21 project-page structures and route-specific variants (in progress).
 2. ENG-014D — approved non-hero media and fallbacks; hero poster-only.
 3. ENG-014E — motion, responsive, accessibility, browser and visual QA.
 4. ENG-015 — merge, validate, record and tag `hoy-clone-baseline-eng-015`.

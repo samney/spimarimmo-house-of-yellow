@@ -1,2070 +1,3010 @@
 [
- {
-  "slug": "oceanco-leviathan",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A cinematic yacht production captured in Antigua, translating the scale, elegance, and futuristic presence of Oceanco’s Leviathan into a refined visual experience built for a global audience.",
-  "categories": [
-   "Corporate",
-   "Commercials"
-  ],
-  "stats": {
-   "impressions": "4.800.000",
-   "followers": "+36.000",
-   "countries": "24",
-   "engagements": "310.000"
+  {
+    "slug": "oceanco-leviathan",
+    "title": "Oceanco – Leviathan",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A cinematic yacht production captured in Antigua, translating the scale, elegance, and futuristic presence of Oceanco’s Leviathan into a refined visual experience built for a global audience.",
+    "infoTags": ["'26", "Luxury & yachting", "Corporate, Commercials"],
+    "categories": ["Corporate", "Commercials"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "4.800.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+36.000"
+      },
+      {
+        "label": "Countries",
+        "value": "24"
+      },
+      {
+        "label": "Engagements",
+        "value": "310.000"
+      }
+    ],
+    "relatedNext": "la-fuente-x-amg",
+    "heroVideoId": "1196251480",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1196251480"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "Oceanco is one of the world’s leading custom yacht builders, known for creating some of the most advanced and iconic superyachts ever built. With a focus on innovation, craftsmanship, and future-thinking engineering, Oceanco continues to redefine the standards of the global superyacht industry."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1196251479"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1196251508"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "For the launch content around Leviathan, House of Yellow traveled to Antigua to capture the yacht in its natural environment: open water, tropical light, and absolute scale. Through cinematic drone work, detail-focused visuals, and atmospheric storytelling, we translated the presence of the yacht into a visual language that feels both powerful and refined. The production focused on movement, architecture, craftsmanship, and the emotion of experiencing Leviathan at sea."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1196251478"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1196251502"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1196251501"
+          },
+          {
+            "shape": "square",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The result is a high-end cinematic production that positions Leviathan as more than a yacht—it becomes a statement of innovation, scale, and experience. By combining luxury visuals with immersive storytelling, the project strengthens Oceanco’s global brand presence while showcasing the next generation of"
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: Oceanco."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "la-fuente-x-amg",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1204605394"
+          }
+        ]
+      }
+    ]
   },
-  "clientText": "Oceanco is one of the world’s leading custom yacht builders, known for creating some of the most advanced and iconic superyachts ever built. With a focus on innovation, craftsmanship, and future-thinking engineering, Oceanco continues to redefine the standards of the global superyacht industry. [ 01 ]",
-  "processText": "For the launch content around Leviathan, House of Yellow traveled to Antigua to capture the yacht in its natural environment: open water, tropical light, and absolute scale. Through cinematic drone work, detail-focused visuals, and atmospheric storytelling, we translated the presence of the yacht into a visual language that feels both powerful and refined. The production focused on movement, architecture, craftsmanship, and the emotion of experiencing Leviathan at sea. [ 02 ]",
-  "projectText": "The result is a high-end cinematic production that positions Leviathan as more than a yacht—it becomes a statement of innovation, scale, and experience. By combining luxury visuals with immersive storytelling, the project strengthens Oceanco’s global brand presence while showcasing the next generation of",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Oceanco.",
-  "relatedNext": "La Fuente x AMG",
-  "heroVideoId": "1196251480",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1196251480"
+  {
+    "slug": "la-fuente-x-amg",
+    "title": "La Fuente x AMG",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A cinematic crossover between performance and personality, bringing the worlds of La Fuente and AMG together through fast-paced visuals, bold styling, and the unmistakable energy of Los Angeles.",
+    "infoTags": ["'26", "Music", "Artists, Commercials"],
+    "categories": ["Artists", "Commercials"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "3.900.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+31.000"
+      },
+      {
+        "label": "Countries",
+        "value": "14"
+      },
+      {
+        "label": "Engagements",
+        "value": "255.000"
+      }
     ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_11-1600x900.jpg"
+    "relatedNext": "broederliefde-rotterdam-ahoy",
+    "heroVideoId": "1204605358",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1204605358"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "La Fuente is a Dutch DJ and producer known for his uplifting house sound, energetic personality, and strong visual identity. For this collaboration, his world collided with the performance-driven universe of AMG—creating a campaign where music, movement, and automotive power come together in one bold visual statement."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1204605308"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1204605277"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "For La Fuente x AMG, House of Yellow developed a high-energy production that blends artist branding with premium automotive storytelling. Shot in Los Angeles, the process focused on creating a visual rhythm that matches both La Fuente’s personality and the bold presence of AMG. Through cinematic driving shots, stylized performance moments, and a fast-paced edit, we built a film that feels dynamic, polished, and unmistakably international"
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1204605354"
+          },
+          {
+            "shape": "portrait",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1204605273"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1204605276"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The result is a cinematic campaign piece that positions La Fuente and AMG in one shared world of speed, style, and performance. By combining music culture with luxury automotive visuals, the project delivers a sharp and energetic brand experience—built to stand out across social, campaign, and artist channels."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1204605278"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: La Fuente."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "broederliefde-rotterdam-ahoy",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194133383"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1196251479",
-     "1196251508"
-    ],
-    "bgs": [
-     "Comp-3_11_34-600x439.jpg",
-     "Comp-1_26_21-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1196251478",
-     "1196251502"
-    ],
-    "bgs": [
-     "Comp-3_11_35-600x439.jpg",
-     "Comp-1_26_22-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1196251501"
-    ],
-    "bgs": [
-     "Comp-1_45-600x600.jpg",
-     "Naamloos-63-1-600x600.jpg",
-     "Naamloos-63-1-800x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [],
-    "bgs": [
-     "Naamloos-62-800x450.jpg",
-     "Naamloos-62.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1204605394"
-    ],
-    "bgs": [
-     "Comp-3_11_36-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "la-fuente-x-amg",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A cinematic crossover between performance and personality, bringing the worlds of La Fuente and AMG together through fast-paced visuals, bold styling, and the unmistakable energy of Los Angeles.",
-  "categories": [
-   "Artists",
-   "Commercials"
-  ],
-  "stats": {
-   "impressions": "3.900.000",
-   "followers": "+31.000",
-   "countries": "14",
-   "engagements": "255.000"
   },
-  "clientText": "The client La Fuente is a Dutch DJ and producer known for his uplifting house sound, energetic personality, and strong visual identity. For this collaboration, his world collided with the performance-driven universe of AMG—creating a campaign where music, movement, and automotive power come together in one bold visual statement. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The result is a cinematic campaign piece that positions La Fuente and AMG in one shared world of speed, style, and performance. By combining music culture with luxury automotive visuals, the project delivers a sharp and energetic brand experience—built to stand out across social, campaign, and artist channels.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: La Fuente.",
-  "relatedNext": "Broederliefde – Rotterdam Ahoy",
-  "heroVideoId": "1204605358",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1204605358"
+  {
+    "slug": "broederliefde-rotterdam-ahoy",
+    "title": "Broederliefde – Rotterdam Ahoy",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "An energetic content campaign that amplified the momentum around Broederliefde’s live show at Rotterdam Ahoy through social-first storytelling and high-impact visuals.",
+    "infoTags": ["'26", "Live music event", "Artists, Events, Social campaigns"],
+    "categories": ["Artists", "Events", "Social campaigns"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.900.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+15.000"
+      },
+      {
+        "label": "Countries",
+        "value": "6"
+      },
+      {
+        "label": "Engagements",
+        "value": "140.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1204605308",
-     "1204605277"
-    ],
-    "bgs": [
-     "Comp-3_11_38-600x439.jpg",
-     "Comp-1_26_26-600x800.jpg"
+    "relatedNext": "srg-international-reeses",
+    "heroVideoId": "1194133383",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1194133383"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "Broederliefde is one of the Netherlands’ most influential hiphop collectives, known for their energetic sound, positive message, and strong connection with their audience. Originating from Rotterdam, the group has grown into a cultural phenomenon, blending hiphop, pop, and Caribbean influences into a unique and widely recognizable style."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1194133343"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1194133345"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "To support Broederliefde’s live show at Rotterdam Ahoy, House of Yellow developed a content campaign that built momentum in the lead-up to the event and during “Het Huis van Broederliefde.” Through a series of teasers and social-first content, we amplified anticipation and strengthened the connection with their audience.",
+          "The campaign extended the experience beyond the concert itself, increasing excitement and visibility while aligning seamlessly with Broederliefde’s existing cultural impact."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1194133346"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1194133344"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194133391"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194133389"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The campaign was designed to build anticipation around Broederliefde’s live show at Rotterdam Ahoy and “Het Huis van Broederliefde.” By developing a series of teasers and social-first content in the lead-up to the event, we amplified excitement and strengthened the connection with their audience.",
+          "The content extended the live experience beyond the concert itself, increasing visibility and engagement while aligning seamlessly with Broederliefde’s cultural impact and fanbase."
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: Broederliefde."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "srg-international-reeses",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194285750"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1204605354"
-    ],
-    "bgs": [
-     "Comp-3_11_37-600x439.jpg",
-     "lafuente-amg-600x800.jpg",
-     "lafuente-amg-800x1067.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1204605273",
-     "1204605276"
-    ],
-    "bgs": [
-     "Comp-1_48-600x600.jpg",
-     "Comp-1_47-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1204605278"
-    ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_13-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1194133383"
-    ],
-    "bgs": [
-     "Comp-1_26_7-800x1067.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "broederliefde-rotterdam-ahoy",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "An energetic content campaign that amplified the momentum around Broederliefde’s live show at Rotterdam Ahoy through social-first storytelling and high-impact visuals.",
-  "categories": [
-   "Artists",
-   "Events",
-   "Social campaigns"
-  ],
-  "stats": {
-   "impressions": "1.900.000",
-   "followers": "+15.000",
-   "countries": "6",
-   "engagements": "140.000"
   },
-  "clientText": "The client Broederliefde is one of the Netherlands’ most influential hiphop collectives, known for their energetic sound, positive message, and strong connection with their audience. Originating from Rotterdam, the group has grown into a cultural phenomenon, blending hiphop, pop, and Caribbean influences into a unique and widely recognizable style. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The campaign was designed to build anticipation around Broederliefde’s live show at Rotterdam Ahoy and “Het Huis van Broederliefde.” By developing a series of teasers and social-first content in the lead-up to the event, we amplified excitement and strengthened the connection with their audience. The content extended the live experience beyond the concert itself, increasing visibility and engagement while aligning seamlessly with Broederliefde’s cultural impact and fanbase.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Broederliefde.",
-  "relatedNext": "SRG International – Reeses",
-  "heroVideoId": "1194133383",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1194133383"
+  {
+    "slug": "srg-international-reeses",
+    "title": "SRG International – Reeses",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A playful cinematic campaign that brought Reese’s back to the spotlight through immersive storytelling, bold visuals, and a larger-than-life takeover of Amsterdam.",
+    "infoTags": ["'26", "FMCG brands", "Commercials, Launches"],
+    "categories": ["Commercials", "Launches"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "3.500.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+28.000"
+      },
+      {
+        "label": "Products sold",
+        "value": "+420.000"
+      },
+      {
+        "label": "Countries",
+        "value": "12"
+      },
+      {
+        "label": "Engagements",
+        "value": "250.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1194133343",
-     "1194133345"
-    ],
-    "bgs": [
-     "Comp-3_11_23-600x439.jpg",
-     "Comp-1_26_8-600x800.jpg"
+    "relatedNext": "klibansky-superman",
+    "heroVideoId": "1194285750",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1194285750"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "SRG International is a Netherlands-based global distribution and brand partner, connecting FMCG brands with retail markets across Europe and beyond. With decades of experience, they specialize in simplifying complex route-to-market strategies through integrated logistics, sales, and brand support. Operating in more than 70 countries, SRG International continues to help brands scale and grow internationally."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1187986095"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "To support the relaunch of Reese’s, House of Yellow partnered once again with SRG International to create a bold and eye-catching campaign. Centered around the iconic sweet-and-salty combination, we developed a concept that brings the brand to life through playful and immersive storytelling.",
+          "Timed with King’s Day, the teaser was set in Amsterdam, featuring a giant Reese’s mascot taking over the city streets. Through cinematic visuals and a strong narrative, the campaign delivers a distinctive and memorable brand moment."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1194285751"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194285748"
+          },
+          {
+            "shape": "square",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The campaign created a standout relaunch moment for Reese’s, building excitement around its signature sweet-and-salty identity. By turning the streets of Amsterdam into a playful stage, the video delivers a bold and memorable visual experience that captures attention instantly.",
+          "The result is a distinctive piece of content that strengthens brand awareness and positions Reese’s as an iconic treat within the Dutch market."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: SRG International."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "klibansky-superman",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188024122"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1194133346",
-     "1194133344"
-    ],
-    "bgs": [
-     "Comp-3_11_24-600x439.jpg",
-     "Comp-1_26_9-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1194133391",
-     "1194133389"
-    ],
-    "bgs": [
-     "Comp-1_35-600x600.jpg",
-     "Comp-1_36-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1194285750"
-    ],
-    "bgs": [
-     "Comp-1_26_18-800x1067.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "srg-international-reeses",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A playful cinematic campaign that brought Reese’s back to the spotlight through immersive storytelling, bold visuals, and a larger-than-life takeover of Amsterdam.",
-  "categories": [
-   "Commercials",
-   "Launches"
-  ],
-  "stats": {
-   "impressions": "3.500.000",
-   "followers": "+28.000",
-   "countries": "12",
-   "engagements": "250.000"
   },
-  "clientText": "The client SRG International is a Netherlands-based global distribution and brand partner, connecting FMCG brands with retail markets across Europe and beyond. With decades of experience, they specialize in simplifying complex route-to-market strategies through integrated logistics, sales, and brand support. Operating in more than 70 countries, SRG International continues to help brands scale and grow internationally. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The campaign created a standout relaunch moment for Reese’s, building excitement around its signature sweet-and-salty identity. By turning the streets of Amsterdam into a playful stage, the video delivers a bold and memorable visual experience that captures attention instantly. The result is a distinctive piece of content that strengthens brand awareness and positions Reese’s as an iconic treat within the Dutch market.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: SRG International.",
-  "relatedNext": "Klibansky – Superman",
-  "heroVideoId": "1194285750",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1194285750"
+  {
+    "slug": "klibansky-superman",
+    "title": "Klibansky – Superman",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A bold visual campaign that merges contemporary art and iconic pop culture through cinematic storytelling, dynamic content, and striking creative direction.",
+    "infoTags": ["'26", "Art", "Commercials, Social campaigns"],
+    "categories": ["Commercials", "Social campaigns"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "2.800.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+22.000"
+      },
+      {
+        "label": "Countries",
+        "value": "32"
+      },
+      {
+        "label": "Engagements",
+        "value": "180.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1187986095"
-    ],
-    "bgs": [
-     "1Y9A8180HOY_REESES_SRGI_KINGSDAY-600x427.jpg",
-     "1Y9A8180HOY_REESES_SRGI_KINGSDAY-800x569.jpg",
-     "dcbc4aa4-61112aab-1_2-600x800.jpg"
+    "relatedNext": "xxl-nutrition-festival-activations",
+    "heroVideoId": "1188024122",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188024122"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "Joseph Klibansky, a Dutch contemporary artist, collaborated with Superman on a bold campaign merging art and pop culture—creating a powerful visual statement that blends iconic symbolism with his signature polished aesthetic."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188027334"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188026479"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "To amplify the launch of Joseph Klibansky’s collaboration with Superman (DC / Warner Bros.), House of Yellow developed a content-driven campaign that builds momentum both leading up to and during the gallery opening. Through a mix of bold teasers, behind-the-scenes content, and dynamic shorts, we showcased the artworks while revealing the story behind the collaboration.",
+          "By combining artistic detail with cinematic storytelling, the campaign brings the world of Klibansky and Superman together in a powerful and engaging way."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188028108"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188024977"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188028894"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188028868"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The campaign was designed to generate maximum impact around the collaboration between Joseph Klibansky and Superman (DC / Warner Bros.). By combining striking visual content with behind-the-scenes storytelling, the project builds anticipation and brings the creative process to the forefront.",
+          "The result is a powerful and visually engaging campaign that positions the collaboration as a unique crossover between contemporary art and global pop culture."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188030910"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: Joseph Klibansky."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "xxl-nutrition-festival-activations",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188098568"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1194285751"
-    ],
-    "bgs": [
-     "1Y9A8436HOY_REESES_SRGI_KINGSDAY-600x427.jpg",
-     "Comp-1_26_19-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1194285748"
-    ],
-    "bgs": [
-     "Comp-1_43-600x600.jpg",
-     "1Y9A7749HOY_REESES_SRGI_KINGSDAY-600x600.jpg",
-     "1Y9A7749HOY_REESES_SRGI_KINGSDAY-800x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [],
-    "bgs": [
-     "srgi-fullwidth-800x450.jpg",
-     "srgi-fullwidth.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188024122"
-    ],
-    "bgs": [
-     "Comp-1_4-800x1067.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "klibansky-superman",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A bold visual campaign that merges contemporary art and iconic pop culture through cinematic storytelling, dynamic content, and striking creative direction.",
-  "categories": [
-   "Commercials",
-   "Social campaigns"
-  ],
-  "stats": {
-   "impressions": "2.800.000",
-   "followers": "+22.000",
-   "countries": "32",
-   "engagements": "180.000"
   },
-  "clientText": "The client Joseph Klibansky, a Dutch contemporary artist, collaborated with Superman on a bold campaign merging art and pop culture—creating a powerful visual statement that blends iconic symbolism with his signature polished aesthetic. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The campaign was designed to generate maximum impact around the collaboration between Joseph Klibansky and Superman (DC / Warner Bros.). By combining striking visual content with behind-the-scenes storytelling, the project builds anticipation and brings the creative process to the forefront. The result is a powerful and visually engaging campaign that positions the collaboration as a unique crossover between contemporary art and global pop culture.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Joseph Klibansky.",
-  "relatedNext": "XXL Nutrition – Festival Activations",
-  "heroVideoId": "1188024122",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188024122"
+  {
+    "slug": "xxl-nutrition-festival-activations",
+    "title": "XXL Nutrition – Festival Activations",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A high-energy aftermovie series capturing live festival activations where sports nutrition, lifestyle, and audience interaction come together in real-time experiences.",
+    "infoTags": ["'26", "Sport nutrition", "Events, Commercials"],
+    "categories": ["Events", "Commercials"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "2.600.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+21.000"
+      },
+      {
+        "label": "Products sold",
+        "value": "+180.000"
+      },
+      {
+        "label": "Countries",
+        "value": "9"
+      },
+      {
+        "label": "Engagements",
+        "value": "210.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188027334",
-     "1188026479"
-    ],
-    "bgs": [
-     "Comp-3-600x439.jpg",
-     "Comp-1_6-600x800.jpg"
+    "relatedNext": "qbuzz-smiley-campaign",
+    "heroVideoId": "1188098568",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188098568"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "XXL Nutrition is Europe’s leading sports nutrition brand, known for its wide range of supplements and performance-focused products. Beyond retail and e-commerce, the brand actively connects with its audience through live activations at festivals and events across the Netherlands and Europe."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188098463"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "For XXL Nutrition, we created a series of aftermovies capturing their on-site festival activations. Focused on energy, interaction, and experience, we translated their brand presence into dynamic visual storytelling.",
+          "From crowd engagement to live challenges and product moments, the process centered around capturing the atmosphere of the XXL Nutrition “Protein Bar” experience in real time—fast-paced, social, and built around connection."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188098498"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188098399"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188098429"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The project showcases XXL Nutrition’s festival activations as more than brand presence—they become experiences in themselves. The aftermovies highlight the interaction between brand and audience, bringing to life the energy of the festival grounds and the role XXL plays within it.",
+          "The result is high-energy content that strengthens brand visibility and connects sports nutrition with lifestyle and culture."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188098532"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: XXL Nutrition."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "qbuzz-smiley-campaign",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188074581"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188028108",
-     "1188024977"
-    ],
-    "bgs": [
-     "Comp-3_1-600x439.jpg",
-     "Comp-1_5-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188028894",
-     "1188028868"
-    ],
-    "bgs": [
-     "Comp-4-600x600.jpg",
-     "Comp-4_1-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188030910"
-    ],
-    "bgs": [
-     "Comp-5_1-2-800x451.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188098568"
-    ],
-    "bgs": [
-     "Comp-1_19-800x1067.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "xxl-nutrition-festival-activations",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A high-energy aftermovie series capturing live festival activations where sports nutrition, lifestyle, and audience interaction come together in real-time experiences.",
-  "categories": [
-   "Events",
-   "Commercials"
-  ],
-  "stats": {
-   "impressions": "2.600.000",
-   "followers": "+21.000",
-   "countries": "9",
-   "engagements": "210.000"
   },
-  "clientText": "The client XXL Nutrition is Europe’s leading sports nutrition brand, known for its wide range of supplements and performance-focused products. Beyond retail and e-commerce, the brand actively connects with its audience through live activations at festivals and events across the Netherlands and Europe. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The project showcases XXL Nutrition’s festival activations as more than brand presence—they become experiences in themselves. The aftermovies highlight the interaction between brand and audience, bringing to life the energy of the festival grounds and the role XXL plays within it. The result is high-energy content that strengthens brand visibility and connects sports nutrition with lifestyle and culture.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: XXL Nutrition.",
-  "relatedNext": "Qbuzz – Smiley Campaign",
-  "heroVideoId": "1188098568",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188098568"
+  {
+    "slug": "qbuzz-smiley-campaign",
+    "title": "Qbuzz – Smiley Campaign",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A friendly and visual campaign that transforms public transport travel rules into an accessible message about respect, shared responsibility, and a better journey for everyone.",
+    "infoTags": ["'26", "Public transport", "Corporate, Social campaigns"],
+    "categories": ["Corporate", "Social campaigns"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "2.200.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+18.000"
+      },
+      {
+        "label": "Countries",
+        "value": "1"
+      },
+      {
+        "label": "Engagements",
+        "value": "160.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188098463"
-    ],
-    "bgs": [
-     "Naamloos-50-3-600x427.jpg",
-     "Naamloos-50-3-800x569.jpg",
-     "Comp-1_22-600x800.jpg"
+    "relatedNext": "porsche-employer-branding",
+    "heroVideoId": "1188075083",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188075083"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "Qbuzz is a Dutch public transport operator connecting thousands of passengers every day through regional bus and rail services. With a strong focus on accessibility, reliability, and social connection, Qbuzz aims to create a comfortable and positive travel experience for all."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "For the Smiley campaign, we developed a content series around public transport travel rules. By translating practical guidelines into a friendly and visual language, we used the smiley as a central symbol for respect, calmness, and shared responsibility. The campaign turns everyday rules into a simple message: a better journey starts with a smile."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188076620"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188078492"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The campaign made travel rules more approachable and human by linking them to a positive “share a smile” mindset. The result is an accessible and visually engaging campaign that gently encourages respectful behavior on public transport, contributing to a more pleasant travel experience for everyone."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: Qbuzz."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "porsche-employer-branding",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151543609"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188098498"
-    ],
-    "bgs": [
-     "Naamloos-51-1-600x427.jpg",
-     "Comp-1_21-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188098399",
-     "1188098429"
-    ],
-    "bgs": [
-     "Comp-4_11-600x600.jpg",
-     "Comp-4_10-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188098532"
-    ],
-    "bgs": [
-     "Comp-1_20-800x1067.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188074581"
-    ],
-    "bgs": [
-     "Comp-3_9-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "qbuzz-smiley-campaign",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A friendly and visual campaign that transforms public transport travel rules into an accessible message about respect, shared responsibility, and a better journey for everyone.",
-  "categories": [
-   "Corporate",
-   "Social campaigns"
-  ],
-  "stats": {
-   "impressions": "2.200.000",
-   "followers": "+18.000",
-   "countries": "1",
-   "engagements": "160.000"
   },
-  "clientText": "The client Qbuzz is a Dutch public transport operator connecting thousands of passengers every day through regional bus and rail services. With a strong focus on accessibility, reliability, and social connection, Qbuzz aims to create a comfortable and positive travel experience for all. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The campaign made travel rules more approachable and human by linking them to a positive “share a smile” mindset. The result is an accessible and visually engaging campaign that gently encourages respectful behavior on public transport, contributing to a more pleasant travel experience for everyone.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Qbuzz.",
-  "relatedNext": "Porsche Employer Branding",
-  "heroVideoId": "1188075083",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188075083"
+  {
+    "slug": "porsche-employer-branding",
+    "title": "Porsche Employer Branding",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A nationwide shoot that translated the premium DNA of Porsche Netherlands into authentic employer branding, uniting eight dealerships in one refined, human visual story.",
+    "infoTags": ["'23", "Automotive", "Corporate, Employer branding"],
+    "categories": ["Corporate", "Employer branding"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "3.600.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+28.000"
+      },
+      {
+        "label": "Countries",
+        "value": "1"
+      },
+      {
+        "label": "Engagements",
+        "value": "240.000"
+      }
     ],
-    "bgs": [
-     "Comp-6_4.jpg"
+    "relatedNext": "glow-eindhoven-light-festival",
+    "heroVideoId": null,
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "Porsche Netherlands, known for its world-class automotive brand, wanted to refresh the employer branding visuals across all eight official Porsche Centers in the Netherlands. The goal: create photography that reflects the premium Porsche image, yet feels authentic and personal to each dealership."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151543609"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "In early 2023, Porsche Netherlands partnered with House of Yellow for a nationwide employer branding shoot. Our team visited all eight Porsche Centers to capture both planned and spontaneous shots of the people and workplaces: blending luxury aesthetics with genuine human moments."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151543943"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151543985"
+          },
+          {
+            "shape": "square",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The result was a cohesive visual series that strengthened Porsche’s employer branding online, showcasing each dealership’s character while staying true to the elegance and excellence of the Porsche brand."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: Porsche Nederland."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "glow-eindhoven-light-festival",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151558347"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [],
-    "bgs": [
-     "1Y9A2933HOY-600x427.jpg",
-     "1Y9A2933HOY-800x569.jpg",
-     "Naamloos-47-2-600x800.jpg",
-     "Naamloos-47-2-800x1067.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188076620"
-    ],
-    "bgs": [
-     "1Y9A3394HOY-600x427.jpg",
-     "Comp-1_13-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188078492"
-    ],
-    "bgs": [
-     "Naamloos-49-600x600.jpg",
-     "Naamloos-49-800x800.jpg",
-     "Naamloos-49-1-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [],
-    "bgs": [
-     "Naamloos-48-800x450.jpg",
-     "Naamloos-48.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1151543609"
-    ],
-    "bgs": [
-     "dcbc4aa4-61112aab.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "porsche-employer-branding",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A nationwide shoot that translated the premium DNA of Porsche Netherlands into authentic employer branding, uniting eight dealerships in one refined, human visual story.",
-  "categories": [
-   "Corporate",
-   "Employer branding"
-  ],
-  "stats": {
-   "impressions": "3.600.000",
-   "followers": "+28.000",
-   "countries": "1",
-   "engagements": "240.000"
   },
-  "clientText": "Porsche Netherlands, known for its world-class automotive brand, wanted to refresh the employer branding visuals across all eight official Porsche Centers in the Netherlands. The goal: create photography that reflects the premium Porsche image, yet feels authentic and personal to each dealership. [ 01 ]",
-  "processText": "In early 2023, Porsche Netherlands partnered with House of Yellow for a nationwide employer branding shoot. Our team visited all eight Porsche Centers to capture both planned and spontaneous shots of the people and workplaces: blending luxury aesthetics with genuine human moments. [ 02 ]",
-  "projectText": "The result was a cohesive visual series that strengthened Porsche’s employer branding online, showcasing each dealership’s character while staying true to the elegance and excellence of the Porsche brand.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Porsche Nederland.",
-  "relatedNext": "GLOW Eindhoven Light Festival",
-  "heroVideoId": null,
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [],
-    "bgs": [
-     "porsche_x_HOY-7.jpg"
-    ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1151543609"
+  {
+    "slug": "glow-eindhoven-light-festival",
+    "title": "GLOW Eindhoven Light Festival",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "Since 2018, GLOW has trusted House of Yellow to translate each annual theme into cinematic trailers and aftermovies, capturing the emotion, energy, and innovation that power one of Europe’s leading light festivals.",
+    "infoTags": ["'21 - '25", "Light festival", "Events, Aftermovies"],
+    "categories": ["Events", "Aftermovies"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "9.500.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+75.000"
+      },
+      {
+        "label": "Countries",
+        "value": "52"
+      },
+      {
+        "label": "Engagements",
+        "value": "620.000"
+      }
     ],
-    "bgs": [
-     "porsche_x_HOY-11-600x400.jpg",
-     "porsche_x_HOY-11-800x534.jpg",
-     "dcbc4aa4-61112aab-600x800.jpg"
+    "relatedNext": "de-hollandse-100-lymphco",
+    "heroVideoId": "1168496060",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1168496060"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "GLOW is an annual light festival in the heart of Eindhoven, where artists and designers from around the world showcase innovative light art using cutting-edge technologies. From sensors and animations to large-scale projections. As the festival continues to grow in size and impact each year, strong visual storytelling is essential to attract both visitors and partners."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188131799"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151558347"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "Since 2018, House of Yellow has been the proud permanent content partner of GLOW. Each year, we produce the official trailer and aftermovie, creatively aligned with that year’s theme. From Urban Skin (2022) to The Beat (2023). Our goal: to capture the emotion, energy, and artistry that define the festival."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188131771"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188131738"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151585281"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188131822"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The annual video productions serve a dual purpose: engaging audiences and inspiring future collaborations. With each edition, our work helps GLOW strengthen its international presence and continue to shine as one of Europe’s leading light festivals."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188131712"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: Glow Eindhoven."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "de-hollandse-100-lymphco",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188086313"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1151543943"
-    ],
-    "bgs": [
-     "porsche_x_HOY-5-600x400.jpg",
-     "porsche-thumb-2-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1151543985"
-    ],
-    "bgs": [
-     "porsche-thumb-3-600x800.jpg",
-     "porsche_x_HOY-1-600x400.jpg",
-     "porsche_x_HOY-1-800x533.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [],
-    "bgs": [
-     "porsche_x_HOY-3-800x534.jpg",
-     "porsche_x_HOY-3.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1151558347"
-    ],
-    "bgs": [
-     "8915c0d8-86eeb7e1.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "glow-eindhoven-light-festival",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "Since 2018, GLOW has trusted House of Yellow to translate each annual theme into cinematic trailers and aftermovies, capturing the emotion, energy, and innovation that power one of Europe’s leading light festivals.",
-  "categories": [
-   "Events",
-   "Aftermovies"
-  ],
-  "stats": {
-   "impressions": "9.500.000",
-   "followers": "+75.000",
-   "countries": "52",
-   "engagements": "620.000"
   },
-  "clientText": "GLOW is an annual light festival in the heart of Eindhoven, where artists and designers from around the world showcase innovative light art using cutting-edge technologies. From sensors and animations to large-scale projections. As the festival continues to grow in size and impact each year, strong visual storytelling is essential to attract both visitors and partners. [ 01 ]",
-  "processText": "Since 2018, House of Yellow has been the proud permanent content partner of GLOW. Each year, we produce the official trailer and aftermovie, creatively aligned with that year’s theme. From Urban Skin (2022) to The Beat (2023). Our goal: to capture the emotion, energy, and artistry that define the festival. [ 02 ]",
-  "projectText": "The annual video productions serve a dual purpose: engaging audiences and inspiring future collaborations. With each edition, our work helps GLOW strengthen its international presence and continue to shine as one of Europe’s leading light festivals.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Glow Eindhoven.",
-  "relatedNext": "De Hollandse 100 – Lymph&Co",
-  "heroVideoId": "1168496060",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1168496060"
+  {
+    "slug": "de-hollandse-100-lymphco",
+    "title": "De Hollandse 100 – Lymph&Co",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A powerful, human-centered campaign capturing the energy of sport and community coming together to fund breakthrough lymphoma research.",
+    "infoTags": ["'26", "Sport event", "Events, Aftermovies"],
+    "categories": ["Events", "Aftermovies"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.100.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+7.200"
+      },
+      {
+        "label": "Donations raised",
+        "value": "€850.000+"
+      },
+      {
+        "label": "Countries",
+        "value": "1"
+      },
+      {
+        "label": "Engagements",
+        "value": "95.000"
+      }
     ],
-    "bgs": [
-     "Glow-eindhoven-thumb-4-1600x900.jpg"
+    "relatedNext": "streetgasm",
+    "heroVideoId": "1188086333",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188086333"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "Lymph&Co is a non-profit foundation dedicated to funding innovative research into lymphoma (lymfeklierkanker). Founded in the Netherlands, the organisation raises awareness and funds through initiatives that connect sport, community and impact. Its largest annual event is De Hollandse 100, a national fundraising challenge that brings people together for one shared goal: advancing research and improving treatment outcomes."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188090081"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188090685"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "For De Hollandse 100, we focused on capturing the spirit of collective effort and purpose behind the event. Through energetic, human-centered storytelling, we translated the experience of skating, cycling and walking in Thialf and the surrounding landscape into a cohesive narrative. The content highlights both the physical challenge and the emotional drive of participants coming together for a cause that matters."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188090059"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188090020"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188089943"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188089916"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The project showcases De Hollandse 100 as more than a sporting event—it’s a movement. A community of participants pushing themselves physically while raising funds for breakthrough lymphoma research. The result is a powerful piece of content that reflects energy, unity, and impact, fully aligned with Lymph&Co’s mission to fund better treatments and ultimately a cure."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188086359"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: De Hollandse 100."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "streetgasm",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188069712"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188131799",
-     "1151558347"
-    ],
-    "bgs": [
-     "Comp-3_11_10-600x439.jpg",
-     "Glow-eindhoven-thumb-1-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188131771",
-     "1188131738"
-    ],
-    "bgs": [
-     "Comp-3_11_11-600x439.jpg",
-     "Comp-1_26_2-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1151585281",
-     "1188131822"
-    ],
-    "bgs": [
-     "8b8753d5-4253b32e.jpg",
-     "Comp-1_29-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188131712"
-    ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_4-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188086313"
-    ],
-    "bgs": [
-     "Comp-3_11-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "de-hollandse-100-lymphco",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A powerful, human-centered campaign capturing the energy of sport and community coming together to fund breakthrough lymphoma research.",
-  "categories": [
-   "Events",
-   "Aftermovies"
-  ],
-  "stats": {
-   "impressions": "1.100.000",
-   "followers": "+7.200",
-   "countries": "1",
-   "engagements": "95.000"
   },
-  "clientText": "The client Lymph&Co is a non-profit foundation dedicated to funding innovative research into lymphoma (lymfeklierkanker). Founded in the Netherlands, the organisation raises awareness and funds through initiatives that connect sport, community and impact. Its largest annual event is De Hollandse 100, a national fundraising challenge that brings people together for one shared goal: advancing research and improving treatment outcomes. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The project showcases De Hollandse 100 as more than a sporting event—it’s a movement. A community of participants pushing themselves physically while raising funds for breakthrough lymphoma research. The result is a powerful piece of content that reflects energy, unity, and impact, fully aligned with Lymph&Co’s mission to fund better treatments and ultimately a cure.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: De Hollandse 100.",
-  "relatedNext": "StreetGasm",
-  "heroVideoId": "1188086333",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188086333"
+  {
+    "slug": "streetgasm",
+    "title": "StreetGasm",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A high-energy cinematic journey that captures the spirit of supercar travel, community, and unforgettable driving experiences across Romania’s iconic landscapes.",
+    "infoTags": ["'25", "Automotive", "Events, Aftermovies"],
+    "categories": ["Events", "Aftermovies"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.600.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+12.500"
+      },
+      {
+        "label": "Countries",
+        "value": "10"
+      },
+      {
+        "label": "Engagements",
+        "value": "110.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188090081",
-     "1188090685"
-    ],
-    "bgs": [
-     "Comp-3_12-600x439.jpg",
-     "Comp-1_16-600x800.jpg"
+    "relatedNext": "de-klerk-employer-branding",
+    "heroVideoId": "1188068714",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188068714"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "StreetGasm is one of Europe’s leading supercar communities, bringing together enthusiasts through exclusive driving tours, events, and lifestyle experiences across the world. Known as “the fastest family of Europe,” the club is built around speed, travel, and connection."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188068753"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188068806"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "For StreetGasm, we captured the DreamDrive experience through fast-paced, cinematic storytelling. Focusing on the drive, the scenery, and the group dynamic, we translated multi-day supercar journeys into a cohesive visual narrative."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188068737"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188068783"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188072092"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188072071"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "DreamDrive Transylvania was brought to life as an immersive supercar journey through Romania’s most iconic roads. The result is an energetic and cinematic piece that reflects the essence of StreetGasm: driving, community, and unforgettable experiences."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188068696"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: StreetGasm."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "de-klerk-employer-branding",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194265974"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188090059",
-     "1188090020"
-    ],
-    "bgs": [
-     "Comp-3_13-600x439.jpg",
-     "Comp-1_14-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188089943",
-     "1188089916"
-    ],
-    "bgs": [
-     "Comp-4_8-600x600.jpg",
-     "Comp-4_9-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188086359"
-    ],
-    "bgs": [
-     "Comp-6_5-1-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188069712"
-    ],
-    "bgs": [
-     "Comp-3_8-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "streetgasm",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A high-energy cinematic journey that captures the spirit of supercar travel, community, and unforgettable driving experiences across Romania’s iconic landscapes.",
-  "categories": [
-   "Events",
-   "Aftermovies"
-  ],
-  "stats": {
-   "impressions": "1.600.000",
-   "followers": "+12.500",
-   "countries": "10",
-   "engagements": "110.000"
   },
-  "clientText": "The client StreetGasm is one of Europe’s leading supercar communities, bringing together enthusiasts through exclusive driving tours, events, and lifestyle experiences across the world. Known as “the fastest family of Europe,” the club is built around speed, travel, and connection. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project DreamDrive Transylvania was brought to life as an immersive supercar journey through Romania’s most iconic roads. The result is an energetic and cinematic piece that reflects the essence of StreetGasm: driving, community, and unforgettable experiences.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: StreetGasm.",
-  "relatedNext": "De Klerk – Employer Branding",
-  "heroVideoId": "1188068714",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188068714"
+  {
+    "slug": "de-klerk-employer-branding",
+    "title": "De Klerk – Employer Branding",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A cinematic employer branding and brand story campaign that brings the people, passion, and impact behind De Klerk’s green environments to life through authentic storytelling.",
+    "infoTags": ["'24", "Green environments", "Corporate, Employer branding"],
+    "categories": ["Corporate", "Employer branding"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.400.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+11.000"
+      },
+      {
+        "label": "Countries",
+        "value": "4"
+      },
+      {
+        "label": "Engagements",
+        "value": "92.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188068753",
-     "1188068806"
-    ],
-    "bgs": [
-     "Comp-3_7-600x439.jpg",
-     "Comp-1_11-600x800.jpg"
+    "relatedNext": "buddha-to-buddha-los-angeles",
+    "heroVideoId": "1194265980",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1194265980"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "De Klerk is one of the Netherlands’ leading specialists in interior landscaping and biophilic work environments. From offices and hospitality spaces to healthcare and education, De Klerk creates healthier and more inspiring environments through plants, green walls, and sustainable interior solutions. Founded in Eindhoven and active throughout the Netherlands and beyond, the family-owned company combines craftsmanship, innovation, and a deep passion for green living."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1194265968"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1194265967"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "To strengthen both employer branding and brand positioning, House of Yellow developed a cinematic brand story and recruitment-focused campaign centered around the people behind De Klerk. Through authentic interviews, natural workplace moments, and atmospheric visuals, we translated the company culture into a human and relatable story.",
+          "The focus was on craftsmanship, teamwork, sustainability, and the shared mission of bringing people closer to nature."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1194265953"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1194265955"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194265954"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194265952"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The result is a cinematic employer branding and brand story campaign that positions De Klerk as a modern, people-driven company with a green heart. By combining emotional storytelling with refined visuals, the content strengthens employer visibility, attracts new talent, and reinforces De Klerk’s identity as a leading name in interior landscaping and sustainable work environments."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1194265972"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: De Klerk."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "buddha-to-buddha-los-angeles",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188638365"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188068737",
-     "1188068783"
-    ],
-    "bgs": [
-     "Comp-3_6-600x439.jpg",
-     "Comp-1_12-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188072092",
-     "1188072071"
-    ],
-    "bgs": [
-     "Comp-4_5-600x600.jpg",
-     "Comp-4_6-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188068696"
-    ],
-    "bgs": [
-     "Comp-6_3-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1194265974"
-    ],
-    "bgs": [
-     "Comp-3_11_28-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "de-klerk-employer-branding",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A cinematic employer branding and brand story campaign that brings the people, passion, and impact behind De Klerk’s green environments to life through authentic storytelling.",
-  "categories": [
-   "Corporate",
-   "Employer branding"
-  ],
-  "stats": {
-   "impressions": "1.400.000",
-   "followers": "+11.000",
-   "countries": "4",
-   "engagements": "92.000"
   },
-  "clientText": "The client De Klerk is one of the Netherlands’ leading specialists in interior landscaping and biophilic work environments. From offices and hospitality spaces to healthcare and education, De Klerk creates healthier and more inspiring environments through plants, green walls, and sustainable interior solutions. Founded in Eindhoven and active throughout the Netherlands and beyond, the family-owned company combines craftsmanship, innovation, and a deep passion for green living. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The result is a cinematic employer branding and brand story campaign that positions De Klerk as a modern, people-driven company with a green heart. By combining emotional storytelling with refined visuals, the content strengthens employer visibility, attracts new talent, and reinforces De Klerk’s identity as a leading name in interior landscaping and sustainable work environments.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: De Klerk.",
-  "relatedNext": "Buddha to Buddha – Los Angeles",
-  "heroVideoId": "1194265980",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1194265980"
+  {
+    "slug": "buddha-to-buddha-los-angeles",
+    "title": "Buddha to Buddha – Los Angeles",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A cinematic lifestyle campaign that brings handcrafted jewelry into the rhythm of Los Angeles, blending street culture, movement, and raw urban energy.",
+    "infoTags": ["'25", "Lifestyle", "Commercials, Social campaigns"],
+    "categories": ["Commercials", "Social campaigns"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.300.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+9.800"
+      },
+      {
+        "label": "Products sold",
+        "value": "+6.500"
+      },
+      {
+        "label": "Countries",
+        "value": "14"
+      },
+      {
+        "label": "Engagements",
+        "value": "75.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1194265968",
-     "1194265967"
-    ],
-    "bgs": [
-     "Comp-3_11_29-600x439.jpg",
-     "Comp-1_26_12-600x800.jpg"
+    "relatedNext": "the-space-dubai",
+    "heroVideoId": "1188638355",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188638355"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "Buddha to Buddha is a Dutch jewelry brand known for its bold, handcrafted silver pieces and distinctive design language. Built around the philosophy of connection and craftsmanship, the brand has grown into an international label with a strong identity rooted in individuality and expression."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188643996"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188643932"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "For Buddha to Buddha in Los Angeles, we created content that captures the brand’s raw and expressive character within an urban West Coast setting. Blending street culture with cinematic lifestyle visuals, we focused on atmosphere, detail, and movement—translating the jewelry into a living part of the LA environment. The shoot emphasized spontaneity and energy, aligning the brand with the rhythm and diversity of the city."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188643980"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188643942"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188643968"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188643952"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The project positions Buddha to Buddha within the world of Los Angeles—bold, diverse, and expressive. The result is a cinematic series that brings the jewelry to life in a new context, reinforcing its identity as a brand that connects craftsmanship with modern lifestyle and self-expression."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188641868"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: Buddha to Buddha."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "the-space-dubai",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151544155"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1194265953",
-     "1194265955"
-    ],
-    "bgs": [
-     "Comp-3_11_30-600x439.jpg",
-     "Comp-1_26_13-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1194265954",
-     "1194265952"
-    ],
-    "bgs": [
-     "Comp-1_40-600x600.jpg",
-     "Comp-1_39-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1194265972"
-    ],
-    "bgs": [
-     "deklerk-footer-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188638365"
-    ],
-    "bgs": [
-     "Comp-3_11_20-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "buddha-to-buddha-los-angeles",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A cinematic lifestyle campaign that brings handcrafted jewelry into the rhythm of Los Angeles, blending street culture, movement, and raw urban energy.",
-  "categories": [
-   "Commercials",
-   "Social campaigns"
-  ],
-  "stats": {
-   "impressions": "1.300.000",
-   "followers": "+9.800",
-   "countries": "14",
-   "engagements": "75.000"
   },
-  "clientText": "Buddha to Buddha is a Dutch jewelry brand known for its bold, handcrafted silver pieces and distinctive design language. Built around the philosophy of connection and craftsmanship, the brand has grown into an international label with a strong identity rooted in individuality and expression. [ 01 ]",
-  "processText": "For Buddha to Buddha in Los Angeles, we created content that captures the brand’s raw and expressive character within an urban West Coast setting. Blending street culture with cinematic lifestyle visuals, we focused on atmosphere, detail, and movement—translating the jewelry into a living part of the LA environment. The shoot emphasized spontaneity and energy, aligning the brand with the rhythm and diversity of the city. [ 02 ]",
-  "projectText": "The project positions Buddha to Buddha within the world of Los Angeles—bold, diverse, and expressive. The result is a cinematic series that brings the jewelry to life in a new context, reinforcing its identity as a brand that connects craftsmanship with modern lifestyle and self-expression.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Buddha to Buddha.",
-  "relatedNext": "The Space Dubai",
-  "heroVideoId": "1188638355",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188638355"
+  {
+    "slug": "the-space-dubai",
+    "title": "The Space Dubai",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A cinematic brand film that transforms The Space into a destination, blending luxury, innovation, and emotion through immersive visuals and refined 3D craft.",
+    "infoTags": ["'22", "Event venue", "Corporate, Commercials"],
+    "categories": ["Corporate", "Commercials"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.200.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+8.500"
+      },
+      {
+        "label": "Countries",
+        "value": "18"
+      },
+      {
+        "label": "Engagements",
+        "value": "65.000"
+      }
     ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_8-1600x900.jpg"
+    "relatedNext": "htc",
+    "heroVideoId": "1168493661",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1168493661"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "The Space is a unique event venue in Dubai, home to some of the world’s rarest and most exclusive cars. More than just a location, it’s an experience where innovation meets elegance. In 2021, The Space wanted to capture this extraordinary atmosphere in a brand video that reflected its vision and global appeal."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188127452"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151544155"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "When House of Yellow first visited The Space, the connection was instant. Their vision aligned perfectly with our creative approach. Entrusting us with the project, we set out to translate their brand story into a visual experience that blends luxury, innovation, and emotion."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1151544199"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151544226"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151544266"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151544291"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The result was a captivating brand video with 3D elements that showcases The Space as more than a venue, a destination for creativity, prestige, and passion."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188127418"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: The Space Dubai."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "htc",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188043705"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188643996",
-     "1188643932"
-    ],
-    "bgs": [
-     "Comp-3_11_21-600x439.jpg",
-     "Comp-1_26_6-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188643980",
-     "1188643942"
-    ],
-    "bgs": [
-     "Comp-3_11_22-600x439.jpg",
-     "Comp-1_26_5-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188643968",
-     "1188643952"
-    ],
-    "bgs": [
-     "Comp-1_33-600x600.jpg",
-     "Comp-1_34-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188641868"
-    ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_9-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1151544155"
-    ],
-    "bgs": [
-     "353d5bb5-393f70ba.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "the-space-dubai",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A cinematic brand film that transforms The Space into a destination, blending luxury, innovation, and emotion through immersive visuals and refined 3D craft.",
-  "categories": [
-   "Corporate",
-   "Commercials"
-  ],
-  "stats": {
-   "impressions": "1.200.000",
-   "followers": "+8.500",
-   "countries": "18",
-   "engagements": "65.000"
   },
-  "clientText": "The Space is a unique event venue in Dubai, home to some of the world’s rarest and most exclusive cars. More than just a location, it’s an experience where innovation meets elegance. In 2021, The Space wanted to capture this extraordinary atmosphere in a brand video that reflected its vision and global appeal. [ 01 ]",
-  "processText": "When House of Yellow first visited The Space, the connection was instant. Their vision aligned perfectly with our creative approach. Entrusting us with the project, we set out to translate their brand story into a visual experience that blends luxury, innovation, and emotion. [ 02 ]",
-  "projectText": "The result was a captivating brand video with 3D elements that showcases The Space as more than a venue, a destination for creativity, prestige, and passion.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: The Space Dubai.",
-  "relatedNext": "HTC",
-  "heroVideoId": "1168493661",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1168493661"
+  {
+    "slug": "htc",
+    "title": "HTC",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A dynamic event and brand storytelling project capturing 25 years of innovation, community, and the next chapter of High Tech Campus Eindhoven.",
+    "infoTags": ["'25", "Campus", "Corporate, Events"],
+    "categories": ["Corporate", "Events"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "950.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+6.500"
+      },
+      {
+        "label": "Countries",
+        "value": "8"
+      },
+      {
+        "label": "Engagements",
+        "value": "55.000"
+      }
     ],
-    "bgs": [
-     "The-space-dubai-thumb-6-1600x900.jpg"
+    "relatedNext": "salvia-bioelectronics",
+    "heroVideoId": "1188043705",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188043705"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "High Tech Campus Eindhoven is one of Europe’s leading innovation hubs, bringing together tech companies, startups, and research institutes in a single ecosystem designed to accelerate collaboration and development. With a strong focus on innovation, technology, and community, the campus is home to a wide range of forward-thinking initiatives. Over time, House of Yellow has partnered with High Tech Campus Eindhoven on multiple projects, building a collaboration that blends corporate storytelling with a more human, experience-driven approach."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "For High Tech Campus Eindhoven, we captured two key moments that highlight both celebration and evolution. The 25th anniversary transformed the campus into the setting of a large-scale, festive picnic, where employees came together for a unique shared experience. Alongside that, we documented the reveal of their new logo—marking a fresh chapter for the brand.",
+          "From spontaneous, high-energy moments during the event to a more focused and cinematic approach around the reveal, the process was all about translating both atmosphere and identity into strong, engaging content."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188045203"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188048249"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188047358"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The project combined two stories into one: celebrating 25 years of community while introducing a renewed visual identity. Through a dynamic aftermovie, photography, and content around the logo reveal, we created a cohesive set of visuals that capture both the energy of the event and the significance of the rebrand.",
+          "The result is content that not only makes you feel like you missed out on an epic day, but also positions High Tech Campus Eindhoven as a brand that continues to evolve and look forward."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188049221"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: HTC."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "salvia-bioelectronics",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188055326"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188127452",
-     "1151544155"
-    ],
-    "bgs": [
-     "Comp-3_11_9-600x439.jpg",
-     "353d5bb5-393f70ba-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1151544199",
-     "1151544226"
-    ],
-    "bgs": [
-     "7c38dfea-926fce65-600x800.jpg",
-     "e019ed68-0104f3ca-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1151544266",
-     "1151544291"
-    ],
-    "bgs": [
-     "d5502da6-27fc0e3b-600x800.jpg",
-     "the-space-dubai-thumb-4-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188127418"
-    ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_3-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188043705"
-    ],
-    "bgs": [
-     "Comp-3_3-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "htc",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A dynamic event and brand storytelling project capturing 25 years of innovation, community, and the next chapter of High Tech Campus Eindhoven.",
-  "categories": [
-   "Corporate",
-   "Events"
-  ],
-  "stats": {
-   "impressions": "950.000",
-   "followers": "+6.500",
-   "countries": "8",
-   "engagements": "55.000"
   },
-  "clientText": "The client High Tech Campus Eindhoven is one of Europe’s leading innovation hubs, bringing together tech companies, startups, and research institutes in a single ecosystem designed to accelerate collaboration and development. With a strong focus on innovation, technology, and community, the campus is home to a wide range of forward-thinking initiatives. Over time, House of Yellow has partnered with High Tech Campus Eindhoven on multiple projects, building a collaboration that blends corporate storytelling with a more human, experience-driven approach. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The project combined two stories into one: celebrating 25 years of community while introducing a renewed visual identity. Through a dynamic aftermovie, photography, and content around the logo reveal, we created a cohesive set of visuals that capture both the energy of the event and the significance of the rebrand. The result is content that not only makes you feel like you missed out on an epic day, but also positions High Tech Campus Eindhoven as a brand that continues to evolve and look forward.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: HTC.",
-  "relatedNext": "Salvia BioElectronics",
-  "heroVideoId": "1188043705",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188043705"
+  {
+    "slug": "salvia-bioelectronics",
+    "title": "Salvia BioElectronics",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A clear and cinematic explainer that translates complex neuromodulation technology into an accessible story about the future of drug-free migraine treatment.",
+    "infoTags": ["'25", "Medtech", "Corporate, Commercials"],
+    "categories": ["Corporate", "Commercials"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "780.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+4.200"
+      },
+      {
+        "label": "Countries",
+        "value": "15"
+      },
+      {
+        "label": "Engagements",
+        "value": "38.000"
+      }
     ],
-    "bgs": [
-     "Comp-3_3.jpg"
+    "relatedNext": "ansu-fati-arriba-nutrition",
+    "heroVideoId": "1188061540",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188061540"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "Salvia BioElectronics is a MedTech innovator pioneering a new direction in migraine treatment. Focused on neuromodulation, the company is developing MySalvia Therapy—an advanced, drug-free approach designed to target key nerves involved in chronic migraine. Built around ultra-thin implants and a wearable activation device, the technology is created to integrate seamlessly into everyday life. Founded in Eindhoven, Salvia operates globally across Europe, the United States, and Australia, driven by a team of experienced device makers and MedTech entrepreneurs."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188060150"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "We translated Salvia’s complex therapy into a clear and accessible story by focusing on how the technology works and fits into daily life. Through clean visuals and straightforward storytelling, we simplified the process of the implants and wearable device into a concise, engaging narrative."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "image",
+            "videoId": null
+          },
+          {
+            "shape": "portrait",
+            "kind": "image",
+            "videoId": null
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The project positions Salvia as a forward-thinking player in neuromodulation. The result is a sharp and informative piece of content that communicates innovation, clarity, and the vision of drug-free migraine relief."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188059039"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: Salvia BioElectronics."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "ansu-fati-arriba-nutrition",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1148957680"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [],
-    "bgs": [
-     "Naamloos-51-600x427.jpg",
-     "Naamloos-51-800x569.jpg",
-     "Naamloos-47-600x800.jpg",
-     "Naamloos-47-800x1067.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188045203"
-    ],
-    "bgs": [
-     "Naamloos-50-600x427.jpg",
-     "Comp-1_9-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188048249",
-     "1188047358"
-    ],
-    "bgs": [
-     "Comp-4_4-600x600.jpg",
-     "Comp-4_2-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188049221"
-    ],
-    "bgs": [
-     "Comp-5_2-800x451.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1188055326"
-    ],
-    "bgs": [
-     "Comp-3_4-800x585.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "salvia-bioelectronics",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A clear and cinematic explainer that translates complex neuromodulation technology into an accessible story about the future of drug-free migraine treatment.",
-  "categories": [
-   "Corporate",
-   "Commercials"
-  ],
-  "stats": {
-   "impressions": "780.000",
-   "followers": "+4.200",
-   "countries": "15",
-   "engagements": "38.000"
   },
-  "clientText": "The client Salvia BioElectronics is a MedTech innovator pioneering a new direction in migraine treatment. Focused on neuromodulation, the company is developing MySalvia Therapy—an advanced, drug-free approach designed to target key nerves involved in chronic migraine. Built around ultra-thin implants and a wearable activation device, the technology is created to integrate seamlessly into everyday life. Founded in Eindhoven, Salvia operates globally across Europe, the United States, and Australia, driven by a team of experienced device makers and MedTech entrepreneurs. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The project positions Salvia as a forward-thinking player in neuromodulation. The result is a sharp and informative piece of content that communicates innovation, clarity, and the vision of drug-free migraine relief.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Salvia BioElectronics.",
-  "relatedNext": "Ansu Fati – Arriba Nutrition",
-  "heroVideoId": "1188061540",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1188061540"
+  {
+    "slug": "ansu-fati-arriba-nutrition",
+    "title": "Ansu Fati – Arriba Nutrition",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "From zero to full-scale production in five days, delivering a high-impact campaign that puts global talent at the heart of the brand story.",
+    "infoTags": ["'22", "Brand ambassador", "Commercials, Social campaigns"],
+    "categories": ["Commercials", "Social campaigns"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "5.200.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+85.000"
+      },
+      {
+        "label": "Products sold",
+        "value": "+180.000"
+      },
+      {
+        "label": "Countries",
+        "value": "45"
+      },
+      {
+        "label": "Engagements",
+        "value": "380.000"
+      }
     ],
-    "bgs": [
-     "Comp-6_1.jpg"
+    "relatedNext": "eiffel-employer-branding",
+    "heroVideoId": "1168477195",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1168477195"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The client",
+        "paragraphs": [
+          "Arriba Nutrition, a leading sports nutrition brand, teamed up with FC Barcelona player and former ambassador Ansu Fati for a new campaign video in Barcelona. With only five days to prepare, they needed a full-scale production partner to make it happen: fast."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188118870"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1148957680"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The process",
+        "paragraphs": [
+          "Using our international network, we arranged the full production from start to finish: crew, locations, logistics, and on-site coordination."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188118853"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1148957741"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The project",
+        "paragraphs": [
+          "The two shooting days ran smoothly and delivered a dynamic video that placed Ansu Fati at the heart of the story, strengthening the link between him, sports, and the Arriba Nutrition brand."
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: Arriba Nutrition."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "eiffel-employer-branding",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151597998"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188060150"
-    ],
-    "bgs": [
-     "Naamloos-50-1-600x427.jpg",
-     "Naamloos-50-1-800x569.jpg",
-     "Comp-1_10-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [],
-    "bgs": [
-     "Naamloos-50-2-600x427.jpg",
-     "Naamloos-47-1-600x800.jpg",
-     "Naamloos-47-1-800x1067.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188059039"
-    ],
-    "bgs": [
-     "Comp-6-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1148957680"
-    ],
-    "bgs": [
-     "ansu-fati-placeholder-1.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "ansu-fati-arriba-nutrition",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "From zero to full-scale production in five days, delivering a high-impact campaign that puts global talent at the heart of the brand story.",
-  "categories": [
-   "Commercials",
-   "Social campaigns"
-  ],
-  "stats": {
-   "impressions": "5.200.000",
-   "followers": "+85.000",
-   "countries": "45",
-   "engagements": "380.000"
   },
-  "clientText": "The client Arriba Nutrition, a leading sports nutrition brand, teamed up with FC Barcelona player and former ambassador Ansu Fati for a new campaign video in Barcelona. With only five days to prepare, they needed a full-scale production partner to make it happen: fast. [ 01 ]",
-  "processText": "",
-  "projectText": "[ 03 ] The project The two shooting days ran smoothly and delivered a dynamic video that placed Ansu Fati at the heart of the story, strengthening the link between him, sports, and the Arriba Nutrition brand.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Arriba Nutrition.",
-  "relatedNext": "Eiffel Employer Branding",
-  "heroVideoId": "1168477195",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1168477195"
+  {
+    "slug": "eiffel-employer-branding",
+    "title": "Eiffel Employer Branding",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A people-first employer brand brought to life through a high-impact film, capturing the community, ambition, and performance mindset of EIFFEL.",
+    "infoTags": ["'23", "Employer Branding", "Corporate, Employer branding"],
+    "categories": ["Corporate", "Employer branding"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "2.100.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+16.500"
+      },
+      {
+        "label": "Countries",
+        "value": "5"
+      },
+      {
+        "label": "Engagements",
+        "value": "145.000"
+      }
     ],
-    "bgs": [
-     "ansi-fati-thumb-5-1600x900.jpg"
+    "relatedNext": "tmc-fundamentals",
+    "heroVideoId": "1168488456",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1168488456"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "EIFFEL, a fast-growing Dutch interim and consulting firm based in Arnhem, wanted to strengthen its employer brand through a video that truly reflected who they are a people-driven organization with a strong community and growth mindset."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188124434"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151597998"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "House of Yellow partnered with EIFFEL in mid-2022 to develop their Employer Brand Video. Through internal research, we uncovered what motivates employees to work at EIFFEL and translated these insights into a creative concept highlighting community, self-development, diversity, and a (top)sport mentality. The signature EIFFEL colors and animations were subtly woven into the styling and set design to ensure brand consistency."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188124402"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188124381"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "Across four production days, seven locations, and with a crew of 15+, we delivered a dynamic and authentic video that captures the essence of working at EIFFEL: a brand powered by people and performance."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188122713"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: Team Eiffel."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "tmc-fundamentals",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194280833"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188118870",
-     "1148957680"
-    ],
-    "bgs": [
-     "Comp-3_11_5-600x439.jpg",
-     "ansu-fati-placeholder-1-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188118853",
-     "1148957741"
-    ],
-    "bgs": [
-     "Comp-3_11_6-600x439.jpg",
-     "ansi-fati-thumb-2-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1151597998"
-    ],
-    "bgs": [
-     "eiffel-thumb-1-800x1067.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "eiffel-employer-branding",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A people-first employer brand brought to life through a high-impact film, capturing the community, ambition, and performance mindset of EIFFEL.",
-  "categories": [
-   "Corporate",
-   "Employer branding"
-  ],
-  "stats": {
-   "impressions": "2.100.000",
-   "followers": "+16.500",
-   "countries": "5",
-   "engagements": "145.000"
   },
-  "clientText": "EIFFEL, a fast-growing Dutch interim and consulting firm based in Arnhem, wanted to strengthen its employer brand through a video that truly reflected who they are a people-driven organization with a strong community and growth mindset. [ 01 ]",
-  "processText": "House of Yellow partnered with EIFFEL in mid-2022 to develop their Employer Brand Video. Through internal research, we uncovered what motivates employees to work at EIFFEL and translated these insights into a creative concept highlighting community, self-development, diversity, and a (top)sport mentality. The signature EIFFEL colors and animations were subtly woven into the styling and set design to ensure brand consistency. [ 02 ]",
-  "projectText": "Across four production days, seven locations, and with a crew of 15+, we delivered a dynamic and authentic video that captures the essence of working at EIFFEL: a brand powered by people and performance.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Team Eiffel.",
-  "relatedNext": "TMC FUNdamentals",
-  "heroVideoId": "1168488456",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1168488456"
+  {
+    "slug": "tmc-fundamentals",
+    "title": "TMC FUNdamentals",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "Social-first content that brings TMC Fundamentals to life, translating engineering careers into authentic, high-energy stories that attract and inspire the next generation of talent.",
+    "infoTags": ["'24 - '25", "High-tech consultancy", "Corporate, Social campaigns"],
+    "categories": ["Corporate", "Social campaigns"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.800.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+14.500"
+      },
+      {
+        "label": "Countries",
+        "value": "6"
+      },
+      {
+        "label": "Engagements",
+        "value": "125.000"
+      }
     ],
-    "bgs": [
-     "Eiffel-thumb-2-1600x900.jpg"
+    "relatedNext": "hotek-brand-video",
+    "heroVideoId": "1194280833",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1194280833"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "TMC is an international high-tech consultancy company where engineering, technology, and people are at the core. With TMC Fundamentals, the focus lies on developing young professionals by strengthening both their technical and personal skills."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1194280847"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1194280810"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "To support this mission, House of Yellow created a series of social-first content pieces designed to make TMC Fundamentals visible, relatable, and engaging. Through short-form videos, interviews, and dynamic visuals, the content highlights growth, ambition, and the human side of engineering. The tone is authentic and energetic, tailored to platforms like Instagram, LinkedIn, and TikTok."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1194280841"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1194280811"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194280809"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1194280812"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The social content plays a key role in attracting new talent and building brand awareness among students and starters. By translating complex careers into accessible and inspiring stories, the campaign positions TMC Fundamentals as a strong starting point for the next generation of engineers."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1194280835"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: The Member Company."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "hotek-brand-video",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151544468"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188124434",
-     "1151597998"
-    ],
-    "bgs": [
-     "Comp-3_11_7-600x439.jpg",
-     "eiffel-thumb-1-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188124402",
-     "1188124381"
-    ],
-    "bgs": [
-     "Comp-3_11_8-600x439.jpg",
-     "Comp-1_26_1-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188122713"
-    ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_2-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1194280833"
-    ],
-    "bgs": [
-     "Comp-1_26_14-800x1067.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "tmc-fundamentals",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "Social-first content that brings TMC Fundamentals to life, translating engineering careers into authentic, high-energy stories that attract and inspire the next generation of talent.",
-  "categories": [
-   "Corporate",
-   "Social campaigns"
-  ],
-  "stats": {
-   "impressions": "1.800.000",
-   "followers": "+14.500",
-   "countries": "6",
-   "engagements": "125.000"
   },
-  "clientText": "TMC is an international high-tech consultancy company where engineering, technology, and people are at the core. With TMC Fundamentals, the focus lies on developing young professionals by strengthening both their technical and personal skills. [ 01 ]",
-  "processText": "To support this mission, House of Yellow created a series of social-first content pieces designed to make TMC Fundamentals visible, relatable, and engaging. Through short-form videos, interviews, and dynamic visuals, the content highlights growth, ambition, and the human side of engineering. The tone is authentic and energetic, tailored to platforms like Instagram, LinkedIn, and TikTok. [ 02 ]",
-  "projectText": "The social content plays a key role in attracting new talent and building brand awareness among students and starters. By translating complex careers into accessible and inspiring stories, the campaign positions TMC Fundamentals as a strong starting point for the next generation of engineers.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: The Member Company.",
-  "relatedNext": "HOTEK Brand Video",
-  "heroVideoId": "1194280833",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1194280833"
+  {
+    "slug": "hotek-brand-video",
+    "title": "HOTEK Brand Video",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A cinematic brand film that elevates HOTEK beyond technology, translating innovation and reliability into a seamless guest experience, strategically crafted for global impact.",
+    "infoTags": ["'23", "Access control solutions", "Corporate, Commercials"],
+    "categories": ["Corporate", "Commercials"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "2.400.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+18.000"
+      },
+      {
+        "label": "Products sold",
+        "value": "+95.000"
+      },
+      {
+        "label": "Countries",
+        "value": "40"
+      },
+      {
+        "label": "Engagements",
+        "value": "160.000"
+      }
     ],
-    "bgs": []
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1194280847",
-     "1194280810"
-    ],
-    "bgs": [
-     "Comp-3_11_31-600x439.jpg",
-     "Comp-1_26_16-600x800.jpg"
+    "relatedNext": "madunia-brand-launch",
+    "heroVideoId": "1168500997",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1168500997"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "HOTEK is a global leader in innovative access control solutions for the hospitality industry, where technology, security, and user experience come together. With smart locking systems used by hotels worldwide, HOTEK continues to shape the future of seamless and secure guest journeys."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188136757"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151544468"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "To translate this vision into a strong visual identity, House of Yellow developed a brand video that goes beyond product functionality. The film focuses on the experience behind the technology: effortless access, trust, and innovation. Through cinematic storytelling, precise motion design, and refined detail shots, we brought the HOTEK brand to life."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188136727"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1151544500"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairSquares",
+        "cls": "projectTwoImagesBlock sqaures",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1188136705"
+          },
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1151544518"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The brand video serves as a powerful tool for both positioning and growth. It strengthens HOTEK’s global brand image, supports international sales, and communicates their leadership in smart hospitality solutions. A clear story, built on innovation and reliability, designed to connect with partners and clients worldwide."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188136672"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": [
+          "Concept & production: House of Yellow. With gratitude to: Hotek Hospitality Group."
+        ]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "madunia-brand-launch",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1148957309"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1194280841",
-     "1194280811"
-    ],
-    "bgs": [
-     "Comp-3_11_32-600x439.jpg",
-     "Comp-1_26_17-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1194280809",
-     "1194280812"
-    ],
-    "bgs": [
-     "Comp-1_41-600x600.jpg",
-     "Comp-1_42-600x600.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1194280835"
-    ],
-    "bgs": [
-     "Comp-1_26_15-800x1067.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1151544468"
-    ],
-    "bgs": [
-     "e832cab1-e647ff70.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "hotek-brand-video",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A cinematic brand film that elevates HOTEK beyond technology, translating innovation and reliability into a seamless guest experience, strategically crafted for global impact.",
-  "categories": [
-   "Corporate",
-   "Commercials"
-  ],
-  "stats": {
-   "impressions": "2.400.000",
-   "followers": "+18.000",
-   "countries": "40",
-   "engagements": "160.000"
   },
-  "clientText": "HOTEK is a global leader in innovative access control solutions for the hospitality industry, where technology, security, and user experience come together. With smart locking systems used by hotels worldwide, HOTEK continues to shape the future of seamless and secure guest journeys. [ 01 ]",
-  "processText": "To translate this vision into a strong visual identity, House of Yellow developed a brand video that goes beyond product functionality. The film focuses on the experience behind the technology: effortless access, trust, and innovation. Through cinematic storytelling, precise motion design, and refined detail shots, we brought the HOTEK brand to life. [ 02 ]",
-  "projectText": "The brand video serves as a powerful tool for both positioning and growth. It strengthens HOTEK’s global brand image, supports international sales, and communicates their leadership in smart hospitality solutions. A clear story, built on innovation and reliability, designed to connect with partners and clients worldwide.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Hotek Hospitality Group.",
-  "relatedNext": "Madunia Brand Launch",
-  "heroVideoId": "1168500997",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1168500997"
+  {
+    "slug": "madunia-brand-launch",
+    "title": "Madunia Brand Launch",
+    "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+    "summary": "A sensory-driven launch campaign that introduced Madunia as a must-visit destination, capturing the rhythm, warmth, and refined island spirit through cinematic storytelling.",
+    "infoTags": ["'24", "Restaurant", "Commercials, Launches"],
+    "categories": ["Commercials", "Launches"],
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "3.200.000"
+      },
+      {
+        "label": "Followers",
+        "value": "+26.000"
+      },
+      {
+        "label": "Countries",
+        "value": "22"
+      }
     ],
-    "bgs": [
-     "HOTEK-thumb-5-1600x900.jpg"
+    "relatedNext": "oceanco-leviathan",
+    "heroVideoId": "1168505818",
+    "blocks": [
+      {
+        "type": "header",
+        "cls": "headerProjectBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1168505818"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "cls": "projectStatsBlock"
+      },
+      {
+        "type": "quote",
+        "cls": "projectTitleQuoteBlock",
+        "index": "01",
+        "heading": "The Client",
+        "paragraphs": [
+          "Madunia is a contemporary restaurant on Ibiza where food, atmosphere, and island culture come together. Rooted in the relaxed yet refined spirit of the island, Madunia offers a dining experience that goes beyond taste, blending Mediterranean influences with a modern, social setting."
+        ]
+      },
+      {
+        "type": "mediaPair",
+        "cls": "projectTwoImagesBlock",
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188140566"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1148957309"
+          }
+        ]
+      },
+      {
+        "type": "mediaPairText",
+        "cls": "projectTwoImagesBlock text",
+        "index": "02",
+        "heading": "The Process",
+        "paragraphs": [
+          "To introduce Madunia to the public, House of Yellow developed a launch campaign that captured the soul of the restaurant and its surroundings. Shot on location in Ibiza, the campaign focuses on sensory storytelling: shared tables, vibrant dishes, warm light, and the rhythm of the island. Cinematic visuals and natural moments bring the Madunia experience to life, both day and night."
+        ],
+        "surfaces": [
+          {
+            "shape": "landscape",
+            "kind": "video",
+            "videoId": "1188140541"
+          },
+          {
+            "shape": "portrait",
+            "kind": "video",
+            "videoId": "1188141715"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "cls": "projectTextBlock",
+        "index": "03",
+        "heading": "The Project",
+        "paragraphs": [
+          "The launch campaign was designed to build anticipation and create a strong first impression. By translating the atmosphere, energy, and identity of Madunia into powerful visual content, the campaign positioned the restaurant as a must-visit destination on Ibiza, connecting with locals, travelers, and the international hospitality community alike."
+        ]
+      },
+      {
+        "type": "fullLoop",
+        "cls": "projectFullWidthLoopBlock",
+        "surfaces": [
+          {
+            "shape": "wide",
+            "kind": "video",
+            "videoId": "1188140581"
+          }
+        ]
+      },
+      {
+        "type": "credits",
+        "cls": "projectCreditsBlock",
+        "heading": "Big thank you to:",
+        "paragraphs": ["Concept & production: House of Yellow. With gratitude to: Madunia."]
+      },
+      {
+        "type": "related",
+        "cls": "projectRelatedBlock",
+        "targetSlug": "oceanco-leviathan",
+        "surfaces": [
+          {
+            "shape": "square",
+            "kind": "video",
+            "videoId": "1196251477"
+          }
+        ]
+      }
     ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188136757",
-     "1151544468"
-    ],
-    "bgs": [
-     "Comp-3_11_12-600x439.jpg",
-     "e832cab1-e647ff70.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188136727",
-     "1151544500"
-    ],
-    "bgs": [
-     "Comp-3_11_13-600x439.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock sqaures",
-    "vidIds": [
-     "1188136705",
-     "1151544518"
-    ],
-    "bgs": [
-     "Comp-1_30-600x600.jpg",
-     "HOTEK-thumb-4-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188136672"
-    ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_5-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1148957309"
-    ],
-    "bgs": [
-     "Madunia-thumb-1-800x1067.jpg"
-    ]
-   }
-  ]
- },
- {
-  "slug": "madunia-brand-launch",
-  "metaDesc": "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
-  "summary": "A sensory-driven launch campaign that introduced Madunia as a must-visit destination, capturing the rhythm, warmth, and refined island spirit through cinematic storytelling.",
-  "categories": [
-   "Commercials",
-   "Launches"
-  ],
-  "stats": {
-   "impressions": "3.200.000",
-   "followers": "+26.000",
-   "countries": "22",
-   "engagements": null
-  },
-  "clientText": "Madunia is a contemporary restaurant on Ibiza where food, atmosphere, and island culture come together. Rooted in the relaxed yet refined spirit of the island, Madunia offers a dining experience that goes beyond taste, blending Mediterranean influences with a modern, social setting. [ 01 ]",
-  "processText": "To introduce Madunia to the public, House of Yellow developed a launch campaign that captured the soul of the restaurant and its surroundings. Shot on location in Ibiza, the campaign focuses on sensory storytelling: shared tables, vibrant dishes, warm light, and the rhythm of the island. Cinematic visuals and natural moments bring the Madunia experience to life, both day and night. [ 02 ]",
-  "projectText": "The launch campaign was designed to build anticipation and create a strong first impression. By translating the atmosphere, energy, and identity of Madunia into powerful visual content, the campaign positioned the restaurant as a must-visit destination on Ibiza, connecting with locals, travelers, and the international hospitality community alike.",
-  "credits": "Concept & production: House of Yellow. With gratitude to: Madunia.",
-  "relatedNext": "Oceanco – Leviathan",
-  "heroVideoId": "1168505818",
-  "blocks": [
-   {
-    "cls": "headerProjectBlock",
-    "vidIds": [
-     "1168505818"
-    ],
-    "bgs": [
-     "madunia_mood_v9_loop_v2-720p.jpg"
-    ]
-   },
-   {
-    "cls": "projectStatsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTitleQuoteBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectTwoImagesBlock",
-    "vidIds": [
-     "1188140566",
-     "1148957309"
-    ],
-    "bgs": [
-     "Comp-3_11_15-600x439.jpg",
-     "Madunia-thumb-1-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTwoImagesBlock text",
-    "vidIds": [
-     "1188140541",
-     "1188141715"
-    ],
-    "bgs": [
-     "Comp-3_11_16-600x439.jpg",
-     "madunia_ibiza_2_v2_720p_1_v1-720p-600x800.jpg"
-    ]
-   },
-   {
-    "cls": "projectTextBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectFullWidthLoopBlock",
-    "vidIds": [
-     "1188140581"
-    ],
-    "bgs": [
-     "arriba_wapp_engels_1_v1-2160p_6-800x450.jpg"
-    ]
-   },
-   {
-    "cls": "projectCreditsBlock",
-    "vidIds": [],
-    "bgs": []
-   },
-   {
-    "cls": "projectRelatedBlock",
-    "vidIds": [
-     "1196251477"
-    ],
-    "bgs": [
-     "Comp-3_11_33-800x585.jpg"
-    ]
-   }
-  ]
- }
+  }
 ]

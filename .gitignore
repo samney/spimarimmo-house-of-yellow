@@ -50,6 +50,10 @@ qa/reference/**/*.png
 qa/reference/**/*.jpg
 qa/reference/**/*.jpeg
 qa/recordings/*.webm
+# ENG-014C implementation captures: regenerable via qa/eng014c-audit.mjs, disk-only
+qa/implementation/eng014c/
+# ENG-014C raw evidence package: path, size and SHA-256 recorded in the parity report
+qa/implementation/ENG-014C-EVIDENCE-PACKAGE.zip
 
 # Large local video corpus: keep out of Git; deploy through external object/CDN storage.
 /public/videos/
