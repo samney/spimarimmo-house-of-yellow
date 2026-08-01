@@ -9,21 +9,36 @@ Statuses: `PENDING` · `IN PROGRESS` · `BLOCKED` · `PR REVIEW` · `DONE (merge
 | `ENG-014B` | `DONE (PR #4 / 4ee1131)` | Work-index constellation, Grid/List, filters, responsive and browser-state convergence | — |
 | `MIG-000` | `DONE (PR #5 / a8847a5)` | Repository-native specifications, decisions, history, manifests and Claude control plane | `ENG-014B` |
 | `OPS-001` | `DONE (PR #6 / f57a87f)` | Add GitHub Actions quality gates for validation, test, typecheck, lint, build, routes and browser discovery | `MIG-000` |
-| `ENG-014C` | `PR REVIEW` | Converge all 21 project-page block orders, hero placement, statistics, spacing and media rhythm | `OPS-001` |
-| `ENG-014D` | `PENDING` | Integrate approved non-hero media and documented fallbacks; hero remains poster-only | `ENG-014C` |
+| `ENG-014C` | `DONE (PR #8 / 17b6974)` | Converge all 21 project-page block orders, hero placement, statistics, spacing and media rhythm | `OPS-001` |
+| `ENG-014D` | `PENDING` (next eligible; not started) | Integrate approved non-hero media and documented fallbacks; hero remains poster-only | `ENG-014C` |
 | `ENG-014E` | `PENDING` | Motion, responsive, accessibility, browser and visual-regression convergence; owns the `D-014` global-shell whole-page height exception (`PAR-P1-004`) | `ENG-014D` |
 | `ENG-015` | `PENDING` | Freeze accepted House of Yellow baseline with tag, SHA, deployment, screenshots and validation | `ENG-014E` |
 
 Post-OPS-001 control-plane hardening (no ticket ID): merged through PR #7 at
 `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run
 `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
-`ENG-014C` is now the active item.
+
+`ENG-014C` is merged and closed through PR #8 at
+`17b697430a55fa3a5835c9c25fef927301b9ec87`, with the exact reviewed head
+`5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent of the
+merge commit; post-merge Quality Gates run `30715826793` and Vercel deployment
+`DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed. Current canonical `main` is
+`17b697430a55fa3a5835c9c25fef927301b9ec87`. `ENG-014D` is the next eligible item
+and has **not** started.
 
 `ENG-014C` is accepted against project-composition parity under `D-014`. Its raw
 whole-page scroll-height criterion (≤2%) is an **authorized unmet exception**,
-never a passed measurement: 3.3–6.3% delta, a constant +203px desktop / +193px
-mobile from the pre-existing unchanged shared global shell. `ENG-014E` must
-resolve or formally reassess it under `PAR-P1-004` before `ENG-015` freeze.
+never a passed measurement, caused by the pre-existing unchanged shared global
+shell. `ENG-014E` must re-measure it and resolve or formally reassess it under
+`PAR-P1-004` before `ENG-015` freeze.
+
+**Measurement erratum (2026-08-01, post-merge).** This entry previously recorded
+the exception as "3.3–6.3% delta, a constant +203px desktop / +193px mobile".
+Re-measured from `qa/eng014c/parity-matrix.json`, the correct figures are:
+delta range **3.18%–6.25%** (rounded **3.2–6.3%**, not 3.3–6.3%); desktop excess
+**203px on 20 records and 202px on 1** — not a constant 203px; mobile excess
+**194px on 18 records and 195px on 3 — never 193px**. The `D-014` authorization,
+scope and ownership are unchanged.
 
 ## SPIMAR controlled restart
 

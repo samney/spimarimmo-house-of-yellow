@@ -15,8 +15,10 @@ Claude Code is the sole source-code implementer from `ENG-014C`.
 - `MIG-000`: merged and closed through PR #5; migration commit `d29776d9e4e1269e809fd2c118d8fc27100a2556`, merge `a8847a5039f347babc2fec2dc48bc39d3d8810c4`.
 - `OPS-001`: merged and closed through PR #6; merge `f57a87fdd55a5bc65fa9e85d83860defbf19a9b1`; post-merge Quality Gates run `30689774539` on `main` succeeded.
 - Control-plane hardening (no ticket ID): merged and closed through PR #7; merge `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` passed; post-merge Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed.
-- `ENG-014C`: active item; in progress on branch `claude/eng-014c-project-detail-parity`.
-- `ENG-014D`–`ENG-015`: not started.
+- `ENG-014C`: `DONE`; merged and closed through PR #8; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent of merge `17b697430a55fa3a5835c9c25fef927301b9ec87` (first parent `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`); post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed.
+- Current canonical `main`: `17b697430a55fa3a5835c9c25fef927301b9ec87`.
+- `ENG-014D`: next eligible item; not started.
+- `ENG-014E`–`ENG-015`: pending. `ENG-014E` owns the `D-014` global-shell whole-page height exception (`PAR-P1-004`) and must re-measure and resolve or formally reassess it before the `ENG-015` freeze.
 - SPIMAR transformation: gated by `ENG-015`.
 
 ## Stage A — Close and freeze the reference foundation

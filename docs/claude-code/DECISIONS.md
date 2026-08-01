@@ -111,3 +111,41 @@ exception, not a successful measurement. `ENG-014E` must resolve or formally
 reassess the global-shell discrepancy before `ENG-015` freeze. This decision
 scopes only the unchanged global shell; project-composition parity remains a
 hard ENG-014C requirement.
+
+### D-014 — measurement erratum — 2026-08-01 (post-merge, PR #8 closeout)
+
+The decision text above is preserved verbatim as the historical record of the
+authorization as it was made. This erratum corrects the **measured figures** it
+quotes. It does **not** change the decision, its scope, or its ownership.
+
+The final independent review of PR #8 re-derived every per-record value from
+`qa/eng014c/parity-matrix.json`. Three figures quoted above are inaccurate:
+
+| Figure as recorded                       | Measured value                                                                            |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------- |
+| "3.3–6.3% delta"                         | **3.18%–6.25%**; the minimum is 3.18%, so the rounded range is **3.2–6.3%**, not 3.3–6.3% |
+| "+203px desktop" (described as constant) | **203px on 20 records, 202px on 1** — not a constant                                      |
+| "+193px mobile" (described as constant)  | **194px on 18 records, 195px on 3 — never 193px**                                         |
+
+Everything else the decision asserts was independently confirmed at review: the
+criterion is unmet on 42 of 42 records; the absolute first-block top is identical
+on all 42 records, so the entire excess lies below the project composition; the
+last-block bottom differs by at most 2px; `oceanco-leviathan` at 1440×900 has a
+last-section bottom of 5911px in both documents; and the implementation's
+`footer.setDarkCursor` was re-measured directly at **521px**. The 318px reference
+figure for that footer is not carried in any committed audit record — the audit
+schema captures no footer box — so it rests on an uncommitted ad-hoc measurement
+and should be re-established by `ENG-014E`.
+
+Scope of this erratum: the `D-014` authorization stands unchanged. The
+pre-existing, unchanged global-shell discrepancy remains an authorized unmet
+exception, never a passing measurement, and remains assigned to `PAR-P1-004`
+under `ENG-014E`, which must **re-measure** it before resolving or formally
+reassessing it.
+
+Not corrected here, by design: `qa/eng014c/validation-log.md` and the
+`ENG-014C` evidence package (`ENG-014C-EVIDENCE-PACKAGE.zip`, SHA-256
+`7C4DF5FF789AE45A1DC9D6D96A15C51244A2F8259B31A2847AAC36579D417FCD`) still carry
+the original figures. Those are immutable merged evidence and are deliberately
+left byte-identical to what PR #8 recorded; this erratum supersedes them for all
+forward-looking purposes.
