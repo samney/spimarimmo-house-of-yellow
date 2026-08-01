@@ -37,7 +37,8 @@
 .worksGrid .project.portrait .media {
   aspect-ratio: 3 / 4;
 }
-.worksGrid .project video {
+.worksGrid .project .mediaPlane__video,
+.worksGrid .project .mediaPlane__poster img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -45,7 +46,8 @@
   object-fit: cover;
   transition: transform 0.45s ease-out;
 }
-.worksGrid .project:hover video {
+.worksGrid .project:hover .mediaPlane__video,
+.worksGrid .project:hover .mediaPlane__poster img {
   transform: scale(1.03);
 }
 .worksGrid .project .tags {
@@ -82,7 +84,9 @@
   padding: 0.35vw 0.9vw;
   opacity: 0;
   transform: translateY(0.5vw);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
 }
 .worksGrid .project:hover .takeALook {
   opacity: 1;
@@ -203,7 +207,9 @@
   font-weight: 500;
   color: var(--hoy-ink);
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s;
 }
 .filterPanel .filterCategory.active {
   background: var(--hoy-ink);

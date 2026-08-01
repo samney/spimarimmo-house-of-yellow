@@ -5,6 +5,9 @@ import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/public/global/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
 import { CATEGORIES, PROJECTS, type Project } from "@/lib/content/projects";
+import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { getProjectPoster } from "@/lib/media/posters";
+import { resolveLegacyVideoPath } from "@/lib/media/video-registry";
 
 /* Made by Yellow overview replicating the reference projectsOverviewBlock:
    masonry-style grid of landscape/portrait autoplaying tiles, "+ filter works"
@@ -13,7 +16,14 @@ import { CATEGORIES, PROJECTS, type Project } from "@/lib/content/projects";
 
 function GridIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 13 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <path d="M0 0H6V3C6 4.65685 4.65685 6 3 6H0V0Z" fill="currentColor" />
       <path d="M0 7H3C4.65685 7 6 8.34315 6 10V13H0V7Z" fill="currentColor" />
       <path d="M7 0H13V6H10C8.34315 6 7 4.65685 7 3V0Z" fill="currentColor" />
@@ -24,7 +34,14 @@ function GridIcon() {
 
 function ListIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 13 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       {[0.5, 2.5, 4.5, 6.5, 8.5, 10.5, 12.5].map((y) => (
         <line key={y} y1={y} x2="13" y2={y} stroke="currentColor" />
       ))}
@@ -34,9 +51,17 @@ function ListIcon() {
 
 function ProjectTile({ p }: { p: Project }) {
   return (
-    <Link className={`project visible ${p.orientation}`} href={`/project/${p.slug}`} data-cursor="play">
+    <Link
+      className={`project visible ${p.orientation}`}
+      href={`/project/${p.slug}`}
+      data-cursor="play"
+    >
       <span className="media">
-        <video src={p.video} poster={p.poster} muted loop playsInline autoPlay preload="metadata" />
+        <ResilientVideo
+          className="mediaPlane--fill"
+          src={resolveLegacyVideoPath(p.video)}
+          poster={getProjectPoster(p)}
+        />
         <span className="tags">
           {p.categories.map((c) => (
             <span className="tag" key={c}>
@@ -104,7 +129,9 @@ export function WorksOverview() {
             ))}
           </div>
         )}
-        {filtered.length === 0 && <div className="noResults text">No works match these filters.</div>}
+        {filtered.length === 0 && (
+          <div className="noResults text">No works match these filters.</div>
+        )}
       </div>
 
       <div className="filterWrapper">

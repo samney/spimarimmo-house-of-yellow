@@ -1,19 +1,21 @@
 import { HeroLetters } from "./HeroLetters";
 import { SplitTitle } from "./SplitTitle";
+import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { MEDIA_POSTERS } from "@/lib/media/posters";
 
 export function HeroSection() {
   return (
     <section className="headerBigBlock noMargin scrollSection" data-cursor="video">
       <div className="innerAnimContainer">
         <div className="background playerBackground">
-          <video
-            className="video playVideoOnScroll"
-            src="/videos/home-hero-1202811863-1080p.mp4"
-            muted
-            loop
-            playsInline
-            autoPlay
-            aria-label="House of Yellow showreel"
+          <ResilientVideo
+            className="mediaPlane--fill"
+            videoClassName="video playVideoOnScroll"
+            src={null}
+            poster={MEDIA_POSTERS.heroDesktop}
+            mobilePoster={MEDIA_POSTERS.heroMobile}
+            label="House of Yellow hero artwork"
+            priority
           />
         </div>
         <HeroLetters />

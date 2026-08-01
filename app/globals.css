@@ -143,6 +143,43 @@ body {
   line-height: 1.4;
 }
 
+/* Deployment-safe media plane: the poster is always present and the video
+   fades in only after it can play. Missing, failed, reduced-motion and
+   data-saving states intentionally remain on the poster. */
+.mediaPlane {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--hoy-ink);
+}
+
+.mediaPlane--fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mediaPlane__poster,
+.mediaPlane__poster img,
+.mediaPlane__video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mediaPlane__video {
+  opacity: 0;
+  transition: opacity 240ms ease-out;
+}
+
+.mediaPlane[data-media-state="ready"] .mediaPlane__video {
+  opacity: 1;
+}
+
 /* Accessibility addition over the reference (recorded in DESIGN-SYSTEM.md):
    real reduced-motion fallbacks for all animated content. */
 @media (prefers-reduced-motion: reduce) {
@@ -153,5 +190,9 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .mediaPlane__video {
+    display: none !important;
   }
 }

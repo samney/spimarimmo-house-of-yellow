@@ -23,11 +23,9 @@
   font-weight: 500;
   display: block;
 }
-.projectDetail .heroMedia video,
-.projectDetail .heroMedia .mediaPlaceholder {
+.projectDetail .heroMedia .projectHeroMedia {
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
   display: block;
   background: var(--hoy-ink);
 }
@@ -75,11 +73,9 @@
 .projectDetail .projectTwoImagesBlock.text .mediaPair {
   padding: 2.5vw 0 0;
 }
-.projectFullWidthLoopBlock .fullLoop,
-.projectFullWidthLoopBlock .mediaPlaceholder {
+.projectFullWidthLoopBlock .fullLoop {
   width: 100%;
   aspect-ratio: 21 / 9;
-  object-fit: cover;
   display: block;
   background: var(--hoy-ink);
   margin: 3vw 0;
@@ -109,10 +105,9 @@
   font-weight: 500;
   margin-bottom: 1.5vw;
 }
-.projectRelatedBlock .relatedMedia video {
+.projectRelatedBlock .relatedMediaPlane {
   width: 100%;
   aspect-ratio: 16 / 7;
-  object-fit: cover;
   border-radius: 0.5vw;
   display: block;
 }

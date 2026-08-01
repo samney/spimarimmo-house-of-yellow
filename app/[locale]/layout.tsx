@@ -3,12 +3,17 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { getCanonicalProductionUrl, getRobotsMetadata } from "@/lib/seo/robots";
 import "../globals.css";
+
+const canonicalProductionUrl = getCanonicalProductionUrl();
 
 export const metadata: Metadata = {
   title: "HOY | House Of Yellow",
   description:
     "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+  robots: getRobotsMetadata(),
+  ...(canonicalProductionUrl ? { metadataBase: canonicalProductionUrl } : {}),
 };
 
 export function generateStaticParams() {
