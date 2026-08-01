@@ -25,7 +25,15 @@ Superseded, never run:
 
 Start from the accepted `hoy-clone-baseline-eng-015` tag and latest clean main. Exclude old patches, experimental worktrees, stale branches and unmerged artifacts.
 
-Active item: `SPI-000`, executed as SPIMAR Transformation Phase 1 — Brand, UX Architecture and Global Experience, on branch `claude/spimar-transformation-phase-1`.
+The normalized Phase 1 contract is
+`docs/spimar/transformation-phase-1/`;
+`docs/spimar/governance/DELIVERY-MAP.md` is the sole Stage/SPI/TRF/Gate
+dependency map. Application implementation starts only after that documentation
+PR is independently reviewed and owner-merged.
+
+First eligible implementation item: `SPI-000 / P1.0 / TRF-000`, on a fresh
+`claude/spimar-transformation-phase-1` branch from the latest approved
+`origin/main`.
 
 1. Audit House of Yellow dependencies, residue, duplication, reusable primitives and obsolete paths.
 2. Neutralize the clone and establish one canonical architecture.
@@ -41,4 +49,3 @@ Active item: `SPI-000`, executed as SPIMAR Transformation Phase 1 — Brand, UX 
 ## Conflict-prevention gates
 
 One Claude implementer, one fresh Claude reviewer, one bounded branch/PR, latest main base, no next phase before owner merge, no silent architecture change, no historical patch after ENG-015, and no completion without diff/tests/evidence/deployment.
-
