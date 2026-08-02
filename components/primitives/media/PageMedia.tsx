@@ -5,9 +5,15 @@ import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
 
    TRF-003 moved this out of the reference tree, but it still imported
    `localVideo` and the `PageVideo` type from `lib/content`, which TRF-004
-   deletes. Both are now props, so the primitive resolves nothing itself and
-   carries no content dependency. SPIMAR media records supply `poster` and
-   `src` in TRF-022. */
+   deletes. Both are now props, so the component carries no content dependency.
+
+   It is not resolution-free, and TRF-006 corrects an earlier claim that it was:
+   `imageRoot` still defaults to `/images` and the poster path is composed here.
+   That default is the legacy convention and is expected to move into the SPIMAR
+   media records in TRF-022.
+
+   No route renders this component at present — TRF-004 deleted its only
+   callers. It is retained engineering, not live code. */
 export type PageMediaSource = {
   /** Poster image path, relative to `imageRoot`. */
   poster: string;

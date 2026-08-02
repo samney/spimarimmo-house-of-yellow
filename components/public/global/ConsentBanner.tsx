@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
-import { Link } from "@/i18n/navigation";
 import {
   CONSENT_CATEGORIES as CATEGORIES,
   CONSENT_STORAGE_KEY as STORAGE_KEY,
@@ -136,11 +135,12 @@ export function ConsentBanner() {
           </button>
         )}
       </div>
-      <div className="cmplz-documents">
-        <Link className="cmplz-link" href="/cookies">
-          Cookies
-        </Link>
-      </div>
+      {/* The cookie-policy link is intentionally absent. TRF-004 deleted the
+          reference policy — it was a third party's legal document describing
+          cookies SPIMAR does not set (blocker LEG-1) — and no SPIMAR policy has
+          been authored yet. Linking to a 404 from a consent dialog is worse
+          than showing no link. Restore this with the SPIMAR-authored policy in
+          TRF-039; the anchor is `cmplz-documents`. */}
     </div>
   );
 }

@@ -5,12 +5,12 @@ Updated: 2026-08-02
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current `origin/main`: `436acd1fbea9aadbaee63fd229991fee087b8966` — the PR #15 merge commit (nested-worktree isolation). `TRF-000` merged at `d1e9654` (PR #12), `TRF-001` at `477f5ae` (PR #14), session commands/skills at `d49053e` (PR #13, `D-019`)
+- Current `origin/main`: `6f7cc3283d5926321189f0230dde49578b7f5d6d` — the PR #20 merge commit (`TRF-005`). Prior merges this phase: PR #16 `7bea6b2` (`GATE-0` acceptance, `D-020`), #17 `8dbfca9` (`TRF-002`), #18 `3675c02` (`TRF-003`), #19 `452c411` (`TRF-004`), #20 `6f7cc32` (`TRF-005`)
 - Accepted application baseline: `main@e048fdde7bdf52992ff258870147bf70c64295e9`, the PR #10 merge commit, tagged `hoy-clone-baseline-eng-015`
-- Latest merged item: `TRF-000` foundation baseline freeze, PR #12 (documentation and control plane only; the application baseline is unchanged)
+- Latest merged item: `TRF-005` recovery verification, PR #20
 - Stage A closed under `D-015` through `ENG-015`, PR #10
 - SPIMAR Phase 1 entry SHA (frozen by `TRF-000`): `643b912f2ff8bd128f857481a2f2427544b5c1c9`
-- Active work branch: `claude/spi-010-trf-002-residue-inventory` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
+- Active work branch: `claude/spi-010-trf-006-gate1-remediation` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
 - `TRF-*` execution state: [`WORK-PACKAGES.md`](WORK-PACKAGES.md). Gate state and review verdicts: [`GATES.md`](GATES.md)
 - ENG-014C control-plane closeout: merged through PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba` (reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent)
 - ENG-014C: merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
@@ -39,7 +39,8 @@ Updated: 2026-08-02
 - `SPI-010`: `IN PROGRESS` at `P1.1`. `TRF-002` residue inventory merged through PR #17 at `8dbfca92d96a4059561b2cdbf174a6bf00a6225f` — 29 tracked source files, 259 occurrences, ~93 visible and ~169 internal identifiers; record in `docs/spimar-phase-1/RESIDUE-INVENTORY.md`. Blocker `LEG-1` is open: the `/cookies` policy is a third party's legal text and cannot be corrected by editing.
 - `TRF-003`: neutral primitive layer merged through PR #18 at `3675c0206c0f819e9af0760763627934be7de304` — nine modules under `components/primitives/{motion,media,form}`. Record in `docs/spimar-phase-1/NEUTRAL-PRIMITIVES.md`.
 - `TRF-004`: reference product removed, merged through PR #19 at `452c411c7003c699377011cc08eee2191427731b` — 102 deletions, 11,482 lines. Record in `docs/spimar-phase-1/NEUTRALIZATION.md`.
-- `TRF-005`: recovery verified on `claude/spi-010-trf-005-recovery-verification` — all 102 deleted files proven byte-recoverable, and a performed rollback rehearsal restored the pre-neutralization tree exactly with all nine gates green (63 unit tests, 27 EN + 27 FR routes). Record in `docs/spimar-phase-1/RECOVERY-VERIFICATION.md`.
+- `TRF-005`: `DONE`, merged through PR #20 at `6f7cc3283d5926321189f0230dde49578b7f5d6d`. All 102 deleted files proven byte-recoverable; rollback rehearsal restored the pre-neutralization tree exactly with all nine gates green.
+- `GATE-1 NEUTRAL`: **`CHANGES_REQUESTED`**. An independent review found two user-facing defects (consent dialog linking to the deleted `/cookies`; two pages styled by deleted class names, headings at ~9.6px) and refuted several published residue figures. `TRF-006` remediates them on `claude/spi-010-trf-006-gate1-remediation`. The gate is **not passed** and needs a re-review.
 - Nested-worktree isolation (no ticket ID): merged through PR #15 at `436acd1fbea9aadbaee63fd229991fee087b8966`. `.claude/worktrees/` is gitignored and excluded from Vitest; `pnpm test` returns 5 files / 63 tests locally again.
 - `D-018` is in effect from `TRF-001` onward: independent review runs per `GATE-*`, not per work package, with the always-review exception list in `CLAUDE.md` § "Review discipline". `D-009` is superseded. `GATE-0` review is due once `TRF-001` merges and must be run by a **fresh session**.
 - `TRF-000` baseline record: `docs/spimar-phase-1/FOUNDATION-BASELINE.md`. Entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; lockfile SHA-256 `870cbbbcabdee46064563d40c9bf065c2fa956d296a5da898f90865d902869e1`; Node `22.14.0`; pnpm `10.15.0`.
@@ -62,13 +63,15 @@ Updated: 2026-08-02
 
 ## Next safe action
 
-Owner-merge `TRF-005` on `claude/spi-010-trf-005-recovery-verification`. That
-closes `P1.1` and makes `GATE-1 NEUTRAL` eligible.
+Owner-merge `TRF-006` on `claude/spi-010-trf-006-gate1-remediation`, then
+**re-review `GATE-1 NEUTRAL`** in a fresh session. The gate is currently
+`CHANGES_REQUESTED` and must not be treated as passed.
 
-`GATE-1` then **requires a fresh-session independent review** covering
-`TRF-002`–`005`. It must not be accepted the way `GATE-0` was: `D-020` set no
-precedent, and this gate deleted 102 files, re-pointed three gates, removed one
-gate assertion, dropped two E2E specs and carries two self-reported defects.
+Two owner decisions are outstanding before `GATE-1` can close cleanly: whether
+the third-party payload still tracked in `qa/cookies-raw.html` and
+`qa/cookies-data.json` is acceptable as provenance under `LEG-1`, and whether
+repository-level naming (`package.json`, `README.md`, `home-structure.json`)
+falls inside reference-product removal.
 
 Only after `GATE-1` passes, open `P1.2`/`P1.3` — which may run in parallel
 under the file-ownership map.

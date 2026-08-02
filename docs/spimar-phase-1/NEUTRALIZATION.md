@@ -40,12 +40,21 @@ The public surface is now `/`, `/fr`, the catch-all, the 404 boundary and
 `robots.txt` — a neutral shell.
 
 - `components/primitives/**` — the `TRF-003` layer, untouched.
-- `ConsentBanner` + `lib/consent.ts` — `hoy:consent` is a **public DOM event
-  contract**; renaming it is breaking and is sequenced into `TRF-017`. It was
-  deliberately excluded from this removal.
+- `ConsentBanner` + `lib/consent.ts` — retained, but **`TRF-006` withdraws the
+  reason originally given**. This document claimed `hoy:consent` was a "public
+  DOM event contract" whose rename would "silently break every subscriber". The
+  `GATE-1` review traced it: the event is dispatched in one place and subscribed
+  in one place, both inside `lib/consent.ts`, and `ConsentBanner` is the only
+  caller of either. Its one genuine second consumer, `ConsentPreferences.tsx`,
+  was deleted by this same package. There are no embeds and no analytics — as
+  § 6 of the residue inventory states — so the two claims contradicted each
+  other and mine was the wrong one. Renaming it is a small, local change.
+  Deferral to `TRF-017`, where the consent surface is rebuilt against SPIMAR
+  copy and a real policy, is still the sensible sequencing; it is a scheduling
+  choice, not a compatibility constraint.
 - `shell.css` and the `--hoy-*` tokens — retained because the consent banner and
-  404 still use them. Renaming 148 custom properties is the SPIMAR token layer's
-  job (`TRF-010`), not a bulk sweep here.
+  404 still use them. Renaming the 8 `--hoy-*` properties is the SPIMAR
+  token layer's job (`TRF-010`), not a bulk sweep here.
 - `lib/{contact,seo,media}`, `i18n/**`, `proxy.ts`, `app/actions/contact.ts` —
   already brand-neutral per `TRF-002` § 8.
 
@@ -138,12 +147,30 @@ reference email, phone or address remain in rendered output — asserted by E2E.
 
 Remaining in source, deliberately and with owners:
 
-| Residue                           | Count | Owner               |
-| --------------------------------- | ----: | ------------------- |
-| `--hoy-*` CSS custom properties   |   148 | `TRF-010`           |
-| `hoy-consent` / `hoy:consent`     |    17 | `TRF-017`           |
-| `hoyCols` layout class            |    14 | `TRF-012`           |
-| `HOY-nnn` ticket refs in comments |     7 | `TRF-003` follow-up |
+| Residue                                          |                                     Count | Owner               |
+| ------------------------------------------------ | ----------------------------------------: | ------------------- |
+| `--hoy-*` custom properties                      | **8 distinct properties**, 44 occurrences | `TRF-010`           |
+| `hoy-consent` / `hoy:consent` / `hoy_consent_v1` |                                        30 | `TRF-017`           |
+| `hoy-marquee`                                    |                                         2 | `TRF-012`           |
+| `HOY-nnn` ticket refs in comments                |                                         3 | `TRF-003` follow-up |
+
+**Corrected by `TRF-006` after the `GATE-1` review.** The table published here
+originally repeated the _pre-deletion_ `TRF-002` figures inside the very commit
+that deleted most of them. Three of four rows were wrong:
+
+- `--hoy-*` was given as **148**, and described as "renaming 148 custom
+  properties". 148 was an occurrence count from the pre-deletion tree; there are
+  **8** distinct properties. The published figure oversized `TRF-010` by roughly
+  18×.
+- `hoyCols` was carried as **14** outstanding for `TRF-012`. Every occurrence
+  lived in deleted files — the real count is **0** and that line item was already
+  complete.
+- `hoy-consent` was given as **17**, which was the `shell.css` figure reported as
+  the namespace total; the real count is **30**.
+- `hoy-marquee` was omitted entirely.
+
+Counts above are measured on this branch across `app`, `components`, `lib`,
+`messages`, `i18n`, `public` and `proxy.ts`.
 
 Explanatory comments in this changeset name House of Yellow when describing what
 was removed. That is provenance, not brand residue.
@@ -155,3 +182,58 @@ declares 0 deployable assets, no reference media was reconstructed or sourced,
 no video activated. `L3` and `PAR-P1-004` transfer to `SPI-040` as before; the
 global shell they describe is now deleted rather than fixed, and the SPIMAR
 shell replacing it is measured on its own terms.
+
+---
+
+## 9. `GATE-1` review outcome and `TRF-006` remediation — 2026-08-02
+
+An independent `GATE-1` review returned **`CHANGES_REQUESTED`**. It found defects
+this session did not, including two that shipped to users. Recorded here rather
+than only in the gate ledger, because several correct the claims above.
+
+### Fixed in `TRF-006`
+
+| Severity | Defect                                                                                                                                                                                                                                          | Fix                                                                                                                 |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **P1**   | `ConsentBanner.tsx` linked to `/cookies`, deleted by `TRF-004`. Every first visit rendered a consent dialog whose only policy link 404'd. § 2 said the banner was "deliberately excluded" and § 3 said `/cookies` 404s; nobody joined them.     | Link removed with an anchor comment for `TRF-039`. An E2E test now asserts every banner link resolves.              |
+| **P1**   | `not-found.tsx` and the homepage placeholder used class names deleted with the reference stylesheets, and `.pagePlaceholder` was never defined at all. With `body { font-size: 0.75vw }` and no heading rules, both `<h1>`s rendered at ~9.6px. | Minimal neutral `.interimSurface` styles added; both pages rewritten to use them.                                   |
+| P2       | The residue guard checked `/` only, matched the phone in a form the site never displayed, and asserted **no** client trademark despite its own comment claiming to.                                                                             | Widened to `/`, `/fr` and the 404 boundary; adds the spaced phone format, street/postcode, and ten client marks.    |
+| P2       | Horizontal-overflow enforcement was lost repo-wide when the two E2E specs were deleted — `.claude/rules/frontend-quality.md` mandates it.                                                                                                       | Re-homed: overflow assertions at 390, 768 and 1440px.                                                               |
+| P2       | `ConsentBanner` and `lib/consent.ts` survived with zero coverage.                                                                                                                                                                               | E2E test for render, link integrity and dismissal.                                                                  |
+| P2       | `ContactForm` still carried WordPress Contact Form 7 markers (`wpcf7-form-control-wrap` ×3) — reference residue missed by `TRF-002` and absent from § 7.                                                                                        | Renamed to `formControlWrap`; count now 0.                                                                          |
+| P2       | `ContactFormLabels` covered only some copy. The accessible form name, both `aria-live` error strings, the honeypot label and a hardcoded `/images/load.gif` were unreachable from the prop — on a site with a live `/fr`.                       | Contract widened to `formLabel`, `errorText`, `rateLimitedText`, `fields.honeypot`; loader is now a defaulted prop. |
+| P2       | § 7's residue table repeated pre-deletion figures.                                                                                                                                                                                              | Re-derived from this branch — see § 7.                                                                              |
+| P2       | The `hoy:consent` "public DOM event contract" rationale was unsupportable and contradicted the residue inventory's own "no analytics wired" finding.                                                                                            | Withdrawn — see § 2.                                                                                                |
+
+### Accepted as accurate criticism, not yet actioned
+
+- **`ContactForm` and `PageMedia` are orphaned.** `TRF-004` deleted their only
+  callers, so § 4's decoupling was never exercised by an integration. They are
+  retained engineering, not live code. `PageMedia`'s comment now says so.
+- **`PageMedia` does still resolve a path** — `imageRoot` defaults to `/images`.
+  "Resolves nothing themselves" was wrong; corrected in the file.
+- **`validate-media.mjs`'s per-asset checks are dormant**, because the manifest
+  is empty. True before this work as well, but "the rest still stands" describes
+  code that does not currently execute.
+- **`video-registry.test.ts` lost its only executing test** — the poster-existence
+  check. Correct to remove (its subject was deleted) but it was not disclosed
+  alongside the two E2E specs.
+- **`validate-routes.mjs` changed one assertion's fixture**, so "only the list
+  shrank" was inaccurate.
+- **`legacyPath` is required but no longer validated.** Rights and provenance are
+  now self-attested until the `TRF-023` register exists.
+- **The `qa/` scrapes still hold the third-party payload** — `qa/cookies-raw.html`
+  and `qa/cookies-data.json` retain the GA cookie IDs, both WordPress and both
+  Wordfence session hashes and the address, and `qa/build-cookies-content.mjs`
+  regenerates the deleted module from them. Scoping QA out as provenance is
+  weaker for `LEG-1`, which is framed as data disclosure. **Owner decision.**
+- **Repository-level naming** — `package.json` `"name": "house-of-yellow"`,
+  `README.md`, and `home-structure.json` (verbatim reference marketing copy).
+  Out of `TRF-004`'s "public surface" scope but reasonably within a package
+  titled "remove the reference product". **Owner decision.**
+- **Counting imprecision**: "61 images" should be 63; "32 trademarks" is 32
+  files but ~31 distinct marks (`CBBE_logo.svg` and `cbbe.svg` are one brand);
+  "all nine R100" was seven; `NEXT_PUBLIC_SITE_URL` does not "resolve to
+  spimarimmo.com in `robots.ts`" — it is env-driven and empty in `.env.example`.
+- **`format:check` is absent from every gate table** in this package, and its
+  exit code is recorded as 2 where the reproducible value is 1.
