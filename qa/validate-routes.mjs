@@ -77,16 +77,16 @@ try {
 
   const checks = [
     ...publicRoutes.map((route) => [route, 200]),
-    ...publicRoutes.map((route) => [`/fr${route === "/" ? "" : route}`, 200]),
+    ...publicRoutes.map((route) => [`/en${route === "/" ? "" : route}`, 200]),
     ["/this-route-does-not-exist", 404],
-    ["/fr/this-route-does-not-exist", 404],
+    ["/en/this-route-does-not-exist", 404],
   ];
   const results = await Promise.all(checks.map(([route, status]) => inspectRoute(route, status)));
   const errors = results.flat();
 
   for (const [route, location] of [
-    ["/en", "/"],
-    ["/en/culture", "/culture"],
+    ["/fr", "/"],
+    ["/fr/culture", "/culture"],
   ]) {
     const response = await fetch(`${origin}${route}`, { redirect: "manual" });
     if (response.status !== 307 || response.headers.get("location") !== location) {
@@ -102,7 +102,7 @@ try {
     process.exitCode = 1;
   } else {
     console.log(
-      `Route validation passed: ${publicRoutes.length} English routes, ${publicRoutes.length} French-prefixed routes, two localized 404s, and canonical /en redirects.`,
+      `Route validation passed: ${publicRoutes.length} French routes, ${publicRoutes.length} English-prefixed routes, two localized 404s, and canonical /fr redirects.`,
     );
   }
 } catch (error) {

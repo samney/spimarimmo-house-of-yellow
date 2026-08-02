@@ -67,6 +67,19 @@
      ~4,000 lines of accepted editorial CSS. The legacy token names are kept as
      aliases so every preserved composition re-skins from one place; they are
      renamed to --spimar-* once the component sweep lands. */
+  /* ==========================================================================
+     TOKEN ARCHITECTURE — primitive -> semantic -> component
+
+     Layer 1 (primitive) is raw value only. Nothing in a component references it.
+     Layer 2 (semantic) names a ROLE — surface, on-surface, action, border,
+     feedback. Components bind here, so a brand, density or RTL change is a
+     layer-2 edit rather than a sweep across ~4,900 lines of editorial CSS.
+     Layer 3 (component) is declared beside the component and derives from L2.
+
+     This is what makes the system extensible rather than merely themed.
+     ========================================================================== */
+
+  /* --- L1: primitives ------------------------------------------------------ */
   --spimar-gold: #efc337;
   --spimar-gold-hover: #f2ce55;
   --spimar-gold-deep: #d4a91f;
@@ -76,6 +89,52 @@
   --spimar-white: #ffffff;
   /* Muted text meeting 4.5:1 on --spimar-paper. Explicit colour, never opacity. */
   --spimar-muted: #55554f;
+
+  /* Bounded semantic feedback only — never campaign or audience colour. */
+  --spimar-positive: #1f7a3d;
+  --spimar-critical: #a3231d;
+  --spimar-focus: #0b5cd5;
+
+  /* --- L1: spacing scale ---------------------------------------------------
+     Viewport-relative like the type ladder so rhythm scales with composition
+     instead of stepping at breakpoints. Restated in the 580 regime. */
+  --space-3xs: 0.25vw;
+  --space-2xs: 0.5vw;
+  --space-xs: 0.75vw;
+  --space-sm: 1.25vw;
+  --space-md: 2vw;
+  --space-lg: 3.75vw;
+  --space-xl: 6.25vw;
+  --space-2xl: 10vw;
+  --space-gutter: 2.5vw;
+  --measure-prose: 44vw;
+  --measure-document: 52vw;
+
+  /* --- L2: semantics -------------------------------------------------------
+     Components bind to these. Re-point them to re-skin the product. */
+  --surface-page: var(--spimar-paper);
+  --surface-raised: var(--spimar-white);
+  --surface-inverse: var(--spimar-black);
+  --surface-accent: var(--spimar-gold);
+  --surface-muted: #efece5;
+
+  --on-surface: var(--spimar-ink);
+  --on-surface-muted: var(--spimar-muted);
+  --on-inverse: var(--spimar-paper);
+  --on-inverse-muted: #c9c7bf;
+  --on-accent: var(--spimar-black);
+
+  --action-primary: var(--spimar-gold);
+  --action-primary-hover: var(--spimar-gold-hover);
+  --action-on-primary: var(--spimar-black);
+
+  --border-subtle: #d9d7cf;
+  --border-strong: var(--spimar-ink);
+  --border-inverse: #2a2a24;
+
+  --feedback-positive: var(--spimar-positive);
+  --feedback-critical: var(--spimar-critical);
+  --focus-ring: var(--spimar-focus);
 
   --hoy-ink: var(--spimar-ink);
   --hoy-yellow: var(--spimar-gold);
@@ -132,11 +191,34 @@
   }
 }
 
-/* Mobile regime (<=580px): 580-based linear vw */
+/* Mobile regime (<=580px): 580-based linear vw.
+
+   The inherited regime overrode only --text-base and --text-h1, so every other
+   step kept its desktop vw value and collapsed: measured at 390px the lede
+   rendered at 5.85px. The full ladder is restated here, and spacing with it —
+   a 2.5vw gutter that reads as generous at 1440px is 10px at 390px. */
 @media (max-width: 580px) {
   :root {
     --text-base: 3.448vw; /* 20px @ 580 */
-    --text-h1: 6.897vw; /* 40px @ 580 */
+    --text-support: 3.276vw; /* 19px */
+    --text-small-title: 4.31vw; /* 25px */
+    --text-heading-sm: 5.517vw; /* 32px */
+    --text-heading: 6.207vw; /* 36px */
+    --text-heading-lg: 6.552vw; /* 38px */
+    --text-h1: 6.897vw; /* 40px */
+    --text-mega: 8.966vw; /* 52px */
+    --leading-small-title: 4.138vw;
+    --leading-h1: 7.586vw;
+
+    --space-xs: 2vw;
+    --space-sm: 3.5vw;
+    --space-md: 5vw;
+    --space-lg: 9vw;
+    --space-xl: 14vw;
+    --space-2xl: 18vw;
+    --space-gutter: 6vw;
+    --measure-prose: 100%;
+    --measure-document: 100%;
   }
 }
 

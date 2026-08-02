@@ -11,13 +11,13 @@ for (const route of coreRoutes) {
   });
 }
 
-test("French-prefixed route renders", async ({ request }) => {
-  const response = await request.get("/fr/culture", { maxRedirects: 0 });
+test("English-prefixed route renders", async ({ request }) => {
+  const response = await request.get("/en/culture", { maxRedirects: 0 });
   expect(response.status()).toBe(200);
 });
 
-test("explicit English prefix redirects to the canonical route", async ({ request }) => {
-  const response = await request.get("/en/culture", { maxRedirects: 0 });
+test("explicit French prefix redirects to the canonical route", async ({ request }) => {
+  const response = await request.get("/fr/culture", { maxRedirects: 0 });
   expect(response.status()).toBe(307);
   expect(response.headers().location).toBe("/culture");
 });
