@@ -1,6 +1,14 @@
 # Public Skills Lock — House of Yellow
 
-Audited date: 2026-07-30. No custom skill was created; no skill-creation tool was used; no `SKILL.md` was authored, rewritten, or "improved" by this project.
+Audited date: 2026-07-30. **Session 0 statement (historical, unchanged):** no custom skill was created during Session 0; no skill-creation tool was used; no `SKILL.md` was authored, rewritten, or "improved" by Session 0.
+
+**Amendment 2026-08-02 (`D-019`).** That statement is now scoped to Session 0 and is no longer a
+standing property of the repository. Under explicit repository-owner instruction, two
+**project-authored** skills were added — `ui-ux-review` and `hidden-features` (sections 7 and 8).
+They are first-party SPIMAR artifacts, not third-party installs: no external code, no network
+access, no credentials, no hooks. Their provenance, hashes, and the capability-overlap
+justification are recorded below. Any future project-authored skill must be added here in the
+same form before it ships.
 
 ## 1. frontend-design
 
@@ -117,6 +125,52 @@ Audited date: 2026-07-30. No custom skill was created; no skill-creation tool wa
 | Decision           | Exact required item from the canonical marketplace                                               |
 | Audited date       | 2026-07-30                                                                                       |
 
+## 7. ui-ux-review (project-authored)
+
+| Field              | Value                                                                                                                                                                                                                                                       |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Capability         | SPIMAR-specific public-route UI review: token compliance, eight-viewport responsive correctness, GSAP/reduced-motion handling, client/server boundary                                                                                                        |
+| Item               | `ui-ux-review` skill                                                                                                                                                                                                                                        |
+| Publisher          | **This project** (first-party). Conceptually derived from a same-owner skill in `PROJECT_SAAS_APP/PUblished_RN_App/react-native-recurrly`; that source was React Native / Recurrly-dark-theme specific and **no line of it was copied** — this is a rewrite |
+| Canonical URL      | none — in-repo artifact                                                                                                                                                                                                                                     |
+| Marketplace entry  | none                                                                                                                                                                                                                                                        |
+| Upstream SHA       | not applicable (no upstream)                                                                                                                                                                                                                                |
+| Installed version  | 1.0.0 (initial)                                                                                                                                                                                                                                             |
+| Install scope      | **project**                                                                                                                                                                                                                                                 |
+| Install method     | Authored in-repo under `D-019`                                                                                                                                                                                                                              |
+| Installed path     | `.claude/skills/ui-ux-review/SKILL.md`                                                                                                                                                                                                                      |
+| Content hash       | SHA-256 `037c0ca98fcf6e8245716cfcf107ac545b652828d835f04628663a9cd2501e96` (4,369 B)                                                                                                                                                                        |
+| License            | Repository-owned                                                                                                                                                                                                                                            |
+| Hooks/scripts      | **Absent.** Single Markdown file; no executables, no package manifest, no hooks                                                                                                                                                                             |
+| Network/MCP access | **None.** `allowed-tools` is `Read, Grep, Glob` — read-only, no WebFetch, no Bash                                                                                                                                                                           |
+| Credentials        | None                                                                                                                                                                                                                                                        |
+| Status             | **installed**                                                                                                                                                                                                                                               |
+| Decision           | See `D-019`. Capability overlap with `web-design-guidelines` is **real and accepted**: that skill is generic web-interface guidance, this one enforces SPIMAR-specific invariants (the three-regime `vw` type scale, the eight required viewports, GSAP-only motion, no shadcn on public routes) that no generic skill can know. This is the reason `taste-skill` was rejected and this one was not — `taste-skill` duplicated generic design taste; this encodes project-specific rules |
+| Audited date       | 2026-08-02                                                                                                                                                                                                                                                  |
+
+## 8. hidden-features (project-authored)
+
+| Field              | Value                                                                                                                                                                            |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Capability         | Process/security guard enforcing that UI hiding is never a security control; hidden-feature registry discipline                                                                  |
+| Item               | `hidden-features` skill                                                                                                                                                          |
+| Publisher          | **This project** (first-party). Concept derived from a same-owner skill in `PROJECT_SAAS_APP/aljaridaproWebAapp/Aljaridapro`; that source depended on Aljaridapro's own registry and `routeAccess.ts` and was **rewritten**, not copied |
+| Canonical URL      | none — in-repo artifact                                                                                                                                                          |
+| Marketplace entry  | none                                                                                                                                                                             |
+| Upstream SHA       | not applicable (no upstream)                                                                                                                                                     |
+| Installed version  | 1.0.0 (initial)                                                                                                                                                                  |
+| Install scope      | **project**                                                                                                                                                                      |
+| Install method     | Authored in-repo under `D-019`                                                                                                                                                   |
+| Installed path     | `.claude/skills/hidden-features/SKILL.md`                                                                                                                                        |
+| Content hash       | SHA-256 `3303cf597f7e9007a83fa918bacd2c448c9da9093062cccae68e0f52ff882d20` (3,706 B)                                                                                              |
+| License            | Repository-owned                                                                                                                                                                 |
+| Hooks/scripts      | **Absent.** Single Markdown file                                                                                                                                                 |
+| Network/MCP access | **None.** `allowed-tools` is `Read, Grep, Glob`                                                                                                                                  |
+| Credentials        | None                                                                                                                                                                             |
+| Status             | **installed** — dormant until `OPS-070`/`CMS-080` create the role surface                                                                                                        |
+| Decision           | See `D-019`. No existing skill covers this; it reinforces `.claude/rules/data-security.md` at the moment a feature is hidden, which is when the mistake is actually made         |
+| Audited date       | 2026-08-02                                                                                                                                                                       |
+
 ## Rejected / skipped items
 
 | Item                                                                                                                                  | Status                     | Reason                                                                                                                                                                                                                                                                                                                                                |
@@ -130,7 +184,11 @@ Audited date: 2026-07-30. No custom skill was created; no skill-creation tool wa
 - Official installer: Claude Code plugin manager, CLI 2.1.220. Immutable per-commit pinning is **not exposed** by `claude plugin install`; the plugin manager records the marketplace git commit SHA at install time (values above). The one project-scoped vendored skill IS pinned to a full commit SHA.
 - Update policy: **no automatic updates for project behavior.** Plugin-manager updates of user-scope plugins may occur outside this project's control; before relying on changed behavior, re-audit and update this lock file.
 - To intentionally refresh one item (example: `web-design-guidelines`): re-clone `vercel-labs/agent-skills`, note the new HEAD SHA, re-run the Phase 2 inspection checklist on the skill directory, copy the file(s) byte-identically into `.claude/skills/web-design-guidelines/`, recompute SHA-256, and update this file's entry plus `DECISIONS.md`.
-- Statement: **no custom skill was created during Session 0.**
+- Statement: **no custom skill was created during Session 0.** This remains true of Session 0. It
+  is superseded as a standing repository property by `D-019` (2026-08-02), which authorized the two
+  project-authored skills in sections 7 and 8. Project-authored skills are versioned in-repo, so
+  their "update policy" is ordinary Git history plus a `DECISIONS.md` entry for any behavioral
+  change — they are not subject to the third-party re-audit procedure above.
 
 ## Owner-requested candidates audited 2026-07-30 (read-only research; nothing cloned or executed)
 
