@@ -1,8 +1,8 @@
 import { Link } from "@/i18n/navigation";
-import { Marquee } from "@/components/public/global/Marquee";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
-import { SplitTitle } from "./SplitTitle";
-import { Counter } from "./Counter";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
+import { Counter } from "@/components/primitives/motion/Counter";
 
 const PHONES = [
   "Comp-1_26_21-400x533.jpg",

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { Marquee } from "./Marquee";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 
 /* Custom cursor replicating the reference: small yellow dot (z-20) following the
    pointer, expanding with looping Play/Video labels over video surfaces

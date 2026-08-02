@@ -5,7 +5,7 @@ import {
   COOKIES_POLICY_BEFORE_WIDGET,
   COOKIES_POLICY_AFTER_WIDGET,
 } from "@/lib/content/cookies-policy";
-import { Inview } from "@/components/public/pages/Inview";
+import { Inview } from "@/components/primitives/motion/Inview";
 import { ConsentPreferences } from "@/components/public/pages/ConsentPreferences";
 
 export const metadata: Metadata = {

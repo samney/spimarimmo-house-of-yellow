@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
-import { Marquee } from "@/components/public/global/Marquee";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
-import { SplitTitle } from "./SplitTitle";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 export function ClosingSection() {
   return (
