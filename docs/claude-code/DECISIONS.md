@@ -333,3 +333,98 @@ concentrates where CI cannot help. The trade-off is accepted deliberately: a
 defect in non-exception work may now survive until its gate, where it is caught
 against a larger diff. `CLAUDE.md` § "Review discipline" carries the operative
 rule.
+
+## D-019 — 2026-08-02 — Project-authored session commands and two first-party skills
+
+**Authority.** Explicit repository-owner instruction to import capable Claude Code tooling
+from two same-owner projects (`PROJECT_SAAS_APP/aljaridaproWebAapp/Aljaridapro` and
+`PROJECT_SAAS_APP/PUblished_RN_App/react-native-recurrly`) into this repository.
+
+**Context.** The source projects contained 4 slash commands, 6 rules files and 8 skills.
+None was importable as-is:
+
+- The 4 Aljaridapro commands are thin entry points that dereference `docs/ai-system/*`,
+  `AGENTS.md` and `npm run verify` — none of which exist here.
+- The React Native skills (`rn-expo-check`, `a11y-audit`, `ui-ux-review`,
+  `integration-expo`) target Expo/RN and a foreign dark theme; this is a Next.js
+  application.
+- The `.agents/skills/*` entries (`improve-codebase-architecture`, `to-prd`,
+  `setup-matt-pocock-skills`) are **already installed at user scope** and available in
+  every session — importing them would duplicate.
+- The Aljaridapro rules duplicate `.claude/rules/*` already present here.
+
+`PUBLIC-SKILLS-LOCK.md` additionally stated that no `SKILL.md` had been authored by this
+project, and `TOOLING-MATRIX.md` excludes any skill absent from that lock. A silent file
+drop would have falsified both.
+
+**Alternatives.** (a) Verbatim copy — produces four commands that dereference missing paths
+and four wrong-stack skills; rejected. (b) Import nothing — discards genuinely applicable
+process discipline the owner asked for; rejected. (c) Port: rewrite each artifact against
+this repository's real control plane and rules, and amend the governance files that
+forbade it.
+
+**Decision.** (c).
+
+1. Four commands added under `.claude/commands/` — `/plan`, `/checkpoint`, `/review`,
+   `/sync-docs`. Each is a thin entry point holding **no policy of its own**; each
+   dereferences `CLAUDE.md`, `STATUS.md`, `QUEUE.md`, `DECISIONS.md`, `BLOCKERS.md`,
+   `VALIDATION-MATRIX.md` and `docs/spimar/governance/*` live. `/review` deliberately
+   reads the `Review discipline` section of `CLAUDE.md` at run time rather than encoding a
+   tier model, because that model has already been superseded once.
+2. Two project-authored skills added — `ui-ux-review` and `hidden-features` — recorded as
+   sections 7 and 8 of `PUBLIC-SKILLS-LOCK.md` with SHA-256 hashes. Both are read-only
+   (`allowed-tools: Read, Grep, Glob`): no network, no credentials, no hooks, no
+   executables.
+3. `PUBLIC-SKILLS-LOCK.md`'s "no custom skill was created" statement is **scoped to
+   Session 0**, where it remains true, and is superseded as a standing repository property.
+   Project-authored skills are governed by Git history plus a `DECISIONS.md` entry, not by
+   the third-party re-audit procedure.
+4. `ui-ux-review` overlaps the "Web UX / accessibility / design review" capability held by
+   `web-design-guidelines`. The overlap is **accepted, not denied**: `web-design-guidelines`
+   is generic web-interface guidance; `ui-ux-review` encodes SPIMAR invariants a generic
+   skill cannot know — the three-regime linear `vw` type scale switched at 1080px/580px, the
+   eight required viewports, GSAP-only motion with `prefers-reduced-motion` fallbacks, and
+   the no-shadcn-on-public-routes exclusion. This is the distinction that separates it from
+   `taste-skill`, which was rejected for duplicating generic design taste with no
+   project-specific content.
+5. `ui-ux-review` **dereferences** the token source of truth (`app/globals.css`,
+   `docs/design-system/DESIGN-SYSTEM.md`) rather than hardcoding values, because the
+   `--hoy-*` tokens are replaced — not extended — at `SPI-030`. Hardcoding would have made
+   the skill wrong on the day the SPIMAR identity lands.
+6. `hidden-features` records that **no hidden-feature registry exists yet** and must not
+   claim one. The first feature that ships hidden creates
+   `docs/claude-code/HIDDEN-FEATURES.md` under its own decision entry.
+7. Nothing from the React Native source was copied. `a11y-audit` was **not** ported — the
+   owner did not select it, and `.claude/rules/testing-and-validation.md` already mandates
+   per-route Axe evidence.
+
+**Consequence.** This changeset is tooling and control-plane only. It touches no
+application source, no test, no dependency, no lockfile and no runtime configuration, and
+does not start or claim any `SPI-*`/`TRF-*` implementation work. It is deliberately kept
+off `claude/spi-000-trf-000-baseline-freeze` so the `TRF-000` PR remained one bounded item.
+
+**Register reconciliation (completed 2026-08-02).** When this entry was authored, `D-017`
+and `D-018` were unmerged on the `TRF-000` branch and invisible from this branch's base
+(`643b912`); `D-019` was chosen to avoid a number collision. `TRF-000` merged first as
+PR #12 (`d1e9654`), bringing both entries onto `main`. This branch then merged `origin/main`
+and the registers were reconciled by hand: `D-017`, `D-018` and `D-019` are all present, in
+numeric order, with no renumbering and no content loss on either side. The only conflicted
+file was this register, and the conflict was purely positional — both sides appended at the
+end.
+
+**Owner ratification — granted 2026-08-02.** Point 3 rewrites a recorded audit statement
+and point 4 accepts a capability duplication that this project previously used as grounds
+for rejecting `taste-skill`. Both were owner-instructed and are within authority order 1.
+The repository owner explicitly instructed the merge of PR #13 after these two points were
+put to them, which constitutes ratification of both. The ratification is also recorded as a
+comment on PR #13.
+
+**Review tier.** Assessed under `D-018`, which was itself unmerged when this work began and
+is now in force. This changeset is **not** in an always-review category: it touches no
+authentication, authorization, role or RLS boundary; no migration or destructive data
+operation; no CRM/consent/PII surface; no dependency or lockfile; no CI workflow, secret
+handling or deployment configuration; and nothing production-affecting. It therefore merges
+as a bounded PR on green required checks plus explicit owner approval, with the
+implementation session's own diff self-review and evidence recorded on the PR. Required
+checks at merge: build/routes/browser gates, media/unit/typecheck/lint gates, migration
+manifest integrity and the Vercel deployment all passed.
