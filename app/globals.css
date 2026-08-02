@@ -1,12 +1,17 @@
 @import "tailwindcss";
 @import "../components/public/global/shell.css";
-@import "../components/public/home/home.css";
-@import "../components/public/projects/works.css";
-@import "../components/public/projects/project-detail.css";
-@import "../components/public/pages/pages.css";
+
+/* TRF-004 deleted the reference home, works, project-detail and pages
+   stylesheets along with the surfaces they styled. `shell.css` is retained for
+   now because the consent banner and 404 boundary still use its primitives; it
+   is replaced wholesale by the SPIMAR design system in TRF-010 to TRF-012. */
 
 /* ---------------------------------------------------------------------------
-   House of Yellow — extracted design tokens
+   Reference-derived design tokens (`--hoy-*`)
+
+   These names are reference-namespace residue, deliberately retained: renaming
+   them is a mechanical sweep across every stylesheet and belongs to the SPIMAR
+   token layer in TRF-010, not to a bulk find-and-replace here.
    Source of truth: docs/design-system/DESIGN-SYSTEM.md (observed values only).
    The reference scales typography linearly with vw in three regimes switched
    at 1080px and 580px — replicated verbatim (no clamp()).

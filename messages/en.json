@@ -1,10 +1,16 @@
 {
   "nav": {
     "home": "Home",
-    "madeByYellow": "Made by Yellow",
-    "culture": "Culture",
-    "howWeRoll": "How we roll",
-    "connect": "Connect",
     "menu": "Menu"
+  },
+  "placeholder": {
+    "title": "SPIMARIMMO",
+    "body": "This surface is being rebuilt. The SPIMAR experience is under construction."
+  },
+  "notFound": {
+    "code": "[ 404 ]",
+    "title": "This page does not exist.",
+    "body": "The page you are looking for has moved or is not available.",
+    "home": "Home"
   }
 }

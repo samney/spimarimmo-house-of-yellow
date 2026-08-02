@@ -40,8 +40,8 @@ Statuses: `PENDING` · `IN PROGRESS` · `PR REVIEW` · `DONE` · `BLOCKED` ·
 | `TRF-000` | `DONE`      | `SPI-000` | `P1.0` | `GATE-0`  | —          | PR #12, merged `d1e96548feafab6bef11bffeca8d759f4ac60f4f` | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md) |
 | `TRF-001` | `DONE`      | `SPI-000` | `P1.0` | `GATE-0`  | `TRF-000`  | PR #14, merged `477f5ae31c1e0135122010148e868fc96bb8f7eb` | this file and [`GATES.md`](GATES.md)                                 |
 | `TRF-002` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-000`  | PR #17, merged `8dbfca92d96a4059561b2cdbf174a6bf00a6225f` | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md)     |
-| `TRF-003` | `PR REVIEW` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-002`  | `claude/spi-010-trf-003-neutral-primitives`               | [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md)   |
-| `TRF-004` | `PENDING`   | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-003`  | —                                                         | —                                                                    |
+| `TRF-003` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-002`  | PR #18, merged `3675c0206c0f819e9af0760763627934be7de304` | [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md)   |
+| `TRF-004` | `PR REVIEW` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-003`  | `claude/spi-010-trf-004-remove-residue`                   | [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md)           |
 | `TRF-005` | `PENDING`   | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-004`  | —                                                         | —                                                                    |
 
 Labels: `002` residue inventory · `003` extract neutral primitives ·

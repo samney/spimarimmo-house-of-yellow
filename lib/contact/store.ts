@@ -35,9 +35,13 @@ export function storeSubmission(
 }
 
 /* Notification contract (P-2): when the owner supplies EMAIL_PROVIDER_API_KEY
-   (and optionally CONTACT_NOTIFY_TO, default info@houseofyellow.nl), this is
-   where the provider call goes. Until then we log a redacted line so the
-   pipeline is observable without leaking content or secrets. */
+   and CONTACT_NOTIFY_TO, this is where the provider call goes. Until then we log
+   a redacted line so the pipeline is observable without leaking content or
+   secrets.
+
+   CONTACT_NOTIFY_TO has no default and must be set explicitly — a recipient
+   fallback baked into source is how mail ends up at the wrong address. The
+   SPIMAR delivery contract is implemented in TRF-063. */
 export function notifySubmission(record: StoredSubmission): void {
   if (process.env.EMAIL_PROVIDER_API_KEY) {
     // Provider integration lands when the owner picks one (e.g. Resend).

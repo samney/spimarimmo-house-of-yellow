@@ -3,16 +3,22 @@ import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import process from "node:process";
-import projectDetails from "../lib/content/project-details.json" with { type: "json" };
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const port = Number(process.env.ROUTE_TEST_PORT ?? 3211);
 const origin = `http://127.0.0.1:${port}`;
 const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "next");
 
-const coreRoutes = ["/", "/made-by-yellow", "/culture", "/how-we-roll", "/connect", "/cookies"];
-const projectRoutes = projectDetails.map(({ slug }) => `/project/${slug}`);
-const publicRoutes = [...coreRoutes, ...projectRoutes];
+/* TRF-004 removed the reference route families and the project-details fixture
+   this list was generated from. The surface is deliberately minimal until the
+   SPIMAR routes are scaffolded in TRF-025.
+
+   Every assertion below is unchanged and still applies to each route: 200 for a
+   public route, the preview/staging X-Robots-Tag, no unavailable /videos/
+   request in the rendered HTML, localized 404s, and the canonical /en redirect.
+   Only the route list shrank, because the routes themselves are gone. Add
+   SPIMAR routes here as TRF-025 scaffolds them. */
+const publicRoutes = ["/"];
 
 async function waitForServer(server) {
   for (let attempt = 0; attempt < 120; attempt += 1) {
@@ -86,7 +92,7 @@ try {
 
   for (const [route, location] of [
     ["/en", "/"],
-    ["/en/culture", "/culture"],
+    ["/en/this-route-does-not-exist", "/this-route-does-not-exist"],
   ]) {
     const response = await fetch(`${origin}${route}`, { redirect: "manual" });
     if (response.status !== 307 || response.headers.get("location") !== location) {
