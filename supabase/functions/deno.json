@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "@supabase/functions-js/edge-runtime.d.ts": "npm:@supabase/functions-js@2.111.0/src/edge-runtime.d.ts",
+    "@supabase/supabase-js": "npm:@supabase/supabase-js@2.111.0"
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+project_id = "spimar-hoy-poc"
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[functions.lead-acquisition]
+verify_jwt = false
+
+[functions.integration-worker]
+verify_jwt = false
+
+[functions.cms-admin]
+verify_jwt = true
+
+[functions.crm-admin]
+verify_jwt = true
