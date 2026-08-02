@@ -233,7 +233,13 @@ body {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.6;
+  /* An explicit colour, not `opacity`. TRF-006 used `opacity: 0.6`, which
+     composited --hoy-ink over --hoy-paper to #71716f — 4.21:1, below the 4.5:1
+     WCAG AA minimum, and shipped a serious axe violation on the 404. Opacity on
+     text is a contrast hazard precisely because the resulting value is implicit
+     and nothing recomputes it when either colour changes. The axe gate added in
+     TRF-007 now fails on regressions like this one. */
+  color: #55554f;
 }
 
 .interimSurface h1 {
