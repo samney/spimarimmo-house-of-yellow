@@ -30,8 +30,13 @@ transferred — they were never implemented and must never be recorded as passed
 `ENG-015` accepted the foundation through an accelerated closure; its accepted
 limitations are enumerated in
 `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
-`SPI-000` is held at `PLANNING CONTRACT` until the `D-016` documentation PR
-is owner-merged.
+
+The `D-016` documentation PR is owner-merged (PR #11 at
+`643b912f2ff8bd128f857481a2f2427544b5c1c9`), so `SPI-000` moved from
+`PLANNING CONTRACT` to `IN PROGRESS`. Under `D-017` the work runs on
+`claude/spi-000-trf-000-baseline-freeze`; the pre-existing
+`claude/spimar-transformation-phase-1` at `478ffc1` is abandoned and must not
+receive further development.
 
 `ENG-014C` is accepted against project-composition parity under `D-014`. Its raw
 whole-page scroll-height criterion (≤2%) is an **authorized unmet exception**,
@@ -51,28 +56,29 @@ scope and ownership are unchanged.
 
 ## SPIMAR controlled restart
 
-| ID        | Status              | Objective                                                                                                                                                                                                                                                          | Depends on           |
-| --------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
-| `SPI-000` | `PLANNING CONTRACT` | **Implementation not started.** The normalized Stage B contract is in documentation review. After owner merge, start `P1.0 / TRF-000`: verify the latest repository baseline, inventories, gates, limitations, and file ownership before neutralization or UI work | `ENG-015`, `D-016`   |
-| `SPI-010` | `PENDING`           | Neutralize House of Yellow and consolidate one canonical architecture                                                                                                                                                                                              | `SPI-000`            |
-| `SPI-020` | `PENDING`           | Revalidate product foundation, PRD, IA, sitemap, content and journeys                                                                                                                                                                                              | `SPI-010`            |
-| `SPI-030` | `PENDING`           | Implement SPIMAR identity, tokens, components, motion, responsive and RTL foundations                                                                                                                                                                              | `SPI-020`            |
-| `SPI-040` | `PENDING`           | Global shell, navigation, locale routing, metadata, consent and shared states                                                                                                                                                                                      | `SPI-030`            |
-| `SPI-050` | `PENDING`           | Homepage top-to-bottom                                                                                                                                                                                                                                             | `SPI-040`            |
-| `SPI-060` | `PENDING`           | Remaining public route families                                                                                                                                                                                                                                    | `SPI-050`            |
-| `OPS-070` | `PENDING`           | Data architecture, migrations, seed, RLS and tenant boundaries                                                                                                                                                                                                     | `SPI-060`            |
-| `CMS-080` | `PENDING`           | Auth, roles, CMS lifecycle, media, translations and audit history                                                                                                                                                                                                  | `OPS-070`            |
-| `CRM-090` | `PENDING`           | Forms, leads, assignment, tasks, appointments, delivery, retries and reporting                                                                                                                                                                                     | `OPS-070`            |
-| `LOC-100` | `PENDING`           | Professional FR/EN/Arabic content and RTL parity                                                                                                                                                                                                                   | `CMS-080`, `CRM-090` |
-| `QA-110`  | `PENDING`           | SEO, analytics, security, privacy, performance, accessibility and regression                                                                                                                                                                                       | `LOC-100`            |
-| `AUD-120` | `PENDING`           | Post-implementation requirements and residue audit                                                                                                                                                                                                                 | `QA-110`             |
-| `REL-130` | `PENDING`           | Production release, rollback, operations and owner handoff                                                                                                                                                                                                         | `AUD-120`            |
+| ID        | Status        | Objective                                                                                                                                                                                                                                                                                  | Depends on           |
+| --------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| `SPI-000` | `IN PROGRESS` | `P1.0` foundation freeze. `TRF-000` **done pending review** — baseline frozen at `643b912` in `docs/spimar-phase-1/FOUNDATION-BASELINE.md`. `TRF-001` (Phase 1 control files and traceability map) **not started**. The item is not complete until both merge and `GATE-0 BASELINE` closes | `ENG-015`, `D-016`   |
+| `SPI-010` | `PENDING`     | Neutralize House of Yellow and consolidate one canonical architecture                                                                                                                                                                                                                      | `SPI-000`            |
+| `SPI-020` | `PENDING`     | Revalidate product foundation, PRD, IA, sitemap, content and journeys                                                                                                                                                                                                                      | `SPI-010`            |
+| `SPI-030` | `PENDING`     | Implement SPIMAR identity, tokens, components, motion, responsive and RTL foundations                                                                                                                                                                                                      | `SPI-020`            |
+| `SPI-040` | `PENDING`     | Global shell, navigation, locale routing, metadata, consent and shared states                                                                                                                                                                                                              | `SPI-030`            |
+| `SPI-050` | `PENDING`     | Homepage top-to-bottom                                                                                                                                                                                                                                                                     | `SPI-040`            |
+| `SPI-060` | `PENDING`     | Remaining public route families                                                                                                                                                                                                                                                            | `SPI-050`            |
+| `OPS-070` | `PENDING`     | Data architecture, migrations, seed, RLS and tenant boundaries                                                                                                                                                                                                                             | `SPI-060`            |
+| `CMS-080` | `PENDING`     | Auth, roles, CMS lifecycle, media, translations and audit history                                                                                                                                                                                                                          | `OPS-070`            |
+| `CRM-090` | `PENDING`     | Forms, leads, assignment, tasks, appointments, delivery, retries and reporting                                                                                                                                                                                                             | `OPS-070`            |
+| `LOC-100` | `PENDING`     | Professional FR/EN/Arabic content and RTL parity                                                                                                                                                                                                                                           | `CMS-080`, `CRM-090` |
+| `QA-110`  | `PENDING`     | SEO, analytics, security, privacy, performance, accessibility and regression                                                                                                                                                                                                               | `LOC-100`            |
+| `AUD-120` | `PENDING`     | Post-implementation requirements and residue audit                                                                                                                                                                                                                                         | `QA-110`             |
+| `REL-130` | `PENDING`     | Production release, rollback, operations and owner handoff                                                                                                                                                                                                                                 | `AUD-120`            |
 
 Expand only the active item into bounded tasks. Never start a later item early.
 
 Phase 1 groups `SPI-000` through `SPI-050` under one owner-approved theme.
-`SPI-000` remains a planning contract until the documentation PR is
-owner-merged; then only `TRF-000` becomes eligible. `ENG-014D` and
+Within `SPI-000`, `TRF-000` is implemented and awaiting review; `TRF-001`
+becomes eligible only after `TRF-000` is independently reviewed and
+owner-merged. `ENG-014D` and
 `ENG-014E` requirements arrive here
 under `D-015`: media delivery into the SPIMAR content/media phase (`CMS-080`),
 animation and responsive-shell convergence into `SPI-030`/`SPI-040`, and the
