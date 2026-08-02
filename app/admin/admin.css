@@ -1,0 +1,153 @@
+/* CMS/CRM operational surface. Denser than the public site by design: this is a
+   work tool, not an editorial page. Colours come from the SPIMAR tokens. */
+.adminShell {
+  min-height: 100vh;
+  background: var(--spimar-surface);
+  color: var(--spimar-ink);
+}
+.adminBar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--spimar-black);
+  color: var(--spimar-paper);
+  padding: 0.75rem 1.25rem;
+}
+.adminBar a {
+  color: var(--spimar-paper);
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+.adminBar a:hover {
+  border-bottom: 2px solid var(--spimar-gold);
+}
+.adminBar__brand {
+  font-weight: 700;
+}
+.adminBar__brand span {
+  color: var(--spimar-gold);
+}
+.adminBar__spacer {
+  margin-inline-start: auto;
+}
+.adminBar__who {
+  font-size: 0.875rem;
+  color: #c9c7bf;
+}
+.adminMain {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.adminMain h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.adminMain h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+}
+.adminMain p {
+  margin-bottom: 0.75rem;
+}
+.adminCard {
+  background: var(--spimar-paper);
+  border: 1px solid var(--spimar-line);
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.adminGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+}
+.adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--spimar-paper);
+}
+.adminTable th,
+.adminTable td {
+  text-align: start;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--spimar-line);
+  font-size: 0.9375rem;
+  vertical-align: top;
+}
+.adminTable th {
+  background: var(--spimar-surface);
+  font-weight: 600;
+}
+.adminForm {
+  display: grid;
+  gap: 0.875rem;
+  max-width: 44rem;
+}
+.adminForm label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.adminForm input,
+.adminForm textarea,
+.adminForm select {
+  width: 100%;
+  font: inherit;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--spimar-line);
+  border-radius: 4px;
+  background: var(--spimar-paper);
+  color: var(--spimar-ink);
+}
+.adminForm textarea {
+  min-height: 7rem;
+}
+.adminRow {
+  display: grid;
+  gap: 0.875rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+.adminBadge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--spimar-line);
+}
+.adminBadge--published {
+  background: var(--spimar-gold);
+  border-color: var(--spimar-gold);
+  color: #000;
+}
+.adminBadge--draft {
+  background: var(--spimar-surface);
+  color: var(--spimar-muted);
+}
+.adminNotice {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--spimar-line);
+  background: var(--spimar-paper);
+  margin-bottom: 1rem;
+}
+.adminNotice--error {
+  border-color: #a3231d;
+  color: #7d1a15;
+}
+.adminNotice--ok {
+  border-color: #1f7a3d;
+  color: #14532a;
+}
+.adminEmpty {
+  border: 1px dashed var(--spimar-line);
+  border-radius: 6px;
+  padding: 1.5rem;
+  background: var(--spimar-paper);
+  color: var(--spimar-muted);
+}
