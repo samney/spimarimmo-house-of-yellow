@@ -32,19 +32,9 @@ export type EventLifecycleAxis =
   | "postponed"
   | "cancelled";
 
-export type ExhibitorSalesStatus =
-  | "planned"
-  | "open"
-  | "limited"
-  | "sold_out"
-  | "closed";
+export type ExhibitorSalesStatus = "planned" | "open" | "limited" | "sold_out" | "closed";
 
-export type VisitorRegistrationStatus =
-  | "planned"
-  | "open"
-  | "waitlist"
-  | "full"
-  | "closed";
+export type VisitorRegistrationStatus = "planned" | "open" | "waitlist" | "full" | "closed";
 
 export type PublicationState =
   | "draft"
@@ -58,29 +48,13 @@ export type PublicationState =
   | "archived";
 
 export type SubmissionState =
-  | "received"
-  | "duplicate_linked"
-  | "invalid_rejected"
-  | "withdrawn"
-  | "retained"
-  | "anonymized";
+  "received" | "duplicate_linked" | "invalid_rejected" | "withdrawn" | "retained" | "anonymized";
 
 export type DeliveryState =
-  | "not_required"
-  | "queued"
-  | "delivered"
-  | "delayed"
-  | "bounced"
-  | "failed"
-  | "suppressed";
+  "not_required" | "queued" | "delivered" | "delayed" | "bounced" | "failed" | "suppressed";
 
 export type AppointmentState =
-  | "lead_captured"
-  | "provider_pending"
-  | "booked"
-  | "provider_failed"
-  | "cancelled"
-  | "expired";
+  "lead_captured" | "provider_pending" | "booked" | "provider_failed" | "cancelled" | "expired";
 
 export type Locale = "en" | "fr" | "ar";
 
@@ -209,9 +183,7 @@ export interface ContentRepository {
   listEvents(query: ContentQuery): Promise<readonly NormalizedEvent[]>;
   getEvent(query: ContentQuery & { slug: string }): Promise<NormalizedEvent | null>;
   listResources(query: ContentQuery): Promise<readonly NormalizedResource[]>;
-  getLegalDocument(
-    query: ContentQuery & { kind: string },
-  ): Promise<NormalizedLegalDocument | null>;
+  getLegalDocument(query: ContentQuery & { kind: string }): Promise<NormalizedLegalDocument | null>;
   getFormDefinition(
     query: ContentQuery & { formKey: string },
   ): Promise<NormalizedFormDefinition | null>;
