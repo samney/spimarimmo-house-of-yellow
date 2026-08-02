@@ -35,14 +35,14 @@ Statuses: `PENDING` · `IN PROGRESS` · `PR REVIEW` · `DONE` · `BLOCKED` ·
 
 ## Epic A — Baseline and neutralization
 
-| TRF       | Status        | SPI       | Stage  | Exit gate | Depends on | Branch / PR                                               | Evidence                                                             |
-| --------- | ------------- | --------- | ------ | --------- | ---------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
-| `TRF-000` | `DONE`        | `SPI-000` | `P1.0` | `GATE-0`  | —          | PR #12, merged `d1e96548feafab6bef11bffeca8d759f4ac60f4f` | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md) |
-| `TRF-001` | `DONE`        | `SPI-000` | `P1.0` | `GATE-0`  | `TRF-000`  | PR #14, merged `477f5ae31c1e0135122010148e868fc96bb8f7eb` | this file and [`GATES.md`](GATES.md)                                 |
-| `TRF-002` | `IN PROGRESS` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-000`  | `claude/spi-010-trf-002-residue-inventory`                | —                                                                    |
-| `TRF-003` | `PENDING`     | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-002`  | —                                                         | —                                                                    |
-| `TRF-004` | `PENDING`     | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-003`  | —                                                         | —                                                                    |
-| `TRF-005` | `PENDING`     | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-004`  | —                                                         | —                                                                    |
+| TRF       | Status      | SPI       | Stage  | Exit gate | Depends on | Branch / PR                                               | Evidence                                                             |
+| --------- | ----------- | --------- | ------ | --------- | ---------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
+| `TRF-000` | `DONE`      | `SPI-000` | `P1.0` | `GATE-0`  | —          | PR #12, merged `d1e96548feafab6bef11bffeca8d759f4ac60f4f` | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md) |
+| `TRF-001` | `DONE`      | `SPI-000` | `P1.0` | `GATE-0`  | `TRF-000`  | PR #14, merged `477f5ae31c1e0135122010148e868fc96bb8f7eb` | this file and [`GATES.md`](GATES.md)                                 |
+| `TRF-002` | `PR REVIEW` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-000`  | `claude/spi-010-trf-002-residue-inventory`                | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md)     |
+| `TRF-003` | `PENDING`   | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-002`  | —                                                         | —                                                                    |
+| `TRF-004` | `PENDING`   | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-003`  | —                                                         | —                                                                    |
+| `TRF-005` | `PENDING`   | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-004`  | —                                                         | —                                                                    |
 
 Labels: `002` residue inventory · `003` extract neutral primitives ·
 `004` remove/quarantine reference-brand residue · `005` verify recovery/rollback.
