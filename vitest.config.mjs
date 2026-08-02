@@ -5,7 +5,17 @@ export default defineConfig({
   /* Mirror the tsconfig "@/*" path alias so unit tests can import application
      modules exactly as the application does. */
   resolve: {
-    alias: [{ find: /^@\//, replacement: `${fileURLToPath(new URL(".", import.meta.url))}` }],
+    alias: [
+      { find: /^@\//, replacement: `${fileURLToPath(new URL(".", import.meta.url))}` },
+      /* `server-only` is a Next.js build-time guard: importing it from a client
+         component is a compile error. It has no Node resolution, so any suite
+         that imports a server module fails at import time.
+
+         Aliased to a stub rather than removed from the modules themselves —
+         dropping the import would silence a real safety check in the
+         application to satisfy the test runner. */
+      { find: /^server-only$/, replacement: fileURLToPath(new URL("./qa/server-only-stub.mjs", import.meta.url)) },
+    ],
   },
   test: {
     // "tests/e2e" belongs to Playwright, not Vitest.
