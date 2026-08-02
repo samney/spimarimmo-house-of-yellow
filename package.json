@@ -19,7 +19,14 @@
     "verify:migration": "node qa/verify-migration-manifest.mjs",
     "test": "vitest run",
     "test:routes": "node qa/validate-routes.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "db:bootstrap": "node qa/backend/db/bootstrap-pglite.mjs",
+    "db:validate": "node qa/backend/db/run-pglite-validation.mjs",
+    "db:inspect": "node qa/backend/db/inspect-schema.mjs",
+    "db:conformance": "node qa/backend/db/audit-canonical-conformance.mjs",
+    "db:contract": "node qa/backend/db/verify-schema-contract.mjs",
+    "test:edge": "node --test \"qa/backend/edge/*.test.mjs\"",
+    "verify:backend": "pnpm db:contract && pnpm db:validate && pnpm db:inspect && pnpm db:conformance && pnpm test:edge"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
