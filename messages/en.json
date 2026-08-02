@@ -1,16 +1,97 @@
 {
   "nav": {
     "home": "Home",
-    "menu": "Menu"
+    "menu": "Menu",
+    "close": "Close",
+    "events": "Events",
+    "exhibit": "Exhibit",
+    "proof": "Evidence",
+    "resources": "Resources",
+    "contact": "Contact",
+    "primaryCta": "Contact us",
+    "localeLabel": "Switch to French",
+    "brand": "SPIMARIMMO"
   },
-  "placeholder": {
+  "footer": {
+    "explore": "Explore",
+    "legalHeading": "Legal",
+    "legal": "Legal notice",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "contactHeading": "Contact",
+    "contactPending": "Published contact details are not available yet.",
+    "rights": "All rights reserved."
+  },
+  "home": {
+    "eyebrow": "International property exhibitions",
     "title": "SPIMARIMMO",
-    "body": "This surface is being rebuilt. The SPIMAR experience is under construction."
+    "lede": "SPIMARIMMO organises international property exhibitions connecting developers with buyers across its event network.",
+    "note": "This site is published progressively. Each section shows approved content once it is published; nothing below is placeholder marketing copy.",
+    "eventsHeading": "Event editions",
+    "exhibitHeading": "Exhibiting with SPIMARIMMO",
+    "exhibitBody": "Exhibitor proposition, method, visibility and offers are published from approved content.",
+    "proofHeading": "Evidence",
+    "proofBody": "Results, case studies and testimonials appear here once approved with their sources.",
+    "ctaHeading": "Talk to the team",
+    "ctaBody": "Send an enquiry and the team will respond.",
+    "ctaButton": "Make an enquiry"
+  },
+  "events": {
+    "title": "Event editions",
+    "lede": "Editions across the SPIMARIMMO network.",
+    "emptyTitle": "No edition is published yet",
+    "emptyBody": "Editions appear here as soon as they are approved and published. Dates are never shown before they are confirmed.",
+    "datesPending": "Dates to be confirmed",
+    "notFound": "This edition is not available.",
+    "backToIndex": "All editions"
+  },
+  "page": {
+    "emptyTitle": "Not published yet",
+    "emptyBody": "This section is being prepared. It will show approved content once published.",
+    "comingSoon": "Coming soon"
+  },
+  "contact": {
+    "title": "Contact",
+    "lede": "Send an enquiry. Required fields are marked.",
+    "name": "Full name",
+    "email": "Email address",
+    "organisation": "Organisation",
+    "message": "Your message",
+    "consent": "I agree that SPIMARIMMO may store and use these details to respond to my enquiry.",
+    "submit": "Send enquiry",
+    "sending": "Sending...",
+    "successTitle": "Enquiry received",
+    "successBody": "Your enquiry has been stored and the team will respond.",
+    "errorTitle": "Your enquiry was not sent",
+    "errorBody": "Nothing was stored. Please try again.",
+    "duplicateTitle": "Already received",
+    "duplicateBody": "An identical enquiry is already recorded. The team will respond to it.",
+    "required": "This field is required.",
+    "invalidEmail": "Enter a valid email address.",
+    "consentRequired": "Consent is required before we can store your enquiry.",
+    "formLabel": "Enquiry form",
+    "honeypot": "Leave this field empty"
+  },
+  "legal": {
+    "legalTitle": "Legal notice",
+    "privacyTitle": "Privacy",
+    "cookiesTitle": "Cookies",
+    "pendingTitle": "Not published yet",
+    "pendingBody": "This legal document has not been published. Legal text must be authored and approved before it appears here; no text from any other organisation is used."
   },
   "notFound": {
-    "code": "[ 404 ]",
+    "code": "404",
     "title": "This page does not exist.",
     "body": "The page you are looking for has moved or is not available.",
     "home": "Home"
+  },
+  "error": {
+    "title": "Something went wrong.",
+    "body": "The page could not be displayed. You can try again.",
+    "retry": "Try again"
+  },
+  "placeholder": {
+    "title": "SPIMARIMMO",
+    "body": "This surface is being rebuilt."
   }
 }

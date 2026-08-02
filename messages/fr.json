@@ -1,16 +1,97 @@
 {
   "nav": {
     "home": "Accueil",
-    "menu": "Menu"
+    "menu": "Menu",
+    "close": "Fermer",
+    "events": "Salons",
+    "exhibit": "Exposer",
+    "proof": "Preuves",
+    "resources": "Ressources",
+    "contact": "Contact",
+    "primaryCta": "Nous contacter",
+    "localeLabel": "Passer en anglais",
+    "brand": "SPIMARIMMO"
   },
-  "placeholder": {
+  "footer": {
+    "explore": "Explorer",
+    "legalHeading": "Légal",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité",
+    "cookies": "Cookies",
+    "contactHeading": "Contact",
+    "contactPending": "Les coordonnées publiées ne sont pas encore disponibles.",
+    "rights": "Tous droits réservés."
+  },
+  "home": {
+    "eyebrow": "Salons immobiliers internationaux",
     "title": "SPIMARIMMO",
-    "body": "Cette page est en cours de reconstruction. L'expérience SPIMAR est en construction."
+    "lede": "SPIMARIMMO organise des salons immobiliers internationaux qui mettent en relation les promoteurs et les acquéreurs à travers son réseau d'événements.",
+    "note": "Ce site est publié progressivement. Chaque section affiche le contenu approuvé une fois publié ; aucun texte marketing fictif n'est utilisé.",
+    "eventsHeading": "Éditions",
+    "exhibitHeading": "Exposer avec SPIMARIMMO",
+    "exhibitBody": "La proposition exposant, la méthode, la visibilité et les offres sont publiées à partir de contenus approuvés.",
+    "proofHeading": "Preuves",
+    "proofBody": "Les résultats, études de cas et témoignages apparaîtront ici une fois approuvés avec leurs sources.",
+    "ctaHeading": "Parler à l'équipe",
+    "ctaBody": "Envoyez une demande et l'équipe vous répondra.",
+    "ctaButton": "Envoyer une demande"
+  },
+  "events": {
+    "title": "Éditions",
+    "lede": "Les éditions du réseau SPIMARIMMO.",
+    "emptyTitle": "Aucune édition publiée pour le moment",
+    "emptyBody": "Les éditions apparaîtront ici dès leur approbation et publication. Les dates ne sont jamais affichées avant confirmation.",
+    "datesPending": "Dates à confirmer",
+    "notFound": "Cette édition n'est pas disponible.",
+    "backToIndex": "Toutes les éditions"
+  },
+  "page": {
+    "emptyTitle": "Pas encore publié",
+    "emptyBody": "Cette section est en préparation. Elle affichera le contenu approuvé une fois publié.",
+    "comingSoon": "Bientôt disponible"
+  },
+  "contact": {
+    "title": "Contact",
+    "lede": "Envoyez une demande. Les champs obligatoires sont indiqués.",
+    "name": "Nom complet",
+    "email": "Adresse e-mail",
+    "organisation": "Organisation",
+    "message": "Votre message",
+    "consent": "J'accepte que SPIMARIMMO conserve et utilise ces informations pour répondre à ma demande.",
+    "submit": "Envoyer la demande",
+    "sending": "Envoi en cours...",
+    "successTitle": "Demande reçue",
+    "successBody": "Votre demande a été enregistrée et l'équipe vous répondra.",
+    "errorTitle": "Votre demande n'a pas été envoyée",
+    "errorBody": "Rien n'a été enregistré. Merci de réessayer.",
+    "duplicateTitle": "Déjà reçue",
+    "duplicateBody": "Une demande identique est déjà enregistrée. L'équipe y répondra.",
+    "required": "Ce champ est obligatoire.",
+    "invalidEmail": "Saisissez une adresse e-mail valide.",
+    "consentRequired": "Le consentement est nécessaire pour enregistrer votre demande.",
+    "formLabel": "Formulaire de demande",
+    "honeypot": "Laissez ce champ vide"
+  },
+  "legal": {
+    "legalTitle": "Mentions légales",
+    "privacyTitle": "Confidentialité",
+    "cookiesTitle": "Cookies",
+    "pendingTitle": "Pas encore publié",
+    "pendingBody": "Ce document légal n'a pas été publié. Un texte légal doit être rédigé et approuvé avant d'apparaître ici ; aucun texte provenant d'une autre organisation n'est utilisé."
   },
   "notFound": {
-    "code": "[ 404 ]",
+    "code": "404",
     "title": "Cette page n'existe pas.",
     "body": "La page que vous recherchez a été déplacée ou n'est pas disponible.",
     "home": "Accueil"
+  },
+  "error": {
+    "title": "Une erreur est survenue.",
+    "body": "La page n'a pas pu être affichée. Vous pouvez réessayer.",
+    "retry": "Réessayer"
+  },
+  "placeholder": {
+    "title": "SPIMARIMMO",
+    "body": "Cette page est en cours de reconstruction."
   }
 }

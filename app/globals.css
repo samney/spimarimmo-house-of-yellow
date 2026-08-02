@@ -1,4 +1,35 @@
 @import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   SPIMARIMMO identity (D-021, accelerated release)
+
+   Palette is the approved brand direction, not a proposal: SPIMAR Gold
+   #EFC337 and Black #000000, verified from the current public site and
+   confirmed by the owner (06-Visual-Identity, BRI-001 / BRI-011). White and
+   grey are supporting neutrals; no other chromatic colour is introduced, and
+   gold is never rendered as a metallic gradient or foil effect (BRI-001).
+
+   The legacy --hoy-* tokens below remain until TRF-010 retires them; the shell
+   and every SPIMAR surface use the --spimar-* tokens.
+   --------------------------------------------------------------------------- */
+:root {
+  --spimar-gold: #efc337;
+  --spimar-gold-deep: #d4a91f;
+  --spimar-black: #000000;
+  --spimar-ink: #14140f;
+  --spimar-paper: #ffffff;
+  --spimar-surface: #f6f5f1;
+  --spimar-line: #d9d7cf;
+  /* Muted text at >=4.5:1 on --spimar-paper and --spimar-surface. Set as an
+     explicit colour, never via opacity — see TRF-007. */
+  --spimar-muted: #55554f;
+  --spimar-focus: #0b5cd5;
+
+  --spimar-measure: 68ch;
+  --spimar-gutter: clamp(1rem, 0.5rem + 2vw, 3rem);
+  --spimar-rhythm: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
+}
+
 @import "../components/public/global/shell.css";
 
 /* TRF-004 deleted the reference home, works, project-detail and pages

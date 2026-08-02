@@ -1,0 +1,394 @@
+/* SPIMARIMMO shell and surfaces.
+
+   Deliberately restrained: this is the launch shell, not the full design system
+   (TRF-010–019). Every colour comes from the --spimar-* tokens; no value is
+   hardcoded and no decorative treatment is invented. */
+
+.spimarBody {
+  background: var(--spimar-paper);
+  color: var(--spimar-ink);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.spimarSkip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--spimar-black);
+  color: var(--spimar-paper);
+}
+.spimarSkip:focus {
+  left: 0;
+}
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--spimar-focus);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------- header */
+
+.spimarHeader {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--spimar-black);
+  color: var(--spimar-paper);
+}
+
+.spimarHeader__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 82rem;
+  margin: 0 auto;
+  padding: 0.875rem var(--spimar-gutter);
+}
+
+.spimarWordmark {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 1.125rem;
+  color: var(--spimar-paper);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.spimarWordmark span {
+  color: var(--spimar-gold);
+}
+
+.spimarNav {
+  display: none;
+  gap: 1.25rem;
+  margin-inline-start: auto;
+}
+.spimarNav a {
+  color: var(--spimar-paper);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+}
+.spimarNav a:hover,
+.spimarNav a[aria-current="page"] {
+  border-bottom-color: var(--spimar-gold);
+}
+
+.spimarHeader__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-inline-start: auto;
+}
+.spimarNav + .spimarHeader__actions {
+  margin-inline-start: 0;
+}
+
+@media (min-width: 900px) {
+  .spimarNav {
+    display: flex;
+  }
+  .spimarMenuButton {
+    display: none;
+  }
+}
+
+.spimarMenuButton {
+  background: transparent;
+  border: 1px solid var(--spimar-paper);
+  color: var(--spimar-paper);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.spimarMobileNav {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.5rem var(--spimar-gutter) 1.25rem;
+  border-top: 1px solid #2a2a24;
+}
+.spimarMobileNav a {
+  color: var(--spimar-paper);
+  text-decoration: none;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid #2a2a24;
+}
+
+/* ------------------------------------------------------------------ buttons */
+
+.spimarButton {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.spimarButton--primary {
+  background: var(--spimar-gold);
+  color: var(--spimar-black);
+}
+.spimarButton--primary:hover {
+  background: var(--spimar-gold-deep);
+}
+.spimarButton--ghost {
+  border-color: currentColor;
+  color: inherit;
+  background: transparent;
+}
+
+/* ----------------------------------------------------------------- sections */
+
+.spimarMain {
+  min-height: 60vh;
+}
+
+.spimarSection {
+  max-width: 82rem;
+  margin: 0 auto;
+  padding: var(--spimar-rhythm) var(--spimar-gutter);
+}
+.spimarSection--tight {
+  padding-block: clamp(1.75rem, 1rem + 2.5vw, 3rem);
+}
+.spimarSection--dark {
+  background: var(--spimar-black);
+  color: var(--spimar-paper);
+  max-width: none;
+}
+.spimarSection--dark .spimarSection__inner {
+  max-width: 82rem;
+  margin: 0 auto;
+}
+.spimarSection--surface {
+  background: var(--spimar-surface);
+  max-width: none;
+}
+.spimarSection--surface .spimarSection__inner {
+  max-width: 82rem;
+  margin: 0 auto;
+  padding-inline: 0;
+}
+
+.spimarEyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--spimar-muted);
+  margin-bottom: 0.75rem;
+}
+.spimarSection--dark .spimarEyebrow {
+  color: var(--spimar-gold);
+}
+
+.spimarHeading {
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem);
+  line-height: 1.1;
+  font-weight: 700;
+  text-wrap: balance;
+  margin-bottom: 1rem;
+}
+.spimarSubheading {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  line-height: 1.25;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.spimarLede {
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  max-width: var(--spimar-measure);
+  margin-bottom: 1.5rem;
+}
+.spimarProse {
+  max-width: var(--spimar-measure);
+}
+.spimarProse p {
+  margin-bottom: 1rem;
+}
+
+.spimarActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* -------------------------------------------------------------------- cards */
+
+.spimarGrid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+
+.spimarCard {
+  border: 1px solid var(--spimar-line);
+  border-radius: 6px;
+  padding: 1.25rem;
+  background: var(--spimar-paper);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.spimarCard h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.spimarCard__meta {
+  font-size: 0.875rem;
+  color: var(--spimar-muted);
+}
+.spimarCard a {
+  color: inherit;
+}
+
+/* ------------------------------------------------------- honest empty states */
+
+/* Used wherever approved content does not exist yet. These are deliberately
+   plain and explicit: an empty state must read as "not published yet", never as
+   a design flourish and never as an implied claim. */
+.spimarEmpty {
+  border: 1px dashed var(--spimar-line);
+  border-radius: 6px;
+  padding: 1.5rem;
+  background: var(--spimar-surface);
+  max-width: var(--spimar-measure);
+}
+.spimarEmpty h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+}
+.spimarEmpty p {
+  color: var(--spimar-muted);
+}
+
+.spimarNotice {
+  border-inline-start: 4px solid var(--spimar-gold);
+  padding: 0.75rem 1rem;
+  background: var(--spimar-surface);
+  max-width: var(--spimar-measure);
+}
+
+/* ------------------------------------------------------------------- footer */
+
+.spimarFooter {
+  background: var(--spimar-black);
+  color: var(--spimar-paper);
+  padding: var(--spimar-rhythm) var(--spimar-gutter) 2rem;
+}
+.spimarFooter__inner {
+  max-width: 82rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+.spimarFooter h2 {
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--spimar-gold);
+  margin-bottom: 0.75rem;
+}
+.spimarFooter a {
+  color: var(--spimar-paper);
+  text-decoration: none;
+  display: block;
+  padding: 0.25rem 0;
+}
+.spimarFooter a:hover {
+  text-decoration: underline;
+}
+.spimarFooter__legal {
+  max-width: 82rem;
+  margin: 2rem auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid #2a2a24;
+  font-size: 0.875rem;
+  /* Meets AA on --spimar-black. */
+  color: #c9c7bf;
+}
+
+/* --------------------------------------------------------------------- form */
+
+.spimarForm {
+  display: grid;
+  gap: 1rem;
+  max-width: 34rem;
+}
+.spimarField {
+  display: grid;
+  gap: 0.375rem;
+}
+.spimarField label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+.spimarField input,
+.spimarField textarea,
+.spimarField select {
+  border: 1px solid var(--spimar-line);
+  border-radius: 4px;
+  padding: 0.625rem 0.75rem;
+  font: inherit;
+  background: var(--spimar-paper);
+  color: var(--spimar-ink);
+  width: 100%;
+}
+.spimarField textarea {
+  min-height: 8rem;
+}
+.spimarField__error {
+  color: #a3231d;
+  font-size: 0.875rem;
+}
+.spimarField__hint {
+  color: var(--spimar-muted);
+  font-size: 0.875rem;
+}
+.spimarConsent {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+}
+.spimarConsent input {
+  width: auto;
+  margin-top: 0.3rem;
+}
+
+.spimarStatus {
+  padding: 0.875rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--spimar-line);
+  background: var(--spimar-surface);
+}
+.spimarStatus--error {
+  border-color: #a3231d;
+  color: #7d1a15;
+}
+
+/* honeypot: removed from the accessibility tree and from view, never
+   `display: none` (some bots skip hidden fields) */
+.spimarHoneypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spimarHeader {
+    position: static;
+  }
+}

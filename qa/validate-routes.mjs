@@ -18,7 +18,17 @@ const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "n
    request in the rendered HTML, localized 404s, and the canonical /en redirect.
    Only the route list shrank, because the routes themselves are gone. Add
    SPIMAR routes here as TRF-025 scaffolds them. */
-const publicRoutes = ["/"];
+const publicRoutes = [
+  "/",
+  "/salons",
+  "/exposer",
+  "/preuves",
+  "/ressources",
+  "/contact",
+  "/mentions-legales",
+  "/confidentialite",
+  "/cookies",
+];
 
 async function waitForServer(server) {
   for (let attempt = 0; attempt < 120; attempt += 1) {

@@ -465,3 +465,46 @@ unreviewed-merge gap already disclosed for PR #11.
 accepted as the starting point for neutralization without independent
 verification. If a defect in either is discovered later, this decision is where
 it traces back to.
+
+## D-021 — 2026-08-02 — Owner-approved accelerated release mode
+
+**Authority.** Explicit repository-owner instruction ("SPIMARIMMO — FIVE-HOUR
+ACCELERATED RELEASE").
+
+**Decision.**
+
+1. The per-`TRF` package workflow, per-package PR cadence and intermediate
+   independent-review gates are **suspended** for this release. `D-018`
+   gate-level review and `D-009` are suspended with them. `GATE-1 NEUTRAL`
+   remains `CHANGES_REQUESTED` and is superseded in sequencing, not resolved.
+2. Execution order: public website → CMS → CRM → integrated QA and release, on a
+   single branch `claude/spimar-accelerated-release` with checkpoint commits and
+   one final PR.
+3. The approved specifications remain requirements and quality references.
+4. Where a decision is not specified, take repository convention first, then the
+   documented recommendation, then the smallest safe reversible implementation.
+
+**Two premises in the instruction did not hold, and the decision is executed
+against the real repository state.**
+
+- _"Use the existing backend/CMS implementation"_ — **no CMS exists.** There is
+  no `supabase/`, no `app/admin/`, no `app/api/`, no migration and no
+  authentication code at `4bb9e61`. The CMS is built here, not connected.
+- _"Complete the lightweight CRM POC"_ — **no CRM exists** either.
+
+**Persistence.** `P-1` leaves Supabase credentials unavailable, so CMS and CRM
+persist through the repository's existing deterministic convention
+(`lib/contact/store.ts` → `.data/*.jsonl`) behind a repository interface, so a
+Supabase adapter substitutes later without touching callers. No provider is
+claimed to be live.
+
+**Content.** No approved SPIMAR content exists in the repository — `TRF-004`
+removed the reference content and nothing replaced it. The site is therefore
+CMS-driven with honest empty and coming-soon states. **No business claim, metric,
+date, partner, price or legal text is invented.** An empty content set rendering
+honest empty states is the correct outcome, not a gap to fill with placeholder
+copy.
+
+**Consequence.** The release is a functional, honestly-stated platform with an
+empty content set, not a content-complete launch. Deferred work is recorded in
+`docs/spimar/ACCELERATED-POST-RELEASE-BACKLOG.md`.

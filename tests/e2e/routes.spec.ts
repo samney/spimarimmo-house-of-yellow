@@ -6,7 +6,17 @@ import { expect, test } from "@playwright/test";
    preview/staging X-Robots-Tag, no unavailable /videos/ request in the rendered
    HTML, working locale prefixes, canonical /en redirects, and localized 404s.
    Extend `coreRoutes` as TRF-025 scaffolds the SPIMAR routes. */
-const coreRoutes = ["/"];
+const coreRoutes = [
+  "/",
+  "/salons",
+  "/exposer",
+  "/preuves",
+  "/ressources",
+  "/contact",
+  "/mentions-legales",
+  "/confidentialite",
+  "/cookies",
+];
 
 for (const route of coreRoutes) {
   test(`${route} renders without unavailable video requests`, async ({ request }) => {
@@ -39,7 +49,14 @@ test("unknown routes 404 in both locales", async ({ request }) => {
    found the original version checked only "/", matched the phone number in a
    format the site never displayed, and asserted no client trademark at all
    despite claiming to. */
-const RESIDUE_ROUTES = ["/", "/fr", "/this-route-does-not-exist"];
+const RESIDUE_ROUTES = [
+  "/",
+  "/fr",
+  "/salons",
+  "/contact",
+  "/cookies",
+  "/this-route-does-not-exist",
+];
 
 const RESIDUE_TOKENS = [
   // brand
