@@ -302,21 +302,40 @@ modified.
 
 ## 9. Proposed file-ownership map
 
-Advisory only, for the parallel tracks that `DELIVERY-MAP.md` permits **after**
-`P1.1`. No parallel worktree is authorized during `P1.0`. Every shared path has
-exactly one owner; no path appears twice.
+Advisory only. No parallel worktree is authorized during `P1.0`.
+
+**Ownership is sequential by stage, not global.** `DELIVERY-MAP.md` serializes
+every stage except one window: `P1.2` (`SPI-030`) and `P1.3` (`SPI-020`) may run
+concurrently after `P1.1`. A path may therefore appear under more than one stage
+below — `SPI-010` sweeps broadly for residue before any later stage owns the
+same tree — and that is safe precisely because those stages never run at the
+same time. Disjointness is required **only** inside the concurrent window.
+
+### Sequential ownership (one stage active at a time)
 
 | Owner                         | Paths                                                                                                                              |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `SPI-010` / `TRF-002`–`005`   | residue inventory + quarantine across `components/public/**`, `lib/content/**`, `messages/**`                                      |
-| `SPI-030` / `TRF-010`–`019`   | `app/globals.css`, token layer, typography assets, `components/public/global/shell.css`, motion primitives                         |
-| `SPI-020` / `TRF-020`–`023`   | `lib/content/**`, `lib/media/**`, domain types, fixtures, media records                                                            |
+| `SPI-010` / `TRF-002`–`005`   | residue inventory + quarantine sweep across `components/public/**`, `lib/content/**`, `messages/**`                                |
 | `SPI-040` / `TRF-024`–`027`   | `proxy.ts`, `i18n/**`, `app/[locale]/layout.tsx`, `app/[locale]/(public)/layout.tsx`, `app/robots.ts`, route scaffolding, metadata |
 | `SPI-050` / `TRF-030`–`033`   | `app/[locale]/(public)/page.tsx`, `components/public/home/**`                                                                      |
 | `SPI-060` / `TRF-034`–`040`   | remaining `app/[locale]/(public)/**` route folders and their feature components                                                    |
 | `OPS-070`/`CMS-080`/`CRM-090` | `supabase/**`, `app/admin/**`, `app/actions/**`, `lib/contact/**`                                                                  |
 | `QA-110` / `TRF-080`–`087`    | `tests/e2e/**`, `qa/**`, `.github/workflows/**`                                                                                    |
 | Control plane (any session)   | `docs/claude-code/**`, `docs/spimar-phase-1/**` — serialized, never concurrent                                                     |
+
+### Concurrent window `P1.2` ‖ `P1.3` — verified disjoint
+
+These two sets share no path and no ancestor, so the two tracks can run in
+isolated worktrees without a shared-file conflict.
+
+| Owner                       | Paths                                                                                                      |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `SPI-030` / `TRF-010`–`019` | `app/globals.css`, `components/public/global/shell.css`, token layer, typography assets, motion primitives |
+| `SPI-020` / `TRF-020`–`023` | `lib/content/**`, `lib/media/**`, domain types, fixtures, media records                                    |
+
+`components/public/global/shell.css` and `components/public/home/**` are both
+inside `SPI-010`'s sweep, but `SPI-010` closes at `GATE-1 NEUTRAL` before either
+later stage opens.
 
 ## 10. Transformation entry gate
 
