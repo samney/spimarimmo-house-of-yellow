@@ -132,3 +132,29 @@ materially more risk and must not be accepted the same way by default:
 
 A reviewer should verify each of those independently rather than accept the
 implementation session's own account of them.
+
+### Review outcome — `CHANGES_REQUESTED`, 2026-08-02
+
+An independent review ran and **did not pass the gate**. It found defects the
+implementation session missed, including two that shipped to users: a consent
+dialog linking to the deleted `/cookies` route, and two surviving pages styled by
+class names deleted in the same commit (both `<h1>`s rendering at ~9.6px).
+
+It also refuted several published claims: the `--hoy-*` residue count (148
+occurrences reported as 148 "custom properties"; there are 8), the `hoyCols`
+figure (14 reported outstanding; actually 0), the `hoy-consent` figure (17
+reported; actually 30), and the `hoy:consent` "public DOM event contract"
+rationale, which contradicted the residue inventory's own finding that no
+analytics is wired.
+
+`TRF-006` remediates the P1 and P2 items; the outstanding owner decisions and
+accepted criticisms are enumerated in
+[`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md) § 9.
+
+**`GATE-1` is not passed.** It requires a re-review after `TRF-006` merges.
+
+Method note: the review was performed by independent reviewer agents with no
+context from the implementation session. They are independent of that session's
+reasoning but share its model, and are not the wholly separate session `D-018`
+envisages. Given how much they found, their verdict is sufficient to block the
+gate but should not be read as proof that nothing further remains.

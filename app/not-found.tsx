@@ -15,27 +15,14 @@ export default function RootNotFound() {
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <div className="pageBlocks blocks dark notFoundBlocks">
-          <div className="grainBackground dark" />
-          <div className="innerBlocks">
-            <section className="notFoundBlock inview">
-              <div className="contentWrapper">
-                <div className="text medium">[ 404 ]</div>
-                <h1 className="normalTitle">This page does not exist.</h1>
-                <div className="smallTitle">
-                  The page you are looking for has moved or is not available.
-                </div>
-                <div className="buttons">
-                  <Link className="button light" href="/" title="Home">
-                    <span className="label">
-                      <span className="fixedLabel">Home</span>
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
+        <section className="interimSurface">
+          <div className="interimSurface__eyebrow">404</div>
+          <h1>This page does not exist.</h1>
+          <p>The page you are looking for has moved or is not available.</p>
+          <Link href="/" title="Home">
+            Home
+          </Link>
+        </section>
       </body>
     </html>
   );

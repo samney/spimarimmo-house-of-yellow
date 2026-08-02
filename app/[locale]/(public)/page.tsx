@@ -15,7 +15,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const t = await getTranslations("placeholder");
 
   return (
-    <section className="pagePlaceholder">
+    <section className="interimSurface">
       <h1>{t("title")}</h1>
       <p>{t("body")}</p>
     </section>

@@ -14,17 +14,29 @@ type Status = "idle" | "loading" | "success" | "error" | "rate_limited";
    content dependency; SPIMAR supplies them from the CMS in TRF-061. */
 export type ContactFormLabels = {
   title: string;
-  fields: { name: string; email: string; message: string };
+  /** Accessible name for the form element. */
+  formLabel: string;
+  fields: { name: string; email: string; message: string; honeypot: string };
   submit: string;
   successTitle: string;
   successText: string;
+  /** Announced through aria-live; must be translatable like any other copy. */
+  errorText: string;
+  rateLimitedText: string;
 };
 
 /* Reference CF7 form replicated: .formWrapper > formTitle + form.fields with
    floating fixedLabels (focus/filled), invalid state, loader overlay while
    sending (.disabled) and successContainer overlay (.sended). Client Zod
    validation mirrors the server action's schema. */
-export function ContactForm({ labels }: { labels: ContactFormLabels }) {
+export function ContactForm({
+  labels,
+  loaderSrc = "/images/load.gif",
+}: {
+  labels: ContactFormLabels;
+  /** Loading indicator asset. Defaulted so the primitive resolves nothing implicitly. */
+  loaderSrc?: string;
+}) {
   const f = labels;
   const [status, setStatus] = useState<Status>("idle");
   const {
@@ -70,14 +82,14 @@ export function ContactForm({ labels }: { labels: ContactFormLabels }) {
   return (
     <div className={`formWrapper${wrapperState}`}>
       <div className="text medium formTitle">{f.title}</div>
-      <form onSubmit={onSubmit} noValidate aria-label="Contact form">
+      <form onSubmit={onSubmit} noValidate aria-label={f.formLabel}>
         <div className="fields">
           <div className={fieldClass("nameVisitor", focused)}>
             <p>
               <label htmlFor="name" className="fixedLabel">
                 {f.fields.name}
               </label>
-              <span className="wpcf7-form-control-wrap" data-name="nameVisitor">
+              <span className="formControlWrap" data-name="nameVisitor">
                 <input
                   id="name"
                   type="text"
@@ -95,7 +107,7 @@ export function ContactForm({ labels }: { labels: ContactFormLabels }) {
               <label htmlFor="email" className="fixedLabel">
                 {f.fields.email}
               </label>
-              <span className="wpcf7-form-control-wrap" data-name="email">
+              <span className="formControlWrap" data-name="email">
                 <input
                   id="email"
                   type="email"
@@ -113,7 +125,7 @@ export function ContactForm({ labels }: { labels: ContactFormLabels }) {
               <label htmlFor="message" className="fixedLabel">
                 {f.fields.message}
               </label>
-              <span className="wpcf7-form-control-wrap" data-name="message">
+              <span className="formControlWrap" data-name="message">
                 <textarea
                   id="message"
                   maxLength={2000}
@@ -128,7 +140,7 @@ export function ContactForm({ labels }: { labels: ContactFormLabels }) {
           </div>
           {/* Honeypot — hidden from humans and assistive tech */}
           <div className="honeypotField" aria-hidden="true">
-            <label htmlFor="website">Website</label>
+            <label htmlFor="website">{f.fields.honeypot}</label>
             <input
               id="website"
               type="text"
@@ -151,20 +163,14 @@ export function ContactForm({ labels }: { labels: ContactFormLabels }) {
           </div>
         </div>
         <div className="formStatus" role="status" aria-live="polite">
-          {status === "error" && (
-            <p className="errorText">
-              Something went wrong sending your message. Please try again.
-            </p>
-          )}
-          {status === "rate_limited" && (
-            <p className="errorText">Too many messages in a short time. Please try again later.</p>
-          )}
+          {status === "error" && <p className="errorText">{f.errorText}</p>}
+          {status === "rate_limited" && <p className="errorText">{f.rateLimitedText}</p>}
         </div>
       </form>
       <div className="loader" aria-hidden="true">
         {/* Reference loader gif, shown while sending */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/load.gif" alt="" />
+        <img src={loaderSrc} alt="" />
       </div>
       <div className="successContainer" aria-hidden={status !== "success"}>
         <div className="smallTitle">{f.successTitle}</div>
