@@ -1,224 +1,224 @@
 {
   "validator": "PGlite PostgreSQL WASM",
   "validatorVersion": "0.4.5",
-  "generatedAt": "2026-08-02T19:28:31.584Z",
+  "generatedAt": "2026-08-02T19:45:28.517Z",
   "productionAuthority": false,
   "bootstrap": "pass",
   "migrations": [
     {
       "name": "202607310001_foundation.sql",
       "status": "pass",
-      "durationMs": 1277
+      "durationMs": 1060
     },
     {
       "name": "202607310002_cms_core.sql",
       "status": "pass",
-      "durationMs": 449
+      "durationMs": 914
     },
     {
       "name": "202607310003_cms_spimar_modules.sql",
       "status": "pass",
-      "durationMs": 456
+      "durationMs": 596
     },
     {
       "name": "202607310004_crm.sql",
       "status": "pass",
-      "durationMs": 947
+      "durationMs": 974
     },
     {
       "name": "202607310005_workflows.sql",
       "status": "pass",
-      "durationMs": 269
+      "durationMs": 394
     },
     {
       "name": "202607310006_rls.sql",
       "status": "pass",
-      "durationMs": 392
+      "durationMs": 525
     },
     {
       "name": "202607310007_acquisition_edge_boundary.sql",
       "status": "pass",
-      "durationMs": 84
+      "durationMs": 81
     },
     {
       "name": "202607310008_integration_worker.sql",
       "status": "pass",
-      "durationMs": 9
+      "durationMs": 58
     },
     {
       "name": "202607310009_cms_page_api.sql",
       "status": "pass",
-      "durationMs": 17
+      "durationMs": 93
     },
     {
       "name": "202607310010_crm_workspace_api.sql",
       "status": "pass",
-      "durationMs": 77
+      "durationMs": 110
     },
     {
       "name": "202607310011_cms_event_api.sql",
       "status": "pass",
-      "durationMs": 30
+      "durationMs": 68
     },
     {
       "name": "202607310012_cms_media_api.sql",
       "status": "pass",
-      "durationMs": 42
+      "durationMs": 92
     },
     {
       "name": "202608010001_crm_audited_export.sql",
       "status": "pass",
-      "durationMs": 11
+      "durationMs": 64
     },
     {
       "name": "202608010002_crm_pipeline_api.sql",
       "status": "pass",
-      "durationMs": 5
+      "durationMs": 82
     },
     {
       "name": "202608010003_cms_dashboard_api.sql",
       "status": "pass",
-      "durationMs": 4
+      "durationMs": 95
     },
     {
       "name": "202608010004_cms_navigation_api.sql",
       "status": "pass",
-      "durationMs": 25
+      "durationMs": 197
     },
     {
       "name": "202608010005_cms_site_locale_api.sql",
       "status": "pass",
-      "durationMs": 14
+      "durationMs": 118
     },
     {
       "name": "202608010006_cms_settings_seo_api.sql",
       "status": "pass",
-      "durationMs": 28
+      "durationMs": 46
     },
     {
       "name": "202608010007_cms_exhibitor_package_api.sql",
       "status": "pass",
-      "durationMs": 42
+      "durationMs": 78
     },
     {
       "name": "202608010008_cms_content_partner_api.sql",
       "status": "pass",
-      "durationMs": 56
+      "durationMs": 85
     },
     {
       "name": "202608010009_cms_case_study_api.sql",
       "status": "pass",
-      "durationMs": 47
+      "durationMs": 117
     },
     {
       "name": "202608010010_cms_dashboard_expansion.sql",
       "status": "pass",
-      "durationMs": 10
+      "durationMs": 85
     },
     {
       "name": "202608010011_cms_metric_api.sql",
       "status": "pass",
-      "durationMs": 24
+      "durationMs": 96
     },
     {
       "name": "202608010012_cms_dashboard_metric_expansion.sql",
       "status": "pass",
-      "durationMs": 8
+      "durationMs": 148
     },
     {
       "name": "202608010013_cms_resource_api.sql",
       "status": "pass",
-      "durationMs": 48
+      "durationMs": 525
     },
     {
       "name": "202608010014_cms_dashboard_resource_expansion.sql",
       "status": "pass",
-      "durationMs": 22
+      "durationMs": 109
     },
     {
       "name": "202608010015_cms_testimonial_api.sql",
       "status": "pass",
-      "durationMs": 129
+      "durationMs": 104
     },
     {
       "name": "202608010016_cms_dashboard_testimonial_expansion.sql",
       "status": "pass",
-      "durationMs": 31
+      "durationMs": 94
     },
     {
       "name": "202608010017_cms_article_api.sql",
       "status": "pass",
-      "durationMs": 48
+      "durationMs": 100
     },
     {
       "name": "202608010018_cms_dashboard_article_expansion.sql",
       "status": "pass",
-      "durationMs": 44
+      "durationMs": 84
     },
     {
       "name": "202608010019_cms_faq_api.sql",
       "status": "pass",
-      "durationMs": 38
+      "durationMs": 100
     },
     {
       "name": "202608010020_cms_dashboard_faq_expansion.sql",
       "status": "pass",
-      "durationMs": 10
+      "durationMs": 148
     },
     {
       "name": "202608010021_cms_venue_api.sql",
       "status": "pass",
-      "durationMs": 149
+      "durationMs": 162
     },
     {
       "name": "202608010022_cms_dashboard_venue_expansion.sql",
       "status": "pass",
-      "durationMs": 43
+      "durationMs": 63
     },
     {
       "name": "202608010023_cms_project_taxonomy_api.sql",
       "status": "pass",
-      "durationMs": 140
+      "durationMs": 169
     },
     {
       "name": "202608010024_cms_dashboard_taxonomy_expansion.sql",
       "status": "pass",
-      "durationMs": 21
+      "durationMs": 90
     },
     {
       "name": "202608010025_cms_project_api.sql",
       "status": "pass",
-      "durationMs": 36
+      "durationMs": 141
     },
     {
       "name": "202608010026_cms_dashboard_project_expansion.sql",
       "status": "pass",
-      "durationMs": 23
+      "durationMs": 115
     },
     {
       "name": "202608010027_cms_project_details_api.sql",
       "status": "pass",
-      "durationMs": 85
+      "durationMs": 149
     },
     {
       "name": "202608020001_canonical_event_axes.sql",
       "status": "pass",
-      "durationMs": 104
+      "durationMs": 212
     },
     {
       "name": "202608020002_canonical_workflow_states.sql",
       "status": "pass",
-      "durationMs": 212
+      "durationMs": 510
     },
     {
       "name": "202608020003_activation_critical_contracts.sql",
       "status": "pass",
-      "durationMs": 342
+      "durationMs": 407
     },
     {
       "name": "202608020004_editorial_separation_of_duties.sql",
       "status": "pass",
-      "durationMs": 132
+      "durationMs": 182
     }
   ],
   "seed": "pass",
@@ -232,7 +232,7 @@
     {
       "name": "00_schema_contract.sql",
       "status": "pass",
-      "durationMs": 367,
+      "durationMs": 792,
       "failures": [],
       "tapOutput": [
         "1..16",
@@ -257,7 +257,7 @@
     {
       "name": "100_crm_audited_export_contract.sql",
       "status": "pass",
-      "durationMs": 1090,
+      "durationMs": 1052,
       "failures": [],
       "tapOutput": [
         "1..30",
@@ -303,7 +303,7 @@
     {
       "name": "10_rls_contract.sql",
       "status": "pass",
-      "durationMs": 1105,
+      "durationMs": 1976,
       "failures": [],
       "tapOutput": [
         "1..17",
@@ -334,7 +334,7 @@
     {
       "name": "110_crm_pipeline_api_contract.sql",
       "status": "pass",
-      "durationMs": 536,
+      "durationMs": 1017,
       "failures": [],
       "tapOutput": [
         "1..19",
@@ -366,7 +366,7 @@
     {
       "name": "120_cms_dashboard_api_contract.sql",
       "status": "pass",
-      "durationMs": 988,
+      "durationMs": 1955,
       "failures": [],
       "tapOutput": [
         "1..47",
@@ -427,7 +427,7 @@
     {
       "name": "130_cms_navigation_api_contract.sql",
       "status": "pass",
-      "durationMs": 733,
+      "durationMs": 1310,
       "failures": [],
       "tapOutput": [
         "1..38",
@@ -480,7 +480,7 @@
     {
       "name": "140_cms_site_locale_api_contract.sql",
       "status": "pass",
-      "durationMs": 759,
+      "durationMs": 2004,
       "failures": [],
       "tapOutput": [
         "1..33",
@@ -524,7 +524,7 @@
     {
       "name": "150_cms_settings_seo_api_contract.sql",
       "status": "pass",
-      "durationMs": 792,
+      "durationMs": 2172,
       "failures": [],
       "tapOutput": [
         "1..43",
@@ -580,7 +580,7 @@
     {
       "name": "160_cms_exhibitor_package_api_contract.sql",
       "status": "pass",
-      "durationMs": 633,
+      "durationMs": 2532,
       "failures": [],
       "tapOutput": [
         "1..45",
@@ -641,7 +641,7 @@
     {
       "name": "170_cms_content_partner_api_contract.sql",
       "status": "pass",
-      "durationMs": 717,
+      "durationMs": 1443,
       "failures": [],
       "tapOutput": [
         "1..40",
@@ -651,9 +651,9 @@
         "ok 4 - direct authenticated partner updates are revoked",
         "ok 5 - direct authenticated partner translation inserts are revoked",
         "{\"sub\":\"00000000-0000-4000-8000-000000002303\",\"role\":\"authenticated\"}",
-        "(00000000-0000-4000-8000-000000002310,in_review,2,\"2026-08-02 20:28:56.361+01\")",
-        "(00000000-0000-4000-8000-000000002310,approved,3,\"2026-08-02 20:28:56.361+01\")",
-        "(00000000-0000-4000-8000-000000002310,published,4,\"2026-08-02 20:28:56.361+01\")",
+        "(00000000-0000-4000-8000-000000002310,in_review,2,\"2026-08-02 20:46:07.697+01\")",
+        "(00000000-0000-4000-8000-000000002310,approved,3,\"2026-08-02 20:46:07.697+01\")",
+        "(00000000-0000-4000-8000-000000002310,published,4,\"2026-08-02 20:46:07.697+01\")",
         "{\"sub\":\"00000000-0000-4000-8000-000000002304\",\"role\":\"authenticated\"}",
         "ok 6 - sales staff cannot inspect partner drafts",
         "{\"sub\":\"00000000-0000-4000-8000-000000002301\",\"role\":\"authenticated\"}",
@@ -699,7 +699,7 @@
     {
       "name": "180_cms_case_study_api_contract.sql",
       "status": "pass",
-      "durationMs": 1240,
+      "durationMs": 1748,
       "failures": [],
       "tapOutput": [
         "1..41",
@@ -709,9 +709,9 @@
         "ok 4 - direct authenticated case study updates are revoked",
         "ok 5 - direct authenticated case study translation inserts are revoked",
         "{\"sub\":\"00000000-0000-4000-8000-000000002403\",\"role\":\"authenticated\"}",
-        "(00000000-0000-4000-8000-000000002411,in_review,2,\"2026-08-02 20:28:57.098+01\")",
-        "(00000000-0000-4000-8000-000000002411,approved,3,\"2026-08-02 20:28:57.098+01\")",
-        "(00000000-0000-4000-8000-000000002411,published,4,\"2026-08-02 20:28:57.098+01\")",
+        "(00000000-0000-4000-8000-000000002411,in_review,2,\"2026-08-02 20:46:09.201+01\")",
+        "(00000000-0000-4000-8000-000000002411,approved,3,\"2026-08-02 20:46:09.201+01\")",
+        "(00000000-0000-4000-8000-000000002411,published,4,\"2026-08-02 20:46:09.201+01\")",
         "{\"sub\":\"00000000-0000-4000-8000-000000002404\",\"role\":\"authenticated\"}",
         "ok 6 - sales staff cannot inspect case study drafts",
         "{\"sub\":\"00000000-0000-4000-8000-000000002401\",\"role\":\"authenticated\"}",
@@ -758,7 +758,7 @@
     {
       "name": "190_cms_metric_api_contract.sql",
       "status": "pass",
-      "durationMs": 1029,
+      "durationMs": 947,
       "failures": [],
       "tapOutput": [
         "1..31",
@@ -801,7 +801,7 @@
     {
       "name": "200_cms_resource_api_contract.sql",
       "status": "pass",
-      "durationMs": 1287,
+      "durationMs": 1070,
       "failures": [],
       "tapOutput": [
         "1..50",
@@ -813,9 +813,9 @@
         "ok 6 - direct authenticated version updates are revoked",
         "ok 7 - anonymous callers cannot enumerate delivery versions",
         "{\"sub\":\"00000000-0000-4000-8000-000000002603\",\"role\":\"authenticated\"}",
-        "(00000000-0000-4000-8000-000000002611,in_review,2,\"2026-08-02 20:28:59.303+01\")",
-        "(00000000-0000-4000-8000-000000002611,approved,3,\"2026-08-02 20:28:59.303+01\")",
-        "(00000000-0000-4000-8000-000000002611,published,4,\"2026-08-02 20:28:59.303+01\")",
+        "(00000000-0000-4000-8000-000000002611,in_review,2,\"2026-08-02 20:46:11.832+01\")",
+        "(00000000-0000-4000-8000-000000002611,approved,3,\"2026-08-02 20:46:11.832+01\")",
+        "(00000000-0000-4000-8000-000000002611,published,4,\"2026-08-02 20:46:11.832+01\")",
         "{\"sub\":\"00000000-0000-4000-8000-000000002604\",\"role\":\"authenticated\"}",
         "ok 8 - sales staff cannot inspect resource drafts",
         "{\"sub\":\"00000000-0000-4000-8000-000000002601\",\"role\":\"authenticated\"}",
@@ -869,7 +869,7 @@
     {
       "name": "20_workflow_contract.sql",
       "status": "pass",
-      "durationMs": 1302,
+      "durationMs": 2348,
       "failures": [],
       "tapOutput": [
         "1..20",
@@ -903,7 +903,7 @@
     {
       "name": "210_cms_testimonial_api_contract.sql",
       "status": "pass",
-      "durationMs": 1774,
+      "durationMs": 2168,
       "failures": [],
       "tapOutput": [
         "1..44",
@@ -913,9 +913,9 @@
         "ok 4 - direct authenticated testimonial updates are revoked",
         "ok 5 - direct authenticated testimonial translation inserts are revoked",
         "{\"sub\":\"00000000-0000-4000-8000-000000002703\",\"role\":\"authenticated\"}",
-        "(00000000-0000-4000-8000-000000002711,in_review,2,\"2026-08-02 20:29:01.978+01\")",
-        "(00000000-0000-4000-8000-000000002711,approved,3,\"2026-08-02 20:29:01.978+01\")",
-        "(00000000-0000-4000-8000-000000002711,published,4,\"2026-08-02 20:29:01.978+01\")",
+        "(00000000-0000-4000-8000-000000002711,in_review,2,\"2026-08-02 20:46:15.166+01\")",
+        "(00000000-0000-4000-8000-000000002711,approved,3,\"2026-08-02 20:46:15.166+01\")",
+        "(00000000-0000-4000-8000-000000002711,published,4,\"2026-08-02 20:46:15.166+01\")",
         "{\"sub\":\"00000000-0000-4000-8000-000000002704\",\"role\":\"authenticated\"}",
         "ok 6 - sales staff cannot inspect testimonial drafts",
         "{\"sub\":\"00000000-0000-4000-8000-000000002701\",\"role\":\"authenticated\"}",
@@ -965,7 +965,7 @@
     {
       "name": "220_cms_article_api_contract.sql",
       "status": "pass",
-      "durationMs": 2610,
+      "durationMs": 2076,
       "failures": [],
       "tapOutput": [
         "1..43",
@@ -975,9 +975,9 @@
         "ok 4 - direct authenticated article updates are revoked",
         "ok 5 - direct authenticated article translation inserts are revoked",
         "{\"sub\":\"00000000-0000-4000-8000-000000002803\",\"role\":\"authenticated\"}",
-        "(00000000-0000-4000-8000-000000002811,in_review,2,\"2026-08-02 20:29:03.742+01\")",
-        "(00000000-0000-4000-8000-000000002811,approved,3,\"2026-08-02 20:29:03.742+01\")",
-        "(00000000-0000-4000-8000-000000002811,published,4,\"2026-08-02 20:29:03.742+01\")",
+        "(00000000-0000-4000-8000-000000002811,in_review,2,\"2026-08-02 20:46:17.38+01\")",
+        "(00000000-0000-4000-8000-000000002811,approved,3,\"2026-08-02 20:46:17.38+01\")",
+        "(00000000-0000-4000-8000-000000002811,published,4,\"2026-08-02 20:46:17.38+01\")",
         "{\"sub\":\"00000000-0000-4000-8000-000000002804\",\"role\":\"authenticated\"}",
         "ok 6 - sales staff cannot inspect article drafts",
         "{\"sub\":\"00000000-0000-4000-8000-000000002801\",\"role\":\"authenticated\"}",
@@ -1026,7 +1026,7 @@
     {
       "name": "230_cms_faq_api_contract.sql",
       "status": "pass",
-      "durationMs": 1624,
+      "durationMs": 1159,
       "failures": [],
       "tapOutput": [
         "1..40",
@@ -1080,7 +1080,7 @@
     {
       "name": "240_cms_venue_api_contract.sql",
       "status": "pass",
-      "durationMs": 1936,
+      "durationMs": 1183,
       "failures": [],
       "tapOutput": [
         "1..44",
@@ -1138,7 +1138,7 @@
     {
       "name": "250_cms_project_taxonomy_api_contract.sql",
       "status": "pass",
-      "durationMs": 2006,
+      "durationMs": 1787,
       "failures": [],
       "tapOutput": [
         "1..79",
@@ -1232,7 +1232,7 @@
     {
       "name": "260_cms_project_api_contract.sql",
       "status": "pass",
-      "durationMs": 4421,
+      "durationMs": 2304,
       "failures": [],
       "tapOutput": [
         "1..66",
@@ -1312,7 +1312,7 @@
     {
       "name": "270_cms_project_details_api_contract.sql",
       "status": "pass",
-      "durationMs": 3700,
+      "durationMs": 1728,
       "failures": [],
       "tapOutput": [
         "1..62",
@@ -1390,7 +1390,7 @@
     {
       "name": "300_canonical_corrections_contract.sql",
       "status": "pass",
-      "durationMs": 4012,
+      "durationMs": 1212,
       "failures": [],
       "tapOutput": [
         "1..75",
@@ -1481,7 +1481,7 @@
     {
       "name": "30_cms_workflow_contract.sql",
       "status": "pass",
-      "durationMs": 3733,
+      "durationMs": 1396,
       "failures": [],
       "tapOutput": [
         "1..16",
@@ -1499,19 +1499,19 @@
         "ok 11 - event publishes after translation completeness passes",
         "ok 12 - published event is visible to anonymous public queries",
         "{\"sub\":\"00000000-0000-4000-8000-000000000901\",\"role\":\"authenticated\"}",
-        "caccf8a5-722e-4668-9f34-d1671a09c59f",
+        "85d24d7f-1ca0-4bae-9dac-c052d5f4fd62",
         "draft",
-        "3387ff8a-ea47-4e3f-82a4-14f3e466d743",
+        "053a275b-b5df-4b8a-be53-c72024ddf40a",
         "draft",
-        "caccf8a5-722e-4668-9f34-d1671a09c59f",
+        "85d24d7f-1ca0-4bae-9dac-c052d5f4fd62",
         "in_review",
-        "3387ff8a-ea47-4e3f-82a4-14f3e466d743",
+        "053a275b-b5df-4b8a-be53-c72024ddf40a",
         "in_review",
-        "caccf8a5-722e-4668-9f34-d1671a09c59f",
+        "85d24d7f-1ca0-4bae-9dac-c052d5f4fd62",
         "approved",
-        "3387ff8a-ea47-4e3f-82a4-14f3e466d743",
+        "053a275b-b5df-4b8a-be53-c72024ddf40a",
         "approved",
-        "842e9267-a432-4b6d-b78b-50925e1b5a34",
+        "af535ece-8e0e-4203-b3d2-ba99cf0e2c97",
         "in_review",
         "missing",
         "ok 13 - unverified package evidence blocks approval",
@@ -1523,7 +1523,7 @@
     {
       "name": "40_edge_acquisition_contract.sql",
       "status": "pass",
-      "durationMs": 2650,
+      "durationMs": 1553,
       "failures": [],
       "tapOutput": [
         "1..13",
@@ -1547,7 +1547,7 @@
     {
       "name": "50_integration_worker_contract.sql",
       "status": "pass",
-      "durationMs": 3605,
+      "durationMs": 1868,
       "failures": [],
       "tapOutput": [
         "1..18",
@@ -1577,7 +1577,7 @@
     {
       "name": "60_cms_page_api_contract.sql",
       "status": "pass",
-      "durationMs": 2152,
+      "durationMs": 1694,
       "failures": [],
       "tapOutput": [
         "1..27",
@@ -1618,7 +1618,7 @@
     {
       "name": "70_crm_workspace_api_contract.sql",
       "status": "pass",
-      "durationMs": 3106,
+      "durationMs": 1854,
       "failures": [],
       "tapOutput": [
         "1..40",
@@ -1677,7 +1677,7 @@
     {
       "name": "80_cms_event_api_contract.sql",
       "status": "pass",
-      "durationMs": 2691,
+      "durationMs": 1582,
       "failures": [],
       "tapOutput": [
         "1..46",
@@ -1741,7 +1741,7 @@
     {
       "name": "90_cms_media_api_contract.sql",
       "status": "pass",
-      "durationMs": 1592,
+      "durationMs": 1218,
       "failures": [],
       "tapOutput": [
         "1..44",
