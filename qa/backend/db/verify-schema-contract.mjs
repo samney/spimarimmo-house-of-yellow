@@ -70,6 +70,12 @@ const expectedMigrations = [
   "202608010025_cms_project_api.sql",
   "202608010026_cms_dashboard_project_expansion.sql",
   "202608010027_cms_project_details_api.sql",
+  // Canonical corrections. Additive forward migrations; the 39 above are never
+  // rewritten. See docs/backend/CANONICAL-CORRECTIONS.md.
+  "202608020001_canonical_event_axes.sql",
+  "202608020002_canonical_workflow_states.sql",
+  "202608020003_activation_critical_contracts.sql",
+  "202608020004_editorial_separation_of_duties.sql",
 ];
 check(
   JSON.stringify(migrationFiles) === JSON.stringify(expectedMigrations),
@@ -388,7 +394,9 @@ for (const name of testFiles) {
   const source = fs.readFileSync(path.join(testDir, name), "utf8");
   const planned = Number(source.match(/select\s+plan\((\d+)\)/i)?.[1] ?? -1);
   const assertions = (
-    source.match(/select\s+(?:has_table|is|isnt|ok|throws_ok|lives_ok|volatility_is|pass)\s*\(/gi) ?? []
+    source.match(
+      /select\s+(?:has_table|has_column|is|isnt|ok|throws_ok|lives_ok|volatility_is|pass)\s*\(/gi,
+    ) ?? []
   ).length;
   check(planned === assertions, `${name} plan(${planned}) matches ${assertions} assertions`);
   check(/select\s+\*\s+from\s+finish\(\)/i.test(source), `${name} calls pgTAP finish()`);

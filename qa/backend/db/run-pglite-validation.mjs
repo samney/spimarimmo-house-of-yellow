@@ -19,6 +19,23 @@ const resultsRoot = path.join(root, "qa", "backend", "db", "results");
 const reportPath = path.join(resultsRoot, "pglite-validation.json");
 const testFilter = (process.argv[2] ?? process.env.PGLITE_TEST_FILTER)?.trim();
 
+// Declared shape of the public schema. Raising this number is a deliberate act:
+// it must accompany the migration that adds the table, so an accidental or
+// unreviewed table cannot slip in unnoticed. Every public table must have RLS
+// enabled, which is asserted as an equality rather than a second constant.
+//
+//   71  donor baseline (39 migrations)
+//   +1  event_axis_history                     (202608020001)
+//   +2  state_contract_versions,
+//       canonical_state_history                (202608020002)
+//  +11  activation-critical conversion records (202608020003)
+//   +5  capability_profiles,
+//       capability_profile_permissions,
+//       profile_capability_assignments,
+//       locked_critical_fields,
+//       privileged_overrides                   (202608020004)
+const EXPECTED_PUBLIC_TABLES = 90;
+
 const importModule = (relativePath) =>
   import(pathToFileURL(path.join(runtimeRoot, relativePath)).href);
 
@@ -225,8 +242,28 @@ try {
       const failures = tapOutput.filter(
         (line) =>
           /^not ok\b/m.test(line) ||
-          /Looks like you failed\s+\d+\s+tests?/i.test(line),
+          /Looks like you failed\s+\d+\s+tests?/i.test(line) ||
+          // A plan that does not match the assertions actually executed means
+          // the suite is not testing what it claims. Without this, a suite can
+          // silently run fewer assertions than it declares and still report
+          // green, because pgTAP reports the mismatch as a diagnostic rather
+          // than as a failed assertion.
+          /Looks like you planned\s+\d+\s+tests?\s+but\s+ran\s+\d+/i.test(line),
       );
+
+      // Same check from the other direction, in case pgTAP emits no summary at
+      // all: compare the declared plan against the observed result lines.
+      const declaredPlan = Number(
+        tapOutput.find((line) => /^1\.\.\d+\s*$/.test(line))?.slice(3) ?? NaN,
+      );
+      const executedAssertions = tapOutput.filter((line) =>
+        /^(ok|not ok)\b/.test(line),
+      ).length;
+      if (Number.isFinite(declaredPlan) && declaredPlan !== executedAssertions) {
+        failures.push(
+          `plan mismatch: declared ${declaredPlan}, executed ${executedAssertions}`,
+        );
+      }
       report.tests.push({
         name,
         status: failures.length === 0 ? "pass" : "fail",
@@ -253,8 +290,9 @@ try {
     report.bootstrap === "pass" &&
     report.migrations.every(({ status }) => status === "pass") &&
     report.seed === "pass" &&
-    report.databaseChecks.publicTableCount === 71 &&
-    report.databaseChecks.rlsEnabledTableCount === 71 &&
+    report.databaseChecks.publicTableCount === EXPECTED_PUBLIC_TABLES &&
+    report.databaseChecks.rlsEnabledTableCount ===
+      report.databaseChecks.publicTableCount &&
     report.databaseChecks.securityDefinerWithoutPinnedSearchPath === 0 &&
     report.tests.every(({ status }) => status === "pass");
 } catch (error) {

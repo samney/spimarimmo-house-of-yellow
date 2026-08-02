@@ -48,9 +48,9 @@ const entities = [
   entity("CNT-03", "content", "Destination", "MISSING", [], [
     "No destination identity, localization, publication, event, evidence, or media relation tables.",
   ]),
-  entity("CNT-04", "content", "Event", "MISMATCH", ["events", "event_translations", "event_status_history"], [
-    "Lifecycle, exhibitor-sales availability, and visitor-registration availability are serialized in one lifecycle enum.",
+  entity("CNT-04", "content", "Event", "PARTIAL", ["events", "event_translations", "event_status_history", "event_axis_history"], [
     "Destination, series/edition, and explicit canonical-host ownership are absent.",
+    "The legacy lifecycle enum is retained alongside the canonical axes until every caller reads the canonical columns.",
   ]),
   entity("CNT-05", "content", "Venue", "PARTIAL", ["venues", "venue_translations"], [
     "Verification status/date and a governed map-reference contract are absent.",
@@ -94,25 +94,17 @@ const entities = [
   entity("CNT-18", "content", "Page", "PARTIAL", ["pages", "page_translations", "page_sections", "page_section_translations", "seo_entries"], [
     "Host/locale release gating and full canonical publication states are incomplete.",
   ]),
-  entity("CNT-19", "content", "LegalDocument", "MISSING", ["pages"], [
-    "Generic pages do not provide typed legal version, effective time, controller/contact, approval, and host/locale scope.",
-  ]),
-  entity("CNT-20", "content", "ConsentDefinition", "MISSING", ["consents"], [
-    "Consent records exist, but no governed definition for purpose, requiredness, legal basis/mechanism, notice/legal version, and host/locale scope.",
-  ]),
-  entity("CNT-21", "content", "FormDefinition", "MISSING", ["form_submissions"], [
-    "No versioned purpose/audience field schema, availability, routing, consent, and confirmation definition.",
-  ]),
+  entity("CNT-19", "content", "LegalDocument", "PRESENT", ["legal_documents"], []),
+  entity("CNT-20", "content", "ConsentDefinition", "PRESENT", ["consent_definitions", "consents"], []),
+  entity("CNT-21", "content", "FormDefinition", "PRESENT", ["form_definitions", "form_definition_versions"], []),
   entity("OPS-01", "operational", "Contact", "PRESENT", ["contacts"], []),
   entity("OPS-02", "operational", "Account", "PARTIAL", ["organizations"], [
     "Approved match metadata and account-deduplication evidence are incomplete.",
   ]),
-  entity("OPS-03", "operational", "Submission", "PARTIAL", ["form_submissions"], [
-    "No canonical submission status, audience/source/route identity, retention/anonymization state, or opaque public reference.",
+  entity("OPS-03", "operational", "Submission", "PARTIAL", ["form_submissions", "submission_public_references"], [
+    "Canonical state, retention/anonymization states and an opaque public reference exist; audience/source/route identity is carried on the context rather than on the submission itself.",
   ]),
-  entity("OPS-04", "operational", "SubmissionContext", "PARTIAL", ["form_submissions", "campaign_attribution"], [
-    "Event is stored, but offer/resource/campaign/route/template/content-version snapshots are incomplete.",
-  ]),
+  entity("OPS-04", "operational", "SubmissionContext", "PRESENT", ["submission_contexts"], []),
   entity("OPS-05", "operational", "ConsentRecord", "PARTIAL", ["consents"], [
     "Withdrawal exists, but objection/state history and linkage to governed consent/legal definitions are incomplete.",
   ]),
@@ -123,47 +115,56 @@ const entities = [
     "Generic leads omit canonical offer/objective/role qualification fields.",
     "Local stages make proposal, negotiation, won/lost, and onboarding first-class website states before an approved provider mapping/source-of-truth decision.",
   ]),
-  entity("OPS-08", "operational", "VisitorRegistration", "MISSING", ["form_submissions", "leads"], [
-    "Visitor registration is only an acquisition kind; no distinct registration state or recipient/sharing-rule version is persisted.",
-  ]),
-  entity("OPS-09", "operational", "AppointmentRequest", "MISMATCH", ["appointments", "appointment_slots"], [
-    "Local pending/confirmed states and required internal slot do not model provider_pending/provider_failed/expired or provider acceptance separately.",
+  entity("OPS-08", "operational", "VisitorRegistration", "PRESENT", ["visitor_registrations"], []),
+  entity("OPS-09", "operational", "AppointmentRequest", "PARTIAL", ["appointments", "appointment_slots"], [
+    "Canonical provider_pending/provider_failed/expired states exist and booked is constrained to evidenced provider acceptance; the legacy status column is retained until callers migrate.",
   ]),
   entity("OPS-10", "operational", "Assignment", "PRESENT", ["lead_assignments", "leads"], []),
-  entity("OPS-11", "operational", "Communication", "MISSING", ["activities"], [
-    "Activities are not a communication record with purpose, template/version, channel, provider status, and suppression outcome.",
+  entity("OPS-11", "operational", "Communication", "PRESENT", ["communications"], []),
+  entity("OPS-12", "operational", "IntegrationJob", "PARTIAL", ["integration_jobs"], [
+    "Canonical retrying/failed_terminal/suppressed/cancelled states exist; the legacy status column is retained until the worker reads the canonical column.",
   ]),
-  entity("OPS-12", "operational", "IntegrationJob", "MISMATCH", ["integration_jobs"], [
-    "Canonical retrying, failed_terminal, suppressed, and cancelled states and explicit adapter/action/correlation fields are absent.",
-  ]),
-  entity("OPS-13", "operational", "OutboxEvent", "PARTIAL", ["integration_jobs"], [
-    "Integration jobs are transactionally queued as an outbox substitute but do not preserve a distinct domain event and source-transaction dispatch record.",
-  ]),
+  entity("OPS-13", "operational", "OutboxEvent", "PRESENT", ["outbox_events"], []),
   entity("OPS-14", "operational", "AuditEvent", "PARTIAL", ["audit_events"], [
     "Purpose and before/after summaries are not explicit governed fields and depend on untyped metadata.",
   ]),
-  entity("OPS-15", "operational", "PrivacyRequest", "MISSING", [], [
-    "No access/correction/deletion/objection/withdrawal workflow and evidence record.",
-  ]),
-  entity("OPS-16", "operational", "Suppression", "MISSING", [], [
-    "No contact/channel/purpose suppression record or provider propagation state.",
-  ]),
+  entity("OPS-15", "operational", "PrivacyRequest", "PRESENT", ["privacy_requests"], []),
+  entity("OPS-16", "operational", "Suppression", "PRESENT", ["suppressions"], []),
 ];
 
-const stateContract = (id, contract, canonical, localEnum) => {
-  const local = enumIndex.get(localEnum) ?? [];
+// A state contract is measured against the CANONICAL enum, with the legacy enum
+// recorded alongside it. The legacy vocabulary is retained deliberately until
+// every caller reads the canonical column, so an exact canonical match is
+// reported as PARTIAL while the legacy enum still exists: the model is correct,
+// but two vocabularies are still live and that is a real, reviewable state.
+const stateContract = (id, contract, canonical, canonicalEnum, legacyEnum) => {
+  const canonicalValues = enumIndex.get(canonicalEnum) ?? [];
+  const legacyValues = legacyEnum ? (enumIndex.get(legacyEnum) ?? []) : [];
+  const canonicalMatches =
+    canonicalValues.length > 0 &&
+    JSON.stringify(canonicalValues) === JSON.stringify(canonical);
+
+  let classification;
+  if (canonicalMatches) {
+    classification = legacyValues.length > 0 ? "PARTIAL" : "PRESENT";
+  } else if (canonicalValues.length > 0) {
+    classification = "PARTIAL";
+  } else if (legacyValues.length > 0) {
+    classification = "MISMATCH";
+  } else {
+    classification = "MISSING";
+  }
+
   return {
     id,
     contract,
     canonical,
-    localEnum: enumIndex.has(localEnum) ? localEnum : null,
-    local,
-    classification:
-      local.length === 0
-        ? "MISSING"
-        : JSON.stringify(local) === JSON.stringify(canonical)
-          ? "PRESENT"
-          : "MISMATCH",
+    canonicalEnum: enumIndex.has(canonicalEnum) ? canonicalEnum : null,
+    canonicalValues,
+    legacyEnum: legacyEnum && enumIndex.has(legacyEnum) ? legacyEnum : null,
+    legacyValues,
+    legacyRetained: legacyValues.length > 0,
+    classification,
   };
 };
 
@@ -172,15 +173,58 @@ const states = [
     "STA-01",
     "event_lifecycle",
     ["draft", "announced_undated", "scheduled", "live", "completed", "archived", "postponed", "cancelled"],
+    "event_lifecycle_axis",
     "event_lifecycle_status",
   ),
-  stateContract("STA-02", "exhibitor_sales", ["planned", "open", "limited", "sold_out", "closed"], "exhibitor_sales_status"),
-  stateContract("STA-03", "visitor_registration", ["planned", "open", "waitlist", "full", "closed"], "visitor_registration_status"),
-  stateContract("STA-04", "submission", ["received", "duplicate_linked", "invalid_rejected", "withdrawn", "retained", "anonymized"], "submission_status"),
-  stateContract("STA-05", "integration_job", ["queued", "processing", "succeeded", "retrying", "failed_terminal", "suppressed", "cancelled"], "integration_job_status"),
-  stateContract("STA-06", "delivery", ["not_required", "queued", "delivered", "delayed", "bounced", "failed", "suppressed"], "delivery_status"),
-  stateContract("STA-07", "appointment", ["lead_captured", "provider_pending", "booked", "provider_failed", "cancelled", "expired"], "appointment_status"),
-  stateContract("STA-08", "publication", ["draft", "in_review", "changes_requested", "approved", "scheduled", "published", "expired", "withdrawn", "archived"], "publication_status"),
+  stateContract(
+    "STA-02",
+    "exhibitor_sales",
+    ["planned", "open", "limited", "sold_out", "closed"],
+    "event_exhibitor_sales_status",
+    null,
+  ),
+  stateContract(
+    "STA-03",
+    "visitor_registration",
+    ["planned", "open", "waitlist", "full", "closed"],
+    "event_visitor_registration_status",
+    null,
+  ),
+  stateContract(
+    "STA-04",
+    "submission",
+    ["received", "duplicate_linked", "invalid_rejected", "withdrawn", "retained", "anonymized"],
+    "submission_state",
+    null,
+  ),
+  stateContract(
+    "STA-05",
+    "integration_job",
+    ["queued", "processing", "succeeded", "retrying", "failed_terminal", "suppressed", "cancelled"],
+    "integration_job_state",
+    "integration_job_status",
+  ),
+  stateContract(
+    "STA-06",
+    "delivery",
+    ["not_required", "queued", "delivered", "delayed", "bounced", "failed", "suppressed"],
+    "delivery_state",
+    "delivery_status",
+  ),
+  stateContract(
+    "STA-07",
+    "appointment",
+    ["lead_captured", "provider_pending", "booked", "provider_failed", "cancelled", "expired"],
+    "appointment_state",
+    "appointment_status",
+  ),
+  stateContract(
+    "STA-08",
+    "publication",
+    ["draft", "in_review", "changes_requested", "approved", "scheduled", "published", "expired", "withdrawn", "archived"],
+    "publication_state",
+    "publication_status",
+  ),
 ];
 
 const canonicalEditorialRoles = [
@@ -191,10 +235,76 @@ const canonicalEditorialRoles = [
   "publisher",
   "administrator",
 ];
-const localRoles = inventory.roleMatrix.map((entry) => entry.role);
 const rolesWithPublishPermission = inventory.roleMatrix
   .filter((entry) => entry.permissions.includes("content.publish"))
   .map((entry) => entry.role);
+
+const capabilityMatrix = inventory.capabilityMatrix ?? [];
+const capabilityPermissions = new Map(
+  capabilityMatrix.map((entry) => [entry.profile, entry.permissions]),
+);
+const profilesWithPublishPermission = capabilityMatrix
+  .filter((entry) => entry.permissions.includes("content.publish"))
+  .map((entry) => entry.profile);
+
+const missingEditorialProfiles = canonicalEditorialRoles.filter(
+  (profile) => !capabilityPermissions.has(profile),
+);
+
+// Separation of duties is only demonstrated when a profile is denied the things
+// it must not be able to do. Presence of the profile alone proves nothing.
+const grants = (profile, permission) =>
+  (capabilityPermissions.get(profile) ?? []).includes(permission);
+
+const separationChecks = [
+  {
+    check: "contributor cannot approve",
+    holds: !grants("contributor", "content.approve"),
+  },
+  {
+    check: "contributor cannot publish",
+    holds: !grants("contributor", "content.publish"),
+  },
+  {
+    check: "editor cannot approve evidence",
+    holds: !grants("editor", "evidence.approve"),
+  },
+  {
+    check: "evidence reviewer cannot publish",
+    holds: !grants("evidence_reviewer", "content.publish"),
+  },
+  {
+    check: "publisher cannot approve evidence",
+    holds: !grants("publisher", "evidence.approve"),
+  },
+  {
+    check: "administrator does not publish routinely",
+    holds: !grants("administrator", "content.publish"),
+  },
+  {
+    check: "translator cannot write base content",
+    holds: !grants("translator", "content.write"),
+  },
+  {
+    check: "publisher can publish",
+    holds: grants("publisher", "content.publish"),
+  },
+  {
+    check: "evidence reviewer can approve evidence",
+    holds: grants("evidence_reviewer", "evidence.approve"),
+  },
+];
+
+const failedSeparationChecks = separationChecks
+  .filter((entry) => !entry.holds)
+  .map((entry) => entry.check);
+
+const rolesClassification =
+  missingEditorialProfiles.length > 0
+    ? "MISMATCH"
+    : failedSeparationChecks.length > 0
+      ? "PARTIAL"
+      : "PRESENT";
 
 const sourceRoots = ["app", "components", "lib"];
 const sourceFiles = [];
@@ -215,9 +325,21 @@ for (const file of sourceFiles) {
   }
 }
 
-const hardCodedPages = await readFile(path.join(root, "lib", "content", "pages.ts"), "utf8");
-const hardCodedProjects = await readFile(path.join(root, "lib", "content", "projects.ts"), "utf8");
-const localContactStore = await readFile(path.join(root, "lib", "contact", "store.ts"), "utf8");
+// These probes describe the donor application layer. The SPIMAR repository does
+// not necessarily contain the same files, and a missing file is a meaningful
+// result ("this hard-coded reader does not exist here"), not a crash.
+const readIfPresent = async (...segments) => {
+  try {
+    return await readFile(path.join(root, ...segments), "utf8");
+  } catch (error) {
+    if (error.code === "ENOENT") return null;
+    throw error;
+  }
+};
+
+const hardCodedPages = await readIfPresent("lib", "content", "pages.ts");
+const hardCodedProjects = await readIfPresent("lib", "content", "projects.ts");
+const localContactStore = await readIfPresent("lib", "contact", "store.ts");
 
 const classificationCounts = entities.reduce((counts, entry) => {
   counts[entry.classification] = (counts[entry.classification] ?? 0) + 1;
@@ -257,28 +379,43 @@ const report = {
   entities,
   states,
   roles: {
-    classification: "MISMATCH",
+    classification: rolesClassification,
     canonicalEditorialRoles,
     localRoleMatrix: inventory.roleMatrix,
-    missingDistinctEditorialRoles: [
-      "contributor",
-      "evidence_reviewer",
-      "publisher",
-    ],
+    capabilityMatrix,
+    missingDistinctEditorialRoles: missingEditorialProfiles,
     rolesWithPublishPermission,
+    profilesWithPublishPermission,
+    separationOfDutiesChecks: separationChecks,
     finding:
-      "Only super_admin has content.publish; contributor/editor/evidence-reviewer/publisher separation is not represented.",
+      missingEditorialProfiles.length > 0
+        ? `Canonical editorial profiles are missing: ${missingEditorialProfiles.join(", ")}.`
+        : failedSeparationChecks.length > 0
+          ? `Editorial profiles exist but separation of duties is not demonstrated: ${failedSeparationChecks.join("; ")}.`
+          : "All six canonical editorial profiles exist and separation of duties holds; legacy roles are retained alongside them.",
   },
   repositorySeams: {
-    classification: "MISSING",
+    // The seam interfaces exist once they are declared in source; they are only
+    // CONNECTED once the public and staff journeys read through them. Declaring
+    // them is necessary but not sufficient, so this stays PARTIAL until the
+    // application actually resolves content and submissions through the seam.
+    classification: repositorySeamHits.length === 0 ? "MISSING" : "PARTIAL",
     repositorySeamHits,
     hardCodedContentMarkers: {
-      pagesDeclareFutureSupabaseMove: hardCodedPages.includes("CMS-shaped: moves into Supabase"),
-      projectsDeclareFutureSupabaseMove: hardCodedProjects.includes("Becomes Supabase seed data"),
+      pagesPresent: hardCodedPages !== null,
+      projectsPresent: hardCodedProjects !== null,
+      pagesDeclareFutureSupabaseMove:
+        hardCodedPages?.includes("CMS-shaped: moves into Supabase") ?? false,
+      projectsDeclareFutureSupabaseMove:
+        hardCodedProjects?.includes("Becomes Supabase seed data") ?? false,
     },
-    localContactJsonlStore: localContactStore.includes("contact-submissions.jsonl"),
+    localContactStorePresent: localContactStore !== null,
+    localContactJsonlStore:
+      localContactStore?.includes("contact-submissions.jsonl") ?? false,
     finding:
-      "The public application has no canonical repository seam, still imports hard-coded content, and persists contact submissions outside the tested Supabase acquisition module.",
+      repositorySeamHits.length === 0
+        ? "The application has no canonical repository seam and does not resolve content or submissions through one."
+        : "Repository seam interfaces are declared, but the public and staff journeys do not yet resolve through them.",
   },
 };
 

@@ -1,0 +1,2167 @@
+{
+  "generatedAt": "2026-08-02T19:02:24.741Z",
+  "authority": {
+    "canonical": [
+      "SPM-TECH-DATA-001",
+      "SPM-TECH-CMS-001",
+      "SPM-TECH-INT-001"
+    ],
+    "implementation": "qa/backend/db/results/schema-inventory.json",
+    "productionAuthority": false
+  },
+  "schemaBaseline": {
+    "migrations": 43,
+    "tables": 90,
+    "enums": 34,
+    "functions": 228,
+    "roles": 6
+  },
+  "summary": {
+    "entityContracts": 37,
+    "entityClassifications": {
+      "PARTIAL": 19,
+      "MISSING": 6,
+      "PRESENT": 11,
+      "MISMATCH": 1
+    },
+    "stateContracts": 8,
+    "stateClassifications": {
+      "PARTIAL": 5,
+      "PRESENT": 3
+    },
+    "canonicalConformant": false
+  },
+  "entities": [
+    {
+      "id": "CNT-01",
+      "domain": "content",
+      "contract": "SiteHost",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "sites",
+          "exists": true,
+          "columns": [
+            "id",
+            "slug",
+            "name",
+            "status",
+            "default_locale",
+            "timezone",
+            "settings",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "deleted_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "site_domains",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "hostname",
+            "is_canonical",
+            "redirects_to_canonical",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "site_locales",
+          "exists": true,
+          "columns": [
+            "site_id",
+            "locale",
+            "direction",
+            "enabled",
+            "is_default",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Host kind G/L1/LM, market, and governed legal/contact/analytics profiles are not explicit contracts."
+      ]
+    },
+    {
+      "id": "CNT-02",
+      "domain": "content",
+      "contract": "LocaleRelease",
+      "classification": "MISSING",
+      "evidence": [
+        {
+          "table": "site_locales",
+          "exists": true,
+          "columns": [
+            "site_id",
+            "locale",
+            "direction",
+            "enabled",
+            "is_default",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "No locale release record with completeness result, publish owner, release state, and effective time."
+      ]
+    },
+    {
+      "id": "CNT-03",
+      "domain": "content",
+      "contract": "Destination",
+      "classification": "MISSING",
+      "evidence": [],
+      "gaps": [
+        "No destination identity, localization, publication, event, evidence, or media relation tables."
+      ]
+    },
+    {
+      "id": "CNT-04",
+      "domain": "content",
+      "contract": "Event",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "events",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_key",
+            "slug",
+            "venue_id",
+            "timezone",
+            "starts_at",
+            "ends_at",
+            "exhibitor_sales_opens_at",
+            "exhibitor_sales_closes_at",
+            "visitor_registration_opens_at",
+            "visitor_registration_closes_at",
+            "lifecycle_status",
+            "status",
+            "publish_at",
+            "published_at",
+            "archived_at",
+            "rescheduled_from_event_id",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "lifecycle_axis",
+            "exhibitor_sales_status",
+            "visitor_registration_status",
+            "axis_reconciliation",
+            "axis_reconciled_at",
+            "axis_reconciled_by",
+            "axis_reconciliation_reason",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "event_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "locale",
+            "name",
+            "short_description",
+            "body",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "event_status_history",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "from_status",
+            "to_status",
+            "reason",
+            "actor_id",
+            "changed_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "event_axis_history",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "from_lifecycle_axis",
+            "to_lifecycle_axis",
+            "from_exhibitor_sales_status",
+            "to_exhibitor_sales_status",
+            "from_visitor_registration_status",
+            "to_visitor_registration_status",
+            "reason",
+            "actor_id",
+            "changed_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Destination, series/edition, and explicit canonical-host ownership are absent.",
+        "The legacy lifecycle enum is retained alongside the canonical axes until every caller reads the canonical columns."
+      ]
+    },
+    {
+      "id": "CNT-05",
+      "domain": "content",
+      "contract": "Venue",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "venues",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "venue_key",
+            "address_line_1",
+            "address_line_2",
+            "city",
+            "region",
+            "country_code",
+            "postal_code",
+            "latitude",
+            "longitude",
+            "timezone",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "venue_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "venue_id",
+            "locale",
+            "name",
+            "directions",
+            "accessibility_notes",
+            "status",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Verification status/date and a governed map-reference contract are absent."
+      ]
+    },
+    {
+      "id": "CNT-06",
+      "domain": "content",
+      "contract": "Organization",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "organizations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "legal_name",
+            "normalized_name",
+            "organization_kind",
+            "website_url",
+            "country_code",
+            "owner_id",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "retention_until",
+            "anonymized_at",
+            "deleted_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "content_partners",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "partner_key",
+            "kind",
+            "logo_media_id",
+            "website_url",
+            "evidence_status",
+            "evidence_source",
+            "approved_by",
+            "approved_at",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "content_partner_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "partner_id",
+            "locale",
+            "name",
+            "description",
+            "status",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Operational account identity and public partner identity are split without canonical participation or rights-period semantics."
+      ]
+    },
+    {
+      "id": "CNT-07",
+      "domain": "content",
+      "contract": "EventParticipation",
+      "classification": "MISSING",
+      "evidence": [],
+      "gaps": [
+        "No explicit event-to-organization/person participation, role, approval, status, or display interval record."
+      ]
+    },
+    {
+      "id": "CNT-08",
+      "domain": "content",
+      "contract": "ProgrammeItem",
+      "classification": "MISSING",
+      "evidence": [],
+      "gaps": [
+        "No localized programme schedule, room, participant, timezone, or change-state record."
+      ]
+    },
+    {
+      "id": "CNT-09",
+      "domain": "content",
+      "contract": "Offer / OfferVersion",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "exhibitor_packages",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "package_key",
+            "tier",
+            "currency",
+            "price_minor",
+            "capacity",
+            "evidence_status",
+            "evidence_source",
+            "approved_by",
+            "approved_at",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "exhibitor_package_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "package_id",
+            "locale",
+            "name",
+            "summary",
+            "inclusions",
+            "status",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "No immutable offer version, applicability, terms version, proposal/public-price mode, or governed override contract."
+      ]
+    },
+    {
+      "id": "CNT-10",
+      "domain": "content",
+      "contract": "EvidenceItem",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "metrics",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "metric_key",
+            "display_value",
+            "definition",
+            "period_start",
+            "period_end",
+            "source_label",
+            "source_url",
+            "evidence_status",
+            "approved_by",
+            "approved_at",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "evidence_source",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "project_metrics",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "project_id",
+            "metric_key",
+            "display_value",
+            "definition",
+            "period_start",
+            "period_end",
+            "source_label",
+            "source_url",
+            "evidence_status",
+            "approved_by",
+            "approved_at",
+            "position",
+            "created_at",
+            "updated_at",
+            "evidence_source",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Evidence is specialized into metric records; generic expected/actual, unit, scope, owner, caveat, expiry, and dependency withdrawal are incomplete."
+      ]
+    },
+    {
+      "id": "CNT-11",
+      "domain": "content",
+      "contract": "CaseStudy",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "case_studies",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "slug",
+            "primary_media_id",
+            "evidence_status",
+            "evidence_source",
+            "approved_by",
+            "approved_at",
+            "status",
+            "publish_at",
+            "published_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "case_study_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "case_study_id",
+            "locale",
+            "title",
+            "summary",
+            "body",
+            "status",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Organization, objective, intervention, outcomes, evidence, permissions, media, and caveat relations are not governed as the canonical contract requires."
+      ]
+    },
+    {
+      "id": "CNT-12",
+      "domain": "content",
+      "contract": "Testimonial",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "testimonials",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "testimonial_key",
+            "person_name",
+            "person_role",
+            "organization_name",
+            "media_id",
+            "evidence_status",
+            "evidence_source",
+            "approved_by",
+            "approved_at",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "consent_reference",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "testimonial_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "testimonial_id",
+            "locale",
+            "quote",
+            "transcript",
+            "status",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Rights period, contextual relations, and withdrawal propagation are incomplete."
+      ]
+    },
+    {
+      "id": "CNT-13",
+      "domain": "content",
+      "contract": "MediaAsset",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "media_assets",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "kind",
+            "storage_provider",
+            "storage_key",
+            "external_url",
+            "mime_type",
+            "byte_size",
+            "width",
+            "height",
+            "duration_ms",
+            "checksum_sha256",
+            "alt_text",
+            "caption",
+            "rights_holder",
+            "rights_source",
+            "rights_expires_at",
+            "focal_x",
+            "focal_y",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "media_variants",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "asset_id",
+            "variant_key",
+            "storage_key",
+            "external_url",
+            "mime_type",
+            "byte_size",
+            "width",
+            "height",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "media_usages",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "asset_id",
+            "entity_table",
+            "entity_id",
+            "field_key",
+            "locale",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Territory/use/consent, localized alt/caption, poster/failure state, and rights-withdrawal propagation are incomplete."
+      ]
+    },
+    {
+      "id": "CNT-14",
+      "domain": "content",
+      "contract": "Gallery",
+      "classification": "MISSING",
+      "evidence": [],
+      "gaps": [
+        "No ordered rights-valid gallery with event/case/destination scope."
+      ]
+    },
+    {
+      "id": "CNT-15",
+      "domain": "content",
+      "contract": "Resource / ResourceVersion",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "resources",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "slug",
+            "resource_kind",
+            "requires_form",
+            "status",
+            "publish_at",
+            "published_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "resource_versions",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "resource_id",
+            "locale",
+            "version_number",
+            "media_asset_id",
+            "notice_version",
+            "is_current",
+            "created_by",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "resource_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "resource_id",
+            "locale",
+            "title",
+            "summary",
+            "status",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Effective/expiry/replacement, rights, and delivery-mode semantics are incomplete."
+      ]
+    },
+    {
+      "id": "CNT-16",
+      "domain": "content",
+      "contract": "Article / Topic",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "articles",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "slug",
+            "primary_media_id",
+            "status",
+            "publish_at",
+            "published_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "article_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "article_id",
+            "locale",
+            "title",
+            "excerpt",
+            "body",
+            "status",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+            "lock_version"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "No Topic contract and no governed author/reviewer, source, freshness, relation, or next-action fields."
+      ]
+    },
+    {
+      "id": "CNT-17",
+      "domain": "content",
+      "contract": "Person",
+      "classification": "MISSING",
+      "evidence": [
+        {
+          "table": "profiles",
+          "exists": true,
+          "columns": [
+            "id",
+            "display_name",
+            "avatar_url",
+            "disabled_at",
+            "last_seen_at",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Staff profiles are private identities, not an approved public person/bio/media/contact-visibility contract."
+      ]
+    },
+    {
+      "id": "CNT-18",
+      "domain": "content",
+      "contract": "Page",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "pages",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "route_key",
+            "page_type",
+            "slug",
+            "status",
+            "publish_at",
+            "published_at",
+            "archived_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "deleted_by",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "page_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "page_id",
+            "locale",
+            "title",
+            "summary",
+            "status",
+            "completed_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "page_sections",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "page_id",
+            "section_key",
+            "section_type",
+            "position",
+            "status",
+            "payload",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "page_section_translations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "section_id",
+            "locale",
+            "status",
+            "payload",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "seo_entries",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "locale",
+            "route",
+            "title",
+            "description",
+            "canonical_url",
+            "robots_index",
+            "robots_follow",
+            "open_graph",
+            "structured_data",
+            "status",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "lock_version",
+            "canonical_publication_state"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Host/locale release gating and full canonical publication states are incomplete."
+      ]
+    },
+    {
+      "id": "CNT-19",
+      "domain": "content",
+      "contract": "LegalDocument",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "legal_documents",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "kind",
+            "locale",
+            "version",
+            "title",
+            "body",
+            "controller_name",
+            "controller_contact",
+            "effective_at",
+            "superseded_at",
+            "approved_by",
+            "approved_at",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "CNT-20",
+      "domain": "content",
+      "contract": "ConsentDefinition",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "consent_definitions",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "purpose",
+            "locale",
+            "version",
+            "requiredness",
+            "legal_basis",
+            "notice_text",
+            "legal_document_id",
+            "effective_at",
+            "superseded_at",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "consents",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "contact_id",
+            "lead_id",
+            "form_submission_id",
+            "purpose",
+            "granted",
+            "notice_version",
+            "locale",
+            "captured_at",
+            "withdrawn_at",
+            "source"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "CNT-21",
+      "domain": "content",
+      "contract": "FormDefinition",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "form_definitions",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "form_key",
+            "purpose",
+            "audience",
+            "acquisition_kind",
+            "is_active",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "form_definition_versions",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "form_definition_id",
+            "version",
+            "locale",
+            "field_schema",
+            "available_from",
+            "available_until",
+            "routing",
+            "consent_definition_ids",
+            "confirmation_contract",
+            "published_at",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-01",
+      "domain": "operational",
+      "contract": "Contact",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "contacts",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "organization_id",
+            "email",
+            "normalized_email",
+            "phone",
+            "normalized_phone",
+            "first_name",
+            "last_name",
+            "preferred_locale",
+            "timezone",
+            "owner_id",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "retention_until",
+            "anonymized_at",
+            "deleted_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-02",
+      "domain": "operational",
+      "contract": "Account",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "organizations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "legal_name",
+            "normalized_name",
+            "organization_kind",
+            "website_url",
+            "country_code",
+            "owner_id",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "retention_until",
+            "anonymized_at",
+            "deleted_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Approved match metadata and account-deduplication evidence are incomplete."
+      ]
+    },
+    {
+      "id": "OPS-03",
+      "domain": "operational",
+      "contract": "Submission",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "form_submissions",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "contact_id",
+            "lead_id",
+            "acquisition_kind",
+            "idempotency_key",
+            "locale",
+            "message",
+            "notice_version",
+            "response_code",
+            "submitted_at",
+            "request_id",
+            "ip_hash",
+            "user_agent_hash",
+            "canonical_state",
+            "canonical_state_version",
+            "canonical_state_changed_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "submission_public_references",
+          "exists": true,
+          "columns": [
+            "reference",
+            "site_id",
+            "form_submission_id",
+            "issued_at",
+            "expires_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Canonical state, retention/anonymization states and an opaque public reference exist; audience/source/route identity is carried on the context rather than on the submission itself."
+      ]
+    },
+    {
+      "id": "OPS-04",
+      "domain": "operational",
+      "contract": "SubmissionContext",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "submission_contexts",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "form_submission_id",
+            "form_definition_version_id",
+            "event_id",
+            "destination_key",
+            "offer_key",
+            "offer_version",
+            "resource_id",
+            "resource_version_id",
+            "campaign_key",
+            "route_path",
+            "template_key",
+            "content_version",
+            "locale",
+            "captured_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-05",
+      "domain": "operational",
+      "contract": "ConsentRecord",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "consents",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "contact_id",
+            "lead_id",
+            "form_submission_id",
+            "purpose",
+            "granted",
+            "notice_version",
+            "locale",
+            "captured_at",
+            "withdrawn_at",
+            "source"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Withdrawal exists, but objection/state history and linkage to governed consent/legal definitions are incomplete."
+      ]
+    },
+    {
+      "id": "OPS-06",
+      "domain": "operational",
+      "contract": "AttributionTouch",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "campaign_attribution",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "lead_id",
+            "form_submission_id",
+            "attribution_model",
+            "source",
+            "medium",
+            "campaign",
+            "term",
+            "content",
+            "referrer",
+            "landing_path",
+            "cta_position",
+            "captured_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "The row has an attribution-model label but no enforced first/latest touch contract or source-version snapshot."
+      ]
+    },
+    {
+      "id": "OPS-07",
+      "domain": "operational",
+      "contract": "ExhibitorLead",
+      "classification": "MISMATCH",
+      "evidence": [
+        {
+          "table": "leads",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "contact_id",
+            "organization_id",
+            "event_id",
+            "acquisition_kind",
+            "dedupe_key",
+            "stage",
+            "owner_id",
+            "queue_key",
+            "source_label",
+            "campaign_label",
+            "next_action",
+            "next_action_at",
+            "lost_reason",
+            "won_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "retention_until",
+            "anonymized_at",
+            "deleted_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "lead_event_interests",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "lead_id",
+            "event_id",
+            "interest_kind",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "lead_stage_history",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "lead_id",
+            "from_stage",
+            "to_stage",
+            "reason",
+            "actor_id",
+            "owner_id",
+            "event_id",
+            "source_label",
+            "campaign_label",
+            "next_action",
+            "changed_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Generic leads omit canonical offer/objective/role qualification fields.",
+        "Local stages make proposal, negotiation, won/lost, and onboarding first-class website states before an approved provider mapping/source-of-truth decision."
+      ]
+    },
+    {
+      "id": "OPS-08",
+      "domain": "operational",
+      "contract": "VisitorRegistration",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "visitor_registrations",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "contact_id",
+            "form_submission_id",
+            "canonical_state",
+            "canonical_state_version",
+            "canonical_state_changed_at",
+            "recipient_policy_version",
+            "sharing_rule_version",
+            "locale",
+            "registered_at",
+            "cancelled_at",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-09",
+      "domain": "operational",
+      "contract": "AppointmentRequest",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "appointments",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "lead_id",
+            "slot_id",
+            "booking_key",
+            "status",
+            "timezone",
+            "attendee_notes",
+            "cancellation_reason",
+            "confirmed_at",
+            "cancelled_at",
+            "completed_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "canonical_state",
+            "canonical_state_version",
+            "canonical_state_changed_at",
+            "provider_reference",
+            "provider_accepted_at",
+            "provider_failed_at",
+            "provider_failure_code"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "appointment_slots",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_id",
+            "staff_id",
+            "starts_at",
+            "ends_at",
+            "timezone",
+            "capacity",
+            "is_public",
+            "cancelled_at",
+            "created_by",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Canonical provider_pending/provider_failed/expired states exist and booked is constrained to evidenced provider acceptance; the legacy status column is retained until callers migrate."
+      ]
+    },
+    {
+      "id": "OPS-10",
+      "domain": "operational",
+      "contract": "Assignment",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "lead_assignments",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "lead_id",
+            "assignee_id",
+            "assigned_by",
+            "reason",
+            "assigned_at",
+            "ended_at"
+          ],
+          "rlsEnabled": true
+        },
+        {
+          "table": "leads",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "contact_id",
+            "organization_id",
+            "event_id",
+            "acquisition_kind",
+            "dedupe_key",
+            "stage",
+            "owner_id",
+            "queue_key",
+            "source_label",
+            "campaign_label",
+            "next_action",
+            "next_action_at",
+            "lost_reason",
+            "won_at",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "retention_until",
+            "anonymized_at",
+            "deleted_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-11",
+      "domain": "operational",
+      "contract": "Communication",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "communications",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "contact_id",
+            "lead_id",
+            "form_submission_id",
+            "purpose",
+            "channel",
+            "template_key",
+            "template_version",
+            "locale",
+            "state",
+            "provider",
+            "provider_message_id",
+            "suppressed_by_id",
+            "failure_code",
+            "queued_at",
+            "sent_at",
+            "delivered_at",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-12",
+      "domain": "operational",
+      "contract": "IntegrationJob",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "integration_jobs",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "lead_id",
+            "job_kind",
+            "idempotency_key",
+            "payload",
+            "status",
+            "attempt_count",
+            "max_attempts",
+            "available_at",
+            "locked_at",
+            "locked_by",
+            "last_error_code",
+            "last_error_at",
+            "completed_at",
+            "created_at",
+            "updated_at",
+            "canonical_state",
+            "canonical_state_version",
+            "canonical_state_changed_at",
+            "suppressed_reason",
+            "cancelled_reason"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Canonical retrying/failed_terminal/suppressed/cancelled states exist; the legacy status column is retained until the worker reads the canonical column."
+      ]
+    },
+    {
+      "id": "OPS-13",
+      "domain": "operational",
+      "contract": "OutboxEvent",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "outbox_events",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "event_type",
+            "aggregate_table",
+            "aggregate_id",
+            "payload",
+            "state",
+            "integration_job_id",
+            "available_at",
+            "dispatched_at",
+            "discarded_reason",
+            "occurred_at",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-14",
+      "domain": "operational",
+      "contract": "AuditEvent",
+      "classification": "PARTIAL",
+      "evidence": [
+        {
+          "table": "audit_events",
+          "exists": true,
+          "columns": [
+            "id",
+            "occurred_at",
+            "site_id",
+            "actor_id",
+            "domain",
+            "action",
+            "entity_table",
+            "entity_id",
+            "request_id",
+            "metadata"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": [
+        "Purpose and before/after summaries are not explicit governed fields and depend on untyped metadata."
+      ]
+    },
+    {
+      "id": "OPS-15",
+      "domain": "operational",
+      "contract": "PrivacyRequest",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "privacy_requests",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "contact_id",
+            "kind",
+            "state",
+            "verification_method",
+            "verified_at",
+            "received_at",
+            "due_at",
+            "completed_at",
+            "outcome_summary",
+            "handled_by",
+            "created_at",
+            "updated_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    },
+    {
+      "id": "OPS-16",
+      "domain": "operational",
+      "contract": "Suppression",
+      "classification": "PRESENT",
+      "evidence": [
+        {
+          "table": "suppressions",
+          "exists": true,
+          "columns": [
+            "id",
+            "site_id",
+            "contact_id",
+            "scope",
+            "channel",
+            "purpose",
+            "reason",
+            "source",
+            "privacy_request_id",
+            "propagated_at",
+            "propagation_failure_code",
+            "effective_from",
+            "effective_until",
+            "created_at"
+          ],
+          "rlsEnabled": true
+        }
+      ],
+      "gaps": []
+    }
+  ],
+  "states": [
+    {
+      "id": "STA-01",
+      "contract": "event_lifecycle",
+      "canonical": [
+        "draft",
+        "announced_undated",
+        "scheduled",
+        "live",
+        "completed",
+        "archived",
+        "postponed",
+        "cancelled"
+      ],
+      "canonicalEnum": "event_lifecycle_axis",
+      "canonicalValues": [
+        "draft",
+        "announced_undated",
+        "scheduled",
+        "live",
+        "completed",
+        "archived",
+        "postponed",
+        "cancelled"
+      ],
+      "legacyEnum": "event_lifecycle_status",
+      "legacyValues": [
+        "draft",
+        "review",
+        "scheduled",
+        "exhibitor_sales_open",
+        "visitor_registration_open",
+        "live",
+        "ended",
+        "recap_waitlist",
+        "archived",
+        "cancelled",
+        "rescheduled"
+      ],
+      "legacyRetained": true,
+      "classification": "PARTIAL"
+    },
+    {
+      "id": "STA-02",
+      "contract": "exhibitor_sales",
+      "canonical": [
+        "planned",
+        "open",
+        "limited",
+        "sold_out",
+        "closed"
+      ],
+      "canonicalEnum": "event_exhibitor_sales_status",
+      "canonicalValues": [
+        "planned",
+        "open",
+        "limited",
+        "sold_out",
+        "closed"
+      ],
+      "legacyEnum": null,
+      "legacyValues": [],
+      "legacyRetained": false,
+      "classification": "PRESENT"
+    },
+    {
+      "id": "STA-03",
+      "contract": "visitor_registration",
+      "canonical": [
+        "planned",
+        "open",
+        "waitlist",
+        "full",
+        "closed"
+      ],
+      "canonicalEnum": "event_visitor_registration_status",
+      "canonicalValues": [
+        "planned",
+        "open",
+        "waitlist",
+        "full",
+        "closed"
+      ],
+      "legacyEnum": null,
+      "legacyValues": [],
+      "legacyRetained": false,
+      "classification": "PRESENT"
+    },
+    {
+      "id": "STA-04",
+      "contract": "submission",
+      "canonical": [
+        "received",
+        "duplicate_linked",
+        "invalid_rejected",
+        "withdrawn",
+        "retained",
+        "anonymized"
+      ],
+      "canonicalEnum": "submission_state",
+      "canonicalValues": [
+        "received",
+        "duplicate_linked",
+        "invalid_rejected",
+        "withdrawn",
+        "retained",
+        "anonymized"
+      ],
+      "legacyEnum": null,
+      "legacyValues": [],
+      "legacyRetained": false,
+      "classification": "PRESENT"
+    },
+    {
+      "id": "STA-05",
+      "contract": "integration_job",
+      "canonical": [
+        "queued",
+        "processing",
+        "succeeded",
+        "retrying",
+        "failed_terminal",
+        "suppressed",
+        "cancelled"
+      ],
+      "canonicalEnum": "integration_job_state",
+      "canonicalValues": [
+        "queued",
+        "processing",
+        "succeeded",
+        "retrying",
+        "failed_terminal",
+        "suppressed",
+        "cancelled"
+      ],
+      "legacyEnum": "integration_job_status",
+      "legacyValues": [
+        "pending",
+        "processing",
+        "succeeded",
+        "failed",
+        "dead_letter"
+      ],
+      "legacyRetained": true,
+      "classification": "PARTIAL"
+    },
+    {
+      "id": "STA-06",
+      "contract": "delivery",
+      "canonical": [
+        "not_required",
+        "queued",
+        "delivered",
+        "delayed",
+        "bounced",
+        "failed",
+        "suppressed"
+      ],
+      "canonicalEnum": "delivery_state",
+      "canonicalValues": [
+        "not_required",
+        "queued",
+        "delivered",
+        "delayed",
+        "bounced",
+        "failed",
+        "suppressed"
+      ],
+      "legacyEnum": "delivery_status",
+      "legacyValues": [
+        "pending",
+        "sent",
+        "delivered",
+        "failed"
+      ],
+      "legacyRetained": true,
+      "classification": "PARTIAL"
+    },
+    {
+      "id": "STA-07",
+      "contract": "appointment",
+      "canonical": [
+        "lead_captured",
+        "provider_pending",
+        "booked",
+        "provider_failed",
+        "cancelled",
+        "expired"
+      ],
+      "canonicalEnum": "appointment_state",
+      "canonicalValues": [
+        "lead_captured",
+        "provider_pending",
+        "booked",
+        "provider_failed",
+        "cancelled",
+        "expired"
+      ],
+      "legacyEnum": "appointment_status",
+      "legacyValues": [
+        "pending",
+        "confirmed",
+        "cancelled",
+        "completed"
+      ],
+      "legacyRetained": true,
+      "classification": "PARTIAL"
+    },
+    {
+      "id": "STA-08",
+      "contract": "publication",
+      "canonical": [
+        "draft",
+        "in_review",
+        "changes_requested",
+        "approved",
+        "scheduled",
+        "published",
+        "expired",
+        "withdrawn",
+        "archived"
+      ],
+      "canonicalEnum": "publication_state",
+      "canonicalValues": [
+        "draft",
+        "in_review",
+        "changes_requested",
+        "approved",
+        "scheduled",
+        "published",
+        "expired",
+        "withdrawn",
+        "archived"
+      ],
+      "legacyEnum": "publication_status",
+      "legacyValues": [
+        "draft",
+        "in_review",
+        "approved",
+        "scheduled",
+        "published",
+        "archived"
+      ],
+      "legacyRetained": true,
+      "classification": "PARTIAL"
+    }
+  ],
+  "roles": {
+    "classification": "PRESENT",
+    "canonicalEditorialRoles": [
+      "contributor",
+      "editor",
+      "evidence_reviewer",
+      "translator",
+      "publisher",
+      "administrator"
+    ],
+    "localRoleMatrix": [
+      {
+        "role": "analyst",
+        "permissions": [
+          "analytics.read"
+        ]
+      },
+      {
+        "role": "content_editor",
+        "permissions": [
+          "content.read",
+          "content.write",
+          "media.write"
+        ]
+      },
+      {
+        "role": "sales_agent",
+        "permissions": [
+          "analytics.read",
+          "crm.read_assigned",
+          "crm.write_assigned"
+        ]
+      },
+      {
+        "role": "sales_manager",
+        "permissions": [
+          "analytics.read",
+          "audit.read",
+          "crm.export",
+          "crm.read_all",
+          "crm.write_all"
+        ]
+      },
+      {
+        "role": "super_admin",
+        "permissions": [
+          "analytics.read",
+          "audit.read",
+          "content.approve",
+          "content.override",
+          "content.publish",
+          "content.read",
+          "content.review",
+          "content.submit_review",
+          "content.write",
+          "crm.export",
+          "crm.read_all",
+          "crm.read_assigned",
+          "crm.write_all",
+          "crm.write_assigned",
+          "evidence.approve",
+          "identity.manage",
+          "media.write",
+          "settings.manage",
+          "translations.write"
+        ]
+      },
+      {
+        "role": "translator",
+        "permissions": [
+          "content.read",
+          "translations.write"
+        ]
+      }
+    ],
+    "capabilityMatrix": [
+      {
+        "profile": "administrator",
+        "permissions": [
+          "audit.read",
+          "content.read",
+          "identity.manage",
+          "settings.manage"
+        ]
+      },
+      {
+        "profile": "contributor",
+        "permissions": [
+          "content.read",
+          "content.submit_review",
+          "content.write",
+          "media.write"
+        ]
+      },
+      {
+        "profile": "editor",
+        "permissions": [
+          "content.read",
+          "content.review",
+          "content.submit_review",
+          "content.write",
+          "media.write"
+        ]
+      },
+      {
+        "profile": "evidence_reviewer",
+        "permissions": [
+          "content.read",
+          "evidence.approve"
+        ]
+      },
+      {
+        "profile": "publisher",
+        "permissions": [
+          "content.approve",
+          "content.publish",
+          "content.read",
+          "content.review"
+        ]
+      },
+      {
+        "profile": "translator",
+        "permissions": [
+          "content.read",
+          "translations.write"
+        ]
+      }
+    ],
+    "missingDistinctEditorialRoles": [],
+    "rolesWithPublishPermission": [
+      "super_admin"
+    ],
+    "profilesWithPublishPermission": [
+      "publisher"
+    ],
+    "separationOfDutiesChecks": [
+      {
+        "check": "contributor cannot approve",
+        "holds": true
+      },
+      {
+        "check": "contributor cannot publish",
+        "holds": true
+      },
+      {
+        "check": "editor cannot approve evidence",
+        "holds": true
+      },
+      {
+        "check": "evidence reviewer cannot publish",
+        "holds": true
+      },
+      {
+        "check": "publisher cannot approve evidence",
+        "holds": true
+      },
+      {
+        "check": "administrator does not publish routinely",
+        "holds": true
+      },
+      {
+        "check": "translator cannot write base content",
+        "holds": true
+      },
+      {
+        "check": "publisher can publish",
+        "holds": true
+      },
+      {
+        "check": "evidence reviewer can approve evidence",
+        "holds": true
+      }
+    ],
+    "finding": "All six canonical editorial profiles exist and separation of duties holds; legacy roles are retained alongside them."
+  },
+  "repositorySeams": {
+    "classification": "PARTIAL",
+    "repositorySeamHits": [
+      "lib/backend/seams.ts"
+    ],
+    "hardCodedContentMarkers": {
+      "pagesPresent": false,
+      "projectsPresent": false,
+      "pagesDeclareFutureSupabaseMove": false,
+      "projectsDeclareFutureSupabaseMove": false
+    },
+    "localContactStorePresent": true,
+    "localContactJsonlStore": true,
+    "finding": "Repository seam interfaces are declared, but the public and staff journeys do not yet resolve through them."
+  }
+}

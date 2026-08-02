@@ -168,7 +168,30 @@ try {
     order by r.code::text
   `);
   report.roleMatrix = roleMatrix.rows;
-  report.ok = report.migrations.length === 39 && report.tables.length === 71;
+
+  // Canonical editorial capability profiles. Reported separately from the legacy
+  // role matrix because the two coexist: a permission may be granted by either.
+  const capabilityMatrix = await db.query(`
+    select
+      cp.code as profile,
+      coalesce(
+        json_agg(cpp.permission order by cpp.permission)
+          filter (where cpp.permission is not null),
+        '[]'::json
+      ) as permissions
+    from public.capability_profiles cp
+    left join public.capability_profile_permissions cpp on cpp.profile = cp.code
+    group by cp.code
+    order by cp.code
+  `);
+  report.capabilityMatrix = capabilityMatrix.rows;
+
+  // Declared shape of the integrated schema: the 39 donor migrations plus the
+  // four additive canonical corrections, and the 71 donor tables plus the 19
+  // canonical records those corrections introduce. Both numbers move only
+  // alongside a reviewed migration. See run-pglite-validation.mjs for the
+  // per-migration table breakdown.
+  report.ok = report.migrations.length === 43 && report.tables.length === 90;
 } catch (error) {
   report.error = error instanceof Error ? error.stack : String(error);
 } finally {
