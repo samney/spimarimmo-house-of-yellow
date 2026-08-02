@@ -49,7 +49,7 @@ Context: Mixed GPT/Codex/Claude source implementation created avoidable handoff 
 Decision: Claude Code is the sole source-code implementer from ENG-014C onward. GPT/Codex artifacts after this point are limited to specifications, contracts, review findings, and historical evidence.
 Consequence: No new GPT/Codex implementation patch may be created or applied for ENG-014C or later work.
 
-## D-009 — 2026-08-01 — Two-pass Claude review and owner-only merge
+## D-009 — 2026-08-01 — Two-pass Claude review and owner-only merge — SUPERSEDED by `D-018`
 
 Context: Implementation-session conclusions must not substitute for independent review.
 Decision: Each implementation PR receives one implementation pass and one fresh Claude review pass. The repository owner remains the only merge authority.
@@ -293,3 +293,43 @@ to create `claude/spimar-transformation-phase-1` from the latest approved
 Any later session must take the branch name from `STATUS.md` and this decision,
 not from the handoff document. No history was rewritten and no owner-visible
 work was discarded.
+
+## D-018 — 2026-08-02 — Gate-level review replaces per-item two-pass review, with an always-review exception list
+
+**Authority.** Explicit repository-owner decision, taken after `TRF-000` and in
+response to schedule pressure across the remaining Phase 1 backlog.
+
+**Context.** `D-009` required a fresh independent Claude review on every bounded
+item. `17-IMPLEMENTATION-BACKLOG.md` defines roughly 90 `TRF-*` work packages,
+so the per-item rule implies on the order of 180 review cycles, which would
+dominate the remaining schedule. `DELIVERY-MAP.md` already defines 13 `GATE-*`
+acceptance boundaries, and `.github/workflows/quality-gates.yml` already runs
+typecheck, lint, unit, build, route and end-to-end suites on every PR — a real
+regression net for mechanical work, but blind to permission boundaries, data
+migrations, privacy handling, supply-chain and deployment risk.
+
+**Decision.**
+
+1. Independent review moves from per-item to **per-gate**. At each `GATE-*`
+   boundary a fresh Claude session reviews every `TRF-*` merged since the
+   previous gate, against that gate's acceptance criteria.
+2. Between gates, a bounded PR merges on green required checks plus explicit
+   owner approval. The implementation session still self-reviews its diff and
+   records evidence.
+3. The following always require a fresh independent review before merge,
+   regardless of gate position: auth/authorization/roles/RLS and any permission
+   boundary; database migrations, schema changes and destructive data
+   operations; CRM submission durability, consent, retention and PII; dependency
+   or lockfile changes; CI workflow, secret handling and deployment
+   configuration; the release candidate and any production-affecting change.
+4. A gate is not passed until its review is recorded in
+   `VALIDATION-MATRIX.md` with evidence. Batching review does not weaken any
+   gate, disable any check, or permit an unevidenced pass.
+5. `D-009` is **superseded** for all work from `TRF-001` onward. It remains
+   valid history for `ENG-*` items already accepted under it.
+
+**Consequence.** Review cycles for Phase 1 drop by roughly 85% while scrutiny
+concentrates where CI cannot help. The trade-off is accepted deliberately: a
+defect in non-exception work may now survive until its gate, where it is caught
+against a larger diff. `CLAUDE.md` § "Review discipline" carries the operative
+rule.
