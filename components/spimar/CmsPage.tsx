@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { EmptyState } from "./EmptyState";
+import { Inview } from "@/components/primitives/motion/Inview";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { getPage } from "@/lib/spimar/repository";
 import { localized, type Locale } from "@/lib/spimar/types";
 
@@ -26,19 +28,29 @@ export async function CmsPage({
   const body = page ? localized(page.body, locale) : "";
 
   return (
-    <section className="spimarSection">
-      <h1 className="spimarHeading">{title}</h1>
-      {intro ? <p className="spimarLede">{intro}</p> : null}
+    <div className="spimarBlocks">
+      <div className="grainBackground" />
+      <div className="spimarBlocks__inner">
+        <Inview as="section" className="reveal">
+          <SplitTitle as="h1" className="spimarHeading" text={title} />
+          {intro ? <p className="spimarLede">{intro}</p> : null}
+        </Inview>
 
-      {body ? (
-        <div className="spimarProse">
-          {body.split(/\n{2,}/).map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-        </div>
-      ) : (
-        <EmptyState title={t("emptyTitle")} body={t("emptyBody")} />
-      )}
-    </section>
+        <section>
+          {body ? (
+            /* Long-form uses the foundation's vw document ladder, so legal and
+               editorial copy keeps the same optical weight as the rest of the
+               page instead of dropping to a default rem scale. */
+            <div className="spimarDocument">
+              {body.split(/\n{2,}/).map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          ) : (
+            <EmptyState title={t("emptyTitle")} body={t("emptyBody")} />
+          )}
+        </section>
+      </div>
+    </div>
   );
 }

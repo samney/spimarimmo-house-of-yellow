@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/spimar/SiteHeader";
 import { SiteFooter } from "@/components/spimar/SiteFooter";
 import type { Locale } from "@/lib/spimar/types";
 import "@/components/spimar/spimar.css";
+import "@/components/spimar/blocks.css";
 
 /* SPIMARIMMO public shell.
 

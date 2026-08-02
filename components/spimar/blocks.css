@@ -1,0 +1,254 @@
+/* SPIMARIMMO editorial block treatments.
+
+   Recovered from the accepted foundation's `pages.css` (deleted by TRF-004,
+   restored from `3675c02`) and adapted per `02-FOUNDATION-HANDOFF`: the block
+   composition, section rhythm and reveal behaviour are kept; colour and
+   typography are SPIMAR.
+
+   The rhythm here is the foundation's, not a new invention — 10vw between
+   sections, an asymmetric 7.1875vw lead-in on the first block and a 10vw
+   run-out on the last. That asymmetry is what stops a page reading as evenly
+   stacked cards. */
+
+/* --------------------------------------------------------------- page shell */
+
+.spimarBlocks {
+  position: relative;
+  min-height: 100vh;
+}
+.spimarBlocks--dark {
+  background: var(--spimar-black);
+  color: var(--spimar-paper);
+}
+.spimarBlocks--gold {
+  background: var(--spimar-gold);
+  color: var(--spimar-black);
+}
+.spimarBlocks > .grainBackground {
+  opacity: 0.3;
+  z-index: var(--z-behind);
+}
+.spimarBlocks__inner {
+  position: relative;
+  z-index: var(--z-content);
+  padding-inline: 2.5vw;
+}
+.spimarBlocks__inner > section {
+  margin: 10vw 0;
+}
+.spimarBlocks__inner > section:first-child {
+  margin-top: 0;
+  padding-top: 7.1875vw;
+}
+.spimarBlocks__inner > section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 10vw;
+}
+
+/* ---------------------------------------------------------- media treatment */
+
+.spimarMedia {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.spimarMedia--wide {
+  aspect-ratio: 16 / 9;
+}
+.spimarMedia--portrait {
+  aspect-ratio: 3 / 4;
+}
+.spimarMedia img,
+.spimarMedia video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------- offset step list */
+
+/* The foundation's method/steps treatment: items sit on an asymmetric measure
+   with the index number pulled into the left margin, and the final item shifts
+   right so the sequence reads as a path rather than a list. Each item reveals
+   independently off its own `inview` class. */
+.spimarSteps {
+  margin-bottom: 3.75vw;
+}
+.spimarStep {
+  position: relative;
+  width: 30vw;
+  margin-inline-start: 24vw;
+  margin-bottom: 5vw;
+  transform: translateY(1.25vw);
+  opacity: 0;
+  transition:
+    transform var(--dur-reveal) var(--stagger-step),
+    opacity var(--dur-reveal) var(--stagger-step);
+}
+.spimarStep.inview {
+  transform: translateY(0);
+  opacity: 1;
+}
+.spimarStep:last-child {
+  margin-inline-start: 46vw;
+}
+.spimarStep__number {
+  position: absolute;
+  inset-inline-start: -24vw;
+  top: 0;
+  font-size: var(--text-heading-sm);
+  line-height: 1;
+  font-weight: 700;
+  color: var(--spimar-gold);
+}
+.spimarStep:last-child .spimarStep__number {
+  inset-inline-start: auto;
+  inset-inline-end: -8vw;
+}
+.spimarStep__marker {
+  position: absolute;
+  inset-inline-start: -2.125vw;
+  top: 0.4vw;
+  width: 1vw;
+  height: 1vw;
+  background: currentColor;
+  transform: translateX(-1vw);
+  opacity: 0;
+  transition:
+    transform var(--dur-reveal) var(--ease-out-ref),
+    opacity var(--dur-reveal) var(--ease-out-ref);
+}
+.spimarStep.inview .spimarStep__marker {
+  transform: translateX(0);
+  opacity: 1;
+}
+.spimarStep h3 {
+  font-size: var(--text-small-title);
+  font-weight: 700;
+  margin-bottom: 0.625vw;
+}
+.spimarStep p {
+  font-size: var(--text-support);
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------- long-form document scale */
+
+/* Legal and editorial long-form. The foundation set these on a vw ladder rather
+   than rem so documents keep the same optical weight as the rest of the page. */
+.spimarDocument {
+  max-width: 52vw;
+  font-size: var(--text-support);
+  line-height: 1.7;
+}
+.spimarDocument h2 {
+  font-size: var(--text-small-title);
+  line-height: 1.25;
+  font-weight: 700;
+  margin: 2.5vw 0 1vw;
+}
+.spimarDocument h3,
+.spimarDocument h4 {
+  font-size: var(--text-support);
+  line-height: 1.5;
+  font-weight: 700;
+  margin: 2vw 0 0.75vw;
+}
+.spimarDocument p {
+  margin-bottom: 1em;
+}
+.spimarDocument ul,
+.spimarDocument ol {
+  margin: 0 0 1em 1.25em;
+}
+.spimarDocument li {
+  margin-bottom: 0.4em;
+}
+.spimarDocument a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* ------------------------------------------------------------- quote block */
+
+.spimarQuote {
+  max-width: 56vw;
+  font-size: var(--text-heading-sm);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.spimarQuote cite {
+  display: block;
+  margin-top: 1.5vw;
+  font-size: var(--text-support);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--spimar-muted);
+}
+.spimarSection--dark .spimarQuote cite,
+.spimarBlocks--dark .spimarQuote cite {
+  color: var(--spimar-gold);
+}
+
+/* --------------------------------------------------- mobile regime (<=580px) */
+
+/* The foundation collapses the offset composition rather than scaling it: the
+   asymmetric margins become a single measure, because a 24vw indent that reads
+   as editorial at 1440px is unusable at 390px. */
+@media (max-width: 580px) {
+  .spimarBlocks__inner {
+    padding-inline: 6vw;
+  }
+  .spimarBlocks__inner > section {
+    margin: 18vw 0;
+  }
+  .spimarBlocks__inner > section:first-child {
+    padding-top: 14vw;
+  }
+  .spimarBlocks__inner > section:last-child {
+    padding-bottom: 18vw;
+  }
+  .spimarStep,
+  .spimarStep:last-child {
+    width: auto;
+    margin-inline-start: 0;
+    margin-bottom: 12vw;
+    padding-inline-start: 8vw;
+  }
+  .spimarStep__number,
+  .spimarStep:last-child .spimarStep__number {
+    position: static;
+    inset-inline: auto;
+    display: block;
+    font-size: var(--text-heading-sm);
+    margin-bottom: 2vw;
+  }
+  .spimarStep__marker {
+    inset-inline-start: 0;
+    width: 3vw;
+    height: 3vw;
+    top: auto;
+  }
+  .spimarDocument,
+  .spimarQuote {
+    max-width: none;
+  }
+  .spimarSteps {
+    margin-bottom: 10vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spimarStep,
+  .spimarStep__marker {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

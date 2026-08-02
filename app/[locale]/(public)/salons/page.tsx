@@ -1,6 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { EmptyState } from "@/components/spimar/EmptyState";
+import { Inview } from "@/components/primitives/motion/Inview";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { listEvents } from "@/lib/spimar/repository";
 import { hasConfirmedDates, localized, type Locale } from "@/lib/spimar/types";
 
@@ -18,14 +20,14 @@ export default async function EventsIndex({ params }: { params: Promise<{ locale
   const events = listEvents();
 
   return (
-    <section className="spimarSection">
-      <h1 className="spimarHeading">{t("title")}</h1>
+    <Inview as="section" className="spimarSection reveal">
+      <SplitTitle as="h1" className="spimarHeading" text={t("title")} />
       <p className="spimarLede">{t("lede")}</p>
 
       {events.length === 0 ? (
         <EmptyState title={t("emptyTitle")} body={t("emptyBody")} />
       ) : (
-        <ul className="spimarGrid" style={{ listStyle: "none", padding: 0 }}>
+        <ul className="spimarGrid">
           {events.map((event) => (
             <li key={event.id} className="spimarCard">
               <h2>
@@ -46,6 +48,6 @@ export default async function EventsIndex({ params }: { params: Promise<{ locale
           ))}
         </ul>
       )}
-    </section>
+    </Inview>
   );
 }

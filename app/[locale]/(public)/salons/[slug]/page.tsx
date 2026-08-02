@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { Inview } from "@/components/primitives/motion/Inview";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { getEvent } from "@/lib/spimar/repository";
 import { hasConfirmedDates, localized, type Locale } from "@/lib/spimar/types";
 
@@ -23,15 +25,19 @@ export default async function EventDetail({
   if (!event) notFound();
 
   return (
-    <article className="spimarSection">
+    <Inview as="article" className="spimarSection reveal">
       <p className="spimarEyebrow">{[event.city, event.country].filter(Boolean).join(", ")}</p>
-      <h1 className="spimarHeading">{localized(event.title, locale as Locale)}</h1>
+      <SplitTitle
+        as="h1"
+        className="spimarHeading"
+        text={localized(event.title, locale as Locale)}
+      />
       <p className="spimarLede">
         {hasConfirmedDates(event)
           ? [event.startDate, event.endDate].filter(Boolean).join(" – ")
           : t("datesPending")}
       </p>
-      <div className="spimarProse">
+      <div className="spimarDocument">
         <p>{localized(event.summary, locale as Locale)}</p>
       </div>
       <div className="spimarActions">
@@ -42,6 +48,6 @@ export default async function EventDetail({
           {t("backToIndex")}
         </Link>
       </div>
-    </article>
+    </Inview>
   );
 }

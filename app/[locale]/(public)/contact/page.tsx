@@ -1,5 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { EnquiryForm } from "@/components/spimar/EnquiryForm";
+import { Inview } from "@/components/primitives/motion/Inview";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import type { Locale } from "@/lib/spimar/types";
 
 export const dynamic = "force-dynamic";
@@ -11,8 +13,8 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const t = await getTranslations("contact");
 
   return (
-    <section className="spimarSection">
-      <h1 className="spimarHeading">{t("title")}</h1>
+    <Inview as="section" className="spimarSection reveal">
+      <SplitTitle as="h1" className="spimarHeading" text={t("title")} />
       <p className="spimarLede">{t("lede")}</p>
       <EnquiryForm
         locale={locale as Locale}
@@ -38,6 +40,6 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           honeypot: t("honeypot"),
         }}
       />
-    </section>
+    </Inview>
   );
 }

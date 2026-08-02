@@ -148,11 +148,33 @@
   }
 }
 
-/* Mobile regime (<=580px): 580-based linear vw */
+/* Mobile regime (<=580px): 580-based linear vw.
+
+   The retained regime overrode only --text-base and --text-h1, so every other
+   step stayed on its desktop vw value and collapsed on small screens: at 390px
+   the hero rendered at 21.5px and the lede at 5.85px. The full ladder is
+   restated here in the 580 regime. Comments give the intended px at 580. */
 @media (max-width: 580px) {
   :root {
     --text-base: 3.448vw; /* 20px @ 580 */
-    --text-h1: 6.897vw; /* 40px @ 580 */
+    --text-support: 3.276vw; /* 19px */
+    --text-small-title: 4.31vw; /* 25px */
+    --text-heading-sm: 5.517vw; /* 32px */
+    --text-heading: 6.207vw; /* 36px */
+    --text-heading-lg: 6.552vw; /* 38px */
+    --text-h1: 6.897vw; /* 40px */
+    --text-mega: 8.966vw; /* 52px */
+    --leading-small-title: 4.138vw;
+    --leading-h1: 7.586vw;
+  }
+}
+
+/* Between 580 and 1080 the desktop ladder is still too small for the support
+   steps, which are sized for a wide viewport. */
+@media (min-width: 581px) and (max-width: 1080px) {
+  :root {
+    --text-support: 1.3vw;
+    --text-small-title: 2.1vw;
   }
 }
 
