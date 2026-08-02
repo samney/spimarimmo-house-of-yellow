@@ -5,16 +5,27 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema, type ContactInput } from "@/lib/contact/schema";
 import { submitContact } from "@/app/actions/contact";
-import { CONNECT } from "@/lib/content/pages";
 
 type Status = "idle" | "loading" | "success" | "error" | "rate_limited";
+
+/* Copy is injected rather than imported. TRF-003 moved this component out of the
+   reference tree, but it still read its labels from `lib/content/pages`, which
+   TRF-004 deletes. Labels now arrive as a prop so the primitive carries no
+   content dependency; SPIMAR supplies them from the CMS in TRF-061. */
+export type ContactFormLabels = {
+  title: string;
+  fields: { name: string; email: string; message: string };
+  submit: string;
+  successTitle: string;
+  successText: string;
+};
 
 /* Reference CF7 form replicated: .formWrapper > formTitle + form.fields with
    floating fixedLabels (focus/filled), invalid state, loader overlay while
    sending (.disabled) and successContainer overlay (.sended). Client Zod
    validation mirrors the server action's schema. */
-export function ContactForm() {
-  const f = CONNECT.form;
+export function ContactForm({ labels }: { labels: ContactFormLabels }) {
+  const f = labels;
   const [status, setStatus] = useState<Status>("idle");
   const {
     register,

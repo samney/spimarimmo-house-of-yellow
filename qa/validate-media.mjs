@@ -5,10 +5,22 @@ import { fileURLToPath } from "node:url";
 
 const repositoryRoot = join(fileURLToPath(new URL("..", import.meta.url)));
 const manifestPath = join(repositoryRoot, "lib/media/video-manifest.json");
-const legacyMapPath = join(repositoryRoot, "lib/content/local-videos.json");
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-const legacyMap = JSON.parse(readFileSync(legacyMapPath, "utf8"));
 const errors = [];
+
+/* TRF-004 removed the audited House of Yellow legacy mapping
+   (lib/content/local-videos.json) that this validator previously cross-checked
+   every published asset against.
+
+   That assertion could not be re-pointed: it required each deployable asset to
+   appear in the reference site's mapping, so it would reject every SPIMAR asset
+   by construction — a gate that fails correct input is worse than no gate.
+
+   Nothing else is relaxed. Rights approval, provenance, ownership, id/path/src
+   uniqueness, repository-media existence and Git tracking, CDN HTTPS, and the
+   ban on raw <video> outside the resilient component all still apply. Per-asset
+   rights and source traceability is owned by the SPIMAR asset/source/readiness
+   register in TRF-023. */
 
 if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.assets)) {
   errors.push("video-manifest.json must use schemaVersion 1 with an assets array");
@@ -33,10 +45,6 @@ for (const asset of manifest.assets ?? []) {
   ids.add(asset.id);
   legacyPaths.add(asset.legacyPath);
   sources.add(asset.src);
-
-  if (legacyMap[asset.id] !== asset.legacyPath) {
-    errors.push(`media asset ${asset.id} does not match the audited legacy mapping`);
-  }
 
   if (asset.delivery === "repository") {
     const publicPath = join(repositoryRoot, "public", asset.src.replace(/^\//, ""));
@@ -92,5 +100,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `Media manifest valid: ${manifest.assets.length} deployable asset(s); ${Object.keys(legacyMap).length} audited reference mapping(s) safely fall back when unavailable.`,
+  `Media manifest valid: ${manifest.assets.length} deployable asset(s); every mapping without a deployable source falls back to its poster.`,
 );
