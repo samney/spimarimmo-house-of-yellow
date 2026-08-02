@@ -57,13 +57,33 @@
 
 :root {
   /* Colors (observed) */
-  --hoy-ink: #1d1d1b;
-  --hoy-yellow: #f2efa3;
-  --hoy-yellow-hover: #e8e48a;
-  --hoy-yellow-deep: #f0eb7f;
-  --hoy-paper: #eeeeee;
-  --hoy-white: #ffffff;
-  --hoy-black: #000000;
+  /* --- SPIMARIMMO identity -------------------------------------------------
+     Approved palette from 06-Visual-Identity: SPIMAR Gold #EFC337 and Black
+     #000000, with white and grey as supporting neutrals only. Gold is never a
+     metallic gradient or foil treatment (BRI-001), and no other chromatic hue
+     is introduced (BRI-011).
+
+     The identity is retargeted HERE, centrally, rather than by rewriting the
+     ~4,000 lines of accepted editorial CSS. The legacy token names are kept as
+     aliases so every preserved composition re-skins from one place; they are
+     renamed to --spimar-* once the component sweep lands. */
+  --spimar-gold: #efc337;
+  --spimar-gold-hover: #f2ce55;
+  --spimar-gold-deep: #d4a91f;
+  --spimar-black: #000000;
+  --spimar-ink: #14140f;
+  --spimar-paper: #f4f2ed;
+  --spimar-white: #ffffff;
+  /* Muted text meeting 4.5:1 on --spimar-paper. Explicit colour, never opacity. */
+  --spimar-muted: #55554f;
+
+  --hoy-ink: var(--spimar-ink);
+  --hoy-yellow: var(--spimar-gold);
+  --hoy-yellow-hover: var(--spimar-gold-hover);
+  --hoy-yellow-deep: var(--spimar-gold-deep);
+  --hoy-paper: var(--spimar-paper);
+  --hoy-white: var(--spimar-white);
+  --hoy-black: var(--spimar-black);
   --hoy-error: #cb4444;
 
   /* Type scale — desktop regime (>1080px), linear vw as in reference */
