@@ -2,6 +2,11 @@
 
 Every pass requires an evidence path or URL. Skipped, blocked or timed-out commands are not passes.
 
+This file holds **per-item** evidence. Gate status and independent-review
+verdicts are in [`GATES.md`](GATES.md); `TRF-*` execution state is in
+[`WORK-PACKAGES.md`](WORK-PACKAGES.md). Under `D-018` a gate is not passed until
+its review is recorded in `GATES.md` with artifacts.
+
 ## MIG-000
 
 - Documentation/control-plane diff only.

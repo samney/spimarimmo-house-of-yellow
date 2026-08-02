@@ -5,12 +5,13 @@ Updated: 2026-08-02
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current `origin/main`: `643b912f2ff8bd128f857481a2f2427544b5c1c9` — the PR #11 merge commit (parents `e048fdde7bdf52992ff258870147bf70c64295e9` + reviewed head `cc4e0f29ab59ef907c161a4818e89985cc3ff16f`); post-merge Quality Gates run `30723261546` and Vercel deployment `DgsTqUuJiwU2Jzv9Biz8jYXv6viW` passed
+- Current `origin/main`: `d1e96548feafab6bef11bffeca8d759f4ac60f4f` — the PR #12 merge commit (`TRF-000` foundation baseline freeze; reviewed head `5bf1ae859754fd18373850bd60ebdc84e072680b` preserved as the second parent)
 - Accepted application baseline: `main@e048fdde7bdf52992ff258870147bf70c64295e9`, the PR #10 merge commit, tagged `hoy-clone-baseline-eng-015`
-- Latest merged item: `D-016` Phase 1 documentation normalization, PR #11 (documentation only; the application baseline is unchanged)
+- Latest merged item: `TRF-000` foundation baseline freeze, PR #12 (documentation and control plane only; the application baseline is unchanged)
 - Stage A closed under `D-015` through `ENG-015`, PR #10
 - SPIMAR Phase 1 entry SHA (frozen by `TRF-000`): `643b912f2ff8bd128f857481a2f2427544b5c1c9`
-- Active work branch: `claude/spi-000-trf-000-baseline-freeze` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
+- Active work branch: `claude/spi-000-trf-001-control-files` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
+- `TRF-*` execution state: [`WORK-PACKAGES.md`](WORK-PACKAGES.md). Gate state and review verdicts: [`GATES.md`](GATES.md)
 - ENG-014C control-plane closeout: merged through PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba` (reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent)
 - ENG-014C: merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
 - Control-plane hardening (no ticket ID): merged through PR #7 at `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed
@@ -34,7 +35,8 @@ Updated: 2026-08-02
 - `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. Motion, header, footer, responsive-shell and visual-convergence requirements move to `SPI-030`/`SPI-040`, with the accessibility, browser and regression sweep in `QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed; the whole-page ≤2% criterion **did not pass**.
 - `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`. Authoritative gates and a live smoke review passed; accepted limitations L1–L9 are recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. Stage A is closed.
 - SPIMAR strategy contract: documentation normalization **merged** through PR #11 at `643b912f2ff8bd128f857481a2f2427544b5c1c9` under `D-016`. The normalized package is 22 files under `docs/spimar/transformation-phase-1/` with 7 governance files under `docs/spimar/governance/`. PR #11 carries **no GitHub-native review record** (`reviews` and `reviewDecision` are both empty); this is disclosed, not resolved.
-- `SPI-000`: `IN PROGRESS`. `TRF-000` (foundation baseline freeze) is implemented on `claude/spi-000-trf-000-baseline-freeze` and awaits independent review and owner merge. `TRF-001` has **not** started; `SPI-000` is not complete.
+- `SPI-000`: `IN PROGRESS`. `TRF-000` (foundation baseline freeze) is `DONE`, owner-merged through PR #12 at `d1e96548feafab6bef11bffeca8d759f4ac60f4f`. `TRF-001` (Phase 1 control files and traceability map) is implemented on `claude/spi-000-trf-001-control-files` and awaits owner merge. `SPI-000` is not complete until `GATE-0 BASELINE` passes its review in [`GATES.md`](GATES.md).
+- `D-018` is in effect from `TRF-001` onward: independent review runs per `GATE-*`, not per work package, with the always-review exception list in `CLAUDE.md` § "Review discipline". `D-009` is superseded. `GATE-0` review is due once `TRF-001` merges and must be run by a **fresh session**.
 - `TRF-000` baseline record: `docs/spimar-phase-1/FOUNDATION-BASELINE.md`. Entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; lockfile SHA-256 `870cbbbcabdee46064563d40c9bf065c2fa956d296a5da898f90865d902869e1`; Node `22.14.0`; pnpm `10.15.0`.
 - SPIMAR application implementation: **not started**. `TRF-000` changed documentation and the control plane only.
 - `D-017`: the pre-existing `claude/spimar-transformation-phase-1` branch at `478ffc1538ae882e6102df5d23a92b69fa895335` is abandoned — wrong baseline, superseded package path, unreviewed. It is retained on `origin` as provenance and must not receive further development.
@@ -55,14 +57,17 @@ Updated: 2026-08-02
 
 ## Next safe action
 
-Independently review and owner-merge the bounded `TRF-000` foundation baseline
-freeze on `claude/spi-000-trf-000-baseline-freeze`. The review must confirm the
-entry SHA, the gate exit codes, the preserved untracked inventory, and that the
-application tree is unchanged.
+Owner-merge `TRF-001` on `claude/spi-000-trf-001-control-files` once its
+required checks are green. Under `D-018` it needs no separate independent review
+pass — it is not on the always-review exception list.
 
-Only after that merge, start `TRF-001` — Phase 1 repository control files and
-traceability map — from the latest approved `origin/main`. `GATE-0 BASELINE`
-closes only when both `TRF-000` and `TRF-001` are merged.
+Then run the `GATE-0 BASELINE` review in a **fresh session**, covering `TRF-000`
+and `TRF-001` together, and record the verdict in
+[`GATES.md`](GATES.md). `GATE-0` is the first gate exercised under the new
+cadence.
+
+Only after `GATE-0` passes, open `P1.1` and start `TRF-002` — House of Yellow
+residue inventory — under `SPI-010`.
 
 Do not continue polishing the House of Yellow clone, do not reconstruct or
 source House of Yellow media, and do not start a later `SPI-*`/`TRF-*` item

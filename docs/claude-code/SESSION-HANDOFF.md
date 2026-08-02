@@ -17,28 +17,32 @@ Updated: 2026-08-02
 - `D-014` / `PAR-P1-004`: preserved and carried forward **unmet**. The whole-page ≤2% criterion did not pass. It transfers to `SPI-040`
 - SPIMAR transformation: **active** at `SPI-000`, status `IN PROGRESS`
 - PR #11 / `D-016`: Phase 1 documentation normalization **merged** at `643b912f2ff8bd128f857481a2f2427544b5c1c9` (reviewed head `cc4e0f29ab59ef907c161a4818e89985cc3ff16f` preserved as the second parent); post-merge Quality Gates run `30723261546` and Vercel deployment `DgsTqUuJiwU2Jzv9Biz8jYXv6viW` passed. **No GitHub-native review record exists on PR #11** — disclosed, not resolved
-- `TRF-000`: foundation baseline frozen at entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; record in `docs/spimar-phase-1/FOUNDATION-BASELINE.md`; all gates green except the pre-existing, non-CI Prettier baseline (`format:check` exit 2, 148 tracked files, unchanged by this work). Awaiting independent review and owner merge
-- `D-017`: branch `claude/spimar-transformation-phase-1` at `478ffc1538ae882e6102df5d23a92b69fa895335` is **abandoned** — branched from the pre-PR-#11 baseline, superseded package path, contains `TRF-001` scope, never reviewed. Retained on `origin` as provenance; must not receive further development. Phase 1 runs on `claude/spi-000-trf-000-baseline-freeze`
+- `TRF-000`: `DONE`. Foundation baseline frozen at entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; record in `docs/spimar-phase-1/FOUNDATION-BASELINE.md`; owner-merged through PR #12 at `d1e96548feafab6bef11bffeca8d759f4ac60f4f` (reviewed head `5bf1ae859754fd18373850bd60ebdc84e072680b` preserved as the second parent). All gates green except the pre-existing, non-CI Prettier baseline (`format:check` exit 2, 148 tracked files, unchanged by this work)
+- `TRF-001`: Phase 1 control files — `WORK-PACKAGES.md` (TRF execution state) and `GATES.md` (gate ledger and review verdicts) — implemented on `claude/spi-000-trf-001-control-files`, awaiting owner merge
+- `D-018`: independent review runs per `GATE-*` from `TRF-001` onward, superseding `D-009`. Always-review exceptions are listed in `CLAUDE.md`. `GATE-0 BASELINE` review is due after `TRF-001` merges and must be run by a fresh session
+- `D-017`: branch `claude/spimar-transformation-phase-1` at `478ffc1538ae882e6102df5d23a92b69fa895335` is **abandoned** — branched from the pre-PR-#11 baseline, superseded package path, contains `TRF-001` scope, never reviewed. Retained on `origin` as provenance; must not receive further development. Phase 1 runs on `claude/spi-000-trf-001-control-files`
 - Application implementation has not started
 
 ## Resume rule
 
 Read `CLAUDE.md` and its required files. Work only on the active queue item.
 
-Stage A is closed and the Phase 1 documentation normalization is merged.
-`TRF-000` is implemented on `claude/spi-000-trf-000-baseline-freeze` and awaits
-independent review and owner merge. Do not start `TRF-001` before that merge.
+Stage A is closed. `TRF-000` is merged. `TRF-001` is implemented and awaits
+owner merge; under `D-018` it needs no separate review pass. After it merges,
+run the `GATE-0 BASELINE` review in a fresh session and record the verdict in
+`GATES.md`. Do not open `P1.1` before `GATE-0` passes.
 
-To continue after that merge:
+To continue after `GATE-0`:
 
 - read the approved specifications under
   `docs/spimar/official-specifications/` before changing any surface;
 - read `docs/spimar/README.md`, the governance preflight, and the Phase 1
   handoff;
-- execute `TRF-001` only: Phase 1 repository control files and the traceability
-  map. Take the frozen entry SHA, inventories, gates, limitations and proposed
-  file-ownership map from `docs/spimar-phase-1/FOUNDATION-BASELINE.md` rather
-  than re-deriving them;
+- execute `TRF-002` only: inventory House of Yellow brand, content, media and
+  analytics residue. Take the frozen entry SHA, inventories, limitations and the
+  file-ownership map from `docs/spimar-phase-1/FOUNDATION-BASELINE.md` and the
+  work-package state from `docs/claude-code/WORK-PACKAGES.md` rather than
+  re-deriving them;
 - replace House of Yellow reference identity and content rather than polishing
   it; the clone is a starting point, not a target;
 - do not reconstruct or source House of Yellow media. `lib/media/video-manifest.json`
