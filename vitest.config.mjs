@@ -17,6 +17,15 @@ export default defineConfig({
     //
     // The relative "tests/e2e" pattern does not match those nested paths, so an
     // absolute-style glob is required. See the matching entry in .gitignore.
-    exclude: [...configDefaults.exclude, "tests/e2e/**", "**/.claude/worktrees/**"],
+    //
+    // "qa/backend/edge" belongs to the Node test runner, not Vitest. Those
+    // suites use node:test and are run by `pnpm test:edge`; Vitest collects
+    // them by filename and then fails with "No test suite found".
+    exclude: [
+      ...configDefaults.exclude,
+      "tests/e2e/**",
+      "qa/backend/edge/**",
+      "**/.claude/worktrees/**",
+    ],
   },
 });
