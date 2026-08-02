@@ -2,6 +2,12 @@
 
 Statuses: `PLANNING CONTRACT` · `PENDING` · `IN PROGRESS` · `BLOCKED` · `PR REVIEW` · `DONE (merged evidence)`.
 
+`SPI-*` is the queue and this file records its status. Nested `TRF-*` work-package
+state is in [`WORK-PACKAGES.md`](WORK-PACKAGES.md); gate state and review verdicts
+are in [`GATES.md`](GATES.md); dependency meaning is in
+[`DELIVERY-MAP.md`](../spimar/governance/DELIVERY-MAP.md). `TRF-*` never replaces
+`SPI-*` (`D-016` § 5).
+
 ## Migration and reference-foundation closure
 
 | ID         | Status                                | Objective                                                                                                                                                                                                             | Depends on |
