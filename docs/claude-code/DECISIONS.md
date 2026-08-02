@@ -465,3 +465,71 @@ unreviewed-merge gap already disclosed for PR #11.
 accepted as the starting point for neutralization without independent
 verification. If a defect in either is discovered later, this decision is where
 it traces back to.
+
+## D-021 — 2026-08-02 — Codex Supabase backend integrated on a dedicated branch, reconciled additively, not connected
+
+**Context.** A substantial Supabase CMS/CRM backend existed only as uncommitted
+work in the read-only Codex donor worktree (`codex/spimar-hoy-recovery` @
+`6c24f4c`): 39 migrations, 71 RLS-enabled tables, 174 policies, 28 pgTAP suites,
+1051 assertions, four Edge Functions. It existed nowhere in `origin/main`, had
+never been hosted, and was never connected to the application. Codex's own
+conformance audit recorded it as **not** the approved physical SPIMAR model:
+4 entity mismatches, 13 missing entities, 5 state mismatches, 3 missing state
+vocabularies, and no editorial separation of duties.
+
+**Alternatives.** (a) Merge the donor tree as-is and correct later — locks a
+known-wrong event model and five wrong state vocabularies into `main`, and every
+later caller inherits them. (b) Rewrite the 39 migrations into a canonical shape
+— destroys the tested history and the provenance that makes the donor work
+reviewable, and is forbidden by the forward-migration contract. (c) Port the
+donor verbatim in one commit, then reconcile with additive forward migrations in
+a second.
+
+**Decision.** (c), on a dedicated branch `claude/spimar-supabase-integration`
+based on `origin/main` @ `4bb9e61`, in a separate worktree so the 36 uncommitted
+entries in `C:\work\spimar` were never touched.
+
+Four supporting decisions inside it:
+
+1. **The donor QA harness moved from `qa/codex/` to `qa/backend/`.** The
+   repository `.gitignore` contains `/qa/codex/`, so the harness would have been
+   silently uncommittable at its donor path. The rename also matches this file's
+   own `D-008`: Claude is the sole implementer, and Codex artifacts are
+   specification and evidence, not live executable tooling.
+
+2. **PGlite stays out of `package.json`.** It is a validation tool, not a product
+   dependency. `qa/backend/db/bootstrap-pglite.mjs` pins 0.4.5 out of tree, so
+   `pnpm-lock.yaml` is unchanged and `pnpm install --frozen-lockfile` succeeds.
+
+3. **Canonical corrections are additive only.** No migration was rewritten, no
+   legacy column or type was dropped. Where a legacy value cannot be safely
+   projected onto a canonical one, the row is left explicitly `unresolved` and
+   publication is blocked, rather than being assigned a state that was never
+   evidenced. Legacy appointment `confirmed` rows in particular are **not**
+   called `booked`, because they carry no provider reference or acceptance time.
+
+4. **Editorial capabilities are assignable profiles, not new `app_role` enum
+   members.** Permissions remain the single enforcement unit, legacy CRM roles
+   are untouched, and no enum that existing rows and functions depend on is
+   mutated.
+
+**Consequence.** `main` gains a backend whose canonical event axes, workflow
+state vocabularies, conversion contracts and separation of duties match the
+approved contracts, with the legacy representation retained alongside for caller
+migration. Conformance moves from 2 PRESENT / 4 MISMATCH / 13 MISSING to
+11 PRESENT / 1 MISMATCH / 6 MISSING on entities, and from 5 MISMATCH / 3 MISSING
+to 3 PRESENT / 5 PARTIAL on state contracts.
+
+**Known gaps, stated deliberately.** This is not a functional CMS/CRM. The
+backend does not drive the application; the existing acquisition path was not
+rewired to populate the new conversion records; nothing has run against hosted
+Supabase; there is no admin UI and no connected public form. `pnpm format:check`
+remains red from 145 documentation files that were already failing on
+`origin/main`; this branch contributes none of them and did not mass-reformat
+unrelated documentation to turn the gate green. The six still-missing canonical
+entities are the SPIMAR content model, a later slice.
+
+**Review tier.** This PR touches RLS and permission boundaries, adds database
+migrations, and changes PII-bearing structures, so it falls under three `D-018`
+always-review exceptions and requires a fresh independent session before merge,
+regardless of gate position.
