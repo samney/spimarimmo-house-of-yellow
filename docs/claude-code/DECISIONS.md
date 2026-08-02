@@ -428,3 +428,40 @@ as a bounded PR on green required checks plus explicit owner approval, with the
 implementation session's own diff self-review and evidence recorded on the PR. Required
 checks at merge: build/routes/browser gates, media/unit/typecheck/lint gates, migration
 manifest integrity and the Vercel deployment all passed.
+
+## D-020 — 2026-08-02 — `GATE-0 BASELINE` accepted by owner decision without an independent review pass
+
+**Authority.** Explicit repository-owner decision, taken under schedule
+pressure after `TRF-000` (PR #12) and `TRF-001` (PR #14) were merged.
+
+**Context.** `D-018` requires an independent review at each `GATE-*` boundary,
+run by a session that did not produce the work. Both `TRF-000` and `TRF-001`
+were written by the same implementation session, so that session is disqualified
+from reviewing them. Standing up a fresh review session was judged too costly
+against the remaining Phase 1 schedule.
+
+**Decision.**
+
+1. `GATE-0 BASELINE` is **accepted by owner decision**, on the merged evidence
+   of `TRF-000` and `TRF-001` plus green required checks on both PRs.
+2. The gate is recorded in `GATES.md` as `PASSED (OWNER ACCEPTED)` with verdict
+   `OWNER_ACCEPTED_WITHOUT_INDEPENDENT_REVIEW`. It is **not** recorded as having
+   passed an independent review, because it did not.
+3. `P1.1` opens. `TRF-002` becomes eligible.
+4. This acceptance is **specific to `GATE-0`**. It sets no precedent for
+   `GATE-1` through `GATE-12`, and it does not amend `D-018`. Every later gate
+   still requires a fresh-session independent review, and the `D-018`
+   always-review exception list remains fully in force.
+
+**Known gap, accepted deliberately.** The self-review that stood in for the
+independent pass did find and fix two real defects in `TRF-000` — a false
+non-overlap claim in the file-ownership map and an unregistered documentation
+folder — which is evidence that review of this work had value, not that it was
+unnecessary. Whatever a fresh reviewer would have caught beyond that is
+unknown and remains unknown. `GATE-0` therefore carries the same
+unreviewed-merge gap already disclosed for PR #11.
+
+**Consequence.** The foundation baseline and the Phase 1 control files are
+accepted as the starting point for neutralization without independent
+verification. If a defect in either is discovered later, this decision is where
+it traces back to.

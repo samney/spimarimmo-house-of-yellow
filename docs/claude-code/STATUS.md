@@ -5,12 +5,12 @@ Updated: 2026-08-02
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
-- Current `origin/main`: `d1e96548feafab6bef11bffeca8d759f4ac60f4f` — the PR #12 merge commit (`TRF-000` foundation baseline freeze; reviewed head `5bf1ae859754fd18373850bd60ebdc84e072680b` preserved as the second parent)
+- Current `origin/main`: `436acd1fbea9aadbaee63fd229991fee087b8966` — the PR #15 merge commit (nested-worktree isolation). `TRF-000` merged at `d1e9654` (PR #12), `TRF-001` at `477f5ae` (PR #14), session commands/skills at `d49053e` (PR #13, `D-019`)
 - Accepted application baseline: `main@e048fdde7bdf52992ff258870147bf70c64295e9`, the PR #10 merge commit, tagged `hoy-clone-baseline-eng-015`
 - Latest merged item: `TRF-000` foundation baseline freeze, PR #12 (documentation and control plane only; the application baseline is unchanged)
 - Stage A closed under `D-015` through `ENG-015`, PR #10
 - SPIMAR Phase 1 entry SHA (frozen by `TRF-000`): `643b912f2ff8bd128f857481a2f2427544b5c1c9`
-- Active work branch: `claude/spi-000-trf-001-control-files` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
+- Active work branch: `claude/spi-010-trf-002-residue-inventory` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
 - `TRF-*` execution state: [`WORK-PACKAGES.md`](WORK-PACKAGES.md). Gate state and review verdicts: [`GATES.md`](GATES.md)
 - ENG-014C control-plane closeout: merged through PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba` (reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent)
 - ENG-014C: merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
@@ -35,7 +35,9 @@ Updated: 2026-08-02
 - `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. Motion, header, footer, responsive-shell and visual-convergence requirements move to `SPI-030`/`SPI-040`, with the accessibility, browser and regression sweep in `QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed; the whole-page ≤2% criterion **did not pass**.
 - `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`. Authoritative gates and a live smoke review passed; accepted limitations L1–L9 are recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. Stage A is closed.
 - SPIMAR strategy contract: documentation normalization **merged** through PR #11 at `643b912f2ff8bd128f857481a2f2427544b5c1c9` under `D-016`. The normalized package is 22 files under `docs/spimar/transformation-phase-1/` with 7 governance files under `docs/spimar/governance/`. PR #11 carries **no GitHub-native review record** (`reviews` and `reviewDecision` are both empty); this is disclosed, not resolved.
-- `SPI-000`: `IN PROGRESS`. `TRF-000` (foundation baseline freeze) is `DONE`, owner-merged through PR #12 at `d1e96548feafab6bef11bffeca8d759f4ac60f4f`. `TRF-001` (Phase 1 control files and traceability map) is implemented on `claude/spi-000-trf-001-control-files` and awaits owner merge. `SPI-000` is not complete until `GATE-0 BASELINE` passes its review in [`GATES.md`](GATES.md).
+- `SPI-000`: `DONE`. `TRF-000` merged through PR #12 at `d1e96548feafab6bef11bffeca8d759f4ac60f4f`; `TRF-001` merged through PR #14 at `477f5ae31c1e0135122010148e868fc96bb8f7eb`. `GATE-0 BASELINE` is `PASSED (OWNER ACCEPTED)` under `D-020` — accepted on merged evidence **without** an independent review pass; the gap is disclosed in [`GATES.md`](GATES.md).
+- `SPI-010`: `IN PROGRESS` at `P1.1`. `TRF-002` (House of Yellow brand/content/media/analytics residue inventory) is the active work package.
+- Nested-worktree isolation (no ticket ID): merged through PR #15 at `436acd1fbea9aadbaee63fd229991fee087b8966`. `.claude/worktrees/` is gitignored and excluded from Vitest; `pnpm test` returns 5 files / 63 tests locally again.
 - `D-018` is in effect from `TRF-001` onward: independent review runs per `GATE-*`, not per work package, with the always-review exception list in `CLAUDE.md` § "Review discipline". `D-009` is superseded. `GATE-0` review is due once `TRF-001` merges and must be run by a **fresh session**.
 - `TRF-000` baseline record: `docs/spimar-phase-1/FOUNDATION-BASELINE.md`. Entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; lockfile SHA-256 `870cbbbcabdee46064563d40c9bf065c2fa956d296a5da898f90865d902869e1`; Node `22.14.0`; pnpm `10.15.0`.
 - SPIMAR application implementation: **not started**. `TRF-000` changed documentation and the control plane only.
@@ -57,17 +59,14 @@ Updated: 2026-08-02
 
 ## Next safe action
 
-Owner-merge `TRF-001` on `claude/spi-000-trf-001-control-files` once its
-required checks are green. Under `D-018` it needs no separate independent review
-pass — it is not on the always-review exception list.
+Execute `TRF-002` — inventory House of Yellow brand, content, media and
+analytics residue — under `SPI-010` / `P1.1`. Inventory only: `TRF-002` records
+what residue exists and where. Removal is `TRF-004`, after `TRF-003` extracts
+neutral primitives.
 
-Then run the `GATE-0 BASELINE` review in a **fresh session**, covering `TRF-000`
-and `TRF-001` together, and record the verdict in
-[`GATES.md`](GATES.md). `GATE-0` is the first gate exercised under the new
-cadence.
-
-Only after `GATE-0` passes, open `P1.1` and start `TRF-002` — House of Yellow
-residue inventory — under `SPI-010`.
+`GATE-1 NEUTRAL` closes `P1.1` and covers `TRF-002`–`005`. Under `D-018` it
+requires a **fresh-session independent review**; `D-020` was specific to
+`GATE-0` and sets no precedent.
 
 Do not continue polishing the House of Yellow clone, do not reconstruct or
 source House of Yellow media, and do not start a later `SPI-*`/`TRF-*` item
