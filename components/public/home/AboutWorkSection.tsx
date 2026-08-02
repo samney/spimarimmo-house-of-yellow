@@ -1,10 +1,10 @@
 import { Link } from "@/i18n/navigation";
-import { Marquee } from "@/components/public/global/Marquee";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
-import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
 import { MEDIA_POSTERS } from "@/lib/media/posters";
 import { resolveLegacyVideoPath } from "@/lib/media/video-registry";
-import { SplitTitle } from "./SplitTitle";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 const FEATURED = [
   {

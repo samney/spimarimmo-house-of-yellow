@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { WorksOverview } from "@/components/public/projects/WorksOverview";
-import { SplitTitle } from "@/components/public/home/SplitTitle";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { Link } from "@/i18n/navigation";
-import { Marquee } from "@/components/public/global/Marquee";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
 
 export const metadata: Metadata = {

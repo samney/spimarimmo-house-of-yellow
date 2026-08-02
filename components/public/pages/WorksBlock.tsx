@@ -2,9 +2,9 @@ import { Link } from "@/i18n/navigation";
 import { CULTURE } from "@/lib/content/pages";
 import { localVideo } from "@/lib/content/project-content";
 import { PlusIcon } from "@/components/public/global/logos";
-import { Marquee } from "@/components/public/global/Marquee";
-import { ResilientVideo } from "@/components/public/media/ResilientVideo";
-import { Inview } from "./Inview";
+import { Marquee } from "@/components/primitives/motion/Marquee";
+import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
+import { Inview } from "@/components/primitives/motion/Inview";
 
 /* Reference cultureWorkBlock — featured-work cards shared by /culture (dark
    page: yellow text) and /connect (light page: `.project.dark` ink variant +

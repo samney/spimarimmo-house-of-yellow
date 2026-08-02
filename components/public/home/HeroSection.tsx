@@ -1,6 +1,6 @@
 import { HeroLetters } from "./HeroLetters";
-import { SplitTitle } from "./SplitTitle";
-import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
+import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
 import { MEDIA_POSTERS } from "@/lib/media/posters";
 
 export function HeroSection() {

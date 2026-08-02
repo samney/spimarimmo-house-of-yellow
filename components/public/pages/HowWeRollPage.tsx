@@ -1,9 +1,9 @@
 import { Link } from "@/i18n/navigation";
 import { HOW_WE_ROLL, type HwrTextItem, type PageVideo } from "@/lib/content/pages";
 import { PlusIcon } from "@/components/public/global/logos";
-import { Marquee } from "@/components/public/global/Marquee";
-import { Inview } from "./Inview";
-import { PageMedia } from "./PageMedia";
+import { Marquee } from "@/components/primitives/motion/Marquee";
+import { Inview } from "@/components/primitives/motion/Inview";
+import { PageMedia } from "@/components/primitives/media/PageMedia";
 import { DividerAnimation, SparklePlus, SquareAnimation } from "./pages-art";
 
 /* /how-we-roll/ — yellow editorial page. Structure, classes, and copy

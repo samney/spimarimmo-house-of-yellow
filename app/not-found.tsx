@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Marquee } from "@/components/public/global/Marquee";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { HoyHeaderLogo, PlusIcon } from "@/components/public/global/logos";
 import "./globals.css";
 

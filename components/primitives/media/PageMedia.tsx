@@ -1,6 +1,6 @@
 import { localVideo } from "@/lib/content/project-content";
 import type { PageVideo } from "@/lib/content/pages";
-import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
 
 /* Reference .imageWrapper.playerBackground: poster as cover background,
    autoplaying muted loop video on top (play-on-scroll refinement pending). */

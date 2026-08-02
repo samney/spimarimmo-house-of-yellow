@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
-import { SplitTitle } from "@/components/public/home/SplitTitle";
-import { ResilientVideo } from "@/components/public/media/ResilientVideo";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
+import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
 import { getSurfacePoster } from "@/lib/media/posters";
 import {
   getNextProject,

@@ -1,10 +1,10 @@
 import { CONNECT } from "@/lib/content/pages";
 import { PlusIcon, WhatsAppIcon } from "@/components/public/global/logos";
-import { Marquee } from "@/components/public/global/Marquee";
-import { Inview } from "./Inview";
+import { Marquee } from "@/components/primitives/motion/Marquee";
+import { Inview } from "@/components/primitives/motion/Inview";
 import { WorksBlock } from "./WorksBlock";
 import { Clocks } from "./Clocks";
-import { ContactForm } from "./ContactForm";
+import { ContactForm } from "@/components/primitives/form/ContactForm";
 
 /* /connect/ — paper page. Structure, classes, and copy replicate the
    reference DOM (qa/connect-main.html): contactBlock (intro, clocks, contact

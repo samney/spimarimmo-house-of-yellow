@@ -73,7 +73,7 @@ function sourceFiles(directory) {
   });
 }
 
-const resilientVideoPath = join(repositoryRoot, "components/public/media/ResilientVideo.tsx");
+const resilientVideoPath = join(repositoryRoot, "components/primitives/media/ResilientVideo.tsx");
 for (const sourcePath of [
   ...sourceFiles(join(repositoryRoot, "app")),
   ...sourceFiles(join(repositoryRoot, "components")),

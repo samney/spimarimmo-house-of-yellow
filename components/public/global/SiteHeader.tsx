@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { HoyHeaderLogo, HoyWordmark, PlusIcon } from "./logos";
-import { Marquee } from "./Marquee";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 
 const NAV = [
   { href: "/", label: "Home" },
