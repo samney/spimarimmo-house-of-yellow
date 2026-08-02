@@ -42,10 +42,16 @@ Statuses: `PENDING` · `IN PROGRESS` · `PR REVIEW` · `DONE` · `BLOCKED` ·
 | `TRF-002` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-000`  | PR #17, merged `8dbfca92d96a4059561b2cdbf174a6bf00a6225f` | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md)         |
 | `TRF-003` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-002`  | PR #18, merged `3675c0206c0f819e9af0760763627934be7de304` | [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md)       |
 | `TRF-004` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-003`  | PR #19, merged `452c411c7003c699377011cc08eee2191427731b` | [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md)               |
-| `TRF-005` | `PR REVIEW` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-004`  | `claude/spi-010-trf-005-recovery-verification`            | [`RECOVERY-VERIFICATION.md`](../spimar-phase-1/RECOVERY-VERIFICATION.md) |
+| `TRF-005` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-004`  | PR #20, merged `6f7cc3283d5926321189f0230dde49578b7f5d6d` | [`RECOVERY-VERIFICATION.md`](../spimar-phase-1/RECOVERY-VERIFICATION.md) |
+| `TRF-006` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-005`  | PR #21, merged `43ca164bda5fed9b6c65cc50e8e2700d27b862c1` | [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md) § 9           |
+| `TRF-007` | `PR REVIEW` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-006`  | `claude/spi-010-trf-007-a11y-gate`                        | `tests/e2e/accessibility.spec.ts`                                        |
 
 Labels: `002` residue inventory · `003` extract neutral primitives ·
-`004` remove/quarantine reference-brand residue · `005` verify recovery/rollback.
+`004` remove/quarantine reference-brand residue · `005` verify recovery/rollback ·
+`006` `GATE-1` review remediation · `007` accessibility gate and contrast fix.
+
+`TRF-006` and `TRF-007` are review-driven additions to Epic A, not part of the
+original `17-IMPLEMENTATION-BACKLOG` numbering. Both close `GATE-1` findings.
 
 ## Epic B — Design system and experience shell
 

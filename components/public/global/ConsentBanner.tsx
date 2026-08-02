@@ -13,9 +13,10 @@ import {
    dialog, Accept / Deny / View preferences, four categories with toggles
    (functional always active). State is a first-party cookie-free localStorage
    record; a "hoy:consent" event lets consumers (analytics, embeds) react.
-   The reference ships mixed EN/NL strings; we render locale-consistent EN
-   (FR via messages in HOY-110) — recorded in DECISIONS. Shared model in
-   lib/consent.ts (also drives the /cookies preferences widget). */
+   Copy is English on every locale, including /fr. That is a real gap, not an
+   oversight: TRF-004 removed the reference content layer and no SPIMAR copy
+   source exists yet. Localised consent copy lands with TRF-017, alongside the
+   SPIMAR policy the banner will link to. Shared model in lib/consent.ts. */
 
 export type { ConsentCategories };
 

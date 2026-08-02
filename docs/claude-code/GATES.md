@@ -73,7 +73,7 @@ its owning gate.
 | Gate               | Stage   | Queue owner          | TRF range       | Status                    | Verdict                                               | Evidence                                                                                                                                                                                                                                                                   |
 | ------------------ | ------- | -------------------- | --------------- | ------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `GATE-0 BASELINE`  | `P1.0`  | `SPI-000`            | `TRF-000`–`001` | `PASSED (OWNER ACCEPTED)` | `OWNER_ACCEPTED_WITHOUT_INDEPENDENT_REVIEW` (`D-020`) | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md), [`VALIDATION-MATRIX.md`](VALIDATION-MATRIX.md)                                                                                                                                                       |
-| `GATE-1 NEUTRAL`   | `P1.1`  | `SPI-010`            | `TRF-002`–`005` | `IN REVIEW`               | `—`                                                   | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md), [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md), [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md), [`RECOVERY-VERIFICATION.md`](../spimar-phase-1/RECOVERY-VERIFICATION.md) |
+| `GATE-1 NEUTRAL`   | `P1.1`  | `SPI-010`            | `TRF-002`–`007` | `CHANGES_REQUESTED`       | `CHANGES_REQUESTED` (re-reviewed 2026-08-02)          | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md), [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md), [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md), [`RECOVERY-VERIFICATION.md`](../spimar-phase-1/RECOVERY-VERIFICATION.md) |
 | `GATE-2 SYSTEM`    | `P1.2`  | `SPI-030`            | `TRF-010`–`019` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
 | `GATE-3 CONTENT`   | `P1.3`  | `SPI-020`            | `TRF-020`–`023` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
 | `GATE-4 ROUTES`    | `P1.4`  | `SPI-040`            | `TRF-024`–`027` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
@@ -151,7 +151,30 @@ analytics is wired.
 accepted criticisms are enumerated in
 [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md) § 9.
 
-**`GATE-1` is not passed.** It requires a re-review after `TRF-006` merges.
+**`GATE-1` is not passed.**
+
+### Re-review after `TRF-006` — still `CHANGES_REQUESTED`, 2026-08-02
+
+The `TRF-006` fixes were verified by measurement and by mutation testing, not by
+reading the diff: `<h1>` computed sizes are 48px desktop / 28px mobile on all
+three routes; injecting residue strings makes the guard fail and reverting makes
+it pass; the five corrected residue figures are exact; the 144-file
+mass-format revert was complete and the tracked Prettier baseline is 145.
+
+The gate still did not pass, because **`TRF-006` introduced a new serious WCAG
+AA contrast violation on the 404** — `opacity: 0.6` on the eyebrow composited to
+4.21:1 against a 4.5:1 minimum. A package opened to fix shipped user-facing
+defects shipped another one.
+
+The root cause is the more important finding: **no accessibility gate existed.**
+`@axe-core/playwright` has been a devDependency since `ENG-014` and nothing ever
+used it, while `.claude/rules/testing-and-validation.md` requires automated axe
+checks per route. `TRF-006` re-homed the horizontal-overflow assertions lost to
+`TRF-004` but not the accessibility ones, then tripped over that exact gap.
+
+`TRF-007` fixes the contrast, adds `tests/e2e/accessibility.spec.ts` (axe on
+`/`, `/fr` and the 404, plus the 404 at 390px), and reconciles the registers.
+The gate requires a further re-review after `TRF-007` merges.
 
 Method note: the review was performed by independent reviewer agents with no
 context from the implementation session. They are independent of that session's

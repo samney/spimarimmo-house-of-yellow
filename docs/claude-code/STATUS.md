@@ -10,7 +10,7 @@ Updated: 2026-08-02
 - Latest merged item: `TRF-005` recovery verification, PR #20
 - Stage A closed under `D-015` through `ENG-015`, PR #10
 - SPIMAR Phase 1 entry SHA (frozen by `TRF-000`): `643b912f2ff8bd128f857481a2f2427544b5c1c9`
-- Active work branch: `claude/spi-010-trf-006-gate1-remediation` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
+- Active work branch: `claude/spi-010-trf-007-a11y-gate` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
 - `TRF-*` execution state: [`WORK-PACKAGES.md`](WORK-PACKAGES.md). Gate state and review verdicts: [`GATES.md`](GATES.md)
 - ENG-014C control-plane closeout: merged through PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba` (reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent)
 - ENG-014C: merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
@@ -40,7 +40,7 @@ Updated: 2026-08-02
 - `TRF-003`: neutral primitive layer merged through PR #18 at `3675c0206c0f819e9af0760763627934be7de304` — nine modules under `components/primitives/{motion,media,form}`. Record in `docs/spimar-phase-1/NEUTRAL-PRIMITIVES.md`.
 - `TRF-004`: reference product removed, merged through PR #19 at `452c411c7003c699377011cc08eee2191427731b` — 102 deletions, 11,482 lines. Record in `docs/spimar-phase-1/NEUTRALIZATION.md`.
 - `TRF-005`: `DONE`, merged through PR #20 at `6f7cc3283d5926321189f0230dde49578b7f5d6d`. All 102 deleted files proven byte-recoverable; rollback rehearsal restored the pre-neutralization tree exactly with all nine gates green.
-- `GATE-1 NEUTRAL`: **`CHANGES_REQUESTED`**. An independent review found two user-facing defects (consent dialog linking to the deleted `/cookies`; two pages styled by deleted class names, headings at ~9.6px) and refuted several published residue figures. `TRF-006` remediates them on `claude/spi-010-trf-006-gate1-remediation`. The gate is **not passed** and needs a re-review.
+- `GATE-1 NEUTRAL`: **`CHANGES_REQUESTED`**, re-reviewed 2026-08-02. The `TRF-006` fixes were verified by measurement and mutation testing and hold. The gate still fails because `TRF-006` itself introduced a serious WCAG AA contrast violation on the 404 (`opacity: 0.6`, 4.21:1) — which shipped because **no accessibility gate existed**, despite `.claude/rules/testing-and-validation.md` requiring automated axe checks per route. `TRF-007` fixes the contrast, adds `tests/e2e/accessibility.spec.ts`, and reconciles `GATES.md`/`WORK-PACKAGES.md`/`VALIDATION-MATRIX.md`, which had been contradicting each other.
 - Nested-worktree isolation (no ticket ID): merged through PR #15 at `436acd1fbea9aadbaee63fd229991fee087b8966`. `.claude/worktrees/` is gitignored and excluded from Vitest; `pnpm test` returns 5 files / 63 tests locally again.
 - `D-018` is in effect from `TRF-001` onward: independent review runs per `GATE-*`, not per work package, with the always-review exception list in `CLAUDE.md` § "Review discipline". `D-009` is superseded. `GATE-0` review is due once `TRF-001` merges and must be run by a **fresh session**.
 - `TRF-000` baseline record: `docs/spimar-phase-1/FOUNDATION-BASELINE.md`. Entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; lockfile SHA-256 `870cbbbcabdee46064563d40c9bf065c2fa956d296a5da898f90865d902869e1`; Node `22.14.0`; pnpm `10.15.0`.
@@ -63,12 +63,12 @@ Updated: 2026-08-02
 
 ## Next safe action
 
-Owner-merge `TRF-006` on `claude/spi-010-trf-006-gate1-remediation`, then
-**re-review `GATE-1 NEUTRAL`** in a fresh session. The gate is currently
-`CHANGES_REQUESTED` and must not be treated as passed.
+Owner-merge `TRF-007` on `claude/spi-010-trf-007-a11y-gate`, then **re-review
+`GATE-1 NEUTRAL`** in a fresh session. The gate is `CHANGES_REQUESTED` and must
+not be treated as passed.
 
-Two owner decisions are outstanding before `GATE-1` can close cleanly: whether
-the third-party payload still tracked in `qa/cookies-raw.html` and
+Two owner decisions remain open before `GATE-1` can close cleanly: whether the
+third-party payload still tracked in `qa/cookies-raw.html` and
 `qa/cookies-data.json` is acceptable as provenance under `LEG-1`, and whether
 repository-level naming (`package.json`, `README.md`, `home-structure.json`)
 falls inside reference-product removal.

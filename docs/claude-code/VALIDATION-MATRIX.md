@@ -118,3 +118,31 @@ on the entry tree with zero tracked modifications.
 - Untracked evidence preserved; `MIG-3` ZIP re-verified at 1,875,071 bytes and
   SHA-256 `6d47f7df…357ee51c`. No destructive Git command was run.
 - Application tree unchanged: documentation and control plane only.
+
+## SPI-010 / P1.1 — neutralization (`TRF-002`–`007`)
+
+Full records under [`../spimar-phase-1/`](../spimar-phase-1/). Gate status and
+review verdicts: [`GATES.md`](GATES.md).
+
+| Package   | Evidence                                                                                                                                                   |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TRF-002` | Residue inventory — 29 files / 259 occurrences at `7bea6b2`; blocker `LEG-1` raised. PR #17                                                                |
+| `TRF-003` | Nine primitives relocated to `components/primitives/`; 17 imports rewritten. PR #18                                                                        |
+| `TRF-004` | Reference product removed — 102 deletions, 11,482 lines. PR #19                                                                                            |
+| `TRF-005` | All 102 deletions proven byte-recoverable; rollback rehearsal restored the tree exactly, all nine gates green. PR #20                                      |
+| `TRF-006` | `GATE-1` review remediation — consent link, page styling, widened residue guard, overflow and consent coverage re-homed, residue figures corrected. PR #21 |
+| `TRF-007` | Accessibility gate (`tests/e2e/accessibility.spec.ts`) and the contrast fix it caught; registers reconciled                                                |
+
+Standing gate results on `main` after `TRF-007`: `verify:migration` 0 ·
+`validate:media` 0 · `test` 0 (3 files, 22) · `typecheck` 0 · `lint` 0 (1
+pre-existing warning, `L7`) · `build` 0 · `test:routes` 0 · `test:e2e` 0 (18
+tests: 14 route/residue/overflow/consent + 4 axe) · `git diff --check` 0.
+
+`pnpm format:check` is **not** a CI gate and does **not** exit 0: the tracked
+Prettier baseline is 145 pre-existing files, essentially all under `docs/`.
+Earlier records in this file and in `FOUNDATION-BASELINE.md` state its exit code
+as 2; the reproducible value is **1**. Recorded here rather than silently
+corrected in place.
+
+**`GATE-1 NEUTRAL` is `CHANGES_REQUESTED`.** It is not passed and needs a
+re-review after `TRF-007`.
