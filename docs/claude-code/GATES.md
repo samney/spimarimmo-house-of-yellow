@@ -70,21 +70,21 @@ its owning gate.
 
 ## Gate ledger
 
-| Gate               | Stage   | Queue owner          | TRF range       | Status                    | Verdict                                               | Evidence                                                                                                             |
-| ------------------ | ------- | -------------------- | --------------- | ------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `GATE-0 BASELINE`  | `P1.0`  | `SPI-000`            | `TRF-000`–`001` | `PASSED (OWNER ACCEPTED)` | `OWNER_ACCEPTED_WITHOUT_INDEPENDENT_REVIEW` (`D-020`) | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md), [`VALIDATION-MATRIX.md`](VALIDATION-MATRIX.md) |
-| `GATE-1 NEUTRAL`   | `P1.1`  | `SPI-010`            | `TRF-002`–`005` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-2 SYSTEM`    | `P1.2`  | `SPI-030`            | `TRF-010`–`019` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-3 CONTENT`   | `P1.3`  | `SPI-020`            | `TRF-020`–`023` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-4 ROUTES`    | `P1.4`  | `SPI-040`            | `TRF-024`–`027` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-5 HOME`      | `P1.5`  | `SPI-050`            | `TRF-030`–`033` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-6 EXHIBITOR` | `P1.6`  | `SPI-060`            | `TRF-034`–`037` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-7 VISITOR`   | `P1.7`  | `SPI-060`            | `TRF-038`–`040` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-8 CMS`       | `P1.8`  | `CMS-080`            | `TRF-050`–`059` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-9 CRM`       | `P1.9`  | `OPS-070`, `CRM-090` | `TRF-060`–`070` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-10 QUALITY`  | `P1.10` | `LOC-100`, `QA-110`  | `TRF-080`–`087` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-11 RC`       | `P1.11` | `AUD-120`            | `TRF-088`       | `OPEN`                    | `—`                                                   | —                                                                                                                    |
-| `GATE-12 RELEASE`  | `P1.12` | `REL-130`            | `TRF-089`–`090` | `OPEN`                    | `—`                                                   | —                                                                                                                    |
+| Gate               | Stage   | Queue owner          | TRF range       | Status                    | Verdict                                               | Evidence                                                                                                                                                                                                                                                                   |
+| ------------------ | ------- | -------------------- | --------------- | ------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GATE-0 BASELINE`  | `P1.0`  | `SPI-000`            | `TRF-000`–`001` | `PASSED (OWNER ACCEPTED)` | `OWNER_ACCEPTED_WITHOUT_INDEPENDENT_REVIEW` (`D-020`) | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md), [`VALIDATION-MATRIX.md`](VALIDATION-MATRIX.md)                                                                                                                                                       |
+| `GATE-1 NEUTRAL`   | `P1.1`  | `SPI-010`            | `TRF-002`–`005` | `IN REVIEW`               | `—`                                                   | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md), [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md), [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md), [`RECOVERY-VERIFICATION.md`](../spimar-phase-1/RECOVERY-VERIFICATION.md) |
+| `GATE-2 SYSTEM`    | `P1.2`  | `SPI-030`            | `TRF-010`–`019` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-3 CONTENT`   | `P1.3`  | `SPI-020`            | `TRF-020`–`023` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-4 ROUTES`    | `P1.4`  | `SPI-040`            | `TRF-024`–`027` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-5 HOME`      | `P1.5`  | `SPI-050`            | `TRF-030`–`033` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-6 EXHIBITOR` | `P1.6`  | `SPI-060`            | `TRF-034`–`037` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-7 VISITOR`   | `P1.7`  | `SPI-060`            | `TRF-038`–`040` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-8 CMS`       | `P1.8`  | `CMS-080`            | `TRF-050`–`059` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-9 CRM`       | `P1.9`  | `OPS-070`, `CRM-090` | `TRF-060`–`070` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-10 QUALITY`  | `P1.10` | `LOC-100`, `QA-110`  | `TRF-080`–`087` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-11 RC`       | `P1.11` | `AUD-120`            | `TRF-088`       | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
+| `GATE-12 RELEASE`  | `P1.12` | `REL-130`            | `TRF-089`–`090` | `OPEN`                    | `—`                                                   | —                                                                                                                                                                                                                                                                          |
 
 ## `GATE-0 BASELINE` — current gate
 
@@ -112,3 +112,23 @@ review, and the always-review exception list is unaffected.
 Open items carried into this gate: accepted limitations `L1`–`L9`, blockers
 `MIG-1`/`MIG-2`/`MIG-3`, `PAR-P1-004`, and the disclosed absence of a
 GitHub-native review record on PR #11. None is closed by `GATE-0`.
+
+## `GATE-1 NEUTRAL` — eligible, review outstanding
+
+Covers `TRF-002` (PR #17), `TRF-003` (PR #18), `TRF-004` (PR #19) and `TRF-005`.
+All four are merged or in review with green required checks.
+
+**This gate requires a fresh-session independent review and has not had one.**
+`D-020` accepted `GATE-0` without a review and set no precedent. `GATE-1` carries
+materially more risk and must not be accepted the same way by default:
+
+- 102 files and 11,482 lines deleted, including 32 third-party trademarks;
+- three gates re-pointed and one gate assertion removed outright
+  (`validate-media.mjs` legacy-map cross-check);
+- two E2E specs deleted — genuine coverage reduction;
+- a self-reported `TRF-003` defect (neutrality judged by brand-token count,
+  which missed content-module coupling);
+- a self-reported `TRF-002` overstatement about `CONTACT_NOTIFY_TO`.
+
+A reviewer should verify each of those independently rather than accept the
+implementation session's own account of them.

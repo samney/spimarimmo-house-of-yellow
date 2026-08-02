@@ -38,7 +38,8 @@ Updated: 2026-08-02
 - `SPI-000`: `DONE`. `TRF-000` merged through PR #12 at `d1e96548feafab6bef11bffeca8d759f4ac60f4f`; `TRF-001` merged through PR #14 at `477f5ae31c1e0135122010148e868fc96bb8f7eb`. `GATE-0 BASELINE` is `PASSED (OWNER ACCEPTED)` under `D-020` — accepted on merged evidence **without** an independent review pass; the gap is disclosed in [`GATES.md`](GATES.md).
 - `SPI-010`: `IN PROGRESS` at `P1.1`. `TRF-002` residue inventory merged through PR #17 at `8dbfca92d96a4059561b2cdbf174a6bf00a6225f` — 29 tracked source files, 259 occurrences, ~93 visible and ~169 internal identifiers; record in `docs/spimar-phase-1/RESIDUE-INVENTORY.md`. Blocker `LEG-1` is open: the `/cookies` policy is a third party's legal text and cannot be corrected by editing.
 - `TRF-003`: neutral primitive layer merged through PR #18 at `3675c0206c0f819e9af0760763627934be7de304` — nine modules under `components/primitives/{motion,media,form}`. Record in `docs/spimar-phase-1/NEUTRAL-PRIMITIVES.md`.
-- `TRF-004`: reference product **removed** on `claude/spi-010-trf-004-remove-residue`. Six reference routes, three component trees, the brand shell, all reference content and 61 reference/client images deleted; public surface is now `/`, `/fr`, catch-all, 404 and `robots.txt`. Two E2E residue guards added. Record in `docs/spimar-phase-1/NEUTRALIZATION.md`.
+- `TRF-004`: reference product removed, merged through PR #19 at `452c411c7003c699377011cc08eee2191427731b` — 102 deletions, 11,482 lines. Record in `docs/spimar-phase-1/NEUTRALIZATION.md`.
+- `TRF-005`: recovery verified on `claude/spi-010-trf-005-recovery-verification` — all 102 deleted files proven byte-recoverable, and a performed rollback rehearsal restored the pre-neutralization tree exactly with all nine gates green (63 unit tests, 27 EN + 27 FR routes). Record in `docs/spimar-phase-1/RECOVERY-VERIFICATION.md`.
 - Nested-worktree isolation (no ticket ID): merged through PR #15 at `436acd1fbea9aadbaee63fd229991fee087b8966`. `.claude/worktrees/` is gitignored and excluded from Vitest; `pnpm test` returns 5 files / 63 tests locally again.
 - `D-018` is in effect from `TRF-001` onward: independent review runs per `GATE-*`, not per work package, with the always-review exception list in `CLAUDE.md` § "Review discipline". `D-009` is superseded. `GATE-0` review is due once `TRF-001` merges and must be run by a **fresh session**.
 - `TRF-000` baseline record: `docs/spimar-phase-1/FOUNDATION-BASELINE.md`. Entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; lockfile SHA-256 `870cbbbcabdee46064563d40c9bf065c2fa956d296a5da898f90865d902869e1`; Node `22.14.0`; pnpm `10.15.0`.
@@ -61,11 +62,16 @@ Updated: 2026-08-02
 
 ## Next safe action
 
-Owner-merge `TRF-004` on `claude/spi-010-trf-004-remove-residue`, then execute
-`TRF-005` — verify recovery and rollback to the frozen foundation — closing
-`P1.1`. `GATE-1 NEUTRAL` then covers `TRF-002`–`005` and **requires a
-fresh-session independent review**; `D-020` was `GATE-0`-specific and set no
-precedent.
+Owner-merge `TRF-005` on `claude/spi-010-trf-005-recovery-verification`. That
+closes `P1.1` and makes `GATE-1 NEUTRAL` eligible.
+
+`GATE-1` then **requires a fresh-session independent review** covering
+`TRF-002`–`005`. It must not be accepted the way `GATE-0` was: `D-020` set no
+precedent, and this gate deleted 102 files, re-pointed three gates, removed one
+gate assertion, dropped two E2E specs and carries two self-reported defects.
+
+Only after `GATE-1` passes, open `P1.2`/`P1.3` — which may run in parallel
+under the file-ownership map.
 
 `GATE-1 NEUTRAL` closes `P1.1` and covers `TRF-002`–`005`. Under `D-018` it
 requires a **fresh-session independent review**; `D-020` was specific to
