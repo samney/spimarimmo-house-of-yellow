@@ -3,7 +3,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = pg_catalog, public, extensions;
 
-select plan(15);
+select plan(16);
 
 select has_table('public', 'sites', 'tenant sites table exists');
 select has_table('public', 'pages', 'CMS pages table exists');
@@ -14,7 +14,21 @@ select has_table('public', 'appointments', 'native appointments table exists');
 select has_table('public', 'audit_events', 'cross-domain audit table exists');
 
 select is((select count(*) from public.roles), 6::bigint, 'all six required roles are seeded');
-select is((select count(*) from public.permissions), 14::bigint, 'normalized permission catalog is seeded');
+-- 14 legacy permissions plus the five separation-of-duties verbs added by
+-- 202608020004. Approving and publishing are deliberately distinct permissions:
+-- if they were one, the approver and the publisher could never be two people.
+select is((select count(*) from public.permissions), 19::bigint, 'normalized permission catalog is seeded');
+select is(
+  (
+    select count(*) from public.permissions
+    where code in (
+      'content.submit_review', 'content.review', 'content.approve',
+      'evidence.approve', 'content.override'
+    )
+  ),
+  5::bigint,
+  'separation-of-duties permissions are seeded'
+);
 
 select ok(
   (

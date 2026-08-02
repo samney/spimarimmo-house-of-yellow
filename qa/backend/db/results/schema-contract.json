@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-08-02T17:33:51.128Z",
+  "checkedAt": "2026-08-02T19:29:46.225Z",
   "migrations": [
     "202607310001_foundation.sql",
     "202607310002_cms_core.sql",
@@ -40,9 +40,13 @@
     "202608010024_cms_dashboard_taxonomy_expansion.sql",
     "202608010025_cms_project_api.sql",
     "202608010026_cms_dashboard_project_expansion.sql",
-    "202608010027_cms_project_details_api.sql"
+    "202608010027_cms_project_details_api.sql",
+    "202608020001_canonical_event_axes.sql",
+    "202608020002_canonical_workflow_states.sql",
+    "202608020003_activation_critical_contracts.sql",
+    "202608020004_editorial_separation_of_duties.sql"
   ],
-  "tables": 71,
-  "checks": 980,
+  "tables": 90,
+  "checks": 1041,
   "failures": []
 }
