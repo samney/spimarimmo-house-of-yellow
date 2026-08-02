@@ -20,8 +20,9 @@ Claude Code is the sole source-code implementer from `ENG-014C`.
 - `ENG-014D` and `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Neither ran, neither passed. Media delivery moves to the SPIMAR content/media phase; motion, shell, responsive and visual convergence move to `SPI-030`/`SPI-040`/`QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed.
 - `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`; accepted limitations recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`.
 - Accepted application baseline: `main@e048fdde7bdf52992ff258870147bf70c64295e9`, tagged `hoy-clone-baseline-eng-015`.
-- SPIMAR Transformation Phase 1 strategy: normalized under `docs/spimar/transformation-phase-1/` with governance under `docs/spimar/governance/`.
-- SPIMAR application implementation: **not started**. After the documentation PR merges, entry is `SPI-000 / P1.0 / TRF-000`.
+- SPIMAR Transformation Phase 1 strategy: normalized under `docs/spimar/transformation-phase-1/` with governance under `docs/spimar/governance/`; merged through PR #11 at `643b912f2ff8bd128f857481a2f2427544b5c1c9` under `D-016`.
+- `SPI-000 / P1.0 / TRF-000`: foundation baseline frozen at `643b912f2ff8bd128f857481a2f2427544b5c1c9`, recorded in `docs/spimar-phase-1/FOUNDATION-BASELINE.md`, awaiting independent review and owner merge. `TRF-001` not started.
+- SPIMAR application implementation: **not started**. `TRF-000` is documentation and control plane only.
 
 ## Stage A — Close and freeze the reference foundation (CLOSED)
 
@@ -33,7 +34,7 @@ Stage A is closed. The foundation is accepted for transformation with the limita
 
 `ENG-015` established the accepted clone baseline. Claude now performs a fresh top-down audit, removes House of Yellow residue, consolidates one canonical architecture, and implements SPIMAR from the approved specification order. Restarting the transformation does not discard the accepted baseline.
 
-Current work is the bounded documentation contract that precedes implementation. The first eligible Claude Code implementation item after its owner merge is `SPI-000 / P1.0 / TRF-000`.
+The bounded documentation contract is merged. Current work is `SPI-000 / P1.0`: `TRF-000` has frozen the foundation baseline and awaits review; `TRF-001` follows only after that merge, and `GATE-0 BASELINE` closes when both are merged.
 
 ## Definition of done
 

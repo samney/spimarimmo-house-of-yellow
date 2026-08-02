@@ -55,9 +55,29 @@ Historical chats and archives are provenance, not automatic authority. Unknown i
 
 ## Review discipline
 
-1. Implementation session changes code and produces evidence.
-2. Fresh Claude session independently reviews the real diff, tests, screenshots and deployment.
-3. Owner merges only after an explicit approval.
+Governed by `D-018`, which supersedes `D-009`'s per-item two-pass rule.
+
+**Default — gate-level review.** Independent review runs at each `GATE-*`
+boundary in `docs/spimar/governance/DELIVERY-MAP.md`, covering every `TRF-*`
+merged since the previous gate. Between gates, a bounded PR merges on green
+required checks plus explicit owner approval; the implementation session still
+self-reviews its own diff and records evidence, and a gate is not passed until
+its review is recorded.
+
+**Always-review exceptions.** These require a fresh independent Claude session
+before merge regardless of gate position, because green CI does not evidence
+their correctness:
+
+- authentication, authorization, roles, RLS or any permission boundary;
+- database migrations, schema changes and destructive data operations;
+- CRM submission durability, consent, retention and any PII handling;
+- dependency or lockfile changes;
+- CI workflow, secret handling and deployment configuration;
+- the release candidate and any production-affecting change.
+
+**Every PR, regardless of tier.** Implementation session produces evidence;
+required checks pass; the owner merges on explicit approval. Never mark a gate
+or matrix cell passed without artifacts.
 
 ## Historical artifacts
 

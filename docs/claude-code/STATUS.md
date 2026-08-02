@@ -1,12 +1,16 @@
 # STATUS
 
-Updated: 2026-08-01
+Updated: 2026-08-02
 
 ## Repository checkpoint
 
 - Repository: `samney/spimarimmo-house-of-yellow`
+- Current `origin/main`: `643b912f2ff8bd128f857481a2f2427544b5c1c9` — the PR #11 merge commit (parents `e048fdde7bdf52992ff258870147bf70c64295e9` + reviewed head `cc4e0f29ab59ef907c161a4818e89985cc3ff16f`); post-merge Quality Gates run `30723261546` and Vercel deployment `DgsTqUuJiwU2Jzv9Biz8jYXv6viW` passed
 - Accepted application baseline: `main@e048fdde7bdf52992ff258870147bf70c64295e9`, the PR #10 merge commit, tagged `hoy-clone-baseline-eng-015`
-- Latest merged item: `ENG-015` accelerated foundation closure, PR #10; Stage A closed under `D-015`
+- Latest merged item: `D-016` Phase 1 documentation normalization, PR #11 (documentation only; the application baseline is unchanged)
+- Stage A closed under `D-015` through `ENG-015`, PR #10
+- SPIMAR Phase 1 entry SHA (frozen by `TRF-000`): `643b912f2ff8bd128f857481a2f2427544b5c1c9`
+- Active work branch: `claude/spi-000-trf-000-baseline-freeze` — the contracted name `claude/spimar-transformation-phase-1` is superseded by `D-017`
 - ENG-014C control-plane closeout: merged through PR #9 at `6961705e657c1fa65f71a5a8099c9e77f6c89cba` (reviewed head `bbc066025ce37751b35216a4369ae52f79c29b9a` preserved as the second parent)
 - ENG-014C: merged through PR #8 at `17b697430a55fa3a5835c9c25fef927301b9ec87`; reviewed head `5358df14cd0ab514739290d56b8fad9b0d313339` preserved as the second parent; post-merge Quality Gates run `30715826793` passed; post-merge Vercel deployment `DBpXw5W9uC36Vbbr3cVzuFSx7YjP` passed
 - Control-plane hardening (no ticket ID): merged through PR #7 at `b1854dc4a1f7b3e6c53c1af4660e85a98061b4cb`; post-merge Quality Gates run `30694095590` and Vercel deployment `3tHix34QF8dM51kDFWKBgVtWpz2q` passed
@@ -29,8 +33,11 @@ Updated: 2026-08-01
 - `ENG-014D`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. House of Yellow non-hero media delivery is no longer a foundation blocker; the requirements move to the SPIMAR content/media phase and SPIMAR-owned media replaces reference media.
 - `ENG-014E`: **SUPERSEDED / TRANSFERRED** under `D-015`. Never implemented, never passed. Motion, header, footer, responsive-shell and visual-convergence requirements move to `SPI-030`/`SPI-040`, with the accessibility, browser and regression sweep in `QA-110`. `PAR-P1-004` and the `D-014` erratum are preserved, not closed; the whole-page ≤2% criterion **did not pass**.
 - `ENG-015`: `DONE` through PR #10 as an accelerated foundation acceptance under `D-015`. Authoritative gates and a live smoke review passed; accepted limitations L1–L9 are recorded in `docs/spimar/parity-history/08-ENG-015-ACCELERATED-FOUNDATION-CLOSURE.md`. Stage A is closed.
-- SPIMAR strategy contract: documentation normalization in review under `D-016`.
-- SPIMAR application implementation: **not started**. First eligible Claude Code item after owner merge is `SPI-000 / P1.0 / TRF-000`.
+- SPIMAR strategy contract: documentation normalization **merged** through PR #11 at `643b912f2ff8bd128f857481a2f2427544b5c1c9` under `D-016`. The normalized package is 22 files under `docs/spimar/transformation-phase-1/` with 7 governance files under `docs/spimar/governance/`. PR #11 carries **no GitHub-native review record** (`reviews` and `reviewDecision` are both empty); this is disclosed, not resolved.
+- `SPI-000`: `IN PROGRESS`. `TRF-000` (foundation baseline freeze) is implemented on `claude/spi-000-trf-000-baseline-freeze` and awaits independent review and owner merge. `TRF-001` has **not** started; `SPI-000` is not complete.
+- `TRF-000` baseline record: `docs/spimar-phase-1/FOUNDATION-BASELINE.md`. Entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`; lockfile SHA-256 `870cbbbcabdee46064563d40c9bf065c2fa956d296a5da898f90865d902869e1`; Node `22.14.0`; pnpm `10.15.0`.
+- SPIMAR application implementation: **not started**. `TRF-000` changed documentation and the control plane only.
+- `D-017`: the pre-existing `claude/spimar-transformation-phase-1` branch at `478ffc1538ae882e6102df5d23a92b69fa895335` is abandoned — wrong baseline, superseded package path, unreviewed. It is retained on `origin` as provenance and must not receive further development.
 - `D-013` is in effect: no historical patch may be applied. `D-012` expired by its own terms at ENG-015 acceptance; this does not authorize enabling video.
 - Portability blockers MIG-1, MIG-2 and MIG-3 remain disclosed in `BLOCKERS.md`.
 
@@ -48,10 +55,15 @@ Updated: 2026-08-01
 
 ## Next safe action
 
-Independently review and owner-merge the bounded Phase 1 documentation
-normalization. Then start `SPI-000 / P1.0 / TRF-000` in Claude Code from the
-latest approved `origin/main`, using
-`docs/spimar/transformation-phase-1/20-CLAUDE-CODE-EXECUTION-HANDOFF.md`.
+Independently review and owner-merge the bounded `TRF-000` foundation baseline
+freeze on `claude/spi-000-trf-000-baseline-freeze`. The review must confirm the
+entry SHA, the gate exit codes, the preserved untracked inventory, and that the
+application tree is unchanged.
+
+Only after that merge, start `TRF-001` — Phase 1 repository control files and
+traceability map — from the latest approved `origin/main`. `GATE-0 BASELINE`
+closes only when both `TRF-000` and `TRF-001` are merged.
 
 Do not continue polishing the House of Yellow clone, do not reconstruct or
-source House of Yellow media, and do not start a later `SPI-*` item early.
+source House of Yellow media, and do not start a later `SPI-*`/`TRF-*` item
+early.

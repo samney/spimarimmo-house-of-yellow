@@ -49,7 +49,7 @@ Context: Mixed GPT/Codex/Claude source implementation created avoidable handoff 
 Decision: Claude Code is the sole source-code implementer from ENG-014C onward. GPT/Codex artifacts after this point are limited to specifications, contracts, review findings, and historical evidence.
 Consequence: No new GPT/Codex implementation patch may be created or applied for ENG-014C or later work.
 
-## D-009 — 2026-08-01 — Two-pass Claude review and owner-only merge
+## D-009 — 2026-08-01 — Two-pass Claude review and owner-only merge — SUPERSEDED by `D-018`
 
 Context: Implementation-session conclusions must not substitute for independent review.
 Decision: Each implementation PR receives one implementation pass and one fresh Claude review pass. The repository owner remains the only merge authority.
@@ -252,6 +252,88 @@ latest approved `origin/main`. `ENG-014D` and `ENG-014E` remain
 superseded/transferred under `D-015`; their useful requirements remain
 absorbed into SPIMAR-native work.
 
+## D-017 — 2026-08-02 — Abandon the pre-existing `claude/spimar-transformation-phase-1` branch; `TRF-000` starts clean from the entry SHA
+
+**Authority.** Explicit repository-owner decision during `TRF-000` kickoff,
+after the session stopped and reported the conflict rather than reusing the
+branch.
+
+**Context.** `20-CLAUDE-CODE-EXECUTION-HANDOFF.md` line 44 instructs Claude Code
+to create `claude/spimar-transformation-phase-1` from the latest approved
+`origin/main`. That branch already existed locally and on `origin` at
+`478ffc1538ae882e6102df5d23a92b69fa895335`, with unexpected provenance:
+
+1. it was branched from `e048fdde7bdf52992ff258870147bf70c64295e9` (PR #10), so
+   it predates the `D-016` normalization and `origin/main` is not an ancestor
+   of it;
+2. it adopts the Phase 1 package at the superseded path
+   `docs/SPIMAR-Transformation-Phase-1/` and lacks the normalized
+   `docs/spimar/transformation-phase-1/` that `D-016` § 1 made canonical;
+3. it already contains a `docs/spimar-phase-1/FOUNDATION-BASELINE.md` recording
+   the **pre-PR-#11** entry SHA, plus `TRF-001` scope;
+4. it authors a competing `D-016` text;
+5. it has no pull request and was never independently reviewed or merged.
+
+**Decision.**
+
+1. `478ffc1` is **abandoned**. It is not reset, deleted, force-updated or
+   reused, and it remains on `origin` as provenance pending a separate owner
+   action.
+2. `TRF-000` executes on a new branch, `claude/spi-000-trf-000-baseline-freeze`,
+   created from the entry SHA `643b912f2ff8bd128f857481a2f2427544b5c1c9`.
+3. The `FOUNDATION-BASELINE.md` content on `478ffc1` carries no authority. The
+   canonical baseline is the freshly measured
+   `docs/spimar-phase-1/FOUNDATION-BASELINE.md` produced by this work package.
+4. `20-CLAUDE-CODE-EXECUTION-HANDOFF.md` is left unedited. It is a static
+   strategy document; this decision supersedes its branch name under the
+   `CLAUDE.md` authority order, which places the latest explicit owner decision
+   first.
+
+**Consequence.** The contracted branch name is superseded for Phase 1 execution.
+Any later session must take the branch name from `STATUS.md` and this decision,
+not from the handoff document. No history was rewritten and no owner-visible
+work was discarded.
+
+## D-018 — 2026-08-02 — Gate-level review replaces per-item two-pass review, with an always-review exception list
+
+**Authority.** Explicit repository-owner decision, taken after `TRF-000` and in
+response to schedule pressure across the remaining Phase 1 backlog.
+
+**Context.** `D-009` required a fresh independent Claude review on every bounded
+item. `17-IMPLEMENTATION-BACKLOG.md` defines roughly 90 `TRF-*` work packages,
+so the per-item rule implies on the order of 180 review cycles, which would
+dominate the remaining schedule. `DELIVERY-MAP.md` already defines 13 `GATE-*`
+acceptance boundaries, and `.github/workflows/quality-gates.yml` already runs
+typecheck, lint, unit, build, route and end-to-end suites on every PR — a real
+regression net for mechanical work, but blind to permission boundaries, data
+migrations, privacy handling, supply-chain and deployment risk.
+
+**Decision.**
+
+1. Independent review moves from per-item to **per-gate**. At each `GATE-*`
+   boundary a fresh Claude session reviews every `TRF-*` merged since the
+   previous gate, against that gate's acceptance criteria.
+2. Between gates, a bounded PR merges on green required checks plus explicit
+   owner approval. The implementation session still self-reviews its diff and
+   records evidence.
+3. The following always require a fresh independent review before merge,
+   regardless of gate position: auth/authorization/roles/RLS and any permission
+   boundary; database migrations, schema changes and destructive data
+   operations; CRM submission durability, consent, retention and PII; dependency
+   or lockfile changes; CI workflow, secret handling and deployment
+   configuration; the release candidate and any production-affecting change.
+4. A gate is not passed until its review is recorded in
+   `VALIDATION-MATRIX.md` with evidence. Batching review does not weaken any
+   gate, disable any check, or permit an unevidenced pass.
+5. `D-009` is **superseded** for all work from `TRF-001` onward. It remains
+   valid history for `ENG-*` items already accepted under it.
+
+**Consequence.** Review cycles for Phase 1 drop by roughly 85% while scrutiny
+concentrates where CI cannot help. The trade-off is accepted deliberately: a
+defect in non-exception work may now survive until its gate, where it is caught
+against a larger diff. `CLAUDE.md` § "Review discipline" carries the operative
+rule.
+
 ## D-019 — 2026-08-02 — Project-authored session commands and two first-party skills
 
 **Authority.** Explicit repository-owner instruction to import capable Claude Code tooling
@@ -319,12 +401,30 @@ forbade it.
 **Consequence.** This changeset is tooling and control-plane only. It touches no
 application source, no test, no dependency, no lockfile and no runtime configuration, and
 does not start or claim any `SPI-*`/`TRF-*` implementation work. It is deliberately kept
-off `claude/spi-000-trf-000-baseline-freeze` so the in-flight `TRF-000` PR remains one
-bounded item. `D-017` and `D-018` are in flight on that branch; this entry takes `D-019` to
-avoid a number collision, and the registers must be reconciled at merge.
+off `claude/spi-000-trf-000-baseline-freeze` so the `TRF-000` PR remained one bounded item.
 
-**Owner ratification required.** Point 3 rewrites a recorded audit statement and point 4
-accepts a capability duplication that this project previously used as grounds for
-rejection. Both are within owner authority (authority order 1) and were owner-instructed,
-but they should be explicitly confirmed at merge rather than treated as settled by this
-entry alone.
+**Register reconciliation (completed 2026-08-02).** When this entry was authored, `D-017`
+and `D-018` were unmerged on the `TRF-000` branch and invisible from this branch's base
+(`643b912`); `D-019` was chosen to avoid a number collision. `TRF-000` merged first as
+PR #12 (`d1e9654`), bringing both entries onto `main`. This branch then merged `origin/main`
+and the registers were reconciled by hand: `D-017`, `D-018` and `D-019` are all present, in
+numeric order, with no renumbering and no content loss on either side. The only conflicted
+file was this register, and the conflict was purely positional — both sides appended at the
+end.
+
+**Owner ratification — granted 2026-08-02.** Point 3 rewrites a recorded audit statement
+and point 4 accepts a capability duplication that this project previously used as grounds
+for rejecting `taste-skill`. Both were owner-instructed and are within authority order 1.
+The repository owner explicitly instructed the merge of PR #13 after these two points were
+put to them, which constitutes ratification of both. The ratification is also recorded as a
+comment on PR #13.
+
+**Review tier.** Assessed under `D-018`, which was itself unmerged when this work began and
+is now in force. This changeset is **not** in an always-review category: it touches no
+authentication, authorization, role or RLS boundary; no migration or destructive data
+operation; no CRM/consent/PII surface; no dependency or lockfile; no CI workflow, secret
+handling or deployment configuration; and nothing production-affecting. It therefore merges
+as a bounded PR on green required checks plus explicit owner approval, with the
+implementation session's own diff self-review and evidence recorded on the PR. Required
+checks at merge: build/routes/browser gates, media/unit/typecheck/lint gates, migration
+manifest integrity and the Vercel deployment all passed.
