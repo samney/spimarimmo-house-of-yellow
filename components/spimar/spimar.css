@@ -148,6 +148,16 @@
 
 .spimarMain {
   min-height: 60vh;
+  /* Establishes a stacking context above the footer. Without it the footer
+     painted over the end of long pages and intercepted pointer events on the
+     contact form's consent checkbox — the field was visible but unclickable. */
+  position: relative;
+  z-index: 1;
+}
+
+.spimarFooter {
+  position: relative;
+  z-index: 0;
 }
 
 .spimarSection {
