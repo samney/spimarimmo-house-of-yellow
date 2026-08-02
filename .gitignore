@@ -44,6 +44,12 @@ next-env.d.ts
 # claude/playwright artifacts
 .playwright-mcp/
 
+# Nested Claude Code worktrees. `EnterWorktree` creates linked worktrees here,
+# each a full checkout of this repository. They must never be committed: a
+# `git add -A` from any session would otherwise vendor an entire second copy of
+# the tree. See also the matching Vitest exclude in `vitest.config.mjs`.
+.claude/worktrees/
+
 
 # Reference captures + recordings: regenerable evidence, disk-only (see DECISIONS D-006)
 qa/reference/**/*.png
