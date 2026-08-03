@@ -339,5 +339,271 @@
     "auto": "Automatic scrolling",
     "pause": "Pause the scrolling",
     "resume": "Resume the scrolling"
+  },
+  "proof": {
+    "eyebrow": "Proof through results",
+    "title": "Documented results, not just promises.",
+    "lead": "Every case study ties our devices to your goals: qualified contacts, generated opportunities, project visits and attributed sales.",
+    "ctaAll": "View all case studies",
+    "caseLabel": "Client case",
+    "badge": "Data under validation",
+    "logoSlot": "Client logo",
+    "caseTitle": "From the exhibition to the sales pipeline.",
+    "caseText": "A documented journey, from first interactions to attributed sales.",
+    "caseCta": "Discover the case study",
+    "voicesLabel": "Decision-makers speak",
+    "voiceTitle": "Sales management",
+    "voiceText": "Testimonial tied to this case study",
+    "voiceCta": "Watch the testimonial",
+    "steps": {
+      "interactions": "Interactions",
+      "leads": "Accepted leads",
+      "opportunities": "Opportunities",
+      "visits": "Project visits",
+      "bookings": "Bookings",
+      "sales": "Attributed sales"
+    },
+    "funnelNote": "Indicators published after validation of the sources and the attribution period.",
+    "method": {
+      "framed": {
+        "title": "Framed methodology",
+        "text": "Definitions, sources and attribution validated."
+      },
+      "transparent": {
+        "title": "Full transparency",
+        "text": "Verifiable indicators, no generic promises."
+      },
+      "informed": {
+        "title": "Informed decisions",
+        "text": "Evidence to compare and prioritise."
+      }
+    },
+    "methodCta": "View the methodology"
+  },
+  "offers": {
+    "eyebrow": "Exhibitor offers",
+    "stepperLabel": "Request progress",
+    "stepper": {
+      "edition": "Edition",
+      "offer": "Offer",
+      "request": "Request"
+    },
+    "header": {
+      "choose": {
+        "title": "Choose your level of presence, in full transparency.",
+        "lead": "Contents, availability and conditions are configured exhibition by exhibition."
+      },
+      "request": {
+        "title": "Describe your project to receive a tailored proposal.",
+        "lead": "A few details are enough to contextualise your {tier} offer."
+      },
+      "sent": {
+        "title": "Your request has been sent.",
+        "lead": "Our sales team will verify the information and prepare a contextualised proposal."
+      }
+    },
+    "intro": {
+      "stepTag": "Step 01 / 03",
+      "title": "Start by choosing an edition.",
+      "text": "We will load the offers, availability and options matching the selected exhibition.",
+      "selectLabel": "Choose an edition",
+      "configNote": "Configuration required"
+    },
+    "notes": {
+      "noPublication": "No price, benefit or availability is published without commercial validation.",
+      "pendingValidation": "Final availability remains subject to commercial validation.",
+      "confirmedInProposal": "Final availability and conditions will be confirmed in the commercial proposal."
+    },
+    "preview": {
+      "label": "Presence levels at a glance",
+      "recommended": "Recommended",
+      "lockedNote": "Details become available after selecting the exhibition."
+    },
+    "summary": {
+      "label": "Selected edition",
+      "offersAvailable": "Offers available",
+      "edit": "Change"
+    },
+    "tiers": {
+      "quote": "On quotation",
+      "standard": {
+        "name": "Standard",
+        "chip": "Presence",
+        "preview": "Essential presence",
+        "desc": "The essentials to exhibit and meet a qualified audience.",
+        "features": {
+          "0": "Space & stand",
+          "1": "Campaign visibility",
+          "2": "Access to leads",
+          "3": "Reporting"
+        },
+        "cta": "Choose Standard"
+      },
+      "premium": {
+        "name": "Premium",
+        "chip": "Visibility",
+        "preview": "Reinforced visibility",
+        "desc": "Reinforced visibility before, during and after the exhibition.",
+        "features": {
+          "0": "Space & stand",
+          "1": "Reinforced visibility",
+          "2": "Speaking slot",
+          "3": "Leads & reporting"
+        },
+        "cta": "Choose Premium"
+      },
+      "sponsor": {
+        "name": "Sponsor",
+        "chip": "Leadership",
+        "preview": "Priority positioning",
+        "desc": "A priority presence to put your brand front and centre.",
+        "features": {
+          "0": "Signature space",
+          "1": "Priority visibility",
+          "2": "Premium speaking slot",
+          "3": "Exclusivity & leads"
+        },
+        "cta": "Choose Sponsor"
+      }
+    },
+    "optionsBar": {
+      "title": "Options available",
+      "sub": "after selecting an offer"
+    },
+    "options": {
+      "speaking": "Speaking slot",
+      "interview": "Interview",
+      "placement": "Enhanced placement",
+      "networking": "Networking",
+      "exclusivity": "Exclusivity"
+    },
+    "reassure": {
+      "contextual": {
+        "title": "Contextualised offers",
+        "sub": "Based on the chosen edition"
+      },
+      "verified": {
+        "title": "Verified availability",
+        "sub": "Commercial validation"
+      },
+      "tailored": {
+        "title": "Personalised proposal",
+        "sub": "Based on your goals"
+      }
+    },
+    "request": {
+      "recapLabel": "Selected offer",
+      "editOffer": "Change the offer",
+      "stepTag": "Step 03 / 03",
+      "formTitle": "Tell us about your project."
+    },
+    "form": {
+      "objectiveLabel": "Your objective",
+      "selectPlaceholder": "Select",
+      "market": {
+        "label": "Target market",
+        "choices": {
+          "france": "France",
+          "belgique": "Belgium",
+          "canada": "Canada",
+          "emirats": "United Arab Emirates",
+          "royaume-uni": "United Kingdom",
+          "multi": "Several markets"
+        }
+      },
+      "goal": {
+        "label": "Commercial objective",
+        "choices": {
+          "leads": "Generate qualified contacts",
+          "notoriety": "Build brand awareness",
+          "launch": "Launch a new programme",
+          "other": "Another objective"
+        }
+      },
+      "surface": {
+        "label": "Desired surface",
+        "choices": {
+          "compact": "Compact stand",
+          "medium": "Mid-size stand",
+          "large": "Large surface",
+          "tbd": "To define with an advisor"
+        }
+      },
+      "optionsLabel": "Desired options",
+      "contactLabel": "Your contact details",
+      "name": {
+        "label": "Full name",
+        "placeholder": "Enter your full name"
+      },
+      "company": {
+        "label": "Company",
+        "placeholder": "Enter your company name"
+      },
+      "email": {
+        "label": "Business email",
+        "placeholder": "Enter your business email"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter your phone number"
+      },
+      "consent": "I agree to be contacted about this request.",
+      "submit": "Send my request",
+      "sending": "Sending…",
+      "advisorNote": "An exhibitor advisor will get back to you with a contextualised proposal.",
+      "errors": {
+        "name": "Enter your full name.",
+        "email": "Enter a valid email address.",
+        "consent": "Consent is required so we can contact you.",
+        "rateLimited": "Too many consecutive requests. Please try again in a few minutes.",
+        "generic": "The request could not be sent. Please check the fields and try again."
+      }
+    },
+    "sent": {
+      "badge": "Request sent",
+      "title": "Thank you for your request.",
+      "text": "Your edition, your offer and your goals have been passed to the exhibitor team.",
+      "duplicateText": "This request was already recorded: the exhibitor team has your information.",
+      "recapTitle": "Summary",
+      "recapEdition": "Edition",
+      "recapOffer": "Offer",
+      "recapProject": "Project",
+      "recapProjectSub": "Information sent",
+      "backToOffers": "Back to the offers",
+      "casesLink": "Discover the case studies"
+    },
+    "next": {
+      "label": "What happens next",
+      "title": "A proposal built with you.",
+      "steps": {
+        "check": {
+          "title": "Commercial verification",
+          "text": "Validation of the information and availability."
+        },
+        "adjust": {
+          "title": "Offer adjustment",
+          "text": "Alignment with your goals and options."
+        },
+        "send": {
+          "title": "Proposal delivery",
+          "text": "Presentation of a clear, contextualised offer."
+        }
+      },
+      "advisor": "An exhibitor advisor remains your point of contact."
+    },
+    "reassureSent": {
+      "data": {
+        "title": "Protected data",
+        "sub": "Processing limited to your request"
+      },
+      "transparency": {
+        "title": "Commercial transparency",
+        "sub": "No availability published without validation"
+      },
+      "support": {
+        "title": "Dedicated support",
+        "sub": "A proposal tailored to your project"
+      }
+    }
   }
 }

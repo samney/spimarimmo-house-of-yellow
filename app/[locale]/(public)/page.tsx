@@ -7,6 +7,8 @@ import { ImpactMetricsSection } from "@/components/public/home/ImpactMetricsSect
 import { MreMarketSection } from "@/components/public/home/MreMarketSection";
 import { VisibilitySection } from "@/components/public/home/VisibilitySection";
 import { PromotersSection } from "@/components/public/home/PromotersSection";
+import { ProofSection } from "@/components/public/home/ProofSection";
+import { OffersSection } from "@/components/public/home/offers/OffersSection";
 import { ClosingSection } from "@/components/public/home/ClosingSection";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -23,6 +25,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <MreMarketSection />
       <VisibilitySection />
       <PromotersSection />
+      <ProofSection />
+      <OffersSection />
       <ClosingSection />
     </>
   );

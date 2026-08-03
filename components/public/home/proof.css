@@ -1,0 +1,641 @@
+/* ==========================================================================
+   Section 09 — La preuve par les résultats (case-study proof)
+   ==========================================================================
+   Binds only to L2 semantic tokens. Paper header, one dark rounded panel
+   carrying the video plane, the featured case and the attribution funnel
+   rail, then a methodology strip back on paper — the same dark-panel-on-paper
+   rhythm as sections 05-08. The video chrome is decorative illustration.
+   ========================================================================== */
+
+.proofSection {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.proofInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header (same hierarchy as section 08) ---------------------------------- */
+
+.proofHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.proofEyebrow {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.proofEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.proofTitle {
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 var(--space-sm);
+  max-width: 58vw;
+  text-wrap: balance;
+}
+
+.proofLead {
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+.proofCta {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  margin-top: var(--space-lg);
+  padding: var(--space-xs) var(--space-sm);
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.proofCta:hover {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.proofCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.proofCtaIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+/* --- Dark panel -------------------------------------------------------------- */
+
+.proofPanel {
+  background: var(--surface-inverse);
+  border-radius: var(--radius-xl);
+  color: var(--on-inverse);
+  padding: var(--space-md);
+}
+
+.proofMain {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1.55fr 1fr;
+}
+
+/* --- Video plane (decorative illustration) ----------------------------------- */
+
+.proofVideo {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.proofVideoPoster {
+  object-fit: cover;
+}
+
+.proofVideoScrim {
+  background: linear-gradient(180deg, transparent 55%, rgb(0 0 0 / 0.55) 100%);
+  inset: 0;
+  position: absolute;
+}
+
+.proofPlayMain {
+  align-items: center;
+  background: rgb(0 0 0 / 0.65);
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: 50%;
+  block-size: 4.2vw;
+  color: var(--on-inverse);
+  display: inline-flex;
+  inline-size: 4.2vw;
+  inset-block-end: 2.6vw;
+  inset-inline-start: var(--space-md);
+  justify-content: center;
+  position: absolute;
+}
+
+.proofPlayMainIcon {
+  height: 1.7vw;
+  width: 1.7vw;
+}
+
+.proofVideoBar {
+  align-items: center;
+  display: flex;
+  gap: var(--space-sm);
+  inset-block-end: var(--space-sm);
+  inset-inline: var(--space-md);
+  position: absolute;
+}
+
+.proofVideoTime {
+  flex: none;
+  font-size: var(--text-base);
+  font-variant-numeric: tabular-nums;
+}
+
+.proofVideoTrack {
+  background: rgb(255 255 255 / 0.3);
+  block-size: 0.2vw;
+  border-radius: var(--radius-pill);
+  flex: 1;
+  overflow: hidden;
+}
+
+.proofVideoFill {
+  background: var(--action-primary);
+  block-size: 100%;
+  border-radius: inherit;
+  display: block;
+  inline-size: 52%;
+}
+
+.proofVideoCtl {
+  flex: none;
+  height: 1.05vw;
+  width: 1.05vw;
+}
+
+/* --- Case column -------------------------------------------------------------- */
+
+.proofCase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-block: var(--space-xs);
+}
+
+.proofCaseHead {
+  align-items: center;
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: space-between;
+}
+
+.proofCaseLabel,
+.proofVoicesLabel {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.proofBadge {
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-pill);
+  color: var(--on-inverse-muted);
+  font-size: var(--text-base);
+  letter-spacing: 0.1em;
+  padding: 0.35vw var(--space-sm);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.proofCaseBody {
+  align-items: center;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* Dashed slot: the client mark appears here once a case is approved. */
+.proofLogoSlot {
+  align-items: center;
+  align-self: stretch;
+  border: 1px dashed var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--on-inverse-muted);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-base);
+  justify-content: center;
+  letter-spacing: 0.12em;
+  min-block-size: 6.5vw;
+  padding: var(--space-xs);
+  text-align: center;
+  text-transform: uppercase;
+  inline-size: 6.5vw;
+}
+
+.proofCaseTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  line-height: 1.12;
+  margin: 0 0 var(--space-xs);
+  text-wrap: balance;
+}
+
+.proofCaseText {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.proofCaseCta {
+  align-items: center;
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  justify-content: center;
+  padding: var(--space-xs) var(--space-md);
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.proofCaseCta:hover {
+  background: var(--action-primary-hover);
+}
+
+.proofCaseCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+/* --- Testimonial row ---------------------------------------------------------- */
+
+.proofVoices {
+  border-top: 1px solid var(--border-inverse);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xs);
+  padding-top: var(--space-sm);
+}
+
+.proofVoice {
+  align-items: center;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.proofVoiceThumb {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  flex: none;
+  inline-size: 9.5vw;
+  overflow: hidden;
+  position: relative;
+}
+
+.proofVoiceImg {
+  object-fit: cover;
+}
+
+.proofVoicePlay {
+  align-items: center;
+  background: rgb(0 0 0 / 0.65);
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: 50%;
+  block-size: 1.8vw;
+  color: var(--on-inverse);
+  display: inline-flex;
+  inline-size: 1.8vw;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  justify-content: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.proofVoicePlayIcon {
+  height: 0.8vw;
+  width: 0.8vw;
+}
+
+.proofVoiceTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+  margin: 0 0 var(--space-3xs);
+}
+
+.proofVoiceText {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-base);
+  margin: 0 0 var(--space-2xs);
+}
+
+.proofVoiceLink {
+  align-items: center;
+  color: var(--action-primary);
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-2xs);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.proofVoiceLink:hover {
+  color: var(--action-primary-hover);
+}
+
+.proofVoiceLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+/* --- Attribution funnel rail --------------------------------------------------- */
+
+.proofFunnel {
+  align-items: center;
+  border-top: 1px solid var(--border-inverse);
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+}
+
+.proofSteps {
+  display: flex;
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.proofStep {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-xs);
+  position: relative;
+  text-align: center;
+}
+
+/* Connector between circles: from this circle's edge to the next one's. */
+.proofStep:not(:last-child)::after {
+  background: var(--border-inverse);
+  block-size: 1px;
+  content: "";
+  inset-block-start: 1.7vw;
+  inset-inline-start: calc(50% + 2.2vw);
+  inline-size: calc(100% - 4.4vw);
+  position: absolute;
+}
+
+.proofStepCircle {
+  align-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: 50%;
+  block-size: 3.4vw;
+  color: var(--action-primary);
+  display: inline-flex;
+  inline-size: 3.4vw;
+  justify-content: center;
+}
+
+.proofStepIcon {
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+.proofStepLabel {
+  font-size: var(--text-support);
+}
+
+.proofFunnelNote {
+  align-items: center;
+  border-inline-start: 1px solid var(--border-inverse);
+  color: var(--on-inverse-muted);
+  display: flex;
+  flex: none;
+  font-size: var(--text-support);
+  gap: var(--space-sm);
+  line-height: 1.5;
+  margin: 0;
+  max-inline-size: 22vw;
+  padding-inline-start: var(--space-md);
+}
+
+.proofFunnelNoteIcon {
+  color: var(--on-inverse);
+  flex: none;
+  height: 2vw;
+  width: 2vw;
+}
+
+/* --- Methodology strip ---------------------------------------------------------- */
+
+.proofMethod {
+  align-items: center;
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.proofMethodItem {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: var(--space-sm);
+}
+
+.proofMethodItem + .proofMethodItem {
+  border-inline-start: 1px solid var(--border-subtle);
+  padding-inline-start: var(--space-md);
+}
+
+.proofMethodIcon {
+  flex: none;
+  height: 2.2vw;
+  width: 2.2vw;
+}
+
+.proofMethodTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+  margin: 0 0 var(--space-3xs);
+}
+
+.proofMethodText {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+.proofMethodLink {
+  align-items: center;
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-2xs);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.proofMethodLink:hover {
+  color: var(--action-primary-hover);
+}
+
+.proofMethodLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+/* --- Reduced motion -------------------------------------------------------------
+   Nothing here animates; the hover transitions are colour-only. Declared for
+   parity with the sibling sections. */
+
+@media (prefers-reduced-motion: reduce) {
+  .proofCta,
+  .proofCaseCta {
+    transition: none;
+  }
+}
+
+/* --- Mobile regime (matches the global 580 restatement) -------------------------- */
+
+@media (max-width: 580px) {
+  .proofHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .proofTitle {
+    max-width: 100%;
+  }
+
+  .proofCta {
+    margin-top: 0;
+  }
+
+  .proofMain {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .proofPanel {
+    padding: var(--space-sm);
+  }
+
+  .proofPlayMain {
+    block-size: 12vw;
+    inline-size: 12vw;
+    inset-block-end: 10vw;
+  }
+
+  .proofPlayMainIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .proofVideoCtl {
+    height: 3.4vw;
+    width: 3.4vw;
+  }
+
+  .proofVideoTrack {
+    block-size: 0.8vw;
+  }
+
+  .proofLogoSlot {
+    inline-size: 20vw;
+    min-block-size: 20vw;
+  }
+
+  .proofVoiceThumb {
+    inline-size: 26vw;
+  }
+
+  .proofVoicePlay {
+    block-size: 7vw;
+    inline-size: 7vw;
+  }
+
+  .proofVoicePlayIcon {
+    height: 3vw;
+    width: 3vw;
+  }
+
+  .proofFunnel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .proofSteps {
+    display: grid;
+    gap: var(--space-md) var(--space-sm);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .proofStep:not(:last-child)::after {
+    content: none;
+  }
+
+  .proofStepCircle {
+    block-size: 11vw;
+    inline-size: 11vw;
+  }
+
+  .proofStepIcon {
+    height: 4.6vw;
+    width: 4.6vw;
+  }
+
+  .proofFunnelNote {
+    border-inline-start: 0;
+    border-top: 1px solid var(--border-inverse);
+    max-inline-size: 100%;
+    padding-inline-start: 0;
+    padding-top: var(--space-sm);
+  }
+
+  .proofFunnelNoteIcon {
+    height: 6vw;
+    width: 6vw;
+  }
+
+  .proofMethod {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .proofMethodItem + .proofMethodItem {
+    border-inline-start: 0;
+    border-top: 1px solid var(--border-subtle);
+    padding-inline-start: 0;
+    padding-top: var(--space-sm);
+  }
+
+  .proofMethodIcon {
+    height: 7vw;
+    width: 7vw;
+  }
+}

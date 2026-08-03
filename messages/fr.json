@@ -339,5 +339,271 @@
     "auto": "Défilement automatique",
     "pause": "Suspendre le défilement",
     "resume": "Reprendre le défilement"
+  },
+  "proof": {
+    "eyebrow": "La preuve par les résultats",
+    "title": "Des résultats documentés, pas seulement des promesses.",
+    "lead": "Chaque étude de cas relie nos dispositifs à vos objectifs : contacts qualifiés, opportunités générées, visites projet et ventes attribuées.",
+    "ctaAll": "Voir toutes les études de cas",
+    "caseLabel": "Cas client",
+    "badge": "Données en validation",
+    "logoSlot": "Logo client",
+    "caseTitle": "Du salon au pipeline commercial.",
+    "caseText": "Un parcours documenté, des premières interactions aux ventes attribuées.",
+    "caseCta": "Découvrir l’étude de cas",
+    "voicesLabel": "La parole aux décideurs",
+    "voiceTitle": "Direction commerciale",
+    "voiceText": "Témoignage lié à cette étude de cas",
+    "voiceCta": "Voir le témoignage",
+    "steps": {
+      "interactions": "Interactions",
+      "leads": "Leads acceptés",
+      "opportunities": "Opportunités",
+      "visits": "Visites projet",
+      "bookings": "Réservations",
+      "sales": "Ventes attribuées"
+    },
+    "funnelNote": "Indicateurs publiés après validation des sources et de la période d’attribution.",
+    "method": {
+      "framed": {
+        "title": "Méthodologie cadrée",
+        "text": "Définitions, sources et attribution validées."
+      },
+      "transparent": {
+        "title": "Transparence totale",
+        "text": "Indicateurs vérifiables, sans promesse générique."
+      },
+      "informed": {
+        "title": "Décisions éclairées",
+        "text": "Des preuves pour comparer et prioriser."
+      }
+    },
+    "methodCta": "Voir la méthodologie"
+  },
+  "offers": {
+    "eyebrow": "Offres exposants",
+    "stepperLabel": "Progression de la demande",
+    "stepper": {
+      "edition": "Édition",
+      "offer": "Offre",
+      "request": "Demande"
+    },
+    "header": {
+      "choose": {
+        "title": "Choisissez votre niveau de présence, en toute transparence.",
+        "lead": "Les contenus, disponibilités et conditions sont configurés salon par salon."
+      },
+      "request": {
+        "title": "Précisez votre projet pour recevoir une proposition adaptée.",
+        "lead": "Quelques informations suffisent pour contextualiser votre offre {tier}."
+      },
+      "sent": {
+        "title": "Votre demande a bien été transmise.",
+        "lead": "Notre équipe commerciale va vérifier les informations et préparer une proposition contextualisée."
+      }
+    },
+    "intro": {
+      "stepTag": "Étape 01 / 03",
+      "title": "Commencez par choisir une édition.",
+      "text": "Nous chargerons les offres, disponibilités et options correspondant au salon sélectionné.",
+      "selectLabel": "Choisir une édition",
+      "configNote": "Configuration requise"
+    },
+    "notes": {
+      "noPublication": "Aucun prix, avantage ou disponibilité n’est publié sans validation commerciale.",
+      "pendingValidation": "Les disponibilités finales restent soumises à validation commerciale.",
+      "confirmedInProposal": "Les disponibilités et conditions finales seront confirmées dans la proposition commerciale."
+    },
+    "preview": {
+      "label": "Aperçu des niveaux de présence",
+      "recommended": "Recommandé",
+      "lockedNote": "Les détails seront disponibles après sélection du salon."
+    },
+    "summary": {
+      "label": "Édition sélectionnée",
+      "offersAvailable": "Offres disponibles",
+      "edit": "Modifier"
+    },
+    "tiers": {
+      "quote": "Sur devis",
+      "standard": {
+        "name": "Standard",
+        "chip": "Présence",
+        "preview": "Présence essentielle",
+        "desc": "L’essentiel pour exposer et rencontrer une audience qualifiée.",
+        "features": {
+          "0": "Espace & stand",
+          "1": "Visibilité campagne",
+          "2": "Accès aux leads",
+          "3": "Reporting"
+        },
+        "cta": "Choisir Standard"
+      },
+      "premium": {
+        "name": "Premium",
+        "chip": "Visibilité",
+        "preview": "Visibilité renforcée",
+        "desc": "Une visibilité renforcée avant, pendant et après le salon.",
+        "features": {
+          "0": "Espace & stand",
+          "1": "Visibilité renforcée",
+          "2": "Prise de parole",
+          "3": "Leads & reporting"
+        },
+        "cta": "Choisir Premium"
+      },
+      "sponsor": {
+        "name": "Sponsor",
+        "chip": "Leadership",
+        "preview": "Positionnement prioritaire",
+        "desc": "Une présence prioritaire pour porter votre marque au premier plan.",
+        "features": {
+          "0": "Espace signature",
+          "1": "Visibilité prioritaire",
+          "2": "Prise de parole premium",
+          "3": "Exclusivité & leads"
+        },
+        "cta": "Choisir Sponsor"
+      }
+    },
+    "optionsBar": {
+      "title": "Options disponibles",
+      "sub": "après sélection de l’offre"
+    },
+    "options": {
+      "speaking": "Prise de parole",
+      "interview": "Interview",
+      "placement": "Placement renforcé",
+      "networking": "Networking",
+      "exclusivity": "Exclusivité"
+    },
+    "reassure": {
+      "contextual": {
+        "title": "Offres contextualisées",
+        "sub": "Selon l’édition choisie"
+      },
+      "verified": {
+        "title": "Disponibilités vérifiées",
+        "sub": "Validation commerciale"
+      },
+      "tailored": {
+        "title": "Proposition personnalisée",
+        "sub": "Selon vos objectifs"
+      }
+    },
+    "request": {
+      "recapLabel": "Offre sélectionnée",
+      "editOffer": "Modifier l’offre",
+      "stepTag": "Étape 03 / 03",
+      "formTitle": "Parlez-nous de votre projet."
+    },
+    "form": {
+      "objectiveLabel": "Votre objectif",
+      "selectPlaceholder": "Sélectionner",
+      "market": {
+        "label": "Marché visé",
+        "choices": {
+          "france": "France",
+          "belgique": "Belgique",
+          "canada": "Canada",
+          "emirats": "Émirats Arabes Unis",
+          "royaume-uni": "Royaume-Uni",
+          "multi": "Plusieurs marchés"
+        }
+      },
+      "goal": {
+        "label": "Objectif commercial",
+        "choices": {
+          "leads": "Générer des contacts qualifiés",
+          "notoriety": "Renforcer la notoriété",
+          "launch": "Lancer un nouveau programme",
+          "other": "Autre objectif"
+        }
+      },
+      "surface": {
+        "label": "Surface souhaitée",
+        "choices": {
+          "compact": "Stand compact",
+          "medium": "Stand intermédiaire",
+          "large": "Grande surface",
+          "tbd": "À définir avec un conseiller"
+        }
+      },
+      "optionsLabel": "Options souhaitées",
+      "contactLabel": "Vos coordonnées",
+      "name": {
+        "label": "Nom et prénom",
+        "placeholder": "Saisir votre nom et prénom"
+      },
+      "company": {
+        "label": "Entreprise",
+        "placeholder": "Saisir le nom de votre entreprise"
+      },
+      "email": {
+        "label": "E-mail professionnel",
+        "placeholder": "Saisir votre e-mail professionnel"
+      },
+      "phone": {
+        "label": "Téléphone",
+        "placeholder": "Saisir votre numéro de téléphone"
+      },
+      "consent": "J’accepte d’être recontacté au sujet de cette demande.",
+      "submit": "Envoyer ma demande",
+      "sending": "Envoi en cours…",
+      "advisorNote": "Un conseiller exposants vous recontacte avec une proposition contextualisée.",
+      "errors": {
+        "name": "Indiquez votre nom et prénom.",
+        "email": "Saisissez une adresse e-mail valide.",
+        "consent": "Le consentement est requis pour être recontacté.",
+        "rateLimited": "Trop de demandes successives. Merci de réessayer dans quelques minutes.",
+        "generic": "La demande n’a pas pu être transmise. Merci de vérifier les champs et de réessayer."
+      }
+    },
+    "sent": {
+      "badge": "Demande envoyée",
+      "title": "Merci pour votre demande.",
+      "text": "Votre édition, votre offre et vos objectifs ont été transmis à l’équipe exposants.",
+      "duplicateText": "Cette demande était déjà enregistrée : l’équipe exposants dispose de vos informations.",
+      "recapTitle": "Récapitulatif",
+      "recapEdition": "Édition",
+      "recapOffer": "Offre",
+      "recapProject": "Projet",
+      "recapProjectSub": "Informations transmises",
+      "backToOffers": "Retour aux offres",
+      "casesLink": "Découvrir les études de cas"
+    },
+    "next": {
+      "label": "La suite",
+      "title": "Une proposition construite avec vous.",
+      "steps": {
+        "check": {
+          "title": "Vérification commerciale",
+          "text": "Validation des informations et disponibilités."
+        },
+        "adjust": {
+          "title": "Ajustement de l’offre",
+          "text": "Alignement avec vos objectifs et options."
+        },
+        "send": {
+          "title": "Envoi de la proposition",
+          "text": "Présentation d’une offre claire et contextualisée."
+        }
+      },
+      "advisor": "Un conseiller exposants reste votre point de contact."
+    },
+    "reassureSent": {
+      "data": {
+        "title": "Données protégées",
+        "sub": "Traitement limité à votre demande"
+      },
+      "transparency": {
+        "title": "Transparence commerciale",
+        "sub": "Aucune disponibilité publiée sans validation"
+      },
+      "support": {
+        "title": "Accompagnement dédié",
+        "sub": "Une proposition adaptée à votre projet"
+      }
+    }
   }
 }
