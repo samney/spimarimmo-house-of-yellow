@@ -6,5 +6,39 @@
     "howWeRoll": "How we roll",
     "connect": "Connect",
     "menu": "Menu"
+  },
+  "impact": {
+    "eyebrow": "Key figures",
+    "title": "Impact, measured.",
+    "lead": "Six indicators tracking the reach and performance of every edition.",
+    "status": "Sources in validation",
+    "note": "Official figures are published once the sources are validated.",
+    "methodology": "See the methodology",
+    "indicators": {
+      "events": {
+        "label": "Exhibitions held",
+        "caption": "International editions"
+      },
+      "visitors": {
+        "label": "Visitors welcomed",
+        "caption": "Qualified audience"
+      },
+      "exhibitors": {
+        "label": "Exhibitors supported",
+        "caption": "End-to-end follow-up"
+      },
+      "countries": {
+        "label": "Countries covered",
+        "caption": "International network"
+      },
+      "leads": {
+        "label": "Leads generated",
+        "caption": "Detected intent"
+      },
+      "satisfaction": {
+        "label": "Satisfaction rate",
+        "caption": "Measured experience"
+      }
+    }
   }
 }

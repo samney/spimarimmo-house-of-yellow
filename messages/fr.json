@@ -6,5 +6,39 @@
     "howWeRoll": "How we roll",
     "connect": "Connect",
     "menu": "Menu"
+  },
+  "impact": {
+    "eyebrow": "Chiffres clés",
+    "title": "L’impact, mesuré.",
+    "lead": "Six indicateurs pour suivre la portée et la performance de chaque édition.",
+    "status": "Sources en validation",
+    "note": "Données officielles publiées après validation des sources.",
+    "methodology": "Voir la méthodologie",
+    "indicators": {
+      "events": {
+        "label": "Salons organisés",
+        "caption": "Éditions internationales"
+      },
+      "visitors": {
+        "label": "Visiteurs accueillis",
+        "caption": "Audience qualifiée"
+      },
+      "exhibitors": {
+        "label": "Exposants accompagnés",
+        "caption": "Suivi de bout en bout"
+      },
+      "countries": {
+        "label": "Pays couverts",
+        "caption": "Réseau international"
+      },
+      "leads": {
+        "label": "Leads générés",
+        "caption": "Intentions détectées"
+      },
+      "satisfaction": {
+        "label": "Taux de satisfaction",
+        "caption": "Expérience mesurée"
+      }
+    }
   }
 }
