@@ -2,25 +2,30 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import type { Destination, Lead, MediaAsset, Page, PublishState, SpimarEvent } from "./types";
+import type { Destination, Lead, MediaAsset, Page, PublishState, SpimarEvent } from "../types";
 
-/* Repository layer.
+/* File-backed store engine.
 
-   Persistence follows the convention already established by
-   `lib/contact/store.ts`: newline-delimited JSON under `.data/`, which is
-   gitignored. This is the documented substitute while `P-1` leaves Supabase
-   credentials unavailable (`D-021`).
+   Persistence follows the convention established by `lib/contact/store.ts`:
+   newline-delimited JSON under `.data/`, which is gitignored. This is the
+   documented substitute while `P-1` leaves Supabase credentials unavailable
+   (`D-021`).
 
-   Every public read and every CMS write goes through the functions below, so
-   swapping in a Supabase adapter is a change to this file alone. Callers never
-   touch storage directly. No provider is claimed to be live. */
+   This module is internal to `lib/spimar/repositories/`. Application code
+   depends on the seams in `lib/backend/` and obtains an implementation from
+   the composition root (`./index.ts`) — never from here. No provider is
+   claimed to be live. */
 
-const DATA_DIR = path.join(process.cwd(), ".data");
+function dataDir(): string {
+  // Overridable so contract tests run against a throwaway directory instead of
+  // the developer's working store. Never set in production.
+  return process.env.SPIMAR_DATA_DIR ?? path.join(process.cwd(), ".data");
+}
 
 type Collection = "destinations" | "events" | "pages" | "media" | "leads";
 
 function file(collection: Collection): string {
-  return path.join(DATA_DIR, `spimar-${collection}.jsonl`);
+  return path.join(dataDir(), `spimar-${collection}.jsonl`);
 }
 
 function readAll<T>(collection: Collection): T[] {
@@ -34,7 +39,7 @@ function readAll<T>(collection: Collection): T[] {
 }
 
 function writeAll<T>(collection: Collection, rows: T[]): void {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.mkdirSync(dataDir(), { recursive: true });
   fs.writeFileSync(file(collection), rows.map((r) => JSON.stringify(r)).join("\n") + "\n", "utf8");
 }
 
@@ -196,7 +201,7 @@ export function deleteRecord(collection: Exclude<Collection, "leads">, id: strin
 
 /* --------------------------------------------------------------------- CRM */
 
-export function dedupeKeyFor(kind: string, email: string, message: string): string {
+function dedupeKeyFor(kind: string, email: string, message: string): string {
   return crypto
     .createHash("sha256")
     .update(`${kind}|${email.trim().toLowerCase()}|${message.trim()}`)
@@ -213,12 +218,17 @@ export function getLead(id: string): Lead | null {
 
 /** Returns the stored lead, or `null` when it duplicates a recent submission.
     The caller must not report success on `null` — an unstored submission is
-    never confirmed to the visitor. */
-export function createLead(input: Omit<Lead, "id" | "createdAt" | "updatedAt" | "activity">) {
+    never confirmed to the visitor. The dedupe key is computed here: callers
+    never mint storage keys. */
+export function createLead(
+  input: Omit<Lead, "id" | "createdAt" | "updatedAt" | "activity" | "dedupeKey">,
+) {
+  const dedupeKey = dedupeKeyFor(input.kind, input.email, input.message);
   const rows = readAll<Lead>("leads");
-  if (rows.some((r) => r.dedupeKey === input.dedupeKey)) return null;
+  if (rows.some((r) => r.dedupeKey === dedupeKey)) return null;
   const record: Lead = {
     ...input,
+    dedupeKey,
     id: newId(),
     createdAt: now(),
     updatedAt: now(),

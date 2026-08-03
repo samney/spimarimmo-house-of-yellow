@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { readSession } from "@/lib/spimar/auth";
-import { listLeads } from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export default async function LeadsAdmin() {
   const session = await readSession();
   if (!session) redirect("/admin/login");
-  const leads = listLeads();
+  const leads = await getAdminSeams().crm.listLeads();
 
   return (
     <>

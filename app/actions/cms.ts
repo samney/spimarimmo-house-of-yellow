@@ -11,14 +11,7 @@ import {
   startSession,
   verifyCredentials,
 } from "@/lib/spimar/auth";
-import {
-  deleteRecord,
-  saveDestination,
-  saveEvent,
-  saveMedia,
-  savePage,
-  updateLead,
-} from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 import type { LeadStage, Localized, PublishState } from "@/lib/spimar/types";
 
 /* CMS and CRM server actions.
@@ -94,7 +87,7 @@ export async function savePageAction(
   if (!slug) return { ok: false, message: "A slug is required." };
 
   const state = requestedState(form, canPublish(session));
-  savePage(
+  await getAdminSeams().cms.savePage(
     {
       id: String(form.get("id") ?? "") || undefined,
       slug,
@@ -136,7 +129,7 @@ export async function saveEventAction(
   }
 
   const state = requestedState(form, canPublish(session));
-  saveEvent(
+  await getAdminSeams().cms.saveEvent(
     {
       id: String(form.get("id") ?? "") || undefined,
       slug,
@@ -175,7 +168,7 @@ export async function saveDestinationAction(
   if (!slug) return { ok: false, message: "A slug is required." };
 
   const state = requestedState(form, canPublish(session));
-  saveDestination(
+  await getAdminSeams().cms.saveDestination(
     {
       id: String(form.get("id") ?? "") || undefined,
       slug,
@@ -216,7 +209,7 @@ export async function saveMediaAction(
   }
 
   const state = requestedState(form, canPublish(session));
-  saveMedia(
+  await getAdminSeams().cms.saveMedia(
     {
       id: String(form.get("id") ?? "") || undefined,
       src,
@@ -238,7 +231,7 @@ export async function deleteContentAction(
   if (!session || !canPublish(session)) {
     return { ok: false, message: "Deleting content requires an administrator." };
   }
-  const removed = deleteRecord(collection, id);
+  const removed = await getAdminSeams().cms.deleteRecord(collection, id);
   revalidatePublic(["/", "/salons"]);
   return removed
     ? { ok: true, message: "Deleted." }
@@ -268,7 +261,11 @@ export async function updateLeadAction(
   if (intent === "note") {
     const detail = String(form.get("note") ?? "").trim();
     if (!detail) return { ok: false, message: "A note cannot be empty." };
-    const updated = updateLead(id, {}, { by: session.email, kind: "note", detail });
+    const updated = await getAdminSeams().crm.updateLead(
+      id,
+      {},
+      { by: session.email, kind: "note", detail },
+    );
     refresh();
     return updated
       ? { ok: true, message: "Note added." }
@@ -279,7 +276,7 @@ export async function updateLeadAction(
     const stage = String(form.get("stage") ?? "") as LeadStage;
     const allowed: LeadStage[] = ["new", "qualified", "in_progress", "won", "lost"];
     if (!allowed.includes(stage)) return { ok: false, message: "That stage is not recognised." };
-    const updated = updateLead(
+    const updated = await getAdminSeams().crm.updateLead(
       id,
       { stage },
       { by: session.email, kind: "stage", detail: `Stage set to ${stage}` },
@@ -292,7 +289,7 @@ export async function updateLeadAction(
 
   if (intent === "assign") {
     const assignee = String(form.get("assignee") ?? "").trim();
-    const updated = updateLead(
+    const updated = await getAdminSeams().crm.updateLead(
       id,
       { assignee },
       {
