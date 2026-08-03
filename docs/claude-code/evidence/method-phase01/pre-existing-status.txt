@@ -1,0 +1,155 @@
+ M app/globals.css
+ M components/public/global/SiteFooter.tsx
+ M components/public/global/SiteHeader.tsx
+ M components/public/global/logos.tsx
+ M components/public/global/shell.css
+ M components/public/home/AboutWorkSection.tsx
+ M components/public/home/ClosingSection.tsx
+ M components/public/home/ServicesSection.tsx
+ M components/public/home/home.css
+ M messages/en.json
+ M messages/fr.json
+ M qa/backend/db/results/canonical-conformance.json
+ M qa/backend/db/results/pglite-validation.json
+ M qa/backend/db/results/schema-contract.json
+ M qa/backend/db/results/schema-inventory.json
+?? app/[locale]/(public)/confidentialite/page.tsx
+?? app/[locale]/(public)/contact/page.tsx
+?? app/[locale]/(public)/etudes-de-cas/page.tsx
+?? app/[locale]/(public)/exposer/devenir-exposant/page.tsx
+?? app/[locale]/(public)/exposer/page.tsx
+?? app/[locale]/(public)/mentions-legales/page.tsx
+?? app/[locale]/(public)/pourquoi-spimar/page.tsx
+?? app/[locale]/(public)/ressources/page.tsx
+?? app/[locale]/(public)/salons/[slug]/page.tsx
+?? app/[locale]/(public)/salons/page.tsx
+?? app/[locale]/(public)/visiteurs/page.tsx
+?? components/public/home/DestinationPlaceholder.tsx
+?? components/public/home/EventsCarousel.tsx
+?? components/public/home/MobileShowcase.tsx
+?? components/public/home/StandCluster.tsx
+?? components/public/home/events.css
+?? components/public/home/pillars.css
+?? components/public/pages/SpimarStandingPage.tsx
+?? docs/0001-Normalize-SPIMAR-Phase-1-documentation.patch
+?? "docs/360 agenyc docs work/00-PART-10-SPECIFICATION.md"
+?? "docs/360 agenyc docs work/00-PART-11-SPECIFICATION.md"
+?? "docs/360 agenyc docs work/01-desktop-homepage-complete-master.png"
+?? "docs/360 agenyc docs work/01-mobile-homepage-complete-master.png"
+?? "docs/360 agenyc docs work/02-UX-ARCHITECTURE.md"
+?? "docs/360 agenyc docs work/02-desktop-homepage-review-board.png"
+?? "docs/360 agenyc docs work/02-mobile-homepage-review-board.png"
+?? "docs/360 agenyc docs work/07-EXECUTION-QUEUE.md"
+?? "docs/360 agenyc docs work/08-DECISION-LOG.md"
+?? "docs/360 agenyc docs work/10-MOBILE-FIRST-UX-BLUEPRINT.md"
+?? "docs/360 agenyc docs work/11-LOW-FIDELITY-WIREFRAMES.md"
+?? "docs/360 agenyc docs work/14-WELLEXPO-REFERENCE-DECONSTRUCTION.md"
+?? "docs/360 agenyc docs work/Documented results and video testimonials.png"
+?? "docs/360 agenyc docs work/Exhibitor package comparison dashboard.png"
+?? "docs/360 agenyc docs work/Exhibitor resources and market insights.png"
+?? "docs/360 agenyc docs work/Inside SPIMAR\342\200\231s real event gallery.png"
+?? "docs/360 agenyc docs work/Measured results and MRE market insights.png"
+?? "docs/360 agenyc docs work/Meet the people behind your property plan.png"
+?? "docs/360 agenyc docs work/Mobile exhibitor package comparison screen.png"
+?? "docs/360 agenyc docs work/Mobile proof, case study, and testimonials.png"
+?? "docs/360 agenyc docs work/Morocco Property Expo UI Showcase.png"
+?? "docs/360 agenyc docs work/Morocco at the Global Property Expo.png"
+?? "docs/360 agenyc docs work/One network, multiple cities.png"
+?? "docs/360 agenyc docs work/Resource cards with amber validation statuses.png"
+?? "docs/360 agenyc docs work/SPIMAR IMMO Global Event Network.png"
+?? "docs/360 agenyc docs work/SPIMAR IMMO mobile property expo homepage.png"
+?? "docs/360 agenyc docs work/SPIMAR IMMO_ Moroccan property, global reach.png"
+?? "docs/360 agenyc docs work/SPIMAR IMMO_ Morocco within reach.png"
+?? "docs/360 agenyc docs work/SPIMAR IMMO_ One network, many journeys.png"
+?? "docs/360 agenyc docs work/SPIMAR International Exhibitor Conversion Hub.png"
+?? "docs/360 agenyc docs work/SPIMAR exhibition playbook_ before, during, after.png"
+?? "docs/360 agenyc docs work/SPIMAR exhibition strategy and method.png"
+?? "docs/360 agenyc docs work/SPIMAR mobile homepage for global property events.png"
+?? "docs/360 agenyc docs work/SPIMAR visibility journey and promoter trust.png"
+?? "docs/360 agenyc docs work/SPIMARIMMO exhibitor resources, insights & FAQ.png"
+?? "docs/360 agenyc docs work/SPIMARIMMO gallery and event proof.png"
+?? "docs/360 agenyc docs work/SPIMARIMMO international property expo.png"
+?? "docs/360 agenyc docs work/SPIMARIMMO mobile exhibition contact flow.png"
+?? "docs/360 agenyc docs work/SPIMARIMMO mobile metrics and MRE insights.png"
+?? "docs/360 agenyc docs work/SPIMARIMMO mobile real estate expo page.png"
+?? "docs/360 agenyc docs work/SPIMARIMMO_UX_UI_Audit_Benchmark_Report_v1.0 (1).pdf"
+?? "docs/360 agenyc docs work/SPIMARIMMO_UX_UI_Audit_Benchmark_Report_v1.0.pdf"
+?? "docs/360 agenyc docs work/SPIMAR\342\200\231s end-to-end event visibility.png"
+?? "docs/360 agenyc docs work/Spimar Experience and International Editions.png"
+?? "docs/360 agenyc docs work/Spimar Immo global property network(1).png"
+?? "docs/360 agenyc docs work/Spimar Immo global property network.png"
+?? "docs/360 agenyc docs work/Spimar Immo mobile property network.png"
+?? "docs/360 agenyc docs work/Spimar Morocco hero with Paris edition.png"
+?? "docs/360 agenyc docs work/Spimarimmo global property expo homepage.png"
+?? "docs/360 agenyc docs work/Spimarimmo mobile property expo homepage.png"
+?? "docs/360 agenyc docs work/Suitcase Toward a Moroccan Villa.png"
+?? docs/MASTER_IMPLEMENTATION_AND_DESIGN_EXPANSION_PROMPT.md
+?? docs/SPIMAR-Transformation-Phase-1-v1.1.zip
+?? docs/SPIMARIMMO_Dossier_Implementation_End_to_End_2026.pdf
+?? docs/SPIMARIMMO_Specifications_Strategie_UX_Contenus_V1.md
+?? docs/assets-UX-UI/Section3/1.png
+?? docs/assets-UX-UI/Section3/2.png
+?? docs/assets-UX-UI/Section3/3.png
+?? docs/assets-UX-UI/Section3/4.png
+?? docs/assets-UX-UI/logo/LogoSection.png
+?? docs/assets-UX-UI/logo/logo.png
+?? docs/assets-UX-UI/logoproof/1.png
+?? docs/assets-UX-UI/logoproof/2.png
+?? docs/assets-UX-UI/logoproof/3.png
+?? docs/assets-UX-UI/logoproof/4.png
+?? docs/assets-UX-UI/logoproof/5.png
+?? docs/codex-implimentation/SPIMARIMMO_NOTRE_METHODE_CLAUDE_HANDOFF_v1.zip
+?? docs/implementation/SPIMARIMMO-FOUNDATION-CONTRACT.md
+?? docs/implementation/SPIMARIMMO-PDF-IMPLEMENTATION-MATRIX.md
+?? docs/implementation/SPIMARIMMO-SECTION-MAPPING.md
+?? docs/pdf/SPIMARIMMO_Specifications_Strategie_UX_Contenus.pdf
+?? "docs/refrence UIUX/hero.png"
+?? "docs/refrence UIUX/heroRTL.png"
+?? qa/implementation/ENG-014B-EVIDENCE-PACKAGE.zip
+?? qa/implementation/eng014b--filter-active--1440x900.png
+?? qa/implementation/eng014b--filter-active--390x844.png
+?? qa/implementation/eng014b--filter-overlay--1440x900.png
+?? qa/implementation/eng014b--filter-overlay--390x844.png
+?? qa/implementation/eng014b--list-view--1440x900.png
+?? qa/implementation/eng014b--list-view--390x844.png
+?? qa/implementation/eng014b--reduced-motion--1440x900.png
+?? qa/implementation/eng014b--works-grid--1440x900.png
+?? qa/implementation/eng014b--works-grid--390x844.png
+?? qa/implementation/eng014b--works-grid--fr--1440x900.png
+?? qa/implementation/eng014b-evidence-package/01-desktop-1440x900--grid.png
+?? qa/implementation/eng014b-evidence-package/02-desktop-1440x900--list.png
+?? qa/implementation/eng014b-evidence-package/03-desktop-1440x900--filter-open.png
+?? qa/implementation/eng014b-evidence-package/04-desktop-1440x900--filter-active.png
+?? qa/implementation/eng014b-evidence-package/05-mobile-390x844--grid.png
+?? qa/implementation/eng014b-evidence-package/06-mobile-390x844--list.png
+?? qa/implementation/eng014b-evidence-package/07-mobile-390x844--filter-open.png
+?? qa/implementation/eng014b-evidence-package/08-mobile-390x844--filter-active.png
+?? qa/implementation/eng014b-evidence-package/MANIFEST.md
+?? qa/implementation/eng014b-evidence-package/eng014b-qa-results.json
+?? qa/implementation/eng014b-evidence-package/supplementary--fr-grid--1440x900.png
+?? qa/implementation/eng014b-evidence-package/supplementary--reduced-motion--1440x900.png
+?? qa/implementation/eng014b-qa-results.json
+?? qa/reconstruction/current/band.png
+?? qa/reconstruction/current/cards.png
+?? qa/reconstruction/current/carousel-expanded.png
+?? qa/reconstruction/current/events--desktop.png
+?? qa/reconstruction/current/events--mobile.png
+?? qa/reconstruction/current/hdr.png
+?? qa/reconstruction/current/header--hero.png
+?? qa/reconstruction/current/header--hover.png
+?? qa/reconstruction/current/header--rest.png
+?? qa/reconstruction/current/home--desktop.png
+?? qa/reconstruction/current/home--mobile.png
+?? qa/reconstruction/current/pillars-01.png
+?? qa/reconstruction/current/pillars-03.png
+?? qa/reconstruction/current/pourquoi--desktop.png
+?? qa/reconstruction/current/restored--desktop.png
+?? qa/reconstruction/current/s3-desktop.png
+?? qa/reconstruction/current/s3-final.png
+?? qa/reconstruction/current/s3-mobile.png
+?? qa/reconstruction/current/s3-phone-mobile.png
+?? qa/reconstruction/current/salons--desktop.png
+?? qa/reconstruction/current/section3-mobile.png
+?? qa/reconstruction/current/section3.png
+?? qa/reconstruction/current/sections-2-3.png
+?? qa/reconstruction/current/stand-glyph.png

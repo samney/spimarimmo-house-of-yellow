@@ -1,0 +1,29 @@
+{
+  "violations": [],
+  "passes": [
+    "aria-allowed-attr",
+    "aria-allowed-role",
+    "aria-conditional-attr",
+    "aria-deprecated-role",
+    "aria-hidden-focus",
+    "aria-prohibited-attr",
+    "aria-required-attr",
+    "aria-required-children",
+    "aria-required-parent",
+    "aria-roles",
+    "aria-valid-attr-value",
+    "aria-valid-attr",
+    "button-name",
+    "color-contrast",
+    "duplicate-id-aria",
+    "empty-heading",
+    "heading-order",
+    "landmark-no-duplicate-banner",
+    "landmark-unique",
+    "link-name",
+    "list",
+    "listitem",
+    "nested-interactive",
+    "tabindex"
+  ]
+}

@@ -1,0 +1,535 @@
+/* Section 03 — "Pourquoi exposer avec SPIMARIMMO ?"
+
+   Structure from the approved boards in docs/assets-UX-UI/Section3; styling is
+   the foundation's own dark band, type ladder, ink and gold. */
+
+.pillars__head {
+  max-width: 62vw;
+}
+.pillars__title {
+  font-size: var(--text-heading-sm);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  margin-block: 0.6vw 0.5vw;
+}
+.pillars__sub {
+  font-size: var(--text-small-title);
+  line-height: 1.35;
+  color: var(--hoy-yellow);
+  margin-block-end: 2.6vw;
+}
+
+/* ------------------------------------------------------------------- tabs */
+
+.pillarTabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9vw;
+  margin-block-end: 3.4vw;
+}
+.pillarTab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.9vw;
+  padding: 1.05vw 1.3vw;
+  border: 1px solid rgba(244, 242, 237, 0.22);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-support);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+}
+.pillarTab:hover {
+  border-color: var(--hoy-yellow);
+}
+.pillarTab.is-active {
+  background: var(--hoy-yellow);
+  border-color: var(--hoy-yellow);
+  color: var(--hoy-ink);
+  font-weight: 500;
+}
+/* The boards mark the active tab with a dot on its lower edge. */
+.pillarTab.is-active::after {
+  content: "";
+  position: absolute;
+  inset-block-end: -0.3vw;
+  inset-inline-start: 50%;
+  width: 0.6vw;
+  height: 0.6vw;
+  border-radius: 50%;
+  background: var(--hoy-yellow);
+  transform: translateX(-50%);
+}
+.pillarTab__num {
+  font-size: var(--text-small-title);
+  font-weight: 500;
+  opacity: 0.6;
+}
+.pillarTab.is-active .pillarTab__num {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------ lead column + phone */
+
+.pillars__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6vw;
+  align-items: center;
+}
+.pillars__lead {
+  max-width: 34vw;
+}
+.pillars__bigNum {
+  font-size: var(--text-heading-sm);
+  line-height: 1;
+  font-weight: 700;
+  color: var(--hoy-yellow);
+  margin-block-end: 1.2vw;
+}
+.pillars__leadTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-block-end: 1.1vw;
+}
+.pillars__leadBody {
+  font-size: var(--text-small-title);
+  line-height: 1.45;
+  margin-block-end: 1.6vw;
+}
+.pillars__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  font-size: var(--text-support);
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+  border-block-end: 1px solid currentColor;
+  padding-block-end: 0.3vw;
+}
+.pillars__cta:hover {
+  color: var(--hoy-yellow);
+}
+.pillars__notion {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9vw;
+  margin-block-start: 4vw;
+  font-size: var(--text-support);
+  line-height: 1.5;
+}
+.pillars__dash {
+  flex: 0 0 2vw;
+  height: 1px;
+  background: var(--hoy-yellow);
+  transform: translateY(-0.3em);
+}
+
+/* --------------------------------------------------------------- the device
+
+   Sized with clamp so it stays a believable handset at every width: it never
+   collapses into a sliver on a narrow desktop, and never balloons on a wide
+   one. Everything inside is sized in `cqw` against the screen, so the interface
+   scales with the device rather than with the page. */
+
+.pillarPhone {
+  display: flex;
+  justify-content: center;
+}
+.pillarPhone__frame {
+  container-type: inline-size;
+  position: relative;
+  width: clamp(272px, 25vw, 348px);
+  aspect-ratio: 409 / 738;
+  padding: 0.85vw;
+  border-radius: clamp(34px, 3.1vw, 46px);
+  background: linear-gradient(158deg, #6b5a20 0%, #16160f 34%, #12120c 62%, #4a3f18 100%);
+  box-shadow:
+    0 0 0 1px rgba(239, 195, 55, 0.32),
+    0 2.4vw 5vw rgba(0, 0, 0, 0.55);
+}
+/* Side buttons, so the edge reads as a device rather than a rounded rectangle. */
+.pillarPhone__frame::before,
+.pillarPhone__frame::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -2px;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(239, 195, 55, 0.28);
+}
+.pillarPhone__frame::before {
+  inset-block-start: 22%;
+  height: 7%;
+}
+.pillarPhone__frame::after {
+  inset-block-start: 33%;
+  height: 11%;
+}
+/* Pill camera and its lens, plus the status row either side of it. */
+.pillarPhone__notch {
+  position: absolute;
+  inset-block-start: 1.9%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline-end: 2.2%;
+  width: 30%;
+  height: 3.2%;
+  border-radius: 999px;
+  background: #05050a;
+}
+.pillarPhone__lens {
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2b3a4a 0%, #0a0d12 60%);
+  box-shadow: inset 0 0 0 1px rgba(120, 160, 200, 0.35);
+}
+.pillarPhone__status {
+  position: absolute;
+  inset-block-start: 2.1%;
+  inset-inline: 7%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--hoy-paper);
+}
+.pillarPhone__time {
+  font-size: 3.1cqw;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.pillarPhone__signal svg {
+  display: block;
+  width: 11cqw;
+  height: auto;
+}
+.pillarPhone__screen {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3cqw;
+  padding: 13cqw 4.5cqw 5cqw;
+  border-radius: clamp(28px, 2.4vw, 38px);
+  background: #101009;
+  overflow: hidden;
+}
+
+.pillarPhone__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.6cqw;
+}
+.pillarChip {
+  padding: 1.5cqw 3cqw;
+  border: 1px solid rgba(239, 195, 55, 0.42);
+  border-radius: 999px;
+  color: var(--hoy-yellow);
+  font-size: 3.4cqw;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.pillarPhone__stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+}
+.pillarPhone__progress {
+  display: flex;
+  justify-content: center;
+  gap: 1.4cqw;
+}
+.pillarPhone__pip {
+  width: 1.6cqw;
+  height: 1.6cqw;
+  border-radius: 50%;
+  background: rgba(244, 242, 237, 0.28);
+  transition: background 0.3s;
+}
+.pillarPhone__pip.is-on {
+  background: var(--hoy-yellow);
+}
+
+/* ------------------------------------------------------------- low-fi cards
+
+   The boards show these deliberately unfinished: an icon, a title, grey bars
+   in place of copy, a gold badge for confirmation. Reproduced as such — the
+   card conveys the shape of a step without asserting a screen that does not
+   exist yet. */
+
+.lofi {
+  display: flex;
+  flex-direction: column;
+  gap: 3cqw;
+  padding: 4cqw;
+  border-radius: 4cqw;
+  background: var(--hoy-paper);
+  color: var(--hoy-ink);
+  animation: lofiIn 0.5s var(--ease-out-ref) both;
+}
+@keyframes lofiIn {
+  from {
+    opacity: 0;
+    transform: translateY(3cqw) scale(0.985);
+  }
+}
+
+.lofi__head {
+  display: flex;
+  align-items: center;
+  gap: 2.2cqw;
+}
+.lofi__headIcon {
+  width: 6cqw;
+  height: 6cqw;
+  border-radius: 1.6cqw;
+  background: rgba(20, 20, 15, 0.1);
+  border: 1px solid rgba(20, 20, 15, 0.18);
+}
+.lofi__headTitle {
+  flex: 1;
+  font-size: 4cqw;
+  font-weight: 600;
+}
+.lofi__more {
+  font-size: 3cqw;
+  letter-spacing: 0.1em;
+  color: rgba(20, 20, 15, 0.45);
+}
+
+.lofi__caption {
+  font-size: 3.6cqw;
+  font-weight: 500;
+  text-align: center;
+}
+.lofi__bar {
+  display: block;
+  height: 2.2cqw;
+  border-radius: 999px;
+  background: rgba(20, 20, 15, 0.13);
+}
+.lofi__glyph {
+  flex: 0 0 5cqw;
+  height: 5cqw;
+  border-radius: 1.4cqw;
+  background: rgba(20, 20, 15, 0.1);
+  border: 1px solid rgba(20, 20, 15, 0.16);
+}
+
+.lofi__track {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+}
+.lofi__dot {
+  width: 2.4cqw;
+  height: 2.4cqw;
+  border-radius: 50%;
+  background: rgba(20, 20, 15, 0.18);
+}
+.lofi__dot.is-on {
+  background: var(--hoy-yellow-deep);
+}
+
+.lofi__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4cqw;
+}
+.lofi__field,
+.lofi__row {
+  display: flex;
+  align-items: center;
+  gap: 2.4cqw;
+  padding: 2.2cqw 2.4cqw;
+  border-radius: 2cqw;
+  border: 1px solid rgba(20, 20, 15, 0.12);
+}
+.lofi__rowText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqw;
+}
+.lofi__label {
+  font-size: 3.4cqw;
+  line-height: 1.2;
+}
+
+.lofi__check {
+  display: flex;
+  align-items: center;
+  gap: 2.4cqw;
+}
+.lofi__tick {
+  flex: 0 0 4.6cqw;
+  height: 4.6cqw;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--hoy-yellow-deep);
+  color: var(--hoy-paper);
+}
+.lofi__tick svg {
+  width: 60%;
+  height: 60%;
+}
+
+.lofi__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3cqw;
+}
+.lofi__ring {
+  width: 26cqw;
+  color: var(--hoy-yellow-deep);
+}
+.lofi__ring svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.lofi__badge {
+  width: 20cqw;
+  height: 20cqw;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--hoy-yellow-deep);
+  color: var(--hoy-paper);
+}
+.lofi__badge svg {
+  width: 52%;
+  height: 52%;
+}
+
+.lofi__cta {
+  display: grid;
+  place-items: center;
+  height: 8cqw;
+  border-radius: 2cqw;
+  background: var(--hoy-yellow-deep);
+  color: var(--hoy-paper);
+}
+.lofi__cta svg {
+  width: 4cqw;
+  height: 4cqw;
+}
+
+.lofi__tiles {
+  display: grid;
+  gap: 2cqw;
+}
+.lofi__tiles--2 {
+  grid-template-columns: 1fr;
+}
+.lofi__tiles--4 {
+  grid-template-columns: 1fr 1fr;
+}
+.lofi__tile {
+  border-radius: 2cqw;
+  background: rgba(20, 20, 15, 0.1);
+  border: 1px solid rgba(20, 20, 15, 0.14);
+  min-height: 14cqw;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lofi {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 1080px) {
+  .pillars__head,
+  .pillars__lead {
+    max-width: none;
+  }
+  .pillarTabs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6vw;
+  }
+  .pillars__body {
+    grid-template-columns: 1fr;
+    gap: 6vw;
+    justify-items: center;
+  }
+  .pillars__lead {
+    width: 100%;
+  }
+  .pillarPhone__frame {
+    width: clamp(280px, 44vw, 360px);
+  }
+}
+
+@media (max-width: 580px) {
+  .pillars__sub {
+    margin-block-end: 7vw;
+  }
+  .pillarTabs {
+    grid-template-columns: 1fr;
+    gap: 2.4vw;
+    margin-block-end: 9vw;
+  }
+  .pillarTab {
+    padding: 3.4vw 4vw;
+    border-radius: 2.6vw;
+    gap: 3vw;
+  }
+  .pillarTab.is-active::after {
+    display: none;
+  }
+  .pillars__bigNum,
+  .pillars__leadTitle {
+    font-size: var(--text-heading-sm);
+  }
+  .pillars__bigNum {
+    margin-block-end: 3vw;
+  }
+  .pillars__leadTitle,
+  .pillars__leadBody {
+    margin-block-end: 4vw;
+  }
+  .pillars__cta {
+    gap: 2vw;
+    padding-block-end: 1.4vw;
+  }
+  .pillars__notion {
+    margin-block-start: 9vw;
+    gap: 3vw;
+  }
+  .pillars__dash {
+    flex-basis: 7vw;
+  }
+  .pillarPhone__frame {
+    /* A phone mockup has to stay phone-sized to read as one. */
+    width: min(78vw, 320px);
+    padding: 2.6vw;
+    box-shadow:
+      0 0 0 1px rgba(244, 242, 237, 0.14),
+      0 6vw 12vw rgba(0, 0, 0, 0.5);
+  }
+}
