@@ -814,6 +814,132 @@
   align-content: center;
 }
 
+/* ----------------------------------------------------------------- toolbar */
+
+.adminToolbar {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------------------------------------------------------- pipeline board */
+
+.adminPipeWrap {
+  overflow-x: auto;
+  position: relative;
+}
+
+.adminPipe {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(12.25rem, 1fr));
+  gap: 0.75rem;
+  min-width: 56rem;
+  align-items: start;
+}
+
+.adminPipe__col {
+  background: var(--admin-panel);
+  border: 1px solid var(--admin-line);
+  border-top: 3px solid var(--admin-line);
+  border-radius: var(--admin-radius);
+}
+
+/* The same stage progression as the chips: black arrival, gold in play. */
+.adminPipe__col--new {
+  border-top-color: var(--admin-spine);
+}
+
+.adminPipe__col--qualified {
+  border-top-color: var(--spimar-gold-deep);
+}
+
+.adminPipe__col--in_progress {
+  border-top-color: var(--admin-accent);
+}
+
+.adminPipe__col--won {
+  border-top-color: var(--admin-ok);
+}
+
+.adminPipe__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid var(--admin-line);
+}
+
+.adminPipe__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--admin-muted);
+}
+
+.adminPipe__count {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.adminPipe__card {
+  padding: 0.75rem 0.875rem;
+}
+
+.adminPipe__card + .adminPipe__card {
+  border-top: 1px solid var(--admin-line);
+}
+
+.adminPipe__name {
+  font-weight: 600;
+  color: var(--admin-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--admin-accent);
+  text-decoration-thickness: 2px;
+}
+
+.adminPipe__name:hover {
+  background: var(--admin-accent);
+}
+
+.adminPipe__meta {
+  font-size: 0.8125rem;
+  color: var(--admin-muted);
+  margin: 0.25rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.adminPipe__move {
+  display: flex;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+}
+
+.adminPipe__move select {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.8125rem;
+  padding: 0.25rem 0.375rem;
+  border: 1px solid var(--admin-line-strong);
+  border-radius: var(--admin-radius);
+  background: var(--admin-panel);
+  color: var(--admin-ink);
+}
+
+.adminPipe__move .adminButton {
+  font-size: 0.8125rem;
+  padding: 0.25rem 0.75rem;
+}
+
+.adminPipe__none {
+  padding: 0.75rem 0.875rem;
+  font-size: 0.8125rem;
+  color: var(--admin-muted);
+}
+
 /* -------------------------------------------------------------- responsive */
 
 @media (max-width: 1100px) {

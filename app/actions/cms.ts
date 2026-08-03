@@ -12,6 +12,7 @@ import {
   verifyCredentials,
 } from "@/lib/spimar/auth";
 import { getAdminSeams } from "@/lib/spimar/repositories";
+import { LEAD_STAGES } from "@/lib/backend/admin-seams";
 import type { LeadStage, Localized, PublishState } from "@/lib/spimar/types";
 
 /* CMS and CRM server actions.
@@ -274,8 +275,8 @@ export async function updateLeadAction(
 
   if (intent === "stage") {
     const stage = String(form.get("stage") ?? "") as LeadStage;
-    const allowed: LeadStage[] = ["new", "qualified", "in_progress", "won", "lost"];
-    if (!allowed.includes(stage)) return { ok: false, message: "That stage is not recognised." };
+    if (!LEAD_STAGES.includes(stage))
+      return { ok: false, message: "That stage is not recognised." };
     const updated = await getAdminSeams().crm.updateLead(
       id,
       { stage },
@@ -305,4 +306,28 @@ export async function updateLeadAction(
   }
 
   return { ok: false, message: "Unrecognised action." };
+}
+
+/** Pipeline board stage move: a plain form action so the board needs no client
+    JS. Authorization and stage validation are identical to updateLeadAction;
+    the board simply re-renders the moved card in its new column. */
+export async function moveLeadStage(form: FormData): Promise<void> {
+  const session = await readSession();
+  if (!session) redirect("/admin/login");
+
+  const id = String(form.get("id") ?? "");
+  const stage = String(form.get("stage") ?? "") as LeadStage;
+
+  if (id && LEAD_STAGES.includes(stage)) {
+    await getAdminSeams().crm.updateLead(
+      id,
+      { stage },
+      { by: session.email, kind: "stage", detail: `Stage set to ${stage}` },
+    );
+  }
+
+  revalidatePath("/admin/pipeline");
+  revalidatePath("/admin/leads");
+  revalidatePath(`/admin/leads/${id}`);
+  redirect("/admin/pipeline");
 }

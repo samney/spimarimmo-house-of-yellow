@@ -2,9 +2,8 @@
 
 import { useActionState } from "react";
 import { updateLeadAction } from "@/app/actions/cms";
+import { LEAD_STAGES as STAGES } from "@/lib/backend/admin-seams";
 import type { LeadActivity, LeadStage } from "@/lib/spimar/types";
-
-const STAGES: LeadStage[] = ["new", "qualified", "in_progress", "won", "lost"];
 
 /* Lead workspace: controlled stage changes, assignment and notes.
 
