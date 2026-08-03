@@ -10,8 +10,14 @@ export default function LoginPage() {
 
   return (
     <>
+      <p className="adminGate__brand">
+        SPIMAR<span>IMMO</span>
+      </p>
+      <p className="adminGate__tag">Operations</p>
       <h1>Sign in</h1>
-      <p>Operations access for the SPIMARIMMO CMS and CRM.</p>
+      <p className="adminLede" style={{ marginBottom: "1.5rem" }}>
+        Access to the SPIMARIMMO CMS and CRM.
+      </p>
 
       {state && !state.ok ? (
         <div className="adminNotice adminNotice--error" role="alert">
@@ -35,7 +41,7 @@ export default function LoginPage() {
           />
         </div>
         <div>
-          <button className="spimarButton spimarButton--primary" type="submit" disabled={pending}>
+          <button className="adminButton adminButton--primary" type="submit" disabled={pending}>
             {pending ? "Signing in..." : "Sign in"}
           </button>
         </div>

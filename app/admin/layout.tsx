@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { isConfigured, readSession } from "@/lib/spimar/auth";
 import { logout } from "@/app/actions/cms";
+import { AdminNav } from "@/components/spimar/admin/AdminNav";
 import "../globals.css";
 import "./admin.css";
 
@@ -20,8 +21,8 @@ export const metadata = {
       panel says so and grants nothing. There is deliberately no built-in
       account: a default credential would make every unconfigured deployment an
       open door.
-   2. Not signed in — only the login route renders.
-   3. Signed in — the full operational shell.
+   2. Not signed in — the gate layout, only the login route renders.
+   3. Signed in — the wayfinding spine and the work area.
 
    Each page re-checks authorization server-side before acting. */
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -32,7 +33,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     return (
       <html lang="en">
         <body className="adminShell">
-          <main className="adminMain">
+          <main className="adminMain adminMain--gate">
+            <p className="adminGate__brand">
+              SPIMAR<span>IMMO</span>
+            </p>
+            <p className="adminGate__tag">Operations</p>
             <h1>Operations is not configured</h1>
             <div className="adminNotice adminNotice--error">
               <p>
@@ -57,28 +62,39 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <html lang="en">
       <body className="adminShell">
+        <a className="adminSkip" href="#operations-content">
+          Skip to content
+        </a>
         {session ? (
-          <nav className="adminBar" aria-label="Operations">
-            <span className="adminBar__brand">
-              SPIMAR<span>IMMO</span>
-            </span>
-            <Link href="/admin">Dashboard</Link>
-            <Link href="/admin/pages">Pages</Link>
-            <Link href="/admin/events">Events</Link>
-            <Link href="/admin/destinations">Destinations</Link>
-            <Link href="/admin/media">Media</Link>
-            <Link href="/admin/leads">Leads</Link>
-            <span className="adminBar__spacer adminBar__who">
-              {session.email} · {session.role}
-            </span>
-            <form action={logout}>
-              <button type="submit" className="spimarButton spimarButton--ghost">
-                Sign out
-              </button>
-            </form>
-          </nav>
-        ) : null}
-        <main className="adminMain">{children}</main>
+          <div className="adminFrame">
+            <aside className="adminSpine">
+              <Link href="/admin" className="adminSpine__brand">
+                SPIMAR<span>IMMO</span>
+                <span className="adminSpine__brandTag">Operations</span>
+              </Link>
+              <AdminNav />
+              <div className="adminPass">
+                <div className="adminPass__strip" aria-hidden="true" />
+                <div className="adminPass__body">
+                  <span className="adminPass__who">{session.email}</span>
+                  <span className="adminPass__role">{session.role}</span>
+                  <form className="adminPass__form" action={logout}>
+                    <button type="submit" className="adminButton adminButton--spine">
+                      Sign out
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </aside>
+            <main id="operations-content" className="adminMain">
+              {children}
+            </main>
+          </div>
+        ) : (
+          <main id="operations-content" className="adminMain adminMain--gate">
+            {children}
+          </main>
+        )}
       </body>
     </html>
   );
