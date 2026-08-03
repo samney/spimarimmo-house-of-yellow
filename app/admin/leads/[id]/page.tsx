@@ -15,68 +15,70 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
 
   return (
     <>
-      <p>
-        <Link href="/admin/leads">← All leads</Link>
-      </p>
-      <h1>{lead.name}</h1>
-      <p>
-        <a href={`mailto:${lead.email}`}>{lead.email}</a>
-        {lead.organisation ? ` · ${lead.organisation}` : ""}
-      </p>
+      <Link className="adminBack" href="/admin/leads">
+        ← All leads
+      </Link>
 
-      <div className="adminCard">
-        <h2 style={{ marginTop: 0 }}>Message</h2>
-        <p style={{ whiteSpace: "pre-wrap", marginBottom: 0 }}>{lead.message}</p>
-      </div>
+      <header className="adminPage__head">
+        <p className="adminEyebrow">CRM — Leads</p>
+        <h1>{lead.name}</h1>
+        <p className="adminLede">
+          <a className="adminLink" href={`mailto:${lead.email}`}>
+            {lead.email}
+          </a>
+          {lead.organisation ? ` · ${lead.organisation}` : ""}
+        </p>
+        <p style={{ marginTop: "0.625rem" }}>
+          <span className="adminChip">{lead.kind}</span>{" "}
+          <span className={`adminChip adminChip--${lead.stage}`}>
+            {lead.stage.replace("_", " ")}
+          </span>
+        </p>
+      </header>
 
-      <div className="adminCard">
-        <h2 style={{ marginTop: 0 }}>Attribution</h2>
-        <table className="adminTable">
-          <tbody>
-            <tr>
-              <th>Received</th>
-              <td>{lead.createdAt}</td>
-            </tr>
-            <tr>
-              <th>Kind</th>
-              <td>{lead.kind}</td>
-            </tr>
-            <tr>
-              <th>Source path</th>
-              <td>
-                <code>{lead.sourcePath || "/"}</code>
-              </td>
-            </tr>
-            <tr>
-              <th>CTA</th>
-              <td>{lead.cta || "—"}</td>
-            </tr>
-            <tr>
-              <th>Event</th>
-              <td>{lead.eventSlug || "—"}</td>
-            </tr>
-            <tr>
-              <th>Locale</th>
-              <td>{lead.locale}</td>
-            </tr>
-            <tr>
-              <th>Consent</th>
-              <td>{lead.consent ? "Given at submission" : "Not given"}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div className="adminSplit adminSplit--wideFirst">
+        <div>
+          <section className="adminPanel" aria-label="Message">
+            <h2>Message</h2>
+            <p style={{ whiteSpace: "pre-wrap", marginBottom: 0 }}>{lead.message}</p>
+          </section>
 
-      <LeadWorkspace
-        id={lead.id}
-        stage={lead.stage}
-        assignee={lead.assignee}
-        activity={lead.activity}
-      />
+          <section className="adminPanel" aria-label="Attribution">
+            <h2>Attribution</h2>
+            <dl className="adminFacts">
+              <dt>Received</dt>
+              <dd>
+                <span className="adminMono">{lead.createdAt}</span>
+              </dd>
+              <dt>Kind</dt>
+              <dd>{lead.kind}</dd>
+              <dt>Source path</dt>
+              <dd>
+                <code className="adminMono">{lead.sourcePath || "/"}</code>
+              </dd>
+              <dt>CTA</dt>
+              <dd>{lead.cta || "—"}</dd>
+              <dt>Event</dt>
+              <dd>{lead.eventSlug || "—"}</dd>
+              <dt>Locale</dt>
+              <dd>{lead.locale}</dd>
+              <dt>Consent</dt>
+              <dd>{lead.consent ? "Given at submission" : "Not given"}</dd>
+            </dl>
+          </section>
 
-      <div className="adminNotice">
-        No email, calendar or external CRM provider is connected on this deployment (blockers P-2).
-        Nothing here has been sent to the contact — this record is internal only.
+          <div className="adminNotice" style={{ marginTop: "1.5rem" }}>
+            No email, calendar or external CRM provider is connected on this deployment (blocker
+            P-2). Nothing here has been sent to the contact — this record is internal only.
+          </div>
+        </div>
+
+        <LeadWorkspace
+          id={lead.id}
+          stage={lead.stage}
+          assignee={lead.assignee}
+          activity={lead.activity}
+        />
       </div>
     </>
   );
