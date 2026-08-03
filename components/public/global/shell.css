@@ -29,7 +29,9 @@ header .headerBar {
   width: 100%;
   z-index: var(--z-header);
   background: var(--hoy-paper);
-  transition: background 0.3s, color 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s;
 }
 header.light .headerBar {
   background: transparent;
@@ -43,16 +45,23 @@ header.light .headerBar .socialLink a {
 header.light .headerBar .logo svg {
   color: var(--hoy-paper);
 }
+/* Bar geometry measured from the reference at 1440: bar 71px tall, columns
+   547 / 274 / 547 laid out contiguously across the 1368 content wrapper.
+
+   The reference uses three inline-blocks; these are flex items pinned to the
+   same proportions (40% / 20% / 40% of 1368 = 547.2 / 273.6 / 547.2) so the
+   column edges land on the reference's x-positions without depending on
+   inline whitespace. The centre column is a real column rather than an
+   absolutely-positioned overlay, which is what the reference does. */
 header .headerBar .contentWrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  line-height: 7.315vw;
+  line-height: 4.931vw;
   position: relative;
 }
 header .left,
 header .right {
-  flex: 1 1 0;
+  flex: 0 0 40%;
   display: flex;
   align-items: center;
 }
@@ -87,10 +96,15 @@ header .menu a.current-menu-item::after {
   height: 1px;
   background: currentColor;
 }
+/* The centre column centres its own content. The bar's 71px line-height would
+   otherwise give this column a 71px line box and drop the mark onto its
+   baseline, which sat the logo 10px above the bar's centre. */
 header .center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  flex: 0 0 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
 }
 header .logo a {
   position: relative;
@@ -109,6 +123,30 @@ header .logo .absoluteSVG {
 header .logo .absoluteSVG .smallLogo {
   position: absolute;
   inset: 0;
+}
+
+/* A section may reclaim the viewport while it is on screen. The bar lifts out
+   rather than fading, so nothing sits half-visible over the content, and it
+   stays focusable-free while away. */
+header.isHidden .headerBar {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+header .headerBar {
+  transition:
+    background 0.3s,
+    color 0.3s,
+    transform 0.4s var(--ease-out-ref),
+    opacity 0.3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  header .headerBar {
+    transition: opacity 0.2s;
+  }
+  header.isHidden .headerBar {
+    transform: none;
+  }
 }
 
 /* Socials (icomoon glyphs) */
@@ -148,33 +186,72 @@ header .logo .absoluteSVG .smallLogo {
   padding: 0 1.25vw;
   overflow: hidden;
   border-radius: 1.875vw;
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s, padding 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    box-shadow 0.3s,
+    padding 0.3s;
 }
 .button:hover {
   background: var(--hoy-yellow-hover);
 }
+/* Label geometry, measured from the reference.
+
+   `.label` clips its own contents. The marquee inside `.innerLabel` is wider
+   than the label, so without this the button is the only thing clipping it and
+   the repeated text can sit under the icon. */
 .button .label {
   position: relative;
-  display: block;
-  padding-right: 1.736vw;
+  display: inline-block;
+  overflow: hidden;
 }
+
+/* The icon's space is reserved by the fixed label's own right padding — 27px at
+   1440 — not by padding on `.label`. That is what makes `.innerLabel`, which is
+   inset to the label box, span the same width as the text it replaces. */
+.button .fixedLabel {
+  display: block;
+  padding-right: 1.875vw;
+}
+
 .button .innerLabel {
   position: absolute;
   inset: 0;
   opacity: 0;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
 }
-.button:hover .fixedLabel {
+
+/* The reference cross-fades the two labels; it does not slide them. Measured on
+   hover: the fixed label goes to opacity 0, the marquee to 1, and the marquee's
+   transform stays identity throughout. */
+.button:hover .fixedLabel,
+.button:focus-visible .fixedLabel {
   opacity: 0;
 }
-.button:hover .innerLabel {
+.button:hover .innerLabel,
+.button:focus-visible .innerLabel {
   opacity: 1;
 }
+
+/* The reference nudges its icon down 10.8px because it sits on a baseline; the
+   nudge is how it ends up centred. Our button is already a flex row with
+   `align-items: center`, so the icon centres on its own — adding the same
+   offset applied it twice and pushed the icon out of the pill. Same measured
+   result, reached the way our layout reaches it. */
 .button .icon {
   display: inline-flex;
 }
 .button .icon svg {
-  width: 1.215vw;
-  height: 1.215vw;
+  width: 1.319vw;
+  height: 1.319vw;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button .innerLabel {
+    transition: none;
+  }
 }
 
 /* Hamburger (mobile only) */
@@ -201,7 +278,10 @@ header .logo .absoluteSVG .smallLogo {
   width: 100%;
   height: 1px;
   background: var(--hoy-ink);
-  transition: transform 0.3s, width 0.3s, top 0.3s;
+  transition:
+    transform 0.3s,
+    width 0.3s,
+    top 0.3s;
 }
 .hamburgerIcon .bar:nth-child(1) {
   top: 0;
@@ -279,7 +359,9 @@ header.menuOpen .hamburgerIcon .bar:nth-child(3) {
   inset: 0;
   background: var(--hoy-yellow-hover);
   border-radius: 0.185vw;
-  transition: transform 0.3s ease-out, border-radius 0.3s;
+  transition:
+    transform 0.3s ease-out,
+    border-radius 0.3s;
 }
 .customCursor .playCursor {
   position: absolute;

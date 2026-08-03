@@ -1,6 +1,6 @@
 {
   "validator": "PGlite PostgreSQL WASM",
-  "generatedAt": "2026-08-02T19:46:40.584Z",
+  "generatedAt": "2026-08-02T20:22:42.333Z",
   "productionAuthority": false,
   "migrations": [
     "202607310001_foundation.sql",

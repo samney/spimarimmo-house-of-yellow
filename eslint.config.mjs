@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Nested Claude Code worktrees are full checkouts with their own build
+    // output; linting them floods the report with vendored chunks. Matches
+    // the equivalent excludes in vitest.config.mjs and .gitignore.
+    ".claude/worktrees/**",
     // Supabase Edge Functions target Deno and are checked by `deno lint`.
     "supabase/functions/**",
   ]),

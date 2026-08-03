@@ -2,13 +2,24 @@
 
 import { useEffect, useRef } from "react";
 import { Link } from "@/i18n/navigation";
-import { HoyFooterLogo, PlusIcon } from "./logos";
+import { SpimarWordmark, PlusIcon } from "./logos";
 
+/* Global footer — specification §17.
+
+   The accepted footer behaviour is preserved exactly: it sits fixed behind the
+   page and is revealed on scroll, which is why the page still needs a bottom
+   margin equal to the footer's measured height. Composition, columns and the
+   bottom bar are unchanged. Only the content becomes SPIMARIMMO's.
+
+   §17 lists Presse and Blog in the footer. Neither route exists yet, so neither
+   is linked — a footer link that 404s is worse than an absent one. They join
+   the sitemap column when their routes are built.
+
+   Contact details are SPIMARIMMO's own published facts. No postal address has
+   been supplied, so no address column is shown rather than an invented one. */
 export function SiteFooter() {
   const ref = useRef<HTMLElement>(null);
 
-  // The reference footer is fixed behind the page (reveal-on-scroll); the page
-  // needs a bottom margin equal to the footer's real height.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -27,46 +38,48 @@ export function SiteFooter() {
     <footer className="setDarkCursor" ref={ref}>
       <div className="contentWrapper">
         <div className="logo">
-          <HoyFooterLogo />
+          <SpimarWordmark title="SPIMARIMMO" />
         </div>
         <div className="cols">
-          <div className="col">
-            <div className="colTitle">Office</div>
-            <div className="text">
-              <p>
-                Hertogstraat 38
-                <br />
-                5611 PB,&nbsp; Eindhoven
-                <br />
-                The Netherlands
-              </p>
-            </div>
-          </div>
           <div className="col">
             <div className="colTitle">Contact</div>
             <div className="text">
               <p>
-                <a href="tel:+31620002644" rel="noopener">
-                  +31 6 20 00 26 44
+                <a href="tel:+212661903190" rel="noopener">
+                  +212 661 903 190
                 </a>
                 <br />
-                <a href="mailto:info@houseofyellow.nl" rel="noopener">
-                  info@houseofyellow.nl
+                <a href="mailto:contact@spimarimmo.com" rel="noopener">
+                  contact@spimarimmo.com
                 </a>
               </p>
             </div>
           </div>
           <div className="col">
-            <div className="colTitle">Sitemap</div>
+            <div className="colTitle">Exposants</div>
             <div className="text">
               <p>
-                <Link href="/made-by-yellow">Made by Yellow</Link>
+                <Link href="/salons">Salons</Link>
                 <br />
-                <Link href="/culture">Culture</Link>
+                <Link href="/exposer">Exposer</Link>
                 <br />
-                <Link href="/how-we-roll">How we roll</Link>
+                <Link href="/etudes-de-cas">Études de cas</Link>
                 <br />
-                <Link href="/connect">Connect</Link>
+                <Link href="/ressources">Ressources</Link>
+              </p>
+            </div>
+          </div>
+          <div className="col">
+            <div className="colTitle">Visiteurs</div>
+            <div className="text">
+              <p>
+                <Link href="/visiteurs">Trouver un salon</Link>
+                <br />
+                <Link href="/contact">Contact</Link>
+                <br />
+                <Link href="/mentions-legales">Mentions légales</Link>
+                <br />
+                <Link href="/confidentialite">Confidentialité</Link>
               </p>
             </div>
           </div>
@@ -74,14 +87,17 @@ export function SiteFooter() {
             <div className="icon">
               <PlusIcon size={20} />
             </div>
-            <div className="colTitle">Join the movement</div>
+            <div className="colTitle">Devenir exposant</div>
             <div className="text">
-              <p>Let’s shape the future — frame by frame.</p>
+              <p>
+                Rencontrez une clientèle qualifiée, prête à concrétiser son projet immobilier au
+                Maroc.
+              </p>
             </div>
           </div>
         </div>
         <div className="bottomFooter">
-          <div className="left">© 2026 House Of Yellow</div>
+          <div className="left">© 2026 SPIMARIMMO</div>
           <div className="right">
             <div className="copyMenu">
               <Link href="/cookies">Cookies</Link>

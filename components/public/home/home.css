@@ -161,12 +161,104 @@
   flex-shrink: 0;
   text-align: right;
 }
+/* The reference carries the yellow band's vertical rhythm here — 108px top and
+   bottom at 1440 — rather than on the column rows. Ours had no rule at all, so
+   once the column padding was removed to match the reference the opening
+   statement sat hard against the hero with no breathing room. */
+.aboutWorkBlock .innerAnimContainer {
+  padding: 7.5vw 0;
+}
+
+/* ===== "Pourquoi SPIMARIMMO" — reference architecture =====
+
+   Measured from the reference at 1440 and expressed in vw so the band stays
+   fluid like the rest of the foundation.
+
+   The three columns are contiguous — there is no gap. 36 + 347 = 383,
+   383 + 906 = 1289, 1289 + 115 + 36 = 1440. The earlier flex `gap` was an
+   approximation; the reference lays these out as inline-blocks in a plain
+   block container, which is why the column edges meet exactly.
+
+   `font-size: 0` on the container removes the whitespace between inline-block
+   children, which is the only reason the widths can total 100% and still fit. */
+.aboutSection .cols {
+  display: block;
+  font-size: 0;
+  padding: 0;
+}
+.aboutSection .cols > .col {
+  display: inline-block;
+  vertical-align: top;
+  font-size: var(--text-base);
+}
+/* 347 / 906 / 115 of the 1368 content wrapper. */
+.aboutSection .cols > .col:nth-child(1) {
+  width: 25.365%;
+}
+.aboutSection .cols > .col:nth-child(2) {
+  width: 66.228%;
+}
+.aboutSection .cols > .col:nth-child(3) {
+  width: 8.406%;
+  text-align: right;
+}
+
+/* The reference title carries no max-width: it fills its column, which is what
+   produces the 906px measure and the seven-line wrap. */
 .aboutSection .normalTitle {
-  max-width: 52vw;
+  max-width: none;
 }
 .aboutSection .smallTitle {
-  max-width: 34vw;
+  max-width: 23.472vw;
   margin: 2vw 0 2.5vw;
+}
+
+.aboutSection .buttons {
+  display: block;
+}
+.aboutSection .buttons .button {
+  margin-right: 0.625vw;
+}
+/* The outline is drawn as an inset shadow rather than a border: the pill's
+   height comes from its line-height, so a real border adds 2px and the
+   secondary action stops matching the primary's 41px. */
+.button.outline {
+  background: transparent;
+  color: var(--hoy-ink);
+  box-shadow: inset 0 0 0 1px var(--hoy-ink);
+}
+.button.outline:hover {
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+}
+
+/* Glyph cluster. Block 328.5px, inner 234px, offset -90px / 747px at 1440. */
+.aboutSection .animation {
+  position: relative;
+  width: 22.8125vw;
+  height: 22.8125vw;
+  margin: -6.25vw 0 0 51.875vw;
+  pointer-events: none;
+}
+.aboutSection .innerAnimation {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 16.25vw;
+  height: 16.25vw;
+  transform: translate(-50%, -50%);
+}
+.aboutSection .svgWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  color: var(--hoy-ink);
+}
+.aboutSection .svgWrapper svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .buttonsRow {
   display: flex;
@@ -180,12 +272,45 @@
   background: #000;
 }
 
-/* Featured projects */
+/* ===== "Salons par pays" — reference architecture =====
+
+   The reference header row here is TWO columns of 684, not the three-column
+   band used by the section above: label and statement on the left, chapter
+   marker and action right-aligned on the right. Same `.cols` / `.col`
+   inline-block system, so both sections share one layout language. */
+.projectsSection .cols {
+  display: block;
+  font-size: 0;
+  padding: 0;
+}
+.projectsSection .cols > .col {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  font-size: var(--text-base);
+}
+.projectsSection .cols > .col:last-child {
+  text-align: right;
+}
+/* The action sits under the chapter marker, right-aligned, not beside it. */
+.projectsSection .cols > .col:last-child .buttons {
+  margin-top: 2.5vw;
+}
+
+/* Featured projects.
+
+   The reference pulls this section up by 125.1px at 1440 so it overlaps the
+   band above. That negative margin is what opens the space the glyph cluster
+   sits in — without it the two sections stack flush and the composition loses
+   the overlap the reference is built around. */
 .projectsSection {
+  margin-top: -8.6875vw;
   padding-bottom: 2.5vw;
 }
+/* 560px measure at 1440, set 9px below the label as in the reference. */
 .projectsSection .smallTitle {
-  max-width: 38vw;
+  max-width: 38.889vw;
+  margin-top: 0.625vw;
   margin-bottom: 2.5vw;
 }
 .projectsSection .projects {
@@ -200,11 +325,14 @@
   color: var(--hoy-ink);
   text-decoration: none;
 }
+/* The reference media frame is square — 444x444 inside a 444-wide card — not
+   the 600/439 landscape crop this had. Squares are also the right frame for a
+   destination card, where no single crop suits every venue photograph. */
 .project .media {
   position: relative;
   border-radius: 0.5vw;
   overflow: hidden;
-  aspect-ratio: 600 / 439;
+  aspect-ratio: 1 / 1;
   background: var(--hoy-ink);
 }
 .project .media video {

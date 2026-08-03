@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Section 05 — Chiffres clés
+   ==========================================================================
+   Binds only to L2 semantic tokens, never to L1 primitives, so re-pointing the
+   palette re-skins this section with it.
+
+   The dark card is the same inverse surface the section above uses for its
+   device panel: the page stays paper, and the inverse surface is what carries
+   the indicators. That keeps the two sections part of one composition instead
+   of alternating full-bleed themes.
+   ========================================================================== */
+
+.impactSection {
+  /* Owner direction 2026-08-03: the section continues the dark block above it
+     rather than returning to the paper surface. */
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.impactInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header --------------------------------------------------------------- */
+
+.impactHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.impactHeadings {
+  min-width: 0;
+}
+
+.impactEyebrow {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-sm);
+}
+
+.impactEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The heading follows the sibling sections' hierarchy exactly ("Notre
+   méthode" is the reference): the short title matches their label treatment
+   (.text.medium — 0.875vw, weight 500) and is always smaller than the
+   statement, which matches their .smallTitle (1.5vw, weight 400). */
+.impactTitle {
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+  margin: 0 0 var(--space-sm);
+  text-wrap: balance;
+}
+
+.impactLead {
+  color: var(--on-inverse);
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  max-width: var(--measure-prose);
+  text-wrap: balance;
+}
+
+/* A status, not a control: outlined, muted, and never styled like the gold
+   primary action, so it cannot be mistaken for something clickable. */
+.impactStatus {
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-pill);
+  color: var(--on-inverse-muted);
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin: 0;
+  padding: var(--space-xs) var(--space-md);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* --- Card ----------------------------------------------------------------- */
+
+.impactCard {
+  background: var(--surface-inverse);
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-xl);
+  color: var(--on-inverse);
+  padding: var(--space-lg) var(--space-md);
+}
+
+.impactGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.impactItem {
+  border-left: 1px solid var(--border-inverse);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+}
+
+/* The rule is a separator between columns, so the first item in each row must
+   not carry one. The selector is restated per breakpoint because the row length
+   changes with the column count. */
+.impactItem:nth-child(6n + 1) {
+  border-left: 0;
+}
+
+.impactIconRing {
+  align-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: 50%;
+  color: var(--action-primary);
+  display: flex;
+  height: 4.4vw;
+  justify-content: center;
+  width: 4.4vw;
+}
+
+.impactIcon {
+  height: 45%;
+  width: 45%;
+}
+
+/* Box titles carry the same label treatment as the section title
+   (.text.medium: 0.875vw / 500); the caption below differs by weight and
+   colour, exactly like the site's .text.medium / .text relationship. */
+.impactLabel {
+  font-size: var(--text-support);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  /* Labels wrap to one or two lines depending on the phrase. Reserving two
+     lines keeps every caption on the same baseline across the six columns. */
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: balance;
+}
+
+.impactCaption {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* --- Card footer ---------------------------------------------------------- */
+
+.impactFooter {
+  align-items: center;
+  border-top: 1px solid var(--border-inverse);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: space-between;
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+}
+
+.impactNote {
+  align-items: center;
+  color: var(--on-inverse-muted);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-sm);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.impactNoteIcon {
+  color: var(--action-primary);
+  flex: none;
+  height: 1.7vw;
+  width: 1.7vw;
+}
+
+.impactMethodology {
+  align-items: center;
+  border-bottom: 1px solid var(--action-primary);
+  color: var(--action-primary);
+  display: inline-flex;
+  font-size: var(--text-support);
+  gap: var(--space-sm);
+  padding-bottom: 0.35em;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.impactMethodologyIcon {
+  height: 1.1em;
+  width: 1.1em;
+  transition: transform 160ms ease;
+}
+
+.impactMethodology:hover,
+.impactMethodology:focus-visible {
+  color: var(--spimar-gold-hover, var(--action-primary-hover));
+}
+
+.impactMethodology:hover .impactMethodologyIcon,
+.impactMethodology:focus-visible .impactMethodologyIcon {
+  transform: translateX(0.25em);
+}
+
+.impactMethodology:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.35em;
+}
+
+/* The arrow nudge is the only movement in the section. It is a direct response
+   to pointer or keyboard focus, not ambient motion, but it is still suppressed
+   for anyone who asked for less. */
+@media (prefers-reduced-motion: reduce) {
+  .impactMethodology,
+  .impactMethodologyIcon {
+    transition: none;
+  }
+
+  .impactMethodology:hover .impactMethodologyIcon,
+  .impactMethodology:focus-visible .impactMethodologyIcon {
+    transform: none;
+  }
+}
+
+/* --- Tablet: 6 columns will not hold a readable label -------------------- */
+
+@media (max-width: 1024px) {
+  .impactGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: var(--space-md);
+  }
+
+  .impactItem:nth-child(6n + 1) {
+    border-left: 1px solid var(--border-inverse);
+  }
+
+  .impactItem:nth-child(3n + 1) {
+    border-left: 0;
+  }
+
+  .impactIconRing {
+    height: 8vw;
+    width: 8vw;
+  }
+
+  .impactNoteIcon {
+    height: 3vw;
+    width: 3vw;
+  }
+}
+
+/* --- Mobile: the 580 type regime ----------------------------------------- */
+
+@media (max-width: 580px) {
+  .impactSection {
+    padding: var(--space-2xl) var(--space-gutter);
+  }
+
+  .impactInner {
+    max-width: 100%;
+  }
+
+  .impactHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .impactStatus {
+    align-self: flex-start;
+    white-space: normal;
+  }
+
+  .impactLead {
+    max-width: 100%;
+  }
+
+  .impactCard {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .impactGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--space-lg);
+  }
+
+  .impactItem:nth-child(3n + 1) {
+    border-left: 1px solid var(--border-inverse);
+  }
+
+  .impactItem:nth-child(2n + 1) {
+    border-left: 0;
+  }
+
+  .impactItem {
+    padding: 0 var(--space-sm);
+  }
+
+  .impactIconRing {
+    height: 14vw;
+    width: 14vw;
+  }
+
+  .impactNoteIcon {
+    height: 5.5vw;
+    width: 5.5vw;
+  }
+
+  .impactFooter {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+}

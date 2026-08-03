@@ -29,6 +29,9 @@ export default defineConfig({
       SPIMAR_ADMIN_PASSWORD: "e2e-admin-password",
       SPIMAR_EDITOR_EMAIL: "e2e-editor@example.test",
       SPIMAR_EDITOR_PASSWORD: "e2e-editor-password",
+      /* Enables the deterministic /visual-test/* parity routes (they 404 in any
+         deployment that does not set this). */
+      SPIMAR_VISUAL_TEST: "1",
     },
   },
 });

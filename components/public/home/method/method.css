@@ -1,0 +1,986 @@
+/* Section 04 — "Notre méthode" (three-state Dossier exposant system).
+
+   Contract: docs/codex-implimentation/SPIMARIMMO_NOTRE_METHODE_CLAUDE_HANDOFF_v1/
+   Golden viewport: 1536 × 1024 (3:2). Every measured value below was taken
+   from the approved Phase 01 reference at that viewport.
+
+   Unit system: --method-u is one reference pixel (100vw / 1536), so rules read
+   in reference pixels while remaining fluid, matching the foundation's
+   vw-based regime. Colors are scoped custom properties sampled from the
+   approved references — the owner decision for Phase 01 forbids new global
+   tokens, and the global --spimar-gold (#efc337) is untouched: the method
+   section's restrained golds (#d79e3b flat CTA gold, #f2be38 small-label gold)
+   are intentionally quieter than the site-wide accent. */
+
+.methodSection {
+  /* 1 reference px at the golden viewport. */
+  --method-u: 0.06510417vw;
+
+  /* Sampled palette (reference: notre-methode-01-avant.png). */
+  --method-paper: #f4ece4; /* warm ivory canvas (page zone) */
+  --method-obsidian: #0e1215; /* stage + dossier base */
+  --method-obsidian-soft: #171c20; /* internal tonal variation, document panels */
+  --method-obsidian-edge: #262c31; /* controlled border highlight */
+  --method-gold: #d79e3b; /* restrained flat gold: CTA, big numerals */
+  /* Intentional delta (specs/05, contrast rule): the reference's #d79e3b on
+     ivory measures 2.03:1; small text on the paper zone uses this compliant
+     deep gold (4.58:1) that preserves the gold role. */
+  --method-gold-ink: #8a6420;
+  --method-gold-bright: #f2be38; /* small uppercase labels, active nav */
+  --method-gold-line: #a8813f; /* fine connectors, hairlines */
+  --method-stone: #b1ada8; /* inactive rail labels */
+  --method-stone-dim: #807e7d; /* inactive footer labels */
+  --method-body-dim: #a3a3a2; /* supporting copy on obsidian */
+  --method-ivory: #f2f1ef; /* headings on obsidian */
+  --method-card: #efe7dd; /* deliverable/document card ivory */
+  --method-card-deep: #e4dbcf; /* document paper shading */
+  --method-ink: #16181b; /* text on ivory */
+
+  --method-stage-radius: calc(28 * var(--method-u));
+  --method-stage-inline: calc(25 * var(--method-u));
+
+  position: relative;
+  background: var(--method-paper);
+  color: var(--method-ink);
+  font-family: var(--font-sans);
+}
+
+/* ================================================================ intro */
+
+.methodIntro {
+  position: relative;
+  padding: calc(48 * var(--method-u)) calc(59 * var(--method-u)) calc(28 * var(--method-u))
+    calc(54 * var(--method-u));
+}
+
+.methodIntro__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: calc(18 * var(--method-u));
+  color: var(--method-gold-ink);
+  font-size: calc(15 * var(--method-u));
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.methodIntro__heading {
+  max-width: calc(820 * var(--method-u));
+  margin-block: calc(16 * var(--method-u)) calc(10 * var(--method-u));
+  font-size: calc(47 * var(--method-u));
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.014em;
+  color: var(--method-ink);
+}
+
+.methodIntro__support {
+  max-width: calc(652 * var(--method-u));
+  font-size: calc(17 * var(--method-u));
+  line-height: 1.5;
+  color: #43423f;
+}
+
+/* Gold CTA pinned to the upper-right zone (x1138–1477, y112–173). */
+.methodIntro__cta {
+  position: absolute;
+  inset-block-start: calc(112 * var(--method-u));
+  inset-inline-end: calc(59 * var(--method-u));
+  display: inline-flex;
+  align-items: center;
+  gap: calc(12 * var(--method-u));
+  block-size: calc(61 * var(--method-u));
+  padding-inline: calc(25 * var(--method-u)) calc(29 * var(--method-u));
+  border-radius: calc(10 * var(--method-u));
+  background: var(--method-gold);
+  color: #241a07;
+  font-size: calc(13.5 * var(--method-u));
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.methodIntro__cta:hover,
+.methodIntro__cta:focus-visible {
+  background: #e0ab48;
+}
+.methodIntro__cta .methodArrow {
+  font-weight: 500;
+}
+
+/* ================================================================ stage */
+
+.methodStage {
+  position: relative;
+  margin-inline: var(--method-stage-inline);
+  margin-block-end: calc(26 * var(--method-u));
+  block-size: calc(712 * var(--method-u));
+  border-radius: var(--method-stage-radius);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0) 55%),
+    var(--method-obsidian);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 calc(18 * var(--method-u)) calc(40 * var(--method-u)) rgba(20, 18, 12, 0.18);
+  color: var(--method-ivory);
+  overflow: hidden;
+}
+
+/* Fine matte grain, reusing the foundation's noise approach without images. */
+.methodStage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: repeating-conic-gradient(
+    rgba(255, 255, 255, 0.14) 0% 0.0001%,
+    transparent 0.0002% 0.00042%
+  );
+  background-size: 7px 7px;
+}
+
+.methodStage__etape {
+  position: absolute;
+  inset-block-start: calc(45 * var(--method-u));
+  inset-inline-start: calc(43 * var(--method-u));
+  color: var(--method-gold-bright);
+  font-size: calc(13 * var(--method-u));
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------- rail */
+
+.methodRail {
+  position: absolute;
+  inset-block-start: calc(88 * var(--method-u));
+  inset-inline-start: calc(43 * var(--method-u));
+  inline-size: calc(150 * var(--method-u));
+  display: flex;
+  flex-direction: column;
+}
+.methodRail__item:nth-child(2) {
+  margin-block-start: calc(95 * var(--method-u));
+}
+.methodRail__item:nth-child(3) {
+  margin-block-start: calc(106 * var(--method-u));
+}
+
+/* Vertical spine behind the nodes. */
+.methodRail::before {
+  content: "";
+  position: absolute;
+  inset-block: calc(24 * var(--method-u));
+  inset-inline-start: calc(11 * var(--method-u));
+  inline-size: 1px;
+  background: linear-gradient(
+    to bottom,
+    var(--method-gold-line) 0%,
+    rgba(168, 129, 63, 0.35) 60%,
+    rgba(128, 126, 125, 0.35) 100%
+  );
+}
+
+.methodRail__item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: calc(18 * var(--method-u));
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--method-stone);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.methodRail__node {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  inline-size: calc(23 * var(--method-u));
+  block-size: calc(23 * var(--method-u));
+  margin-block-start: calc(4 * var(--method-u));
+  border: calc(2 * var(--method-u)) solid var(--method-stone-dim);
+  border-radius: 50%;
+  background: var(--method-obsidian);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.methodRail__item.is-active .methodRail__node {
+  border-color: var(--method-gold-bright);
+}
+.methodRail__item.is-active .methodRail__node::after {
+  content: "";
+  inline-size: calc(9 * var(--method-u));
+  block-size: calc(9 * var(--method-u));
+  border-radius: 50%;
+  background: var(--method-gold-bright);
+}
+.methodRail__item.is-done .methodRail__node {
+  border-color: var(--method-stone);
+}
+
+.methodRail__num {
+  display: block;
+  font-size: calc(30 * var(--method-u));
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--method-stone);
+}
+.methodRail__label {
+  display: block;
+  margin-block-start: calc(3 * var(--method-u));
+  font-size: calc(15 * var(--method-u));
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--method-stone-dim);
+}
+.methodRail__item.is-active .methodRail__num,
+.methodRail__item.is-active .methodRail__label {
+  color: var(--method-gold-bright);
+}
+.methodRail__item:hover .methodRail__num,
+.methodRail__item:focus-visible .methodRail__num {
+  color: var(--method-ivory);
+}
+.methodRail__item:focus-visible {
+  outline: 2px solid var(--method-gold-bright);
+  outline-offset: 4px;
+  border-radius: calc(4 * var(--method-u));
+}
+
+/* --------------------------------------------------------- phase copy */
+
+.methodCopy {
+  position: absolute;
+  inset-block-start: calc(60 * var(--method-u));
+  inset-inline-start: calc(213 * var(--method-u));
+  inline-size: calc(320 * var(--method-u));
+}
+
+.methodCopy__number {
+  font-size: calc(124 * var(--method-u));
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--method-gold);
+}
+
+.methodCopy__title {
+  margin-block: calc(2 * var(--method-u)) calc(19 * var(--method-u));
+  font-size: calc(33 * var(--method-u));
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--method-ivory);
+}
+
+.methodCopy__body {
+  font-size: calc(15 * var(--method-u));
+  line-height: 1.55;
+  color: var(--method-body-dim);
+}
+
+.methodCopy__chips {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: calc(11 * var(--method-u));
+  margin-block-start: calc(10 * var(--method-u));
+  padding: 0;
+  list-style: none;
+}
+
+.methodCopy__chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: calc(30 * var(--method-u));
+  padding-inline: calc(11 * var(--method-u));
+  border: 1px solid rgba(178, 173, 168, 0.42);
+  border-radius: calc(15 * var(--method-u));
+  font-size: calc(11.5 * var(--method-u));
+  font-weight: 400;
+  color: #cfccc8;
+  white-space: nowrap;
+}
+
+.methodCopy__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(10 * var(--method-u));
+  margin-block-start: calc(35 * var(--method-u));
+  color: var(--method-ivory);
+  font-size: calc(15 * var(--method-u));
+  font-weight: 500;
+  text-decoration: none;
+  border-block-end: 1px solid var(--method-gold-line);
+  padding-block-end: calc(6 * var(--method-u));
+}
+.methodCopy__cta:hover,
+.methodCopy__cta:focus-visible {
+  color: var(--method-gold-bright);
+}
+
+/* ------------------------------------------------------------ dossier */
+
+.methodDossier {
+  position: absolute;
+  inset-block-start: calc(20 * var(--method-u));
+  inset-inline-start: calc(515 * var(--method-u));
+  inline-size: calc(590 * var(--method-u));
+  block-size: calc(600 * var(--method-u));
+}
+
+/* Matte black folder with gold binding edge. */
+.methodDossier__base {
+  position: absolute;
+  inset: calc(12 * var(--method-u)) calc(55 * var(--method-u)) calc(6 * var(--method-u))
+    calc(43 * var(--method-u));
+  border-radius: calc(14 * var(--method-u));
+  background: linear-gradient(155deg, #1a1f24 0%, #12161a 45%, #0f1317 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 calc(26 * var(--method-u)) calc(50 * var(--method-u)) rgba(0, 0, 0, 0.55);
+}
+/* Gold spine on the folder's left edge. */
+.methodDossier__base::before {
+  content: "";
+  position: absolute;
+  inset-block: calc(8 * var(--method-u));
+  inset-inline-start: calc(6 * var(--method-u));
+  inline-size: calc(5 * var(--method-u));
+  border-radius: calc(3 * var(--method-u));
+  background: linear-gradient(to bottom, #c69a45, #8a6a2c 55%, #c69a45);
+  opacity: 0.85;
+}
+/* Paper layers peeking beneath the folder's lower-right edge. */
+.methodDossier__base::after {
+  content: "";
+  position: absolute;
+  inset-inline: calc(330 * var(--method-u)) calc(28 * var(--method-u));
+  inset-block-end: calc(-7 * var(--method-u));
+  block-size: calc(15 * var(--method-u));
+  border-radius: calc(4 * var(--method-u));
+  background: linear-gradient(
+    to bottom,
+    var(--method-card) 0 45%,
+    var(--method-card-deep) 45% 75%,
+    #d8cec1 75%
+  );
+  box-shadow: 0 calc(8 * var(--method-u)) calc(18 * var(--method-u)) rgba(0, 0, 0, 0.35);
+  transform: rotate(-0.8deg);
+}
+
+.methodDossier__title {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: calc(79 * var(--method-u));
+  inset-inline-start: calc(41 * var(--method-u));
+  font-size: calc(26 * var(--method-u));
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #d8c9a4;
+  text-transform: uppercase;
+}
+
+/* Binder clip silhouette at the folder's top edge. */
+.methodDossier__clip {
+  position: absolute;
+  z-index: 3;
+  inset-block-start: calc(4 * var(--method-u));
+  inset-inline-start: calc(190 * var(--method-u));
+  inline-size: calc(46 * var(--method-u));
+  block-size: calc(32 * var(--method-u));
+  border-radius: calc(5 * var(--method-u)) calc(5 * var(--method-u)) calc(3 * var(--method-u))
+    calc(3 * var(--method-u));
+  background: linear-gradient(to bottom, #454c54 0%, #23282d 55%, #171b1f 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 calc(4 * var(--method-u)) calc(10 * var(--method-u)) rgba(0, 0, 0, 0.5);
+}
+.methodDossier__clip::before {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(-15 * var(--method-u));
+  inset-inline-start: calc(8 * var(--method-u));
+  inline-size: calc(22 * var(--method-u));
+  block-size: calc(17 * var(--method-u));
+  border: calc(3 * var(--method-u)) solid #83898f;
+  border-block-end: none;
+  border-radius: calc(9 * var(--method-u)) calc(9 * var(--method-u)) 0 0;
+}
+
+/* Gold pen resting along the folder's right edge. */
+.methodDossier__pen {
+  position: absolute;
+  z-index: 3;
+  inset-block-start: calc(112 * var(--method-u));
+  inset-inline-end: calc(40 * var(--method-u));
+  inline-size: calc(9 * var(--method-u));
+  block-size: calc(296 * var(--method-u));
+  border-radius: calc(5 * var(--method-u));
+  background: linear-gradient(
+    to bottom,
+    #8f6f33 0%,
+    #c9a254 8%,
+    #2b2f34 16%,
+    #3a3f45 46%,
+    #23272c 78%,
+    #b08a41 86%,
+    #6f5626 100%
+  );
+  box-shadow:
+    inset 1px 0 0 rgba(255, 255, 255, 0.28),
+    calc(3 * var(--method-u)) calc(6 * var(--method-u)) calc(12 * var(--method-u))
+      rgba(0, 0, 0, 0.5);
+}
+
+/* Document panels inside the dossier. */
+.methodDoc {
+  position: absolute;
+  z-index: 2;
+  border-radius: calc(8 * var(--method-u));
+  overflow: hidden;
+}
+.methodDoc--paper {
+  background: linear-gradient(170deg, var(--method-card) 0%, var(--method-card-deep) 100%);
+  color: var(--method-ink);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 calc(14 * var(--method-u)) calc(28 * var(--method-u)) rgba(0, 0, 0, 0.45);
+}
+.methodDoc--panel {
+  background: linear-gradient(165deg, #1c2126 0%, var(--method-obsidian-soft) 100%);
+  color: var(--method-ivory);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    0 calc(14 * var(--method-u)) calc(28 * var(--method-u)) rgba(0, 0, 0, 0.5);
+}
+
+.methodDoc__label {
+  display: block;
+  padding: calc(12 * var(--method-u)) calc(16 * var(--method-u)) calc(8 * var(--method-u));
+  font-size: calc(13 * var(--method-u));
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.methodDoc--panel .methodDoc__label {
+  color: var(--method-ivory);
+}
+
+/* Neutral layout bars: approved stand-in for unapproved document microcopy. */
+.methodDoc__body {
+  padding: 0 calc(16 * var(--method-u)) calc(14 * var(--method-u));
+  display: grid;
+  gap: calc(8 * var(--method-u));
+}
+.methodDoc__bar {
+  block-size: calc(8 * var(--method-u));
+  border-radius: calc(2 * var(--method-u));
+  background: currentColor;
+  opacity: 0.16;
+}
+.methodDoc__bar--gold {
+  background: var(--method-gold);
+  opacity: 0.75;
+}
+.methodDoc--paper .methodDoc__bar {
+  opacity: 0.22;
+}
+.methodDoc__row {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--method-u));
+}
+.methodDoc__inner {
+  margin: 0 calc(14 * var(--method-u)) calc(14 * var(--method-u));
+  padding: calc(14 * var(--method-u));
+  border-radius: calc(6 * var(--method-u));
+  background: linear-gradient(170deg, var(--method-card) 0%, var(--method-card-deep) 100%);
+  color: var(--method-ink);
+  display: grid;
+  gap: calc(12 * var(--method-u));
+}
+.methodDoc__inner .methodDoc__bar {
+  opacity: 0.3;
+}
+.methodDoc__dot {
+  flex: none;
+  inline-size: calc(14 * var(--method-u));
+  block-size: calc(14 * var(--method-u));
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.5;
+}
+.methodDoc__dot--filled {
+  background: var(--method-gold);
+  border-color: var(--method-gold);
+  opacity: 1;
+}
+.methodDoc__media {
+  margin: 0 calc(16 * var(--method-u)) calc(10 * var(--method-u));
+  border-radius: calc(4 * var(--method-u));
+  block-size: calc(64 * var(--method-u));
+  background: linear-gradient(140deg, #5a636b 0%, #39424a 45%, #2a3138 100%);
+  opacity: 0.95;
+}
+.methodDoc--paper .methodDoc__media {
+  background: linear-gradient(135deg, #cfc5b6 0%, #b9ae9d 60%);
+}
+/* Gantt-style schedule bars. */
+.methodDoc__gantt {
+  display: grid;
+  gap: calc(7 * var(--method-u));
+}
+.methodDoc__ganttRow {
+  display: flex;
+  gap: calc(6 * var(--method-u));
+  align-items: center;
+}
+.methodDoc__ganttRow .methodDoc__bar {
+  block-size: calc(9 * var(--method-u));
+}
+
+/* Document slot placement, measured from the Phase 01 reference. Slots are
+   part of the locked dossier geometry: every phase pours its documents into
+   the same five slots (slot 4 is only occupied by the five-document phases). */
+.methodDoc--slot0 {
+  inset-block-start: calc(26 * var(--method-u));
+  inset-inline-start: calc(217 * var(--method-u));
+  inline-size: calc(260 * var(--method-u));
+  block-size: calc(150 * var(--method-u));
+  transform: rotate(-1.2deg);
+}
+.methodDoc--slot1 {
+  inset-block-start: calc(181 * var(--method-u));
+  inset-inline-start: calc(33 * var(--method-u));
+  inline-size: calc(237 * var(--method-u));
+  block-size: calc(282 * var(--method-u));
+  transform: rotate(-0.6deg);
+}
+.methodDoc--slot2 {
+  inset-block-start: calc(168 * var(--method-u));
+  inset-inline-start: calc(272 * var(--method-u));
+  inline-size: calc(228 * var(--method-u));
+  block-size: calc(220 * var(--method-u));
+}
+.methodDoc--slot3 {
+  inset-block-start: calc(343 * var(--method-u));
+  inset-inline-start: calc(160 * var(--method-u));
+  inline-size: calc(375 * var(--method-u));
+  block-size: calc(150 * var(--method-u));
+  transform: rotate(0.8deg);
+}
+.methodDoc--slot4 {
+  inset-block-start: calc(414 * var(--method-u));
+  inset-inline-start: calc(58 * var(--method-u));
+  inline-size: calc(164 * var(--method-u));
+  block-size: calc(114 * var(--method-u));
+  transform: rotate(0.5deg);
+}
+
+/* ---------------------------------------------------------- status rail */
+
+/* Positioned inside .methodDossier: reference-global (600, 795) minus the
+   dossier's own stage offset. */
+.methodStatus {
+  position: absolute;
+  z-index: 4;
+  inset-block-start: calc(489 * var(--method-u));
+  inset-inline-start: calc(60 * var(--method-u));
+  inline-size: calc(410 * var(--method-u));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(10 * var(--method-u)) calc(20 * var(--method-u));
+  border-radius: calc(24 * var(--method-u));
+  background: rgba(10, 13, 15, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.methodStatus__item {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(9 * var(--method-u));
+  font-size: calc(13 * var(--method-u));
+  color: var(--method-body-dim);
+}
+.methodStatus__item.is-lead {
+  color: var(--method-gold-bright);
+}
+.methodStatus__icon {
+  inline-size: calc(17 * var(--method-u));
+  block-size: calc(17 * var(--method-u));
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10 * var(--method-u));
+}
+.methodStatus__arrow {
+  color: var(--method-stone-dim);
+  font-size: calc(14 * var(--method-u));
+}
+
+/* -------------------------------------------------------- deliverables */
+
+.methodDeliverables {
+  position: absolute;
+  inset-block-start: calc(37 * var(--method-u));
+  inset-inline-end: calc(60 * var(--method-u));
+  inline-size: calc(266 * var(--method-u));
+}
+
+.methodDeliverables__heading {
+  margin-block-end: calc(22 * var(--method-u));
+  font-size: calc(14 * var(--method-u));
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--method-gold-bright);
+}
+
+.methodDeliverables__list {
+  display: grid;
+  gap: calc(16 * var(--method-u));
+  padding: 0;
+  list-style: none;
+}
+
+.methodCard {
+  display: flex;
+  align-items: center;
+  gap: calc(16 * var(--method-u));
+  block-size: calc(103 * var(--method-u));
+  padding-inline: calc(14 * var(--method-u)) calc(8 * var(--method-u));
+  border-radius: calc(10 * var(--method-u));
+  background: var(--method-card);
+  color: var(--method-ink);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 calc(10 * var(--method-u)) calc(22 * var(--method-u)) rgba(0, 0, 0, 0.35);
+}
+
+.methodCard__thumb {
+  flex: none;
+  inline-size: calc(88 * var(--method-u));
+  block-size: calc(74 * var(--method-u));
+  border-radius: calc(6 * var(--method-u));
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(22, 24, 27, 0.12);
+  display: grid;
+  align-content: start;
+  gap: calc(6 * var(--method-u));
+  padding: calc(9 * var(--method-u));
+}
+.methodCard__thumbBar {
+  block-size: calc(6 * var(--method-u));
+  border-radius: calc(2 * var(--method-u));
+  background: var(--method-ink);
+  opacity: 0.18;
+}
+.methodCard__thumbBar--gold {
+  background: var(--method-gold);
+  opacity: 0.8;
+}
+
+.methodCard__title {
+  display: block;
+  font-size: calc(15 * var(--method-u));
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--method-ink);
+}
+.methodCard__status {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(7 * var(--method-u));
+  margin-block-start: calc(7 * var(--method-u));
+  font-size: calc(13 * var(--method-u));
+  color: #5c584f;
+}
+.methodCard__statusIcon {
+  inline-size: calc(16 * var(--method-u));
+  block-size: calc(16 * var(--method-u));
+  border: 1px solid var(--method-gold);
+  color: var(--method-gold);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10 * var(--method-u));
+}
+.methodCard__statusIcon--pending {
+  border-style: dashed;
+  color: transparent;
+}
+
+.methodDeliverables__annotation {
+  margin-block-start: calc(24 * var(--method-u));
+  font-size: calc(15 * var(--method-u));
+  line-height: 1.5;
+  color: var(--method-ivory);
+  border-block-end: 1px solid var(--method-gold-line);
+  padding-block-end: calc(8 * var(--method-u));
+}
+
+/* Connector lines from the dossier to each deliverable card. */
+.methodConnectors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.methodConnectors path {
+  fill: none;
+  stroke: var(--method-gold-line);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 6;
+  opacity: 0.85;
+}
+.methodConnectors circle {
+  fill: var(--method-gold-line);
+}
+
+/* ------------------------------------------------------------- footer */
+
+.methodJourney {
+  position: absolute;
+  inset-block-start: calc(629 * var(--method-u));
+  inset-inline: calc(55 * var(--method-u)) calc(46 * var(--method-u));
+  display: flex;
+  align-items: flex-start;
+}
+
+.methodJourney__track {
+  position: absolute;
+  inset-block-start: calc(5 * var(--method-u));
+  inset-inline: 0 calc(255 * var(--method-u));
+  block-size: calc(2 * var(--method-u));
+  background: #313336;
+}
+.methodJourney__trackFill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  background: var(--method-gold-bright);
+}
+
+.methodJourney__steps {
+  position: relative;
+  flex: 1;
+  block-size: calc(46 * var(--method-u));
+  margin-inline-end: calc(300 * var(--method-u));
+  padding: 0;
+  list-style: none;
+}
+.methodJourney__step:nth-child(1) {
+  inset-inline-start: 0;
+}
+.methodJourney__step:nth-child(2) {
+  inset-inline-start: calc(493 * var(--method-u));
+}
+.methodJourney__step:nth-child(3) {
+  inset-inline-start: calc(883 * var(--method-u));
+}
+.methodJourney__step {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(12 * var(--method-u));
+  padding-block-start: calc(24 * var(--method-u));
+  font-size: calc(14 * var(--method-u));
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--method-stone-dim);
+}
+.methodJourney__step::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: calc(12 * var(--method-u));
+  block-size: calc(12 * var(--method-u));
+  border-radius: 50%;
+  background: #45484c;
+}
+.methodJourney__step.is-active {
+  color: var(--method-gold-bright);
+}
+.methodJourney__step.is-active::before {
+  background: var(--method-gold-bright);
+}
+.methodJourney__step.is-done {
+  color: var(--method-stone);
+}
+
+.methodJourney__next {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: calc(-1 * var(--method-u));
+  display: inline-flex;
+  align-items: center;
+  gap: calc(12 * var(--method-u));
+  block-size: calc(36 * var(--method-u));
+  padding-inline: calc(24 * var(--method-u));
+  border: 1px solid rgba(178, 173, 168, 0.5);
+  border-radius: calc(22 * var(--method-u));
+  background: none;
+  color: var(--method-ivory);
+  font: inherit;
+  font-size: calc(14 * var(--method-u));
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    color 0.3s;
+}
+.methodJourney__next:hover,
+.methodJourney__next:focus-visible {
+  border-color: var(--method-gold-bright);
+  color: var(--method-gold-bright);
+}
+
+/* ------------------------------------------------- static test rendering */
+
+/* The deterministic visual state disables every transition so screenshots
+   capture one stable end frame (qa/01_VISUAL_PARITY_PROTOCOL.md). */
+.methodSection[data-static="true"] *,
+.methodSection[data-static="true"] *::before,
+.methodSection[data-static="true"] *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* --------------------------------------------------- pre-Gate-6 fallback */
+
+/* Responsive recomposition is Gate 6. Until that gate, tablet and mobile
+   receive a readable stacked fallback rather than a broken absolute layout. */
+@media (max-width: 1279px) {
+  .methodSection {
+    --method-u: 0.078125vw; /* 1 reference px at 1280 */
+  }
+}
+@media (max-width: 1023px) {
+  .methodIntro {
+    padding: 6vw 5vw 4vw;
+  }
+  .methodIntro__heading {
+    max-width: none;
+    font-size: 5.2vw;
+  }
+  .methodIntro__support {
+    max-width: none;
+    font-size: 2.4vw;
+  }
+  .methodIntro__cta {
+    position: static;
+    margin-block-start: 4vw;
+    block-size: 8vw;
+    font-size: 2.2vw;
+  }
+  .methodStage {
+    margin-inline: 3vw;
+    block-size: auto;
+    border-radius: 3vw;
+    padding: 5vw 4vw;
+  }
+  .methodStage__etape,
+  .methodRail,
+  .methodCopy,
+  .methodDossier,
+  .methodStatus,
+  .methodDeliverables,
+  .methodJourney {
+    position: static;
+    inset: auto;
+    inline-size: auto;
+    block-size: auto;
+    margin: 0 0 5vw;
+    transform: none;
+  }
+  .methodRail {
+    flex-direction: row;
+    gap: 6vw;
+  }
+  .methodRail::before {
+    display: none;
+  }
+  .methodDossier {
+    display: grid;
+    gap: 3vw;
+  }
+  .methodDossier__base,
+  .methodDossier__clip,
+  .methodDossier__pen {
+    display: none;
+  }
+  .methodDossier__title {
+    position: static;
+    font-size: 3.4vw;
+  }
+  .methodDoc {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    transform: none;
+  }
+  .methodCopy__number {
+    font-size: 12vw;
+  }
+  .methodCopy__title {
+    font-size: 4.6vw;
+  }
+  .methodCopy__body,
+  .methodCopy__cta {
+    font-size: 2.4vw;
+  }
+  .methodCopy__chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .methodCopy__chip {
+    block-size: 6vw;
+    font-size: 2vw;
+  }
+  .methodStatus {
+    inline-size: auto;
+    flex-wrap: wrap;
+    gap: 2vw;
+  }
+  .methodDeliverables {
+    inline-size: auto;
+  }
+  .methodCard {
+    block-size: auto;
+    padding-block: 2.4vw;
+  }
+  .methodConnectors {
+    display: none;
+  }
+  .methodJourney {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3vw;
+  }
+  .methodJourney__track {
+    display: none;
+  }
+  .methodJourney__steps {
+    margin-inline-end: 0;
+    inline-size: 100%;
+  }
+  .methodJourney__step {
+    font-size: 2.2vw;
+  }
+  .methodJourney__next {
+    position: static;
+    block-size: 8vw;
+    font-size: 2.2vw;
+  }
+}

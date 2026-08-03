@@ -1,10 +1,343 @@
 {
   "nav": {
-    "home": "Home",
-    "madeByYellow": "Made by Yellow",
-    "culture": "Culture",
-    "howWeRoll": "How we roll",
-    "connect": "Connect",
+    "salons": "Exhibitions",
+    "exposer": "Exhibit",
+    "pourquoiSpimar": "Why SPIMAR",
+    "etudesDeCas": "Case studies",
+    "ressources": "Resources",
+    "visiteurs": "Visitors",
+    "becomeExhibitor": "Become an exhibitor",
+    "contact": "Contact",
     "menu": "Menu"
+  },
+  "impact": {
+    "eyebrow": "Key figures",
+    "title": "Impact, measured.",
+    "lead": "Six indicators tracking the reach and performance of every edition.",
+    "status": "Sources in validation",
+    "note": "Official figures are published once the sources are validated.",
+    "methodology": "See the methodology",
+    "indicators": {
+      "events": {
+        "label": "Exhibitions held",
+        "caption": "International editions"
+      },
+      "visitors": {
+        "label": "Visitors welcomed",
+        "caption": "Qualified audience"
+      },
+      "exhibitors": {
+        "label": "Exhibitors supported",
+        "caption": "End-to-end follow-up"
+      },
+      "countries": {
+        "label": "Countries covered",
+        "caption": "International network"
+      },
+      "leads": {
+        "label": "Leads generated",
+        "caption": "Detected intent"
+      },
+      "satisfaction": {
+        "label": "Satisfaction rate",
+        "caption": "Measured experience"
+      }
+    }
+  },
+  "mre": {
+    "eyebrow": "Understanding the MRE market",
+    "title": "Why do Moroccans living abroad buy in Morocco?",
+    "lead": "Six motivations shape the demand and point to commercial opportunities for developers.",
+    "downloadStudy": "Download the study",
+    "filtersLabel": "Filter the motivations",
+    "filters": {
+      "all": "All drivers",
+      "life": "Life project",
+      "investment": "Investment",
+      "transmission": "Transmission"
+    },
+    "railCount": "{count, plural, one {# motivation} other {# motivations}}",
+    "detailCounter": "Motivation {num} / 0{total}",
+    "explore": "Explore",
+    "mediaPending": "Visual in validation",
+    "motivations": {
+      "principale": {
+        "label": "Primary residence",
+        "description": "Settling in Morocco for good, with a home suited to a local way of life.",
+        "tags": "Life project|Lasting settlement|Suited housing",
+        "imageAlt": "A family tours a bright living room with a property advisor."
+      },
+      "secondaire": {
+        "label": "Second home",
+        "description": "Keeping a pied-à-terre in Morocco for family stays throughout the year.",
+        "tags": "Life project|Pied-à-terre|Family stays",
+        "imageAlt": ""
+      },
+      "retour": {
+        "label": "Returning to Morocco",
+        "description": "Preparing a definitive or gradual return under the right conditions.",
+        "tags": "Life project|Gradual return|Settling in",
+        "imageAlt": "A couple with suitcases is welcomed at the door of a traditional house."
+      },
+      "retraite": {
+        "label": "Retirement",
+        "description": "Preparing a retirement in Morocco in a serene, accessible living environment.",
+        "tags": "Life project|Living environment|Retirement",
+        "imageAlt": ""
+      },
+      "patrimonial": {
+        "label": "Wealth investment",
+        "description": "Building and growing secure property assets in Morocco.",
+        "tags": "Investment|Appreciation|Assets",
+        "imageAlt": "An advisor presents a residence scale model to an investor couple."
+      },
+      "transmission": {
+        "label": "Family transmission",
+        "description": "Preparing the future and passing on lasting property assets to loved ones.",
+        "tags": "Transmission|Family|Lasting assets",
+        "imageAlt": ""
+      }
+    },
+    "study": {
+      "coverTitle": "The MRE market in Morocco",
+      "eyebrow": "Spimarimmo study",
+      "title": "The MRE market, in summary",
+      "text": "Motivations, trends and key lessons to guide your strategies.",
+      "note": "Sources verified before publication."
+    },
+    "scope": {
+      "label": "Source & scope",
+      "study": "Qualitative study of MRE investors and home buyers",
+      "countries": "France · Canada · Belgium · United Kingdom · United Arab Emirates",
+      "recency": "Recent data"
+    },
+    "methodology": "See the full methodology"
+  },
+  "visibility": {
+    "eyebrow": "Your visibility",
+    "title": "An amplified presence before, during and after every exhibition.",
+    "lead": "A coordinated media and commercial device to attract, engage and convert a qualified audience.",
+    "cta": "Discover the device",
+    "tabsLabel": "Device phases",
+    "channelsLabel": "Activated channels",
+    "phaseCounter": "Phase {num} / 03",
+    "nextPhase": "Next phase",
+    "phases": {
+      "before": {
+        "label": "Before the exhibition",
+        "sub": "Prepare the audience",
+        "status": "Active",
+        "heading": "Build attention before the doors open.",
+        "body": "We prepare the audience and establish your brand before the first meeting.",
+        "levers": {
+          "0": "Sponsored videos",
+          "1": "Meta campaigns",
+          "2": "Google Ads",
+          "3": "Emailing & SMS",
+          "4": "Influence & press"
+        },
+        "channels": {
+          "meta": "Meta",
+          "google": "Google",
+          "youtube": "YouTube",
+          "email": "Email",
+          "sms": "SMS",
+          "press": "Press",
+          "influence": "Influence"
+        },
+        "deliverablesTitle": "Deliverables before",
+        "deliverables": {
+          "0": {
+            "label": "Sponsored film",
+            "status": "Prepared"
+          },
+          "1": {
+            "label": "Social ads kit",
+            "status": "Ready"
+          },
+          "2": {
+            "label": "Landing page",
+            "status": "Validated"
+          },
+          "3": {
+            "label": "CRM sequence",
+            "status": "Planned"
+          },
+          "4": {
+            "label": "Press & influence",
+            "status": "Coordinated"
+          }
+        },
+        "closing": "Everything is visible before the exhibition opens.",
+        "flow": {
+          "0": "Prepared",
+          "1": "Validated",
+          "2": "Planned"
+        }
+      },
+      "during": {
+        "label": "During the exhibition",
+        "sub": "Activate engagement",
+        "status": "Live",
+        "heading": "Activate meetings in real time.",
+        "body": "We capture the highlights, animate the exchanges and facilitate qualified meetings during the exhibition.",
+        "levers": {
+          "0": "Video capture",
+          "1": "Interviews",
+          "2": "Social distribution",
+          "3": "Live",
+          "4": "Qualified meetings"
+        },
+        "channels": {
+          "captation": "Capture",
+          "interviews": "Interviews",
+          "social": "Social",
+          "live": "Live",
+          "meetings": "Meetings"
+        },
+        "deliverablesTitle": "Deliverables during",
+        "deliverables": {
+          "0": {
+            "label": "Video capsules",
+            "status": "Filming"
+          },
+          "1": {
+            "label": "Exhibitor interviews",
+            "status": "In progress"
+          },
+          "2": {
+            "label": "Live publications",
+            "status": "Published"
+          },
+          "3": {
+            "label": "Qualified meetings",
+            "status": "Confirmed"
+          },
+          "4": {
+            "label": "Content bank",
+            "status": "Growing"
+          }
+        },
+        "closing": "Every highlight is captured and activated during the exhibition.",
+        "flow": {
+          "0": "Captured",
+          "1": "Published",
+          "2": "Qualified"
+        }
+      },
+      "after": {
+        "label": "After the exhibition",
+        "sub": "Extend the conversion",
+        "status": "Active follow-up",
+        "heading": "Turn interest into opportunities.",
+        "body": "We hand over the leads, measure performance and support the commercial follow-up after the exhibition.",
+        "levers": {
+          "0": "Lead handover",
+          "1": "Reporting",
+          "2": "Commercial follow-up",
+          "3": "Performance analysis",
+          "4": "Recommendations"
+        },
+        "channels": {
+          "leads": "Leads",
+          "reporting": "Reporting",
+          "followup": "Follow-up",
+          "analysis": "Analysis",
+          "advice": "Advice"
+        },
+        "deliverablesTitle": "Deliverables after",
+        "deliverables": {
+          "0": {
+            "label": "Qualified leads",
+            "status": "Handed over"
+          },
+          "1": {
+            "label": "Performance report",
+            "status": "Available"
+          },
+          "2": {
+            "label": "Commercial follow-up",
+            "status": "In progress"
+          },
+          "3": {
+            "label": "Campaign review",
+            "status": "Consolidated"
+          },
+          "4": {
+            "label": "Recommendations",
+            "status": "Shared"
+          }
+        },
+        "closing": "Every contact remains actionable after the exhibition.",
+        "flow": {
+          "0": "Handed over",
+          "1": "Qualified",
+          "2": "Followed"
+        },
+        "cta": "See the review"
+      }
+    },
+    "stage": {
+      "heroTitle": "Moroccan real estate, internationally.",
+      "heroSub": "Exceptional projects designed for today’s investors.",
+      "heroCta": "Discover the projects",
+      "scheduleTitle": "Meetings",
+      "slots": {
+        "0": {
+          "time": "10:00",
+          "who": "Investor – Paris"
+        },
+        "1": {
+          "time": "11:30",
+          "who": "Family Office – Casablanca"
+        },
+        "2": {
+          "time": "14:00",
+          "who": "Developer – Tangier"
+        },
+        "3": {
+          "time": "15:30",
+          "who": "Investor – London"
+        }
+      },
+      "pipelineTitle": "CRM pipeline",
+      "pipeline": {
+        "new": "New leads",
+        "qualified": "Qualified",
+        "meetings": "Meetings",
+        "opportunities": "Opportunities"
+      },
+      "companyLabel": "Company {letter}"
+    },
+    "benefits": {
+      "audience": {
+        "title": "Qualified audience",
+        "sub": "Targeting by project and area"
+      },
+      "engagement": {
+        "title": "Continuous engagement",
+        "sub": "Present across the whole journey"
+      },
+      "reach": {
+        "title": "Multichannel visibility",
+        "sub": "Content on every lever"
+      },
+      "performance": {
+        "title": "Measurable performance",
+        "sub": "Actions and results tracked"
+      }
+    }
+  },
+  "promoters": {
+    "eyebrow": "They trust us",
+    "title": "Property developers at the heart of the SPIMARIMMO experience.",
+    "lead": "A partner network supported before, during and after every exhibition.",
+    "showAll": "View all developers",
+    "hideAll": "Hide the developers",
+    "allLabel": "All partner developers",
+    "consent": "Logos displayed with the developers’ consent.",
+    "auto": "Automatic scrolling",
+    "pause": "Pause the scrolling",
+    "resume": "Resume the scrolling"
   }
 }

@@ -1,87 +1,67 @@
 import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
-import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
-import { MEDIA_POSTERS } from "@/lib/media/posters";
-import { resolveLegacyVideoPath } from "@/lib/media/video-registry";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
+import { StandCluster } from "./StandCluster";
+import { EventsCarousel, type EventOpportunity } from "./EventsCarousel";
 
-const FEATURED = [
+/* The works -> Salons par pays (specification §05, §07).
+
+   The section keeps its foundation direction exactly: the same
+   `projectsSection` treatment, the same `hoyCols` header of side label /
+   statement / numbered chapter marker, the same card row, and cards with the
+   same media plane, tag chip, title and two stats. Only the content changes,
+   from featured project to event destination.
+
+   Content discipline, from §07 and §19:
+   - Country, city and status come from the specification.
+   - Date, venue and expected-visitor counts must never appear unvalidated, so
+     those stats state their readiness instead of carrying a figure.
+   - Ordering follows §07: upcoming editions first, historical last. */
+
+const EVENTS: EventOpportunity[] = [
+  { slug: "paris", country: "France", city: "Paris", status: "prochaine-edition" },
+  { slug: "bruxelles", country: "Belgique", city: "Bruxelles", status: "prochaine-edition" },
+  { slug: "laval", country: "Canada", city: "Laval", status: "prochaine-edition" },
   {
-    slug: "oceanco-leviathan",
-    title: "Oceanco – Leviathan",
-    tags: ["Corporate", "Commercials"],
-    views: "7.100.000",
-    delivery: "2 wks production + 2 wks post",
-    video: "/videos/featured-oceanco-1196251477-540p.mp4",
-    poster: "/images/posters/Comp-3_11_33-600x439.jpg",
+    slug: "abu-dhabi",
+    country: "Émirats Arabes Unis",
+    city: "Abu Dhabi",
+    status: "prochaine-edition",
   },
-  {
-    slug: "la-fuente-x-amg",
-    title: "La Fuente x AMG",
-    tags: ["Artists", "Commercials"],
-    views: "5.800.000",
-    delivery: "1 week pre-production + 2 shoot days",
-    video: "/videos/featured-lafuente-1204605394-540p.mp4",
-    poster: "/images/posters/Comp-3_11_36-600x439.jpg",
-  },
-  {
-    slug: "broederliefde-rotterdam-ahoy",
-    title: "Broederliefde – Rotterdam Ahoy",
-    tags: ["Artists", "Events"],
-    views: "1.900.000",
-    delivery: "8 days",
-    video: "/videos/featured-broederliefde-1194133383-720p.mp4",
-    poster: null,
-  },
+  { slug: "londres", country: "Royaume-Uni", city: "Londres", status: "a-venir" },
+  { slug: "montreal", country: "Canada", city: "Montréal", status: "historique" },
 ];
 
-const CLIENT_LOGOS = [
-  "XXL-nutrition",
-  "Team-Eiffel",
-  "SuperOffice",
-  "Streetgasm",
-  "srg-international",
-  "Qbuzz",
-  "psv",
-  "la-fuente",
-  "KPN",
-  "joseph-klibansky",
-  "IMA-benelux",
-  "Hotek",
-  "high-tech-campus",
-  "Glow-eindhoven",
-  "Edco",
-  "De-klerk",
-  "Buddha-to-Buddha",
-  "Broederliefde",
-  "AbrahamArt",
-  "femaletechheroes",
-  "philipshue",
-  "etos",
-  "mentech",
-  "cbbe",
-  "rd-dubai",
-  "lymph-co",
-  "marco-schuitmaker",
-  "tmc",
-  "groenontwikkelfonds",
-  "CBBE_logo",
-  "nextlevelcars",
-  "o2life",
-];
+/* Social proof — "Ils nous font confiance" (§14).
+
+   Restored to the reference's `logoSection` marquee architecture. The previous
+   occupant of this row was 32 House of Yellow client logos, which presented
+   other companies' trademarks as SPIMARIMMO's clients; that content was the
+   problem, not the component.
+
+   These partners are named in the approved SPIMARIMMO design reference under
+   "Ils nous font confiance", so the relationships are evidenced. They are set
+   as wordmarks rather than logo files: the partners' marks are third-party
+   trademarks whose usage rights are not recorded, and §14 requires logos to be
+   CMS-managed with an approval state. The approved reference sets them as type
+   too. Real marks replace these once rights are cleared. */
+const PARTNERS = ["Prestigia", "Saham Immobilier", "Addoha", "Coralia", "CGI"];
 
 function PillButton({
   href,
   label,
-  dark = false,
+  variant,
 }: {
   href: string;
   label: string;
-  dark?: boolean;
+  /* The reference pairs a filled primary with an outlined secondary, which is
+     also the specification's commitment hierarchy: stand first, brochure as the
+     lighter alternative. */
+  variant?: "dark" | "outline";
 }) {
   return (
-    <Link className={`button${dark ? " dark" : ""}`} href={href} title={label}>
+    <Link className={`button${variant ? ` ${variant}` : ""}`} href={href} title={label}>
       <span className="label">
         <span className="fixedLabel">{label}</span>
         <span className="innerLabel">
@@ -102,98 +82,80 @@ export function AboutWorkSection() {
         <div className="grainBackground" aria-hidden="true" />
         <div className="contentWrapper">
           <div className="aboutSection">
-            <div className="hoyCols">
-              <div className="colLabel">
-                <div className="text smaller medium">Who are we?</div>
+            <div className="cols">
+              <div className="col">
+                <div className="text smaller medium">Pourquoi SPIMARIMMO</div>
               </div>
-              <div className="colMain">
+              <div className="col">
+                {/* §01 North Star, stated as the opening editorial claim. */}
                 <SplitTitle
-                  as="h2"
+                  as="h1"
                   className="normalTitle smaller"
-                  text="Trusted by industry leaders, not because we chase volume, but because we craft stories with intention. From cinematic video and photography to high-end 3D animation, every detail is carefully crafted to create impact, from the first concept to global rollout."
+                  text="SPIMARIMMO apporte aux promoteurs immobiliers marocains un accès mesurable, organisé et crédible à la demande MRE et internationale."
                 />
+                {/* §06 approved supporting message. */}
                 <SplitTitle
                   className="smallTitle"
-                  text="Looking for a partner that’s agile and thinks big? Let’s talk."
+                  text="Nos salons réunissent une clientèle qualifiée, prête à concrétiser son projet immobilier au Maroc."
                 />
-                <div className="buttonsRow">
-                  <PillButton href="/connect" label="Connect" dark />
-                  <PillButton href="/culture" label="Culture" dark />
+                <div className="buttons">
+                  <PillButton
+                    href="/exposer/devenir-exposant"
+                    label="Devenir exposant"
+                    variant="dark"
+                  />
+                  <PillButton
+                    href="/ressources"
+                    label="Télécharger la brochure"
+                    variant="outline"
+                  />
                 </div>
               </div>
-              <div className="colIndex">
+              <div className="col">
                 <div className="text medium">
                   [ <span className="numIndex">01</span> ]
                 </div>
               </div>
             </div>
+            <StandCluster />
           </div>
           <div className="projectsSection">
-            <div className="hoyCols" style={{ paddingBottom: "2.5vw" }}>
-              <div className="colLabel">
-                <div className="text smaller medium">The works</div>
-              </div>
-              <div className="colMain">
+            {/* Reference header row: two columns of 684. Label and statement
+                left, chapter marker and action right-aligned. */}
+            <div className="cols" style={{ paddingBottom: "2.5vw" }}>
+              <div className="col">
+                <div className="text smaller medium">Salons par pays</div>
                 <SplitTitle
                   className="smallTitle"
-                  text="Every frame tells our story too, of passion, agility, and the pursuit of brilliance. This is Made by Yellow. A showcase of the work we proudly shaped together with our partners."
+                  text="Les salons SPIMARIMMO rendent le réseau international tangible : chaque destination réunit une clientèle qualifiée, prête à concrétiser son projet immobilier au Maroc."
                 />
-                <div className="buttonsRow">
-                  <PillButton href="/made-by-yellow" label="Made by Yellow" dark />
-                </div>
               </div>
-              <div className="colIndex">
+              <div className="col">
                 <div className="text medium">
                   [ <span className="numIndex">02</span> ]
                 </div>
+                <div className="buttons">
+                  <PillButton href="/salons" label="Voir tous les salons" variant="dark" />
+                </div>
               </div>
             </div>
-            <div className="projects">
-              {FEATURED.map((p) => (
-                <Link
-                  key={p.slug}
-                  className="project"
-                  href={`/project/${p.slug}`}
-                  data-cursor="play"
-                >
-                  <span className="media">
-                    <ResilientVideo
-                      className="mediaPlane--fill"
-                      src={resolveLegacyVideoPath(p.video)}
-                      poster={p.poster ?? MEDIA_POSTERS.landscape}
-                    />
-                    <span className="tags">
-                      {p.tags.map((t) => (
-                        <span className="tag" key={t}>
-                          {t}
-                        </span>
-                      ))}
-                    </span>
-                  </span>
-                  <span className="projectTitle">{p.title}</span>
-                  <span className="stats">
-                    <span>
-                      <span className="statLabel">Views</span> {p.views}
-                    </span>
-                    <span>
-                      <span className="statLabel">Delivery time</span> {p.delivery}
-                    </span>
-                  </span>
-                </Link>
-              ))}
-            </div>
+            <EventsCarousel events={EVENTS} />
           </div>
         </div>
-        <div className="logoSection" aria-label="Clients">
+        <div className="logoSection">
+          <div className="contentWrapper">
+            <div className="text smaller medium logoSection__label">Ils nous font confiance</div>
+          </div>
           <div className="marquees" aria-hidden="true">
             <div className="marqueeWrapper">
               <div className="marquee" style={{ ["--marquee-duration" as string]: "40s" }}>
                 <div className="marqueeScroll">
                   {[0, 1, 2, 3].map((copy) => (
                     <span className="itemsContainer" key={copy}>
-                      {CLIENT_LOGOS.map((l) => (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img key={l} src={`/images/clients/${l}.svg`} alt="" loading="lazy" />
+                      {PARTNERS.map((name) => (
+                        <span className="partnerMark" key={name}>
+                          {name}
+                        </span>
                       ))}
                     </span>
                   ))}
@@ -201,6 +163,13 @@ export function AboutWorkSection() {
               </div>
             </div>
           </div>
+          {/* The marquee is decorative and hidden from assistive tech, so the
+              partners are also listed once in text. */}
+          <ul className="sr-only">
+            {PARTNERS.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

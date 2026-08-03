@@ -1,0 +1,767 @@
+/* ==========================================================================
+   Section 06 — Comprendre le marché MRE
+   ==========================================================================
+   Binds only to L2 semantic tokens, like section 05. The section returns to
+   the paper surface after the dark section 05, per the approved mock; the
+   study sidebar carries the inverse surface so the dark rhythm continues in
+   the composition without another full-bleed block.
+   ========================================================================== */
+
+.mreSection {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.mreInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header (sibling-section hierarchy: title < statement) ---------------- */
+
+.mreHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.mreEyebrow {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-sm);
+}
+
+.mreEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.mreTitle {
+  font-size: var(--text-support);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 var(--space-sm);
+}
+
+.mreLead {
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  max-width: var(--measure-prose);
+  text-wrap: balance;
+}
+
+/* --- Primary CTA ----------------------------------------------------------- */
+
+.mreCta {
+  align-items: center;
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  justify-content: center;
+  padding: var(--space-xs) var(--space-md);
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.mreCta:hover {
+  background: var(--action-primary-hover);
+}
+
+.mreCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.mreCtaIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+.mreCtaWide {
+  width: 100%;
+  padding-block: var(--space-sm);
+}
+
+/* --- Layout: explorer + study sidebar ------------------------------------- */
+
+.mreLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20vw;
+  gap: var(--space-md);
+  align-items: start;
+}
+
+/* --- Filters --------------------------------------------------------------- */
+
+.mreFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.mreFilter {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--on-surface);
+  cursor: pointer;
+  font-size: var(--text-support);
+  font-weight: 500;
+  padding: var(--space-2xs) var(--space-sm);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.mreFilter:hover {
+  border-color: var(--border-strong);
+}
+
+.mreFilter[aria-pressed="true"] {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.mreFilter:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+/* --- Explorer panel -------------------------------------------------------- */
+
+.mrePanel {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: 16vw minmax(0, 1fr);
+}
+
+.mreRail {
+  border-right: 1px solid var(--border-subtle);
+  padding: var(--space-sm);
+}
+
+.mreRailCount {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.mreRailList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mreRailList > li + li {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mreRailItem {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  cursor: pointer;
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  text-align: start;
+  width: 100%;
+  transition: background-color 160ms ease;
+}
+
+.mreRailItem .mreIcon {
+  color: var(--spimar-gold-deep, var(--action-primary));
+  height: 1.9vw;
+  width: 1.9vw;
+}
+
+.mreRailNum {
+  color: var(--spimar-gold-deep, var(--action-primary));
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.mreRailLabel {
+  display: block;
+  font-size: var(--text-support);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.mreRailItem[aria-current="true"] {
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+}
+
+.mreRailItem[aria-current="true"] .mreIcon,
+.mreRailItem[aria-current="true"] .mreRailNum {
+  color: var(--action-primary);
+}
+
+.mreRailItem:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+/* --- Detail pane ------------------------------------------------------------ */
+
+.mreDetail {
+  padding: var(--space-md);
+  animation: mre-detail-in 240ms ease both;
+}
+
+@keyframes mre-detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5vw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.mreDetailCounter {
+  color: var(--spimar-gold-deep, var(--action-primary));
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  margin: 0 0 var(--space-xs);
+  text-transform: uppercase;
+}
+
+.mreDetailTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin: 0 0 var(--space-xs);
+}
+
+.mreDetailText {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0 0 var(--space-sm);
+  max-width: var(--measure-prose);
+}
+
+.mreTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  list-style: none;
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+}
+
+.mreTag {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: var(--space-3xs) var(--space-sm);
+  text-transform: uppercase;
+}
+
+.mreMedia {
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.mreMediaImage {
+  object-fit: cover;
+}
+
+/* The honest state for a motivation whose visual has not been validated yet:
+   a designed pending panel, never a borrowed or invented photo. */
+.mreMediaPending {
+  align-items: center;
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.mreMediaPendingIcon {
+  color: var(--on-surface-muted);
+  height: 3vw;
+  width: 3vw;
+}
+
+.mreMediaPendingNote {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin: 0;
+  padding: var(--space-3xs) var(--space-sm);
+  text-transform: uppercase;
+}
+
+/* --- Progress row ----------------------------------------------------------- */
+
+.mreProgress {
+  align-items: center;
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  margin-top: var(--space-sm);
+}
+
+.mreProgressStart,
+.mreProgressEnd {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mreProgressNum {
+  color: var(--spimar-gold-deep, var(--action-primary));
+  font-variant-numeric: tabular-nums;
+}
+
+.mreDots {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 0;
+}
+
+.mreDot {
+  background: var(--border-subtle);
+  border-radius: 50%;
+  height: 0.55vw;
+  width: 0.55vw;
+  flex: none;
+}
+
+.mreDot[data-active] {
+  background: var(--action-primary);
+  height: 0.9vw;
+  width: 0.9vw;
+}
+
+/* Hairline between dots, drawn as flexible connectors. */
+.mreDots::before,
+.mreDots::after {
+  content: none;
+}
+
+.mreDot + .mreDot {
+  margin-inline-start: 0;
+}
+
+.mreDots {
+  justify-content: space-between;
+  position: relative;
+}
+
+.mreDots::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mreDot {
+  position: relative;
+}
+
+/* --- Study sidebar ----------------------------------------------------------- */
+
+.mreStudyCard {
+  background: var(--surface-inverse);
+  border-radius: var(--radius-xl);
+  color: var(--on-inverse);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+/* A stack of printed study brochures, as in the approved mock: portrait
+   covers, fanned duplicates behind, the front cover carrying the study title
+   over the photograph. The soft shadow depicts the physical stack shown in
+   the mock, not generic card chrome. */
+.mreStudyCovers {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-md) 0 var(--space-sm);
+  position: relative;
+}
+
+.mreStudyCover {
+  aspect-ratio: 3 / 4;
+  background-color: var(--spimar-ink);
+  background-image: url("/images/mre/investissement-patrimonial.jpg");
+  background-position: center;
+  background-size: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0.6vw 1.6vw rgb(0 0 0 / 0.45);
+  display: block;
+  width: 10.5vw;
+}
+
+.mreStudyCover[data-i="2"],
+.mreStudyCover[data-i="3"] {
+  position: absolute;
+  top: var(--space-md);
+}
+
+.mreStudyCover[data-i="2"] {
+  transform: rotate(6deg) translateX(1.1vw);
+}
+
+.mreStudyCover[data-i="3"] {
+  transform: rotate(11deg) translateX(2.2vw);
+}
+
+.mreStudyCover[data-i="1"] {
+  align-items: flex-start;
+  display: flex;
+  padding: var(--space-sm);
+  position: relative;
+  transform: rotate(-3deg);
+  z-index: 1;
+}
+
+/* Legibility scrim behind the cover title, top-weighted like the mock. */
+.mreStudyCover[data-i="1"]::before {
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.55), transparent 55%);
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.mreStudyCoverTitle {
+  color: var(--spimar-white);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.mreStudyEyebrow {
+  color: var(--action-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.mreStudyTitle {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.mreStudyText {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.mreStudyNote {
+  align-items: center;
+  border-top: 1px solid var(--border-inverse);
+  color: var(--on-inverse-muted);
+  display: flex;
+  font-size: var(--text-base);
+  gap: var(--space-xs);
+  line-height: 1.4;
+  margin: 0;
+  padding-top: var(--space-sm);
+}
+
+.mreStudyNoteIcon {
+  color: var(--action-primary);
+  flex: none;
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+/* --- Source & périmètre footer -----------------------------------------------
+   A static strip on one centered axis: label | three facts | methodology
+   link. Fixed grid columns, one gap value, no wrapping at desktop, no motion.
+   Every cell centers on the same horizontal axis, so nothing can sit a few
+   pixels above or below its neighbours. */
+
+.mreFooter {
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: auto 1fr auto;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+}
+
+.mreFooterLabel {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  margin: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mreFooterFacts {
+  align-items: center;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mreFooterFact {
+  align-items: center;
+  color: var(--on-surface);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-sm);
+  justify-content: center;
+  line-height: 1.4;
+  text-align: start;
+}
+
+.mreFooterFact + .mreFooterFact {
+  border-inline-start: 1px solid var(--border-subtle);
+}
+
+.mreFooterIcon {
+  color: var(--on-surface);
+  flex: none;
+  height: 1.6vw;
+  width: 1.6vw;
+}
+
+.mreMethodology {
+  align-items: center;
+  border-bottom: 1px solid var(--on-surface);
+  color: var(--on-surface);
+  display: inline-flex;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  justify-self: end;
+  padding-bottom: 0.3em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.mreMethodology:hover,
+.mreMethodology:focus-visible {
+  color: var(--spimar-gold-deep, var(--action-primary));
+}
+
+.mreMethodology:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.35em;
+}
+
+.mreMethodologyIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+/* --- Reduced motion ----------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .mreDetail {
+    animation: none;
+  }
+
+  .mreCta,
+  .mreFilter,
+  .mreRailItem {
+    transition: none;
+  }
+}
+
+/* --- Tablet -------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .mreLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .mreStudyCard {
+    max-width: 60vw;
+  }
+
+  .mreStudyCover {
+    width: 20vw;
+  }
+
+  .mrePanel {
+    grid-template-columns: 30vw minmax(0, 1fr);
+  }
+
+  .mreRailItem .mreIcon {
+    height: 3.4vw;
+    width: 3.4vw;
+  }
+
+  .mreDot {
+    height: 1vw;
+    width: 1vw;
+  }
+
+  .mreDot[data-active] {
+    height: 1.6vw;
+    width: 1.6vw;
+  }
+
+  .mreStudyNoteIcon,
+  .mreFooterIcon {
+    height: 2.6vw;
+    width: 2.6vw;
+  }
+
+  .mreMediaPendingIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .mreFooterFact {
+    max-width: none;
+  }
+}
+
+/* --- Mobile: the 580 regime ------------------------------------------------------ */
+
+@media (max-width: 580px) {
+  .mreSection {
+    padding: var(--space-2xl) var(--space-gutter);
+  }
+
+  .mreInner {
+    max-width: 100%;
+  }
+
+  .mreHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .mreLead {
+    max-width: 100%;
+  }
+
+  .mrePanel {
+    grid-template-columns: 1fr;
+  }
+
+  .mreRail {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .mreRailItem .mreIcon {
+    height: 6.5vw;
+    width: 6.5vw;
+  }
+
+  .mreStudyCard {
+    max-width: 100%;
+  }
+
+  .mreStudyCover {
+    width: 36vw;
+  }
+
+  .mreStudyNoteIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .mreFooter {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .mreFooterFacts {
+    gap: var(--space-sm);
+    grid-template-columns: 1fr;
+  }
+
+  .mreFooterFact {
+    justify-content: flex-start;
+  }
+
+  .mreFooterFact + .mreFooterFact {
+    border-inline-start: 0;
+  }
+
+  .mreMethodology {
+    justify-self: start;
+  }
+
+  .mreFooterIcon {
+    height: 6vw;
+    width: 6vw;
+  }
+
+  .mreMediaPendingIcon {
+    height: 9vw;
+    width: 9vw;
+  }
+
+  .mreDot {
+    height: 1.8vw;
+    width: 1.8vw;
+  }
+
+  .mreDot[data-active] {
+    height: 2.8vw;
+    width: 2.8vw;
+  }
+}

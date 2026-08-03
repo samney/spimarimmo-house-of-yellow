@@ -1,24 +1,46 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { HoyHeaderLogo, HoyWordmark, PlusIcon } from "./logos";
+import { SpimarWordmark, PlusIcon } from "./logos";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 
+/* Global header — specification §04.
+
+   The header architecture is preserved exactly as accepted: left navigation,
+   centred mark, right-hand actions and rounded CTA, the scroll-driven `light`
+   state over a dark hero, and the existing mobile menu. Only the content
+   changes, to the SPIMARIMMO information architecture.
+
+   That composition is also what the approved design reference shows, so no
+   structural change is needed to reach it.
+
+   Labels come from the message catalogue rather than being hardcoded, because
+   the locale architecture must stay ready for English and Arabic. */
+
 const NAV = [
-  { href: "/", label: "Home" },
-  { href: "/made-by-yellow", label: "Made by Yellow" },
-  { href: "/culture", label: "Culture" },
-  { href: "/how-we-roll", label: "How we roll" },
+  { href: "/salons", key: "salons" },
+  { href: "/exposer", key: "exposer" },
+  { href: "/pourquoi-spimar", key: "pourquoiSpimar" },
+  { href: "/etudes-de-cas", key: "etudesDeCas" },
+  { href: "/ressources", key: "ressources" },
 ] as const;
+
+/* §07 primary conversion. The brochure is the deliberately lighter secondary
+   action and lives in the hero, not the header. */
+const PRIMARY_CTA = "/exposer/devenir-exposant";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const [menuOpen, setMenuOpen] = useState(false);
   const [light, setLight] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
-  // Reference behavior: header is "light" (transparent, paper text) while a
-  // dark fullscreen hero (.headerBigBlock) sits under it; reverts on scroll.
+  // Preserved reference behavior: header is "light" (transparent, paper text)
+  // while a dark fullscreen hero (.headerBigBlock) sits under it; reverts on
+  // scroll.
   useEffect(() => {
     const update = () => {
       const hero = document.querySelector<HTMLElement>(".headerBigBlock");
@@ -32,12 +54,49 @@ export function SiteHeader() {
     };
   }, [pathname]);
 
+  // Sections marked `data-hide-header` reclaim the full viewport while they are
+  // on screen. The header returns as soon as one scrolls away, and never hides
+  // while the menu is open — that would strip the only way to close it.
+  useEffect(() => {
+    const targets = document.querySelectorAll<HTMLElement>("[data-hide-header]");
+    if (targets.length === 0) {
+      // Scheduled rather than synchronous, matching the scroll effect above:
+      // a synchronous setState inside an effect can cascade renders.
+      const raf = requestAnimationFrame(() => setHidden(false));
+      return () => cancelAnimationFrame(raf);
+    }
+    const seen = new Set<Element>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) seen.add(entry.target);
+          else seen.delete(entry.target);
+        }
+        setHidden(seen.size > 0);
+      },
+      // A ratio threshold is useless here: these sections are taller than the
+      // viewport, so half of one can never be on screen at once. Instead the
+      // root is squeezed to the middle band of the viewport, and the section
+      // counts as "on screen" while it crosses that band.
+      { threshold: 0, rootMargin: "-35% 0px -35% 0px" },
+    );
+    targets.forEach((t) => io.observe(t));
+    return () => {
+      io.disconnect();
+      setHidden(false);
+    };
+  }, [pathname]);
+
   return (
-    <header className={`${light && !menuOpen ? "light " : ""}active${menuOpen ? " menuOpen" : ""}`}>
+    <header
+      className={`${light && !menuOpen ? "light " : ""}active${menuOpen ? " menuOpen" : ""}${
+        hidden && !menuOpen ? " isHidden" : ""
+      }`}
+    >
       <div className="headerBar">
         <div className="contentWrapper">
           <div className="left">
-            <nav className="mainMenuWrapper" aria-label="Main">
+            <nav className="mainMenuWrapper" aria-label="Principal">
               <ul className="menu">
                 {NAV.map((item) => (
                   <li key={item.href} className="menu-item">
@@ -46,7 +105,7 @@ export function SiteHeader() {
                       className={pathname === item.href ? "active current-menu-item" : undefined}
                       aria-current={pathname === item.href ? "page" : undefined}
                     >
-                      {item.label}
+                      {t(item.key)}
                     </Link>
                   </li>
                 ))}
@@ -55,47 +114,18 @@ export function SiteHeader() {
           </div>
           <div className="center">
             <div className="logo">
-              <Link href="/" title="House Of Yellow">
-                <HoyHeaderLogo />
-                <span className="absoluteSVG">
-                  <HoyWordmark word="house" />
-                  <HoyWordmark word="of" />
-                  <HoyWordmark word="yellow" />
-                </span>
+              <Link href="/" title="SPIMARIMMO">
+                <SpimarWordmark title="SPIMARIMMO" />
               </Link>
             </div>
           </div>
           <div className="right">
-            <div className="socials">
-              <span className="socialLink">
-                <a
-                  href="https://www.linkedin.com/company/houseofyellow/"
-                  title="Linkedin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="icon-linkedin" aria-hidden="true" />
-                  <span className="sr-only">LinkedIn</span>
-                </a>
-              </span>
-              <span className="socialLink">
-                <a
-                  href="https://www.instagram.com/hoy/"
-                  title="Instagram"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="icon-instagram" aria-hidden="true" />
-                  <span className="sr-only">Instagram</span>
-                </a>
-              </span>
-            </div>
             <div className="buttons">
-              <Link className="button" href="/connect" title="Connect">
+              <Link className="button" href={PRIMARY_CTA} title={t("becomeExhibitor")}>
                 <span className="label">
-                  <span className="fixedLabel">Connect</span>
+                  <span className="fixedLabel">{t("becomeExhibitor")}</span>
                   <span className="innerLabel">
-                    <Marquee text="Connect" direction="left" speed={90} />
+                    <Marquee text={t("becomeExhibitor")} direction="left" speed={90} />
                   </span>
                 </span>
                 <span className="icon">
@@ -110,7 +140,7 @@ export function SiteHeader() {
               aria-controls="mobile-menu"
               onClick={() => setMenuOpen((v) => !v)}
             >
-              Menu
+              {t("menu")}
               <span className="hamburgerIcon" aria-hidden="true">
                 <span className="bar" />
                 <span className="bar" />
@@ -124,35 +154,35 @@ export function SiteHeader() {
         <div className="innerContainer" data-lenis-prevent="">
           <nav className="mobileMenu" aria-label="Mobile">
             <ul className="menu">
-              {[...NAV, { href: "/connect", label: "Connect" } as const].map((item) => (
+              {NAV.map((item) => (
                 <li key={item.href} className="menu-item">
                   <Link href={item.href} onClick={() => setMenuOpen(false)}>
-                    {item.label}
+                    {t(item.key)}
                   </Link>
                 </li>
               ))}
+              <li className="menu-item">
+                <Link href={PRIMARY_CTA} onClick={() => setMenuOpen(false)}>
+                  {t("becomeExhibitor")}
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link href="/visiteurs" onClick={() => setMenuOpen(false)}>
+                  {t("visiteurs")}
+                </Link>
+              </li>
             </ul>
           </nav>
           <div className="footerCols">
+            {/* Contact details are SPIMARIMMO's own published facts. No postal
+                address has been supplied, so none is shown. */}
             <div className="col">
-              <div className="colTitle">Office</div>
+              <div className="colTitle">{t("contact")}</div>
               <div className="text">
                 <p>
-                  Hertogstraat 38
+                  <a href="tel:+212661903190">+212 661 903 190</a>
                   <br />
-                  5611 PB,&nbsp; Eindhoven
-                  <br />
-                  The Netherlands
-                </p>
-              </div>
-            </div>
-            <div className="col">
-              <div className="colTitle">Contact</div>
-              <div className="text">
-                <p>
-                  <a href="tel:+31620002644">+31 6 20 00 26 44</a>
-                  <br />
-                  <a href="mailto:info@houseofyellow.nl">info@houseofyellow.nl</a>
+                  <a href="mailto:contact@spimarimmo.com">contact@spimarimmo.com</a>
                 </p>
               </div>
             </div>
