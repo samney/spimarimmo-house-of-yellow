@@ -47,9 +47,9 @@ export function ContentForm({
       {fields.map((field) => {
         if (field.kind === "localized") {
           return (
-            <fieldset key={field.name} style={{ border: 0, padding: 0 }}>
-              <legend style={{ fontWeight: 600, fontSize: "0.9375rem" }}>{field.label}</legend>
-              {field.hint ? <p className="spimarField__hint">{field.hint}</p> : null}
+            <fieldset key={field.name}>
+              <legend>{field.label}</legend>
+              {field.hint ? <p className="adminHint">{field.hint}</p> : null}
               <div className="adminRow">
                 {(["en", "fr"] as const).map((loc) => (
                   <div key={loc}>
@@ -86,7 +86,7 @@ export function ContentForm({
               required={field.kind === "text" ? field.required : undefined}
               defaultValue={initial[field.name] ?? ""}
             />
-            {field.hint ? <p className="spimarField__hint">{field.hint}</p> : null}
+            {field.hint ? <p className="adminHint">{field.hint}</p> : null}
           </div>
         );
       })}
@@ -100,7 +100,7 @@ export function ContentForm({
           </option>
         </select>
         {!canPublish ? (
-          <p className="spimarField__hint">
+          <p className="adminHint">
             Your role can edit but not publish. Saving keeps this a draft; the server enforces this
             regardless of what the form sends.
           </p>
@@ -108,7 +108,7 @@ export function ContentForm({
       </div>
 
       <div>
-        <button className="spimarButton spimarButton--primary" type="submit" disabled={pending}>
+        <button className="adminButton adminButton--primary" type="submit" disabled={pending}>
           {pending ? "Saving..." : submitLabel}
         </button>
       </div>

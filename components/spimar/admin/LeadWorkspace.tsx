@@ -11,7 +11,9 @@ const STAGES: LeadStage[] = ["new", "qualified", "in_progress", "won", "lost"];
    Each mutation appends to an activity trail with actor and timestamp, so a
    lead's history is reconstructable — required by the audit rule in
    `data-security.md`. The trail is append-only; nothing here edits or deletes
-   past entries. */
+   past entries.
+
+   Returns ONE element on purpose: the workspace sits inside a grid column. */
 export function LeadWorkspace({
   id,
   stage,
@@ -26,7 +28,7 @@ export function LeadWorkspace({
   const [result, action, pending] = useActionState(updateLeadAction, null);
 
   return (
-    <>
+    <div>
       {result ? (
         <div
           className={`adminNotice ${result.ok ? "adminNotice--ok" : "adminNotice--error"}`}
@@ -37,8 +39,8 @@ export function LeadWorkspace({
         </div>
       ) : null}
 
-      <div className="adminCard">
-        <h2 style={{ marginTop: 0 }}>Stage</h2>
+      <section className="adminPanel" aria-label="Stage">
+        <h2>Stage</h2>
         <form className="adminForm" action={action}>
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="intent" value="stage" />
@@ -47,21 +49,21 @@ export function LeadWorkspace({
             <select id="stage" name="stage" defaultValue={stage}>
               {STAGES.map((s) => (
                 <option key={s} value={s}>
-                  {s}
+                  {s.replace("_", " ")}
                 </option>
               ))}
             </select>
           </div>
           <div>
-            <button className="spimarButton spimarButton--primary" type="submit" disabled={pending}>
+            <button className="adminButton adminButton--primary" type="submit" disabled={pending}>
               Update stage
             </button>
           </div>
         </form>
-      </div>
+      </section>
 
-      <div className="adminCard">
-        <h2 style={{ marginTop: 0 }}>Assignment</h2>
+      <section className="adminPanel" aria-label="Assignment">
+        <h2>Assignment</h2>
         <form className="adminForm" action={action}>
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="intent" value="assign" />
@@ -75,15 +77,15 @@ export function LeadWorkspace({
             />
           </div>
           <div>
-            <button className="spimarButton spimarButton--ghost" type="submit" disabled={pending}>
+            <button className="adminButton adminButton--ghost" type="submit" disabled={pending}>
               Save assignment
             </button>
           </div>
         </form>
-      </div>
+      </section>
 
-      <div className="adminCard">
-        <h2 style={{ marginTop: 0 }}>Next action / notes</h2>
+      <section className="adminPanel" aria-label="Notes">
+        <h2>Next action / notes</h2>
         <form className="adminForm" action={action}>
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="intent" value="note" />
@@ -92,40 +94,31 @@ export function LeadWorkspace({
             <textarea id="note" name="note" placeholder="What happens next?" />
           </div>
           <div>
-            <button className="spimarButton spimarButton--ghost" type="submit" disabled={pending}>
+            <button className="adminButton adminButton--ghost" type="submit" disabled={pending}>
               Add note
             </button>
           </div>
         </form>
-      </div>
+      </section>
 
-      <div className="adminCard">
-        <h2 style={{ marginTop: 0 }}>Activity</h2>
+      <section className="adminPanel" aria-label="Activity">
+        <h2>Activity</h2>
         {activity.length === 0 ? (
           <div className="adminEmpty">No activity recorded yet.</div>
         ) : (
-          <table className="adminTable">
-            <thead>
-              <tr>
-                <th>When</th>
-                <th>Who</th>
-                <th>What</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[...activity].reverse().map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.at.slice(0, 16).replace("T", " ")}</td>
-                  <td>{entry.by}</td>
-                  <td>
-                    <span className="adminBadge">{entry.kind}</span> {entry.detail}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ol className="adminTrail">
+            {[...activity].reverse().map((entry, index) => (
+              <li className="adminTrail__entry" key={index}>
+                <p className="adminTrail__meta">
+                  <time>{entry.at.slice(0, 16).replace("T", " ")}</time> · {entry.by} ·{" "}
+                  <span className="adminChip">{entry.kind}</span>
+                </p>
+                <p className="adminTrail__detail">{entry.detail}</p>
+              </li>
+            ))}
+          </ol>
         )}
-      </div>
-    </>
+      </section>
+    </div>
   );
 }

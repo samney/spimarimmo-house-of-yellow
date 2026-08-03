@@ -8,8 +8,17 @@ import {
   listMedia,
   listPages,
 } from "@/lib/spimar/repository";
+import type { LeadStage } from "@/lib/spimar/types";
 
 export const dynamic = "force-dynamic";
+
+const STAGES: { key: LeadStage; label: string }[] = [
+  { key: "new", label: "New" },
+  { key: "qualified", label: "Qualified" },
+  { key: "in_progress", label: "In progress" },
+  { key: "won", label: "Won" },
+  { key: "lost", label: "Lost" },
+];
 
 export default async function AdminDashboard() {
   const session = await readSession();
@@ -21,65 +30,86 @@ export default async function AdminDashboard() {
   const media = listMedia({ includeDrafts: true });
   const leads = listLeads();
 
-  const counts = [
-    {
-      label: "Pages",
-      total: pages.length,
-      published: pages.filter((p) => p.state === "published").length,
-      href: "/admin/pages",
-    },
-    {
-      label: "Events",
-      total: events.length,
-      published: events.filter((e) => e.state === "published").length,
-      href: "/admin/events",
-    },
+  const collections = [
+    { label: "Pages", hint: "Standing marketing routes", rows: pages, href: "/admin/pages" },
+    { label: "Events", hint: "Salon editions", rows: events, href: "/admin/events" },
     {
       label: "Destinations",
-      total: destinations.length,
-      published: destinations.filter((d) => d.state === "published").length,
+      hint: "Markets the event network serves",
+      rows: destinations,
       href: "/admin/destinations",
     },
-    {
-      label: "Media",
-      total: media.length,
-      published: media.filter((m) => m.state === "published").length,
-      href: "/admin/media",
-    },
+    { label: "Media", hint: "Assets with recorded rights", rows: media, href: "/admin/media" },
   ];
 
   return (
     <>
-      <h1>Dashboard</h1>
-      <p>
-        Content published here appears on the public site immediately: saving a published record
-        revalidates the affected routes.
-      </p>
+      <header className="adminPage__head">
+        <p className="adminEyebrow">Overview</p>
+        <h1>Dashboard</h1>
+        <p className="adminLede">
+          Content published here appears on the public site immediately: saving a published record
+          revalidates the affected routes.
+        </p>
+      </header>
 
-      <div className="adminGrid">
-        {counts.map((c) => (
-          <div className="adminCard" key={c.label}>
-            <h2 style={{ margin: 0 }}>
-              <Link href={c.href}>{c.label}</Link>
-            </h2>
-            <p style={{ marginBottom: 0 }}>
-              {c.published} published / {c.total} total
-            </p>
-          </div>
-        ))}
-        <div className="adminCard">
-          <h2 style={{ margin: 0 }}>
-            <Link href="/admin/leads">Leads</Link>
-          </h2>
-          <p style={{ marginBottom: 0 }}>{leads.length} recorded</p>
-        </div>
+      <h2>Published content</h2>
+      <div className="adminBoard">
+        {collections.map((c) => {
+          const published = c.rows.filter((r) => r.state === "published").length;
+          return (
+            <Link className="adminBoard__row" href={c.href} key={c.label}>
+              <span className="adminBoard__label">
+                {c.label}
+                <span className="adminBoard__hint">{c.hint}</span>
+              </span>
+              <span className="adminBoard__tally">
+                <span className="adminBoard__big">{published}</span>
+                <span className="adminBoard__of">published of {c.rows.length}</span>
+              </span>
+            </Link>
+          );
+        })}
       </div>
 
-      <h2>Storage</h2>
-      <div className="adminNotice">
-        Records persist to <code>.data/spimar-*.jsonl</code> through the repository layer, the
-        documented substitute while Supabase credentials are unavailable (blocker P-1). No email,
-        calendar or external CRM provider is connected — nothing here claims otherwise.
+      <h2>Lead pipeline</h2>
+      <div className="adminRail">
+        {STAGES.map((stage) => {
+          const count = leads.filter((l) => l.stage === stage.key).length;
+          return (
+            <div
+              className={`adminRail__stop${count > 0 ? " adminRail__stop--active" : ""}`}
+              key={stage.key}
+            >
+              <div className="adminRail__count">{count}</div>
+              <div className="adminRail__label">{stage.label}</div>
+            </div>
+          );
+        })}
+      </div>
+      <p style={{ marginTop: "0.75rem" }}>
+        <Link className="adminLink" href="/admin/leads">
+          Open the lead desk
+        </Link>
+      </p>
+
+      <h2>System</h2>
+      <div className="adminSystem">
+        <div className="adminSystem__row">
+          <span className="adminSystem__key">Storage</span>
+          <span>
+            Records persist to <code className="adminMono">.data/spimar-*.jsonl</code> through the
+            repository layer — the documented substitute while Supabase credentials are unavailable
+            (blocker P-1).
+          </span>
+        </div>
+        <div className="adminSystem__row">
+          <span className="adminSystem__key">Providers</span>
+          <span>
+            No email, calendar or external CRM provider is connected (blocker P-2) — nothing here
+            claims otherwise.
+          </span>
+        </div>
       </div>
     </>
   );
