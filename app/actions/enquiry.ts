@@ -2,7 +2,7 @@
 
 import { headers } from "next/headers";
 import { enquirySchema, type EnquiryResult } from "@/lib/spimar/contact-schema";
-import { createLead, dedupeKeyFor } from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 import { isRateLimited } from "@/lib/contact/rate-limit";
 import type { Locale } from "@/lib/spimar/types";
 
@@ -44,7 +44,9 @@ export async function submitEnquiry(raw: unknown): Promise<EnquiryResult> {
       return { status: "rate_limited" };
     }
 
-    const lead = createLead({
+    // The repository computes the dedupe key itself and resolves with null for
+    // a duplicate — durable-or-nothing stays the seam's contract, not ours.
+    const lead = await getAdminSeams().crm.createLead({
       kind: input.kind,
       name: input.name,
       email: input.email,
@@ -57,7 +59,6 @@ export async function submitEnquiry(raw: unknown): Promise<EnquiryResult> {
       consent: input.consent,
       stage: "new",
       assignee: "",
-      dedupeKey: dedupeKeyFor(input.kind, input.email, input.message),
     });
 
     // `createLead` returns null when the submission duplicates an existing one.

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { canPublish, readSession } from "@/lib/spimar/auth";
-import { listDestinations } from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 import { saveDestinationAction } from "@/app/actions/cms";
 import { ContentForm } from "@/components/spimar/admin/ContentForm";
 import { localized } from "@/lib/spimar/types";
@@ -15,7 +15,7 @@ export default async function DestinationsAdmin({
   const session = await readSession();
   if (!session) redirect("/admin/login");
   const { edit } = await searchParams;
-  const rows = listDestinations({ includeDrafts: true });
+  const rows = await getAdminSeams().cms.listDestinations({ includeDrafts: true });
   const current = edit ? rows.find((d) => d.id === edit) : undefined;
 
   return (

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { canPublish, readSession } from "@/lib/spimar/auth";
-import { listPages } from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 import { savePageAction } from "@/app/actions/cms";
 import { ContentForm } from "@/components/spimar/admin/ContentForm";
 import { localized } from "@/lib/spimar/types";
@@ -19,7 +19,7 @@ export default async function PagesAdmin({
   if (!session) redirect("/admin/login");
   const { edit } = await searchParams;
 
-  const pages = listPages({ includeDrafts: true });
+  const pages = await getAdminSeams().cms.listPages({ includeDrafts: true });
   const current = edit ? pages.find((p) => p.id === edit) : undefined;
 
   return (

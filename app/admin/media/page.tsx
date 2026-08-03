@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { canPublish, readSession } from "@/lib/spimar/auth";
-import { listMedia } from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 import { saveMediaAction } from "@/app/actions/cms";
 import { ContentForm } from "@/components/spimar/admin/ContentForm";
 import { localized } from "@/lib/spimar/types";
@@ -18,7 +18,7 @@ export default async function MediaAdmin({
   const session = await readSession();
   if (!session) redirect("/admin/login");
   const { edit } = await searchParams;
-  const rows = listMedia({ includeDrafts: true });
+  const rows = await getAdminSeams().cms.listMedia({ includeDrafts: true });
   const current = edit ? rows.find((m) => m.id === edit) : undefined;
 
   return (

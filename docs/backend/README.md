@@ -39,7 +39,52 @@ qa/backend/
   db/results/       generated JSON evidence (committed)
 lib/backend/
   seams.ts          ContentRepository / SubmissionRepository / ProviderAdapter
+  admin-seams.ts    CmsRepository / CrmRepository (console, R1 domain)
+lib/spimar/repositories/
+  postgres-*.ts     Postgres adapters for the canonical seams
+  file-*.ts         development file adapters
+  contract-suites.ts  shared contract describes both implementations must pass
 ```
+
+## Application seams
+
+The application consumes the schema through `ContentRepository` and
+`SubmissionRepository` (`lib/backend/seams.ts`). Two implementations exist:
+
+- **File adapters** — development only, `.data/*.jsonl`.
+- **Postgres adapters** — `postgres-content-repository.ts` reads with explicit
+  publication predicates mirroring `cms_public_read` (direct connections
+  usually bypass RLS, so the adapter restates visibility itself);
+  `postgres-submission-repository.ts` is the first consumer of the activation
+  contracts: one transaction commits contact upsert → `form_submissions` →
+  `submission_contexts` → `consents` → `outbox_events` → 32-hex public
+  reference via `app_private.issue_submission_reference`.
+
+`lib/spimar/repositories/index.ts` selects the adapter: file when
+`SUPABASE_DATABASE_URL` is unset, Postgres when set (site uuid from
+`SPIMAR_SITE_ID`, defaulting to the seeded site). The console's operational
+seams (`admin-seams.ts`) remain file-backed until the R1↔canonical content
+model lands; with a database configured the console fails loudly rather than
+serving files.
+
+Both implementations are held to the SAME contract suites
+(`contract-suites.ts`). The Postgres run applies all migrations plus the seed
+to PGlite and executes 19 contract tests:
+
+```bash
+pnpm db:bootstrap      # once
+pnpm test:seams:pg     # also part of pnpm verify:backend
+```
+
+## Hosted wiring (remaining, needs credentials)
+
+Blocked on a Supabase project and owner-supplied secrets (P-1/P-2). When they
+exist: create the project, `supabase link`, `supabase db push` (43 migrations)
+and apply `seed.sql`; deploy the four Edge Functions; set
+`SUPABASE_DATABASE_URL` (service connection) and `SPIMAR_SITE_ID`; replace the
+env-credential console auth with Supabase Auth and role assignments; then run
+the contract suites against the hosted instance before any production claim.
+PGlite validation is never hosted evidence (`productionAuthority: false`).
 
 ## Running the checks
 

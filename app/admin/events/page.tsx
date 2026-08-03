@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { canPublish, readSession } from "@/lib/spimar/auth";
-import { listEvents } from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 import { saveEventAction } from "@/app/actions/cms";
 import { ContentForm } from "@/components/spimar/admin/ContentForm";
 import { localized } from "@/lib/spimar/types";
@@ -16,7 +16,7 @@ export default async function EventsAdmin({
   if (!session) redirect("/admin/login");
   const { edit } = await searchParams;
 
-  const events = listEvents({ includeDrafts: true });
+  const events = await getAdminSeams().cms.listEvents({ includeDrafts: true });
   const current = edit ? events.find((e) => e.id === edit) : undefined;
 
   return (

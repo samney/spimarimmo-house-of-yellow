@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { readSession } from "@/lib/spimar/auth";
-import {
-  listDestinations,
-  listEvents,
-  listLeads,
-  listMedia,
-  listPages,
-} from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
 import type { LeadStage } from "@/lib/spimar/types";
 
 export const dynamic = "force-dynamic";
@@ -24,11 +18,14 @@ export default async function AdminDashboard() {
   const session = await readSession();
   if (!session) redirect("/admin/login");
 
-  const pages = listPages({ includeDrafts: true });
-  const events = listEvents({ includeDrafts: true });
-  const destinations = listDestinations({ includeDrafts: true });
-  const media = listMedia({ includeDrafts: true });
-  const leads = listLeads();
+  const { cms, crm } = getAdminSeams();
+  const [pages, events, destinations, media, leads] = await Promise.all([
+    cms.listPages({ includeDrafts: true }),
+    cms.listEvents({ includeDrafts: true }),
+    cms.listDestinations({ includeDrafts: true }),
+    cms.listMedia({ includeDrafts: true }),
+    crm.listLeads(),
+  ]);
 
   const collections = [
     { label: "Pages", hint: "Standing marketing routes", rows: pages, href: "/admin/pages" },
