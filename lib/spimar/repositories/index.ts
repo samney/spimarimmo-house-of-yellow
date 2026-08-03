@@ -4,6 +4,9 @@ import type { AdminSeams } from "@/lib/backend/admin-seams";
 import { FileContentRepository } from "./file-content-repository";
 import { FileSubmissionRepository } from "./file-submission-repository";
 import { FileCmsRepository, FileCrmRepository } from "./file-admin-repository";
+import { PgSqlClient } from "./pg-sql-client";
+import { PostgresContentRepository } from "./postgres-content-repository";
+import { PostgresSubmissionRepository } from "./postgres-submission-repository";
 
 /* Composition root for the backend seams.
 
@@ -22,25 +25,32 @@ function hasDatabase(): boolean {
   return Boolean(process.env.SUPABASE_DATABASE_URL);
 }
 
+/** The seed provisions exactly one site; a deployment overrides via env. */
+function configuredSiteId(): string {
+  return process.env.SPIMAR_SITE_ID ?? "00000000-0000-4000-8000-000000000100";
+}
+
 let cached: BackendSeams | null = null;
 
 export function getBackendSeams(): BackendSeams {
   if (cached) return cached;
 
   if (hasDatabase()) {
-    // The Postgres adapter is not implemented yet. Failing loudly is correct:
-    // an environment that declares a database must not be served from files.
-    throw new Error(
-      "SUPABASE_DATABASE_URL is set but the Postgres adapter is not implemented yet. " +
-        "Unset it to use the development file adapter, or implement the Postgres seams.",
-    );
+    const sql = new PgSqlClient(process.env.SUPABASE_DATABASE_URL as string);
+    const siteId = configuredSiteId();
+    cached = {
+      content: new PostgresContentRepository(sql, siteId),
+      submissions: new PostgresSubmissionRepository(sql, siteId),
+      // No provider is connected (`P-2`). An empty list is honest; a stub
+      // adapter that reports success would not be.
+      providers: [],
+    };
+    return cached;
   }
 
   cached = {
     content: new FileContentRepository(),
     submissions: new FileSubmissionRepository(),
-    // No provider is connected (`P-2`). An empty list is honest; a stub adapter
-    // that reports success would not be.
     providers: [],
   };
   return cached;
@@ -68,4 +78,12 @@ export function getAdminSeams(): AdminSeams {
   return cachedAdmin;
 }
 
-export { FileContentRepository, FileSubmissionRepository, FileCmsRepository, FileCrmRepository };
+export {
+  FileContentRepository,
+  FileSubmissionRepository,
+  FileCmsRepository,
+  FileCrmRepository,
+  PostgresContentRepository,
+  PostgresSubmissionRepository,
+  PgSqlClient,
+};

@@ -14,7 +14,10 @@ export default defineConfig({
          Aliased to a stub rather than removed from the modules themselves —
          dropping the import would silence a real safety check in the
          application to satisfy the test runner. */
-      { find: /^server-only$/, replacement: fileURLToPath(new URL("./qa/server-only-stub.mjs", import.meta.url)) },
+      {
+        find: /^server-only$/,
+        replacement: fileURLToPath(new URL("./qa/server-only-stub.mjs", import.meta.url)),
+      },
     ],
   },
   test: {
@@ -36,6 +39,9 @@ export default defineConfig({
       "tests/e2e/**",
       "qa/backend/edge/**",
       "**/.claude/worktrees/**",
+      // Database-adapter contracts need the out-of-tree PGlite runtime; they
+      // run via vitest.backend.config.mjs inside `pnpm verify:backend`.
+      "**/*.pg.test.ts",
     ],
   },
 });

@@ -26,7 +26,8 @@
     "db:conformance": "node qa/backend/db/audit-canonical-conformance.mjs",
     "db:contract": "node qa/backend/db/verify-schema-contract.mjs",
     "test:edge": "node --test \"qa/backend/edge/*.test.mjs\"",
-    "verify:backend": "pnpm db:contract && pnpm db:validate && pnpm db:inspect && pnpm db:conformance && pnpm test:edge"
+    "verify:backend": "pnpm db:contract && pnpm db:validate && pnpm db:inspect && pnpm db:conformance && pnpm test:edge && pnpm test:seams:pg",
+    "test:seams:pg": "vitest run --config vitest.backend.config.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -37,6 +38,7 @@
     "lenis": "^1.3.25",
     "next": "16.2.12",
     "next-intl": "^4.13.4",
+    "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.83.0",
@@ -47,6 +49,7 @@
     "@playwright/test": "^1.62.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22",
+    "@types/pg": "^8.20.3",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
