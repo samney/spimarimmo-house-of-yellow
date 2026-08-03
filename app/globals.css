@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "../components/public/global/shell.css";
 @import "../components/public/home/home.css";
+@import "../components/public/home/impact.css";
 @import "../components/public/projects/works.css";
 @import "../components/public/projects/project-detail.css";
 @import "../components/public/pages/pages.css";
