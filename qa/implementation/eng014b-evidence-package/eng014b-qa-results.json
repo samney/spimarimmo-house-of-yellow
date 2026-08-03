@@ -1,0 +1,117 @@
+[
+  {
+    "name": "desktop: 21-project constellation renders",
+    "pass": true,
+    "detail": "count=21"
+  },
+  {
+    "name": "desktop: HOY letterform present and behind media layer",
+    "pass": true,
+    "detail": "{\"position\":\"absolute\",\"zIndex\":\"0\",\"stageZ\":\"2\",\"height\":4102.59375}"
+  },
+  {
+    "name": "desktop: no horizontal overflow",
+    "pass": true,
+    "detail": "{\"scrollHeight\":5470,\"scrollWidth\":1440,\"clientWidth\":1440}"
+  },
+  {
+    "name": "desktop: filter overlay opens with 8 categories",
+    "pass": true,
+    "detail": "Artists | Corporate | Events | Employer branding | Commercials | Aftermovies | Launches | Social campaigns"
+  },
+  {
+    "name": "desktop: active filter reduces the set",
+    "pass": true,
+    "detail": "category=\"Artists\" visible=2"
+  },
+  {
+    "name": "desktop: reset restores all 21",
+    "pass": true,
+    "detail": "visible=21"
+  },
+  {
+    "name": "desktop: Escape closes the filter overlay",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "desktop: list view shows 21 compact rows with metadata",
+    "pass": true,
+    "detail": "data-view=list rows=21 firstRow=\"'26 Oceanco – Leviathan Luxury & yachting Corporate Views 7.100.000 Delivery time 2 wks production + 2 wks post\""
+  },
+  {
+    "name": "desktop: inactive grid panel is tab-isolated in list view",
+    "pass": true,
+    "detail": "{\"ok\":true,\"focusable\":0,\"total\":21}"
+  },
+  {
+    "name": "desktop: no /videos/ requests",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "desktop: no console/page errors",
+    "pass": true,
+    "detail": "{\"console\":[],\"pageErrors\":[]}"
+  },
+  {
+    "name": "desktop: no hydration warnings",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "mobile: 21-project constellation renders",
+    "pass": true,
+    "detail": "count=21"
+  },
+  {
+    "name": "mobile: no horizontal overflow",
+    "pass": true,
+    "detail": "{\"scrollHeight\":5405,\"scrollWidth\":390,\"clientWidth\":390}"
+  },
+  {
+    "name": "mobile: filter overlay opens",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "mobile: list view shows 21 rows",
+    "pass": true,
+    "detail": "rows=21"
+  },
+  {
+    "name": "mobile: no /videos/ requests",
+    "pass": true,
+    "detail": ""
+  },
+  {
+    "name": "mobile: no console/page errors",
+    "pass": true,
+    "detail": "{\"console\":[],\"pageErrors\":[]}"
+  },
+  {
+    "name": "fr: /fr/made-by-yellow renders the 21-project constellation",
+    "pass": true,
+    "detail": "status=200 count=21"
+  },
+  {
+    "name": "fr: no console/page errors, no /videos/",
+    "pass": true,
+    "detail": "{\"console\":[],\"pageErrors\":[]}"
+  },
+  {
+    "name": "reduced-motion: page usable (grid visible, list reachable)",
+    "pass": true,
+    "detail": "gridVisible=true rows=21"
+  },
+  {
+    "name": "home: hero remains poster-only (no video sources, no /videos/ requests)",
+    "pass": true,
+    "detail": "{\"videoSrcs\":[],\"videoRequests\":[]}"
+  },
+  {
+    "name": "mobile: active filter reduces the set, reset restores all 21",
+    "pass": true,
+    "detail": "category=\"Artists\" visible=2 afterReset=21"
+  }
+]
