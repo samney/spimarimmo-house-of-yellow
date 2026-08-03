@@ -6,3 +6,9 @@ qa
 HOUSE-OF-YELLOW-CLAUDE-CODE-MASTER-PROMPT.md
 CLAUDE-CODE-PUBLIC-SKILLS-WORKFLOW-BOOTSTRAP.md
 .claude/skills
+
+# Supabase Edge Functions target Deno and are formatted by `deno fmt`, which
+# disagrees with Prettier. They are also ported byte-identical from the Codex
+# donor, so reformatting them here would destroy that provenance. Matches the
+# same exclusion in tsconfig.json and eslint.config.mjs.
+supabase/functions

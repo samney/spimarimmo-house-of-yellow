@@ -68,6 +68,14 @@ qa/implementation/ENG-014C-EVIDENCE-PACKAGE.zip
 /qa/codex/
 /.codex-server.*.log
 /test-results/
+/playwright-report/
+
+# Backend QA evidence: JSON reports are committed as executed evidence.
+# Only regenerable binary/visual output is excluded.
+qa/backend/**/*.png
+qa/backend/**/*.jpg
+qa/backend/**/*.jpeg
+qa/backend/**/*.webm
 
 # Local contact-submission store (substitute until Supabase, HOY-100)
 /.data/
