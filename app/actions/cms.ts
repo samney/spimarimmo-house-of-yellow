@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   canEditContent,
+  canManageLeads,
   canPublish,
   endSession,
   isConfigured,
@@ -246,7 +247,9 @@ export async function updateLeadAction(
   form: FormData,
 ): Promise<ActionResult> {
   const session = await readSession();
-  if (!session) return { ok: false, message: "You do not have permission to manage leads." };
+  if (!session || !canManageLeads(session)) {
+    return { ok: false, message: "You do not have permission to manage leads." };
+  }
 
   const id = String(form.get("id") ?? "");
   const intent = String(form.get("intent") ?? "");
@@ -314,6 +317,9 @@ export async function updateLeadAction(
 export async function moveLeadStage(form: FormData): Promise<void> {
   const session = await readSession();
   if (!session) redirect("/admin/login");
+  // The lead-desk permission, not just a session — same gate as the export
+  // route, so every lead mutation and read-out shares one boundary.
+  if (!canManageLeads(session)) redirect("/admin");
 
   const id = String(form.get("id") ?? "");
   const stage = String(form.get("stage") ?? "") as LeadStage;
