@@ -1396,3 +1396,20 @@
   outline: 2px solid var(--focus-ring);
   outline-offset: 0.2em;
 }
+
+/* --- Combined conversion section (flexible path) --------------------------- */
+.offSkipBtn {
+  margin-top: var(--space-sm);
+}
+.offFieldWide {
+  margin-top: var(--space-sm);
+}
+.offFieldTextarea {
+  min-height: 8vw;
+  resize: vertical;
+}
+@media (max-width: 580px) {
+  .offFieldTextarea {
+    min-height: 30vw;
+  }
+}

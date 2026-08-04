@@ -409,7 +409,8 @@
       },
       "request": {
         "title": "Précisez votre projet pour recevoir une proposition adaptée.",
-        "lead": "Quelques informations suffisent pour contextualiser votre offre {tier}."
+        "lead": "Quelques informations suffisent pour contextualiser votre offre {tier}.",
+        "leadFlexible": "Décrivez votre projet librement — l’équipe qualifie votre besoin et revient avec une proposition adaptée. Le choix d’une offre reste possible à tout moment."
       },
       "sent": {
         "title": "Votre demande a bien été transmise.",
@@ -509,7 +510,9 @@
       "recapLabel": "Offre sélectionnée",
       "editOffer": "Modifier l’offre",
       "stepTag": "Étape 03 / 03",
-      "formTitle": "Parlez-nous de votre projet."
+      "formTitle": "Parlez-nous de votre projet.",
+      "flexibleDesc": "Vous décrivez votre projet, l’équipe qualifie et propose le niveau adapté.",
+      "chooseOffer": "Parcourir les offres"
     },
     "form": {
       "objectiveLabel": "Votre objectif",
@@ -571,6 +574,17 @@
         "consent": "Le consentement est requis pour être recontacté.",
         "rateLimited": "Trop de demandes successives. Merci de réessayer dans quelques minutes.",
         "generic": "La demande n’a pas pu être transmise. Merci de vérifier les champs et de réessayer."
+      },
+      "skipToRequest": "Passer directement à ma demande",
+      "flexibleBadge": "Demande libre",
+      "emptyMessage": "Demande personnalisée.",
+      "budget": {
+        "label": "Budget indicatif",
+        "placeholder": "Donnez une fourchette si possible"
+      },
+      "message": {
+        "label": "Votre message",
+        "placeholder": "Décrivez votre marché, vos objectifs et toute information utile…"
       }
     },
     "sent": {

@@ -409,7 +409,8 @@
       },
       "request": {
         "title": "Describe your project to receive a tailored proposal.",
-        "lead": "A few details are enough to contextualise your {tier} offer."
+        "lead": "A few details are enough to contextualise your {tier} offer.",
+        "leadFlexible": "Describe your project freely — the team qualifies your needs and returns with a tailored proposal. Choosing an offer stays possible at any time."
       },
       "sent": {
         "title": "Your request has been sent.",
@@ -509,7 +510,9 @@
       "recapLabel": "Selected offer",
       "editOffer": "Change the offer",
       "stepTag": "Step 03 / 03",
-      "formTitle": "Tell us about your project."
+      "formTitle": "Tell us about your project.",
+      "flexibleDesc": "You describe your project; the team qualifies it and proposes the right level.",
+      "chooseOffer": "Browse the offers"
     },
     "form": {
       "objectiveLabel": "Your objective",
@@ -571,6 +574,17 @@
         "consent": "Consent is required so we can contact you.",
         "rateLimited": "Too many consecutive requests. Please try again in a few minutes.",
         "generic": "The request could not be sent. Please check the fields and try again."
+      },
+      "skipToRequest": "Skip straight to my request",
+      "flexibleBadge": "Open request",
+      "emptyMessage": "Tailored proposal request.",
+      "budget": {
+        "label": "Indicative budget",
+        "placeholder": "Give a range if possible"
+      },
+      "message": {
+        "label": "Your message",
+        "placeholder": "Describe your market, your goals and any useful information…"
       }
     },
     "sent": {

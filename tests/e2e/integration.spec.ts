@@ -58,19 +58,20 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
   const name = `E2E Visitor ${id}`;
   const message = `Integration enquiry ${id}`;
 
-  // conversion page -> section 13 exhibitor form (the homepage now carries
-  // only the teaser; the form lives on the offer pages)
+  // conversion page -> combined section: the flexible path (skip the wizard,
+  // tier optional) leads straight to the request form
   await page.goto("/en/exposer/devenir-exposant");
   await dismissConsent(page);
+  await page.getByRole("button", { name: "Skip straight to my request" }).click();
+  await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Company").fill(`E2E Co ${id}`);
-  await page.getByLabel("Name and role").fill(name);
   await page.getByLabel("Business email").fill(`e2e-${id}@example.test`);
   await page.getByLabel("Your message").fill(message);
-  await page.getByLabel(/I agree that SPIMAR/).check();
+  await page.getByLabel(/I agree to be contacted/).check();
   await page.getByRole("button", { name: "Send my request" }).click();
 
   // The confirmation appears only after a durable write.
-  await expect(page.getByText("Thank you for your request.")).toBeVisible();
+  await expect(page.getByText("Your request has been sent.")).toBeVisible();
 
   // -> CRM lead, with attribution captured at submission.
   await signIn(page, ADMIN);
@@ -81,7 +82,7 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
     .getByRole("link", { name: "Open" })
     .click();
   await expect(page.getByText(message)).toBeVisible();
-  await expect(page.getByText("devenir-exposant-section-13")).toBeVisible();
+  await expect(page.getByText("devenir-exposant-flexible")).toBeVisible();
 
   // Operational workflow: stage, assignment and a note, each audited.
   await page.getByLabel("Current stage").selectOption("qualified");
@@ -109,15 +110,16 @@ test("duplicate submissions are refused without a false confirmation", async ({ 
   for (const attempt of [1, 2]) {
     await page.goto("/en/exposer/devenir-exposant");
     await dismissConsent(page);
+    await page.getByRole("button", { name: "Skip straight to my request" }).click();
+    await page.getByLabel("Full name").fill(`Dupe ${id}`);
     await page.getByLabel("Company").fill(`Dupe Co ${id}`);
-    await page.getByLabel("Name and role").fill(`Dupe ${id}`);
     await page.getByLabel("Business email").fill(email);
     await page.getByLabel("Your message").fill(message);
-    await page.getByLabel(/I agree that SPIMAR/).check();
+    await page.getByLabel(/I agree to be contacted/).check();
     await page.getByRole("button", { name: "Send my request" }).click();
 
     if (attempt === 1) {
-      await expect(page.getByText("Thank you for your request.")).toBeVisible();
+      await expect(page.getByText("Your request has been sent.")).toBeVisible();
     } else {
       // Honest: says already recorded, does NOT claim a new enquiry was created.
       await expect(page.getByText(/already recorded/)).toBeVisible();

@@ -120,7 +120,14 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
     surface: "",
   });
   const [options, setOptions] = useState<readonly string[]>([]);
-  const [contact, setContact] = useState({ name: "", company: "", email: "", phone: "" });
+  const [contact, setContact] = useState({
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    budget: "",
+    message: "",
+  });
   const [consent, setConsent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const [duplicate, setDuplicate] = useState(false);
@@ -170,13 +177,16 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
   function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormError("");
-    if (!tierEntry || localInvalid()) return;
+    /* The tier is OPTIONAL: the flexible path (skip straight to the request)
+       submits the same dossier without one — the user is never locked out of
+       the form by the wizard. */
+    if (localInvalid()) return;
 
     /* Qualification composed into the message field — the enquiry schema's
        free-text channel — so no schema or storage contract changes. */
     const lines = [
-      `Édition : ${editionLabel}`,
-      `Offre : ${t(`tiers.${tierEntry.key}.name`)}`,
+      editionLabel ? `Édition : ${editionLabel}` : "",
+      tierEntry ? `Offre : ${t(`tiers.${tierEntry.key}.name`)}` : "",
       ...SELECT_FIELDS.filter((f) => selects[f]).map(
         (f) => `${t(`form.${f}.label`)} : ${t(`form.${f}.choices.${selects[f]}`)}`,
       ),
@@ -185,6 +195,10 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
         : "",
       contact.phone.trim() ? `${t("form.phone.label")} : ${contact.phone.trim().slice(0, 40)}` : "",
       contact.company.trim() ? `${t("form.company.label")} : ${contact.company.trim()}` : "",
+      contact.budget.trim()
+        ? `${t("form.budget.label")} : ${contact.budget.trim().slice(0, 160)}`
+        : "",
+      contact.message.trim(),
     ].filter(Boolean);
 
     startTransition(async () => {
@@ -192,11 +206,11 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
         name: contact.name.trim(),
         email: contact.email.trim(),
         organisation: contact.company.trim(),
-        message: lines.join("\n"),
+        message: lines.join("\n") || t("form.emptyMessage"),
         consent: consent as true,
         locale,
         sourcePath: pathname,
-        cta: `offres-exposants-${tierEntry.key}`,
+        cta: tierEntry ? `offres-exposants-${tierEntry.key}` : "devenir-exposant-flexible",
         eventSlug: edition,
         kind: "exhibitor",
         website: honeypot,
@@ -228,8 +242,10 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
               {t(`header.${headerKey}.title`)}
             </h2>
             <p className="offLead">
-              {headerKey === "request" && tierEntry
-                ? t("header.request.lead", { tier: t(`tiers.${tierEntry.key}.name`) })
+              {headerKey === "request"
+                ? tierEntry
+                  ? t("header.request.lead", { tier: t(`tiers.${tierEntry.key}.name`) })
+                  : t("header.request.leadFlexible")
                 : t(`header.${headerKey}.lead`)}
             </p>
             {detailHref ? (
@@ -259,6 +275,16 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
               );
             })}
           </ol>
+          {(phase === "edition" || phase === "offer") && (
+            <button
+              className="offGhostBtn offSkipBtn"
+              onClick={() => setPhase("request")}
+              type="button"
+            >
+              {t("form.skipToRequest")}
+              <ArrowRightIcon className="offBtnIcon" aria-hidden="true" />
+            </button>
+          )}
         </header>
 
         {(phase === "offer" || phase === "request") && (
@@ -268,7 +294,7 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
             </span>
             <span className="offSummaryMeta">
               <span className="offSummaryLabel">{t("summary.label")}</span>
-              <span className="offSummaryValue">{editionLabel}</span>
+              <span className="offSummaryValue">{editionLabel || t("form.flexibleBadge")}</span>
             </span>
             {phase === "offer" && (
               <span className="offSummaryState">
@@ -426,36 +452,52 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
           </>
         )}
 
-        {phase === "request" && tierEntry && (
+        {phase === "request" && (
           <div className="offRequestGrid">
             <div className="offRecapCol">
               <div className="offDarkCard offRecapCard">
                 <p className="offRailLabel offRailLabelGold">{t("request.recapLabel")}</p>
-                <div className="offRecapHead">
-                  <span className="offTierBubble isInverse" aria-hidden="true">
-                    <tierEntry.Icon className="offTierBubbleIcon" />
-                  </span>
-                  <div>
-                    <h3 className="offRecapName">
-                      {t(`tiers.${tierEntry.key}.name`)}
-                      <span className="offTierChip isInverse">
-                        {t(`tiers.${tierEntry.key}.chip`)}
+                {tierEntry ? (
+                  <>
+                    <div className="offRecapHead">
+                      <span className="offTierBubble isInverse" aria-hidden="true">
+                        <tierEntry.Icon className="offTierBubbleIcon" />
                       </span>
-                    </h3>
-                    <p className="offDarkText">{t(`tiers.${tierEntry.key}.desc`)}</p>
+                      <div>
+                        <h3 className="offRecapName">
+                          {t(`tiers.${tierEntry.key}.name`)}
+                          <span className="offTierChip isInverse">
+                            {t(`tiers.${tierEntry.key}.chip`)}
+                          </span>
+                        </h3>
+                        <p className="offDarkText">{t(`tiers.${tierEntry.key}.desc`)}</p>
+                      </div>
+                    </div>
+                    <ul className="offTierFeatures isInverse">
+                      {tierEntry.featureIcons.map((FeatureIcon, i) => (
+                        <li className="offTierFeature" key={i}>
+                          <FeatureIcon className="offFeatureIcon" aria-hidden="true" />
+                          <span>{t(`tiers.${tierEntry.key}.features.${i}`)}</span>
+                          <CheckCircleIcon className="offFeatureCheck" aria-hidden="true" />
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  /* Flexible path: no tier chosen — the recap states that
+                     honestly and offers the wizard, never blocks the form. */
+                  <div className="offRecapHead">
+                    <span className="offTierBubble isInverse" aria-hidden="true">
+                      <FolderCheckIcon className="offTierBubbleIcon" />
+                    </span>
+                    <div>
+                      <h3 className="offRecapName">{t("form.flexibleBadge")}</h3>
+                      <p className="offDarkText">{t("request.flexibleDesc")}</p>
+                    </div>
                   </div>
-                </div>
-                <ul className="offTierFeatures isInverse">
-                  {tierEntry.featureIcons.map((FeatureIcon, i) => (
-                    <li className="offTierFeature" key={i}>
-                      <FeatureIcon className="offFeatureIcon" aria-hidden="true" />
-                      <span>{t(`tiers.${tierEntry.key}.features.${i}`)}</span>
-                      <CheckCircleIcon className="offFeatureCheck" aria-hidden="true" />
-                    </li>
-                  ))}
-                </ul>
+                )}
                 <button className="offGhostBtn" onClick={() => setPhase("offer")} type="button">
-                  {t("request.editOffer")}
+                  {tierEntry ? t("request.editOffer") : t("request.chooseOffer")}
                 </button>
               </div>
               <p className="offShieldNote">
@@ -555,6 +597,34 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
                       )}
                     </div>
                   ))}
+                  <div className="offField">
+                    <label className="offFieldLabel" htmlFor="off-budget">
+                      {t("form.budget.label")}
+                    </label>
+                    <input
+                      className="offFieldInput"
+                      id="off-budget"
+                      onChange={(e) => setContact((prev) => ({ ...prev, budget: e.target.value }))}
+                      placeholder={t("form.budget.placeholder")}
+                      type="text"
+                      value={contact.budget}
+                    />
+                  </div>
+                </div>
+                {/* Free-text channel absorbed from the flexible form: the
+                    request never restricts the user to the structured picks. */}
+                <div className="offField offFieldWide">
+                  <label className="offFieldLabel" htmlFor="off-message">
+                    {t("form.message.label")}
+                  </label>
+                  <textarea
+                    className="offFieldInput offFieldTextarea"
+                    id="off-message"
+                    onChange={(e) => setContact((prev) => ({ ...prev, message: e.target.value }))}
+                    placeholder={t("form.message.placeholder")}
+                    rows={4}
+                    value={contact.message}
+                  />
                 </div>
               </fieldset>
 
@@ -607,7 +677,7 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
           </div>
         )}
 
-        {phase === "sent" && tierEntry && (
+        {phase === "sent" && (
           <>
             <div className="offSentGrid">
               <div className="offSentCard">
@@ -626,13 +696,15 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
                     <span className="offReassureTitle">{t("sent.recapEdition")}</span>
                     <span className="offReassureSub">{editionLabel}</span>
                   </li>
-                  <li className="offSentRecapItem">
-                    <span className="offTierBubble" aria-hidden="true">
-                      <tierEntry.Icon className="offTierBubbleIcon" />
-                    </span>
-                    <span className="offReassureTitle">{t("sent.recapOffer")}</span>
-                    <span className="offReassureSub">{t(`tiers.${tierEntry.key}.name`)}</span>
-                  </li>
+                  {tierEntry ? (
+                    <li className="offSentRecapItem">
+                      <span className="offTierBubble" aria-hidden="true">
+                        <tierEntry.Icon className="offTierBubbleIcon" />
+                      </span>
+                      <span className="offReassureTitle">{t("sent.recapOffer")}</span>
+                      <span className="offReassureSub">{t(`tiers.${tierEntry.key}.name`)}</span>
+                    </li>
+                  ) : null}
                   <li className="offSentRecapItem">
                     <span className="offTierBubble" aria-hidden="true">
                       <FolderCheckIcon className="offTierBubbleIcon" />
