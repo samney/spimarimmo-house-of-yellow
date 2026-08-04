@@ -210,3 +210,22 @@ Not everything needs changing, and recording this prevents wasted effort:
 test, dependency, lockfile, runtime configuration, media, asset, migration, CI
 or deployment file was modified. No residue was removed, no brand replaced, no
 media reconstructed or sourced, and no video activated.
+
+---
+
+## Correction — 2026-08-02, raised during `TRF-004`
+
+**§ 3 overstated the `CONTACT_NOTIFY_TO` finding.** It described the default as a
+live data-routing defect where "a misconfigured deployment mails SPIMAR
+enquiries to a third party".
+
+Re-checked against source during `TRF-004`: `info@houseofyellow.nl` appears
+**only inside a comment** in `lib/contact/store.ts`. There is no code default,
+no environment fallback, and no email is sent at all — `notifySubmission` writes
+a redacted log line and nothing more. No enquiry could have been delivered
+anywhere.
+
+The residue was real and is removed; the described consequence was not. The
+comment now states that `CONTACT_NOTIFY_TO` has no default and must be set
+explicitly. Recorded as a correction rather than an edit, per the
+`DOCUMENT-REGISTRY` mutation rule for this folder.

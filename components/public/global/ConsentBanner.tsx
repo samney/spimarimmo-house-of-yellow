@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
-import { Link } from "@/i18n/navigation";
 import {
   CONSENT_CATEGORIES as CATEGORIES,
   CONSENT_STORAGE_KEY as STORAGE_KEY,
@@ -14,9 +13,10 @@ import {
    dialog, Accept / Deny / View preferences, four categories with toggles
    (functional always active). State is a first-party cookie-free localStorage
    record; a "hoy:consent" event lets consumers (analytics, embeds) react.
-   The reference ships mixed EN/NL strings; we render locale-consistent EN
-   (FR via messages in HOY-110) — recorded in DECISIONS. Shared model in
-   lib/consent.ts (also drives the /cookies preferences widget). */
+   Copy is English on every locale, including /fr. That is a real gap, not an
+   oversight: TRF-004 removed the reference content layer and no SPIMAR copy
+   source exists yet. Localised consent copy lands with TRF-017, alongside the
+   SPIMAR policy the banner will link to. Shared model in lib/consent.ts. */
 
 export type { ConsentCategories };
 
@@ -136,11 +136,12 @@ export function ConsentBanner() {
           </button>
         )}
       </div>
-      <div className="cmplz-documents">
-        <Link className="cmplz-link" href="/cookies">
-          Cookies
-        </Link>
-      </div>
+      {/* The cookie-policy link is intentionally absent. TRF-004 deleted the
+          reference policy — it was a third party's legal document describing
+          cookies SPIMAR does not set (blocker LEG-1) — and no SPIMAR policy has
+          been authored yet. Linking to a 404 from a consent dialog is worse
+          than showing no link. Restore this with the SPIMAR-authored policy in
+          TRF-039; the anchor is `cmplz-documents`. */}
     </div>
   );
 }

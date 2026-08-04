@@ -533,3 +533,62 @@ entities are the SPIMAR content model, a later slice.
 migrations, and changes PII-bearing structures, so it falls under three `D-018`
 always-review exceptions and requires a fresh independent session before merge,
 regardless of gate position.
+
+## D-022 — 2026-08-02 — `taste-skill` installed as a subordinate advisory skill, overriding its 2026-07-30 rejection
+
+**Authority.** Explicit repository-owner instruction to set up
+`https://github.com/leonxlnx/taste-skill`.
+
+**Context.** `PUBLIC-SKILLS-LOCK.md` recorded this pack on 2026-07-30 as
+**`rejected (overridable)`** and specified the override gate itself: _"line-by-line read of
+the pinned SKILL.md, then vendored install like web-design-guidelines."_ The 2026-07-30 pass
+had read the 87 KB file only "via summarization". The owner instruction activates the
+override, so the gate was executed rather than the rejection re-litigated.
+
+**Audit performed.** All **1,206 lines** read directly at pinned SHA
+`e988add20dab0fa97d7a76781c48961c8184288e`, plus an automated scan for the Phase-2 threat
+classes. Clean on all of them: no download-and-execute, no credential access, no
+home-directory or global writes, no destructive commands, no operator-directed prompt
+injection, no `allowed-tools` declaration, no bundled executables. `npx`/`npm` strings are
+user-facing install documentation in Appendix A, not agent-executed instructions. This
+directly addresses the Snyk ToxicSkills concern already recorded in the lock.
+
+**Decision.**
+
+1. Vendor **one** file — `skills/taste-skill/SKILL.md` — byte-identically at the pinned SHA
+   into `.claude/skills/taste-skill/`. SHA-256
+   `aa194351b246b8b4799099d4ed7b033d29eab6e6e3d58d8d2172978be7b3ec89`, 87,253 B, verified
+   with `cmp`. The pack's other 12 skills were **not** vendored.
+2. Follow the `D-002` precedent: the `npx skills` installer and the repo's `skill.sh` were
+   **not run**. No third-party code was executed at any point. Nothing was cloned; the file
+   was fetched pinned by ref.
+3. The skill registers as **`design-taste-frontend`** (frontmatter `name`), not
+   "taste-skill". Recorded so the session skill list is not mistaken for a missing install.
+4. **The skill is installed subordinate, not authoritative.** Nine concrete conflicts with
+   `.claude/rules/frontend-quality.md`, `.claude/rules/architecture.md` and
+   `TOOLING-MATRIX.md` are enumerated in `PUBLIC-SKILLS-LOCK.md` §9.B — most materially:
+   it mandates Motion (ex-Framer Motion) which this project **excludes**; it recommends
+   hotlinking `picsum.photos` and `cdn.simpleicons.org` which this project **forbids**; it
+   builds on shadcn/ui which this project **excludes on public routes**; and its
+   anti-centered-hero / eyebrow-count / layout-repetition rules fight the fidelity-first
+   mandate. Where they disagree, **the project rules win, without exception.**
+5. The subordination rule is stated in `.claude/rules/frontend-quality.md`, not only in the
+   lock, because rules files load in every session and the lock does not. A binding
+   constraint recorded only where nobody reads it is not a control.
+6. Scope of legitimate use: §9 (AI Tells) and §14 (Pre-Flight Check) as stack-agnostic
+   output-quality gates during `SPI-020`/`SPI-030` identity generation and copy review.
+   **Not** for reproducing House of Yellow composition, **not** for public-route fidelity
+   work, and **not** for CMS/CRM console surfaces — which the skill's own §13 disclaims.
+
+**Consequence.** The original overlap objection with `frontend-design` +
+`web-design-guidelines` is **bounded, not dismissed**: the skill may advise, never decide.
+This changeset is tooling and control-plane only — no application source, test, dependency,
+lockfile or runtime configuration changed. The vendored file is third-party MIT content and
+must not be edited in place; refreshing it means re-running the §9.A audit at a new SHA and
+updating the lock, per the existing refresh procedure.
+
+**Review tier.** Under `D-018` this is not in an always-review category (no auth/RLS, no
+migration, no PII, no dependency or lockfile change, no CI or secret handling, not
+production-affecting). It does introduce **third-party content with a prompt-injection
+surface**, which is why the §9.A scan is recorded in full and why an independent reviewer
+should re-run it rather than trust this entry.

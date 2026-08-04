@@ -9,9 +9,10 @@ import "../globals.css";
 const canonicalProductionUrl = getCanonicalProductionUrl();
 
 export const metadata: Metadata = {
-  title: "HOY | House Of Yellow",
-  description:
-    "We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship.",
+  /* Neutral metadata. TRF-004 removed the reference brand; SPIMAR title,
+     description, hreflang and structured data are authored in TRF-026. */
+  title: "SPIMARIMMO",
+  description: "SPIMARIMMO.",
   robots: getRobotsMetadata(),
   ...(canonicalProductionUrl ? { metadataBase: canonicalProductionUrl } : {}),
 };

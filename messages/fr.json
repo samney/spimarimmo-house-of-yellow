@@ -1,10 +1,16 @@
 {
   "nav": {
-    "home": "Home",
-    "madeByYellow": "Made by Yellow",
-    "culture": "Culture",
-    "howWeRoll": "How we roll",
-    "connect": "Connect",
+    "home": "Accueil",
     "menu": "Menu"
+  },
+  "placeholder": {
+    "title": "SPIMARIMMO",
+    "body": "Cette page est en cours de reconstruction. L'expérience SPIMAR est en construction."
+  },
+  "notFound": {
+    "code": "[ 404 ]",
+    "title": "Cette page n'existe pas.",
+    "body": "La page que vous recherchez a été déplacée ou n'est pas disponible.",
+    "home": "Accueil"
   }
 }
