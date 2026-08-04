@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { isRateLimited } from "@/lib/contact/rate-limit";
 import {
   canEditContent,
+  canManageLeads,
   canPublish,
   endSession,
   isConfigured,
@@ -269,7 +270,11 @@ export async function updateLeadAction(
   form: FormData,
 ): Promise<ActionResult> {
   const session = await readSession();
-  if (!session) return { ok: false, message: "You do not have permission to manage leads." };
+  // Capability, not session presence: matches the reads, the export, and the
+  // PR #29 fix on the seam lineage so the eventual merge converges.
+  if (!session || !canManageLeads(session)) {
+    return { ok: false, message: "You do not have permission to manage leads." };
+  }
 
   const id = String(form.get("id") ?? "");
   const intent = String(form.get("intent") ?? "");
