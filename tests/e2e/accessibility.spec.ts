@@ -23,6 +23,8 @@ const ROUTES = [
   "/insights",
   "/faq",
   "/ressources",
+  "/ressources/galerie",
+  "/exposer/devenir-exposant",
   "/contact",
   "/this-route-does-not-exist",
 ];

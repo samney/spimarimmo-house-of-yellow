@@ -20,7 +20,9 @@
     "socials": {
       "instagram": "Instagram",
       "linkedin": "LinkedIn"
-    }
+    },
+    "ressourcesExposants": "Exhibitor resources",
+    "galerie": "Gallery"
   },
   "impact": {
     "eyebrow": "Key figures",
@@ -917,7 +919,9 @@
     "availability": "Released as soon as the validated version exists — on request",
     "outro": "To receive a document:",
     "outroContact": "Contact us",
-    "outroInsights": "Read the blog"
+    "outroInsights": "Read the blog",
+    "outroExposants": "Exhibitor resources",
+    "outroGallery": "See the gallery"
   },
   "salonsPage": {
     "label": "Exhibitions",

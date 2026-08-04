@@ -51,6 +51,8 @@ const NAV: readonly NavItem[] = [
     key: "ressources",
     children: [
       { href: "/ressources", key: "bibliotheque" },
+      { href: "/ressources/exposants", key: "ressourcesExposants" },
+      { href: "/ressources/galerie", key: "galerie" },
       { href: "/insights", key: "blog" },
       { href: "/faq", key: "faq" },
     ],

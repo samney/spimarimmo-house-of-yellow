@@ -79,12 +79,20 @@ const CATEGORIES: readonly ("all" | CategoryKey)[] = [
   "networking",
 ];
 
-export function GallerySection() {
+export function GallerySection({
+  fullGalleryHref,
+  defaultExpanded = false,
+}: {
+  /** When set (homepage), the primary CTA navigates to the standalone gallery
+      page instead of expanding in place. */
+  fullGalleryHref?: string;
+  defaultExpanded?: boolean;
+} = {}) {
   const t = useTranslations("gallery");
   const [city, setCity] = useState<string>("paris");
   const [category, setCategory] = useState<"all" | CategoryKey>("all");
   const [selected, setSelected] = useState<string>("film");
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(defaultExpanded);
 
   const filtered = MEDIA.filter((m) => category === "all" || m.category === category);
   const stage = filtered.find((m) => m.id === selected) ?? filtered[0];
@@ -322,16 +330,23 @@ export function GallerySection() {
             </span>
           )}
           <div className="galActions">
-            <button
-              aria-controls="gal-all"
-              aria-expanded={expanded}
-              className="galCtaGold"
-              onClick={() => setExpanded((open) => !open)}
-              type="button"
-            >
-              <span>{expanded ? t("hideGallery") : t("showGallery")}</span>
-              <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
-            </button>
+            {fullGalleryHref ? (
+              <Link className="galCtaGold" href={fullGalleryHref}>
+                <span>{t("showGallery")}</span>
+                <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
+              </Link>
+            ) : (
+              <button
+                aria-controls="gal-all"
+                aria-expanded={expanded}
+                className="galCtaGold"
+                onClick={() => setExpanded((open) => !open)}
+                type="button"
+              >
+                <span>{expanded ? t("hideGallery") : t("showGallery")}</span>
+                <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
+              </button>
+            )}
             <Link className="galCtaGhost" href="/salons">
               <span>{t("exploreSalons")}</span>
               <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />

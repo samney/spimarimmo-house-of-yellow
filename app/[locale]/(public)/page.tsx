@@ -10,7 +10,6 @@ import { PromotersSection } from "@/components/public/home/PromotersSection";
 import { ProofSection } from "@/components/public/home/ProofSection";
 import { OffersSection } from "@/components/public/home/offers/OffersSection";
 import { GallerySection } from "@/components/public/home/GallerySection";
-import { ResourcesSection } from "@/components/public/home/ResourcesSection";
 import { BecomeExhibitorSection } from "@/components/public/home/BecomeExhibitorSection";
 import { ClosingSection } from "@/components/public/home/ClosingSection";
 
@@ -30,8 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <PromotersSection />
       <ProofSection />
       <OffersSection detailHref="/exposer/offres" />
-      <GallerySection />
-      <ResourcesSection />
+      <GallerySection fullGalleryHref="/ressources/galerie" />
       <BecomeExhibitorSection />
       <ClosingSection />
     </>
