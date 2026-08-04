@@ -1,10 +1,11 @@
 import { setRequestLocale } from "next-intl/server";
-import { GallerySection } from "@/components/public/home/GallerySection";
+import { GalleryListing } from "@/components/public/pages/GalleryListing";
 
-/* Owner restructure (2026-08-04): the full gallery lives in the Bibliothèque
-   family. The grid opens expanded here; the homepage instance links in. */
+/* Owner restructure (2026-08-04): the standalone gallery is a LISTING, not a
+   repeat of the homepage teaser section — the homepage has a display budget,
+   the library scales. Media data stays single-sourced in galleryData. */
 export default async function Galerie({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <GallerySection defaultExpanded />;
+  return <GalleryListing />;
 }

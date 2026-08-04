@@ -136,3 +136,48 @@
 .pageBlocks:not(.dark) .cultureQuoteAnimationBlock .numIndex {
   color: var(--spimar-gold-text);
 }
+
+/* Gallery listing: category anchor nav + grouped grids. The homepage section
+   is a bounded teaser; this composition scales with the library. */
+.galListNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+.galListNavPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: var(--text-support);
+  font-weight: 500;
+  color: var(--on-surface);
+  text-decoration: none;
+  transition: border-color var(--dur-micro) var(--ease-out-ref);
+}
+.galListNavPill:hover {
+  border-color: var(--border-strong);
+}
+.galListNavPill:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+.galListNavCount {
+  color: var(--on-surface-muted);
+  font-variant-numeric: tabular-nums;
+}
+.galListGroup {
+  margin-bottom: var(--space-lg);
+  scroll-margin-top: 6vw;
+}
+.galListGroup > h2 {
+  margin-bottom: var(--space-sm);
+}
+@media (max-width: 580px) {
+  .galListGroup {
+    scroll-margin-top: 16vw;
+  }
+}

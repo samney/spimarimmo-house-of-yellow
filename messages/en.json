@@ -954,5 +954,13 @@
     "backToIndex": "All exhibitions",
     "outro": "Preparing to exhibit?",
     "outroCta": "Become an exhibitor"
+  },
+  "galleryPage": {
+    "label": "Gallery",
+    "title": "The editions, seen from the inside.",
+    "lead": "The full library of exhibition visuals, organised by category. Every visual carries its status: no image is attached to an edition without validation.",
+    "navLabel": "Gallery categories",
+    "outro": "Continue:",
+    "outroLibrary": "Resource library"
   }
 }

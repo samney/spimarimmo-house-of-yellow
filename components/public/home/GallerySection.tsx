@@ -8,14 +8,8 @@ import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon, VisitorsIcon } from "./i
 import { CameraIcon, CheckCircleIcon, MicIcon } from "./visibilityIcons";
 import { PlaySolidIcon, VolumeIcon, FullscreenIcon } from "./proofIcons";
 import { PinIcon } from "./offers/offersIcons";
-import {
-  CaptionsIcon,
-  ChevronRightIcon,
-  ExpandIcon,
-  GearIcon,
-  ImageIcon,
-  SkipIcon,
-} from "./galleryIcons";
+import { CaptionsIcon, ChevronRightIcon, ExpandIcon, GearIcon, SkipIcon } from "./galleryIcons";
+import { MEDIA, type CategoryKey } from "./galleryData";
 
 /* Section 11 — Preuve terrain: the salons seen from the inside.
  *
@@ -40,34 +34,6 @@ import {
  *   disclosure pattern as section 08. "Explorer les salons" goes to /salons.
  * - The design's grid/list view toggle has no designed list state, so it is
  *   deliberately not built rather than invented. */
-
-type CategoryKey = "stands" | "affluence" | "rendezvous" | "conferences" | "networking";
-type IconComponent = (props: { className?: string }) => React.JSX.Element;
-
-type MediaItem = {
-  readonly id: string;
-  readonly file: string;
-  readonly category: CategoryKey;
-  readonly kind: "video" | "photo";
-  readonly Icon: IconComponent;
-};
-
-const MEDIA: readonly MediaItem[] = [
-  { id: "film", file: "film-edition", category: "stands", kind: "video", Icon: CameraIcon },
-  { id: "stand", file: "stand-presentation", category: "stands", kind: "photo", Icon: ImageIcon },
-  { id: "rdv", file: "rendez-vous", category: "rendezvous", kind: "photo", Icon: VisitorsIcon },
-  { id: "affluence", file: "affluence", category: "affluence", kind: "photo", Icon: VisitorsIcon },
-  { id: "conference", file: "conference", category: "conferences", kind: "photo", Icon: MicIcon },
-  { id: "interview", file: "interview", category: "conferences", kind: "photo", Icon: CameraIcon },
-  {
-    id: "networking",
-    file: "networking",
-    category: "networking",
-    kind: "photo",
-    Icon: VisitorsIcon,
-  },
-  { id: "espace", file: "espace-stand", category: "stands", kind: "photo", Icon: ImageIcon },
-];
 
 const CITIES = ["paris", "montreal", "bruxelles", "abu-dhabi"] as const;
 const CATEGORIES: readonly ("all" | CategoryKey)[] = [

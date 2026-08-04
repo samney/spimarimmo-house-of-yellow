@@ -954,5 +954,13 @@
     "backToIndex": "Tous les salons",
     "outro": "Vous préparez une participation ?",
     "outroCta": "Devenir exposant"
+  },
+  "galleryPage": {
+    "label": "Galerie",
+    "title": "Les éditions, vues de l’intérieur.",
+    "lead": "La bibliothèque complète des visuels de salon, classée par catégorie. Chaque visuel est présenté avec son statut : aucune image n’est rattachée à une édition sans validation.",
+    "navLabel": "Catégories de la galerie",
+    "outro": "Continuer :",
+    "outroLibrary": "Bibliothèque de ressources"
   }
 }
