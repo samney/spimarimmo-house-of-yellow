@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { PlusIcon } from "@/components/public/global/logos";
@@ -35,6 +36,16 @@ export type EventOpportunity = {
   city: string;
   status: EventStatus;
 };
+
+/* Destinations with owner-supplied photography in public/destinations. */
+const DESTINATION_IMAGES = new Set([
+  "paris",
+  "bruxelles",
+  "laval",
+  "montreal",
+  "abu-dhabi",
+  "londres",
+]);
 
 const STATUS_LABEL: Record<EventStatus, string> = {
   "prochaine-edition": "Prochaine édition",
@@ -118,7 +129,20 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
             <span className="innerProject">
               <span className="imageWrapper">
                 <span className="innerImage">
-                  <DestinationPlaceholder slug={event.slug} />
+                  {/* Owner-supplied destination photography (countryImages).
+                      The designed placeholder stays for any destination whose
+                      image is not supplied yet. */}
+                  {DESTINATION_IMAGES.has(event.slug) ? (
+                    <Image
+                      alt=""
+                      className="eventCardImage"
+                      fill
+                      sizes="(max-width: 580px) 80vw, 26vw"
+                      src={`/destinations/${event.slug}.png`}
+                    />
+                  ) : (
+                    <DestinationPlaceholder slug={event.slug} />
+                  )}
                 </span>
                 <span className="tags">
                   <span className="tag textTitle">{STATUS_LABEL[event.status]}</span>

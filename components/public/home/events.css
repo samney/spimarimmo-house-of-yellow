@@ -142,6 +142,15 @@
   opacity: 1;
   transform: none;
 }
+
+/* The reveal alone is not a focus indicator: it is identical to the hover
+   state, so a keyboard user cannot tell focus from hover. The card carries a
+   real ring, in the same vocabulary as every other focusable surface. */
+.eventCard:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-md);
+}
 .eventCard .bottomButton .button {
   display: flex;
   align-items: center;
@@ -174,9 +183,11 @@
 .eventCard .bottomContent .row {
   display: inline-block;
 }
-/* The reference sets the stat label to 0.2 opacity against its value. */
+/* The reference set this label to 0.2 opacity, which measures ~1.6:1 on the
+   card and fails WCAG AA on real content. The intent — label quieter than its
+   value — is kept with an explicit muted colour instead. */
 .eventCard .bottomContent .label {
-  opacity: 0.2;
+  color: var(--on-surface-muted);
   margin-inline-end: 0.35vw;
 }
 
@@ -731,5 +742,30 @@
   .phoneScreen {
     padding: 16cqw 5cqw 5cqw;
     gap: 3.4cqw;
+  }
+}
+
+/* Owner-supplied destination photography fills the card media plane. */
+.eventCard .eventCardImage {
+  object-fit: cover;
+}
+
+/* Logo band below the cards: the reference component, now running the real
+   promoter marks (owner-authorized 2026-08-04). */
+.logoSection .partnerMark img {
+  width: auto;
+  height: 2.6vw;
+  min-height: 26px;
+  max-width: 10vw;
+  object-fit: contain;
+}
+.logoSection__consent {
+  margin-top: var(--space-sm);
+  color: var(--on-surface-muted);
+}
+@media (max-width: 580px) {
+  .logoSection .partnerMark img {
+    height: 6vw;
+    max-width: 26vw;
   }
 }

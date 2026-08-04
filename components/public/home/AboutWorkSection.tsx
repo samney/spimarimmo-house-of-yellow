@@ -1,8 +1,8 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
-import { StandCluster } from "./StandCluster";
 import { EventsCarousel, type EventOpportunity } from "./EventsCarousel";
 
 /* The works -> Salons par pays (specification §05, §07).
@@ -40,13 +40,19 @@ const EVENTS: EventOpportunity[] = [
    other companies' trademarks as SPIMARIMMO's clients; that content was the
    problem, not the component.
 
-   These partners are named in the approved SPIMARIMMO design reference under
-   "Ils nous font confiance", so the relationships are evidenced. They are set
-   as wordmarks rather than logo files: the partners' marks are third-party
-   trademarks whose usage rights are not recorded, and §14 requires logos to be
-   CMS-managed with an approval state. The approved reference sets them as type
-   too. Real marks replace these once rights are cleared. */
-const PARTNERS = ["Prestigia", "Saham Immobilier", "Addoha", "Coralia", "CGI"];
+   The marks were previously set as type because their usage rights were not
+   recorded. The owner has since supplied the logo files directly
+   (`docs/assets-UX-UI/logoproof/`, mirrored to `public/promoters/`) and
+   authorized them for this band (2026-08-04), so the reference component now
+   runs the real logos, as it does below its own project cards. Section 12
+   publishes the same set with the consent line, which is repeated here. */
+const PARTNERS: readonly { slug: string; name: string; width: number; height: number }[] = [
+  { slug: "prestigia", name: "Prestigia", width: 500, height: 230 },
+  { slug: "saham-immobilier", name: "Saham Immobilier", width: 1200, height: 1054 },
+  { slug: "addoha", name: "Addoha", width: 200, height: 107 },
+  { slug: "coralia", name: "Coralia", width: 1136, height: 568 },
+  { slug: "cgi", name: "CGI", width: 300, height: 300 },
+];
 
 function PillButton({
   href,
@@ -117,7 +123,6 @@ export function AboutWorkSection() {
                 </div>
               </div>
             </div>
-            <StandCluster />
           </div>
           <div className="projectsSection">
             {/* Reference header row: two columns of 684. Label and statement
@@ -152,9 +157,14 @@ export function AboutWorkSection() {
                 <div className="marqueeScroll">
                   {[0, 1, 2, 3].map((copy) => (
                     <span className="itemsContainer" key={copy}>
-                      {PARTNERS.map((name) => (
-                        <span className="partnerMark" key={name}>
-                          {name}
+                      {PARTNERS.map((partner) => (
+                        <span className="partnerMark" key={partner.slug}>
+                          <Image
+                            alt=""
+                            height={partner.height}
+                            src={`/promoters/${partner.slug}.png`}
+                            width={partner.width}
+                          />
                         </span>
                       ))}
                     </span>
@@ -163,11 +173,16 @@ export function AboutWorkSection() {
               </div>
             </div>
           </div>
+          <div className="contentWrapper">
+            <p className="text smaller logoSection__consent">
+              Logos affichés avec l’accord des promoteurs.
+            </p>
+          </div>
           {/* The marquee is decorative and hidden from assistive tech, so the
               partners are also listed once in text. */}
           <ul className="sr-only">
-            {PARTNERS.map((name) => (
-              <li key={name}>{name}</li>
+            {PARTNERS.map((partner) => (
+              <li key={partner.slug}>{partner.name}</li>
             ))}
           </ul>
         </div>

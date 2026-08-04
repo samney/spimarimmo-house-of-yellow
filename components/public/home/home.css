@@ -181,10 +181,13 @@
 
    `font-size: 0` on the container removes the whitespace between inline-block
    children, which is the only reason the widths can total 100% and still fit. */
+/* The glyph cluster that used to sit under this row carried its bottom
+   rhythm; with the cluster removed (owner note) the padding is stated here
+   instead, or the next section rides up into the copy. */
 .aboutSection .cols {
   display: block;
   font-size: 0;
-  padding: 0;
+  padding: 0 0 12vw;
 }
 .aboutSection .cols > .col {
   display: inline-block;
@@ -208,8 +211,10 @@
 .aboutSection .normalTitle {
   max-width: none;
 }
+/* Owner note (2026-08-04): the supporting message read as four narrow lines;
+   the measure now lets it settle on two. */
 .aboutSection .smallTitle {
-  max-width: 23.472vw;
+  max-width: 44vw;
   margin: 2vw 0 2.5vw;
 }
 
