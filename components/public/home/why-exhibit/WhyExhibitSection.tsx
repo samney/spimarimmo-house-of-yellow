@@ -80,7 +80,7 @@ export function WhyExhibitSection({
       data-static={staticRender ? "true" : undefined}
     >
       <div className="whyExhibit__inner">
-        <WhyExhibitHeader content={content} headingId={headingId} />
+        <WhyExhibitHeader content={content} benefit={benefit} headingId={headingId} />
         <BenefitTabs
           benefits={content.benefits}
           activeBenefit={benefit.id}
@@ -88,7 +88,7 @@ export function WhyExhibitSection({
           label={content.tablistLabel}
           panelId={panelId}
         />
-        <BenefitStage benefit={benefit} panelId={panelId} />
+        <BenefitStage benefit={benefit} panelId={panelId} staticRender={staticRender} />
       </div>
     </section>
   );

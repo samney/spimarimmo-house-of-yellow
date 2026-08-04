@@ -164,6 +164,23 @@ const ICONS: Record<WhyIconName, { d?: string[]; fills?: string[] }> = {
   },
 };
 
+/* The `.button` pill's icon slot. Matches the arrow used in the copy column's
+   reference CTA rather than the site's PlusIcon: the action is "go read this",
+   not "add". */
+export function ArrowRightIcon() {
+  return (
+    <svg viewBox="0 0 20 14" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M1 7h17M12.5 1.5 19 7l-6.5 5.5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function WhyIcon({ name, className }: { name: WhyIconName; className?: string }) {
   const icon = ICONS[name];
   return (

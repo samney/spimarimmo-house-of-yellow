@@ -694,3 +694,63 @@ visible copy. Country slides render "À venir" because no edition date is
 validated. The phone's gold bar is inert text, not a button — the phone depicts
 the product, it does not offer a control. All four CTAs point at shipped routes
 (`/exposer/methode`, `/salons`, `/etudes-de-cas`, `/exposer/offres`).
+
+## D-026 — 2026-08-04 — Section 03 recomposed: 35/65 split, design-system buttons, GSAP choreography
+
+**Authority.** Repository-owner direction in session, after reviewing the D-025
+build. This entry supersedes the parts of `D-025` it names; everything else in
+`D-025` (content honesty, asset mapping, real routes) still stands.
+
+**Decisions.**
+
+- _Eyebrow._ The index now tracks the selected pillar while the shared
+  `SectionEyebrow` component and its label stay — `[ 01 ] POURQUOI EXPOSER ?`.
+  This replaces `D-025`'s fixed `[ 03 ]`.
+- _Split._ The stage is a 35 / 65 composition: the argument on the left, the
+  proof on the right.
+- _One card box._ Rotations are gone. Every evidence card is 196 × 270 in a
+  four-column right zone (left rail, device, right rail, offset outer column),
+  so no card reads as a stray shape.
+- _Device-to-card ratio._ The device is deliberately the smaller object at
+  259 × 560 (a true 0.4625 handset ratio): two stacked cards plus their gap
+  equal its height, which is what makes the rail and the device read as one
+  measured system.
+- _Buttons are the site's buttons._ The copy CTA is now the repository's
+  `.button` pill with its label / marquee / icon anatomy. The tab rail is sized
+  as one button group, and every action surface — active tab, depicted submit,
+  diffusion pill, the device's action bar — binds to `--action-primary` /
+  `--action-on-primary` instead of a section-local bronze.
+- _Card titles_ carry a brown → gold brand gradient (`#5a3a0c` → `#8a6420`);
+  both stops clear AA on this paper, and `color` is set first as the fallback.
+- _Device detail._ Titanium rail, black bezel, four physical keys, dynamic
+  island with lens and sensor, a real status bar, a segmented filter nav with a
+  current view, and a home indicator — all code, no bitmap.
+- _Depth._ A dot field on the page plane, a warm glow anchored on the device,
+  and three orbit rings centred on it. The anchor network is orthogonal and
+  symmetrical — a lead from each card's inner edge to a vertical bus, one lead
+  into the neighbour — so the eye reads one system, not five decorations. The
+  reference's chevrons are dropped; they read as clutter in this composition.
+- _Motion is GSAP._ `EvidenceCanvas` owns the choreography through `useGSAP` +
+  `ScrollTrigger` + `gsap.matchMedia`: on scroll-in the device rises first, the
+  cards are then thrown out from behind it to their slots, the anchors draw,
+  and the cards keep a slow out-of-phase drift. Changing tab replays the throw
+  for the new cards only; the device never moves. Reduced motion gets the end
+  state immediately with no draw and no drift; below the desktop regime the
+  cards simply rise. No CSS entrance animation remains, so the section is
+  complete with JavaScript disabled and in the visual-test frame.
+- _Public skills._ The official GreenSock skills (`gsap-core`,
+  `gsap-scrolltrigger`, `gsap-timeline`, `gsap-performance`) are installed at
+  user level on owner instruction. Like `taste-skill` under `D-022` they are
+  subordinate to `DESIGN-CONTRACT.md` and `ENGINEERING-CONTRACT.md`; where they
+  disagree, the contracts win.
+
+**Measured.** Section height is exactly 970px at 1536 × 1024 with the stage at
+312–952. Axe reports 0 violations across all four states. No page-level
+horizontal overflow at 390 / 1024 / 1536 / 1920. The GSAP timeline was sampled
+frame by frame: cards start at scale 0.5 on the device centre, overshoot at
+1.02, settle to identity, then drift; the device holds identity throughout.
+
+**Open.** The mobile floor for the copy CTA (44px target, 12px label) is scoped
+to this section rather than fixed in `.button` globally — the global rule's
+`line-height: 4.167vw` collapses to ~16px at 390 for every section that uses it.
+That is a site-wide fix and a separate slice; this entry raises it.

@@ -35,9 +35,6 @@ const STAND_PLAN = (alt: string) => image("stand-plan-topdown.webp", alt, "50% 5
 const PROPERTY_HERO = (alt: string) => image("campaign-property-hero.webp", alt);
 const PROPERTY_INTERIOR = (alt: string) => image("show-apartment-interior.webp", alt);
 const PROPERTY_NIGHT = (alt: string) => image("project-ocean-view.webp", alt);
-const PROPERTY_WIDE = (alt: string) => image("project-riviera-bay.webp", alt);
-const CONSULTATION = (alt: string) => image("investor-consultation.webp", alt);
-const EVENT_CROWD = (alt: string) => image("affluence.webp", alt);
 const CONFERENCE = (alt: string) => image("conference-marche-mre.webp", alt);
 
 export const WHY_EXHIBIT_CONTENT: WhyExhibitContent = {
@@ -283,7 +280,15 @@ export const WHY_EXHIBIT_CONTENT: WhyExhibitContent = {
       screenFootnote: "Données vérifiées",
       scene: {
         kind: "campaigns",
-        feed: [PROPERTY_WIDE(""), EVENT_CROWD(""), CONSULTATION(""), PROPERTY_NIGHT("")],
+        /* `property_wide`, `event_crowd`, `consultation` and `property_night`
+           from the manifest. The feed cells are wide, shallow crops, so the
+           focal point is biased away from the sky band. */
+        feed: [
+          image("project-riviera-bay.webp", "", "50% 68%"),
+          image("affluence.webp", "", "50% 45%"),
+          image("investor-consultation.webp", "", "50% 40%"),
+          image("project-ocean-view.webp", "", "50% 62%"),
+        ],
         stats: [
           { label: "Volume média", chart: "bars" },
           { label: "Couverture", chart: "map" },

@@ -1,61 +1,99 @@
 /* Section 03 — "Pourquoi exposer avec SPIMARIMMO ?" (four-state benefit system).
 
    Contract: docs/codex-implimentation/SPIMARIMMO_WHY_EXHIBIT_IMPLEMENTATION_HANDOFF_v1/
-   Golden viewport: 1536 × 1024 (3:2). Every measured value below was taken from
-   the four approved reference screens at that viewport.
+   Golden viewport: 1536 × 1024 (3:2). Composition revised 2026-08-04 on owner
+   direction: a 35 / 65 split, one uniform card box, the repository's button
+   system for every action, a true-ratio device, and GSAP-owned motion.
 
    Unit system: --why-u is one reference pixel (100vw / 1536), matching the
    sibling method section, so rules read in reference pixels while the whole
    composition stays viewport-relative. Below the desktop regime the composition
    changes shape rather than shrinking, so --why-u is restated as 1px and the
-   phone keeps its natural size.
+   device keeps its natural size.
 
-   Colors are section-scoped L3 properties sampled from the references. The
-   global --spimar-gold (#efc337) is untouched: this section's golds are
-   deliberately quieter bronzes, exactly as the approved screens are. */
+   Stage grid at the golden viewport (1436 × 640, inset to inset):
+
+     left rail   503 →  699   card column, width 196
+     device      730 →  989   width 259, ratio 0.4625 (true handset)
+     right rail 1020 → 1216   card column, width 196
+     outer      1240 → 1436   card column, width 196
+
+   The device is deliberately the smaller object: two stacked cards plus their
+   gap equal its height exactly (270 + 22 + 270 = 562 against 560), so the rail
+   and the device read as one measured system rather than a tall phone with
+   tall slivers beside it. Every card is 196 × 270 — one box, one ratio, one
+   radius, one elevation ladder.
+
+   Colours are section-scoped L3 properties sampled from the references, except
+   action surfaces, which bind to the global button tokens so this section's
+   buttons are the site's buttons. */
 
 .whyExhibit {
   /* 1 reference px at the golden viewport. */
   --why-u: 0.06510417vw;
 
-  /* Sampled palette (reference: 01-clientele-qualifiee.png). */
+  /* Editorial palette, sampled from 01-clientele-qualifiee.png. */
   --why-paper: #f7f0e9; /* warm page canvas */
   --why-ink: #101215; /* near-black type */
   --why-ink-soft: #4a4c50; /* supporting type on paper */
   --why-gold: #b8781e; /* numerals, nodes, dashes, emblems */
   /* Intentional delta (DESIGN-CONTRACT contrast rule): the reference's #b8781e
-     measures 3.28:1 on this paper — fine for the 76px numeral, short of AA for
+     measures 3.28:1 on this paper — fine for the 84px numeral, short of AA for
      small text. Small gold type uses this compliant deep gold instead. */
   --why-gold-ink: #8a6420;
-  --why-gold-tab: #bd8a3e; /* active rail fill, top */
-  --why-gold-tab-deep: #b07a26; /* active rail fill, bottom */
+  --why-brown-ink: #5a3a0c; /* dark end of the card-title brand gradient */
   --why-gold-line: #d8b183; /* hairline connectors */
-  --why-gold-border: #d9ad72; /* card borders */
-  --why-card: #fbf6f0; /* card paper, top */
-  --why-card-deep: #f5eee5; /* card paper, bottom */
+  --why-gold-border: #dcb27b; /* card borders */
+  --why-card: #fdf9f4; /* card paper, top */
+  --why-card-deep: #f5ede3; /* card paper, bottom */
   --why-panel: #fbf7f1; /* inner panel */
-  --why-panel-border: #e8e1d5;
+  --why-panel-border: #e9e2d6;
   --why-bar: #cecdca; /* neutral layout bar */
-  --why-obsidian: #050505; /* phone shell */
-  --why-screen: #111214; /* phone screen */
-  --why-screen-row: #1e1f20; /* screen row surface */
-  --why-screen-edge: #35363a; /* screen hairlines, chips */
+
+  /* Device. */
+  --why-titanium: #8e8e93;
+  --why-titanium-deep: #2b2b2d;
+  --why-obsidian: #050505;
+  --why-screen: #111214;
+  --why-screen-row: #1e1f20;
+  --why-screen-edge: #35363a;
   --why-screen-ink: #f3efe8;
   --why-screen-dim: #a8a49c;
   --why-screen-gold: #d7a549;
-  --why-screen-cta: #cf9a3c;
-  --why-screen-cta-deep: #bd8330;
+
+  /* One elevation ladder, so depth is consistent everywhere. */
+  --why-lift-1: 0 calc(2 * var(--why-u)) calc(6 * var(--why-u)) rgb(60 40 10 / 6%);
+  --why-lift-2:
+    0 calc(4 * var(--why-u)) calc(10 * var(--why-u)) rgb(60 40 10 / 7%),
+    0 calc(14 * var(--why-u)) calc(30 * var(--why-u)) rgb(60 40 10 / 9%);
+  --why-lift-3:
+    0 calc(6 * var(--why-u)) calc(14 * var(--why-u)) rgb(30 20 5 / 12%),
+    0 calc(28 * var(--why-u)) calc(60 * var(--why-u)) rgb(30 20 5 / 20%);
 
   position: relative;
   z-index: 1;
+  overflow: clip;
   background: var(--why-paper);
   color: var(--why-ink);
   font-family: var(--font-sans);
 }
 
+/* Branded depth on the page plane: a fine dot field that reads as texture at
+   distance and never competes with the type. */
+.whyExhibit::before {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgb(184 120 30 / 12%) 1px, transparent 1px);
+  background-size: calc(26 * var(--why-u)) calc(26 * var(--why-u));
+  content: "";
+  mask-image: radial-gradient(120% 80% at 62% 58%, #000 0%, transparent 72%);
+  pointer-events: none;
+}
+
 .whyExhibit__inner {
   position: relative;
-  padding: calc(38 * var(--why-u)) calc(50 * var(--why-u)) calc(60 * var(--why-u));
+  z-index: 1;
+  padding: calc(40 * var(--why-u)) calc(50 * var(--why-u)) calc(18 * var(--why-u));
 }
 
 /* ================================================================== header */
@@ -66,10 +104,9 @@
 
 /* The reference sets this line at ~78px in a narrower grotesk. Poppins is
    wider, so the size is tuned down until the headline holds the reference's
-   single line across the same 1436px measure — matching the composition
-   matters more than matching one nominal value. */
+   single line across the same 1436px measure. */
 .whyExhibit__heading {
-  margin: calc(16 * var(--why-u)) 0 0;
+  margin: calc(14 * var(--why-u)) 0 0;
   font-size: calc(74 * var(--why-u));
   font-weight: 700;
   line-height: 0.98;
@@ -78,17 +115,22 @@
 }
 
 .whyExhibit__subtitle {
-  margin: calc(26 * var(--why-u)) 0 0;
-  font-size: calc(21 * var(--why-u));
+  max-width: calc(720 * var(--why-u));
+  margin: calc(20 * var(--why-u)) 0 0;
+  color: var(--why-ink-soft);
+  font-size: calc(20 * var(--why-u));
   line-height: 1.35;
 }
 
-/* ================================================================ tab rail */
+/* ====================================================== tab rail (buttons) */
 
+/* A button group, sized as one: four equal tracks, one height, one radius, one
+   gap. Fills bind to the global action tokens, so a selected pillar is the same
+   gold as every primary action on the site. */
 .whyTabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: calc(4 * var(--why-u));
+  gap: calc(6 * var(--why-u));
   margin-top: calc(26 * var(--why-u));
 }
 
@@ -96,45 +138,68 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: calc(22 * var(--why-u));
-  min-height: calc(69 * var(--why-u));
+  gap: calc(18 * var(--why-u));
+  min-height: calc(72 * var(--why-u));
   padding: 0 calc(24 * var(--why-u));
-  border: 1px solid rgb(184 120 30 / 32%);
-  border-radius: calc(12 * var(--why-u));
-  background: transparent;
+  border: 1px solid rgb(184 120 30 / 30%);
+  border-radius: calc(14 * var(--why-u));
+  background: rgb(255 255 255 / 45%);
+  box-shadow: var(--why-lift-1);
   color: var(--why-ink);
   text-align: left;
   cursor: pointer;
   transition:
-    background-color var(--dur-micro) var(--ease-out-ref),
-    color var(--dur-micro) var(--ease-out-ref),
-    border-color var(--dur-micro) var(--ease-out-ref);
+    background-color 240ms var(--ease-out-ref),
+    border-color 240ms var(--ease-out-ref),
+    box-shadow 240ms var(--ease-out-ref),
+    color 240ms var(--ease-out-ref),
+    transform 240ms var(--ease-out-ref);
 }
 
+.whyTab:hover {
+  border-color: rgb(184 120 30 / 55%);
+  background: var(--spimar-white);
+  transform: translateY(calc(-2 * var(--why-u)));
+}
+
+/* Number and label carry the hierarchy: the index is the quiet tabular anchor,
+   the label is the read. */
 .whyTab__num {
-  font-size: calc(23 * var(--why-u));
-  font-weight: 400;
+  color: var(--why-gold-ink);
+  font-size: calc(24 * var(--why-u));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  transition: color 240ms var(--ease-out-ref);
 }
 
 .whyTab__label {
   font-size: calc(16 * var(--why-u));
   font-weight: 500;
+  letter-spacing: -0.005em;
 }
 
 .whyTab.is-active {
   border-color: transparent;
-  background: linear-gradient(180deg, var(--why-gold-tab), var(--why-gold-tab-deep));
-  color: var(--spimar-white);
+  background: var(--action-primary);
+  box-shadow: var(--why-lift-2);
+  color: var(--action-on-primary);
 }
 
-/* Active state is never colour-only: the fill, the white label and the gold
-   indicator below the track all move together, and aria-selected carries it. */
+.whyTab.is-active .whyTab__num {
+  color: var(--action-on-primary);
+  opacity: 0.62;
+}
+
+/* Selection is never colour-only: the fill, the numeral and the gold indicator
+   below the track all move together, and aria-selected carries it. */
 .whyTab__dot {
   position: absolute;
   bottom: calc(-6 * var(--why-u));
   left: 50%;
   width: calc(12 * var(--why-u));
   height: calc(12 * var(--why-u));
+  border: calc(2 * var(--why-u)) solid var(--why-paper);
   border-radius: 50%;
   background: var(--why-gold);
   transform: translateX(-50%) scale(0);
@@ -147,99 +212,75 @@
 
 .whyTab:focus-visible {
   outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 /* =================================================================== stage */
 
 .whyStage {
   position: relative;
-  height: calc(694 * var(--why-u));
+  height: calc(640 * var(--why-u));
   margin-top: calc(22 * var(--why-u));
 }
 
-/* ---------------------------------------------------------- copy column */
+/* ------------------------------------------------ copy column (left, 35%) */
 
 .whyCopy {
   position: absolute;
-  top: calc(46 * var(--why-u));
-  left: calc(2 * var(--why-u));
+  top: calc(24 * var(--why-u));
+  left: 0;
   z-index: 3;
-  /* Wider than the reference's 330px column: Poppins sets these titles wider
-     than the reference grotesk, and the column may grow to the left card's
-     edge (x=387) before anything collides. */
-  width: calc(380 * var(--why-u));
+  width: calc(462 * var(--why-u));
 }
 
 .whyCopy__number {
   margin: 0;
   color: var(--why-gold);
-  font-size: calc(76 * var(--why-u));
+  font-size: calc(84 * var(--why-u));
   font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.01em;
+  line-height: 0.86;
+  letter-spacing: -0.03em;
 }
 
 .whyCopy__title {
-  margin: calc(20 * var(--why-u)) 0 0;
-  /* The reference sets these titles at ~45px. Poppins is materially wider —
-     at that size "Un accompagnement" cannot hold the reference's first line
-     inside the corridor left of the evidence cards. The size steps down until
-     all four titles keep the approved two-line structure. */
-  font-size: calc(35 * var(--why-u));
+  margin: calc(22 * var(--why-u)) 0 0;
+  font-size: calc(40 * var(--why-u));
   font-weight: 700;
-  line-height: 1.14;
+  line-height: 1.1;
   letter-spacing: -0.032em;
 }
 
 .whyCopy__body {
-  max-width: calc(344 * var(--why-u));
-  margin: calc(22 * var(--why-u)) 0 0;
-  font-size: calc(17 * var(--why-u));
+  max-width: calc(404 * var(--why-u));
+  margin: calc(24 * var(--why-u)) 0 0;
+  color: var(--why-ink-soft);
+  font-size: calc(18 * var(--why-u));
   line-height: 1.62;
 }
 
-.whyCopy__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(11 * var(--why-u));
+.whyCopy__actions {
+  display: block;
   margin-top: calc(34 * var(--why-u));
-  color: var(--why-ink);
-  font-size: calc(17 * var(--why-u));
-  font-weight: 500;
 }
 
-.whyCopy__ctaLabel {
-  padding-bottom: calc(6 * var(--why-u));
-  border-bottom: 1px solid currentcolor;
+/* The pill is the repository's `.button`; only its elevation is section-local,
+   so it sits on the same depth ladder as the cards beside it. */
+.whyCopy__cta {
+  box-shadow: var(--why-lift-2);
 }
 
-.whyCopy__ctaArrow {
-  width: calc(19 * var(--why-u));
-  height: calc(13 * var(--why-u));
-  transition: transform var(--dur-micro) var(--ease-out-ref);
-}
-
-.whyCopy__cta:hover .whyCopy__ctaArrow {
-  transform: translateX(calc(4 * var(--why-u)));
-}
-
-.whyCopy__cta:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 4px;
-}
-
-/* ------------------------------------------------------------ proof line */
+/* -------------------------------------------------------------- proof line */
 
 .whyProof {
   position: absolute;
-  top: calc(612 * var(--why-u));
-  left: calc(3 * var(--why-u));
+  top: calc(556 * var(--why-u));
+  left: calc(2 * var(--why-u));
   z-index: 3;
   display: flex;
   gap: calc(20 * var(--why-u));
-  width: calc(320 * var(--why-u));
+  width: calc(420 * var(--why-u));
   margin: 0;
+  color: var(--why-ink-soft);
   font-size: calc(17 * var(--why-u));
   line-height: 1.5;
 }
@@ -252,11 +293,25 @@
   background: var(--why-gold);
 }
 
-/* ========================================================= evidence stage */
+/* =========================================== evidence stage (right, 65%) */
 
 .whyCanvas {
   position: absolute;
   inset: 0;
+}
+
+/* Warm light anchored on the device — the depth cue that makes the cards read
+   as floating in front of a lit plane rather than pasted on paper. */
+.whyCanvas__glow {
+  position: absolute;
+  top: calc(-70 * var(--why-u));
+  left: calc(450 * var(--why-u));
+  width: calc(1000 * var(--why-u));
+  height: calc(780 * var(--why-u));
+  background:
+    radial-gradient(closest-side, rgb(216 177 131 / 34%), transparent 72%),
+    radial-gradient(closest-side at 62% 46%, rgb(184 120 30 / 14%), transparent 70%);
+  pointer-events: none;
 }
 
 .whyConnectors {
@@ -267,23 +322,23 @@
   overflow: visible;
 }
 
+/* Orbit rings centred on the device: the quiet geometry that anchors the whole
+   right zone and gives the flat paper a sense of plane. */
+.whyConnectors__ring {
+  fill: none;
+  stroke: rgb(184 120 30 / 12%);
+  stroke-width: 1;
+}
+
 .whyConnectors__path {
   fill: none;
   stroke: var(--why-gold-line);
+  stroke-dasharray: 300;
   stroke-width: 1;
 }
 
 .whyConnectors__node {
   fill: var(--why-gold);
-}
-
-.whyConnectors__chevron path {
-  fill: none;
-  stroke: var(--why-gold);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.85;
 }
 
 .whyCanvas__cards {
@@ -298,94 +353,106 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: calc(11 * var(--why-u));
+  gap: calc(12 * var(--why-u));
+  width: calc(196 * var(--why-u));
+  height: calc(270 * var(--why-u));
   padding: calc(14 * var(--why-u));
   overflow: hidden;
   border: 1px solid var(--why-gold-border);
-  border-radius: calc(14 * var(--why-u));
-  background: linear-gradient(158deg, var(--why-card), var(--why-card-deep));
-  box-shadow: 0 calc(10 * var(--why-u)) calc(26 * var(--why-u)) rgb(60 40 10 / 10%);
+  border-radius: calc(16 * var(--why-u));
+  background: linear-gradient(162deg, var(--why-card), var(--why-card-deep));
+  box-shadow: var(--why-lift-2);
+  will-change: transform;
 }
 
-/* Slot geometry, measured from the references and expressed relative to the
-   stage — never to the viewport. Rotations are restrained versions of the
-   reference's stronger tilt: the approved screens skew the card box (which
-   would shear the type); a small rotation reads the same and keeps the copy
-   legible. Recorded as an intentional delta. */
+/* One inner highlight along the top edge: the detail that separates a card
+   from a rectangle. */
+.whyCard::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 85%);
+  content: "";
+  pointer-events: none;
+}
+
+/* One box in five slots. Two stacked columns flank the device; the fifth card
+   sits between them in an offset outer column, which is what gives the rail its
+   rhythm without changing any card's shape. */
 .whyCard[data-slot="leftTop"] {
-  top: calc(67 * var(--why-u));
-  left: calc(387 * var(--why-u));
-  width: calc(172 * var(--why-u));
-  height: calc(278 * var(--why-u));
-  transform: rotate(2.2deg);
+  top: calc(39 * var(--why-u));
+  left: calc(503 * var(--why-u));
 }
 
 .whyCard[data-slot="leftBottom"] {
-  top: calc(361 * var(--why-u));
-  left: calc(387 * var(--why-u));
-  width: calc(174 * var(--why-u));
-  height: calc(265 * var(--why-u));
-  transform: rotate(-2.6deg);
+  top: calc(331 * var(--why-u));
+  left: calc(503 * var(--why-u));
 }
 
 .whyCard[data-slot="rightTop"] {
-  top: calc(49 * var(--why-u));
-  left: calc(1002 * var(--why-u));
-  width: calc(208 * var(--why-u));
-  height: calc(244 * var(--why-u));
-  transform: rotate(-2.2deg);
+  top: calc(39 * var(--why-u));
+  left: calc(1020 * var(--why-u));
 }
 
 .whyCard[data-slot="rightBottom"] {
-  top: calc(306 * var(--why-u));
-  left: calc(1002 * var(--why-u));
-  width: calc(208 * var(--why-u));
-  height: calc(275 * var(--why-u));
-  transform: rotate(0.6deg);
+  top: calc(331 * var(--why-u));
+  left: calc(1020 * var(--why-u));
 }
 
 .whyCard[data-slot="rightOuter"] {
-  top: calc(243 * var(--why-u));
-  left: calc(1257 * var(--why-u));
-  width: calc(166 * var(--why-u));
-  height: calc(326 * var(--why-u));
-  transform: rotate(-1.6deg);
+  top: calc(185 * var(--why-u));
+  left: calc(1240 * var(--why-u));
 }
 
 .whyCard__head {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: calc(8 * var(--why-u));
+  gap: calc(7 * var(--why-u));
+  padding-bottom: calc(10 * var(--why-u));
+  border-bottom: 1px solid rgb(184 120 30 / 16%);
 }
 
 .whyCard__icon {
   display: flex;
-  color: var(--why-ink);
+  color: var(--why-gold-ink);
 }
 
 .whyCard__icon svg {
-  width: calc(19 * var(--why-u));
-  height: calc(19 * var(--why-u));
+  width: calc(16 * var(--why-u));
+  height: calc(16 * var(--why-u));
 }
 
 .whyCard__flag {
   flex-shrink: 0;
-  width: calc(22 * var(--why-u));
-  height: calc(16 * var(--why-u));
+  width: calc(21 * var(--why-u));
+  height: calc(15 * var(--why-u));
   border-radius: calc(2 * var(--why-u));
+  box-shadow: 0 0 0 1px rgb(20 20 15 / 12%);
 }
 
+/* Brand treatment on card titles: brown into gold, left to right. Both stops
+   clear AA on this paper, so the gradient never costs legibility, and `color`
+   is set first as the fallback wherever background-clip is unsupported. */
 .whyCard__title {
   min-width: 0;
   margin: 0;
-  font-size: calc(12 * var(--why-u));
-  font-weight: 500;
+  color: var(--why-brown-ink);
+  font-size: calc(11.5 * var(--why-u));
+  font-weight: 600;
   line-height: 1.25;
+  letter-spacing: 0.005em;
 }
 
-/* The outer right card is the narrowest slot; its longest title needs a step
-   down to hold one line the way every reference card does. */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .whyCard__title {
+    background: linear-gradient(96deg, var(--why-brown-ink) 8%, var(--why-gold-ink) 96%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 .whyCard[data-slot="rightOuter"] .whyCard__title {
   font-size: calc(11 * var(--why-u));
 }
@@ -398,10 +465,10 @@
 }
 
 .whyCard__more span {
-  width: calc(3.4 * var(--why-u));
-  height: calc(3.4 * var(--why-u));
+  width: calc(3.2 * var(--why-u));
+  height: calc(3.2 * var(--why-u));
   border-radius: 50%;
-  background: var(--why-ink);
+  background: rgb(90 58 12 / 45%);
 }
 
 .whyCard__body {
@@ -422,8 +489,9 @@
   flex-direction: column;
   padding: calc(12 * var(--why-u));
   border: 1px solid var(--why-panel-border);
-  border-radius: calc(10 * var(--why-u));
+  border-radius: calc(11 * var(--why-u));
   background: var(--why-panel);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%);
 }
 
 .whyBar {
@@ -450,6 +518,7 @@
   display: block;
   overflow: hidden;
   background: var(--why-card-deep);
+  box-shadow: inset 0 0 0 1px rgb(20 20 15 / 6%);
 }
 
 .whyMedia img {
@@ -466,7 +535,8 @@
   width: calc(34 * var(--why-u));
   height: calc(34 * var(--why-u));
   border-radius: 50%;
-  background: rgb(255 255 255 / 90%);
+  background: rgb(255 255 255 / 92%);
+  box-shadow: 0 calc(3 * var(--why-u)) calc(10 * var(--why-u)) rgb(0 0 0 / 22%);
   color: #1a1a1a;
   transform: translate(-50%, -50%);
 }
@@ -480,7 +550,7 @@
   display: flex;
   align-items: center;
   gap: calc(9 * var(--why-u));
-  color: var(--why-ink);
+  color: var(--why-ink-soft);
 }
 
 .whySocial svg {
@@ -495,12 +565,14 @@
 /* ------------------------------------------------------------- card: form */
 
 .whyForm {
-  gap: calc(9 * var(--why-u));
+  gap: calc(10 * var(--why-u));
 }
 
 .whyForm__caption {
   margin: 0;
-  font-size: calc(11.5 * var(--why-u));
+  color: var(--why-gold-ink);
+  font-size: calc(11 * var(--why-u));
+  font-weight: 500;
   text-align: center;
 }
 
@@ -540,13 +612,14 @@
 
 .whyStepper__dot.is-on {
   background: var(--why-gold);
+  box-shadow: 0 0 0 calc(2 * var(--why-u)) rgb(184 120 30 / 18%);
 }
 
 .whyForm__fields {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(7 * var(--why-u));
+  gap: calc(8 * var(--why-u));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -556,10 +629,12 @@
   display: flex;
   flex: 1;
   align-items: center;
-  min-height: calc(22 * var(--why-u));
-  padding: 0 calc(8 * var(--why-u));
+  min-height: calc(24 * var(--why-u));
+  padding: 0 calc(9 * var(--why-u));
   border: 1px solid #e4ded3;
-  border-radius: calc(6 * var(--why-u));
+  border-radius: calc(7 * var(--why-u));
+  background: var(--spimar-white);
+  color: var(--why-ink-soft);
 }
 
 .whyForm__fieldIcon {
@@ -567,14 +642,16 @@
   height: calc(13 * var(--why-u));
 }
 
+/* Depicted submit control: same fill as the site's primary action. */
 .whyForm__submit {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(26 * var(--why-u));
-  border-radius: calc(6 * var(--why-u));
-  background: linear-gradient(180deg, #c58f34, #b47a24);
-  color: var(--spimar-white);
+  height: calc(28 * var(--why-u));
+  border-radius: calc(7 * var(--why-u));
+  background: var(--action-primary);
+  box-shadow: var(--why-lift-1);
+  color: var(--action-on-primary);
 }
 
 .whyForm__submit svg {
@@ -593,7 +670,7 @@
   flex: 1;
   align-items: center;
   gap: calc(9 * var(--why-u));
-  padding: calc(9 * var(--why-u)) calc(11 * var(--why-u));
+  padding: calc(10 * var(--why-u)) calc(11 * var(--why-u));
 }
 
 .whyAttributes__row + .whyAttributes__row {
@@ -604,6 +681,7 @@
   flex-shrink: 0;
   width: calc(17 * var(--why-u));
   height: calc(17 * var(--why-u));
+  color: var(--why-gold-ink);
 }
 
 .whyAttributes__text {
@@ -622,7 +700,7 @@
 .whyEmblem {
   align-items: center;
   justify-content: center;
-  gap: calc(14 * var(--why-u));
+  gap: calc(16 * var(--why-u));
 }
 
 .whyEmblem__mark {
@@ -630,14 +708,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(80 * var(--why-u));
-  height: calc(80 * var(--why-u));
+  width: calc(88 * var(--why-u));
+  height: calc(88 * var(--why-u));
   color: var(--why-gold);
 }
 
 .whyEmblem__mark--disc {
   border-radius: 50%;
-  background: var(--why-gold);
+  background: linear-gradient(160deg, #c9902f, var(--why-gold));
+  box-shadow: var(--why-lift-1);
   color: var(--spimar-white);
 }
 
@@ -649,19 +728,20 @@
 }
 
 .whyEmblem__icon {
-  width: calc(34 * var(--why-u));
-  height: calc(34 * var(--why-u));
+  width: calc(36 * var(--why-u));
+  height: calc(36 * var(--why-u));
 }
 
 .whyEmblem__mark--disc .whyEmblem__icon {
-  width: calc(40 * var(--why-u));
-  height: calc(40 * var(--why-u));
+  width: calc(42 * var(--why-u));
+  height: calc(42 * var(--why-u));
 }
 
 .whyEmblem__caption {
   margin: 0;
-  font-size: calc(12.5 * var(--why-u));
-  white-space: nowrap;
+  font-size: calc(11.5 * var(--why-u));
+  font-weight: 500;
+  text-align: center;
 }
 
 /* -------------------------------------------------------- card: checklist */
@@ -683,8 +763,8 @@
 .whyChecklist__row {
   display: flex;
   align-items: center;
-  gap: calc(7 * var(--why-u));
-  font-size: calc(9.5 * var(--why-u));
+  gap: calc(8 * var(--why-u));
+  font-size: calc(10 * var(--why-u));
 }
 
 .whyChecklist__tick {
@@ -692,8 +772,8 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: calc(15 * var(--why-u));
-  height: calc(15 * var(--why-u));
+  width: calc(16 * var(--why-u));
+  height: calc(16 * var(--why-u));
   border-radius: 50%;
   background: var(--why-gold);
   color: var(--spimar-white);
@@ -715,15 +795,16 @@
 
 .whyCountry__media {
   flex: 1;
-  border-radius: calc(6 * var(--why-u));
+  border-radius: calc(8 * var(--why-u));
 }
 
 .whyCountry__caption {
   margin: 0;
-  font-size: calc(12.5 * var(--why-u));
+  color: var(--why-ink-soft);
+  font-size: calc(11.5 * var(--why-u));
 }
 
-/* ------------------------------------------------------- card: social post */
+/* ------------------------------------------------------ card: social post */
 
 .whyPost {
   position: relative;
@@ -735,7 +816,7 @@
 
 .whyPost__media {
   flex: 1;
-  border-radius: calc(5 * var(--why-u));
+  border-radius: calc(7 * var(--why-u));
 }
 
 .whyPost--reel .whyPlay {
@@ -750,25 +831,27 @@
 
 .whyMailer__heading {
   margin: 0;
-  font-size: calc(11 * var(--why-u));
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  color: var(--why-gold-ink);
+  font-size: calc(10.5 * var(--why-u));
+  font-weight: 600;
+  letter-spacing: 0.07em;
   text-align: center;
   text-transform: uppercase;
 }
 
 .whyMailer__media {
   flex: 1;
-  border-radius: calc(4 * var(--why-u));
+  border-radius: calc(6 * var(--why-u));
 }
 
 .whyMailer__pill {
   margin: 0;
   padding: calc(6 * var(--why-u));
-  border-radius: calc(4 * var(--why-u));
-  background: linear-gradient(180deg, #c58f34, #b47a24);
-  color: var(--spimar-white);
+  border-radius: calc(6 * var(--why-u));
+  background: var(--action-primary);
+  color: var(--action-on-primary);
   font-size: calc(9 * var(--why-u));
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
@@ -788,7 +871,7 @@
   display: block;
   flex: 1;
   overflow: hidden;
-  border-radius: calc(6 * var(--why-u));
+  border-radius: calc(8 * var(--why-u));
 }
 
 .whyVideo__media {
@@ -819,7 +902,9 @@
 
 .whyPress__heading {
   margin: 0;
-  font-size: calc(11 * var(--why-u));
+  color: var(--why-gold-ink);
+  font-size: calc(10.5 * var(--why-u));
+  font-weight: 600;
   letter-spacing: 0.07em;
   text-align: center;
   text-transform: uppercase;
@@ -833,10 +918,10 @@
 }
 
 .whyPress__media {
-  border-radius: calc(4 * var(--why-u));
+  border-radius: calc(6 * var(--why-u));
 }
 
-/* ------------------------------------------------- cards: plan / collage */
+/* -------------------------------------------------- cards: plan / collage */
 
 .whyPlan {
   display: flex;
@@ -845,7 +930,7 @@
 
 .whyPlan__media {
   flex: 1;
-  border-radius: calc(8 * var(--why-u));
+  border-radius: calc(10 * var(--why-u));
 }
 
 .whyCollage {
@@ -858,11 +943,7 @@
 
 .whyCollage__wide,
 .whyCollage__tall {
-  border-radius: calc(4 * var(--why-u));
-}
-
-.whyCollage__tall {
-  grid-row: span 1;
+  border-radius: calc(6 * var(--why-u));
 }
 
 .whyCollage__sheet {
@@ -870,19 +951,21 @@
   flex-direction: column;
   justify-content: flex-end;
   gap: calc(5 * var(--why-u));
-  padding: calc(7 * var(--why-u));
+  padding: calc(8 * var(--why-u));
   border: 1px solid var(--why-panel-border);
-  border-radius: calc(4 * var(--why-u));
+  border-radius: calc(6 * var(--why-u));
   background: var(--spimar-white);
+  box-shadow: var(--why-lift-1);
 }
 
 .whyCollage__docIcon {
   width: calc(14 * var(--why-u));
   height: calc(14 * var(--why-u));
   margin-bottom: auto;
+  color: var(--why-gold-ink);
 }
 
-/* --------------------------------------------- cards: roster / checks / report */
+/* ---------------------------------------- cards: roster / checks / report */
 
 .whyRoster,
 .whyCheckRows {
@@ -902,16 +985,16 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: calc(26 * var(--why-u));
-  height: calc(26 * var(--why-u));
+  width: calc(28 * var(--why-u));
+  height: calc(28 * var(--why-u));
   border-radius: 50%;
-  background: #e6e0d6;
+  background: #ece5d9;
   color: #8d887f;
 }
 
 .whyRoster__avatar svg {
-  width: calc(15 * var(--why-u));
-  height: calc(15 * var(--why-u));
+  width: calc(16 * var(--why-u));
+  height: calc(16 * var(--why-u));
 }
 
 .whyRoster__bars,
@@ -924,11 +1007,11 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: calc(16 * var(--why-u));
-  height: calc(16 * var(--why-u));
-  border: 1px solid #c9c3b8;
+  width: calc(17 * var(--why-u));
+  height: calc(17 * var(--why-u));
+  border: 1px solid rgb(184 120 30 / 45%);
   border-radius: 50%;
-  color: #8d887f;
+  color: var(--why-gold-ink);
 }
 
 .whyCheckRows__tick svg {
@@ -941,8 +1024,8 @@
 }
 
 .whyReport__media {
-  height: calc(78 * var(--why-u));
-  border-radius: calc(4 * var(--why-u));
+  height: calc(96 * var(--why-u));
+  border-radius: calc(6 * var(--why-u));
 }
 
 .whyReport__bars {
@@ -960,7 +1043,7 @@
   flex-shrink: 0;
   width: calc(28 * var(--why-u));
   height: calc(28 * var(--why-u));
-  color: #8d887f;
+  color: var(--why-gold-ink);
 }
 
 .whyReport__pie svg {
@@ -972,87 +1055,211 @@
   flex: 1;
 }
 
-/* =================================================================== phone */
+/* ================================================================== device */
 
 .whyPhone {
   position: absolute;
-  top: 0;
-  left: calc(598 * var(--why-u));
+  top: calc(40 * var(--why-u));
+  left: calc(730 * var(--why-u));
   z-index: 4;
-  width: calc(365 * var(--why-u));
-  height: calc(695 * var(--why-u));
+  width: calc(259 * var(--why-u));
+  height: calc(560 * var(--why-u));
+  will-change: transform;
 }
 
+/* Physical keys, outside the bezel so they read as hardware. */
+.whyPhone__keys {
+  position: absolute;
+  top: calc(118 * var(--why-u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(14 * var(--why-u));
+}
+
+.whyPhone__keys--left {
+  left: calc(-3 * var(--why-u));
+  align-items: flex-start;
+}
+
+.whyPhone__keys--right {
+  top: calc(150 * var(--why-u));
+  right: calc(-3 * var(--why-u));
+}
+
+.whyPhone__key {
+  display: block;
+  width: calc(3 * var(--why-u));
+  border-radius: calc(2 * var(--why-u));
+  background: linear-gradient(180deg, #6f6f74, #2f2f31);
+}
+
+.whyPhone__key--action {
+  height: calc(22 * var(--why-u));
+}
+
+.whyPhone__key--volume {
+  height: calc(38 * var(--why-u));
+}
+
+.whyPhone__key--power {
+  height: calc(62 * var(--why-u));
+}
+
+/* Titanium rail → black bezel → clipped screen: three real layers. */
 .whyPhone__frame {
   position: relative;
   width: 100%;
   height: 100%;
-  padding: calc(11 * var(--why-u));
-  border-radius: calc(54 * var(--why-u));
+  border-radius: calc(46 * var(--why-u));
   background: var(--why-obsidian);
-  box-shadow: 0 calc(26 * var(--why-u)) calc(50 * var(--why-u)) rgb(30 20 5 / 26%);
+  box-shadow: var(--why-lift-3);
 }
 
-.whyPhone__edge {
+.whyPhone__rail {
   position: absolute;
-  inset: calc(2 * var(--why-u));
-  border: 1px solid #5c5a58;
-  border-radius: calc(52 * var(--why-u));
-  opacity: 0.5;
+  inset: 0;
+  border-radius: calc(46 * var(--why-u));
+  background: linear-gradient(
+    142deg,
+    var(--why-titanium) 0%,
+    var(--why-titanium-deep) 26%,
+    #6d6d72 52%,
+    var(--why-titanium-deep) 74%,
+    var(--why-titanium) 100%
+  );
+  pointer-events: none;
+}
+
+.whyPhone__bezel {
+  position: absolute;
+  inset: calc(3 * var(--why-u));
+  border-radius: calc(43 * var(--why-u));
+  background: #050506;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 6%);
+  pointer-events: none;
+}
+
+.whyPhone__screen {
+  position: absolute;
+  inset: calc(9 * var(--why-u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(9 * var(--why-u));
+  padding: calc(10 * var(--why-u)) calc(12 * var(--why-u)) calc(12 * var(--why-u));
+  overflow: hidden;
+  border-radius: calc(37 * var(--why-u));
+  background: var(--why-screen);
+  color: var(--why-screen-ink);
+}
+
+/* A single soft diagonal across the glass. */
+.whyPhone__glare {
+  position: absolute;
+  inset: calc(9 * var(--why-u));
+  border-radius: calc(37 * var(--why-u));
+  background: linear-gradient(
+    128deg,
+    rgb(255 255 255 / 9%) 0%,
+    rgb(255 255 255 / 2%) 22%,
+    transparent 46%
+  );
   pointer-events: none;
 }
 
 .whyPhone__island {
   position: absolute;
-  top: calc(22 * var(--why-u));
+  top: calc(11 * var(--why-u));
   left: 50%;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  width: calc(108 * var(--why-u));
-  height: calc(30 * var(--why-u));
-  padding-right: calc(12 * var(--why-u));
-  border-radius: calc(15 * var(--why-u));
+  justify-content: space-between;
+  width: calc(92 * var(--why-u));
+  height: calc(26 * var(--why-u));
+  padding: 0 calc(9 * var(--why-u));
+  border-radius: calc(13 * var(--why-u));
   background: #000;
   transform: translateX(-50%);
 }
 
+.whyPhone__sensor {
+  width: calc(5 * var(--why-u));
+  height: calc(5 * var(--why-u));
+  border-radius: 50%;
+  background: #0e1113;
+}
+
 .whyPhone__lens {
+  position: relative;
   width: calc(9 * var(--why-u));
   height: calc(9 * var(--why-u));
   border-radius: 50%;
-  background: #16181a;
+  background: radial-gradient(circle at 35% 32%, #2b3238 0%, #0b0d0f 62%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 8%);
 }
 
-.whyPhone__screen {
-  position: relative;
+.whyPhone__status {
   display: flex;
-  flex-direction: column;
-  gap: calc(10 * var(--why-u));
-  width: 100%;
-  height: 100%;
-  padding: calc(58 * var(--why-u)) calc(14 * var(--why-u)) calc(14 * var(--why-u));
-  overflow: hidden;
-  border-radius: calc(44 * var(--why-u));
-  background: var(--why-screen);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(26 * var(--why-u));
+  padding: 0 calc(6 * var(--why-u));
   color: var(--why-screen-ink);
+  font-size: calc(10 * var(--why-u));
+  font-weight: 600;
 }
 
-.whyPhone__chips {
+.whyPhone__indicators {
+  display: flex;
+  align-items: center;
+  gap: calc(5 * var(--why-u));
+}
+
+.whyPhone__signal {
+  width: calc(15 * var(--why-u));
+  height: calc(10 * var(--why-u));
+  fill: currentcolor;
+}
+
+.whyPhone__wifi {
+  width: calc(13 * var(--why-u));
+  height: calc(10 * var(--why-u));
+  stroke: currentcolor;
+}
+
+.whyPhone__battery {
+  width: calc(21 * var(--why-u));
+  height: calc(10 * var(--why-u));
+  stroke: currentcolor;
+}
+
+.whyPhone__batteryFill {
+  fill: var(--why-screen-gold);
+}
+
+/* Filter nav: a segmented control with a current view, not a pill cloud. */
+.whyPhone__nav {
   display: flex;
   flex-shrink: 0;
   flex-wrap: wrap;
   gap: calc(5 * var(--why-u));
   justify-content: center;
-  padding: 0 calc(2 * var(--why-u));
 }
 
 .whyPhone__chip {
-  padding: calc(4 * var(--why-u)) calc(8 * var(--why-u));
+  padding: calc(4 * var(--why-u)) calc(9 * var(--why-u));
   border: 1px solid var(--why-screen-edge);
   border-radius: calc(11 * var(--why-u));
-  font-size: calc(9 * var(--why-u));
+  color: var(--why-screen-dim);
+  font-size: calc(8.5 * var(--why-u));
+}
+
+.whyPhone__chip.is-on {
+  border-color: transparent;
+  background: var(--why-screen-gold);
+  color: #17181a;
+  font-weight: 600;
 }
 
 .whyPhone__scene {
@@ -1076,7 +1283,7 @@
   gap: calc(6 * var(--why-u));
   margin: 0;
   color: var(--why-screen-dim);
-  font-size: calc(10 * var(--why-u));
+  font-size: calc(9.5 * var(--why-u));
 }
 
 .whyPhone__footnoteIcon {
@@ -1085,7 +1292,8 @@
 }
 
 /* Depicted product chrome, not a control of this page: inert text, never a
-   button or a link, so no dead affordance is offered. */
+   button or a link, so no dead affordance is offered. Fill and ink are the
+   site's action tokens, so the depicted product looks like the real one. */
 .whyPhone__action {
   display: flex;
   flex-shrink: 0;
@@ -1094,16 +1302,25 @@
   gap: calc(10 * var(--why-u));
   height: calc(38 * var(--why-u));
   margin: 0;
-  border-radius: calc(10 * var(--why-u));
-  background: linear-gradient(180deg, var(--why-screen-cta), var(--why-screen-cta-deep));
-  color: var(--spimar-white);
-  font-size: calc(14 * var(--why-u));
-  font-weight: 500;
+  border-radius: calc(19 * var(--why-u));
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+  font-size: calc(13 * var(--why-u));
+  font-weight: 600;
 }
 
 .whyPhone__action svg {
-  width: calc(17 * var(--why-u));
-  height: calc(12 * var(--why-u));
+  width: calc(16 * var(--why-u));
+  height: calc(11 * var(--why-u));
+}
+
+.whyPhone__home {
+  flex-shrink: 0;
+  width: calc(96 * var(--why-u));
+  height: calc(4 * var(--why-u));
+  margin: calc(2 * var(--why-u)) auto 0;
+  border-radius: calc(2 * var(--why-u));
+  background: rgb(243 239 232 / 55%);
 }
 
 /* ============================================================ phone scenes */
@@ -1125,7 +1342,7 @@
   position: relative;
   display: block;
   overflow: hidden;
-  border-radius: calc(4 * var(--why-u));
+  border-radius: calc(5 * var(--why-u));
   background: #202224;
 }
 
@@ -1139,7 +1356,7 @@
   grid-template-columns: repeat(3, 1fr);
   overflow: hidden;
   border: 1px solid var(--why-screen-edge);
-  border-radius: calc(8 * var(--why-u));
+  border-radius: calc(10 * var(--why-u));
   background: var(--why-screen-row);
 }
 
@@ -1158,8 +1375,9 @@
 .whySceneStat__label {
   margin: 0;
   color: var(--why-screen-dim);
-  font-size: calc(8 * var(--why-u));
-  letter-spacing: 0.07em;
+  font-size: calc(6.8 * var(--why-u));
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-align: center;
   text-transform: uppercase;
 }
@@ -1169,7 +1387,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: calc(30 * var(--why-u));
+  height: calc(28 * var(--why-u));
 }
 
 .whyChart {
@@ -1203,7 +1421,7 @@
   stroke: currentcolor;
 }
 
-/* ------------------------------------------------- scene 01: qualification */
+/* ------------------------------------------------ scene 01: qualification */
 
 .whyQualify {
   display: flex;
@@ -1218,13 +1436,12 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(7 * var(--why-u));
+  gap: calc(6 * var(--why-u));
   margin: 0;
-  padding: 0 0 0 calc(16 * var(--why-u));
+  padding: 0 0 0 calc(15 * var(--why-u));
   list-style: none;
 }
 
-/* The journey spine. */
 .whyQualify__rows::before {
   position: absolute;
   top: calc(14 * var(--why-u));
@@ -1245,11 +1462,12 @@
 .whyQualify__node {
   position: absolute;
   top: 50%;
-  left: calc(-15 * var(--why-u));
+  left: calc(-14 * var(--why-u));
   width: calc(7 * var(--why-u));
   height: calc(7 * var(--why-u));
   border-radius: 50%;
   background: var(--why-screen-gold);
+  box-shadow: 0 0 0 calc(3 * var(--why-u)) rgb(215 165 73 / 14%);
   transform: translateY(-50%);
 }
 
@@ -1257,10 +1475,11 @@
   display: flex;
   flex: 1;
   align-items: center;
-  gap: calc(9 * var(--why-u));
-  padding: calc(8 * var(--why-u)) calc(10 * var(--why-u));
-  border-radius: calc(8 * var(--why-u));
+  gap: calc(8 * var(--why-u));
+  padding: calc(8 * var(--why-u)) calc(9 * var(--why-u));
+  border-radius: calc(9 * var(--why-u));
   background: var(--why-screen-row);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
 }
 
 .whyQualify__avatar {
@@ -1268,16 +1487,16 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: calc(30 * var(--why-u));
-  height: calc(30 * var(--why-u));
+  width: calc(28 * var(--why-u));
+  height: calc(28 * var(--why-u));
   border-radius: 50%;
   background: #cfcabf;
   color: #4b4a47;
 }
 
 .whyQualify__avatar svg {
-  width: calc(17 * var(--why-u));
-  height: calc(17 * var(--why-u));
+  width: calc(16 * var(--why-u));
+  height: calc(16 * var(--why-u));
 }
 
 .whyQualify__text {
@@ -1289,7 +1508,7 @@
 }
 
 .whyQualify__title {
-  font-size: calc(11 * var(--why-u));
+  font-size: calc(10.5 * var(--why-u));
 }
 
 .whyQualify__progress {
@@ -1334,7 +1553,7 @@
   height: calc(11 * var(--why-u));
 }
 
-/* ------------------------------------------------ scene 02: international */
+/* ----------------------------------------------- scene 02: international */
 
 .whyWorld {
   display: flex;
@@ -1372,8 +1591,8 @@
 .whyWorld__carousel {
   display: grid;
   flex-shrink: 0;
-  grid-template-columns: 0.82fr 1fr 0.82fr;
-  gap: calc(6 * var(--why-u));
+  grid-template-columns: 0.8fr 1fr 0.8fr;
+  gap: calc(5 * var(--why-u));
   align-items: end;
   margin: 0;
   padding: 0;
@@ -1384,36 +1603,37 @@
   display: flex;
   flex-direction: column;
   gap: calc(5 * var(--why-u));
-  padding: calc(8 * var(--why-u));
+  padding: calc(7 * var(--why-u));
   border: 1px solid var(--why-screen-edge);
-  border-radius: calc(8 * var(--why-u));
+  border-radius: calc(9 * var(--why-u));
   background: var(--why-screen-row);
-  opacity: 0.72;
+  opacity: 0.68;
 }
 
 .whyWorld__slide.is-current {
-  border-color: rgb(215 165 73 / 45%);
+  border-color: rgb(215 165 73 / 50%);
+  box-shadow: 0 calc(6 * var(--why-u)) calc(16 * var(--why-u)) rgb(0 0 0 / 35%);
   opacity: 1;
 }
 
 .whyWorld__slideName {
   margin: 0;
-  font-size: calc(11 * var(--why-u));
-  font-weight: 500;
+  font-size: calc(10 * var(--why-u));
+  font-weight: 600;
 }
 
 .whyWorld__slideCaption {
   margin: 0;
   color: var(--why-screen-dim);
-  font-size: calc(8.5 * var(--why-u));
+  font-size: calc(8 * var(--why-u));
 }
 
 .whyWorld__slideMedia {
   position: relative;
   display: block;
-  height: calc(74 * var(--why-u));
+  height: calc(70 * var(--why-u));
   overflow: hidden;
-  border-radius: calc(5 * var(--why-u));
+  border-radius: calc(6 * var(--why-u));
 }
 
 .whyWorld__slideMedia .whyScene__media {
@@ -1429,9 +1649,9 @@
   padding: calc(3 * var(--why-u)) calc(8 * var(--why-u));
   border: 1px solid var(--why-screen-edge);
   border-radius: calc(9 * var(--why-u));
-  background: rgb(0 0 0 / 35%);
+  background: rgb(0 0 0 / 40%);
   color: var(--why-screen-ink);
-  font-size: calc(8.5 * var(--why-u));
+  font-size: calc(8 * var(--why-u));
 }
 
 .whyWorld__dots {
@@ -1452,7 +1672,7 @@
   background: var(--why-screen-gold);
 }
 
-/* ---------------------------------------------------- scene 03: campaigns */
+/* --------------------------------------------------- scene 03: campaigns */
 
 .whyFeed {
   display: flex;
@@ -1467,9 +1687,9 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(7 * var(--why-u));
+  gap: calc(6 * var(--why-u));
   margin: 0;
-  padding: 0 0 0 calc(16 * var(--why-u));
+  padding: 0 0 0 calc(15 * var(--why-u));
   list-style: none;
 }
 
@@ -1493,11 +1713,12 @@
 .whyFeed__node {
   position: absolute;
   top: 50%;
-  left: calc(-15 * var(--why-u));
+  left: calc(-14 * var(--why-u));
   width: calc(7 * var(--why-u));
   height: calc(7 * var(--why-u));
   border-radius: 50%;
   background: var(--why-screen-gold);
+  box-shadow: 0 0 0 calc(3 * var(--why-u)) rgb(215 165 73 / 14%);
   transform: translateY(-50%);
 }
 
@@ -1508,7 +1729,7 @@
   gap: calc(5 * var(--why-u));
   padding: calc(5 * var(--why-u));
   overflow: hidden;
-  border-radius: calc(6 * var(--why-u));
+  border-radius: calc(8 * var(--why-u));
   background: var(--why-screen-row);
 }
 
@@ -1517,7 +1738,7 @@
   min-height: 0;
 }
 
-/* ------------------------------------------------------ scene 04: support */
+/* ----------------------------------------------------- scene 04: support */
 
 .whyDeliverables {
   display: flex;
@@ -1532,9 +1753,9 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(5 * var(--why-u));
+  gap: calc(4 * var(--why-u));
   margin: 0;
-  padding: 0 0 0 calc(16 * var(--why-u));
+  padding: 0 0 0 calc(15 * var(--why-u));
   list-style: none;
 }
 
@@ -1553,17 +1774,18 @@
   display: flex;
   flex: 1;
   align-items: center;
-  gap: calc(8 * var(--why-u));
+  gap: calc(7 * var(--why-u));
   min-height: 0;
-  padding: calc(6 * var(--why-u)) calc(8 * var(--why-u));
-  border-radius: calc(8 * var(--why-u));
+  padding: calc(4 * var(--why-u)) calc(7 * var(--why-u));
+  border-radius: calc(9 * var(--why-u));
   background: var(--why-screen-row);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
 }
 
 .whyDeliver__node {
   position: absolute;
   top: 50%;
-  left: calc(-15 * var(--why-u));
+  left: calc(-14 * var(--why-u));
   width: calc(7 * var(--why-u));
   height: calc(7 * var(--why-u));
   border-radius: 50%;
@@ -1576,37 +1798,38 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: calc(26 * var(--why-u));
-  height: calc(26 * var(--why-u));
+  width: calc(23 * var(--why-u));
+  height: calc(23 * var(--why-u));
   border-radius: calc(7 * var(--why-u));
   background: #2c2d2f;
   color: var(--why-screen-ink);
 }
 
 .whyDeliver__icon svg {
-  width: calc(15 * var(--why-u));
-  height: calc(15 * var(--why-u));
+  width: calc(14 * var(--why-u));
+  height: calc(14 * var(--why-u));
 }
 
 .whyDeliver__text {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(4 * var(--why-u));
+  gap: calc(3 * var(--why-u));
   align-items: flex-start;
   min-width: 0;
 }
 
 .whyDeliver__title {
-  font-size: calc(10.5 * var(--why-u));
+  font-size: calc(9.5 * var(--why-u));
+  line-height: 1.25;
 }
 
 .whyDeliver__status {
-  padding: calc(2 * var(--why-u)) calc(7 * var(--why-u));
+  padding: calc(1.5 * var(--why-u)) calc(6 * var(--why-u));
   border-radius: calc(8 * var(--why-u));
   background: #343537;
   color: var(--why-screen-dim);
-  font-size: calc(8 * var(--why-u));
+  font-size: calc(7.5 * var(--why-u));
 }
 
 .whyDeliver__sheet {
@@ -1615,11 +1838,11 @@
   flex-direction: column;
   gap: calc(3 * var(--why-u));
   justify-content: center;
-  width: calc(96 * var(--why-u));
-  height: calc(38 * var(--why-u));
-  padding: calc(5 * var(--why-u));
+  width: calc(78 * var(--why-u));
+  height: calc(30 * var(--why-u));
+  padding: calc(4 * var(--why-u));
   overflow: hidden;
-  border-radius: calc(4 * var(--why-u));
+  border-radius: calc(5 * var(--why-u));
   background: #e9e4da;
 }
 
@@ -1654,8 +1877,8 @@
 }
 
 .whyDeliver__chart {
-  width: calc(46 * var(--why-u));
-  height: calc(26 * var(--why-u));
+  width: calc(42 * var(--why-u));
+  height: calc(24 * var(--why-u));
 }
 
 .whyDeliver__chart rect {
@@ -1669,14 +1892,14 @@
 .whyDeliver__legend {
   display: flex;
   flex-shrink: 0;
-  gap: calc(14 * var(--why-u));
+  gap: calc(13 * var(--why-u));
   justify-content: center;
-  padding: calc(8 * var(--why-u));
+  padding: calc(6 * var(--why-u));
   border: 1px solid var(--why-screen-edge);
-  border-radius: calc(8 * var(--why-u));
+  border-radius: calc(9 * var(--why-u));
   background: var(--why-screen-row);
   color: var(--why-screen-dim);
-  font-size: calc(8.5 * var(--why-u));
+  font-size: calc(8 * var(--why-u));
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -1716,90 +1939,47 @@
 
 /* ================================================================== motion */
 
-@keyframes whyEnter {
-  from {
-    opacity: 0;
-    transform: translateY(calc(10 * var(--why-u)));
-  }
-}
+/* Motion is owned by GSAP in EvidenceCanvas (device in, cards thrown from
+   behind it, connectors drawn, then a slow breathing drift). Nothing here
+   animates entrances, so the section is complete and correct with JavaScript
+   disabled and in the deterministic visual-test frame.
 
-@keyframes whyEnterCard {
-  from {
-    opacity: 0;
-  }
-}
-
-@keyframes whyDraw {
-  from {
-    stroke-dashoffset: 620;
-  }
-}
-
-/* The phone shell never moves: only the screen content, the copy and the cards
-   cross-fade in when a benefit is selected. Nothing animates height. */
-.whyCopy,
-.whyPhone__scene {
-  animation: whyEnter 280ms var(--ease-out-ref) both;
-}
-
-.whyCard {
-  animation: whyEnterCard 300ms var(--ease-out-ref) both;
-  animation-delay: calc(var(--why-card-index, 0) * 38ms);
-}
-
-.whyConnectors__path {
-  stroke-dasharray: 620;
-  animation: whyDraw 620ms var(--ease-out-ref) both;
-  animation-delay: calc(180ms + var(--why-path-index, 0) * 60ms);
-}
-
-/* Reduced motion and the deterministic visual-test frame both switch states
-   instantly, with no draw-on and no parallax. */
+   These rules are the only motion CSS owns: the connector dash is set in CSS
+   for the GSAP tween to animate from, so the reduced-motion and static branches
+   have to neutralise it. */
 @media (prefers-reduced-motion: reduce) {
-  .whyCopy,
-  .whyPhone__scene,
-  .whyCard,
-  .whyConnectors__path,
-  .whyTab,
-  .whyTab__dot,
-  .whyCopy__ctaArrow {
-    animation: none !important;
-    transition: none !important;
-  }
-
   .whyConnectors__path {
     stroke-dasharray: none;
   }
-}
 
-.whyExhibit[data-static="true"] .whyCopy,
-.whyExhibit[data-static="true"] .whyPhone__scene,
-.whyExhibit[data-static="true"] .whyCard,
-.whyExhibit[data-static="true"] .whyConnectors__path,
-.whyExhibit[data-static="true"] .whyTab,
-.whyExhibit[data-static="true"] .whyTab__dot {
-  animation: none !important;
-  transition: none !important;
+  .whyTab,
+  .whyTab__dot,
+  .whyCard {
+    transition: none !important;
+  }
 }
 
 .whyExhibit[data-static="true"] .whyConnectors__path {
   stroke-dasharray: none;
 }
 
+.whyExhibit[data-static="true"] .whyTab,
+.whyExhibit[data-static="true"] .whyTab__dot {
+  transition: none !important;
+}
+
 /* ============================================================== responsive */
 
 /* Below the desktop regime the composition changes shape instead of shrinking:
    --why-u becomes a real pixel, the stage returns to document flow and the
-   phone keeps its natural 365 × 695 size. */
+   device keeps its natural size. */
 @media (max-width: 1279px) {
   .whyExhibit {
     --why-u: 1px;
+  }
 
-    /* The tab rail and the card carousel scroll horizontally inside
-       themselves; `clip` keeps their scrollable overflow from reaching the
-       viewport, which would give the whole page a horizontal scrollbar.
-       `clip` rather than `hidden` so no extra scroll container is created. */
-    overflow-x: clip;
+  .whyExhibit::before {
+    mask-image: radial-gradient(140% 60% at 50% 40%, #000 0%, transparent 78%);
   }
 
   .whyExhibit__inner {
@@ -1809,9 +1989,9 @@
   /* --text-support is a desktop-based vw step; below 1080 it collapses to
      ~8px here. The eyebrow gets a real floor in this regime. */
   .whyExhibit__header .sectionEyebrow {
-    font-size: 12px;
     gap: 10px;
     margin-bottom: 14px;
+    font-size: 12px;
   }
 
   .whyExhibit__heading {
@@ -1820,20 +2000,22 @@
   }
 
   .whyExhibit__subtitle {
+    max-width: 60ch;
+    margin-top: 14px;
     font-size: 17px;
   }
 
   .whyTabs {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-top: 24px;
+    gap: 10px;
+    margin-top: 26px;
   }
 
   .whyTab {
     gap: 14px;
-    min-height: 56px;
+    min-height: 58px;
     padding: 0 16px;
-    border-radius: 10px;
+    border-radius: 12px;
   }
 
   .whyTab__num {
@@ -1853,7 +2035,7 @@
   .whyStage {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 34px;
     height: auto;
     margin-top: 34px;
   }
@@ -1866,7 +2048,7 @@
   }
 
   .whyCopy__number {
-    font-size: 56px;
+    font-size: 60px;
   }
 
   .whyCopy__title {
@@ -1882,9 +2064,27 @@
     font-size: 16px;
   }
 
+  /* The global `.button` line-height is a desktop vw step and collapses to
+     ~16px here, which is both cramped and under the 44px touch target. The
+     floor is scoped to this section rather than applied to `.button`
+     globally — that is a site-wide change and not this slice's call. */
+  .whyCopy__cta {
+    padding: 0 20px;
+    border-radius: 22px;
+    font-size: 12px;
+    line-height: 44px;
+  }
+
+  /* The global `.button` pill is sized in desktop vw and collapses to a ~16px
+     line box here. Scoped to this instance only — changing the shared rule
+     would move every other section — so the action still clears the 44px
+     minimum touch target. */
   .whyCopy__cta {
     min-height: 44px;
-    font-size: 16px;
+    padding: 0 20px;
+    border-radius: 22px;
+    font-size: 13px;
+    line-height: 44px;
   }
 
   .whyProof {
@@ -1897,25 +2097,26 @@
     margin-top: 11px;
   }
 
-  /* Decorative desktop paths are removed rather than rescaled: the corridors
-     they connect no longer exist in this layout. */
-  .whyConnectors {
+  /* Decorative desktop paths and the device glow are removed rather than
+     rescaled: the corridors they belong to no longer exist in this layout. */
+  .whyConnectors,
+  .whyCanvas__glow {
     display: none;
   }
 
   .whyCanvas {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 30px;
     align-items: center;
   }
 
   .whyPhone {
     position: static;
     order: 1;
-    width: min(88vw, 365px);
+    width: min(80vw, 290px);
     height: auto;
-    aspect-ratio: 365 / 695;
+    aspect-ratio: 259 / 560;
   }
 
   .whyCanvas__cards {
@@ -1927,22 +2128,15 @@
     width: 100%;
   }
 
-  .whyCard {
-    position: static;
-    height: 300px;
-    transform: none;
-  }
-
+  .whyCard,
   .whyCard[data-slot] {
-    top: auto;
-    left: auto;
+    position: static;
     width: auto;
-    height: 300px;
-    transform: none;
+    height: 286px;
   }
 }
 
-/* Single column: header, scrollable tabs, copy, phone, evidence carousel,
+/* Single column: header, scrollable tabs, copy, device, evidence carousel,
    proof line. No overlap, no page-level horizontal overflow. */
 @media (max-width: 767px) {
   .whyExhibit__inner {
@@ -1952,7 +2146,7 @@
   .whyTabs {
     display: flex;
     grid-template-columns: none;
-    gap: 8px;
+    gap: 10px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -1961,12 +2155,12 @@
   .whyTab {
     flex: 0 0 auto;
     min-width: 44px;
-    min-height: 48px;
+    min-height: 52px;
     scroll-snap-align: start;
   }
 
   .whyTab__dot {
-    bottom: 4px;
+    bottom: 5px;
   }
 
   .whyCanvas__cards {
@@ -1981,9 +2175,9 @@
 
   .whyCard,
   .whyCard[data-slot] {
-    flex: 0 0 78vw;
+    flex: 0 0 76vw;
     max-width: 320px;
-    height: 300px;
+    height: 280px;
     scroll-snap-align: center;
   }
 }

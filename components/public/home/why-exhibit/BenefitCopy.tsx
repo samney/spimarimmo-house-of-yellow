@@ -1,8 +1,16 @@
 import { Fragment } from "react";
 import { Link } from "@/i18n/navigation";
+import { Marquee } from "@/components/primitives/motion/Marquee";
+import { ArrowRightIcon } from "./why-exhibit-icons";
 import type { Benefit } from "./why-exhibit-types";
 
-/* Copy column: benefit numeral, title, body, underlined CTA.
+/* Copy column: benefit numeral, title, body, action.
+
+   The action is the repository's own `.button` pill — same fill, same label /
+   marquee / icon anatomy as every other primary action on the site (owner
+   direction, 2026-08-04). The references draw an underlined text link; the
+   design system outranks that, and one button vocabulary across the page is
+   worth more than one section's screenshot.
 
    The title is stored as one verbatim string; `titleBreakAfterWord` reproduces
    the reference's controlled break without editing the copy. The break is
@@ -24,19 +32,19 @@ export function BenefitCopy({ benefit }: { benefit: Benefit }) {
         ))}
       </h3>
       <p className="whyCopy__body">{benefit.body}</p>
-      <Link className="whyCopy__cta" href={benefit.cta.href}>
-        <span className="whyCopy__ctaLabel">{benefit.cta.label}</span>
-        <svg viewBox="0 0 20 14" aria-hidden="true" focusable="false" className="whyCopy__ctaArrow">
-          <path
-            d="M1 7h17M12.5 1.5 19 7l-6.5 5.5"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        </svg>
-      </Link>
+      <span className="whyCopy__actions">
+        <Link className="button whyCopy__cta" href={benefit.cta.href} title={benefit.cta.label}>
+          <span className="label">
+            <span className="fixedLabel">{benefit.cta.label}</span>
+            <span className="innerLabel">
+              <Marquee text={benefit.cta.label} direction="left" speed={90} />
+            </span>
+          </span>
+          <span className="icon">
+            <ArrowRightIcon />
+          </span>
+        </Link>
+      </span>
     </div>
   );
 }
