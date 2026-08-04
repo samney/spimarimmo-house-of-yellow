@@ -592,3 +592,18 @@ migration, no PII, no dependency or lockfile change, no CI or secret handling, n
 production-affecting). It does introduce **third-party content with a prompt-injection
 surface**, which is why the §9.A scan is recorded in full and why an independent reviewer
 should re-run it rather than trust this entry.
+
+## D-023 — 2026-08-04 — lucide-react adopted as the icon library for new SPIMAR surfaces
+
+**Authority.** Explicit repository-owner instruction in session: "we should use
+modern library of icons" for the offers CTA band polish.
+
+**Decision.** `lucide-react` (1.28.0, MIT) is the icon set for new and reworked
+SPIMAR surfaces, starting with the homepage offers CTA band. It is
+tree-shakeable (only imported glyphs ship), stroke-based, and consistent with
+the existing hand-drawn stroke style, which remains in the accepted sections
+until each is reworked — no bulk icon sweep.
+
+**Consequence.** One production dependency added to `package.json` /
+`pnpm-lock.yaml`. Dependency changes sit in the `D-018` always-review tier;
+this entry records the owner authorization.

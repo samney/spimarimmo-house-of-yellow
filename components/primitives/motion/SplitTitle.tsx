@@ -16,10 +16,12 @@ export function SplitTitle({
   text,
   as: Tag = "div",
   className = "",
+  id,
 }: {
   text: string;
   as?: "h1" | "h2" | "div";
   className?: string;
+  id?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
 
@@ -51,7 +53,7 @@ export function SplitTitle({
   );
 
   return (
-    <Tag ref={ref as never} className={`${className} splitTitle`}>
+    <Tag ref={ref as never} className={`${className} splitTitle`} id={id}>
       {text}
     </Tag>
   );
