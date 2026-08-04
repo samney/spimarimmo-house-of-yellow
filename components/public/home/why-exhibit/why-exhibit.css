@@ -1,0 +1,1989 @@
+/* Section 03 — "Pourquoi exposer avec SPIMARIMMO ?" (four-state benefit system).
+
+   Contract: docs/codex-implimentation/SPIMARIMMO_WHY_EXHIBIT_IMPLEMENTATION_HANDOFF_v1/
+   Golden viewport: 1536 × 1024 (3:2). Every measured value below was taken from
+   the four approved reference screens at that viewport.
+
+   Unit system: --why-u is one reference pixel (100vw / 1536), matching the
+   sibling method section, so rules read in reference pixels while the whole
+   composition stays viewport-relative. Below the desktop regime the composition
+   changes shape rather than shrinking, so --why-u is restated as 1px and the
+   phone keeps its natural size.
+
+   Colors are section-scoped L3 properties sampled from the references. The
+   global --spimar-gold (#efc337) is untouched: this section's golds are
+   deliberately quieter bronzes, exactly as the approved screens are. */
+
+.whyExhibit {
+  /* 1 reference px at the golden viewport. */
+  --why-u: 0.06510417vw;
+
+  /* Sampled palette (reference: 01-clientele-qualifiee.png). */
+  --why-paper: #f7f0e9; /* warm page canvas */
+  --why-ink: #101215; /* near-black type */
+  --why-ink-soft: #4a4c50; /* supporting type on paper */
+  --why-gold: #b8781e; /* numerals, nodes, dashes, emblems */
+  /* Intentional delta (DESIGN-CONTRACT contrast rule): the reference's #b8781e
+     measures 3.28:1 on this paper — fine for the 76px numeral, short of AA for
+     small text. Small gold type uses this compliant deep gold instead. */
+  --why-gold-ink: #8a6420;
+  --why-gold-tab: #bd8a3e; /* active rail fill, top */
+  --why-gold-tab-deep: #b07a26; /* active rail fill, bottom */
+  --why-gold-line: #d8b183; /* hairline connectors */
+  --why-gold-border: #d9ad72; /* card borders */
+  --why-card: #fbf6f0; /* card paper, top */
+  --why-card-deep: #f5eee5; /* card paper, bottom */
+  --why-panel: #fbf7f1; /* inner panel */
+  --why-panel-border: #e8e1d5;
+  --why-bar: #cecdca; /* neutral layout bar */
+  --why-obsidian: #050505; /* phone shell */
+  --why-screen: #111214; /* phone screen */
+  --why-screen-row: #1e1f20; /* screen row surface */
+  --why-screen-edge: #35363a; /* screen hairlines, chips */
+  --why-screen-ink: #f3efe8;
+  --why-screen-dim: #a8a49c;
+  --why-screen-gold: #d7a549;
+  --why-screen-cta: #cf9a3c;
+  --why-screen-cta-deep: #bd8330;
+
+  position: relative;
+  z-index: 1;
+  background: var(--why-paper);
+  color: var(--why-ink);
+  font-family: var(--font-sans);
+}
+
+.whyExhibit__inner {
+  position: relative;
+  padding: calc(38 * var(--why-u)) calc(50 * var(--why-u)) calc(60 * var(--why-u));
+}
+
+/* ================================================================== header */
+
+.whyExhibit__header .sectionEyebrow {
+  margin: 0;
+}
+
+/* The reference sets this line at ~78px in a narrower grotesk. Poppins is
+   wider, so the size is tuned down until the headline holds the reference's
+   single line across the same 1436px measure — matching the composition
+   matters more than matching one nominal value. */
+.whyExhibit__heading {
+  margin: calc(16 * var(--why-u)) 0 0;
+  font-size: calc(74 * var(--why-u));
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.whyExhibit__subtitle {
+  margin: calc(26 * var(--why-u)) 0 0;
+  font-size: calc(21 * var(--why-u));
+  line-height: 1.35;
+}
+
+/* ================================================================ tab rail */
+
+.whyTabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(4 * var(--why-u));
+  margin-top: calc(26 * var(--why-u));
+}
+
+.whyTab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(22 * var(--why-u));
+  min-height: calc(69 * var(--why-u));
+  padding: 0 calc(24 * var(--why-u));
+  border: 1px solid rgb(184 120 30 / 32%);
+  border-radius: calc(12 * var(--why-u));
+  background: transparent;
+  color: var(--why-ink);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-micro) var(--ease-out-ref),
+    color var(--dur-micro) var(--ease-out-ref),
+    border-color var(--dur-micro) var(--ease-out-ref);
+}
+
+.whyTab__num {
+  font-size: calc(23 * var(--why-u));
+  font-weight: 400;
+}
+
+.whyTab__label {
+  font-size: calc(16 * var(--why-u));
+  font-weight: 500;
+}
+
+.whyTab.is-active {
+  border-color: transparent;
+  background: linear-gradient(180deg, var(--why-gold-tab), var(--why-gold-tab-deep));
+  color: var(--spimar-white);
+}
+
+/* Active state is never colour-only: the fill, the white label and the gold
+   indicator below the track all move together, and aria-selected carries it. */
+.whyTab__dot {
+  position: absolute;
+  bottom: calc(-6 * var(--why-u));
+  left: 50%;
+  width: calc(12 * var(--why-u));
+  height: calc(12 * var(--why-u));
+  border-radius: 50%;
+  background: var(--why-gold);
+  transform: translateX(-50%) scale(0);
+  transition: transform 240ms var(--ease-out-ref);
+}
+
+.whyTab.is-active .whyTab__dot {
+  transform: translateX(-50%) scale(1);
+}
+
+.whyTab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* =================================================================== stage */
+
+.whyStage {
+  position: relative;
+  height: calc(694 * var(--why-u));
+  margin-top: calc(22 * var(--why-u));
+}
+
+/* ---------------------------------------------------------- copy column */
+
+.whyCopy {
+  position: absolute;
+  top: calc(46 * var(--why-u));
+  left: calc(2 * var(--why-u));
+  z-index: 3;
+  /* Wider than the reference's 330px column: Poppins sets these titles wider
+     than the reference grotesk, and the column may grow to the left card's
+     edge (x=387) before anything collides. */
+  width: calc(380 * var(--why-u));
+}
+
+.whyCopy__number {
+  margin: 0;
+  color: var(--why-gold);
+  font-size: calc(76 * var(--why-u));
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.whyCopy__title {
+  margin: calc(20 * var(--why-u)) 0 0;
+  /* The reference sets these titles at ~45px. Poppins is materially wider —
+     at that size "Un accompagnement" cannot hold the reference's first line
+     inside the corridor left of the evidence cards. The size steps down until
+     all four titles keep the approved two-line structure. */
+  font-size: calc(35 * var(--why-u));
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.032em;
+}
+
+.whyCopy__body {
+  max-width: calc(344 * var(--why-u));
+  margin: calc(22 * var(--why-u)) 0 0;
+  font-size: calc(17 * var(--why-u));
+  line-height: 1.62;
+}
+
+.whyCopy__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(11 * var(--why-u));
+  margin-top: calc(34 * var(--why-u));
+  color: var(--why-ink);
+  font-size: calc(17 * var(--why-u));
+  font-weight: 500;
+}
+
+.whyCopy__ctaLabel {
+  padding-bottom: calc(6 * var(--why-u));
+  border-bottom: 1px solid currentcolor;
+}
+
+.whyCopy__ctaArrow {
+  width: calc(19 * var(--why-u));
+  height: calc(13 * var(--why-u));
+  transition: transform var(--dur-micro) var(--ease-out-ref);
+}
+
+.whyCopy__cta:hover .whyCopy__ctaArrow {
+  transform: translateX(calc(4 * var(--why-u)));
+}
+
+.whyCopy__cta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+
+/* ------------------------------------------------------------ proof line */
+
+.whyProof {
+  position: absolute;
+  top: calc(612 * var(--why-u));
+  left: calc(3 * var(--why-u));
+  z-index: 3;
+  display: flex;
+  gap: calc(20 * var(--why-u));
+  width: calc(320 * var(--why-u));
+  margin: 0;
+  font-size: calc(17 * var(--why-u));
+  line-height: 1.5;
+}
+
+.whyProof__dash {
+  flex-shrink: 0;
+  width: calc(48 * var(--why-u));
+  height: calc(2 * var(--why-u));
+  margin-top: calc(12 * var(--why-u));
+  background: var(--why-gold);
+}
+
+/* ========================================================= evidence stage */
+
+.whyCanvas {
+  position: absolute;
+  inset: 0;
+}
+
+.whyConnectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.whyConnectors__path {
+  fill: none;
+  stroke: var(--why-gold-line);
+  stroke-width: 1;
+}
+
+.whyConnectors__node {
+  fill: var(--why-gold);
+}
+
+.whyConnectors__chevron path {
+  fill: none;
+  stroke: var(--why-gold);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+.whyCanvas__cards {
+  position: absolute;
+  inset: 0;
+}
+
+/* ------------------------------------------------------------------ cards */
+
+.whyCard {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: calc(11 * var(--why-u));
+  padding: calc(14 * var(--why-u));
+  overflow: hidden;
+  border: 1px solid var(--why-gold-border);
+  border-radius: calc(14 * var(--why-u));
+  background: linear-gradient(158deg, var(--why-card), var(--why-card-deep));
+  box-shadow: 0 calc(10 * var(--why-u)) calc(26 * var(--why-u)) rgb(60 40 10 / 10%);
+}
+
+/* Slot geometry, measured from the references and expressed relative to the
+   stage — never to the viewport. Rotations are restrained versions of the
+   reference's stronger tilt: the approved screens skew the card box (which
+   would shear the type); a small rotation reads the same and keeps the copy
+   legible. Recorded as an intentional delta. */
+.whyCard[data-slot="leftTop"] {
+  top: calc(67 * var(--why-u));
+  left: calc(387 * var(--why-u));
+  width: calc(172 * var(--why-u));
+  height: calc(278 * var(--why-u));
+  transform: rotate(2.2deg);
+}
+
+.whyCard[data-slot="leftBottom"] {
+  top: calc(361 * var(--why-u));
+  left: calc(387 * var(--why-u));
+  width: calc(174 * var(--why-u));
+  height: calc(265 * var(--why-u));
+  transform: rotate(-2.6deg);
+}
+
+.whyCard[data-slot="rightTop"] {
+  top: calc(49 * var(--why-u));
+  left: calc(1002 * var(--why-u));
+  width: calc(208 * var(--why-u));
+  height: calc(244 * var(--why-u));
+  transform: rotate(-2.2deg);
+}
+
+.whyCard[data-slot="rightBottom"] {
+  top: calc(306 * var(--why-u));
+  left: calc(1002 * var(--why-u));
+  width: calc(208 * var(--why-u));
+  height: calc(275 * var(--why-u));
+  transform: rotate(0.6deg);
+}
+
+.whyCard[data-slot="rightOuter"] {
+  top: calc(243 * var(--why-u));
+  left: calc(1257 * var(--why-u));
+  width: calc(166 * var(--why-u));
+  height: calc(326 * var(--why-u));
+  transform: rotate(-1.6deg);
+}
+
+.whyCard__head {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: calc(8 * var(--why-u));
+}
+
+.whyCard__icon {
+  display: flex;
+  color: var(--why-ink);
+}
+
+.whyCard__icon svg {
+  width: calc(19 * var(--why-u));
+  height: calc(19 * var(--why-u));
+}
+
+.whyCard__flag {
+  flex-shrink: 0;
+  width: calc(22 * var(--why-u));
+  height: calc(16 * var(--why-u));
+  border-radius: calc(2 * var(--why-u));
+}
+
+.whyCard__title {
+  min-width: 0;
+  margin: 0;
+  font-size: calc(12 * var(--why-u));
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+/* The outer right card is the narrowest slot; its longest title needs a step
+   down to hold one line the way every reference card does. */
+.whyCard[data-slot="rightOuter"] .whyCard__title {
+  font-size: calc(11 * var(--why-u));
+}
+
+.whyCard__more {
+  display: flex;
+  flex-shrink: 0;
+  gap: calc(3 * var(--why-u));
+  margin-left: auto;
+}
+
+.whyCard__more span {
+  width: calc(3.4 * var(--why-u));
+  height: calc(3.4 * var(--why-u));
+  border-radius: 50%;
+  background: var(--why-ink);
+}
+
+.whyCard__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.whyCard__body > * {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ------------------------------------------------------- shared primitives */
+
+.whyPanel {
+  display: flex;
+  flex-direction: column;
+  padding: calc(12 * var(--why-u));
+  border: 1px solid var(--why-panel-border);
+  border-radius: calc(10 * var(--why-u));
+  background: var(--why-panel);
+}
+
+.whyBar {
+  display: block;
+  height: calc(4 * var(--why-u));
+  border-radius: calc(2 * var(--why-u));
+  background: var(--why-bar);
+}
+
+.whyBar--wide {
+  width: 70%;
+  height: calc(5 * var(--why-u));
+  margin: 0 auto;
+}
+
+.whyBars {
+  display: flex;
+  flex-direction: column;
+  gap: calc(5 * var(--why-u));
+}
+
+.whyMedia {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--why-card-deep);
+}
+
+.whyMedia img {
+  object-fit: cover;
+}
+
+.whyPlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(34 * var(--why-u));
+  height: calc(34 * var(--why-u));
+  border-radius: 50%;
+  background: rgb(255 255 255 / 90%);
+  color: #1a1a1a;
+  transform: translate(-50%, -50%);
+}
+
+.whyPlay svg {
+  width: calc(15 * var(--why-u));
+  height: calc(15 * var(--why-u));
+}
+
+.whySocial {
+  display: flex;
+  align-items: center;
+  gap: calc(9 * var(--why-u));
+  color: var(--why-ink);
+}
+
+.whySocial svg {
+  width: calc(13 * var(--why-u));
+  height: calc(13 * var(--why-u));
+}
+
+.whySocial__end {
+  margin-left: auto;
+}
+
+/* ------------------------------------------------------------- card: form */
+
+.whyForm {
+  gap: calc(9 * var(--why-u));
+}
+
+.whyForm__caption {
+  margin: 0;
+  font-size: calc(11.5 * var(--why-u));
+  text-align: center;
+}
+
+.whyStepper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(9 * var(--why-u));
+}
+
+.whyStepper__rail,
+.whyStepper__fill {
+  position: absolute;
+  top: 50%;
+  left: calc(4 * var(--why-u));
+  height: calc(1.6 * var(--why-u));
+  transform: translateY(-50%);
+}
+
+.whyStepper__rail {
+  right: calc(4 * var(--why-u));
+  background: #ded8cd;
+}
+
+.whyStepper__fill {
+  background: var(--why-gold);
+}
+
+.whyStepper__dot {
+  position: relative;
+  width: calc(8 * var(--why-u));
+  height: calc(8 * var(--why-u));
+  border-radius: 50%;
+  background: #ded8cd;
+}
+
+.whyStepper__dot.is-on {
+  background: var(--why-gold);
+}
+
+.whyForm__fields {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(7 * var(--why-u));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.whyForm__field {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-height: calc(22 * var(--why-u));
+  padding: 0 calc(8 * var(--why-u));
+  border: 1px solid #e4ded3;
+  border-radius: calc(6 * var(--why-u));
+}
+
+.whyForm__fieldIcon {
+  width: calc(13 * var(--why-u));
+  height: calc(13 * var(--why-u));
+}
+
+.whyForm__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(26 * var(--why-u));
+  border-radius: calc(6 * var(--why-u));
+  background: linear-gradient(180deg, #c58f34, #b47a24);
+  color: var(--spimar-white);
+}
+
+.whyForm__submit svg {
+  width: calc(14 * var(--why-u));
+  height: calc(14 * var(--why-u));
+}
+
+/* ------------------------------------------------------- card: attributes */
+
+.whyAttributes {
+  padding: 0;
+}
+
+.whyAttributes__row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: calc(9 * var(--why-u));
+  padding: calc(9 * var(--why-u)) calc(11 * var(--why-u));
+}
+
+.whyAttributes__row + .whyAttributes__row {
+  border-top: 1px solid #ece6db;
+}
+
+.whyAttributes__icon {
+  flex-shrink: 0;
+  width: calc(17 * var(--why-u));
+  height: calc(17 * var(--why-u));
+}
+
+.whyAttributes__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(6 * var(--why-u));
+}
+
+.whyAttributes__label {
+  font-size: calc(11 * var(--why-u));
+}
+
+/* ----------------------------------------------------------- card: emblem */
+
+.whyEmblem {
+  align-items: center;
+  justify-content: center;
+  gap: calc(14 * var(--why-u));
+}
+
+.whyEmblem__mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(80 * var(--why-u));
+  height: calc(80 * var(--why-u));
+  color: var(--why-gold);
+}
+
+.whyEmblem__mark--disc {
+  border-radius: 50%;
+  background: var(--why-gold);
+  color: var(--spimar-white);
+}
+
+.whyEmblem__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.whyEmblem__icon {
+  width: calc(34 * var(--why-u));
+  height: calc(34 * var(--why-u));
+}
+
+.whyEmblem__mark--disc .whyEmblem__icon {
+  width: calc(40 * var(--why-u));
+  height: calc(40 * var(--why-u));
+}
+
+.whyEmblem__caption {
+  margin: 0;
+  font-size: calc(12.5 * var(--why-u));
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------- card: checklist */
+
+.whyChecklist {
+  gap: calc(12 * var(--why-u));
+}
+
+.whyChecklist__rows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(12 * var(--why-u));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.whyChecklist__row {
+  display: flex;
+  align-items: center;
+  gap: calc(7 * var(--why-u));
+  font-size: calc(9.5 * var(--why-u));
+}
+
+.whyChecklist__tick {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(15 * var(--why-u));
+  height: calc(15 * var(--why-u));
+  border-radius: 50%;
+  background: var(--why-gold);
+  color: var(--spimar-white);
+}
+
+.whyChecklist__tick svg {
+  width: calc(9 * var(--why-u));
+  height: calc(9 * var(--why-u));
+}
+
+/* ---------------------------------------------------------- card: country */
+
+.whyCountry {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(11 * var(--why-u));
+}
+
+.whyCountry__media {
+  flex: 1;
+  border-radius: calc(6 * var(--why-u));
+}
+
+.whyCountry__caption {
+  margin: 0;
+  font-size: calc(12.5 * var(--why-u));
+}
+
+/* ------------------------------------------------------- card: social post */
+
+.whyPost {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(9 * var(--why-u));
+}
+
+.whyPost__media {
+  flex: 1;
+  border-radius: calc(5 * var(--why-u));
+}
+
+.whyPost--reel .whyPlay {
+  top: 42%;
+}
+
+/* ----------------------------------------------------------- card: mailer */
+
+.whyMailer {
+  gap: calc(9 * var(--why-u));
+}
+
+.whyMailer__heading {
+  margin: 0;
+  font-size: calc(11 * var(--why-u));
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.whyMailer__media {
+  flex: 1;
+  border-radius: calc(4 * var(--why-u));
+}
+
+.whyMailer__pill {
+  margin: 0;
+  padding: calc(6 * var(--why-u));
+  border-radius: calc(4 * var(--why-u));
+  background: linear-gradient(180deg, #c58f34, #b47a24);
+  color: var(--spimar-white);
+  font-size: calc(9 * var(--why-u));
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------ card: video */
+
+.whyVideo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(9 * var(--why-u));
+}
+
+.whyVideo__frame {
+  position: relative;
+  display: block;
+  flex: 1;
+  overflow: hidden;
+  border-radius: calc(6 * var(--why-u));
+}
+
+.whyVideo__media {
+  position: absolute;
+  inset: 0;
+}
+
+.whyVideo__scrub {
+  position: relative;
+  height: calc(3 * var(--why-u));
+  border-radius: calc(2 * var(--why-u));
+  background: #e0dad0;
+}
+
+.whyVideo__scrubFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 38%;
+  border-radius: inherit;
+  background: var(--why-gold);
+}
+
+/* ------------------------------------------------------------ card: press */
+
+.whyPress {
+  gap: calc(9 * var(--why-u));
+}
+
+.whyPress__heading {
+  margin: 0;
+  font-size: calc(11 * var(--why-u));
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.whyPress__columns {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(9 * var(--why-u));
+}
+
+.whyPress__media {
+  border-radius: calc(4 * var(--why-u));
+}
+
+/* ------------------------------------------------- cards: plan / collage */
+
+.whyPlan {
+  display: flex;
+  flex: 1;
+}
+
+.whyPlan__media {
+  flex: 1;
+  border-radius: calc(8 * var(--why-u));
+}
+
+.whyCollage {
+  display: grid;
+  flex: 1;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1.35fr 1fr;
+  gap: calc(8 * var(--why-u));
+}
+
+.whyCollage__wide,
+.whyCollage__tall {
+  border-radius: calc(4 * var(--why-u));
+}
+
+.whyCollage__tall {
+  grid-row: span 1;
+}
+
+.whyCollage__sheet {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: calc(5 * var(--why-u));
+  padding: calc(7 * var(--why-u));
+  border: 1px solid var(--why-panel-border);
+  border-radius: calc(4 * var(--why-u));
+  background: var(--spimar-white);
+}
+
+.whyCollage__docIcon {
+  width: calc(14 * var(--why-u));
+  height: calc(14 * var(--why-u));
+  margin-bottom: auto;
+}
+
+/* --------------------------------------------- cards: roster / checks / report */
+
+.whyRoster,
+.whyCheckRows {
+  justify-content: space-around;
+  gap: calc(10 * var(--why-u));
+}
+
+.whyRoster__row,
+.whyCheckRows__row {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--why-u));
+}
+
+.whyRoster__avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(26 * var(--why-u));
+  height: calc(26 * var(--why-u));
+  border-radius: 50%;
+  background: #e6e0d6;
+  color: #8d887f;
+}
+
+.whyRoster__avatar svg {
+  width: calc(15 * var(--why-u));
+  height: calc(15 * var(--why-u));
+}
+
+.whyRoster__bars,
+.whyCheckRows__bars {
+  flex: 1;
+}
+
+.whyCheckRows__tick {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(16 * var(--why-u));
+  height: calc(16 * var(--why-u));
+  border: 1px solid #c9c3b8;
+  border-radius: 50%;
+  color: #8d887f;
+}
+
+.whyCheckRows__tick svg {
+  width: calc(9 * var(--why-u));
+  height: calc(9 * var(--why-u));
+}
+
+.whyReport {
+  gap: calc(9 * var(--why-u));
+}
+
+.whyReport__media {
+  height: calc(78 * var(--why-u));
+  border-radius: calc(4 * var(--why-u));
+}
+
+.whyReport__bars {
+  flex: 1;
+}
+
+.whyReport__foot {
+  display: flex;
+  align-items: center;
+  gap: calc(9 * var(--why-u));
+}
+
+.whyReport__pie {
+  display: block;
+  flex-shrink: 0;
+  width: calc(28 * var(--why-u));
+  height: calc(28 * var(--why-u));
+  color: #8d887f;
+}
+
+.whyReport__pie svg {
+  width: 100%;
+  height: 100%;
+}
+
+.whyReport__footBars {
+  flex: 1;
+}
+
+/* =================================================================== phone */
+
+.whyPhone {
+  position: absolute;
+  top: 0;
+  left: calc(598 * var(--why-u));
+  z-index: 4;
+  width: calc(365 * var(--why-u));
+  height: calc(695 * var(--why-u));
+}
+
+.whyPhone__frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: calc(11 * var(--why-u));
+  border-radius: calc(54 * var(--why-u));
+  background: var(--why-obsidian);
+  box-shadow: 0 calc(26 * var(--why-u)) calc(50 * var(--why-u)) rgb(30 20 5 / 26%);
+}
+
+.whyPhone__edge {
+  position: absolute;
+  inset: calc(2 * var(--why-u));
+  border: 1px solid #5c5a58;
+  border-radius: calc(52 * var(--why-u));
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.whyPhone__island {
+  position: absolute;
+  top: calc(22 * var(--why-u));
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: calc(108 * var(--why-u));
+  height: calc(30 * var(--why-u));
+  padding-right: calc(12 * var(--why-u));
+  border-radius: calc(15 * var(--why-u));
+  background: #000;
+  transform: translateX(-50%);
+}
+
+.whyPhone__lens {
+  width: calc(9 * var(--why-u));
+  height: calc(9 * var(--why-u));
+  border-radius: 50%;
+  background: #16181a;
+}
+
+.whyPhone__screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--why-u));
+  width: 100%;
+  height: 100%;
+  padding: calc(58 * var(--why-u)) calc(14 * var(--why-u)) calc(14 * var(--why-u));
+  overflow: hidden;
+  border-radius: calc(44 * var(--why-u));
+  background: var(--why-screen);
+  color: var(--why-screen-ink);
+}
+
+.whyPhone__chips {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: calc(5 * var(--why-u));
+  justify-content: center;
+  padding: 0 calc(2 * var(--why-u));
+}
+
+.whyPhone__chip {
+  padding: calc(4 * var(--why-u)) calc(8 * var(--why-u));
+  border: 1px solid var(--why-screen-edge);
+  border-radius: calc(11 * var(--why-u));
+  font-size: calc(9 * var(--why-u));
+}
+
+.whyPhone__scene {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.whyPhone__scene > * {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.whyPhone__footnote {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: calc(6 * var(--why-u));
+  margin: 0;
+  color: var(--why-screen-dim);
+  font-size: calc(10 * var(--why-u));
+}
+
+.whyPhone__footnoteIcon {
+  width: calc(12 * var(--why-u));
+  height: calc(12 * var(--why-u));
+}
+
+/* Depicted product chrome, not a control of this page: inert text, never a
+   button or a link, so no dead affordance is offered. */
+.whyPhone__action {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: calc(10 * var(--why-u));
+  height: calc(38 * var(--why-u));
+  margin: 0;
+  border-radius: calc(10 * var(--why-u));
+  background: linear-gradient(180deg, var(--why-screen-cta), var(--why-screen-cta-deep));
+  color: var(--spimar-white);
+  font-size: calc(14 * var(--why-u));
+  font-weight: 500;
+}
+
+.whyPhone__action svg {
+  width: calc(17 * var(--why-u));
+  height: calc(12 * var(--why-u));
+}
+
+/* ============================================================ phone scenes */
+
+.whySceneBars {
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--why-u));
+}
+
+.whySceneBar {
+  display: block;
+  height: calc(4 * var(--why-u));
+  border-radius: calc(2 * var(--why-u));
+  background: #3a3b3d;
+}
+
+.whyScene__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: calc(4 * var(--why-u));
+  background: #202224;
+}
+
+.whyScene__media img {
+  object-fit: cover;
+}
+
+.whySceneStats {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: repeat(3, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--why-screen-edge);
+  border-radius: calc(8 * var(--why-u));
+  background: var(--why-screen-row);
+}
+
+.whySceneStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(7 * var(--why-u));
+  padding: calc(9 * var(--why-u)) calc(6 * var(--why-u));
+}
+
+.whySceneStat + .whySceneStat {
+  border-left: 1px solid var(--why-screen-edge);
+}
+
+.whySceneStat__label {
+  margin: 0;
+  color: var(--why-screen-dim);
+  font-size: calc(8 * var(--why-u));
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.whySceneStat__chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(30 * var(--why-u));
+}
+
+.whyChart {
+  width: 100%;
+  height: 100%;
+  color: var(--why-screen-gold);
+}
+
+.whyChart--bars rect {
+  fill: currentcolor;
+}
+
+.whyChart--donut circle {
+  stroke: currentcolor;
+}
+
+.whyChart--donut .whyChart__track {
+  stroke: #4a4b4d;
+}
+
+.whyChart--line path {
+  stroke: currentcolor;
+}
+
+.whyChart--map path {
+  fill: currentcolor;
+  opacity: 0.55;
+}
+
+.whyChart--glyph {
+  stroke: currentcolor;
+}
+
+/* ------------------------------------------------- scene 01: qualification */
+
+.whyQualify {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(10 * var(--why-u));
+  min-height: 0;
+}
+
+.whyQualify__rows {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(7 * var(--why-u));
+  margin: 0;
+  padding: 0 0 0 calc(16 * var(--why-u));
+  list-style: none;
+}
+
+/* The journey spine. */
+.whyQualify__rows::before {
+  position: absolute;
+  top: calc(14 * var(--why-u));
+  bottom: calc(14 * var(--why-u));
+  left: calc(4 * var(--why-u));
+  width: 1px;
+  background: rgb(215 165 73 / 45%);
+  content: "";
+}
+
+.whyQualify__row {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.whyQualify__node {
+  position: absolute;
+  top: 50%;
+  left: calc(-15 * var(--why-u));
+  width: calc(7 * var(--why-u));
+  height: calc(7 * var(--why-u));
+  border-radius: 50%;
+  background: var(--why-screen-gold);
+  transform: translateY(-50%);
+}
+
+.whyQualify__card {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: calc(9 * var(--why-u));
+  padding: calc(8 * var(--why-u)) calc(10 * var(--why-u));
+  border-radius: calc(8 * var(--why-u));
+  background: var(--why-screen-row);
+}
+
+.whyQualify__avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(30 * var(--why-u));
+  height: calc(30 * var(--why-u));
+  border-radius: 50%;
+  background: #cfcabf;
+  color: #4b4a47;
+}
+
+.whyQualify__avatar svg {
+  width: calc(17 * var(--why-u));
+  height: calc(17 * var(--why-u));
+}
+
+.whyQualify__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(6 * var(--why-u));
+  min-width: 0;
+}
+
+.whyQualify__title {
+  font-size: calc(11 * var(--why-u));
+}
+
+.whyQualify__progress {
+  position: relative;
+  height: calc(4 * var(--why-u));
+  border-radius: calc(2 * var(--why-u));
+  background: #3a3b3d;
+}
+
+.whyQualify__progressFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--why-screen-gold);
+}
+
+.whyQualify__thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(4 * var(--why-u));
+  height: calc(30 * var(--why-u));
+}
+
+.whyQualify__thumb {
+  height: 100%;
+}
+
+.whyQualify__check {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(20 * var(--why-u));
+  height: calc(20 * var(--why-u));
+  border-radius: 50%;
+  background: var(--why-screen-gold);
+  color: #17181a;
+}
+
+.whyQualify__check svg {
+  width: calc(11 * var(--why-u));
+  height: calc(11 * var(--why-u));
+}
+
+/* ------------------------------------------------ scene 02: international */
+
+.whyWorld {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(9 * var(--why-u));
+  min-height: 0;
+}
+
+.whyWorld__map {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.whyWorld__land path {
+  fill: #2a2c2e;
+}
+
+.whyWorld__route {
+  fill: none;
+  stroke: var(--why-screen-gold);
+  stroke-width: 1.4;
+  opacity: 0.9;
+}
+
+.whyWorld__origin {
+  fill: var(--why-screen-gold);
+}
+
+.whyWorld__node {
+  fill: #f0e4cd;
+}
+
+.whyWorld__carousel {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: 0.82fr 1fr 0.82fr;
+  gap: calc(6 * var(--why-u));
+  align-items: end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.whyWorld__slide {
+  display: flex;
+  flex-direction: column;
+  gap: calc(5 * var(--why-u));
+  padding: calc(8 * var(--why-u));
+  border: 1px solid var(--why-screen-edge);
+  border-radius: calc(8 * var(--why-u));
+  background: var(--why-screen-row);
+  opacity: 0.72;
+}
+
+.whyWorld__slide.is-current {
+  border-color: rgb(215 165 73 / 45%);
+  opacity: 1;
+}
+
+.whyWorld__slideName {
+  margin: 0;
+  font-size: calc(11 * var(--why-u));
+  font-weight: 500;
+}
+
+.whyWorld__slideCaption {
+  margin: 0;
+  color: var(--why-screen-dim);
+  font-size: calc(8.5 * var(--why-u));
+}
+
+.whyWorld__slideMedia {
+  position: relative;
+  display: block;
+  height: calc(74 * var(--why-u));
+  overflow: hidden;
+  border-radius: calc(5 * var(--why-u));
+}
+
+.whyWorld__slideMedia .whyScene__media {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+}
+
+/* Honest pending state: no edition date is validated, so the slide says so. */
+.whyWorld__slideStatus {
+  align-self: flex-start;
+  margin: 0;
+  padding: calc(3 * var(--why-u)) calc(8 * var(--why-u));
+  border: 1px solid var(--why-screen-edge);
+  border-radius: calc(9 * var(--why-u));
+  background: rgb(0 0 0 / 35%);
+  color: var(--why-screen-ink);
+  font-size: calc(8.5 * var(--why-u));
+}
+
+.whyWorld__dots {
+  display: flex;
+  flex-shrink: 0;
+  gap: calc(5 * var(--why-u));
+  justify-content: center;
+}
+
+.whyWorld__dot {
+  width: calc(5 * var(--why-u));
+  height: calc(5 * var(--why-u));
+  border-radius: 50%;
+  background: #4a4b4d;
+}
+
+.whyWorld__dot.is-on {
+  background: var(--why-screen-gold);
+}
+
+/* ---------------------------------------------------- scene 03: campaigns */
+
+.whyFeed {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(10 * var(--why-u));
+  min-height: 0;
+}
+
+.whyFeed__rows {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(7 * var(--why-u));
+  margin: 0;
+  padding: 0 0 0 calc(16 * var(--why-u));
+  list-style: none;
+}
+
+.whyFeed__rows::before {
+  position: absolute;
+  top: calc(14 * var(--why-u));
+  bottom: calc(14 * var(--why-u));
+  left: calc(4 * var(--why-u));
+  width: 1px;
+  background: rgb(215 165 73 / 45%);
+  content: "";
+}
+
+.whyFeed__row {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.whyFeed__node {
+  position: absolute;
+  top: 50%;
+  left: calc(-15 * var(--why-u));
+  width: calc(7 * var(--why-u));
+  height: calc(7 * var(--why-u));
+  border-radius: 50%;
+  background: var(--why-screen-gold);
+  transform: translateY(-50%);
+}
+
+.whyFeed__cell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(5 * var(--why-u));
+  padding: calc(5 * var(--why-u));
+  overflow: hidden;
+  border-radius: calc(6 * var(--why-u));
+  background: var(--why-screen-row);
+}
+
+.whyFeed__media {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ------------------------------------------------------ scene 04: support */
+
+.whyDeliverables {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(9 * var(--why-u));
+  min-height: 0;
+}
+
+.whyDeliver__rows {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(5 * var(--why-u));
+  margin: 0;
+  padding: 0 0 0 calc(16 * var(--why-u));
+  list-style: none;
+}
+
+.whyDeliver__rows::before {
+  position: absolute;
+  top: calc(12 * var(--why-u));
+  bottom: calc(12 * var(--why-u));
+  left: calc(4 * var(--why-u));
+  width: 1px;
+  background: rgb(215 165 73 / 45%);
+  content: "";
+}
+
+.whyDeliver__row {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: calc(8 * var(--why-u));
+  min-height: 0;
+  padding: calc(6 * var(--why-u)) calc(8 * var(--why-u));
+  border-radius: calc(8 * var(--why-u));
+  background: var(--why-screen-row);
+}
+
+.whyDeliver__node {
+  position: absolute;
+  top: 50%;
+  left: calc(-15 * var(--why-u));
+  width: calc(7 * var(--why-u));
+  height: calc(7 * var(--why-u));
+  border-radius: 50%;
+  background: var(--why-screen-gold);
+  transform: translateY(-50%);
+}
+
+.whyDeliver__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(26 * var(--why-u));
+  height: calc(26 * var(--why-u));
+  border-radius: calc(7 * var(--why-u));
+  background: #2c2d2f;
+  color: var(--why-screen-ink);
+}
+
+.whyDeliver__icon svg {
+  width: calc(15 * var(--why-u));
+  height: calc(15 * var(--why-u));
+}
+
+.whyDeliver__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: calc(4 * var(--why-u));
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.whyDeliver__title {
+  font-size: calc(10.5 * var(--why-u));
+}
+
+.whyDeliver__status {
+  padding: calc(2 * var(--why-u)) calc(7 * var(--why-u));
+  border-radius: calc(8 * var(--why-u));
+  background: #343537;
+  color: var(--why-screen-dim);
+  font-size: calc(8 * var(--why-u));
+}
+
+.whyDeliver__sheet {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: calc(3 * var(--why-u));
+  justify-content: center;
+  width: calc(96 * var(--why-u));
+  height: calc(38 * var(--why-u));
+  padding: calc(5 * var(--why-u));
+  overflow: hidden;
+  border-radius: calc(4 * var(--why-u));
+  background: #e9e4da;
+}
+
+.whyDeliver__sheet .whySceneBar {
+  background: #b9b4ab;
+}
+
+.whyDeliver__sheet--paper.is-cols-2 {
+  flex-direction: row;
+  gap: calc(5 * var(--why-u));
+}
+
+.whyDeliver__sheet--paper.is-cols-2 .whySceneBars {
+  flex: 1;
+}
+
+.whyDeliver__sheet--image {
+  position: relative;
+  padding: 0;
+}
+
+.whyDeliver__sheet--image .whyScene__media {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+}
+
+.whyDeliver__sheet--chart {
+  flex-direction: row;
+  gap: calc(5 * var(--why-u));
+  align-items: center;
+}
+
+.whyDeliver__chart {
+  width: calc(46 * var(--why-u));
+  height: calc(26 * var(--why-u));
+}
+
+.whyDeliver__chart rect {
+  fill: #8d887f;
+}
+
+.whyDeliver__sheet--chart .whySceneBars {
+  flex: 1;
+}
+
+.whyDeliver__legend {
+  display: flex;
+  flex-shrink: 0;
+  gap: calc(14 * var(--why-u));
+  justify-content: center;
+  padding: calc(8 * var(--why-u));
+  border: 1px solid var(--why-screen-edge);
+  border-radius: calc(8 * var(--why-u));
+  background: var(--why-screen-row);
+  color: var(--why-screen-dim);
+  font-size: calc(8.5 * var(--why-u));
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.whyDeliver__legendItem {
+  display: flex;
+  align-items: center;
+  gap: calc(6 * var(--why-u));
+}
+
+.whyDeliver__marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(11 * var(--why-u));
+  height: calc(11 * var(--why-u));
+  border-radius: 50%;
+}
+
+.whyDeliver__marker svg {
+  width: calc(7 * var(--why-u));
+  height: calc(7 * var(--why-u));
+}
+
+.whyDeliver__marker--neutral {
+  background: #6f6d6a;
+}
+
+.whyDeliver__marker--progress {
+  background: var(--why-screen-gold);
+}
+
+.whyDeliver__marker--done {
+  background: var(--why-screen-gold);
+  color: #17181a;
+}
+
+/* ================================================================== motion */
+
+@keyframes whyEnter {
+  from {
+    opacity: 0;
+    transform: translateY(calc(10 * var(--why-u)));
+  }
+}
+
+@keyframes whyEnterCard {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes whyDraw {
+  from {
+    stroke-dashoffset: 620;
+  }
+}
+
+/* The phone shell never moves: only the screen content, the copy and the cards
+   cross-fade in when a benefit is selected. Nothing animates height. */
+.whyCopy,
+.whyPhone__scene {
+  animation: whyEnter 280ms var(--ease-out-ref) both;
+}
+
+.whyCard {
+  animation: whyEnterCard 300ms var(--ease-out-ref) both;
+  animation-delay: calc(var(--why-card-index, 0) * 38ms);
+}
+
+.whyConnectors__path {
+  stroke-dasharray: 620;
+  animation: whyDraw 620ms var(--ease-out-ref) both;
+  animation-delay: calc(180ms + var(--why-path-index, 0) * 60ms);
+}
+
+/* Reduced motion and the deterministic visual-test frame both switch states
+   instantly, with no draw-on and no parallax. */
+@media (prefers-reduced-motion: reduce) {
+  .whyCopy,
+  .whyPhone__scene,
+  .whyCard,
+  .whyConnectors__path,
+  .whyTab,
+  .whyTab__dot,
+  .whyCopy__ctaArrow {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .whyConnectors__path {
+    stroke-dasharray: none;
+  }
+}
+
+.whyExhibit[data-static="true"] .whyCopy,
+.whyExhibit[data-static="true"] .whyPhone__scene,
+.whyExhibit[data-static="true"] .whyCard,
+.whyExhibit[data-static="true"] .whyConnectors__path,
+.whyExhibit[data-static="true"] .whyTab,
+.whyExhibit[data-static="true"] .whyTab__dot {
+  animation: none !important;
+  transition: none !important;
+}
+
+.whyExhibit[data-static="true"] .whyConnectors__path {
+  stroke-dasharray: none;
+}
+
+/* ============================================================== responsive */
+
+/* Below the desktop regime the composition changes shape instead of shrinking:
+   --why-u becomes a real pixel, the stage returns to document flow and the
+   phone keeps its natural 365 × 695 size. */
+@media (max-width: 1279px) {
+  .whyExhibit {
+    --why-u: 1px;
+
+    /* The tab rail and the card carousel scroll horizontally inside
+       themselves; `clip` keeps their scrollable overflow from reaching the
+       viewport, which would give the whole page a horizontal scrollbar.
+       `clip` rather than `hidden` so no extra scroll container is created. */
+    overflow-x: clip;
+  }
+
+  .whyExhibit__inner {
+    padding: 40px var(--space-gutter) 56px;
+  }
+
+  /* --text-support is a desktop-based vw step; below 1080 it collapses to
+     ~8px here. The eyebrow gets a real floor in this regime. */
+  .whyExhibit__header .sectionEyebrow {
+    font-size: 12px;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .whyExhibit__heading {
+    font-size: clamp(34px, 5.4vw, 62px);
+    white-space: normal;
+  }
+
+  .whyExhibit__subtitle {
+    font-size: 17px;
+  }
+
+  .whyTabs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .whyTab {
+    gap: 14px;
+    min-height: 56px;
+    padding: 0 16px;
+    border-radius: 10px;
+  }
+
+  .whyTab__num {
+    font-size: 18px;
+  }
+
+  .whyTab__label {
+    font-size: 14px;
+  }
+
+  .whyTab__dot {
+    bottom: -5px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .whyStage {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    height: auto;
+    margin-top: 34px;
+  }
+
+  .whyCopy,
+  .whyProof,
+  .whyCanvas {
+    position: static;
+    width: auto;
+  }
+
+  .whyCopy__number {
+    font-size: 56px;
+  }
+
+  .whyCopy__title {
+    font-size: clamp(26px, 6.4vw, 34px);
+  }
+
+  .whyCopy__break {
+    display: none;
+  }
+
+  .whyCopy__body {
+    max-width: 52ch;
+    font-size: 16px;
+  }
+
+  .whyCopy__cta {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .whyProof {
+    gap: 16px;
+    font-size: 16px;
+  }
+
+  .whyProof__dash {
+    width: 40px;
+    margin-top: 11px;
+  }
+
+  /* Decorative desktop paths are removed rather than rescaled: the corridors
+     they connect no longer exist in this layout. */
+  .whyConnectors {
+    display: none;
+  }
+
+  .whyCanvas {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .whyPhone {
+    position: static;
+    order: 1;
+    width: min(88vw, 365px);
+    height: auto;
+    aspect-ratio: 365 / 695;
+  }
+
+  .whyCanvas__cards {
+    position: static;
+    display: grid;
+    order: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+  }
+
+  .whyCard {
+    position: static;
+    height: 300px;
+    transform: none;
+  }
+
+  .whyCard[data-slot] {
+    top: auto;
+    left: auto;
+    width: auto;
+    height: 300px;
+    transform: none;
+  }
+}
+
+/* Single column: header, scrollable tabs, copy, phone, evidence carousel,
+   proof line. No overlap, no page-level horizontal overflow. */
+@media (max-width: 767px) {
+  .whyExhibit__inner {
+    padding: 32px var(--space-gutter) 48px;
+  }
+
+  .whyTabs {
+    display: flex;
+    grid-template-columns: none;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .whyTab {
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 48px;
+    scroll-snap-align: start;
+  }
+
+  .whyTab__dot {
+    bottom: 4px;
+  }
+
+  .whyCanvas__cards {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    padding-bottom: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .whyCard,
+  .whyCard[data-slot] {
+    flex: 0 0 78vw;
+    max-width: 320px;
+    height: 300px;
+    scroll-snap-align: center;
+  }
+}

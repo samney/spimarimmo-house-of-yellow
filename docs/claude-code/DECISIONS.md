@@ -643,3 +643,54 @@ third-party exhibitor trademarks are legible (`DIP`, `Allianz`,
 SPIMARIMMO is recorded as the rights owner; whether those incidental third-party
 marks carry any further clearance requirement is an owner question that this
 entry raises rather than answers.
+
+## D-025 — 2026-08-04 — Section 03 rebuilt as the four-state "Pourquoi exposer" benefit system
+
+**Authority.** Repository-owner instruction in session, with the
+`SPIMARIMMO_WHY_EXHIBIT_IMPLEMENTATION_HANDOFF_v1` bundle supplied as the
+implementation contract (four 1536 × 1024 reference screens, asset manifest,
+pixel-parity spec). The bundle is committed under `docs/codex-implimentation/`
+beside the Notre-méthode handoff.
+
+**Decision.** Section 03 is rebuilt in `components/public/home/why-exhibit/`
+as one data-driven tree — header, four-part tab rail, copy column, fixed phone,
+five evidence cards and a connector layer — driven by a single `activeBenefit`.
+The previous lo-fi composition (`MobileShowcase.tsx`, `pillars.css`) is removed;
+`ServicesSection` keeps the `.servicesBlock` shell that carries the page rhythm
+and `data-hide-header`. A deterministic `/visual-test/why-exhibit` route follows
+the existing `/visual-test/method` convention.
+
+**Intentional deltas from the references, each with its reason.**
+
+- _Eyebrow._ The references print `[ 01 ]`–`[ 04 ]` alone, tracking the active
+  tab. The section instead renders the page-wide `SectionEyebrow` as
+  `[ 03 ] POURQUOI EXPOSER ?`. The 2026-08-04 owner decision that every section
+  uses one header component outranks a per-section screenshot.
+- _Card rotation._ The reference cards are **skewed** (vertical edges, tilted
+  horizontals, 5–11° depending on the card — generated-image variance). A skew
+  shears the type. Restrained rotations (0.6–2.6°) are used instead.
+- _Type sizes._ Poppins is materially wider than the references' grotesk. The
+  H2 (78 → 74px), benefit titles (45 → 35px) and card titles (≈14 → 12px) step
+  down so each holds the reference's own line structure inside the same measure.
+  Matching the composition was preferred to matching a nominal value.
+- _Tab rail width._ The reference rail is ~1422px from x=50, leaving a 64px
+  right inset against a 50px left one. The rail is made symmetric (1436px);
+  the asymmetry reads as generated-image imprecision, not intent.
+- _Phone chip rows._ The references fit 5 country chips on one line at ~7px.
+  The chips render at 9px and wrap to 4 + 1; legibility wins.
+- _YouTube mark._ Drawn monochrome rather than brand red — `BRI-011` admits no
+  chromatic hue beyond gold, black and the neutrals. The play cut-out still
+  identifies the platform. Country flags are the one exception: a flag cannot
+  be recoloured and stay a flag.
+- _Gold on paper._ The sampled reference gold `#b8781e` measures 3.28:1 on the
+  section's paper — sufficient for the 76px numeral, short of AA for small
+  text. `--why-gold-ink: #8a6420` carries small gold type, as `--method-gold-ink`
+  does in section 04.
+
+**Content honesty.** No count, campaign volume, case-study value, lead total or
+event date appears anywhere: the references carry none, every chart is a shape
+with an approved label, and a unit test fails the build if a digit reaches the
+visible copy. Country slides render "À venir" because no edition date is
+validated. The phone's gold bar is inert text, not a button — the phone depicts
+the product, it does not offer a control. All four CTAs point at shipped routes
+(`/exposer/methode`, `/salons`, `/etudes-de-cas`, `/exposer/offres`).
