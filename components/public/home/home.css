@@ -76,7 +76,7 @@
   margin-bottom: 1vw;
 }
 .headerBigBlock .smallTitle {
-  font-size: 1.5vw;
+  font-size: var(--text-small-title);
   line-height: 1.2;
   font-weight: 400;
 }
@@ -87,7 +87,7 @@
 
 /* ===== Shared editorial type ===== */
 .smallTitle {
-  font-size: 1.5vw;
+  font-size: var(--text-small-title);
   line-height: 1.2;
   font-weight: 400;
 }
@@ -101,11 +101,11 @@
   font-size: var(--text-heading-sm);
 }
 .text {
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   line-height: 1.4;
 }
 .text.smaller {
-  font-size: 0.75vw;
+  font-size: var(--text-base);
 }
 .text.medium {
   font-weight: 500;
@@ -366,7 +366,7 @@
 .project .stats {
   display: flex;
   justify-content: space-between;
-  font-size: 0.75vw;
+  font-size: var(--text-base);
 }
 .project .stats .statLabel {
   font-weight: 500;
@@ -446,7 +446,7 @@
   flex: 1;
 }
 .videoBlock .metric .metricLabel {
-  font-size: 0.75vw;
+  font-size: var(--text-base);
   font-weight: 500;
   margin-bottom: 0.5vw;
 }

@@ -467,7 +467,7 @@
   margin-right: 0.625vw;
   margin-bottom: 0.625vw;
   border-radius: 1.25vw;
-  font-size: 0.75vw;
+  font-size: var(--text-base);
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -561,7 +561,7 @@
 .cultureWorkBlock .projects .project .bottomContent .row .info {
   display: inline-block;
   vertical-align: top;
-  font-size: 0.75vw;
+  font-size: var(--text-base);
 }
 .cultureWorkBlock .projects .project .bottomContent .row .label {
   opacity: 0.2;
@@ -971,7 +971,7 @@
   top: 1.25vw;
   width: 100%;
   line-height: 1.25vw;
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   opacity: 0.4;
   pointer-events: none;
   z-index: 1;
@@ -991,7 +991,7 @@
   display: block;
   color: var(--hoy-ink);
   font-family: "Poppins-font", sans-serif;
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   line-height: 2.5vw;
   padding: 0.625vw 0.625vw 0.5vw;
   background: var(--hoy-paper);
@@ -1038,7 +1038,7 @@
   font-weight: 500;
   text-transform: uppercase;
   line-height: 2.8125vw;
-  font-size: 0.75vw;
+  font-size: var(--text-base);
   border: none;
   cursor: pointer;
   user-select: none;
@@ -1059,7 +1059,7 @@
 }
 .contactBlock .formWrapper .formStatus .errorText {
   color: var(--hoy-error);
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   margin-top: 0.75vw;
 }
 .contactBlock .formWrapper .loader {
@@ -1225,11 +1225,11 @@
 }
 .cookiesBlock #cmplz-document {
   max-width: 100%;
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   line-height: 1.5vw;
 }
 .cookiesBlock #cmplz-document h2 {
-  font-size: 1.5vw;
+  font-size: var(--text-small-title);
   line-height: 1.5vw;
   font-weight: 400;
   margin: 1.5vw 0;
@@ -1243,7 +1243,7 @@
   margin: 1.5vw 0 0.75vw;
 }
 .cookiesBlock #cmplz-document p {
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   line-height: 1.5vw;
   margin: 0.75vw 0;
 }
@@ -1261,7 +1261,7 @@
   list-style: disc inside;
 }
 .cookiesBlock #cmplz-document ul li {
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   line-height: 1.5vw;
 }
 /* Embedded consent widget (reference Complianz manage-consent styling) */
@@ -1277,7 +1277,7 @@
   font-weight: 500;
 }
 .cookiesBlock .cmplz-categories .cmplz-always-active {
-  font-size: 0.875vw;
+  font-size: var(--text-support);
   line-height: 1.5vw;
   margin-right: 1.25vw;
 }
