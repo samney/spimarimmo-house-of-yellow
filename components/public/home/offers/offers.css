@@ -1335,3 +1335,18 @@
     inset-inline-start: 4.5vw;
   }
 }
+
+/* Link from the homepage instance to the canonical full-detail page. */
+.offDetailLink {
+  display: inline-block;
+  margin-top: var(--space-xs);
+  color: var(--on-surface);
+  font-size: var(--text-support);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.offDetailLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}

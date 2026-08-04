@@ -15,7 +15,12 @@
     "offres": "Offers",
     "blog": "Blog",
     "faq": "FAQ",
-    "bibliotheque": "Library"
+    "bibliotheque": "Library",
+    "socialsPending": "Social media — links to be confirmed",
+    "socials": {
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    }
   },
   "impact": {
     "eyebrow": "Key figures",
@@ -611,7 +616,8 @@
         "title": "Dedicated support",
         "sub": "A proposal tailored to your project"
       }
-    }
+    },
+    "detailCta": "See the full Offers page"
   },
   "placeholder": {
     "title": "SPIMARIMMO",

@@ -109,6 +109,8 @@
   --spimar-positive: #1f7a3d;
   --spimar-critical: #a3231d;
   --spimar-focus: #0b5cd5;
+  /* Elevation for floating panels (submenus). One place, so depth is uniform. */
+  --shadow-raised: 0 0.55vw 1.6vw rgb(20 20 15 / 10%);
 
   /* --- L1: spacing scale ---------------------------------------------------
      Viewport-relative like the type ladder so rhythm scales with composition

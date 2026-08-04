@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { SpimarWordmark, PlusIcon } from "./logos";
+import { SpimarWordmark, PlusIcon, InstagramIcon, LinkedInIcon } from "./logos";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 
 /* Global header — specification §04.
@@ -27,20 +27,25 @@ import { Marquee } from "@/components/primitives/motion/Marquee";
 type NavChild = { href: string; key: string };
 type NavItem = { href: string; key: string; children?: readonly NavChild[] };
 
+/* Owner nav contract (2026-08-04): Home first; Exposer's children ANCHOR to
+   the homepage sections (the child routes stay alive for deep links); the
+   primary CTA button covers Devenir exposant, so it leaves the dropdown;
+   Offres is a top-level item before Ressources, landing on the full-detail
+   page; Ressources keeps its standalone pages. */
 const NAV: readonly NavItem[] = [
+  { href: "/", key: "home" },
   { href: "/salons", key: "salons" },
   {
     href: "/exposer",
     key: "exposer",
     children: [
       { href: "/pourquoi-spimar", key: "pourquoiSpimar" },
-      { href: "/exposer/methode", key: "methode" },
-      { href: "/exposer/visibilite", key: "visibilite" },
-      { href: "/exposer/offres", key: "offres" },
-      { href: "/exposer/devenir-exposant", key: "becomeExhibitor" },
+      { href: "/#methode", key: "methode" },
+      { href: "/#visibilite", key: "visibilite" },
     ],
   },
   { href: "/etudes-de-cas", key: "etudesDeCas" },
+  { href: "/exposer/offres", key: "offres" },
   {
     href: "/ressources",
     key: "ressources",
@@ -50,6 +55,14 @@ const NAV: readonly NavItem[] = [
       { href: "/faq", key: "faq" },
     ],
   },
+];
+
+/* SPIMAR's social profiles are not validated yet (content-honesty rule: no
+   invented URLs). The icons hold the reference placement and activate the day
+   the owner supplies the links. */
+const SOCIALS: readonly { key: "instagram" | "linkedin"; href: string | null }[] = [
+  { key: "instagram", href: null },
+  { key: "linkedin", href: null },
 ];
 
 /* §07 primary conversion. The brochure is the deliberately lighter secondary
@@ -138,8 +151,10 @@ export function SiteHeader() {
                             : undefined
                         }
                         aria-current={pathname === item.href ? "page" : undefined}
+                        aria-haspopup={item.children ? "true" : undefined}
                       >
                         {t(item.key)}
+                        {item.children ? <span className="navCaret" aria-hidden="true" /> : null}
                       </Link>
                       {item.children ? (
                         <ul className="subMenu">
@@ -170,6 +185,31 @@ export function SiteHeader() {
             </div>
           </div>
           <div className="right">
+            <div className="headerSocials">
+              {SOCIALS.map((social) =>
+                social.href ? (
+                  <a
+                    key={social.key}
+                    className="socialLink"
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={t(`socials.${social.key}`)}
+                  >
+                    {social.key === "instagram" ? <InstagramIcon /> : <LinkedInIcon />}
+                  </a>
+                ) : (
+                  <span
+                    key={social.key}
+                    className="socialLink isPending"
+                    title={t("socialsPending")}
+                    aria-hidden="true"
+                  >
+                    {social.key === "instagram" ? <InstagramIcon /> : <LinkedInIcon />}
+                  </span>
+                ),
+              )}
+            </div>
             <div className="buttons">
               <Link className="button" href={PRIMARY_CTA} title={t("becomeExhibitor")}>
                 <span className="label">

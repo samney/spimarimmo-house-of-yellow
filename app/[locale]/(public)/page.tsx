@@ -29,7 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <VisibilitySection />
       <PromotersSection />
       <ProofSection />
-      <OffersSection />
+      <OffersSection detailHref="/exposer/offres" />
       <GallerySection />
       <ResourcesSection />
       <BecomeExhibitorSection />

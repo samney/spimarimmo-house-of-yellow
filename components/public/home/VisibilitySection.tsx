@@ -18,7 +18,7 @@ export function VisibilitySection({ deviceHref = "/exposer" }: VisibilitySection
   const t = useTranslations("visibility");
 
   return (
-    <section className="visSection" aria-labelledby="vis-title">
+    <section id="visibilite" className="visSection" aria-labelledby="vis-title">
       <div className="visInner">
         <header className="visHeader">
           <div className="visHeadings">

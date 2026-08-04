@@ -50,6 +50,7 @@ export function MethodSection({
 
   return (
     <section
+      id="methode"
       className="methodSection"
       aria-labelledby={headingId}
       data-static={staticRender ? "true" : undefined}

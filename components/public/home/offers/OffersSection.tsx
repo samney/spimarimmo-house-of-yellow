@@ -105,7 +105,7 @@ const SELECT_CHOICES: Record<SelectField, readonly string[]> = {
   surface: ["compact", "medium", "large", "tbd"],
 };
 
-export function OffersSection() {
+export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
   const t = useTranslations("offers");
   const locale = useLocale();
   const pathname = usePathname();
@@ -232,6 +232,11 @@ export function OffersSection() {
                 ? t("header.request.lead", { tier: t(`tiers.${tierEntry.key}.name`) })
                 : t(`header.${headerKey}.lead`)}
             </p>
+            {detailHref ? (
+              <Link className="offDetailLink" href={detailHref}>
+                {t("detailCta")}
+              </Link>
+            ) : null}
           </div>
           <ol className="offStepper" aria-label={t("stepperLabel")}>
             {(["edition", "offer", "request"] as const).map((step, i) => {

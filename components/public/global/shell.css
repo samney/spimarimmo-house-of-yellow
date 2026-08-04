@@ -808,3 +808,87 @@ header .menu .subMenu a::after {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
+
+/* --- Nav quality pass (owner notes 2026-08-04) ------------------------------ */
+
+/* Caret: tells sighted users a submenu exists (the a11y gap), rotates open. */
+.menu .hasChildren > a .navCaret {
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-left: 0.45em;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-15%);
+  transition: transform var(--dur-micro) var(--ease-out-ref);
+}
+.menu .hasChildren:hover > a .navCaret,
+.menu .hasChildren:focus-within > a .navCaret {
+  transform: rotate(225deg) translateY(15%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu .hasChildren > a .navCaret {
+    transition: none;
+  }
+}
+
+/* Submenu depth + hierarchy: raised paper panel, uniform elevation token,
+   quiet hover fill, breathing room between trigger and panel. */
+header .menu .subMenu {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-raised);
+  padding: var(--space-2xs) 0;
+  margin-top: 0.35vw;
+}
+header .menu .subMenu a,
+header.light .headerBar .menu .subMenu a {
+  padding: 0.4vw 1.25vw;
+  transition: background-color var(--dur-micro) var(--ease-out-ref);
+}
+header .menu .subMenu a:hover,
+header .menu .subMenu a:focus-visible {
+  background: var(--surface-muted);
+}
+
+/* Social icons — reference placement at the right, before the CTA. Pending
+   state is honest: no invented URLs, muted glyphs, activated when the owner
+   supplies links. */
+.headerSocials {
+  display: flex;
+  align-items: center;
+  gap: 0.9vw;
+  margin-right: 1.1vw;
+}
+.headerSocials .socialLink {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+}
+.headerSocials .socialLink.isPending {
+  opacity: 0.45;
+  cursor: default;
+}
+.headerSocials .socialLink svg {
+  width: 1.15vw;
+  height: 1.15vw;
+  min-width: 14px;
+  min-height: 14px;
+}
+
+/* Anchored homepage sections land below the fixed bar, not underneath it. */
+#methode,
+#visibilite {
+  scroll-margin-top: 6vw;
+}
+
+@media (max-width: 1023px) {
+  .headerSocials {
+    display: none;
+  }
+}
+@media (max-width: 580px) {
+  #methode,
+  #visibilite {
+    scroll-margin-top: 16vw;
+  }
+}
