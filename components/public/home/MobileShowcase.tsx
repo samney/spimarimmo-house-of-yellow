@@ -437,83 +437,108 @@ export function MobileShowcase() {
           onFocusCapture={() => setPaused(true)}
           onBlurCapture={() => setPaused(false)}
         >
-          <div className="pillarPhone">
-            <div className="pillarPhone__frame">
-              {/* Device chrome, as the reference has it: pill camera, clock and
+          {/* Approved Section-1 reference: the pillar's cards float AROUND the
+              device as a connected diagram. Same lo-fi treatment as inside the
+              phone — inventing screen photography would be fake content. */}
+          <div className="pillarDiagram">
+            <div className="pillarAside pillarAside--left" aria-hidden="true">
+              {pillar.cards.slice(0, 2).map((c) => (
+                <div className="pillarAside__card" key={`left-${c.title}`}>
+                  <LofiCard card={c} />
+                </div>
+              ))}
+            </div>
+            <div className="pillarPhone">
+              <div className="pillarPhone__frame">
+                {/* Device chrome, as the reference has it: pill camera, clock and
                 signal/wifi/battery icons. It is what makes the frame read as a
                 handset rather than a rounded rectangle. */}
-              <span className="pillarPhone__notch" aria-hidden="true">
-                <span className="pillarPhone__lens" />
-              </span>
-              <div className="pillarPhone__status" aria-hidden="true">
-                <span className="pillarPhone__time">09:41</span>
-                <span className="pillarPhone__signal">
-                  <svg viewBox="0 0 69 12" fill="none">
-                    <path d="M1 8h3v4H1zM6 5.5h3V12H6zM11 3h3v9h-3z" fill="currentColor" />
-                    <path
-                      d="M25.5 4.2c2.3-1.9 5.7-1.9 8 0M23 1.6c3.7-3 9.3-3 13 0M28 7c1-.8 2.5-.8 3.5 0"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                    />
-                    <rect
-                      x="48"
-                      y="2"
-                      width="17"
-                      height="8"
-                      rx="2.2"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                    />
-                    <rect x="49.5" y="3.5" width="12" height="5" rx="1" fill="currentColor" />
-                    <path
-                      d="M66.5 5v2"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                <span className="pillarPhone__notch" aria-hidden="true">
+                  <span className="pillarPhone__lens" />
                 </span>
-              </div>
-              <div className="pillarPhone__screen">
-                <div className="pillarPhone__chips" aria-hidden="true">
-                  {pillar.chips.map((c) => (
-                    <span className="pillarChip" key={c}>
-                      {c}
-                    </span>
-                  ))}
+                <div className="pillarPhone__status" aria-hidden="true">
+                  <span className="pillarPhone__time">09:41</span>
+                  <span className="pillarPhone__signal">
+                    <svg viewBox="0 0 69 12" fill="none">
+                      <path d="M1 8h3v4H1zM6 5.5h3V12H6zM11 3h3v9h-3z" fill="currentColor" />
+                      <path
+                        d="M25.5 4.2c2.3-1.9 5.7-1.9 8 0M23 1.6c3.7-3 9.3-3 13 0M28 7c1-.8 2.5-.8 3.5 0"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                      />
+                      <rect
+                        x="48"
+                        y="2"
+                        width="17"
+                        height="8"
+                        rx="2.2"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                      />
+                      <rect x="49.5" y="3.5" width="12" height="5" rx="1" fill="currentColor" />
+                      <path
+                        d="M66.5 5v2"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
                 </div>
+                {/* Approved Section-1 reference: the cards float AROUND the device as a
 
-                {/* Keyed so each card mounts fresh and plays its own entrance. */}
-                <div className="pillarPhone__stage">
-                  <LofiCard card={current} key={`${pillar.num}-${card}`} />
-                </div>
+                  diagram, connected by rails. Same lo-fi treatment as inside the
 
-                <div className="pillarPhone__nav" aria-hidden="true">
-                  {[
-                    "M3 11 12 4l9 7v9h-6v-6h-6v6H3z",
-                    "M5 4h14v16H5zM5 9h14M9 4v5",
-                    "M4 6h16v12H4zM4 10h16",
-                    "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0",
-                  ].map((d, i) => (
-                    <span className={`pillarPhone__navItem${i === 0 ? " is-on" : ""}`} key={d}>
-                      <svg viewBox="0 0 24 24" fill="none">
-                        <path
-                          d={d}
-                          stroke="currentColor"
-                          strokeWidth="1.7"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  ))}
-                </div>
-                <div className="pillarPhone__progress" aria-hidden="true">
-                  {pillar.cards.map((_, i) => (
-                    <span className={`pillarPhone__pip${i === card ? " is-on" : ""}`} key={i} />
-                  ))}
+                  phone — inventing screen photography would be fake content. */}
+
+                <div className="pillarPhone__screen">
+                  <div className="pillarPhone__chips" aria-hidden="true">
+                    {pillar.chips.map((c) => (
+                      <span className="pillarChip" key={c}>
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Keyed so each card mounts fresh and plays its own entrance. */}
+                  <div className="pillarPhone__stage">
+                    <LofiCard card={current} key={`${pillar.num}-${card}`} />
+                  </div>
+
+                  <div className="pillarPhone__nav" aria-hidden="true">
+                    {[
+                      "M3 11 12 4l9 7v9h-6v-6h-6v6H3z",
+                      "M5 4h14v16H5zM5 9h14M9 4v5",
+                      "M4 6h16v12H4zM4 10h16",
+                      "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0",
+                    ].map((d, i) => (
+                      <span className={`pillarPhone__navItem${i === 0 ? " is-on" : ""}`} key={d}>
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path
+                            d={d}
+                            stroke="currentColor"
+                            strokeWidth="1.7"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="pillarPhone__progress" aria-hidden="true">
+                    {pillar.cards.map((_, i) => (
+                      <span className={`pillarPhone__pip${i === card ? " is-on" : ""}`} key={i} />
+                    ))}
+                  </div>
                 </div>
               </div>
+            </div>
+            <div className="pillarAside pillarAside--right" aria-hidden="true">
+              {pillar.cards.slice(2).map((c) => (
+                <div className="pillarAside__card" key={`right-${c.title}`}>
+                  <LofiCard card={c} />
+                </div>
+              ))}
             </div>
           </div>
 

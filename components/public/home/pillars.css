@@ -97,13 +97,15 @@
   grid-column: 1 / -1;
   grid-row: 3;
   display: grid;
-  /* Reference diagram row: pillar copy left, device in the true centre. */
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  /* Reference diagram row: pillar copy left, the diagram taking the width it
+     needs so the copy is not crushed. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);
   align-items: center;
   gap: 3.5vw;
 }
 .pillars__body > :first-child {
   grid-column: 2;
+  grid-row: 1;
 }
 .pillars__body .pillars__lead {
   grid-column: 1;
@@ -675,4 +677,89 @@
 }
 .pillars__leadBody {
   color: var(--on-surface-muted);
+}
+
+/* --- Diagram: cards floating around the device (Section-1 reference) -------- */
+.pillarDiagram {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 2vw;
+  position: relative;
+}
+.pillarAside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6vw;
+  position: relative;
+}
+.pillarAside--left {
+  align-items: flex-end;
+}
+.pillarAside--right {
+  align-items: flex-start;
+}
+.pillarAside__card {
+  /* The lo-fi kit is sized in cqw against the phone container; each aside card
+     becomes its own container so the same kit scales to the card, not to the
+     viewport (which rendered them enormous). */
+  container-type: inline-size;
+  width: 16vw;
+  min-width: 170px;
+  background: var(--surface-raised);
+  border: 1px solid rgb(20 20 15 / 12%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0.6vw 1.8vw rgb(20 20 15 / 8%);
+  padding: var(--space-sm);
+  position: relative;
+}
+/* Connector rail from each card toward the device, as in the reference. */
+.pillarAside--left .pillarAside__card::after,
+.pillarAside--right .pillarAside__card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 2vw;
+  border-top: 1px dashed var(--spimar-gold-deep);
+  opacity: 0.55;
+}
+.pillarAside--left .pillarAside__card::after {
+  inset-inline-start: 100%;
+}
+.pillarAside--right .pillarAside__card::after {
+  inset-inline-end: 100%;
+}
+/* The lo-fi card renders on ivory here, not inside the dark phone. */
+.pillarAside__card .lofi {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.pillarAside__card .lofi__headTitle {
+  color: var(--on-surface);
+  opacity: 1;
+}
+.pillarAside__card .lofi__caption,
+.pillarAside__card .lofi__fieldLabel {
+  color: var(--on-surface-muted);
+  opacity: 1;
+}
+.pillarAside__card .lofi__bar {
+  background: rgb(20 20 15 / 20%);
+}
+
+@media (max-width: 1080px) {
+  .pillarAside__card {
+    width: 20vw;
+  }
+}
+@media (max-width: 900px) {
+  /* Below the diagram breakpoint the asides would crush the device; the cards
+     already appear in sequence inside the phone, so nothing is lost. */
+  .pillarDiagram {
+    grid-template-columns: 1fr;
+  }
+  .pillarAside {
+    display: none;
+  }
 }
