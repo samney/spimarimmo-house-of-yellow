@@ -70,26 +70,23 @@
   height: 1.1em;
 }
 
-/* Content column: wordmark -> eyebrow -> statement -> lead. */
+/* Centred hierarchy: eyebrow -> statement -> lead, optically centred in the
+   frame with the proof strip anchored below it. */
 .headerBigBlock .heroContent {
   position: absolute;
-  left: var(--space-gutter);
-  bottom: var(--space-xl);
+  left: 50%;
+  top: 46%;
+  translate: -50% -50%;
   z-index: var(--z-content);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-sm);
-  max-width: var(--measure-prose);
+  width: min(72vw, 100%);
+  padding-inline: var(--space-gutter);
+  text-align: center;
   color: var(--on-inverse);
   pointer-events: none;
-}
-
-.heroWordmark {
-  width: 18vw;
-  min-width: 150px;
-  height: auto;
-  margin-bottom: var(--space-xs);
 }
 
 .heroEyebrow {
@@ -105,9 +102,10 @@
   margin: 0;
   font-size: var(--text-h1);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.01em;
   text-wrap: balance;
+  max-width: 24ch;
 }
 
 .heroLead {
@@ -115,7 +113,65 @@
   font-size: var(--text-support);
   line-height: 1.55;
   color: var(--on-inverse);
-  max-width: 34vw;
+  max-width: 62ch;
+}
+
+/* Social proof: the spec's "bande de confiance", visible before first scroll.
+   Same logos and consent line as section 12 — never a claim they don't carry. */
+.heroProof {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-lg);
+  translate: -50% 0;
+  z-index: var(--z-content);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: min(80vw, 100%);
+  padding-inline: var(--space-gutter);
+  text-align: center;
+  pointer-events: none;
+}
+
+.heroProofLabel {
+  margin: 0;
+  color: var(--on-inverse);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.heroProofLogos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.heroProofLogo img {
+  width: auto;
+  height: 3.1vw;
+  min-height: 30px;
+  max-width: 11vw;
+  object-fit: contain;
+  /* The files are colour marks on transparent ground; over footage they read
+     as one confident band rather than five competing brand colours. */
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
+
+.heroProofConsent {
+  margin: 0;
+  color: var(--on-inverse);
+  font-size: var(--text-base);
+  opacity: 0.7;
 }
 
 /* --- Modal player ---------------------------------------------------------- */
@@ -206,25 +262,30 @@
 }
 
 @media (max-width: 1080px) {
-  .heroLead {
-    max-width: 46vw;
+  .headerBigBlock .heroContent {
+    width: min(88vw, 100%);
   }
 }
 
 @media (max-width: 580px) {
   .headerBigBlock .heroContent {
-    left: var(--space-gutter);
-    right: var(--space-gutter);
-    bottom: var(--space-lg);
-    max-width: none;
+    top: 44%;
+    width: 100%;
+    gap: var(--space-xs);
   }
 
-  .heroWordmark {
-    width: 44vw;
+  .heroProof {
+    width: 100%;
+    gap: var(--space-2xs);
   }
 
-  .heroLead {
-    max-width: none;
+  .heroProofLogos {
+    gap: var(--space-md);
+  }
+
+  .heroProofLogo img {
+    height: 5vw;
+    max-width: 22vw;
   }
 
   .heroModalPanel {

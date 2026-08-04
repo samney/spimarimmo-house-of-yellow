@@ -979,11 +979,12 @@
     "outroCta": "Devenir exposant"
   },
   "hero": {
-    "eyebrow": "Salons immobiliers privés",
-    "title": "Rencontrez des acquéreurs MRE qualifiés.",
-    "lead": "Une plateforme sélective où les promoteurs présentent leurs projets à une audience internationale qualifiée. Pensée pour la clarté, la confiance et la décision.",
+    "eyebrow": "Promoteurs immobiliers",
+    "title": "Le partenaire de référence des promoteurs immobiliers marocains à l’international.",
+    "lead": "SPIMARIMMO organise des salons dédiés aux MRE et aux investisseurs internationaux, pour rencontrer une clientèle qualifiée prête à concrétiser son projet.",
     "playVideo": "Voir la vidéo",
     "playerLabel": "Vidéo de présentation SPIMARIMMO",
-    "closePlayer": "Fermer la vidéo"
+    "closePlayer": "Fermer la vidéo",
+    "proofLabel": "Ils exposent avec SPIMARIMMO"
   }
 }

@@ -1,20 +1,32 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { HeroVideoStage } from "./HeroVideoStage";
 
 /* Hero — owner rebuild (2026-08-04, D-024).
 
-   Keeps the accepted fullscreen hero VIEW; the reference's side text columns,
-   centred logo glyph, star marks and visitor quote are removed. The white
-   SPIMARIMMO wordmark carries the brand, the copy is the mobile site's hero
-   content, and the CTA lives in the header — the hero carries none.
+   Keeps the accepted fullscreen VIEW; the reference's side text columns,
+   centred logo glyph, star marks and visitor quote are removed, and so is the
+   oversized wordmark (the header already carries the mark).
 
-   The owner-supplied exhibition footage autoplays muted behind the content
-   (manifest-declared, rights-approved); reduced motion and save-data fall
-   back to the poster through ResilientVideo. Clicking the stage opens the
-   player modal. */
+   Copy is the canonical specification §06 "Hero et première impression", not
+   the mobile site's English pitch. The CTA the spec asks for lives in the
+   header by owner decision, so the hero carries none.
+
+   The social-proof strip reuses the promoter logos that section 12 already
+   publishes, and carries the same consent line — the spec's "bande de
+   confiance visible avant le premier défilement". */
+const PROOF_LOGOS: readonly { slug: string; name: string; width: number; height: number }[] = [
+  { slug: "prestigia", name: "Prestigia", width: 500, height: 230 },
+  { slug: "saham-immobilier", name: "Saham Immobilier", width: 1200, height: 1054 },
+  { slug: "addoha", name: "Addoha", width: 200, height: 107 },
+  { slug: "coralia", name: "Coralia", width: 1136, height: 568 },
+  { slug: "cgi", name: "CGI", width: 300, height: 300 },
+];
+
 export async function HeroSection() {
   const t = await getTranslations("hero");
+  const tp = await getTranslations("promoters");
 
   return (
     <section className="headerBigBlock noMargin scrollSection">
@@ -28,12 +40,26 @@ export async function HeroSection() {
         </div>
 
         <div className="heroContent">
-          {/* eslint-disable-next-line @next/next/no-img-element -- the wordmark
-              is a vector brand mark sized by CSS, not a raster photograph. */}
-          <img alt="SPIMARIMMO" className="heroWordmark" src="/spimarimmo-wordmark-white.svg" />
           <p className="heroEyebrow">{t("eyebrow")}</p>
           <SplitTitle as="h1" className="heroTitle" text={t("title")} />
           <p className="heroLead">{t("lead")}</p>
+        </div>
+
+        <div className="heroProof">
+          <p className="heroProofLabel">{t("proofLabel")}</p>
+          <ul className="heroProofLogos" role="list">
+            {PROOF_LOGOS.map((logo) => (
+              <li key={logo.slug} className="heroProofLogo">
+                <Image
+                  alt={logo.name}
+                  height={logo.height}
+                  src={`/promoters/${logo.slug}.png`}
+                  width={logo.width}
+                />
+              </li>
+            ))}
+          </ul>
+          <p className="heroProofConsent">{tp("consent")}</p>
         </div>
       </div>
     </section>

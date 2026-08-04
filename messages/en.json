@@ -979,11 +979,12 @@
     "outroCta": "Become an exhibitor"
   },
   "hero": {
-    "eyebrow": "Real estate private exhibitions",
-    "title": "Meet high-intent MRE buyers.",
-    "lead": "A curated platform where premium developers present projects to qualified international audiences. Built for clarity, trust, and action.",
+    "eyebrow": "Property developers",
+    "title": "The reference partner of Moroccan property developers abroad.",
+    "lead": "SPIMARIMMO runs exhibitions dedicated to Moroccans living abroad and international investors, to meet a qualified audience ready to act on its project.",
     "playVideo": "Watch the video",
     "playerLabel": "SPIMARIMMO presentation video",
-    "closePlayer": "Close the video"
+    "closePlayer": "Close the video",
+    "proofLabel": "They exhibit with SPIMARIMMO"
   }
 }
