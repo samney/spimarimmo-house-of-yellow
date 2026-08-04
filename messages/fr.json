@@ -616,5 +616,209 @@
     "title": "Cette page n'existe pas.",
     "body": "La page que vous recherchez a été déplacée ou n'est pas disponible.",
     "home": "Accueil"
+  },
+  "gallery": {
+    "eyebrow": "Preuve terrain",
+    "title": "Les salons SPIMAR, vus de l’intérieur",
+    "lead": "Stands, rencontres, conférences et affluence — chaque média est rattaché à une édition et à une source validée.",
+    "trustStrong": "Médias réels uniquement",
+    "trustText": "Aucun visuel n’est publié sans droits et provenance.",
+    "editionSelectLabel": "Filtrer par édition",
+    "allEditions": "Toutes les éditions",
+    "cities": {
+      "paris": "Paris",
+      "montreal": "Montréal",
+      "bruxelles": "Bruxelles",
+      "abu-dhabi": "Abu Dhabi"
+    },
+    "categories": {
+      "all": "Tous",
+      "stands": "Stands",
+      "affluence": "Affluence",
+      "rendezvous": "Rendez-vous",
+      "conferences": "Conférences",
+      "networking": "Networking"
+    },
+    "validatedCount": "médias validés",
+    "demoBadge": "Aperçu de démonstration",
+    "editionPending": "édition à confirmer",
+    "editionPendingUpper": "Édition à confirmer",
+    "items": {
+      "film": {
+        "title": "Film de l’édition"
+      },
+      "stand": {
+        "title": "Stand & présentation"
+      },
+      "rdv": {
+        "title": "Rendez-vous qualifié"
+      },
+      "affluence": {
+        "title": "Affluence"
+      },
+      "conference": {
+        "title": "Conférence"
+      },
+      "interview": {
+        "title": "Interview"
+      },
+      "networking": {
+        "title": "Networking"
+      },
+      "espace": {
+        "title": "Espace stand"
+      }
+    },
+    "meta": {
+      "edition": "Édition",
+      "city": "Ville",
+      "venue": "Lieu",
+      "rights": "Droits",
+      "pending": "À confirmer",
+      "allCities": "Toutes",
+      "rightsPending": "Validation requise"
+    },
+    "showGallery": "Voir toute la galerie",
+    "hideGallery": "Masquer la galerie",
+    "exploreSalons": "Explorer les salons"
+  },
+  "resources": {
+    "eyebrow": "Ressources exposants",
+    "title": "Préparez votre salon avec des informations utiles.",
+    "lead": "Guides, calendriers, analyses de marché et réponses pratiques pour sécuriser votre décision.",
+    "pendingSourceDate": "Source et date à valider",
+    "feature": {
+      "chip": "Dossier marché",
+      "title": "Comprendre les attentes immobilières des MRE",
+      "cta": "Lire le dossier"
+    },
+    "toolbox": {
+      "label": "Votre boîte à outils",
+      "validatedRequired": "Version validée requise",
+      "sourcePending": "Source à valider",
+      "download": "Télécharger",
+      "items": {
+        "brochure": "Brochure exposant",
+        "calendar": "Calendrier des salons",
+        "checklist": "Checklist de préparation",
+        "report": "Exemple de rapport"
+      }
+    },
+    "analyses": {
+      "label": "Analyses pour décider",
+      "featured": "Les critères qui structurent un projet immobilier MRE",
+      "read": "Lire l’analyse",
+      "items": {
+        "strategy": "Préparer une stratégie salon à l’international",
+        "interview": "Entretien avec une direction commerciale"
+      }
+    },
+    "faq": {
+      "label": "Vos questions avant d’exposer",
+      "all": "Voir toutes les réponses",
+      "items": {
+        "choose": {
+          "q": "Comment choisir le bon salon ?",
+          "a": "Le choix part de vos marchés cibles et de vos objectifs commerciaux : un conseiller exposants vous aide à comparer les éditions et à prioriser."
+        },
+        "proposal": {
+          "q": "Que comprend une proposition ?",
+          "a": "Une proposition détaille l’espace, la visibilité et les options retenues pour votre projet, avec des conditions confirmées lors de la validation commerciale."
+        },
+        "qualified": {
+          "q": "Comment les visiteurs sont-ils qualifiés ?",
+          "a": "Le dispositif d’inscription et d’accueil recueille le projet et les intentions des visiteurs avant et pendant le salon, selon la méthodologie publiée."
+        },
+        "leads": {
+          "q": "Quand et comment les leads sont-ils transmis ?",
+          "a": "Les contacts recueillis sur votre stand et via le dispositif digital vous sont transmis selon le cadre défini dans votre offre, pendant et après le salon."
+        }
+      }
+    }
+  },
+  "exhibit": {
+    "eyebrow": "Devenez exposant",
+    "title": "Construisons votre prochaine présence à l’international.",
+    "lead": "Parlez-nous de votre marché, de vos objectifs et de l’édition qui vous intéresse. Notre équipe préparera une proposition adaptée après validation de votre demande.",
+    "stepsLabel": "Comment ça se passe",
+    "steps": {
+      "edition": "Choisissez une édition",
+      "goals": "Précisez vos objectifs",
+      "team": "Échangez avec notre équipe"
+    },
+    "project": {
+      "title": "Votre projet d’exposition",
+      "editionLabel": "Salon visé",
+      "editionPlaceholder": "Sélectionner une édition",
+      "objectiveLabel": "Objectif principal",
+      "objectives": {
+        "leads": "Générer des leads",
+        "visibility": "Accroître la visibilité",
+        "sales": "Développer les ventes"
+      },
+      "noCommitment": "Aucun engagement",
+      "responseTime": "Délai de réponse à confirmer"
+    },
+    "form": {
+      "title": "Recevoir une proposition personnalisée",
+      "optional": "facultatif",
+      "company": {
+        "label": "Société",
+        "placeholder": "Nom de votre société"
+      },
+      "name": {
+        "label": "Nom et fonction",
+        "placeholder": "Nom complet et fonction"
+      },
+      "email": {
+        "label": "E-mail professionnel",
+        "placeholder": "ex. nom@societe.ma"
+      },
+      "phone": {
+        "label": "Téléphone / WhatsApp",
+        "placeholder": "ex. +212 6 00 00 00 00"
+      },
+      "budget": {
+        "label": "Budget indicatif",
+        "placeholder": "Indiquez une fourchette si possible"
+      },
+      "message": {
+        "label": "Votre message",
+        "placeholder": "Décrivez votre marché, vos objectifs et toute information utile…"
+      },
+      "consent": "J’accepte que SPIMAR utilise mes informations pour traiter cette demande.",
+      "submit": "Envoyer ma demande",
+      "sending": "Envoi en cours…",
+      "disclaimer": "L’envoi du formulaire ne confirme ni disponibilité, ni prix, ni réservation.",
+      "emptyMessage": "Demande de proposition personnalisée.",
+      "errors": {
+        "company": "Indiquez le nom de votre société.",
+        "name": "Indiquez votre nom et votre fonction.",
+        "email": "Saisissez une adresse e-mail valide.",
+        "consent": "Le consentement est requis pour traiter la demande.",
+        "rateLimited": "Trop de demandes successives. Merci de réessayer dans quelques minutes.",
+        "generic": "La demande n’a pas pu être transmise. Merci de vérifier les champs et de réessayer."
+      }
+    },
+    "sent": {
+      "badge": "Demande envoyée",
+      "title": "Merci pour votre demande.",
+      "text": "Votre projet a été transmis à l’équipe exposants. Un conseiller vous recontacte pour préparer une proposition adaptée.",
+      "duplicateText": "Cette demande était déjà enregistrée : l’équipe exposants dispose de vos informations."
+    },
+    "reassure": {
+      "tailored": {
+        "title": "Proposition adaptée",
+        "sub": "Une proposition construite selon votre marché, vos objectifs et l’édition sélectionnée."
+      },
+      "dedicated": {
+        "title": "Interlocuteur dédié",
+        "sub": "Un contact unique vous accompagne à chaque étape de votre projet d’exposition."
+      },
+      "followup": {
+        "title": "Suivi avant, pendant et après",
+        "sub": "Nous restons à vos côtés pour maximiser l’impact de votre participation."
+      }
+    }
   }
 }

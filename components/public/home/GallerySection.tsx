@@ -1,0 +1,372 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon, VisitorsIcon } from "./impactIcons";
+import { CameraIcon, CheckCircleIcon, MicIcon } from "./visibilityIcons";
+import { PlaySolidIcon, VolumeIcon, FullscreenIcon } from "./proofIcons";
+import { PinIcon } from "./offers/offersIcons";
+import {
+  CaptionsIcon,
+  ChevronRightIcon,
+  ExpandIcon,
+  GearIcon,
+  ImageIcon,
+  SkipIcon,
+} from "./galleryIcons";
+
+/* Section 11 — Preuve terrain: the salons seen from the inside.
+ *
+ * Media-proof gallery from the approved section-11 design. The design is
+ * explicitly honest about its own media state, and every one of those devices
+ * is kept: each tile carries the "aperçu de démonstration" badge, editions
+ * read "à confirmer", rights read "validation requise", and the toolbar count
+ * shows "— médias validés" because none are. The photographs are the
+ * owner-supplied demonstration set from docs/assets-UX-UI/section11/assets,
+ * mirrored to public/gallery — presented as demo previews, never as
+ * documentary evidence of a real edition.
+ *
+ * Interaction model:
+ * - Edition context: a select plus quick city pills; it drives the metadata
+ *   bar only, since no media is tied to a validated edition yet.
+ * - Category pills filter the collection; the first matching item takes the
+ *   stage and the rest form the thumbnail rail.
+ * - Any rail tile promotes itself to the stage. Player chrome renders only
+ *   for the film item and is a decorative, inert composition (the video
+ *   manifest still declares zero deployable assets).
+ * - "Voir toute la galerie" expands the full demo grid downward, in the same
+ *   disclosure pattern as section 08. "Explorer les salons" goes to /salons.
+ * - The design's grid/list view toggle has no designed list state, so it is
+ *   deliberately not built rather than invented. */
+
+type CategoryKey = "stands" | "affluence" | "rendezvous" | "conferences" | "networking";
+type IconComponent = (props: { className?: string }) => React.JSX.Element;
+
+type MediaItem = {
+  readonly id: string;
+  readonly file: string;
+  readonly category: CategoryKey;
+  readonly kind: "video" | "photo";
+  readonly Icon: IconComponent;
+};
+
+const MEDIA: readonly MediaItem[] = [
+  { id: "film", file: "film-edition", category: "stands", kind: "video", Icon: CameraIcon },
+  { id: "stand", file: "stand-presentation", category: "stands", kind: "photo", Icon: ImageIcon },
+  { id: "rdv", file: "rendez-vous", category: "rendezvous", kind: "photo", Icon: VisitorsIcon },
+  { id: "affluence", file: "affluence", category: "affluence", kind: "photo", Icon: VisitorsIcon },
+  { id: "conference", file: "conference", category: "conferences", kind: "photo", Icon: MicIcon },
+  { id: "interview", file: "interview", category: "conferences", kind: "photo", Icon: CameraIcon },
+  {
+    id: "networking",
+    file: "networking",
+    category: "networking",
+    kind: "photo",
+    Icon: VisitorsIcon,
+  },
+  { id: "espace", file: "espace-stand", category: "stands", kind: "photo", Icon: ImageIcon },
+];
+
+const CITIES = ["paris", "montreal", "bruxelles", "abu-dhabi"] as const;
+const CATEGORIES: readonly ("all" | CategoryKey)[] = [
+  "all",
+  "stands",
+  "affluence",
+  "rendezvous",
+  "conferences",
+  "networking",
+];
+
+export function GallerySection() {
+  const t = useTranslations("gallery");
+  const [city, setCity] = useState<string>("paris");
+  const [category, setCategory] = useState<"all" | CategoryKey>("all");
+  const [selected, setSelected] = useState<string>("film");
+  const [expanded, setExpanded] = useState(false);
+
+  const filtered = MEDIA.filter((m) => category === "all" || m.category === category);
+  const stage = filtered.find((m) => m.id === selected) ?? filtered[0];
+  const rail = filtered.filter((m) => m.id !== stage?.id);
+  const stageIndex = stage ? filtered.indexOf(stage) : 0;
+
+  function pickCategory(next: "all" | CategoryKey) {
+    setCategory(next);
+    const nextItems = MEDIA.filter((m) => next === "all" || m.category === next);
+    if (!nextItems.some((m) => m.id === selected)) setSelected(nextItems[0]?.id ?? "film");
+  }
+
+  return (
+    <section className="galSection" aria-labelledby="gal-title">
+      <div className="galInner">
+        <header className="galHeader">
+          <p className="galEyebrow">
+            [ <span className="galEyebrowIndex">11</span> ] {t("eyebrow")}
+          </p>
+          <h2 className="galTitle" id="gal-title">
+            {t("title")}
+          </h2>
+          <p className="galLead">{t("lead")}</p>
+        </header>
+
+        <p className="galTrust">
+          <ShieldCheckIcon className="galTrustIcon" aria-hidden="true" />
+          <strong className="galTrustStrong">{t("trustStrong")}</strong>
+          <span className="galTrustText">{t("trustText")}</span>
+        </p>
+
+        <div className="galToolbar">
+          <div className="galToolGroup">
+            <label className="sr-only" htmlFor="gal-edition">
+              {t("editionSelectLabel")}
+            </label>
+            <span className="galSelectShell">
+              <CalendarIcon className="galSelectIcon" aria-hidden="true" />
+              <select
+                className="galEditionSelect"
+                id="gal-edition"
+                onChange={(e) => setCity(e.target.value)}
+                value={city}
+              >
+                <option value="all">{t("allEditions")}</option>
+                {CITIES.map((c) => (
+                  <option key={c} value={c}>
+                    {t(`cities.${c}`)}
+                  </option>
+                ))}
+              </select>
+            </span>
+            <ul className="galPills">
+              {CITIES.map((c) => (
+                <li key={c}>
+                  <button
+                    aria-pressed={city === c}
+                    className={`galPill${city === c ? " isDark" : ""}`}
+                    onClick={() => setCity(c)}
+                    type="button"
+                  >
+                    {t(`cities.${c}`)}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <ul className="galPills galPillsCats">
+            {CATEGORIES.map((c) => (
+              <li key={c}>
+                <button
+                  aria-pressed={category === c}
+                  className={`galPill${category === c ? " isGold" : ""}`}
+                  onClick={() => pickCategory(c)}
+                  type="button"
+                >
+                  {t(`categories.${c}`)}
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <p className="galValidatedCount">
+            <span aria-hidden="true">—</span> {t("validatedCount")}
+          </p>
+        </div>
+
+        {stage && (
+          <div className="galPanel">
+            <div className="galStageGrid">
+              <figure className="galStage">
+                <Image
+                  alt=""
+                  className="galStageImg"
+                  fill
+                  priority={false}
+                  sizes="(max-width: 580px) 88vw, 58vw"
+                  src={`/gallery/${stage.file}.png`}
+                />
+                <span className="galDemoBadge">{t("demoBadge")}</span>
+                <span className="galStageTopRight" aria-hidden="true">
+                  <span className="galCounter">{String(stageIndex + 1).padStart(2, "0")} / —</span>
+                  <span className="galExpandGlyph">
+                    <ExpandIcon className="galCtlIcon" />
+                  </span>
+                </span>
+                <figcaption className="galStageCaption">
+                  {stage.kind === "video" && (
+                    <span className="galStagePlay" aria-hidden="true">
+                      <PlaySolidIcon className="galStagePlayIcon" />
+                    </span>
+                  )}
+                  <span>
+                    <span className="galStageTitle">{t(`items.${stage.id}.title`)}</span>
+                    <span className="galStageSub">
+                      {city === "all" ? t("allEditions") : t(`cities.${city}`)} ·{" "}
+                      {t("editionPending")}
+                    </span>
+                  </span>
+                </figcaption>
+                {stage.kind === "video" && (
+                  <span className="galControls" aria-hidden="true">
+                    <PlaySolidIcon className="galCtlIcon" />
+                    <SkipIcon className="galCtlIcon" />
+                    <span className="galTime">00:24 / 02:18</span>
+                    <span className="galTrack">
+                      <span className="galTrackFill" />
+                      <span className="galTrackDot" />
+                    </span>
+                    <VolumeIcon className="galCtlIcon" />
+                    <CaptionsIcon className="galCtlIcon" />
+                    <GearIcon className="galCtlIcon" />
+                    <FullscreenIcon className="galCtlIcon" />
+                  </span>
+                )}
+              </figure>
+
+              <div className="galSide">
+                {rail.slice(0, 2).map((m) => (
+                  <button
+                    className="galSideTile"
+                    key={m.id}
+                    onClick={() => setSelected(m.id)}
+                    type="button"
+                  >
+                    <Image
+                      alt=""
+                      className="galTileImg"
+                      fill
+                      sizes="28vw"
+                      src={`/gallery/${m.file}.png`}
+                    />
+                    <span className="galDemoBadge">{t("demoBadge")}</span>
+                    <span className="galTileMeta">
+                      <span className="galTileBubble" aria-hidden="true">
+                        <m.Icon className="galTileBubbleIcon" />
+                      </span>
+                      <span>
+                        <span className="galTileTitle">{t(`items.${m.id}.title`)}</span>
+                        <span className="galTileSub">{t("editionPendingUpper")}</span>
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <ul className="galMeta">
+              <li className="galMetaCell">
+                <CalendarIcon className="galMetaIcon" aria-hidden="true" />
+                <span>
+                  <span className="galMetaLabel">{t("meta.edition")}</span>
+                  <span className="galMetaValue">{t("meta.pending")}</span>
+                </span>
+              </li>
+              <li className="galMetaCell">
+                <PinIcon className="galMetaIcon" aria-hidden="true" />
+                <span>
+                  <span className="galMetaLabel">{t("meta.city")}</span>
+                  <span className="galMetaValue">
+                    {city === "all" ? t("meta.allCities") : t(`cities.${city}`)}
+                  </span>
+                </span>
+              </li>
+              <li className="galMetaCell">
+                <PinIcon className="galMetaIcon" aria-hidden="true" />
+                <span>
+                  <span className="galMetaLabel">{t("meta.venue")}</span>
+                  <span className="galMetaValue">{t("meta.pending")}</span>
+                </span>
+              </li>
+              <li className="galMetaCell">
+                <ShieldCheckIcon className="galMetaIcon" aria-hidden="true" />
+                <span>
+                  <span className="galMetaLabel">{t("meta.rights")}</span>
+                  <span className="galMetaValue">{t("meta.rightsPending")}</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        )}
+
+        <div className="galRailRow">
+          <ul className="galRail">
+            {rail.slice(0, 4).map((m, i) => (
+              <li className="galRailItem" key={m.id}>
+                <button
+                  aria-pressed={false}
+                  className="galRailTile"
+                  onClick={() => setSelected(m.id)}
+                  type="button"
+                >
+                  <Image
+                    alt=""
+                    className="galTileImg"
+                    fill
+                    sizes="18vw"
+                    src={`/gallery/${m.file}.png`}
+                  />
+                  <span className="galDemoBadge galDemoBadgeSm">{t("demoBadge")}</span>
+                  <span className="galRailMeta">
+                    <span className="galRailNum" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="galRailTitle">{t(`items.${m.id}.title`)}</span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          {rail.length > 4 && (
+            <span className="galRailMore" aria-hidden="true">
+              <ChevronRightIcon className="galCtlIcon" />
+            </span>
+          )}
+          <div className="galActions">
+            <button
+              aria-controls="gal-all"
+              aria-expanded={expanded}
+              className="galCtaGold"
+              onClick={() => setExpanded((open) => !open)}
+              type="button"
+            >
+              <span>{expanded ? t("hideGallery") : t("showGallery")}</span>
+              <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
+            </button>
+            <Link className="galCtaGhost" href="/salons">
+              <span>{t("exploreSalons")}</span>
+              <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+
+        <div aria-hidden={!expanded} className={`galAll${expanded ? " isOpen" : ""}`} id="gal-all">
+          <div className="galAllInner">
+            <ul className="galAllGrid">
+              {MEDIA.map((m) => (
+                <li className="galAllCard" key={m.id}>
+                  <span className="galAllThumb">
+                    <Image
+                      alt=""
+                      className="galTileImg"
+                      fill
+                      sizes="22vw"
+                      src={`/gallery/${m.file}.png`}
+                    />
+                    <span className="galDemoBadge galDemoBadgeSm">{t("demoBadge")}</span>
+                  </span>
+                  <span className="galAllMeta">
+                    <span className="galAllTitle">{t(`items.${m.id}.title`)}</span>
+                    <span className="galAllSub">
+                      {t(`categories.${m.category}`)} · {t("editionPending")}
+                    </span>
+                    <CheckCircleIcon className="galAllCheck" aria-hidden="true" />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

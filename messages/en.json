@@ -616,5 +616,209 @@
     "title": "This page does not exist.",
     "body": "The page you are looking for has moved or is not available.",
     "home": "Home"
+  },
+  "gallery": {
+    "eyebrow": "Field proof",
+    "title": "SPIMAR exhibitions, seen from the inside",
+    "lead": "Stands, meetings, conferences and attendance — every asset is tied to an edition and a validated source.",
+    "trustStrong": "Real media only",
+    "trustText": "No visual is published without rights and provenance.",
+    "editionSelectLabel": "Filter by edition",
+    "allEditions": "All editions",
+    "cities": {
+      "paris": "Paris",
+      "montreal": "Montreal",
+      "bruxelles": "Brussels",
+      "abu-dhabi": "Abu Dhabi"
+    },
+    "categories": {
+      "all": "All",
+      "stands": "Stands",
+      "affluence": "Attendance",
+      "rendezvous": "Meetings",
+      "conferences": "Conferences",
+      "networking": "Networking"
+    },
+    "validatedCount": "validated media",
+    "demoBadge": "Demonstration preview",
+    "editionPending": "edition to be confirmed",
+    "editionPendingUpper": "Edition to be confirmed",
+    "items": {
+      "film": {
+        "title": "Edition film"
+      },
+      "stand": {
+        "title": "Stand & presentation"
+      },
+      "rdv": {
+        "title": "Qualified meeting"
+      },
+      "affluence": {
+        "title": "Attendance"
+      },
+      "conference": {
+        "title": "Conference"
+      },
+      "interview": {
+        "title": "Interview"
+      },
+      "networking": {
+        "title": "Networking"
+      },
+      "espace": {
+        "title": "Stand space"
+      }
+    },
+    "meta": {
+      "edition": "Edition",
+      "city": "City",
+      "venue": "Venue",
+      "rights": "Rights",
+      "pending": "To be confirmed",
+      "allCities": "All",
+      "rightsPending": "Validation required"
+    },
+    "showGallery": "View the full gallery",
+    "hideGallery": "Hide the gallery",
+    "exploreSalons": "Explore the exhibitions"
+  },
+  "resources": {
+    "eyebrow": "Exhibitor resources",
+    "title": "Prepare your exhibition with useful information.",
+    "lead": "Guides, calendars, market analyses and practical answers to secure your decision.",
+    "pendingSourceDate": "Source and date to be validated",
+    "feature": {
+      "chip": "Market dossier",
+      "title": "Understanding the property expectations of MREs",
+      "cta": "Read the dossier"
+    },
+    "toolbox": {
+      "label": "Your toolbox",
+      "validatedRequired": "Validated version required",
+      "sourcePending": "Source to be validated",
+      "download": "Download",
+      "items": {
+        "brochure": "Exhibitor brochure",
+        "calendar": "Exhibition calendar",
+        "checklist": "Preparation checklist",
+        "report": "Sample report"
+      }
+    },
+    "analyses": {
+      "label": "Analyses to decide",
+      "featured": "The criteria that structure an MRE property project",
+      "read": "Read the analysis",
+      "items": {
+        "strategy": "Preparing an international exhibition strategy",
+        "interview": "Interview with a sales management team"
+      }
+    },
+    "faq": {
+      "label": "Your questions before exhibiting",
+      "all": "See all the answers",
+      "items": {
+        "choose": {
+          "q": "How do I choose the right exhibition?",
+          "a": "The choice starts from your target markets and commercial goals: an exhibitor advisor helps you compare the editions and prioritise."
+        },
+        "proposal": {
+          "q": "What does a proposal include?",
+          "a": "A proposal details the space, the visibility and the options selected for your project, with conditions confirmed during commercial validation."
+        },
+        "qualified": {
+          "q": "How are visitors qualified?",
+          "a": "The registration and reception process captures visitors’ projects and intentions before and during the exhibition, following the published methodology."
+        },
+        "leads": {
+          "q": "When and how are leads passed on?",
+          "a": "Contacts gathered on your stand and through the digital programme are passed to you under the terms defined in your offer, during and after the exhibition."
+        }
+      }
+    }
+  },
+  "exhibit": {
+    "eyebrow": "Become an exhibitor",
+    "title": "Let’s build your next international presence.",
+    "lead": "Tell us about your market, your goals and the edition you are interested in. Our team will prepare a tailored proposal after validating your request.",
+    "stepsLabel": "How it works",
+    "steps": {
+      "edition": "Choose an edition",
+      "goals": "Define your goals",
+      "team": "Talk with our team"
+    },
+    "project": {
+      "title": "Your exhibition project",
+      "editionLabel": "Target exhibition",
+      "editionPlaceholder": "Select an edition",
+      "objectiveLabel": "Main objective",
+      "objectives": {
+        "leads": "Generate leads",
+        "visibility": "Increase visibility",
+        "sales": "Grow sales"
+      },
+      "noCommitment": "No commitment",
+      "responseTime": "Response time to be confirmed"
+    },
+    "form": {
+      "title": "Receive a personalised proposal",
+      "optional": "optional",
+      "company": {
+        "label": "Company",
+        "placeholder": "Your company name"
+      },
+      "name": {
+        "label": "Name and role",
+        "placeholder": "Full name and role"
+      },
+      "email": {
+        "label": "Business email",
+        "placeholder": "e.g. name@company.ma"
+      },
+      "phone": {
+        "label": "Phone / WhatsApp",
+        "placeholder": "e.g. +212 6 00 00 00 00"
+      },
+      "budget": {
+        "label": "Indicative budget",
+        "placeholder": "Give a range if possible"
+      },
+      "message": {
+        "label": "Your message",
+        "placeholder": "Describe your market, your goals and any useful information…"
+      },
+      "consent": "I agree that SPIMAR may use my information to process this request.",
+      "submit": "Send my request",
+      "sending": "Sending…",
+      "disclaimer": "Sending the form confirms neither availability, nor price, nor booking.",
+      "emptyMessage": "Personalised proposal request.",
+      "errors": {
+        "company": "Enter your company name.",
+        "name": "Enter your name and role.",
+        "email": "Enter a valid email address.",
+        "consent": "Consent is required to process the request.",
+        "rateLimited": "Too many consecutive requests. Please try again in a few minutes.",
+        "generic": "The request could not be sent. Please check the fields and try again."
+      }
+    },
+    "sent": {
+      "badge": "Request sent",
+      "title": "Thank you for your request.",
+      "text": "Your project has been passed to the exhibitor team. An advisor will get back to you to prepare a tailored proposal.",
+      "duplicateText": "This request was already recorded: the exhibitor team has your information."
+    },
+    "reassure": {
+      "tailored": {
+        "title": "Tailored proposal",
+        "sub": "A proposal built on your market, your goals and the selected edition."
+      },
+      "dedicated": {
+        "title": "Dedicated contact",
+        "sub": "A single contact supports you at every step of your exhibition project."
+      },
+      "followup": {
+        "title": "Support before, during and after",
+        "sub": "We stay at your side to maximise the impact of your participation."
+      }
+    }
   }
 }
