@@ -40,8 +40,8 @@
 .impactEyebrow {
   color: var(--action-primary);
   font-size: var(--text-support);
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   margin: 0 0 var(--space-sm);
 }

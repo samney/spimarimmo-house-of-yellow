@@ -31,8 +31,8 @@
 .proofEyebrow {
   color: var(--spimar-gold-text); /* WCAG AA on paper */
   font-size: var(--text-support);
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   margin: 0 0 var(--space-sm);
   text-transform: uppercase;
 }

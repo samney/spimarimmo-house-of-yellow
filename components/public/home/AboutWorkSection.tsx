@@ -4,6 +4,7 @@ import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { EventsCarousel, type EventOpportunity } from "./EventsCarousel";
+import { SectionEyebrow } from "./SectionEyebrow";
 
 /* The works -> Salons par pays (specification §05, §07).
 
@@ -89,10 +90,9 @@ export function AboutWorkSection() {
         <div className="contentWrapper">
           <div className="aboutSection">
             <div className="cols">
+              <div className="col"></div>
               <div className="col">
-                <div className="text smaller medium">Pourquoi SPIMARIMMO</div>
-              </div>
-              <div className="col">
+                <SectionEyebrow index="01" label="Pourquoi SPIMARIMMO" />
                 {/* §01 North Star, stated as the opening editorial claim. */}
                 <SplitTitle
                   as="h1"
@@ -117,11 +117,7 @@ export function AboutWorkSection() {
                   />
                 </div>
               </div>
-              <div className="col">
-                <div className="text medium">
-                  [ <span className="numIndex">01</span> ]
-                </div>
-              </div>
+              <div className="col"></div>
             </div>
           </div>
           <div className="projectsSection">
@@ -129,16 +125,13 @@ export function AboutWorkSection() {
                 left, chapter marker and action right-aligned. */}
             <div className="cols" style={{ paddingBottom: "2.5vw" }}>
               <div className="col">
-                <div className="text smaller medium">Salons par pays</div>
+                <SectionEyebrow index="02" label="Salons par pays" />
                 <SplitTitle
                   className="smallTitle"
                   text="Les salons SPIMARIMMO rendent le réseau international tangible : chaque destination réunit une clientèle qualifiée, prête à concrétiser son projet immobilier au Maroc."
                 />
               </div>
               <div className="col">
-                <div className="text medium">
-                  [ <span className="numIndex">02</span> ]
-                </div>
                 <div className="buttons">
                   <PillButton href="/salons" label="Voir tous les salons" variant="dark" />
                 </div>

@@ -670,3 +670,29 @@
     font-size: 3.448vw;
   }
 }
+
+/* ==========================================================================
+   Shared section header (owner note 2026-08-04)
+   ==========================================================================
+   Section 04 "NOTRE MÉTHODE" set the pattern; every section renders it through
+   <SectionEyebrow> so index and label can never drift apart again. */
+.sectionEyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-sm);
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.sectionEyebrow.isInverse {
+  color: var(--action-primary);
+}
+.sectionEyebrow__index {
+  flex: none;
+}
+.sectionEyebrow .numIndex {
+  font-variant-numeric: tabular-nums;
+}

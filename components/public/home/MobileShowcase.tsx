@@ -1,5 +1,7 @@
 "use client";
 
+import { SectionEyebrow } from "./SectionEyebrow";
+
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 
@@ -384,7 +386,7 @@ export function MobileShowcase() {
         {/* Left column: the section-2 text hierarchy — small label, then the
             statement in smallTitle. */}
         <div className="pillars__left">
-          <div className="text smaller medium">Pourquoi exposer&nbsp;?</div>
+          <SectionEyebrow index="03" label="Pourquoi exposer ?" surface="inverse" />
           <h2 className="smallTitle pillars__statement">
             Pourquoi exposer avec SPIMARIMMO&nbsp;? Quatre piliers de réponse, soutenus par des
             preuves concrètes.
