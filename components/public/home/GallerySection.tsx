@@ -8,7 +8,7 @@ import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon, VisitorsIcon } from "./i
 import { CameraIcon, CheckCircleIcon, MicIcon } from "./visibilityIcons";
 import { PlaySolidIcon, VolumeIcon, FullscreenIcon } from "./proofIcons";
 import { PinIcon } from "./offers/offersIcons";
-import { CaptionsIcon, ChevronRightIcon, ExpandIcon, GearIcon, SkipIcon } from "./galleryIcons";
+import { CaptionsIcon, ChevronRightIcon, GearIcon, SkipIcon } from "./galleryIcons";
 import { MEDIA, type CategoryKey } from "./galleryData";
 
 /* Section 11 — Preuve terrain: the salons seen from the inside.
@@ -71,6 +71,13 @@ export function GallerySection({
     if (!nextItems.some((m) => m.id === selected)) setSelected(nextItems[0]?.id ?? "film");
   }
 
+  /* Functional stage navigation: cycles the filtered collection. */
+  function stepMedia(direction: 1 | -1) {
+    if (filtered.length < 2) return;
+    const next = filtered[(stageIndex + direction + filtered.length) % filtered.length];
+    setSelected(next.id);
+  }
+
   return (
     <section className="galSection" aria-labelledby="gal-title">
       <div className="galInner">
@@ -83,12 +90,6 @@ export function GallerySection({
           </h2>
           <p className="galLead">{t("lead")}</p>
         </header>
-
-        <p className="galTrust">
-          <ShieldCheckIcon className="galTrustIcon" aria-hidden="true" />
-          <strong className="galTrustStrong">{t("trustStrong")}</strong>
-          <span className="galTrustText">{t("trustText")}</span>
-        </p>
 
         <div className="galToolbar">
           <div className="galToolGroup">
@@ -141,10 +142,6 @@ export function GallerySection({
               </li>
             ))}
           </ul>
-
-          <p className="galValidatedCount">
-            <span aria-hidden="true">—</span> {t("validatedCount")}
-          </p>
         </div>
 
         {stage && (
@@ -160,11 +157,27 @@ export function GallerySection({
                   src={`/gallery/${stage.file}.png`}
                 />
                 <span className="galDemoBadge">{t("demoBadge")}</span>
-                <span className="galStageTopRight" aria-hidden="true">
-                  <span className="galCounter">{String(stageIndex + 1).padStart(2, "0")} / —</span>
-                  <span className="galExpandGlyph">
-                    <ExpandIcon className="galCtlIcon" />
+                <span className="galStageTopRight">
+                  <button
+                    aria-label={t("prevMedia")}
+                    className="galStageNavBtn"
+                    onClick={() => stepMedia(-1)}
+                    type="button"
+                  >
+                    <ChevronRightIcon className="galCtlIcon galCtlIconFlip" aria-hidden="true" />
+                  </button>
+                  <span className="galCounter" aria-live="polite">
+                    {String(stageIndex + 1).padStart(2, "0")} /{" "}
+                    {String(filtered.length).padStart(2, "0")}
                   </span>
+                  <button
+                    aria-label={t("nextMedia")}
+                    className="galStageNavBtn"
+                    onClick={() => stepMedia(1)}
+                    type="button"
+                  >
+                    <ChevronRightIcon className="galCtlIcon" aria-hidden="true" />
+                  </button>
                 </span>
                 <figcaption className="galStageCaption">
                   {stage.kind === "video" && (
@@ -291,9 +304,14 @@ export function GallerySection({
             ))}
           </ul>
           {rail.length > 4 && (
-            <span className="galRailMore" aria-hidden="true">
-              <ChevronRightIcon className="galCtlIcon" />
-            </span>
+            <button
+              aria-label={t("nextMedia")}
+              className="galRailMore"
+              onClick={() => stepMedia(1)}
+              type="button"
+            >
+              <ChevronRightIcon className="galCtlIcon" aria-hidden="true" />
+            </button>
           )}
           <div className="galActions">
             {fullGalleryHref ? (

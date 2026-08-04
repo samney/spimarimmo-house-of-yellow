@@ -714,7 +714,9 @@
     },
     "showGallery": "View the full gallery",
     "hideGallery": "Hide the gallery",
-    "exploreSalons": "Explore the exhibitions"
+    "exploreSalons": "Explore the exhibitions",
+    "prevMedia": "Previous media",
+    "nextMedia": "Next media"
   },
   "resources": {
     "eyebrow": "Exhibitor resources",

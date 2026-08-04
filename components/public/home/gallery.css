@@ -821,3 +821,37 @@
     width: 4vw;
   }
 }
+
+/* Functional stage navigation (owner note: not static chrome). */
+.galStageNavBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 45%);
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 50%;
+  width: 2vw;
+  height: 2vw;
+  min-width: 28px;
+  min-height: 28px;
+  color: var(--on-inverse);
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out-ref);
+}
+.galStageNavBtn:hover {
+  background: rgb(0 0 0 / 70%);
+}
+.galStageNavBtn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.galCtlIconFlip {
+  transform: rotate(180deg);
+}
+button.galRailMore {
+  cursor: pointer;
+}
+button.galRailMore:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

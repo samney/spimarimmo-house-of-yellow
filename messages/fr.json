@@ -714,7 +714,9 @@
     },
     "showGallery": "Voir toute la galerie",
     "hideGallery": "Masquer la galerie",
-    "exploreSalons": "Explorer les salons"
+    "exploreSalons": "Explorer les salons",
+    "prevMedia": "Média précédent",
+    "nextMedia": "Média suivant"
   },
   "resources": {
     "eyebrow": "Ressources exposants",
