@@ -128,3 +128,11 @@
     padding: 1.5rem;
   }
 }
+
+/* Standing pages: pages.css renders .cultureQuoteAnimationBlock transparent
+   inside .pageBlocks, so on a non-dark page the block sits on paper even
+   though it carries the `dark` class. The bright gold index fails WCAG AA
+   there (1.49:1); follow the effective surface, not the class. */
+.pageBlocks:not(.dark) .cultureQuoteAnimationBlock .numIndex {
+  color: var(--spimar-gold-text);
+}

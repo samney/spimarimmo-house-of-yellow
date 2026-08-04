@@ -29,7 +29,9 @@
 }
 
 .mreEyebrow {
-  color: var(--action-primary);
+  /* WCAG AA: the action gold fails at eyebrow size on paper; see
+     --spimar-gold-text in globals.css. */
+  color: var(--spimar-gold-text);
   font-size: var(--text-support);
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -198,7 +200,7 @@
 }
 
 .mreRailNum {
-  color: var(--spimar-gold-deep, var(--action-primary));
+  color: var(--spimar-gold-text);
   display: block;
   font-size: var(--text-base);
   font-weight: 500;
@@ -246,7 +248,7 @@
 }
 
 .mreDetailCounter {
-  color: var(--spimar-gold-deep, var(--action-primary));
+  color: var(--spimar-gold-text);
   font-size: var(--text-support);
   font-weight: 500;
   letter-spacing: 0.16em;
@@ -352,7 +354,7 @@
 }
 
 .mreProgressNum {
-  color: var(--spimar-gold-deep, var(--action-primary));
+  color: var(--spimar-gold-text);
   font-variant-numeric: tabular-nums;
 }
 

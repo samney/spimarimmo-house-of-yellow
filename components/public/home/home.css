@@ -503,7 +503,12 @@
   max-width: 62vw;
   margin-bottom: 3vw;
 }
+/* WCAG AA: bright gold fails at this size on paper (1.49:1); light blocks use
+   the deep text gold, dark blocks keep the bright accent. */
 .cultureQuoteAnimationBlock .numIndex {
+  color: var(--spimar-gold-text);
+}
+.cultureQuoteAnimationBlock.dark .numIndex {
   color: var(--hoy-yellow);
 }
 .button.light {

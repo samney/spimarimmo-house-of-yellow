@@ -29,7 +29,8 @@
 }
 
 .offEyebrow {
-  color: var(--action-primary);
+  /* WCAG AA: action gold fails at this size on paper; see --spimar-gold-text. */
+  color: var(--spimar-gold-text);
   font-size: var(--text-support);
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -350,7 +351,7 @@
 /* --- Locked tier preview rail -------------------------------------------------- */
 
 .offRailLabel {
-  color: var(--action-primary);
+  color: var(--spimar-gold-text);
   font-size: var(--text-support);
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -359,7 +360,7 @@
 }
 
 .offRailLabelGold {
-  color: var(--action-primary);
+  color: var(--spimar-gold-text);
 }
 
 .offPreview {

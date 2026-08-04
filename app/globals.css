@@ -94,6 +94,10 @@
   --spimar-gold: #efc337;
   --spimar-gold-hover: #f2ce55;
   --spimar-gold-deep: #d4a91f;
+  /* Gold for SMALL TEXT on paper. #efc337 reads at 1.49:1 on #f4f2ed and
+     #d4a91f at ~2:1 — both fail WCAG AA (4.5:1) at eyebrow sizes. This deep
+     text gold measures ~5.0:1 on paper. Dark surfaces keep the bright gold. */
+  --spimar-gold-text: #7a6600;
   --spimar-black: #000000;
   --spimar-ink: #14140f;
   --spimar-paper: #f4f2ed;
