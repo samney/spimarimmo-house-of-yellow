@@ -912,5 +912,18 @@
     "outro": "Pour recevoir un document :",
     "outroContact": "Contactez-nous",
     "outroInsights": "Lire le blog"
+  },
+  "salonsPage": {
+    "label": "Salons",
+    "title": "Les destinations et les éditions.",
+    "lead": "Chaque édition publiée apparaît ici avec sa destination et ses dates. Aucune date, aucun lieu n'est publié sans validation.",
+    "empty": "Le calendrier des prochaines éditions est en cours de validation. Les destinations et les dates sont publiées ici dès leur confirmation.",
+    "datesTbc": "Dates à confirmer",
+    "venueTbc": "Lieu à confirmer",
+    "detailLabel": "Édition",
+    "detailPending": "Le programme, les exposants et les informations pratiques de cette édition sont publiés ici au fur et à mesure de leur validation.",
+    "backToIndex": "Tous les salons",
+    "outro": "Vous préparez une participation ?",
+    "outroCta": "Devenir exposant"
   }
 }

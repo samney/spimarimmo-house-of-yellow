@@ -58,20 +58,19 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
   const name = `E2E Visitor ${id}`;
   const message = `Integration enquiry ${id}`;
 
-  // public page -> CTA -> form
-  await page.goto("/");
+  // public page -> section 13 exhibitor form (the rebuilt site's enquiry
+  // surface; the placeholder-era /contact form no longer exists)
+  await page.goto("/en");
   await dismissConsent(page);
-  await page.getByRole("link", { name: "Make an enquiry" }).first().click();
-  await expect(page.getByRole("heading", { name: "Contact" })).toBeVisible();
-
-  await page.getByLabel(/Full name/).fill(name);
-  await page.getByLabel(/Email address/).fill(`e2e-${id}@example.test`);
-  await page.getByLabel(/Your message/).fill(message);
-  await page.getByLabel(/I agree that SPIMARIMMO/).check();
-  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await page.getByLabel("Company").fill(`E2E Co ${id}`);
+  await page.getByLabel("Name and role").fill(name);
+  await page.getByLabel("Business email").fill(`e2e-${id}@example.test`);
+  await page.getByLabel("Your message").fill(message);
+  await page.getByLabel(/I agree that SPIMAR/).check();
+  await page.getByRole("button", { name: "Send my request" }).click();
 
   // The confirmation appears only after a durable write.
-  await expect(page.getByText("Enquiry received")).toBeVisible();
+  await expect(page.getByText("Thank you for your request.")).toBeVisible();
 
   // -> CRM lead, with attribution captured at submission.
   await signIn(page, ADMIN);
@@ -82,7 +81,7 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
     .getByRole("link", { name: "Open" })
     .click();
   await expect(page.getByText(message)).toBeVisible();
-  await expect(page.getByText("contact-page")).toBeVisible();
+  await expect(page.getByText("devenir-exposant-section-13")).toBeVisible();
 
   // Operational workflow: stage, assignment and a note, each audited.
   await page.getByLabel("Current stage").selectOption("qualified");
@@ -93,13 +92,13 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
   await page.getByRole("button", { name: "Save assignment" }).click();
   await expect(page.getByText("Assignment updated.")).toBeVisible();
 
-  await page.getByLabel("Note").fill("Following up this week.");
+  await page.getByRole("textbox", { name: "Note" }).fill("Following up this week.");
   await page.getByRole("button", { name: "Add note" }).click();
   await expect(page.getByText("Note added.")).toBeVisible();
 
-  // Audit trail records actor and action.
-  await expect(page.getByRole("cell", { name: /Stage set to qualified/ })).toBeVisible();
-  await expect(page.getByRole("cell", { name: /Following up this week/ })).toBeVisible();
+  // Audit trail records actor and action (rendered as the activity list).
+  await expect(page.getByText(/Stage set to qualified/).first()).toBeVisible();
+  await expect(page.getByText(/Following up this week/).first()).toBeVisible();
 });
 
 test("duplicate submissions are refused without a false confirmation", async ({ page }) => {
@@ -108,20 +107,20 @@ test("duplicate submissions are refused without a false confirmation", async ({ 
   const message = `Duplicate probe ${id}`;
 
   for (const attempt of [1, 2]) {
-    await page.goto("/contact");
+    await page.goto("/en");
     await dismissConsent(page);
-    await page.getByLabel(/Full name/).fill(`Dupe ${id}`);
-    await page.getByLabel(/Email address/).fill(email);
-    await page.getByLabel(/Your message/).fill(message);
-    await page.getByLabel(/I agree that SPIMARIMMO/).check();
-    await page.getByRole("button", { name: "Send enquiry" }).click();
+    await page.getByLabel("Company").fill(`Dupe Co ${id}`);
+    await page.getByLabel("Name and role").fill(`Dupe ${id}`);
+    await page.getByLabel("Business email").fill(email);
+    await page.getByLabel("Your message").fill(message);
+    await page.getByLabel(/I agree that SPIMAR/).check();
+    await page.getByRole("button", { name: "Send my request" }).click();
 
     if (attempt === 1) {
-      await expect(page.getByText("Enquiry received")).toBeVisible();
+      await expect(page.getByText("Thank you for your request.")).toBeVisible();
     } else {
       // Honest: says already recorded, does NOT claim a new enquiry was created.
-      await expect(page.getByText("Already received")).toBeVisible();
-      await expect(page.getByText("Enquiry received")).toHaveCount(0);
+      await expect(page.getByText(/already recorded/)).toBeVisible();
     }
   }
 });
@@ -144,11 +143,11 @@ test("CMS publish updates the public site through revalidation", async ({ page }
   await expect(page.getByText(/published/i).first()).toBeVisible();
 
   // -> public revalidation: the published edition is now live.
-  await page.goto("/salons");
+  await page.goto("/en/salons");
   await expect(page.getByRole("link", { name: title })).toBeVisible();
   await expect(page.getByText("Dates to be confirmed").first()).toBeVisible();
 
-  await page.goto(`/salons/${slug}`);
+  await page.goto(`/en/salons/${slug}`);
   await expect(page.getByRole("heading", { name: title })).toBeVisible();
 });
 

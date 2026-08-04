@@ -912,5 +912,18 @@
     "outro": "To receive a document:",
     "outroContact": "Contact us",
     "outroInsights": "Read the blog"
+  },
+  "salonsPage": {
+    "label": "Exhibitions",
+    "title": "The destinations and the editions.",
+    "lead": "Every published edition appears here with its destination and dates. No date and no venue is published without validation.",
+    "empty": "The calendar of upcoming editions is being validated. Destinations and dates are published here as soon as they are confirmed.",
+    "datesTbc": "Dates to be confirmed",
+    "venueTbc": "Venue to be confirmed",
+    "detailLabel": "Edition",
+    "detailPending": "This edition's programme, exhibitors and practical information are published here as they are validated.",
+    "backToIndex": "All exhibitions",
+    "outro": "Preparing to exhibit?",
+    "outroCta": "Become an exhibitor"
   }
 }
