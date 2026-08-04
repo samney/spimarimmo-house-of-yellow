@@ -750,6 +750,22 @@ horizontal overflow at 390 / 1024 / 1536 / 1920. The GSAP timeline was sampled
 frame by frame: cards start at scale 0.5 on the device centre, overshoot at
 1.02, settle to identity, then drift; the device holds identity throughout.
 
+**Follow-up, same day — type ladder and viewport fit.**
+
+- _Type._ The section's steps were section-local magic numbers and the H2 at
+  74px dwarfed its neighbours. Typography now runs off a declared L3 ladder
+  whose steps equal the site's own at the golden viewport: display =
+  `--text-h1` (57.6px), title 33px and lede 17px matching section 04's phase
+  title and support line, body 16px, detail 15px. The steps stay expressed in
+  `--why-u` so the viewport cap below governs the type too.
+- _Viewport fit._ `--why-u` is now `min(0.06510417vw, 0.098vh)` and the inner
+  wrapper is capped at `1536 * --why-u` and centred. The composition is 954
+  reference px tall, so the section holds at ~93% of the viewport height at
+  every size instead of being cut off on short or very wide displays —
+  measured 92.3–93.0% across 1280×800, 1366×768, 1440×900, 1536×1024,
+  1920×1080 and 2560×1440, with no horizontal overflow at any of them. A
+  section marked `data-hide-header` only earns that treatment if it fits.
+
 **Open.** The mobile floor for the copy CTA (44px target, 12px label) is scoped
 to this section rather than fixed in `.button` globally — the global rule's
 `line-height: 4.167vw` collapses to ~16px at 390 for every section that uses it.

@@ -29,8 +29,27 @@
    buttons are the site's buttons. */
 
 .whyExhibit {
-  /* 1 reference px at the golden viewport. */
-  --why-u: 0.06510417vw;
+  /* One reference pixel. Width-driven at the golden viewport, but capped by
+     viewport height so the whole section is always on screen at once instead of
+     being cut off on short or very wide displays: the composition is 954
+     reference px tall, so 0.098vh holds it at ~93.5% of any viewport height.
+     `data-hide-header` lets the section reclaim the viewport — that only pays
+     off if the section actually fits in it. */
+  --why-u: min(0.06510417vw, 0.098vh);
+
+  /* Type ladder. Each step equals the site's own step at the golden viewport,
+     so this section reads on the same ladder as its neighbours, while staying
+     in --why-u so the viewport-fit cap above governs the type too.
+       display  = --text-h1        (3.75vw  = 57.6px @1536)
+       title    = method §04 phase title (33px)
+       lede     = method §04 support line (17px)
+       body     = 16px, one step under the lede
+       detail   = 15px */
+  --why-text-display: calc(57.6 * var(--why-u));
+  --why-text-title: calc(33 * var(--why-u));
+  --why-text-lede: calc(17 * var(--why-u));
+  --why-text-body: calc(16 * var(--why-u));
+  --why-text-detail: calc(15 * var(--why-u));
 
   /* Editorial palette, sampled from 01-clientele-qualifiee.png. */
   --why-paper: #f7f0e9; /* warm page canvas */
@@ -93,6 +112,8 @@
 .whyExhibit__inner {
   position: relative;
   z-index: 1;
+  max-width: calc(1536 * var(--why-u));
+  margin: 0 auto;
   padding: calc(40 * var(--why-u)) calc(50 * var(--why-u)) calc(18 * var(--why-u));
 }
 
@@ -106,20 +127,20 @@
    wider, so the size is tuned down until the headline holds the reference's
    single line across the same 1436px measure. */
 .whyExhibit__heading {
-  margin: calc(14 * var(--why-u)) 0 0;
-  font-size: calc(74 * var(--why-u));
+  margin: calc(16 * var(--why-u)) 0 0;
+  font-size: var(--why-text-display);
   font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: -0.024em;
   white-space: nowrap;
 }
 
 .whyExhibit__subtitle {
   max-width: calc(720 * var(--why-u));
-  margin: calc(20 * var(--why-u)) 0 0;
+  margin: calc(16 * var(--why-u)) 0 0;
   color: var(--why-ink-soft);
-  font-size: calc(20 * var(--why-u));
-  line-height: 1.35;
+  font-size: var(--why-text-lede);
+  line-height: 1.5;
 }
 
 /* ====================================================== tab rail (buttons) */
@@ -139,8 +160,8 @@
   display: flex;
   align-items: center;
   gap: calc(18 * var(--why-u));
-  min-height: calc(72 * var(--why-u));
-  padding: 0 calc(24 * var(--why-u));
+  min-height: calc(64 * var(--why-u));
+  padding: 0 calc(22 * var(--why-u));
   border: 1px solid rgb(184 120 30 / 30%);
   border-radius: calc(14 * var(--why-u));
   background: rgb(255 255 255 / 45%);
@@ -166,7 +187,7 @@
    the label is the read. */
 .whyTab__num {
   color: var(--why-gold-ink);
-  font-size: calc(24 * var(--why-u));
+  font-size: calc(20 * var(--why-u));
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
@@ -174,7 +195,7 @@
 }
 
 .whyTab__label {
-  font-size: calc(16 * var(--why-u));
+  font-size: var(--why-text-detail);
   font-weight: 500;
   letter-spacing: -0.005em;
 }
@@ -236,7 +257,7 @@
 .whyCopy__number {
   margin: 0;
   color: var(--why-gold);
-  font-size: calc(84 * var(--why-u));
+  font-size: calc(92 * var(--why-u));
   font-weight: 700;
   line-height: 0.86;
   letter-spacing: -0.03em;
@@ -244,18 +265,18 @@
 
 .whyCopy__title {
   margin: calc(22 * var(--why-u)) 0 0;
-  font-size: calc(40 * var(--why-u));
+  font-size: var(--why-text-title);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.032em;
+  line-height: 1.15;
+  letter-spacing: -0.022em;
 }
 
 .whyCopy__body {
   max-width: calc(404 * var(--why-u));
-  margin: calc(24 * var(--why-u)) 0 0;
+  margin: calc(22 * var(--why-u)) 0 0;
   color: var(--why-ink-soft);
-  font-size: calc(18 * var(--why-u));
-  line-height: 1.62;
+  font-size: var(--why-text-body);
+  line-height: 1.6;
 }
 
 .whyCopy__actions {
@@ -281,7 +302,7 @@
   width: calc(420 * var(--why-u));
   margin: 0;
   color: var(--why-ink-soft);
-  font-size: calc(17 * var(--why-u));
+  font-size: var(--why-text-detail);
   line-height: 1.5;
 }
 
