@@ -619,7 +619,12 @@
         "sub": "Une proposition adaptée à votre projet"
       }
     },
-    "detailCta": "Voir la page Offres complète"
+    "detailCta": "Voir la page Offres complète",
+    "teaser": {
+      "title": "Trois niveaux d’offre, un dossier sur mesure.",
+      "lead": "Standard, Premium ou Sponsor — chaque niveau précise ce qu’il couvre, et la proposition chiffrée suit la qualification de votre besoin.",
+      "cta": "Découvrir les offres"
+    }
   },
   "placeholder": {
     "title": "SPIMARIMMO",

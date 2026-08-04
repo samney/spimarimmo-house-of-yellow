@@ -619,7 +619,12 @@
         "sub": "A proposal tailored to your project"
       }
     },
-    "detailCta": "See the full Offers page"
+    "detailCta": "See the full Offers page",
+    "teaser": {
+      "title": "Three offer levels, one tailored file.",
+      "lead": "Standard, Premium or Sponsor — each level states what it covers; a quoted proposal follows the qualification of your needs.",
+      "cta": "Explore the offers"
+    }
   },
   "placeholder": {
     "title": "SPIMARIMMO",

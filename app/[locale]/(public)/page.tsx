@@ -8,7 +8,7 @@ import { MreMarketSection } from "@/components/public/home/MreMarketSection";
 import { VisibilitySection } from "@/components/public/home/VisibilitySection";
 import { PromotersSection } from "@/components/public/home/PromotersSection";
 import { ProofSection } from "@/components/public/home/ProofSection";
-import { OffersSection } from "@/components/public/home/offers/OffersSection";
+import { OffersTeaser } from "@/components/public/home/offers/OffersTeaser";
 import { GallerySection } from "@/components/public/home/GallerySection";
 import { BecomeExhibitorSection } from "@/components/public/home/BecomeExhibitorSection";
 import { ClosingSection } from "@/components/public/home/ClosingSection";
@@ -28,7 +28,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <VisibilitySection />
       <PromotersSection />
       <ProofSection />
-      <OffersSection detailHref="/exposer/offres" />
+      <OffersTeaser />
       <GallerySection fullGalleryHref="/ressources/galerie" />
       <BecomeExhibitorSection />
       <ClosingSection />
