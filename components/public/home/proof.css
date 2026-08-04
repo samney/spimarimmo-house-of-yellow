@@ -110,7 +110,10 @@
 /* --- Video plane (decorative illustration) ----------------------------------- */
 
 .proofVideo {
-  aspect-ratio: 16 / 9;
+  /* Fills the row set by the case column on desktop (no fixed ratio, or the
+     plane overflows the column); the stacked 580 regime restores 16/9. */
+  height: 100%;
+  min-height: 22vw;
   border-radius: var(--radius-lg);
   margin: 0;
   overflow: hidden;
@@ -521,6 +524,14 @@
 }
 
 /* --- Mobile regime (matches the global 580 restatement) -------------------------- */
+
+@media (max-width: 580px) {
+  .proofVideo {
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: 0;
+  }
+}
 
 @media (max-width: 580px) {
   .proofHeader {
