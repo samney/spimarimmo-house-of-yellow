@@ -58,9 +58,9 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
   const name = `E2E Visitor ${id}`;
   const message = `Integration enquiry ${id}`;
 
-  // public page -> section 13 exhibitor form (the rebuilt site's enquiry
-  // surface; the placeholder-era /contact form no longer exists)
-  await page.goto("/en");
+  // conversion page -> section 13 exhibitor form (the homepage now carries
+  // only the teaser; the form lives on the offer pages)
+  await page.goto("/en/exposer/devenir-exposant");
   await dismissConsent(page);
   await page.getByLabel("Company").fill(`E2E Co ${id}`);
   await page.getByLabel("Name and role").fill(name);
@@ -107,7 +107,7 @@ test("duplicate submissions are refused without a false confirmation", async ({ 
   const message = `Duplicate probe ${id}`;
 
   for (const attempt of [1, 2]) {
-    await page.goto("/en");
+    await page.goto("/en/exposer/devenir-exposant");
     await dismissConsent(page);
     await page.getByLabel("Company").fill(`Dupe Co ${id}`);
     await page.getByLabel("Name and role").fill(`Dupe ${id}`);
