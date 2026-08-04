@@ -18,8 +18,12 @@ const ROUTES = [
   "/fr",
   "/salons",
   "/exposer",
+  "/exposer/methode",
+  "/exposer/offres",
+  "/insights",
+  "/faq",
+  "/ressources",
   "/contact",
-  "/cookies",
   "/this-route-does-not-exist",
 ];
 

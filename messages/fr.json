@@ -9,7 +9,13 @@
     "becomeExhibitor": "Devenir exposant",
     "contact": "Contact",
     "menu": "Menu",
-    "home": "Accueil"
+    "home": "Accueil",
+    "methode": "Méthode",
+    "visibilite": "Visibilité",
+    "offres": "Offres",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "bibliotheque": "Bibliothèque"
   },
   "impact": {
     "eyebrow": "Chiffres clés",
@@ -820,5 +826,91 @@
         "sub": "Nous restons à vos côtés pour maximiser l’impact de votre participation."
       }
     }
+  },
+  "faq": {
+    "label": "FAQ exposants",
+    "title": "Les dernières questions avant de réserver.",
+    "lead": "FAQ, formulaire, WhatsApp et rendez-vous fonctionnent comme un même système : lever la dernière objection et faciliter la prise de contact.",
+    "q1": {
+      "question": "Comment réserver ?",
+      "answer": "Quatre voies mènent au même dossier : le formulaire de qualification, un échange rapide sur WhatsApp, un rendez-vous planifié, ou la demande de brochure pour avancer à votre rythme. Commencez par la voie qui vous convient — l'équipe reprend contact avec une proposition adaptée à votre projet."
+    },
+    "q2": {
+      "question": "Comment les visiteurs sont-ils qualifiés ?",
+      "answer": "Le dispositif de qualification est documenté salon par salon, et chaque chiffre publié l'est avec sa période et sa source. Le détail du dispositif vous est présenté lors de l'échange commercial."
+    },
+    "q3": {
+      "question": "Combien de visiteurs sont attendus ?",
+      "answer": "Aucun chiffre n'est publié sans validation. Les fréquentations sont communiquées salon par salon, avec leur période et leur source, dans la fiche de chaque édition et lors de l'échange commercial."
+    },
+    "q4": {
+      "question": "Quel est le coût ?",
+      "answer": "Les offres sont structurées en niveaux — voir la page Offres. Le tarif dépend du salon, de la surface et du niveau retenu ; une proposition chiffrée vous est remise après qualification de votre besoin."
+    },
+    "q5": {
+      "question": "Comment récupérer les leads ?",
+      "answer": "Les contacts collectés pendant le salon vous sont restitués, et leur suivi s'inscrit dans l'accompagnement avant–pendant–après décrit dans la méthode. Le dispositif exact de restitution est présenté lors de l'échange commercial."
+    },
+    "q6": {
+      "question": "Comment se déroule le montage ?",
+      "answer": "Le guide exposant et la checklist avant–pendant–après couvrent la préparation, le montage et le démontage. Ces documents sont mis à disposition dans les ressources dès leur version validée."
+    },
+    "q7": {
+      "question": "Quel accompagnement est inclus ?",
+      "answer": "L'accompagnement suit la méthode avant–pendant–après ; son périmètre exact dépend du niveau d'offre retenu. Les pages Méthode et Offres décrivent ce que chaque niveau couvre."
+    },
+    "outro": "Une question qui n'est pas ici ?",
+    "outroContact": "Contactez-nous",
+    "outroCta": "Devenir exposant"
+  },
+  "insights": {
+    "label": "Blog",
+    "title": "Le marché, la diaspora, l'investissement.",
+    "lead": "Les ressources réduisent la friction commerciale ; le blog capte les recherches autour du marché immobilier marocain et de la diaspora. Chaque article se relie à un salon, une destination ou une offre.",
+    "territoriesTitle": "Territoires éditoriaux",
+    "territoryKicker": "Territoire",
+    "territories": {
+      "t1": "Marché immobilier marocain",
+      "t2": "Diaspora marocaine",
+      "t3": "Investissement",
+      "t4": "Fiscalité",
+      "t5": "Tendances MRE",
+      "t6": "Interviews"
+    },
+    "pendingNote": "Premiers articles en préparation",
+    "outro": "En attendant les premiers articles :",
+    "outroResources": "Ressources",
+    "outroSalons": "Voir les salons"
+  },
+  "resourcesPage": {
+    "label": "Ressources",
+    "title": "Une bibliothèque utile pour la vente.",
+    "lead": "Chaque ressource possède une présentation avant téléchargement, et les formulaires ne demandent que les informations utiles au suivi.",
+    "resources": {
+      "r1": {
+        "name": "Brochure",
+        "description": "Vision, audiences, salons et offres."
+      },
+      "r2": {
+        "name": "Guide exposant",
+        "description": "Processus et préparation."
+      },
+      "r3": {
+        "name": "Calendrier",
+        "description": "Dates et destinations."
+      },
+      "r4": {
+        "name": "Plans des salons",
+        "description": "Surfaces et circulation."
+      },
+      "r5": {
+        "name": "Checklist",
+        "description": "Avant, pendant, après."
+      }
+    },
+    "availability": "Mis à disposition dès la version validée — sur demande",
+    "outro": "Pour recevoir un document :",
+    "outroContact": "Contactez-nous",
+    "outroInsights": "Lire le blog"
   }
 }

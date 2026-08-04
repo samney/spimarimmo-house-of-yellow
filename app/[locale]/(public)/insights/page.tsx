@@ -2,18 +2,16 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
-/* Spec §16 — Ressources et SEO. The five-resource library comes from the
-   specification table. Per the content principle every resource keeps a
-   presentation before download; the documents themselves ship once their
-   validated versions exist, so each card carries an honest availability state
-   and routes the request through contact. Nothing is linked that does not
-   exist. */
-const RESOURCES = ["r1", "r2", "r3", "r4", "r5"] as const;
+/* Spec §16 — the blog captures searches around the Moroccan market and the
+   diaspora. The six editorial territories come from the specification; no
+   article is fabricated — the index states honestly that the first articles
+   are in preparation, and each will link to a salon, destination or offer. */
+const TERRITORIES = ["t1", "t2", "t3", "t4", "t5", "t6"] as const;
 
-export default async function Ressources({ params }: { params: Promise<{ locale: string }> }) {
+export default async function Insights({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("resourcesPage");
+  const t = await getTranslations("insights");
 
   return (
     <div className="pageBlocks">
@@ -22,7 +20,7 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
           <div className="hoyCols">
             <div className="colLabel">
               <div className="text medium">
-                [ <span className="numIndex">13</span> ]
+                [ <span className="numIndex">16</span> ]
               </div>
             </div>
             <div className="colMain">
@@ -31,20 +29,21 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
                 <SplitTitle as="h1" className="normalTitle" text={t("title")} />
                 <p className="text medium">{t("lead")}</p>
               </header>
+              <h2 className="text medium label">{t("territoriesTitle")}</h2>
               <ul className="spimarCardList" role="list">
-                {RESOURCES.map((key) => (
+                {TERRITORIES.map((key) => (
                   <li key={key} className="cardItem">
-                    <h2 className="text medium">{t(`resources.${key}.name`)}</h2>
-                    <p className="text medium">{t(`resources.${key}.description`)}</p>
-                    <span className="cardNote text medium">{t("availability")}</span>
+                    <span className="cardKicker text medium">{t("territoryKicker")}</span>
+                    <h3 className="text medium">{t(`territories.${key}`)}</h3>
+                    <span className="cardNote text medium">{t("pendingNote")}</span>
                   </li>
                 ))}
               </ul>
               <footer className="pageOutro">
                 <p className="text medium">
-                  {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
+                  {t("outro")} <Link href="/ressources">{t("outroResources")}</Link>
                   {" · "}
-                  <Link href="/insights">{t("outroInsights")}</Link>
+                  <Link href="/salons">{t("outroSalons")}</Link>
                 </p>
               </footer>
             </div>
