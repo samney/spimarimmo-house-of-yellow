@@ -102,6 +102,8 @@
   --spimar-black: #000000;
   --spimar-ink: #14140f;
   --spimar-paper: #f4f2ed;
+  /* Warm ivory of the approved Section-1 reference. */
+  --spimar-ivory: #f7f2e9;
   --spimar-white: #ffffff;
   /* Muted text meeting 4.5:1 on --spimar-paper. Explicit colour, never opacity. */
   --spimar-muted: #55554f;

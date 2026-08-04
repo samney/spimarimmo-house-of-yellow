@@ -426,9 +426,6 @@ export function MobileShowcase() {
               </button>
             ))}
           </div>
-          <div className="text medium pillars__marker">
-            [ <span className="numIndex">03</span> ]
-          </div>
         </div>
         <div
           className="pillars__body"

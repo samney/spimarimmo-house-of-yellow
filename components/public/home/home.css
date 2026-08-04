@@ -399,8 +399,10 @@
 .servicesBlock {
   position: relative;
   min-height: 70vh;
-  background: var(--hoy-ink);
-  color: var(--hoy-paper);
+  /* Approved Section-1 reference: warm ivory surface, ink type — the pillars
+     read as an editorial diagram, not a dark panel. */
+  background: var(--spimar-ivory);
+  color: var(--on-surface);
 }
 .grainBackground.dark {
   opacity: 0.35;

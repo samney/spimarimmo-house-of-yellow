@@ -11,9 +11,10 @@
 /* ------------------------------------------------------------------- tabs */
 
 .pillarTabs {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0.5vw;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85vw;
+  width: 100%;
   margin-block-end: 3vw;
 }
 .pillarTab {
@@ -63,39 +64,31 @@
 
 .pillars__grid {
   display: grid;
-  grid-template-columns: minmax(0, 31%) minmax(0, 1fr);
+  /* Owner layout: tabs across the top, then left copy | device | right copy,
+     with equal side columns so the device holds the true centre. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   grid-template-rows: auto auto auto;
   column-gap: 3vw;
   row-gap: 3.5vw;
   /* Breathing room so the content never sits on the band's edges. */
   padding-block: 1.5vw 2.5vw;
 }
+/* Reference order: section header, then tabs, then the diagram row. */
 .pillars__left {
-  grid-column: 1;
+  grid-column: 1 / -1;
   grid-row: 1;
+  max-width: 60vw;
 }
 .pillars__statement {
   margin-block-start: 0.625vw;
 }
 /* The tab row bottom-aligns with the end of the left column, so the eye
    travels label -> statement -> tabs -> device. */
-/* Owner recomposition (2026-08-04): the tab group is centred on its own
-   row rather than crowding the header, and the chapter index is pinned right
-   so the header statement and the body copy share one alignment. */
+/* Tab group: its own full-width row, centred. */
 .pillars__rightHead {
   grid-column: 1 / -1;
   grid-row: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5vw;
-  position: relative;
-  margin-block-start: 2.5vw;
-}
-.pillars__rightHead > :last-child {
-  position: absolute;
-  inset-inline-end: 0;
-  inset-block-start: 0;
+  display: block;
 }
 
 /* ----------------------------------------------------- lead column + device */
@@ -104,7 +97,7 @@
   grid-column: 1 / -1;
   grid-row: 3;
   display: grid;
-  /* Equal side columns put the device in the true centre of the section. */
+  /* Reference diagram row: pillar copy left, device in the true centre. */
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 3.5vw;
@@ -112,8 +105,9 @@
 .pillars__body > :first-child {
   grid-column: 2;
 }
-.pillars__body > :last-child {
-  grid-column: 3;
+.pillars__body .pillars__lead {
+  grid-column: 1;
+  grid-row: 1;
 }
 /* The device holds the centre column, per-view copy sits bottom-right. */
 .pillars__lead {
@@ -629,4 +623,56 @@
 .pillarTab:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* --- Approved Section-1 reference alignment (owner A/B, 2026-08-04) --------- */
+
+/* Ivory surface: the tabs are outlined cards, the active one solid gold. */
+.pillarTab {
+  justify-content: flex-start;
+  width: 100%;
+  border: 1px solid rgb(20 20 15 / 16%);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--on-surface);
+  padding: var(--space-sm) var(--space-md);
+}
+.pillarTab .pillarTab__num {
+  color: var(--on-surface-muted);
+  opacity: 1;
+}
+/* The reference sets white type on the gold tab; measured, that is 2.21:1
+   and fails AA. Ink on the same gold reads ~8.9:1 and keeps the design's
+   solid-gold active state intact. */
+.pillarTab.is-active {
+  background: var(--spimar-gold-deep);
+  border-color: var(--spimar-gold-deep);
+  color: var(--on-accent);
+}
+.pillarTab.is-active .pillarTab__num {
+  color: var(--on-accent);
+  opacity: 0.75;
+}
+
+/* Left column: the reference leads with a large chapter numeral. */
+.pillars__leadIndex {
+  display: block;
+  color: var(--spimar-gold-deep);
+  font-size: var(--text-mega);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-block-end: var(--space-sm);
+}
+.pillars__statement {
+  color: var(--on-surface);
+}
+.pillars__leadTitle,
+.pillars__leadBody,
+.pillars__cta,
+.pillars__notion {
+  color: var(--on-surface);
+}
+.pillars__leadBody {
+  color: var(--on-surface-muted);
 }
