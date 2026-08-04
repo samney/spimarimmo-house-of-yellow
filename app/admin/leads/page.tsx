@@ -23,6 +23,19 @@ export default async function LeadsAdmin() {
         </p>
       </header>
 
+      <div className="adminToolbar">
+        <Link className="adminLink" href="/admin/pipeline">
+          Pipeline view
+        </Link>
+        {/* A download is an action, not a navigation: a GET form keeps the
+            browser's native download flow and satisfies the page-link rule. */}
+        <form action="/admin/leads/export" method="get">
+          <button type="submit" className="adminButton adminButton--ghost">
+            Export CSV
+          </button>
+        </form>
+      </div>
+
       {leads.length === 0 ? (
         <div className="adminEmpty">
           No lead has been submitted yet. Submitting the public contact form creates one here.

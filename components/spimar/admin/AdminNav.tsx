@@ -25,7 +25,10 @@ const GROUPS = [
   },
   {
     label: "CRM — Leads",
-    items: [{ href: "/admin/leads", label: "Leads" }],
+    items: [
+      { href: "/admin/leads", label: "Leads" },
+      { href: "/admin/pipeline", label: "Pipeline" },
+    ],
   },
 ] as const;
 
