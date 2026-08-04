@@ -181,3 +181,43 @@
     scroll-margin-top: 16vw;
   }
 }
+
+/* Case-study detail: video slot (honest pending state) + prose body. */
+.caseVideoSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  aspect-ratio: 16 / 9;
+  max-width: var(--measure-document);
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  text-align: center;
+}
+.caseVideoBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.4vw;
+  height: 3.4vw;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+}
+.caseVideoIcon {
+  width: 45%;
+  height: 45%;
+}
+.caseBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: var(--measure-prose);
+  margin-bottom: var(--space-lg);
+}

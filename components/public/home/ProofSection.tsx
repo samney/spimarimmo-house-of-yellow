@@ -1,18 +1,20 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ArrowRightIcon, ShieldCheckIcon, TargetIcon, VisitorsIcon } from "./impactIcons";
-import { BarsIcon } from "./visibilityIcons";
 import {
-  ChatDotsIcon,
-  DataShieldIcon,
-  EyeIcon,
-  FullscreenIcon,
-  LeadIcon,
-  PlaySolidIcon,
-  TagIcon,
-  VolumeIcon,
-} from "./proofIcons";
+  BadgeCheck,
+  CalendarCheck,
+  Eye,
+  Magnet,
+  MessagesSquare,
+  Scale,
+  ShieldCheck,
+  Target,
+  TrendingUp,
+} from "lucide-react";
+import { ArrowRightIcon } from "./impactIcons";
+
+import { DataShieldIcon, FullscreenIcon, PlaySolidIcon, VolumeIcon } from "./proofIcons";
 
 /* Section 09 — La preuve par les résultats.
  *
@@ -37,21 +39,23 @@ import {
  * - Every action lands on a real route: the études-de-cas hub (which states
  *   the publication precondition itself) and the resources methodology. */
 
-type IconComponent = (props: { className?: string }) => React.JSX.Element;
+type IconComponent = React.ComponentType<{ className?: string }>;
 
+/* Owner note (2026-08-04): the funnel and methodology glyphs move to the
+   lucide set (D-023) — expressive per-step icons instead of generic marks. */
 const STEPS: readonly { key: string; Icon: IconComponent }[] = [
-  { key: "interactions", Icon: ChatDotsIcon },
-  { key: "leads", Icon: LeadIcon },
-  { key: "opportunities", Icon: TargetIcon },
-  { key: "visits", Icon: EyeIcon },
-  { key: "bookings", Icon: TagIcon },
-  { key: "sales", Icon: BarsIcon },
+  { key: "interactions", Icon: MessagesSquare },
+  { key: "leads", Icon: Magnet },
+  { key: "opportunities", Icon: Target },
+  { key: "visits", Icon: Eye },
+  { key: "bookings", Icon: CalendarCheck },
+  { key: "sales", Icon: TrendingUp },
 ];
 
 const METHOD_ITEMS: readonly { key: string; Icon: IconComponent }[] = [
-  { key: "framed", Icon: ShieldCheckIcon },
-  { key: "transparent", Icon: BarsIcon },
-  { key: "informed", Icon: VisitorsIcon },
+  { key: "framed", Icon: ShieldCheck },
+  { key: "transparent", Icon: Scale },
+  { key: "informed", Icon: BadgeCheck },
 ];
 
 type ProofSectionProps = {
@@ -63,7 +67,7 @@ type ProofSectionProps = {
 
 export function ProofSection({
   caseStudiesHref = "/etudes-de-cas",
-  methodologyHref = "/ressources",
+  methodologyHref = "/insights",
 }: ProofSectionProps) {
   const t = useTranslations("proof");
 
@@ -80,10 +84,8 @@ export function ProofSection({
             </h2>
             <p className="proofLead">{t("lead")}</p>
           </div>
-          <Link className="proofCta" href={caseStudiesHref}>
-            <span>{t("ctaAll")}</span>
-            <ArrowRightIcon className="proofCtaIcon" aria-hidden="true" />
-          </Link>
+          {/* Owner note (2026-08-04): one CTA only — the in-panel case CTA
+              stays; the duplicate header CTA is removed. */}
         </header>
 
         <div className="proofPanel">

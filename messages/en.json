@@ -965,5 +965,17 @@
     "navLabel": "Gallery categories",
     "outro": "Continue:",
     "outroLibrary": "Resource library"
+  },
+  "caseStudies": {
+    "label": "Case studies",
+    "title": "Proof through results.",
+    "lead": "Every published case study documents a real participation: context, setup and results. No figure is published without validation.",
+    "empty": "The first case studies are being validated. They are published here as soon as their approved version exists.",
+    "cardKicker": "Case study",
+    "detailLabel": "Case study",
+    "videoPending": "This case study’s video is published after its rights and provenance are validated.",
+    "backToList": "All case studies",
+    "outro": "Your project deserves the same setup:",
+    "outroCta": "Become an exhibitor"
   }
 }

@@ -153,6 +153,34 @@ test("CMS publish updates the public site through revalidation", async ({ page }
   await expect(page.getByRole("heading", { name: title })).toBeVisible();
 });
 
+test("a published case study lists and serves its detail; drafts 404", async ({ page }) => {
+  const id = stamp();
+  const title = `E2E Case ${id}`;
+
+  // The CMS utility: case studies are pages in the `etudes/` family.
+  await signIn(page, ADMIN);
+  await page.goto("/admin/pages");
+  await page.getByLabel("Slug").fill(`etudes/e2e-case-${id}`);
+  await page.getByLabel("EN").first().fill(title);
+  await page.getByLabel("Publication").selectOption("published");
+  await page.getByRole("button", { name: "Save" }).click();
+  await expect(page.getByText(/published/i).first()).toBeVisible();
+
+  await page.goto("/en/etudes-de-cas");
+  await page.getByRole("link", { name: title }).click();
+  await expect(page.getByRole("heading", { name: title })).toBeVisible();
+
+  await page.goto("/admin/pages");
+  await page.getByLabel("Slug").fill(`etudes/e2e-case-draft-${id}`);
+  await page.getByLabel("EN").first().fill(`Draft case ${id}`);
+  await page.getByRole("button", { name: "Save" }).click();
+  await expect(page.getByText(/draft/i).first()).toBeVisible();
+  const response = await page.request.get(`/etudes-de-cas/e2e-case-draft-${id}`, {
+    maxRedirects: 0,
+  });
+  expect(response.status()).toBe(404);
+});
+
 test("drafts are never visible publicly", async ({ page }) => {
   const id = stamp();
   const slug = `e2e-draft-${id}`;

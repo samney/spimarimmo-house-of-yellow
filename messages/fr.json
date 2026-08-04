@@ -965,5 +965,17 @@
     "navLabel": "Catégories de la galerie",
     "outro": "Continuer :",
     "outroLibrary": "Bibliothèque de ressources"
+  },
+  "caseStudies": {
+    "label": "Études de cas",
+    "title": "La preuve par les résultats.",
+    "lead": "Chaque étude de cas publiée documente une participation réelle : contexte, dispositif et résultats. Aucun chiffre n’est publié sans validation.",
+    "empty": "Les premières études de cas sont en cours de validation. Elles sont publiées ici dès leur version approuvée.",
+    "cardKicker": "Étude de cas",
+    "detailLabel": "Étude de cas",
+    "videoPending": "La vidéo de cette étude de cas est publiée après validation des droits et de la provenance.",
+    "backToList": "Toutes les études de cas",
+    "outro": "Votre projet mérite le même dispositif :",
+    "outroCta": "Devenir exposant"
   }
 }
