@@ -9,7 +9,7 @@ const port = Number(process.env.ROUTE_TEST_PORT ?? 3211);
 const origin = `http://127.0.0.1:${port}`;
 const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "next");
 
-const coreRoutes = ["/", "/salons", "/exposer", "/pourquoi-spimar", "/etudes-de-cas", "/ressources", "/visiteurs", "/contact", "/confidentialite", "/mentions-legales"];
+const coreRoutes = ["/", "/salons", "/exposer", "/exposer/methode", "/exposer/visibilite", "/exposer/offres", "/pourquoi-spimar", "/etudes-de-cas", "/ressources", "/insights", "/faq", "/visiteurs", "/contact", "/confidentialite", "/mentions-legales"];
 const projectRoutes = [];
 const publicRoutes = [...coreRoutes, ...projectRoutes];
 

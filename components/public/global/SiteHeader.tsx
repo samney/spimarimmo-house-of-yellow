@@ -19,13 +19,38 @@ import { Marquee } from "@/components/primitives/motion/Marquee";
    Labels come from the message catalogue rather than being hardcoded, because
    the locale architecture must stay ready for English and Arabic. */
 
-const NAV = [
+/* Spec §6.1 navigation content: Exposer carries why/method/visibility/offers,
+   Ressources carries the library, the blog and the FAQ. Child menus are
+   CSS-revealed (hover and focus-within) so keyboard users reach every entry
+   without JS state; the nested lists stay in the accessibility tree either
+   way. */
+type NavChild = { href: string; key: string };
+type NavItem = { href: string; key: string; children?: readonly NavChild[] };
+
+const NAV: readonly NavItem[] = [
   { href: "/salons", key: "salons" },
-  { href: "/exposer", key: "exposer" },
-  { href: "/pourquoi-spimar", key: "pourquoiSpimar" },
+  {
+    href: "/exposer",
+    key: "exposer",
+    children: [
+      { href: "/pourquoi-spimar", key: "pourquoiSpimar" },
+      { href: "/exposer/methode", key: "methode" },
+      { href: "/exposer/visibilite", key: "visibilite" },
+      { href: "/exposer/offres", key: "offres" },
+      { href: "/exposer/devenir-exposant", key: "becomeExhibitor" },
+    ],
+  },
   { href: "/etudes-de-cas", key: "etudesDeCas" },
-  { href: "/ressources", key: "ressources" },
-] as const;
+  {
+    href: "/ressources",
+    key: "ressources",
+    children: [
+      { href: "/ressources", key: "bibliotheque" },
+      { href: "/insights", key: "blog" },
+      { href: "/faq", key: "faq" },
+    ],
+  },
+];
 
 /* §07 primary conversion. The brochure is the deliberately lighter secondary
    action and lives in the hero, not the header. */
@@ -98,17 +123,42 @@ export function SiteHeader() {
           <div className="left">
             <nav className="mainMenuWrapper" aria-label="Principal">
               <ul className="menu">
-                {NAV.map((item) => (
-                  <li key={item.href} className="menu-item">
-                    <Link
-                      href={item.href}
-                      className={pathname === item.href ? "active current-menu-item" : undefined}
-                      aria-current={pathname === item.href ? "page" : undefined}
+                {NAV.map((item) => {
+                  const childActive = item.children?.some((c) => pathname === c.href) ?? false;
+                  return (
+                    <li
+                      key={item.href}
+                      className={`menu-item${item.children ? " hasChildren" : ""}`}
                     >
-                      {t(item.key)}
-                    </Link>
-                  </li>
-                ))}
+                      <Link
+                        href={item.href}
+                        className={
+                          pathname === item.href || childActive
+                            ? "active current-menu-item"
+                            : undefined
+                        }
+                        aria-current={pathname === item.href ? "page" : undefined}
+                      >
+                        {t(item.key)}
+                      </Link>
+                      {item.children ? (
+                        <ul className="subMenu">
+                          {item.children.map((child) => (
+                            <li key={`${item.href}:${child.href}`}>
+                              <Link
+                                href={child.href}
+                                className={pathname === child.href ? "active" : undefined}
+                                aria-current={pathname === child.href ? "page" : undefined}
+                              >
+                                {t(child.key)}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           </div>
@@ -155,10 +205,21 @@ export function SiteHeader() {
           <nav className="mobileMenu" aria-label="Mobile">
             <ul className="menu">
               {NAV.map((item) => (
-                <li key={item.href} className="menu-item">
+                <li key={item.href} className={`menu-item${item.children ? " hasChildren" : ""}`}>
                   <Link href={item.href} onClick={() => setMenuOpen(false)}>
                     {t(item.key)}
                   </Link>
+                  {item.children ? (
+                    <ul className="mobileSubMenu">
+                      {item.children.map((child) => (
+                        <li key={`${item.href}:${child.href}`}>
+                          <Link href={child.href} onClick={() => setMenuOpen(false)}>
+                            {t(child.key)}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </li>
               ))}
               <li className="menu-item">

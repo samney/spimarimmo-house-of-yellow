@@ -734,3 +734,70 @@ footer .bottomFooter a {
     width: 25.862vw;
   }
 }
+
+/* Spec §6.1 child menus (Exposer, Ressources). Revealed on hover and on
+   focus-within so keyboard users reach every entry without JS; the nested
+   list stays in the accessibility tree either way. The panel keeps solid
+   paper in both header states so contrast never depends on the hero under
+   the transparent bar. */
+header .menu .menu-item {
+  position: relative;
+}
+header .menu .subMenu {
+  position: absolute;
+  top: 100%;
+  left: -1.25rem;
+  min-width: 13.5rem;
+  margin: 0;
+  padding: 0.6rem 0;
+  list-style: none;
+  background: var(--hoy-paper);
+  color: var(--hoy-ink);
+  border: 1px solid rgba(29, 29, 27, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 8px;
+  transition:
+    opacity 0.16s ease,
+    translate 0.16s ease,
+    visibility 0.16s;
+}
+header .menu .menu-item.hasChildren:hover > .subMenu,
+header .menu .menu-item.hasChildren:focus-within > .subMenu {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+}
+header .menu .subMenu a,
+header.light .headerBar .menu .subMenu a {
+  display: block;
+  padding: 0.35rem 1.25rem;
+  color: var(--hoy-ink);
+  line-height: 1.8;
+}
+header .menu .subMenu a.active {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+header .menu .subMenu a::after {
+  content: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  header .menu .subMenu {
+    transition: none;
+    translate: 0 0;
+  }
+}
+
+/* Mobile: children are always expanded as an indented group — no hidden
+   second-level state to manage inside the overlay menu. */
+.mobileMenu .mobileSubMenu {
+  list-style: none;
+  margin: 0.25rem 0 0.75rem;
+  padding: 0 0 0 1.25rem;
+  border-left: 1px solid rgba(29, 29, 27, 0.25);
+}
+.mobileMenu .mobileSubMenu a {
+  font-size: 0.85em;
+  line-height: 2.1;
+}

@@ -9,7 +9,13 @@
     "becomeExhibitor": "Become an exhibitor",
     "contact": "Contact",
     "menu": "Menu",
-    "home": "Home"
+    "home": "Home",
+    "methode": "Method",
+    "visibilite": "Visibility",
+    "offres": "Offers",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "bibliotheque": "Library"
   },
   "impact": {
     "eyebrow": "Key figures",
@@ -616,5 +622,91 @@
     "title": "This page does not exist.",
     "body": "The page you are looking for has moved or is not available.",
     "home": "Home"
+  },
+  "faq": {
+    "label": "Exhibitor FAQ",
+    "title": "The last questions before you book.",
+    "lead": "FAQ, form, WhatsApp and appointments work as one system: remove the last objection and make contact easy.",
+    "q1": {
+      "question": "How do I book?",
+      "answer": "Four paths lead to the same file: the qualification form, a quick WhatsApp exchange, a scheduled appointment, or a brochure request to move at your own pace. Start with whichever suits you — the team follows up with a proposal tailored to your project."
+    },
+    "q2": {
+      "question": "How are visitors qualified?",
+      "answer": "The qualification setup is documented per exhibition, and every published figure carries its period and source. The full detail is presented during the commercial exchange."
+    },
+    "q3": {
+      "question": "How many visitors are expected?",
+      "answer": "No figure is published without validation. Attendance is communicated per exhibition, with its period and source, on each edition's page and during the commercial exchange."
+    },
+    "q4": {
+      "question": "What does it cost?",
+      "answer": "Offers are structured in levels — see the Offers page. Pricing depends on the exhibition, the surface and the level you choose; a quoted proposal follows the qualification of your needs."
+    },
+    "q5": {
+      "question": "How do I get my leads?",
+      "answer": "Contacts collected during the exhibition are handed back to you, and their follow-up is part of the before–during–after support described in the method. The exact hand-back process is presented during the commercial exchange."
+    },
+    "q6": {
+      "question": "How does stand setup work?",
+      "answer": "The exhibitor guide and the before–during–after checklist cover preparation, setup and teardown. These documents are released in the resources as soon as their validated versions exist."
+    },
+    "q7": {
+      "question": "What support is included?",
+      "answer": "Support follows the before–during–after method; its exact scope depends on the offer level you choose. The Method and Offers pages describe what each level covers."
+    },
+    "outro": "A question that isn't here?",
+    "outroContact": "Contact us",
+    "outroCta": "Become an exhibitor"
+  },
+  "insights": {
+    "label": "Blog",
+    "title": "The market, the diaspora, investment.",
+    "lead": "Resources reduce commercial friction; the blog captures searches around the Moroccan property market and the diaspora. Every article connects to an exhibition, a destination or an offer.",
+    "territoriesTitle": "Editorial territories",
+    "territoryKicker": "Territory",
+    "territories": {
+      "t1": "Moroccan property market",
+      "t2": "Moroccan diaspora",
+      "t3": "Investment",
+      "t4": "Taxation",
+      "t5": "MRE trends",
+      "t6": "Interviews"
+    },
+    "pendingNote": "First articles in preparation",
+    "outro": "While the first articles are being prepared:",
+    "outroResources": "Resources",
+    "outroSalons": "See the exhibitions"
+  },
+  "resourcesPage": {
+    "label": "Resources",
+    "title": "A library that works for the sale.",
+    "lead": "Every resource keeps a presentation before download, and forms only ask for the information useful to follow-up.",
+    "resources": {
+      "r1": {
+        "name": "Brochure",
+        "description": "Vision, audiences, exhibitions and offers."
+      },
+      "r2": {
+        "name": "Exhibitor guide",
+        "description": "Process and preparation."
+      },
+      "r3": {
+        "name": "Calendar",
+        "description": "Dates and destinations."
+      },
+      "r4": {
+        "name": "Floor plans",
+        "description": "Surfaces and circulation."
+      },
+      "r5": {
+        "name": "Checklist",
+        "description": "Before, during, after."
+      }
+    },
+    "availability": "Released as soon as the validated version exists — on request",
+    "outro": "To receive a document:",
+    "outroContact": "Contact us",
+    "outroInsights": "Read the blog"
   }
 }
