@@ -65,7 +65,7 @@ scope and ownership are unchanged.
 | ID        | Status                | Objective                                                                                                                                                                                                                                         | Depends on           |
 | --------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
 | `SPI-000` | `DONE (PR #12 + #14)` | `P1.0` foundation freeze complete. `TRF-000` baseline frozen at `643b912`; `TRF-001` control files added. `GATE-0 BASELINE` is `PASSED (OWNER ACCEPTED)` under `D-020` — accepted without an independent review pass, gap disclosed in `GATES.md` | `ENG-015`, `D-016`   |
-| `SPI-010` | `IN PROGRESS`         | Neutralize House of Yellow and consolidate one canonical architecture. Active package `TRF-002` — residue inventory. Exit `GATE-1 NEUTRAL`                                                                                                        | `SPI-000`            |
+| `SPI-010` | `IN PROGRESS`         | Neutralize House of Yellow and consolidate one canonical architecture. `TRF-002`–`007` merged (see `WORK-PACKAGES.md`); exit `GATE-1 NEUTRAL` is `CHANGES_REQUESTED` with the post-`TRF-007` re-review outstanding (see `GATES.md`)               | `SPI-000`            |
 | `SPI-020` | `PENDING`             | Revalidate product foundation, PRD, IA, sitemap, content and journeys                                                                                                                                                                             | `SPI-010`            |
 | `SPI-030` | `PENDING`             | Implement SPIMAR identity, tokens, components, motion, responsive and RTL foundations                                                                                                                                                             | `SPI-020`            |
 | `SPI-040` | `PENDING`             | Global shell, navigation, locale routing, metadata, consent and shared states                                                                                                                                                                     | `SPI-030`            |
@@ -80,6 +80,13 @@ scope and ownership are unchanged.
 | `REL-130` | `PENDING`             | Production release, rollback, operations and owner handoff                                                                                                                                                                                        | `AUD-120`            |
 
 Expand only the active item into bounded tasks. Never start a later item early.
+
+**Queue/reality divergence (2026-08-04).** Application implementation ran ahead
+of this queue on owner-directed PRs #23–#32 while `SPI-010` was still open; the
+verified record, including an `UNRESOLVED` authorization flag, lives in
+`STATUS.md` § "Off-queue implementation state". This queue remains the
+contracted execution order; how the delivered scope maps back onto
+`SPI-020`–`CRM-090` is an owner decision, not something this file can assert.
 
 Phase 1 groups `SPI-000` through `SPI-050` under one owner-approved theme.
 Within `SPI-000`, `TRF-000` is implemented and awaiting review; `TRF-001`

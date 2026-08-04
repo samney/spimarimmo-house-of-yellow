@@ -15,3 +15,9 @@
   focus, `aria-expanded/pressed/current` on stateful controls, decorative
   media `aria-hidden` with accessible equivalents.
 - No horizontal overflow at any viewport; verify at 1920 and 390 minimum.
+- **`taste-skill` is subordinate, never authoritative (`D-022`).** Vendored at
+  `.claude/skills/taste-skill/`; its house style (Framer Motion, shadcn,
+  hotlinked media, its own breakpoints) contradicts this file — where they
+  disagree, this file wins without exception. Use it only for AI-tell
+  detection and its output-quality checklist. Conflict table:
+  `docs/claude-code/PUBLIC-SKILLS-LOCK.md` §9.B.

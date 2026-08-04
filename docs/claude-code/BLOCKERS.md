@@ -1,6 +1,6 @@
 # BLOCKERS
 
-Updated: 2026-08-02
+Updated: 2026-08-04
 
 ## MIG-1 — Raw project-specific ChatGPT export unavailable
 
@@ -16,13 +16,15 @@ Updated: 2026-08-02
 - What is missing: repository-accessible release/LFS locations and SHA-256 values for the 44 early visual explorations and large historical ZIP packages.
 - Required closure: export/hash the raw assets and publish them through Git LFS or durable release assets, or record an explicit owner acceptance of metadata-only preservation for rejected/superseded material.
 
-## MIG-3 — ENG-014B evidence ZIP bytes are still local on the owner's Windows checkout
+## MIG-3 — ENG-014B evidence ZIP — **CLOSED 2026-08-04**
 
-- Status: `BLOCKS_FULL_EVIDENCE_PORTABILITY`; PR #4 remains valid and merged.
-- Expected path: `C:\work\spimar\qa\implementation\ENG-014B-EVIDENCE-PACKAGE.zip`.
-- Expected size: 1,875,071 bytes.
-- Expected SHA-256: `6D47F7DFA7066F258A9E848A1CCCBDFCEBA508D6A15C5379482C52ED357EE51C`.
-- Required closure: copy the original ZIP, verify the checksum, publish it durably, and update `docs/spimar/parity-history/06-ENG-014B-EVIDENCE-REGISTER.md`.
+- Status: `CLOSED`. The original ZIP was found at its expected path on the
+  owner's Windows checkout, its SHA-256 verified byte-identical
+  (`6d47f7dfa7066f258a9e848a1cccbdfceba508d6a15c5379482c52ed357ee51c`,
+  1,875,071 bytes), and the file committed to the repository at
+  `qa/implementation/ENG-014B-EVIDENCE-PACKAGE.zip` in the same changeset as
+  this entry. `docs/spimar/parity-history/06-ENG-014B-EVIDENCE-REGISTER.md`
+  is updated and reclassified `SUPPORTING_VERIFIED_REPOSITORY_BYTES`.
 
 ## LEG-1 — SPIMAR cookie policy must be authored, not adapted
 
@@ -35,7 +37,8 @@ Updated: 2026-08-02
 
 ## P-1 — Supabase project credentials / CMS provider decision
 
-Deferred until the post-ENG-015 SPIMAR data/CMS phase. No credential is required for MIG-000 or clone convergence.
+- 2026-08-04 update: the provider decision is made — `D-021` integrated the Supabase CMS/CRM backend into `main` (PR #25). What remains blocked is operation: nothing has run against hosted Supabase, no project credentials exist in the repository contract, and the backend does not yet drive the application (gaps stated deliberately in `D-021`).
+- Required closure: an owner-provisioned Supabase project and the `.env.example` contract update, in the approved integration phase.
 
 ## P-2 — Email, anti-spam, CRM, scheduling, and provider credentials
 

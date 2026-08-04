@@ -171,6 +171,89 @@ same form before it ships.
 | Decision           | See `D-019`. No existing skill covers this; it reinforces `.claude/rules/data-security.md` at the moment a feature is hidden, which is when the mistake is actually made         |
 | Audited date       | 2026-08-02                                                                                                                                                                       |
 
+## 9. taste-skill / `design-taste-frontend` (vendored third-party)
+
+| Field              | Value                                                                                                                                                                                                                                                                                                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Capability         | Anti-slop generative design taste for landing/portfolio/redesign surfaces; AI-tell detection and a mechanical pre-flight quality checklist                                                                                                                                                                                          |
+| Item               | `skills/taste-skill/SKILL.md` from the `taste-skill` pack (**one** of the pack's 13 skills; the other 12 were **not** vendored)                                                                                                                                                                                                     |
+| Publisher          | `Leonxlnx` (individual; Vercel-OSS-sponsored, ~71.1k stars, active — last push 2026-07-23)                                                                                                                                                                                                                                          |
+| Canonical URL      | https://github.com/leonxlnx/taste-skill (skills/taste-skill)                                                                                                                                                                                                                                                                        |
+| Marketplace entry  | none — the pack ships a `.claude-plugin/marketplace.json`, but it was **not** used; no marketplace install was performed                                                                                                                                                                                                            |
+| Upstream SHA       | `e988add20dab0fa97d7a76781c48961c8184288e` (full 40-char SHA; file fetched pinned to this ref)                                                                                                                                                                                                                                     |
+| Installed version  | pack `plugin.json` declares 1.0.0; the skill file itself carries no version                                                                                                                                                                                                                                                         |
+| Install scope      | **project**                                                                                                                                                                                                                                                                                                                        |
+| Install method     | Vendored byte-identically per the `D-002` precedent: single-file fetch at the pinned SHA, `cmp` byte-comparison against the vendored copy, SHA-256 recorded. **The `npx skills` installer and `skill.sh` were not run** — no third-party code executed at any point                                                                 |
+| Installed path     | `.claude/skills/taste-skill/SKILL.md`                                                                                                                                                                                                                                                                                              |
+| Content hash       | SHA-256 `aa194351b246b8b4799099d4ed7b033d29eab6e6e3d58d8d2172978be7b3ec89` (87,253 B; `cmp` verified identical to upstream)                                                                                                                                                                                                         |
+| Registered name    | **`design-taste-frontend`** — the frontmatter `name` differs from the directory name. It will appear under that name in the session skill list, not as "taste-skill"                                                                                                                                                                |
+| License            | MIT (`LICENSE` present at repository root)                                                                                                                                                                                                                                                                                         |
+| Hooks/scripts      | **Absent in the vendored artifact.** The upstream repo contains `skill.sh` (a bash lookup table that echoes a path; no network, no execution) and `scripts/*.mjs` (README asset processing: webp conversion, sponsor badges). **None was vendored**; the vendored skill is a single Markdown file with no executable content         |
+| Network/MCP access | **None at load time.** The file references external URLs as documentation links and as image-source *recommendations* (`picsum.photos`, `cdn.simpleicons.org`) — see the conflict table below                                                                                                                                       |
+| Credentials        | None. The only credential-shaped string is a `%SHOPIFY_API_KEY%` placeholder inside a documentation snippet                                                                                                                                                                                                                         |
+| `allowed-tools`    | **Not declared.** The skill requests no tool permissions; frontmatter is `name` + `description` only                                                                                                                                                                                                                               |
+| Status             | **installed — subordinate** (see the subordination rule below)                                                                                                                                                                                                                                                                     |
+| Decision           | See `D-022`. Supersedes the `rejected (overridable)` row in the audited-candidates table below, on explicit owner instruction, after the override gate that row itself specified was executed                                                                                                                                       |
+| Audited date       | 2026-08-02                                                                                                                                                                                                                                                                                                                         |
+
+### 9.A Audit performed (the `rejected (overridable)` override gate)
+
+The 2026-07-30 row required, as the override gate, a **line-by-line read of the pinned
+SKILL.md** followed by a vendored install. The 2026-07-30 pass had reviewed the file only
+"via summarization". That gate is now discharged: all **1,206 lines** were read directly at
+the pinned SHA, plus an automated scan for the Phase-2 threat classes.
+
+**Findings — clean on every threat class:**
+
+| Threat class                      | Result                                                                                                                                                            |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Download-and-execute              | **None.** `npx`/`npm install` strings appear only as user-facing install documentation in Appendix A and Section 2.A tables — not as agent-executed instructions   |
+| Credential / secret access        | **None.** All "token" matches are *design* tokens; one `%SHOPIFY_API_KEY%` doc placeholder                                                                          |
+| Global / home-directory writes    | **None.** Zero matches for `~/.claude`, `settings.json`, `$HOME`, `/etc`, shell rc files                                                                            |
+| Destructive commands              | **None.** Zero matches for `rm -rf`, `--force`, `git reset --hard`, `sudo`, `DROP`                                                                                  |
+| Operator-directed prompt injection| **None.** Zero matches for instruction-override, "ignore previous", "do not tell the user", or system-prompt manipulation patterns                                  |
+| Wildcard permissions              | **None.** No `allowed-tools` declared at all                                                                                                                        |
+| Bundled executables               | **None** in the vendored artifact (single `.md`)                                                                                                                    |
+| External hosts referenced         | All legitimate vendor documentation (Material, Fluent, Carbon, Polaris, Atlassian, Primer, GOV.UK, USWDS, Bootstrap, Radix, shadcn, MDN, CSSWG, Apple) plus two asset CDNs — see conflicts |
+
+This addresses the Snyk ToxicSkills concern recorded at the foot of this document
+(prompt injection found in 36% of tested skills): this artifact was checked for it
+explicitly and directly, not inferred.
+
+### 9.B Conflicts with SPIMAR rules — the reason this skill is subordinate, not authoritative
+
+The skill is safe. It is **not** aligned. It encodes a generative, greenfield, Tailwind +
+Motion house style; SPIMAR is fidelity-first with its own locked stack. Recorded conflicts:
+
+| Skill instruction                                                             | SPIMAR rule it contradicts                                                                       |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| §3.A (L132): animation library is **Motion** (ex-Framer Motion), `motion/react`| `.claude/rules/frontend-quality.md` — "**No Framer Motion**"; `TOOLING-MATRIX.md` excludes it        |
+| §4.8 (L269), §9.E (L626): hotlink `picsum.photos`; §4.8 (L277) `cdn.simpleicons.org` | `.claude/rules/architecture.md` — media served from `public/` or Supabase Storage, "**never hotlinked**" |
+| §2.A (L99), §9.E (L627): shadcn/ui as a foundation                            | `TOOLING-MATRIX.md` excludes "shadcn/ui on public routes"                                          |
+| §9.A (L604): "**NO custom mouse cursors**"                                     | The reference implementation has one; `frontend-quality.md` lists cursor as a legitimate Client Component |
+| §3.C (L141-143): Phosphor/HugeIcons/Radix/Tabler; "never hand-roll SVG"        | SPIMAR ships an **icomoon icon font**                                                              |
+| §4.1: prefer Geist/Satoshi/Cabinet Grotesk; ban Fraunces/Instrument_Serif      | SPIMAR type is locked to **Poppins 300–700, self-hosted**                                          |
+| §3.E (L151): breakpoints `sm 640 / md 768 / lg 1024 / xl 1280 / 2xl 1536`      | SPIMAR validates **eight** viewports: 1920, 1440, 1280, 1024×768, 768×1024, 430, 390, 360          |
+| §4.3, §4.7, §9.C: bans centered heroes, caps eyebrows, bans layout repetition  | `.claude/rules/frontend-quality.md` — "Do not modernize, simplify, or 'improve' the public UI"     |
+| §13: dashboards, admin panels, data tables, multi-step forms are out of scope  | This is precisely the `CMS-080` / `CRM-090` surface, so the skill disclaims it there               |
+
+**Subordination rule (binding).** Where this skill and
+`.claude/rules/frontend-quality.md`, `.claude/rules/architecture.md`, or
+`TOOLING-MATRIX.md` disagree, **the project rules win, without exception**. The skill is
+advisory input, never authority. It sits at authority level 6 (supporting material), below
+this repository's own rules. The rule is also stated in
+`.claude/rules/frontend-quality.md` so it loads in every session, since that file is always
+in context and this lock file is not.
+
+**Where it is genuinely useful:** §9 (AI Tells) and §14 (Pre-Flight Check) are
+stack-agnostic output-quality gates — em-dash ban, copy self-audit, WCAG contrast checks on
+buttons and forms, CTA wrap, hero discipline, motion-must-be-motivated. These apply at
+`SPI-020`/`SPI-030` when generating **new** SPIMAR identity, and during copy review. They do
+not conflict with anything.
+
+**Where it must not be used:** reproducing House of Yellow reference composition, any
+public-route fidelity work, and CMS/CRM console surfaces (which it disclaims itself).
+
 ## Rejected / skipped items
 
 | Item                                                                                                                                  | Status                     | Reason                                                                                                                                                                                                                                                                                                                                                |
@@ -194,7 +277,7 @@ same form before it ships.
 
 | Item | Publisher | License | Audit outcome | Status | Decision |
 |---|---|---|---|---|---|
-| `Leonxlnx/taste-skill` | Individual (`Leonxlnx`, Vercel-OSS-sponsored, ~69k stars, active) | MIT | 13-skill design pack; no malicious patterns found (87 KB main SKILL.md reviewed via summarization, not yet line-by-line); install path relies on third-party `npx skills` CLI | **rejected (overridable)** | High overlap with installed `frontend-design` + `web-design-guidelines`; bootstrap forbids duplicate frontend skills, and this project reproduces an existing design rather than generating new "taste". If the owner still wants it, next gate = line-by-line read of the pinned SKILL.md, then vendored install like web-design-guidelines |
+| `Leonxlnx/taste-skill` | Individual (`Leonxlnx`, Vercel-OSS-sponsored, ~69k stars, active) | MIT | 13-skill design pack; no malicious patterns found (87 KB main SKILL.md reviewed via summarization, not yet line-by-line); install path relies on third-party `npx skills` CLI | **SUPERSEDED by `D-022` — now installed, see §9** (was: rejected (overridable)) | Original reasoning: high overlap with installed `frontend-design` + `web-design-guidelines`; bootstrap forbids duplicate frontend skills, and this project reproduces an existing design rather than generating new "taste". Override gate specified here — line-by-line read of the pinned SKILL.md, then vendored install like web-design-guidelines — was **executed in full on 2026-08-02** (1,206/1,206 lines read at pinned SHA `e988add`, threat scan clean). Installed under `D-022` on explicit owner instruction, **subordinate** to project rules; the overlap concern is not dismissed but bounded by the subordination rule in §9.B |
 | `JCodesMore/ai-website-cloner-template` | Individual (`JCodesMore`, ~31k stars, active) | MIT | Project *template* (Next 16 + embedded `clone-website` skill), not an installable skill; no malicious code found, but dual-use cloning pipeline that ingests arbitrary web content (prompt-injection surface); no ethics guardrails inside the SKILL.md | **rejected** | Adopting the template would replace this repo's mandated architecture/control plane; its capabilities (browser capture, token extraction, visual QA diff) are already covered by our Playwright + HOY-010…150 pipeline under the master prompt's authorization framework |
 | `VoltAgent/awesome-agent-skills` | VoltAgent org (~29k stars) | MIT | Catalog/awesome-list only — README + links, nothing executable, nothing installable; transitively unvetted links | **not applicable (reference only)** | Kept as a discovery reference; any skill found through it needs its own Phase-2-style audit before install |
 | `mksglu/context-mode` | Individual (`mksglu`, ~19k stars, active) | **Elastic License 2.0 (source-available, not OSI)** | MCP server + hooks on every tool call; writes to `~/.claude/settings.json` and `~/.context-mode/`; executable artifact is an unaudited npm package; security claims (redaction, no telemetry) unverified against source | **rejected** | Violates multiple bootstrap rules: no custom hooks in Session 0, no global/home-directory changes, no uninspectable executable payloads; capability (context optimization) is orthogonal to project needs and duplicated by Claude Code's native compaction/hooks |

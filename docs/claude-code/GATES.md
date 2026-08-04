@@ -14,7 +14,7 @@ replaced_by: null
 
 # GATES — `GATE-*` execution state and review verdicts
 
-Updated: 2026-08-02
+Updated: 2026-08-04
 
 This is the ledger that makes `D-018` enforceable. Under `D-018` independent
 review runs **per gate**, not per work package, so a gate is the point where
@@ -175,6 +175,20 @@ checks per route. `TRF-006` re-homed the horizontal-overflow assertions lost to
 `TRF-007` fixes the contrast, adds `tests/e2e/accessibility.spec.ts` (axe on
 `/`, `/fr` and the 404, plus the 404 at 390px), and reconciles the registers.
 The gate requires a further re-review after `TRF-007` merges.
+
+### Post-`TRF-007` state — re-review still outstanding, 2026-08-04
+
+`TRF-007` merged through PR #22 at `4bb9e61a7d4f587e3ab5f4efbb9e1adddacce37b`
+on 2026-08-02 with green required checks. The further re-review this gate
+requires **has not been run**: no fresh-session review of the `TRF-002`–`007`
+range post-merge is recorded anywhere in this ledger. `GATE-1 NEUTRAL` remains
+`CHANGES_REQUESTED` and must not be treated as passed.
+
+Note for the reviewer who eventually runs it: implementation activity continued
+past this gate under separate owner direction (the CMS/CRM backend under
+`D-021` via PR #25, and the off-queue implementation PRs recorded in
+`STATUS.md` § "Off-queue implementation state"). That activity does not close
+this gate and is not covered by it.
 
 Method note: the review was performed by independent reviewer agents with no
 context from the implementation session. They are independent of that session's
