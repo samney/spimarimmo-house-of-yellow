@@ -977,5 +977,13 @@
     "backToList": "All case studies",
     "outro": "Your project deserves the same setup:",
     "outroCta": "Become an exhibitor"
+  },
+  "hero": {
+    "eyebrow": "Real estate private exhibitions",
+    "title": "Meet high-intent MRE buyers.",
+    "lead": "A curated platform where premium developers present projects to qualified international audiences. Built for clarity, trust, and action.",
+    "playVideo": "Watch the video",
+    "playerLabel": "SPIMARIMMO presentation video",
+    "closePlayer": "Close the video"
   }
 }

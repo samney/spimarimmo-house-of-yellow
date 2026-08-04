@@ -607,3 +607,39 @@ until each is reworked — no bulk icon sweep.
 **Consequence.** One production dependency added to `package.json` /
 `pnpm-lock.yaml`. Dependency changes sit in the `D-018` always-review tier;
 this entry records the owner authorization.
+
+## D-024 — 2026-08-04 — Hero rebuilt on SPIMAR identity with owner-supplied autoplay footage
+
+**Authority.** Explicit repository-owner instruction in session: keep the
+accepted fullscreen hero view, remove the reference's side text columns,
+centred logo glyph, star marks and visitor quote, use the supplied white
+SPIMARIMMO wordmark, take the copy from `mobile.spimarimmo.com`, autoplay the
+supplied exhibition video without sound, and carry no CTA (the header owns it).
+
+**Decision.** The hero is rebuilt accordingly, and the **poster-only media
+policy is lifted for this one manifest-declared asset**. The owner-supplied
+`SPIMARIMMO_mobile_hero_real-estate-exhibition.mp4` is committed to
+`public/videos/`, declared in `lib/media/video-manifest.json` as
+rights-approved with SPIMARIMMO as rights owner, and served muted, looping and
+autoplaying through `ResilientVideo`. Reduced motion and save-data still fall
+back to the poster; the posters are frames extracted from that same footage,
+which also removes the last House of Yellow reference images from the hero.
+
+`ResilientVideo` gains an `interactive` mode for the click-to-play modal:
+controls, focusable, not `aria-hidden`. Playback policy gates AUTOPLAY, never
+an explicitly requested play, so reduced motion does not suppress the modal.
+
+**Test-contract change, stated plainly.** The `hero remains poster-only`
+assertion could not survive this decision and was **replaced, not deleted**, by
+three assertions that are strictly stronger: the hero serves exactly the
+manifest-declared source over a visible poster; reduced motion renders the
+poster with no `<video>` element; and the modal player is keyboard-operable and
+Escape-closable. The site-wide "no unavailable video request" assertion is
+unchanged except that it now excludes this one declared asset.
+
+**Disclosed, not resolved.** The footage shows a trade-fair hall in which
+third-party exhibitor trademarks are legible (`DIP`, `Allianz`,
+`TÜV Rheinland` among others). It is owner-supplied and owner-authorized, and
+SPIMARIMMO is recorded as the rights owner; whether those incidental third-party
+marks carry any further clearance requirement is an owner question that this
+entry raises rather than answers.

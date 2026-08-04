@@ -48,6 +48,11 @@ type ResilientVideoProps = Omit<
   videoClassName?: string;
   label?: string;
   priority?: boolean;
+  /** Player mode: the visitor explicitly asked to watch, so the video is
+      focusable, carries controls and is not aria-hidden. Reduced-motion and
+      save-data gate AUTOPLAY, never an explicit request, so they do not
+      suppress the element here. */
+  interactive?: boolean;
 };
 
 export function ResilientVideo({
@@ -58,6 +63,7 @@ export function ResilientVideo({
   videoClassName = "video",
   label,
   priority = false,
+  interactive = false,
   muted = true,
   loop = true,
   playsInline = true,
@@ -72,7 +78,7 @@ export function ResilientVideo({
   );
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
-  const shouldLoadVideo = Boolean(src) && playbackPolicy === "allowed" && !failed;
+  const shouldLoadVideo = Boolean(src) && (interactive || playbackPolicy === "allowed") && !failed;
   const mediaState = !src
     ? "unavailable"
     : failed
@@ -87,9 +93,9 @@ export function ResilientVideo({
     <span
       className={`mediaPlane ${className}`.trim()}
       data-media-state={mediaState}
-      role={label ? "img" : undefined}
-      aria-label={label}
-      aria-hidden={label ? undefined : true}
+      role={label && !interactive ? "img" : undefined}
+      aria-label={interactive ? undefined : label}
+      aria-hidden={label || interactive ? undefined : true}
     >
       <picture className="mediaPlane__poster">
         {mobilePoster && <source media="(max-width: 580px)" srcSet={mobilePoster} />}
@@ -111,8 +117,9 @@ export function ResilientVideo({
           playsInline={playsInline}
           autoPlay={autoPlay}
           preload={preload}
-          aria-hidden="true"
-          tabIndex={-1}
+          aria-hidden={interactive ? undefined : "true"}
+          aria-label={interactive ? label : undefined}
+          tabIndex={interactive ? 0 : -1}
           onCanPlay={(event) => {
             setReady(true);
             videoProps.onCanPlay?.(event);

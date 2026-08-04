@@ -977,5 +977,13 @@
     "backToList": "Toutes les études de cas",
     "outro": "Votre projet mérite le même dispositif :",
     "outroCta": "Devenir exposant"
+  },
+  "hero": {
+    "eyebrow": "Salons immobiliers privés",
+    "title": "Rencontrez des acquéreurs MRE qualifiés.",
+    "lead": "Une plateforme sélective où les promoteurs présentent leurs projets à une audience internationale qualifiée. Pensée pour la clarté, la confiance et la décision.",
+    "playVideo": "Voir la vidéo",
+    "playerLabel": "Vidéo de présentation SPIMARIMMO",
+    "closePlayer": "Fermer la vidéo"
   }
 }

@@ -1,41 +1,39 @@
-import { HeroLetters } from "./HeroLetters";
+import { getTranslations } from "next-intl/server";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
-import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
-import { MEDIA_POSTERS } from "@/lib/media/posters";
+import { HeroVideoStage } from "./HeroVideoStage";
 
-export function HeroSection() {
+/* Hero — owner rebuild (2026-08-04, D-024).
+
+   Keeps the accepted fullscreen hero VIEW; the reference's side text columns,
+   centred logo glyph, star marks and visitor quote are removed. The white
+   SPIMARIMMO wordmark carries the brand, the copy is the mobile site's hero
+   content, and the CTA lives in the header — the hero carries none.
+
+   The owner-supplied exhibition footage autoplays muted behind the content
+   (manifest-declared, rights-approved); reduced motion and save-data fall
+   back to the poster through ResilientVideo. Clicking the stage opens the
+   player modal. */
+export async function HeroSection() {
+  const t = await getTranslations("hero");
+
   return (
-    <section className="headerBigBlock noMargin scrollSection" data-cursor="video">
+    <section className="headerBigBlock noMargin scrollSection">
       <div className="innerAnimContainer">
         <div className="background playerBackground">
-          <ResilientVideo
-            className="mediaPlane--fill heroMediaPlane"
-            videoClassName="video playVideoOnScroll"
-            src={null}
-            poster={MEDIA_POSTERS.heroDesktop}
-            mobilePoster={MEDIA_POSTERS.heroMobile}
-            label="House of Yellow hero artwork"
-            priority
+          <HeroVideoStage
+            src="/videos/hero-real-estate-exhibition.mp4"
+            poster="/images/posters/hero-desktop.jpg"
+            mobilePoster="/images/posters/hero-mobile.jpg"
           />
         </div>
-        <HeroLetters />
-        <div className="leftContent">
-          <div className="innerContent">
-            <h1 className="text smaller">Welcome!</h1>
-            <SplitTitle
-              className="smallTitle"
-              text="We’re a creative content agency that moves at the speed of your ambition. From idea to production and beyond. Where speed meets craftsmanship."
-            />
-          </div>
-        </div>
-        <div className="rightContent">
-          <div className="innerContent">
-            <p className="text smaller">
-              We craft formats that stick and stories that move. From an 8-second viral to a full
-              brand documentary, we translate your message into content that creates real momentum.
-              From a same-day edit to a feature-length film, we deliver stories at every scale.
-            </p>
-          </div>
+
+        <div className="heroContent">
+          {/* eslint-disable-next-line @next/next/no-img-element -- the wordmark
+              is a vector brand mark sized by CSS, not a raster photograph. */}
+          <img alt="SPIMARIMMO" className="heroWordmark" src="/spimarimmo-wordmark-white.svg" />
+          <p className="heroEyebrow">{t("eyebrow")}</p>
+          <SplitTitle as="h1" className="heroTitle" text={t("title")} />
+          <p className="heroLead">{t("lead")}</p>
         </div>
       </div>
     </section>
