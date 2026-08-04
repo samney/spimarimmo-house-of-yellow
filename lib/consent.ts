@@ -1,6 +1,11 @@
-/* Shared consent model (Complianz-equivalent, first-party localStorage).
-   Used by the global ConsentBanner and the /cookies ConsentPreferences
-   widget so both read and write the same record + "hoy:consent" event. */
+/* Shared consent model (first-party localStorage).
+
+   ConsentBanner is currently the only consumer: TRF-004 deleted the /cookies
+   route and its ConsentPreferences widget, which was the second reader/writer
+   this model was designed for. The "hoy:consent" event therefore has one
+   publisher and one subscriber, both here — it is not an external contract, and
+   TRF-006 withdrew the claim that it was. Renaming it is local work, scheduled
+   into TRF-017 with the rest of the consent surface. */
 
 export type ConsentCategories = {
   functional: true;

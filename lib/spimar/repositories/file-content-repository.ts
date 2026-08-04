@@ -18,7 +18,12 @@ import {
   getPage as storeGetPage,
   getEvent as storeGetEvent,
 } from "@/lib/spimar/repository";
-import { localized, type Locale as StoreLocale, type Page, type SpimarEvent } from "@/lib/spimar/types";
+import {
+  localized,
+  type Locale as StoreLocale,
+  type Page,
+  type SpimarEvent,
+} from "@/lib/spimar/types";
 
 /* Development implementation of `ContentRepository`.
 

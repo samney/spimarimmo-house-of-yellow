@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T20:22:49.712Z",
+  "generatedAt": "2026-08-02T19:46:49.053Z",
   "authority": {
     "canonical": [
       "SPM-TECH-DATA-001",
@@ -2152,15 +2152,12 @@
   "repositorySeams": {
     "classification": "PARTIAL",
     "repositorySeamHits": [
-      "lib/spimar/repositories/file-content-repository.ts",
-      "lib/spimar/repositories/file-submission-repository.ts",
-      "lib/spimar/repositories/seams.contract.test.ts",
       "lib/backend/seams.ts"
     ],
     "hardCodedContentMarkers": {
-      "pagesPresent": true,
-      "projectsPresent": true,
-      "pagesDeclareFutureSupabaseMove": true,
+      "pagesPresent": false,
+      "projectsPresent": false,
+      "pagesDeclareFutureSupabaseMove": false,
       "projectsDeclareFutureSupabaseMove": false
     },
     "localContactStorePresent": true,

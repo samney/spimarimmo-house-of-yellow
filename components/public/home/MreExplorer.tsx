@@ -114,9 +114,7 @@ export function MreExplorer() {
 
       <div className="mrePanel">
         <div className="mreRail">
-          <p className="mreRailCount">
-            {t("railCount", { count: visible.length })}
-          </p>
+          <p className="mreRailCount">{t("railCount", { count: visible.length })}</p>
           <ul className="mreRailList">
             {visible.map((m) => (
               <li key={m.key}>

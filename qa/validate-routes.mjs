@@ -3,15 +3,14 @@ import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import process from "node:process";
-import projectDetails from "../lib/content/project-details.json" with { type: "json" };
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const port = Number(process.env.ROUTE_TEST_PORT ?? 3211);
 const origin = `http://127.0.0.1:${port}`;
 const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "next");
 
-const coreRoutes = ["/", "/made-by-yellow", "/culture", "/how-we-roll", "/connect", "/cookies"];
-const projectRoutes = projectDetails.map(({ slug }) => `/project/${slug}`);
+const coreRoutes = ["/", "/salons", "/exposer", "/pourquoi-spimar", "/etudes-de-cas", "/ressources", "/visiteurs", "/contact", "/confidentialite", "/mentions-legales"];
+const projectRoutes = [];
 const publicRoutes = [...coreRoutes, ...projectRoutes];
 
 async function waitForServer(server) {
@@ -86,7 +85,7 @@ try {
 
   for (const [route, location] of [
     ["/fr", "/"],
-    ["/fr/culture", "/culture"],
+    ["/fr/salons", "/salons"],
   ]) {
     const response = await fetch(`${origin}${route}`, { redirect: "manual" });
     if (response.status !== 307 || response.headers.get("location") !== location) {

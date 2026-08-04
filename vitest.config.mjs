@@ -14,7 +14,10 @@ export default defineConfig({
          Aliased to a stub rather than removed from the modules themselves —
          dropping the import would silence a real safety check in the
          application to satisfy the test runner. */
-      { find: /^server-only$/, replacement: fileURLToPath(new URL("./qa/server-only-stub.mjs", import.meta.url)) },
+      {
+        find: /^server-only$/,
+        replacement: fileURLToPath(new URL("./qa/server-only-stub.mjs", import.meta.url)),
+      },
     ],
   },
   test: {

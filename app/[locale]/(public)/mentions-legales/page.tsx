@@ -3,11 +3,7 @@ import { SpimarStandingPage } from "@/components/public/pages/SpimarStandingPage
 
 /* Legal identification. The publisher, host and company details are legally
    binding facts that must be supplied and verified — never drafted here. */
-export default async function MentionsLegales({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function MentionsLegales({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   return (

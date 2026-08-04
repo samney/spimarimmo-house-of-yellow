@@ -8,7 +8,8 @@
     "visiteurs": "Visiteurs",
     "becomeExhibitor": "Devenir exposant",
     "contact": "Contact",
-    "menu": "Menu"
+    "menu": "Menu",
+    "home": "Accueil"
   },
   "impact": {
     "eyebrow": "Chiffres clés",
@@ -605,5 +606,15 @@
         "sub": "Une proposition adaptée à votre projet"
       }
     }
+  },
+  "placeholder": {
+    "title": "SPIMARIMMO",
+    "body": "Cette page est en cours de reconstruction. L'expérience SPIMAR est en construction."
+  },
+  "notFound": {
+    "code": "[ 404 ]",
+    "title": "Cette page n'existe pas.",
+    "body": "La page que vous recherchez a été déplacée ou n'est pas disponible.",
+    "home": "Accueil"
   }
 }

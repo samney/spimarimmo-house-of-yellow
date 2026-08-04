@@ -20,8 +20,7 @@ export function MethodPhaseCopy({ phase }: { phase: MethodPhase }) {
       {/* The space before the break keeps the accessible text one phrase:
           without it, textContent runs the words together. */}
       <h3 className="methodCopy__title">
-        {firstLine}{" "}
-        <br />
+        {firstLine} <br />
         {secondLine}
       </h3>
       <p className="methodCopy__body">{phase.description}</p>

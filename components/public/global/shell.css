@@ -588,13 +588,6 @@ footer .bottomFooter a {
   border-color: var(--hoy-ink);
   color: #fff;
 }
-.hoy-consent .cmplz-documents {
-  padding: 0 16px 12px;
-}
-.hoy-consent .cmplz-documents a {
-  font-size: 12px;
-  color: #222;
-}
 
 /* ===== Tablet regime (<=1080px) ===== */
 @media (max-width: 1080px) {

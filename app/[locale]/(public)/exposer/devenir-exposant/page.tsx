@@ -1,11 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { SpimarStandingPage } from "@/components/public/pages/SpimarStandingPage";
 
-export default async function DevenirExposant({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function DevenirExposant({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   return (

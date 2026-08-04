@@ -22,7 +22,7 @@ function hash(seed: string): number {
 export function DestinationPlaceholder({ slug }: { slug: string }) {
   const h = hash(slug);
   // A 6x6 stand grid; the seed decides which cells are occupied.
-  const cells = Array.from({ length: 36 }, (_, i) => (h >> i % 30) % 5 !== 0);
+  const cells = Array.from({ length: 36 }, (_, i) => (h >> (i % 30)) % 5 !== 0);
 
   return (
     <svg

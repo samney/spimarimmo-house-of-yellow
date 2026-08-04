@@ -1,6 +1,17 @@
 import { expect, test } from "@playwright/test";
 
-const coreRoutes = ["/", "/made-by-yellow", "/culture", "/how-we-roll", "/connect", "/cookies"];
+const coreRoutes = [
+  "/",
+  "/salons",
+  "/exposer",
+  "/pourquoi-spimar",
+  "/etudes-de-cas",
+  "/ressources",
+  "/visiteurs",
+  "/contact",
+  "/confidentialite",
+  "/mentions-legales",
+];
 
 for (const route of coreRoutes) {
   test(`${route} renders without unavailable video requests`, async ({ request }) => {
@@ -12,14 +23,14 @@ for (const route of coreRoutes) {
 }
 
 test("English-prefixed route renders", async ({ request }) => {
-  const response = await request.get("/en/culture", { maxRedirects: 0 });
+  const response = await request.get("/en/salons", { maxRedirects: 0 });
   expect(response.status()).toBe(200);
 });
 
 test("explicit French prefix redirects to the canonical route", async ({ request }) => {
-  const response = await request.get("/fr/culture", { maxRedirects: 0 });
+  const response = await request.get("/fr/salons", { maxRedirects: 0 });
   expect(response.status()).toBe(307);
-  expect(response.headers().location).toBe("/culture");
+  expect(response.headers().location).toBe("/salons");
 });
 
 test("hero remains poster-only", async ({ page }) => {

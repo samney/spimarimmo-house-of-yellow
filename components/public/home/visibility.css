@@ -697,7 +697,9 @@
   gap: var(--space-xs);
   padding: var(--space-xs) var(--space-md);
   text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
 .visNext:hover {

@@ -3,11 +3,7 @@ import { SpimarStandingPage } from "@/components/public/pages/SpimarStandingPage
 
 /* Privacy policy. Controller identity, retention and rights are legal
    commitments; they are supplied and validated, never generated. */
-export default async function Confidentialite({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function Confidentialite({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   return (

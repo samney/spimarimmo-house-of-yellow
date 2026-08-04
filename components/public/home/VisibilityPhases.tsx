@@ -4,12 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import {
-  ArrowRightIcon,
-  CalendarIcon,
-  ShieldCheckIcon,
-  VisitorsIcon,
-} from "./impactIcons";
+import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon, VisitorsIcon } from "./impactIcons";
 import {
   BarsIcon,
   BulbIcon,
@@ -260,7 +255,11 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                         <span className="visPipelineCard" key={i}>
                           <span className="visPipelineAvatar" />
                           <span className="visPipelineLines">
-                            <span>{t("stage.companyLabel", { letter: String.fromCharCode(65 + col.offset + i) })}</span>
+                            <span>
+                              {t("stage.companyLabel", {
+                                letter: String.fromCharCode(65 + col.offset + i),
+                              })}
+                            </span>
                             <i />
                           </span>
                         </span>
@@ -308,7 +307,9 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                     <Icon className="visRailThumbIcon" />
                   </span>
                   <span className="visRailText">
-                    <span className="visRailLabel">{t(`phases.${phase.key}.deliverables.${i}.label`)}</span>
+                    <span className="visRailLabel">
+                      {t(`phases.${phase.key}.deliverables.${i}.label`)}
+                    </span>
                     <span className="visRailState" data-state={phase.deliverableStates[i]}>
                       <StateIcon state={phase.deliverableStates[i]} className="visRailStateIcon" />
                       {t(`phases.${phase.key}.deliverables.${i}.status`)}
