@@ -9,7 +9,7 @@ const MAX_PER_WINDOW = 5;
 
 const hits = new Map<string, { windowStart: number; count: number }>();
 
-export function isRateLimited(key: string): boolean {
+export function isRateLimited(key: string, maxPerWindow: number = MAX_PER_WINDOW): boolean {
   const now = Date.now();
   const entry = hits.get(key);
   if (!entry || now - entry.windowStart > WINDOW_MS) {
@@ -20,5 +20,5 @@ export function isRateLimited(key: string): boolean {
   if (hits.size > 10_000) {
     for (const [k, v] of hits) if (now - v.windowStart > WINDOW_MS) hits.delete(k);
   }
-  return entry.count > MAX_PER_WINDOW;
+  return entry.count > maxPerWindow;
 }

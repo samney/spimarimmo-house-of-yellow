@@ -1,5 +1,6 @@
 "use server";
 
+import { createHash } from "node:crypto";
 import { headers } from "next/headers";
 import { enquirySchema, type EnquiryResult } from "@/lib/spimar/contact-schema";
 import { createLead, dedupeKeyFor } from "@/lib/spimar/repository";
@@ -38,7 +39,12 @@ export async function submitEnquiry(raw: unknown): Promise<EnquiryResult> {
   try {
     const headerList = await headers();
     const forwarded = headerList.get("x-forwarded-for") ?? "";
-    const client = forwarded.split(",")[0]?.trim() || "unknown";
+    /* Hashed, not raw: no raw IP is held in process memory, matching the
+       pre-existing contact path. The header is only trustworthy behind a
+       proxy that strips client-supplied values (Vercel does). */
+    const client = createHash("sha256")
+      .update(forwarded.split(",")[0]?.trim() || "unknown")
+      .digest("hex");
 
     if (isRateLimited(client)) {
       return { status: "rate_limited" };

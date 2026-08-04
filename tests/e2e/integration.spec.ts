@@ -178,9 +178,24 @@ test("an editor cannot publish, and the server enforces it", async ({ page }) =>
   await page.getByLabel("EN").first().fill(`Editor attempt ${id}`);
   await page.getByRole("button", { name: "Save" }).click();
 
-  // The publish option is disabled in the UI, but the guarantee is server-side:
-  // the record must be a draft and must not resolve publicly.
   await expect(page.getByText(/draft/i).first()).toBeVisible();
+
+  // The publish option is disabled in the UI, but the guarantee must be
+  // server-side — so ATTACK it: force-enable the disabled option, submit
+  // `state=published` as the editor, and require the server to downgrade.
+  await page.getByLabel("Slug").fill(slug);
+  await page.getByLabel("EN").first().fill(`Editor attempt ${id}`);
+  await page.evaluate(() => {
+    const select = document.querySelector<HTMLSelectElement>('select[name="state"]');
+    if (select) {
+      for (const option of select.options) option.disabled = false;
+      select.value = "published";
+    }
+  });
+  await page.getByRole("button", { name: "Save" }).click();
+  await expect(page.getByText(/draft/i).first()).toBeVisible();
+
+  // And the record must not resolve publicly either way.
   const response = await page.request.get(`/salons/${slug}`, { maxRedirects: 0 });
   expect(response.status()).toBe(404);
 });

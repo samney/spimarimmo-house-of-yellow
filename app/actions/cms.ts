@@ -1,7 +1,10 @@
 "use server";
 
+import { createHash } from "node:crypto";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { isRateLimited } from "@/lib/contact/rate-limit";
 import {
   canEditContent,
   canPublish,
@@ -56,6 +59,17 @@ export async function login(_prev: ActionResult | null, form: FormData): Promise
   if (!isConfigured()) {
     return { ok: false, message: "CMS authentication is not configured on this deployment." };
   }
+  /* Brute-force control: the endpoint that grants access to every lead's PII
+     must have at least the protection the public contact form has. Key is
+     hashed and login-scoped; behind a trusted proxy the first forwarded hop
+     is the client. */
+  const forwarded = (await headers()).get("x-forwarded-for") ?? "";
+  const loginKey = createHash("sha256")
+    .update(`login|${forwarded.split(",")[0]?.trim() || "unknown"}`)
+    .digest("hex");
+  if (isRateLimited(loginKey, 10)) {
+    return { ok: false, message: "Too many attempts. Try again in a few minutes." };
+  }
   const email = String(form.get("email") ?? "");
   const password = String(form.get("password") ?? "");
   const session = verifyCredentials(email, password);
@@ -77,7 +91,10 @@ export async function logout(): Promise<void> {
 function revalidatePublic(paths: string[]): void {
   for (const locale of ["en", "fr"]) {
     for (const path of paths) {
-      const prefix = locale === "en" ? "" : "/fr";
+      /* French is the default locale (i18n/routing.ts): FR lives unprefixed
+         at /, EN under /en. Getting this backwards leaves retracted content
+         cached on the EN routes while the console reports success. */
+      const prefix = locale === "fr" ? "" : "/en";
       revalidatePath(`${prefix}${path}`);
     }
   }

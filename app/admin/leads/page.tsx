@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { readSession } from "@/lib/spimar/auth";
+import { canManageLeads, readSession } from "@/lib/spimar/auth";
 import { listLeads } from "@/lib/spimar/repository";
 
 export const dynamic = "force-dynamic";
@@ -10,6 +10,9 @@ export const dynamic = "force-dynamic";
 export default async function LeadsAdmin() {
   const session = await readSession();
   if (!session) redirect("/admin/login");
+  // PII read gated on capability, not session existence: reads must be no
+  // looser than the mutations and the export (data-security role model).
+  if (!canManageLeads(session)) redirect("/admin");
   const leads = listLeads();
 
   return (
