@@ -637,7 +637,8 @@
     "teaser": {
       "title": "Trois niveaux d’offre, un dossier sur mesure.",
       "lead": "Standard, Premium ou Sponsor — chaque niveau précise ce qu’il couvre, et la proposition chiffrée suit la qualification de votre besoin.",
-      "cta": "Découvrir les offres"
+      "cta": "Composer mon offre",
+      "secondary": "Une question ? FAQ exposants"
     }
   },
   "placeholder": {

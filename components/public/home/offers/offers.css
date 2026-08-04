@@ -1351,30 +1351,56 @@
   outline-offset: 0.2em;
 }
 
-/* --- Homepage teaser (full configurator lives on the standalone pages) ----- */
+/* --- Homepage CTA band (full configurator lives on the standalone pages) ---
+   Inverse surface: the surrounding sections sit on paper, so the action
+   moment is the one dark band — hierarchy runs eyebrow -> statement ->
+   lead -> primary action, with the tier value stack as supporting proof. */
 .offTeaser {
-  background: var(--surface-page);
-  color: var(--on-surface);
-  padding: var(--space-xl) var(--space-gutter);
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+  padding: var(--space-2xl) var(--space-gutter);
 }
 .offTeaserInner {
   max-width: 95vw;
   margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: center;
 }
-.offTeaserTiers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  list-style: none;
-  margin: var(--space-sm) 0 var(--space-md);
-  padding: 0;
+.offTeaserCopy {
+  max-width: var(--measure-prose);
 }
-.offTeaserTier {
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-pill);
-  padding: var(--space-2xs) var(--space-sm);
+.offTeaserEyebrow {
+  color: var(--action-primary);
   font-size: var(--text-support);
   font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-sm);
+}
+.offTeaserEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+.offTeaserTitle {
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin: 0 0 var(--space-sm);
+}
+.offTeaserLead {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0 0 var(--space-md);
+}
+.offTeaserActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
 }
 .offTeaserCta {
   display: inline-flex;
@@ -1383,18 +1409,121 @@
   background: var(--action-primary);
   color: var(--action-on-primary);
   border-radius: var(--radius-md);
-  padding: var(--space-xs) var(--space-md);
+  padding: var(--space-sm) var(--space-lg);
   font-size: var(--text-support);
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  transition: background-color var(--dur-micro) var(--ease-out-ref);
+  transition:
+    background-color var(--dur-micro) var(--ease-out-ref),
+    translate var(--dur-micro) var(--ease-out-ref);
 }
 .offTeaserCta:hover {
   background: var(--action-primary-hover);
+  translate: 0 -0.15vw;
 }
 .offTeaserCta:focus-visible {
   outline: 2px solid var(--focus-ring);
+  outline-offset: 0.25em;
+}
+.offTeaserCtaIcon {
+  width: 1.1em;
+  height: 1.1em;
+}
+.offTeaserSecondary {
+  color: var(--on-inverse);
+  font-size: var(--text-support);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.offTeaserSecondary:focus-visible {
+  outline: 2px solid var(--focus-ring);
   outline-offset: 0.2em;
+}
+.offTeaserNote {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--on-inverse-muted);
+  font-size: var(--text-base);
+  margin: 0;
+}
+.offTeaserNoteIcon {
+  width: 1.2em;
+  height: 1.2em;
+  color: var(--action-primary);
+  flex: none;
+}
+.offTeaserTiers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.offTeaserTier {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-md);
+}
+.offTeaserTier.isHighlighted {
+  border-color: var(--action-primary);
+}
+.offTeaserTierBubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6vw;
+  height: 2.6vw;
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 50%;
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+  flex: none;
+}
+.offTeaserTierIcon {
+  width: 55%;
+  height: 55%;
+}
+.offTeaserTierMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+.offTeaserTierName {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+.offTeaserTierChip {
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-pill);
+  padding: 0.1em 0.7em;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--on-inverse-muted);
+}
+.offTeaserTierDesc {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-base);
+  line-height: 1.45;
+}
+@media (max-width: 580px) {
+  .offTeaserInner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .offTeaserCta {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* --- Combined conversion section (flexible path) --------------------------- */
