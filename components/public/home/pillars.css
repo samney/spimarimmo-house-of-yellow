@@ -607,3 +607,10 @@
       0 5vw 10vw rgba(0, 0, 0, 0.5);
   }
 }
+
+/* A11y: .pillarTab is a role="tab" control and had no focus indicator at all.
+   Same ring vocabulary as every sibling section. */
+.pillarTab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

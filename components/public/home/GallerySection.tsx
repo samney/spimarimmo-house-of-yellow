@@ -293,7 +293,7 @@ export function GallerySection() {
             {rail.slice(0, 4).map((m, i) => (
               <li className="galRailItem" key={m.id}>
                 <button
-                  aria-pressed={false}
+                  aria-pressed={m.id === selected}
                   className="galRailTile"
                   onClick={() => setSelected(m.id)}
                   type="button"

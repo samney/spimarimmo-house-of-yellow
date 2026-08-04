@@ -663,7 +663,7 @@ footer .bottomFooter a {
     width: 100vw;
     height: 100%;
     padding-top: 18.793vw;
-    z-index: 11;
+    z-index: var(--z-menu); /* was 11 — under the header (12); the overlay must cover it */
     background: var(--hoy-paper);
     opacity: 0;
     pointer-events: none;
@@ -800,4 +800,11 @@ header .menu .subMenu a::after {
 .mobileMenu .mobileSubMenu a {
   font-size: 0.85em;
   line-height: 2.1;
+}
+
+/* A11y: the pill CTA's focus state was only the hover label crossfade, which
+   reads as no indicator. Give keyboard focus a real ring. */
+.button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
 }

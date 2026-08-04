@@ -1,33 +1,37 @@
-/* Editorial list pages — /faq, /insights, /ressources.
+/* Editorial list pages — /faq, /insights, /ressources, /salons.
 
    Same composition family as the standing pages (side index column, editorial
    statement) so specification routes graduate from standing page to content
-   page without changing the visual system. Tokens only; no new colors. */
+   page without changing the visual system.
+
+   Binds to the L2 tokens and the vw ladders only: spacing and type restate
+   themselves in the 1080/580 regimes through :root, so this file needs no
+   parallel scale of its own. */
 
 .spimarListPage {
-  background: var(--color-paper);
-  color: var(--color-ink);
-  padding: calc(var(--header-height, 96px) + 6rem) 0 6rem;
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-2xl) 0 var(--space-xl);
 }
 
 .spimarListPage .pageIntro {
-  margin-bottom: 4rem;
-  max-width: 60rem;
+  margin-bottom: var(--space-lg);
+  max-width: var(--measure-document);
 }
 
 .spimarListPage .pageIntro .label {
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-sm);
 }
 
 .spimarListPage .pageIntro .text.medium {
-  margin-top: 1.5rem;
-  max-width: 44rem;
+  margin-top: var(--space-sm);
+  max-width: var(--measure-prose);
 }
 
 /* FAQ — native disclosure widgets: keyboard and reduced-motion safe. */
 .faqList {
   border-top: 1px solid var(--border-subtle);
-  max-width: 60rem;
+  max-width: var(--measure-document);
 }
 
 .faqList details {
@@ -38,8 +42,8 @@
   cursor: pointer;
   display: flex;
   align-items: baseline;
-  gap: 1.5rem;
-  padding: 1.75rem 0;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0;
   list-style: none;
 }
 
@@ -54,7 +58,7 @@
 .faqList summary .faqMarker {
   margin-left: auto;
   flex: none;
-  transition: rotate var(--dur-micro, 150ms) ease;
+  transition: rotate var(--dur-micro) var(--ease-out-ref);
 }
 
 .faqList details[open] summary .faqMarker {
@@ -68,13 +72,13 @@
 }
 
 .faqList summary:focus-visible {
-  outline: 2px solid var(--color-ink);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 4px;
 }
 
 .faqList .faqAnswer {
-  padding: 0 0 1.75rem;
-  max-width: 44rem;
+  padding: 0 0 var(--space-md);
+  max-width: var(--measure-prose);
 }
 
 .faqList .faqAnswer a {
@@ -85,47 +89,43 @@
 /* Topic / resource card lists */
 .spimarCardList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
   gap: 1px;
   background: var(--border-subtle);
   border: 1px solid var(--border-subtle);
 }
 
 .spimarCardList .cardItem {
-  background: var(--color-paper);
-  padding: 2rem;
+  background: var(--surface-page);
+  padding: var(--space-md);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  min-height: 12rem;
+  gap: var(--space-xs);
+  min-height: 14vw;
 }
 
 .spimarCardList .cardItem .cardKicker {
-  opacity: 0.6;
+  color: var(--on-surface-muted);
 }
 
 .spimarCardList .cardItem .cardNote {
   margin-top: auto;
-  opacity: 0.6;
+  color: var(--on-surface-muted);
 }
 
 .spimarListPage .pageOutro {
-  margin-top: 4rem;
+  margin-top: var(--space-lg);
 }
 
-@media (max-width: 767px) {
-  .spimarListPage {
-    padding-top: calc(var(--header-height, 72px) + 3.5rem);
-    padding-bottom: 4rem;
-  }
-
-  .spimarListPage .pageIntro {
-    margin-bottom: 2.5rem;
+/* 580 regime: type and spacing restate through :root; only the layout that
+   cannot derive from a token changes here. */
+@media (max-width: 580px) {
+  .spimarCardList {
+    grid-template-columns: 1fr;
   }
 
   .spimarCardList .cardItem {
     min-height: 0;
-    padding: 1.5rem;
   }
 }
 
