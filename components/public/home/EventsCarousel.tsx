@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { PlusIcon } from "@/components/public/global/logos";
@@ -151,14 +152,25 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                 {/* Revealed on hover, as in the reference: hidden at rest and
                     offset 9px, so the media reads first. The card is a link, so
                     this is decoration over an already-actionable surface and
-                    never the only route to the destination. */}
+                    never the only route to the destination.
+
+                    Dark variant (2026-08-05): the gold pill had no edge against
+                    a bright photograph, and none at all where it met this
+                    section's gold surface. Ink fill separates from any frame
+                    and matches the section's own CTA. */}
                 <span className="bottomButton" aria-hidden="true">
-                  <span className="button">
+                  <span className="button dark">
                     <span className="icon">
                       <PlusIcon />
                     </span>
                     <span className="label">
                       <span className="fixedLabel">Découvrir le salon</span>
+                      {/* The system button cross-fades its two labels on hover.
+                          Without the inner one the fixed label faded to nothing
+                          and the pill read as empty the moment it appeared. */}
+                      <span className="innerLabel">
+                        <Marquee text="Découvrir le salon" direction="left" speed={90} />
+                      </span>
                     </span>
                     <span className="icon">
                       <PlusIcon />

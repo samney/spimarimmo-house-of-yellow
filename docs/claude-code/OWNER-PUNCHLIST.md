@@ -44,9 +44,13 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       column drops 25.4% → 12%, so the opening claim gets a ~1160px measure
       instead of 966px and settles on three lines. Below 1080 the two empty
       spacer columns collapse and the copy takes the full measure, which also
-      aligns it with section 02 underneath. → `a565088`
-- [ ] **C2 · [02] Salons par pays — card bottom-hover contrast.** Button text
-      colour still reads against the hover fill; an accessibility defect.
+      aligns it with section 02 underneath. → `35e333d`
+- [x] **C2 · [02] Salons par pays — card bottom-hover.** Two real defects: the
+      pill carried no `.innerLabel`, so the system button's cross-fade faded
+      the label to nothing and the pill read as empty the moment it appeared;
+      and the gold fill had no edge against a bright photograph or against this
+      section's gold surface. The pill takes the marquee inner label and the
+      `dark` variant, matching the section's own CTA. → `COMMIT`
 - [ ] **C3 · [02] Salons par pays — replace the static "date à confirmer"** with
       mock data.
 - [ ] **C4 · [08] Ils nous font confiance — merge the two duplicate versions**,
