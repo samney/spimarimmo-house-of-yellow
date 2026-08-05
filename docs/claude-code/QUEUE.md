@@ -81,6 +81,10 @@ scope and ownership are unchanged.
 
 Expand only the active item into bounded tasks. Never start a later item early.
 
+Owner remarks captured directly in session — homepage and chrome punch-list
+items that are not `SPI-*` work packages — are tracked in
+[`OWNER-PUNCHLIST.md`](OWNER-PUNCHLIST.md) and closed against real commits.
+
 **Queue/reality divergence (2026-08-04).** Application implementation ran ahead
 of this queue on owner-directed PRs #23–#32 while `SPI-010` was still open; the
 verified record, including an `UNRESOLVED` authorization flag, lives in
