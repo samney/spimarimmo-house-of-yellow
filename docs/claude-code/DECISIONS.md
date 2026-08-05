@@ -1023,3 +1023,60 @@ the same hazard: it renders `{prefix}0` as its initial DOM, so a script failure
 shows a literal "0" where a real figure belongs. Its only designed home is the
 homepage impact figures, held by a parallel session, so it is recorded rather
 than mounted somewhere convenient. `F-05` resolves it.
+
+## D-032 — The motion primitives audited by measurement, not by reading
+
+**Date:** 2026-08-05 · **Scope:** `F-05` · **Status:** implemented
+
+Every motion primitive was exercised in a production build under both
+`prefers-reduced-motion` settings and its computed style captured, rather than
+its source read and its behaviour inferred. Four of the five were already
+correct:
+
+| Primitive      | Under `reduce`                                          |
+| -------------- | ------------------------------------------------------- |
+| `SmoothScroll` | Lenis never constructed; no `lenis` class on `html`     |
+| `CustomCursor` | `display: none`, `pointer-events: none`, `aria-hidden`  |
+| `SplitTitle`   | no split performed; plain text; 0 chars left translated |
+| `Marquee`      | legible at rest — but only by accident (below)          |
+
+`SplitTitle` was the one worth checking hardest, because it sets
+`yPercent: 110` before its ScrollTrigger fires — the same shape as the `Inview`
+hazard, where content is hidden first and something else is trusted to reveal
+it. Measured across route pages: 0 stranded characters, and under reduced
+motion no split happens at all.
+
+**`Marquee` fixed.** It was resting legibly only because the global kill-switch
+(`animation-duration: 0.01ms !important`) ends the animation and these
+keyframes, carrying no fill-mode, revert to the origin. Correct outcome,
+accidental cause — it would stop being true the moment someone added
+`animation-fill-mode: forwards` or moved the `from` frame off the origin.
+`shell.css` now declares the rest state itself.
+
+**A defect this turned up, in someone else's file.** `.promoProgressLine` — the
+promoters autoplay progress bar — animates `inline-size` from 0% to 100% with
+no fill-mode over a base of `inline-size: 0%`. The kill-switch therefore
+reverts it to **zero width**: measured 92.5px with motion, **0.0px** with
+`prefers-reduced-motion: reduce`. The indicator does not degrade, it
+disappears, for precisely the users who most need a still cue that a carousel
+is advancing. The fix is one rule beside the `.promoTrack` block that already
+has one:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .promoProgressLine {
+    animation: none;
+    inline-size: 100%;
+  }
+}
+```
+
+`promoters.css` is a homepage file held by a parallel session, so this is
+recorded and tracked rather than edited across that boundary.
+
+**Generalised into a guard.** Rather than fix the one instance, the rule is now
+enforced: any `animation: … infinite` must have a reduced-motion rule for the
+same selector in the same file. An infinite animation is where it matters most,
+because there is no natural end for a kill-switch to land on. The guard found
+`.promoProgressLine` on its first run — the class of defect was invisible to
+review precisely because the global rule makes every animation _look_ handled.

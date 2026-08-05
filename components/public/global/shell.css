@@ -468,6 +468,28 @@ header.menuOpen .hamburgerIcon .bar:nth-child(3) {
   }
 }
 
+/* A designed rest state, not the global kill-switch (F-05).
+
+   The blunt `animation-duration: 0.01ms !important` rule does leave this
+   marquee readable — measured `transform: none`, because the keyframes carry
+   no fill-mode so the element reverts to its base position once the 0.01ms
+   iteration ends. But that is an accident of how the kill-switch interacts
+   with these particular keyframes, not a decision, and it would stop being
+   true the moment someone added `animation-fill-mode: forwards` or shifted
+   the `from` frame off the origin.
+
+   For a marquee the honest reduced-motion fallback is simply the first copy,
+   held still and legible. Stating it here makes that a property of the
+   component instead of a side effect. The repeated copies stay in the DOM and
+   remain `aria-hidden`; the accessible name comes from `.fixedLabel`, which is
+   never animated. */
+@media (prefers-reduced-motion: reduce) {
+  .marqueeScroll {
+    animation: none;
+    transform: translateX(0);
+  }
+}
+
 /* ===== Footer: fixed yellow reveal (reference rule) ===== */
 footer {
   position: fixed;

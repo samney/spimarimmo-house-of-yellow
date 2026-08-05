@@ -56,99 +56,27 @@ These are the facts the plan rests on. Re-measure before contradicting them.
 
 ## Phase F — Restore the foundation (blocks everything else)
 
-- [x] **F-01 · Inventory the clone's motion foundation.** →
-      [`FOUNDATION-INVENTORY.md`](FOUNDATION-INVENTORY.md). Found: the
-      `.inview` reveal is dormant (17 rules, 0 mounts) but hides nothing;
-      Lenis runs without its stylesheet; `.scrollSection` is inert; 122 of
-      1155 styled classes are never produced, 789 declarations of that in
-      `pages.css` alone.
+Detail for each item lives in `DECISIONS.md`; this list carries the verdict and
+the pointer, so it stays skimmable.
 
-      _Original scope:_ Diff what
-                          `components/primitives/motion/` provides against what the reference
-                          actually drove, and list every CSS rule that expects a runtime class
-                          (`.inview`, `.scrollSection`, `setDarkCursor`, …). Output: one table of
-                          _alive / dormant / retired_.
-
-- [~] **F-02 · Decide each dormant piece: rewire or retire.** Recorded in
-  `DECISIONS.md` D-030. Done: Lenis stylesheet wired (its
-  `[data-lenis-prevent]` and height rules now apply); `pages.css` pruned
-  2446 → 260 lines, verified by computed style across 1683 elements.
-  Remaining: `events.css` (136) and `home.css` (113) are homepage files
-  held by a parallel session; `Inview` retires with `F-03`;
-  `.scrollSection` still to decide.
-
-      _Original scope:_ Recorded in
-      `DECISIONS.md`. Retiring means deleting the CSS too — dead rules are how
-      the next session hallucinates a feature that does not exist.
-
-- [x] **F-03 · Rebuild scroll reveal on GSAP + ScrollTrigger.** →
-      `components/primitives/motion/Reveal.tsx`, `Inview.tsx` deleted, D-031.
-      The engine now animates **from** an offset with `gsap.from`, so the DOM's
-      natural state _is_ the finished state: no-JS, no-GSAP and reduced-motion
-      all render finished content instead of relying on a class arriving.
-      Targets are explicit (`[data-reveal]`, else direct children), so a
-      restyle cannot silently detach the choreography. The dead
-      `transition-delay` stagger left in `pages.css` went with it — verified
-      inert first (no rule gave those elements a transition-duration).
-
-      _Original scope:_ Replace the
-          `IntersectionObserver` + `.inview` class mechanism with the same
-          `useGSAP` / `matchMedia` pattern §03 uses, so the site has **one** motion
-          engine. Must honour `prefers-reduced-motion` with a documented no-motion
-          end state and must never leave content at `opacity: 0` if the script
-          fails.
-
-- [x] **F-04 · Restore the reveal to the route pages** that were designed for
-      it, using the new engine. Applied to the five routes that own content
-      below the header — `/faq`, `/insights`, `/ressources`, `/salons`,
-      `/etudes-de-cas`. `PageHeader` is deliberately excluded: `SplitTitle`
-      already owns the title, and wrapping the header would animate it twice.
-- [ ] **F-05 · Audit `SmoothScroll`, `CustomCursor`, `Counter`, `SplitTitle`,
-      `Marquee`** — each gets a reduced-motion path, a keyboard path where it
-      carries meaning, and a documented fallback.
-
-      Two already have findings waiting: **`Counter`** is a second orphan of
-          exactly the `Inview` kind — imported nowhere, and it renders `{prefix}0`
-          as its initial DOM, so a script failure shows a literal "0" where a real
-          figure belongs. Its only designed home is the homepage impact figures,
-          held by a parallel session, so it is tracked in `KNOWN_ORPHANS` rather
-          than mounted somewhere convenient. **`Marquee`** still relies on the
-          global `prefers-reduced-motion` kill-switch (`animation-duration:
-          0.01ms`), which is a stop, not a designed fallback.
-
-- [~] **F-06 · Motion vocabulary.** One set of durations, eases and stagger
-  steps as L2 tokens. Done: `motion-tokens.ts` is the GSAP-side source
-  (`DUR`, `STAGGER`, `EASE`, `REVEAL_SHIFT`) and a test asserts it mirrors
-  the `--dur-*` / `--stagger-step` CSS ladder exactly, so the two cannot
-  drift apart silently. Remaining: migrate the animations that still
-  hard-code their own numbers onto it.
-
-- [~] **F-07 · Foundation regression tests.** →
-  `components/primitives/motion/motion-foundation.test.ts`, 5 guards.
-  Covers: tokens mirror the CSS ladder; no `opacity: 0` rule is gated on a
-  class nothing produces; no primitive ships unmounted. Remaining: an
-  automated reduced-motion assertion (verified in-browser for F-03, not
-  yet pinned by a spec).
-
-      Note the guard was written wrong first and **passed vacuously** — it
-      substring-matched the primitive's name, which the word "Revealed" in an
-      unrelated comment satisfied. It reported clean while `Reveal` and
-      `Counter` were both mounted nowhere. It now matches the import path, and
-      asserts orphan-set *equality* so the allowlist cannot rot.
+- [x] **F-01 · Inventory the clone's motion foundation.** → [`FOUNDATION-INVENTORY.md`](FOUNDATION-INVENTORY.md). Found: the `.inview` reveal is dormant (17 rules, 0 mounts) but hides nothing; Lenis runs without its stylesheet; `.scrollSection` is inert; 122 of 1155 styled classes are never produced, 789 declarations of that in `pages.css` alone.
+- [~] **F-02 · Decide each dormant piece: rewire or retire.** → D-030. Lenis stylesheet wired (its `[data-lenis-prevent]` and height rules now apply); `pages.css` pruned 2446 → 225 lines, verified by computed style across 1683 elements. Remaining: `events.css` (136) and `home.css` (113) are homepage files held by a parallel session; `.scrollSection` still to decide.
+- [x] **F-03 · Rebuild scroll reveal on GSAP + ScrollTrigger.** → `Reveal.tsx`, D-031. It animates **from** an offset, so the DOM's natural state _is_ the finished state: no-JS, no-GSAP and reduced motion all render finished content instead of waiting for a class to arrive. Targets are explicit (`[data-reveal]`, else direct children), so a restyle cannot silently detach the choreography. The dead `transition-delay` stagger in `pages.css` went with it, verified inert first.
+- [x] **F-04 · Restore the reveal to the route pages.** Applied to the five routes owning content below the header — `/faq`, `/insights`, `/ressources`, `/salons`, `/etudes-de-cas`. `PageHeader` is excluded on purpose: `SplitTitle` already animates the title, and wrapping the header would animate it twice.
+- [x] **F-05 · Audit the five remaining primitives.** → D-032. Measured in a production build under both motion settings rather than read off the source. `SmoothScroll`, `CustomCursor` and `SplitTitle` were already correct; `Marquee` rested legibly only by accident of the global kill-switch and now declares its own rest state; nothing is reachable by pointer alone. Two findings: `Counter` is a tracked orphan that renders a literal `0` if its script fails, and `.promoProgressLine` renders **0px wide** under reduced motion (92.5px with motion) — a real defect in a homepage file, flagged as punchlist F6 rather than edited across that boundary.
+- [~] **F-06 · Motion vocabulary.** `motion-tokens.ts` is the GSAP-side source (`DUR`, `STAGGER`, `EASE`, `REVEAL_SHIFT`) and a test asserts it mirrors the `--dur-*` / `--stagger-step` CSS ladder exactly, so the two cannot drift apart silently. Remaining: migrate the animations that still hard-code their own numbers onto it.
+- [~] **F-07 · Foundation regression tests.** → `motion-foundation.test.ts`, 6 guards: tokens mirror the CSS ladder; no `opacity: 0` rule is gated on a class nothing produces; no primitive ships unmounted; every `infinite` animation states its own reduced-motion rest state — that one found the `.promoProgressLine` defect on its first run. The orphan guard was written wrong first and **passed vacuously**, substring-matching a word inside an unrelated comment while two primitives were mounted nowhere; it now matches the import path and asserts set _equality_ so the allowlist cannot rot. Remaining: a runtime reduced-motion spec.
 
 ## Phase D — Design system deep dive and update
 
 - [ ] **D-01 · Extract what the homepage rebuild proved.** The section-header
-      anatomy, the elevation ladder, the depth layers (wash / grain / rings),
-      the reference-pixel unit and its viewport-fit cap, the demo-badge
-      pattern, the GSAP choreography shape, the honest-pending vocabulary.
+      anatomy, the elevation ladder, the depth layers (wash / grain / rings), the reference-pixel unit and its viewport-fit cap, the demo-badge pattern, the GSAP choreography shape, the honest-pending vocabulary.
 - [ ] **D-02 · Write them into `DESIGN-CONTRACT.md`** as rules with measured
       values, so they are checkable rather than remembered.
 - [ ] **D-03 · Token audit.** Every L3 block declared in a section, promoted to
       L2 where it is used twice or more; every loose hex hunted down.
 - [ ] **D-04 · Component inventory.** What exists, what is duplicated, what
-      should be shared: buttons, cards, pills, tabs, page header, listing card,
-      detail header, empty state, pending state.
+      should be shared: buttons, cards, pills, tabs, page header, listing card, detail header, empty state, pending state.
 - [ ] **D-05 · Fix the two known system defects** — global `.button` mobile
       collapse (`F1` on the punch list) and §04's off-pattern header (`F2`).
 - [ ] **D-06 · Publish a one-page component/pattern reference** a future
@@ -159,8 +87,7 @@ These are the facts the plan rests on. Re-measure before contradicting them.
 - [ ] **A-01 · Route map.** All 20 non-home routes: purpose, template, data
       source, entry points, exits, and where each sits in the funnel.
 - [ ] **A-02 · Automated sweep.** Per route: Axe, horizontal overflow at
-      390/768/1024/1536/1920, header conformance, contrast, focus order,
-      reduced-motion behaviour. Numbers, not impressions.
+      390/768/1024/1536/1920, header conformance, contrast, focus order, reduced-motion behaviour. Numbers, not impressions.
 - [ ] **A-03 · Content-honesty sweep.** Every figure, date and claim on every
       route traced to validation, or marked pending.
 - [ ] **A-04 · Gap register.** One ranked list feeding Phase P.
@@ -188,25 +115,17 @@ the scoping decision rather than letting the two rules silently contradict.
 - [ ] **C-01 · Fixture contract.** One typed fixture module per collection,
       conforming to `lib/spimar/types.ts`. No component reads it directly.
 - [ ] **C-02 · Honesty gate.** One switch decides whether demo content is
-      served. Production without it falls back to today's honest pending
-      states; every card or page rendering demo values carries the `DÉMO`
-      marker already shipped on the salon cards (`b910b14`).
+      served. Production without it falls back to today's honest pending states; every card or page rendering demo values carries the `DÉMO` marker already shipped on the salon cards (`b910b14`).
 - [ ] **C-03 · Text fixtures.** Destinations, editions, case studies, insight
-      articles, resources, FAQ entries — plausible French copy at realistic
-      lengths, including the awkward ones: longest title, empty summary,
-      missing date, single-item list.
+      articles, resources, FAQ entries — plausible French copy at realistic lengths, including the awkward ones: longest title, empty summary, missing date, single-item list.
 - [ ] **C-04 · Image fixtures.** Reuse owner-supplied assets already in
-      `public/` (`destinations/`, `gallery/`, `images/why-exhibit/`) mapped
-      through `MediaAsset`. No new photography, nothing hotlinked, and
-      `pnpm validate:media` still passes.
+      `public/` (`destinations/`, `gallery/`, `images/why-exhibit/`) mapped through `MediaAsset`. No new photography, nothing hotlinked, and `pnpm validate:media` still passes.
 - [ ] **C-05 · Empty and edge states.** Every listing gets a zero-result state,
-      a one-result state and a long-list state, so Phase P designs all three
-      rather than only the happy path.
+      a one-result state and a long-list state, so Phase P designs all three rather than only the happy path.
 - [ ] **C-06 · EN parity.** Fixtures carry both locales so `/en` stops
       rendering French (`N-05` depends on this).
 - [ ] **C-07 · Swap rehearsal.** Prove the components are source-agnostic by
-      pointing the repository at a second adapter and re-running the route
-      sweep with no component change.
+      pointing the repository at a second adapter and re-running the route sweep with no component change.
 
 ## Phase P — Page by page
 
@@ -229,8 +148,7 @@ designed with real content in it and needs no rework when the API lands.
 - [ ] **P-09 · `/contact`** — the real form on the existing `submitEnquiry`
       action: validation, honeypot, rate limit, success and failure states.
 - [ ] **P-10 · `/exposer` hub + `/exposer/offres`, `/methode`, `/visibilite`,
-      `/devenir-exposant`** — currently a homepage section each; give them page
-      identity without duplicating the section.
+      `/devenir-exposant`** — currently a homepage section each; give them page identity without duplicating the section.
 - [ ] **P-11 · `/pourquoi-spimar`** — stub to real page.
 - [ ] **P-12 · `/visiteurs`** — stub to real page.
 - [ ] **P-13 · `/confidentialite` + `/mentions-legales`** — legally complete,

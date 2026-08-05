@@ -135,3 +135,74 @@ describe("the motion foundation has no orphaned primitives", () => {
     expect(orphans.sort()).toEqual([...KNOWN_ORPHANS].sort());
   });
 });
+
+describe("every looping animation states its own reduced-motion rest state", () => {
+  /* `globals.css` carries a blunt fallback — `animation-duration: 0.01ms
+     !important` for everything. It happens to leave the marquee legible,
+     because these keyframes have no fill-mode and so revert to the base
+     position. That is an interaction, not a decision: add
+     `animation-fill-mode: forwards` or move the `from` frame off the origin
+     and the same rule strands the content mid-loop instead.
+
+     An `infinite` animation is the case where it matters most — there is no
+     natural end for the kill-switch to land on — so each one must say in its
+     own file what it looks like when motion is off (F-05). */
+  /* Found by this guard on its first run, confirmed in the browser, and left
+     unfixed only because the file belongs to another working branch.
+
+     `.promoProgressLine` — the promoters autoplay progress bar. `promoSweep`
+     animates `inline-size` 0% -> 100% with no fill-mode, and its base value is
+     `inline-size: 0%`. So the global kill-switch ends the animation and the
+     bar reverts to **zero width**: measured 92.5px with motion, 0.0px with
+     `prefers-reduced-motion: reduce`. The indicator does not degrade — it
+     disappears, for exactly the users most likely to need a non-moving cue
+     that the carousel is advancing.
+
+     The fix is one rule in `promoters.css`, beside the `.promoTrack` block
+     that already has one:
+
+         @media (prefers-reduced-motion: reduce) {
+           .promoProgressLine { animation: none; inline-size: 100%; }
+         }
+
+     `promoters.css` is a homepage file held by a parallel session, so it is
+     recorded here rather than edited across that boundary. Remove this entry
+     with the fix. */
+  const KNOWN_UNCOVERED = [".promoProgressLine"];
+
+  it("pairs each `infinite` animation with a reduced-motion rule in the same file", () => {
+    const offenders: string[] = [];
+
+    for (const file of cssFiles) {
+      const css = readFileSync(file, "utf8");
+      if (!/animation:[^;]*\binfinite\b/.test(css)) continue;
+
+      /* The selectors that loop, and the selectors named inside any
+         reduced-motion block in this file. */
+      const looping = [...css.matchAll(/([^{}]+)\{[^}]*animation:[^;]*\binfinite\b[^}]*\}/g)].map(
+        ([, sel]) =>
+          sel
+            .trim()
+            .split(",")
+            .map((s) => s.trim()),
+      );
+      const reduced = [
+        ...css.matchAll(/@media[^{]*prefers-reduced-motion:\s*reduce[^{]*\{([\s\S]*?)\n\}/g),
+      ]
+        .map(([, body]) => body)
+        .join("\n");
+
+      for (const selectors of looping) {
+        const covered = selectors.some((s) => reduced.includes(s));
+        const tracked = selectors.some((s) => KNOWN_UNCOVERED.includes(s));
+        if (!covered && !tracked) {
+          offenders.push(
+            `${file.replace(ROOT, "")}: "${selectors.join(", ")}" loops forever with no reduced-motion rule beside it`,
+          );
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
+});
