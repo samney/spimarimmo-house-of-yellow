@@ -92,9 +92,13 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       `footer` tag as the site's fixed reveal (`width: 100vw`), and the
       in-page `<footer class="pageOutro">` inherited it, hanging past its
       column. → `2a8cf69`
-- [ ] **G2 · `header .right` overruns the bar at 390** by ~21px. It is inside
-      the fixed bar so it never scrolled the document, which is why it survived
-      the contract's overflow check — but it is still laid out off-screen.
+- [x] **G2 · `header .right` overran the bar at 390.** The 40 / 20 / 40 columns
+      took their basis from the wrapper's border box, not its content box, so
+      they totalled 390 inside a 361px content box and pushed the right column
+      35px past the padded edge — a third of the hamburger sat off-screen and
+      could not be tapped. Below 1024 the sides now share what is left. Inside
+      the fixed bar, so it never scrolled the document and the contract's
+      overflow check never caught it. → `COMMIT`
 - [ ] **G3 · Six routes are thin stubs** (260–340 characters of body text):
       `/visiteurs`, `/contact`, `/pourquoi-spimar`, `/exposer`,
       `/confidentialite`, `/mentions-legales`. `/contact` has no form;

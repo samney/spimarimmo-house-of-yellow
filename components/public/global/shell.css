@@ -961,6 +961,21 @@ a.socialLink:focus-visible {
   .right > .headerSocials {
     display: none;
   }
+
+  /* The 40 / 20 / 40 columns take their basis from the wrapper's border box,
+     not its content box, so at 390 they totalled 390 inside a 361px content
+     box and pushed the right column 35px past the padded edge — a third of the
+     hamburger sat off-screen. Below 1024 the right column only carries the
+     hamburger, so the sides simply share what is left and the wordmark stays
+     centred. */
+  header .left,
+  header .right {
+    flex: 1 1 0%;
+  }
+
+  header .center {
+    flex: 0 1 auto;
+  }
 }
 @media (max-width: 580px) {
   #methode,
