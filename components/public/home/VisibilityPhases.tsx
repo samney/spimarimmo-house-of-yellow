@@ -226,27 +226,113 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
 
           <div className="visArtifacts">
             {phase.key === "before" && (
-              <div className="visFrame visBrowser" aria-hidden="true">
-                <span className="visBrowserBar">
-                  <b>SPIMARIMMO</b>
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span className="visBrowserHero">
-                  <span className="visBrowserHeadline">{t("stage.heroTitle")}</span>
-                  <span className="visBrowserSub">{t("stage.heroSub")}</span>
-                  <span className="visBrowserCta">{t("stage.heroCta")}</span>
-                </span>
-                <span className="visBrowserRow">
-                  {/* The landing page's own project cards, not the filmstrip's
-                      frames: this is the site being advertised, so it shows
-                      projects rather than campaign or field photography. */}
-                  {[MEDIA.rivieraBay, MEDIA.atlasHorizon, MEDIA.oceanView].map((src, i) => (
-                    <span className="visBrowserThumb" key={i}>
-                      <Image src={src} alt="" fill sizes="8vw" />
+              /* The authored device layering from the reference: an invitation
+                 card furthest back, the laptop carrying the campaign landing
+                 page, and the sponsored post on a phone in front of it. It was
+                 a single flat browser card, which is the "generic centre
+                 graphic" the audit calls out — the depth is what makes this
+                 read as a campaign rather than a screenshot.
+
+                 Every surface is DOM, per the manifest: only the photographs
+                 are raster. */
+              <div className="visCanvas" aria-hidden="true">
+                <span className="visInvite">
+                  <span className="visInviteClip" />
+                  <span className="visInviteFrame">
+                    <span className="visInviteTitle">{t("stage.inviteTitle")}</span>
+                    <span className="visInviteSub">{t("stage.inviteSub")}</span>
+                    {/* Neutral lines, not invented copy: the invitation's body
+                        paragraph is not legible in the reference, and the
+                        section forbids inventing text to fill a surface. */}
+                    <span className="visInviteLines">
+                      <i />
+                      <i />
+                      <i />
                     </span>
-                  ))}
+                  </span>
+                </span>
+
+                <span className="visLaptop">
+                  <span className="visLaptopScreen">
+                    <span className="visSiteNav">
+                      <b>SPIMARIMMO</b>
+                      <span className="visSiteNavLinks">
+                        {[0, 1, 2, 3].map((i) => (
+                          <em key={i}>{t(`stage.nav.${i}`)}</em>
+                        ))}
+                      </span>
+                      <span className="visSiteNavCta">{t("stage.navCta")}</span>
+                    </span>
+
+                    <span className="visSiteHero">
+                      <Image
+                        alt=""
+                        className="visSiteHeroImage"
+                        fill
+                        sizes="34vw"
+                        src={MEDIA.campaignHero}
+                      />
+                      <span className="visSiteHeroCopy">
+                        <span className="visSiteHeadline">{t("stage.heroTitle")}</span>
+                        <span className="visSiteSub">{t("stage.heroSub")}</span>
+                        <span className="visSiteCta">{t("stage.heroCta")}</span>
+                      </span>
+                    </span>
+
+                    <span className="visSiteProjects">
+                      <span className="visSiteProjectsTitle">{t("stage.projectsTitle")}</span>
+                      <span className="visSiteProjectRow">
+                        {[
+                          MEDIA.rivieraBay,
+                          MEDIA.atlasHorizon,
+                          MEDIA.oceanView,
+                          MEDIA.interior,
+                        ].map((src, i) => (
+                          <span className="visSiteProject" key={i}>
+                            <span className="visSiteProjectShot">
+                              <Image alt="" fill sizes="7vw" src={src} />
+                            </span>
+                            <span className="visSiteProjectName">
+                              {t(`stage.projects.${i}.name`)}
+                            </span>
+                            <span className="visSiteProjectCity">
+                              {t(`stage.projects.${i}.city`)}
+                            </span>
+                          </span>
+                        ))}
+                      </span>
+                    </span>
+                  </span>
+                  <span className="visLaptopBase" />
+                </span>
+
+                <span className="visPhone">
+                  <span className="visPhoneScreen">
+                    <span className="visPostHead">
+                      <span className="visPostAvatar" />
+                      <span className="visPostWho">
+                        <b>SPIMARIMMO</b>
+                        <em>{t("stage.sponsored")}</em>
+                      </span>
+                      <span className="visPostMore">•••</span>
+                    </span>
+                    <span className="visPostMedia">
+                      <Image alt="" fill sizes="12vw" src={MEDIA.videoProduction} />
+                      <span className="visPostPlay">
+                        <PlayBadgeIcon className="visPostPlayIcon" />
+                      </span>
+                    </span>
+                    <span className="visPostBody">
+                      <span className="visPostCaption">{t("stage.postCaption")}</span>
+                      <span className="visPostCta">{t("stage.postCta")}</span>
+                    </span>
+                    <span className="visPostActions">
+                      {[0, 1, 2].map((i) => (
+                        <em key={i}>{t(`stage.postActions.${i}`)}</em>
+                      ))}
+                    </span>
+                    <span className="visPhoneBar" />
+                  </span>
                 </span>
               </div>
             )}

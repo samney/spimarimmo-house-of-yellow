@@ -347,82 +347,397 @@
   overflow: hidden;
 }
 
-/* Browser frame (phase 01) */
-.visBrowser {
-  background: var(--surface-page);
-  color: var(--on-surface);
+/* ---- Centre canvas, phase 01 -------------------------------------------- */
+
+/* The authored device layering. Three objects share one stacking context so
+   their overlap is a composition rather than a stack of cards: the invitation
+   sits furthest back and rotated, the laptop carries the campaign landing
+   page, and the phone comes forward over the laptop's right edge.
+
+   Sized in vw so the whole assembly scales with the stage rather than
+   resolving to fixed pixels at one width. */
+.visCanvas {
+  aspect-ratio: 16 / 11;
+  display: grid;
+  position: relative;
 }
 
-.visBrowserBar {
-  align-items: center;
-  border-bottom: 1px solid var(--border-subtle);
-  display: flex;
-  font-size: var(--text-base);
-  font-weight: 600;
-  gap: var(--space-2xs);
-  letter-spacing: 0.1em;
-  padding: var(--space-xs) var(--space-sm);
+/* -- Invitation card, back layer -- */
+.visInvite {
+  position: absolute;
+  inset-block-start: 1%;
+  inset-inline-end: 0;
+  inline-size: 30%;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(160deg, #1c1f23, #101317);
+  border-radius: 0.3vw;
+  box-shadow: 0 1.2vw 2.6vw rgb(0 0 0 / 45%);
+  transform: rotate(2.4deg);
+  padding: 8% 8% 6%;
 }
 
-.visBrowserBar b {
-  flex: 1;
-  font-weight: 600;
+/* The binder clip: a gold band with two arms, drawn rather than imaged. */
+.visInviteClip {
+  position: absolute;
+  inset-block-start: -6%;
+  inset-inline-start: 50%;
+  inline-size: 22%;
+  block-size: 9%;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, #d8b26a, #8c6f33);
+  border-radius: 0.2vw;
+  box-shadow: 0 0.2vw 0.5vw rgb(0 0 0 / 50%);
+}
+.visInviteClip::before,
+.visInviteClip::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 30%;
+  inline-size: 14%;
+  block-size: 130%;
+  border: 1px solid rgb(216 178 106 / 75%);
+  border-block-start: 0;
+  border-radius: 0 0 0.2vw 0.2vw;
+}
+.visInviteClip::before {
+  inset-inline-start: 14%;
+}
+.visInviteClip::after {
+  inset-inline-end: 14%;
 }
 
-.visBrowserBar i {
-  background: var(--border-subtle);
-  border-radius: 50%;
-  display: block;
-  height: 0.45vw;
-  width: 0.45vw;
-}
-
-.visBrowserHero {
+/* The inset gold rule the reference draws inside the card edge. */
+.visInviteFrame {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  padding: var(--space-md) var(--space-sm) var(--space-sm);
+  gap: 6%;
+  block-size: 100%;
+  border: 1px solid rgb(216 178 106 / 45%);
+  padding: 10% 9%;
 }
 
-.visBrowserHeadline {
-  font-size: var(--text-small-title);
+.visInviteTitle {
+  color: #e3c98f;
+  font-size: 1.05vw;
   font-weight: 600;
-  line-height: 1.1;
-  max-width: 22vw;
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
-.visBrowserSub {
-  color: var(--on-surface-muted);
-  font-size: var(--text-base);
-  max-width: 24vw;
-}
-
-.visBrowserCta {
-  align-self: flex-start;
-  background: var(--action-primary);
-  border-radius: var(--radius-sm);
-  color: var(--action-on-primary);
-  font-size: var(--text-base);
+.visInviteSub {
+  color: rgb(227 201 143 / 70%);
+  font-size: 0.62vw;
   font-weight: 500;
-  padding: var(--space-3xs) var(--space-sm);
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
-.visBrowserRow {
-  display: grid;
-  gap: var(--space-xs);
-  grid-template-columns: repeat(3, 1fr);
-  padding: 0 var(--space-sm) var(--space-sm);
+.visInviteLines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35vw;
+}
+.visInviteLines i {
+  background: rgb(227 201 143 / 22%);
+  block-size: 1px;
+  display: block;
+}
+.visInviteLines i:last-child {
+  inline-size: 62%;
 }
 
-.visBrowserThumb {
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-sm);
+/* -- Laptop -- */
+.visLaptop {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 74%;
+}
+
+.visLaptopScreen {
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: #0d1013;
+  border: 0.42vw solid #23272c;
+  border-radius: 0.75vw;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 8%),
+    0 1.4vw 3vw rgb(0 0 0 / 50%);
   overflow: hidden;
   position: relative;
 }
 
-.visBrowserThumb img {
+/* The lid's foot: a tapered bar, wider than the screen, as in the reference. */
+.visLaptopBase {
+  display: block;
+  block-size: 0.9vw;
+  inline-size: 112%;
+  margin-inline-start: -6%;
+  background: linear-gradient(to bottom, #2a2f35, #171a1e);
+  border-radius: 0 0 0.5vw 0.5vw;
+  box-shadow: 0 0.6vw 1.2vw rgb(0 0 0 / 45%);
+}
+
+/* -- The site inside the laptop -- */
+.visSiteNav {
+  align-items: center;
+  background: rgb(10 12 15 / 92%);
+  display: flex;
+  gap: 1vw;
+  padding: 0.55vw 0.9vw;
+  position: relative;
+  z-index: 2;
+}
+.visSiteNav b {
+  color: var(--spimar-white);
+  font-size: 0.6vw;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+.visSiteNavLinks {
+  display: flex;
+  gap: 0.8vw;
+  margin-inline-start: auto;
+}
+.visSiteNavLinks em {
+  color: rgb(255 255 255 / 62%);
+  font-size: 0.52vw;
+  font-style: normal;
+}
+.visSiteNavCta {
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: 0.6vw;
+  color: var(--spimar-white);
+  font-size: 0.5vw;
+  padding: 0.2vw 0.5vw;
+}
+
+.visSiteHero {
+  /* The hero yields the height: the screen is a fixed 16:10 box and the
+     project row below it must show its captions, not just its photographs. */
+  aspect-ratio: 30 / 9;
+  display: block;
+  position: relative;
+}
+.visSiteHeroImage {
   object-fit: cover;
+}
+/* Legibility scrim: the headline sits on photography. */
+.visSiteHero::after {
+  background: linear-gradient(100deg, rgb(8 10 12 / 88%) 30%, rgb(8 10 12 / 10%) 75%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+.visSiteHeroCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4vw;
+  inset-block-start: 50%;
+  inset-inline-start: 1.1vw;
+  inline-size: 55%;
+  position: absolute;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+.visSiteHeadline {
+  color: var(--spimar-white);
+  font-size: 1.05vw;
+  font-weight: 600;
+  line-height: 1.12;
+}
+.visSiteSub {
+  color: rgb(255 255 255 / 72%);
+  font-size: 0.55vw;
+  line-height: 1.35;
+}
+.visSiteCta {
+  background: var(--action-primary);
+  border-radius: 0.25vw;
+  color: var(--action-on-primary);
+  font-size: 0.5vw;
+  font-weight: 600;
+  padding: 0.28vw 0.6vw;
+}
+
+.visSiteProjects {
+  background: var(--surface-page);
+  display: block;
+  padding: 0.45vw 0.9vw 0.5vw;
+}
+.visSiteProjectsTitle {
+  color: var(--on-surface);
+  display: block;
+  font-size: 0.52vw;
+  font-weight: 600;
+  margin-block-end: 0.32vw;
+}
+.visSiteProjectRow {
+  display: grid;
+  gap: 0.5vw;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.visSiteProject {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vw;
+}
+.visSiteProjectShot {
+  aspect-ratio: 16 / 9;
+  border-radius: 0.18vw;
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+.visSiteProjectShot img {
+  object-fit: cover;
+}
+.visSiteProjectName {
+  color: var(--on-surface);
+  font-size: 0.46vw;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.visSiteProjectCity {
+  color: var(--on-surface-muted);
+  font-size: 0.42vw;
+  line-height: 1.2;
+}
+
+/* -- Phone, front layer -- */
+.visPhone {
+  position: absolute;
+  inset-block-start: 22%;
+  inset-inline-start: 55%;
+  inline-size: 17%;
+  aspect-ratio: 1 / 2;
+  background: #05070a;
+  border: 0.28vw solid #2b3036;
+  border-radius: 1.1vw;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 10%),
+    0 1.6vw 3.2vw rgb(0 0 0 / 55%);
+  padding: 0.22vw;
+  z-index: 3;
+}
+.visPhoneScreen {
+  background: #0b0e12;
+  border-radius: 0.85vw;
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vw;
+  overflow: hidden;
+  padding: 0.4vw 0.35vw 0.3vw;
+}
+
+.visPostHead {
+  align-items: center;
+  display: flex;
+  gap: 0.28vw;
+}
+.visPostAvatar {
+  background: linear-gradient(140deg, #d8b26a, #8c6f33);
+  block-size: 0.85vw;
+  border-radius: 50%;
+  flex: none;
+  inline-size: 0.85vw;
+}
+.visPostWho {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  min-inline-size: 0;
+}
+.visPostWho b {
+  color: var(--spimar-white);
+  font-size: 0.42vw;
+  font-weight: 600;
+}
+.visPostWho em {
+  color: rgb(255 255 255 / 55%);
+  font-size: 0.38vw;
+  font-style: normal;
+}
+.visPostMore {
+  color: rgb(255 255 255 / 55%);
+  font-size: 0.42vw;
+  margin-inline-start: auto;
+}
+
+.visPostMedia {
+  aspect-ratio: 4 / 5;
+  border-radius: 0.25vw;
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+.visPostMedia img {
+  object-fit: cover;
+}
+.visPostPlay {
+  align-items: center;
+  background: rgb(0 0 0 / 45%);
+  block-size: 1.5vw;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 50%;
+  display: flex;
+  inline-size: 1.5vw;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  justify-content: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.visPostPlayIcon {
+  block-size: 0.7vw;
+  color: var(--spimar-white);
+  inline-size: 0.7vw;
+}
+
+.visPostBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25vw;
+}
+.visPostCaption {
+  color: rgb(255 255 255 / 88%);
+  font-size: 0.4vw;
+  line-height: 1.3;
+}
+.visPostCta {
+  align-self: flex-start;
+  border: 1px solid rgb(255 255 255 / 32%);
+  border-radius: 0.18vw;
+  color: var(--spimar-white);
+  font-size: 0.36vw;
+  padding: 0.14vw 0.3vw;
+}
+
+.visPostActions {
+  border-block-start: 1px solid rgb(255 255 255 / 12%);
+  display: flex;
+  gap: 0.4vw;
+  justify-content: space-between;
+  padding-block-start: 0.25vw;
+}
+.visPostActions em {
+  color: rgb(255 255 255 / 55%);
+  font-size: 0.34vw;
+  font-style: normal;
+}
+
+/* The handset's home indicator, closing the frame. */
+.visPhoneBar {
+  background: rgb(255 255 255 / 45%);
+  block-size: 0.12vw;
+  border-radius: 0.1vw;
+  display: block;
+  inline-size: 34%;
+  margin: auto auto 0;
 }
 
 /* Schedule frame (phase 02) */

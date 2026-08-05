@@ -749,24 +749,40 @@
   top: 0;
 }
 
-/* Members taller than the viewport pin by their BOTTOM edge instead.
+/* Members taller than the viewport pin at a NEGATIVE top offset, so they
+   scroll fully into view and only pin once their bottom reaches the viewport
+   bottom. `top: 0` would hold their first screenful and cut everything below.
 
-   `top: 0` would hold their first screenful and cut everything below it. With
-   `bottom: 0` the section scrolls fully into view first and only pins once its
-   bottom reaches the viewport bottom, so the screenful that gets covered is
-   its last one and nothing is ever clipped. Measured at 1536×1024: 06 1290px,
-   07 1474px, 09 1276px against a 1024 viewport.
+   `bottom: 0` looks like the obvious answer and is wrong here: a bottom-stuck
+   element floats at the viewport bottom for the entire scroll range of its
+   containing block, so each tall member painted over the one before it from
+   the moment the stack came into view. A negative top keeps ordinary
+   top-sticking semantics — an element only pins once its own top passes the
+   threshold — so members still hand over one at a time.
 
-   These three are not compressed to fit. They carry more content than the
-   bounded compositions above them, and shrinking them would mean type below
-   the L2 ladder or dropped evidence — a worse trade than a taller section.
+   --stack-h is each member's height as a share of viewport width, measured at
+   1536×1024 (06 1290px, 07 1474px, 09 1276px) and rounded UP. Over-estimating
+   is the safe direction: the member then pins slightly early and leaves a
+   little space beneath it, where under-estimating would push its bottom off
+   screen — the exact clipping this exists to avoid.
 
-   Written as two disjoint selectors rather than an override: `top: auto` is an
-   initial value and the build's CSS optimizer strips it. */
+   These three are not compressed to fit. They carry more than the bounded
+   compositions above them, and shrinking them would mean type below the L2
+   ladder or dropped evidence. */
 .sectionStack.sectionStack > .mreSection,
 .sectionStack.sectionStack > .visSection,
 .sectionStack.sectionStack > .proofSection {
-  bottom: 0;
+  top: calc(100vh - var(--stack-h));
+}
+
+.sectionStack.sectionStack > .mreSection {
+  --stack-h: 88vw;
+}
+.sectionStack.sectionStack > .visSection {
+  --stack-h: 100vw;
+}
+.sectionStack.sectionStack > .proofSection {
+  --stack-h: 88vw;
 }
 
 /* Paint order has to be explicit. Several members set their own `z-index` on

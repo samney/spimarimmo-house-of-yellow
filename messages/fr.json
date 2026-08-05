@@ -321,7 +321,34 @@
         "meetings": "Rendez-vous",
         "opportunities": "Opportunités"
       },
-      "companyLabel": "Société {letter}"
+      "companyLabel": "Société {letter}",
+      "nav": ["Projets", "À propos", "Actualités", "Contact"],
+      "navCta": "Nous rencontrer",
+      "projectsTitle": "Nos projets",
+      "projects": [
+        {
+          "name": "Marrakech Signature",
+          "city": "Marrakech"
+        },
+        {
+          "name": "Riviera Bay",
+          "city": "Tanger"
+        },
+        {
+          "name": "Anfa Horizon",
+          "city": "Casablanca"
+        },
+        {
+          "name": "Ocean View",
+          "city": "Agadir"
+        }
+      ],
+      "sponsored": "Sponsorisé",
+      "postCaption": "Investissez au Maroc, progressez à l’international.",
+      "postCta": "En savoir plus",
+      "postActions": ["J’aime", "Commenter", "Partager"],
+      "inviteTitle": "Invitation privée",
+      "inviteSub": "Salon international de l’immobilier"
     },
     "benefits": {
       "audience": {

@@ -321,7 +321,34 @@
         "meetings": "Meetings",
         "opportunities": "Opportunities"
       },
-      "companyLabel": "Company {letter}"
+      "companyLabel": "Company {letter}",
+      "nav": ["Projects", "About", "News", "Contact"],
+      "navCta": "Meet us",
+      "projectsTitle": "Our projects",
+      "projects": [
+        {
+          "name": "Marrakech Signature",
+          "city": "Marrakech"
+        },
+        {
+          "name": "Riviera Bay",
+          "city": "Tanger"
+        },
+        {
+          "name": "Anfa Horizon",
+          "city": "Casablanca"
+        },
+        {
+          "name": "Ocean View",
+          "city": "Agadir"
+        }
+      ],
+      "sponsored": "Sponsored",
+      "postCaption": "Invest in Morocco, grow internationally.",
+      "postCta": "Learn more",
+      "postActions": ["Like", "Comment", "Share"],
+      "inviteTitle": "Private invitation",
+      "inviteSub": "International real-estate show"
     },
     "benefits": {
       "audience": {
