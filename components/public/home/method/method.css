@@ -14,15 +14,21 @@
 
 .methodSection {
   /* One reference pixel of the PAGE grid (100vw / 1536), capped by the height
-     left in the viewport — the same fitting rule section 03 uses, so the
-     section always lands on screen instead of pushing a scrollbar.
+     the introduction leaves behind — the same fitting rule section 03 uses.
 
-     Section stack at the golden viewport, in page px:
-       intro 287 + stage 688 + tail 26 = 1001
-     On a normal display the width term wins and one page px is exactly one
-     pixel; on a short viewport the height term shrinks the whole composition
-     uniformly rather than cropping it. */
-  --method-pu: min(0.06510417vw, calc(98vh / 1001));
+     The introduction is sized in raw vw off the L2 type steps, exactly like
+     every other section header, so it is NOT on this unit and cannot be
+     divided into the total. It measures ~21vw as laid out (measured: 322px at
+     1536, the same as section 03's header). What remains is the stage:
+
+       stage 712 stage-px = 688 page-px, plus a 26 page-px tail = 714
+
+     so  --method-pu <= (98vh - 21vw) / 714
+
+     and the section always lands at ~98vh. The stage takes whatever height is
+     left rather than pushing a scrollbar, while the header type stays exactly
+     on the site ladder. */
+  --method-pu: min(0.06510417vw, calc((98vh - 21vw) / 714));
 
   /* One reference pixel of the STAGE grid.
 
@@ -55,8 +61,18 @@
   --method-ink: #16181b; /* text on ivory */
 
   --method-stage-radius: calc(28 * var(--method-u));
-  /* Page gutters, not stage coordinates: 50px each side, matching section 03. */
-  --method-stage-inline: calc(50 * var(--method-pu));
+
+  /* The content column, sized in stage units and centred — the same shape as
+     section 03's `max-width: calc(1536 * var(--why-u))` inner.
+
+     It must be measured in --method-u, not "viewport minus 50px gutters".
+     Those agree only while --method-u is exactly one pixel; the moment the
+     height cap engages, a viewport-derived width leaves the stage box wider
+     than the coordinate system its children are laid out in, the right-anchored
+     deliverables slide away from the left-anchored dossier, and the connector
+     SVG — stretched to the box — distorts non-uniformly. At the golden
+     viewport this resolves to 1436, so the gutters are still 50. */
+  --method-content-w: calc(1486 * var(--method-u));
 
   position: relative;
   background: var(--method-paper);
@@ -66,73 +82,68 @@
 
 /* ================================================================ intro */
 
-/* The introduction lives on the PAGE grid, so its gutters line up with the
-   stage below it and with section 03 above it. */
+/* The introduction shares the stage's content column, so their gutters line up
+   at every viewport rather than only at the golden one. Its vertical rhythm
+   and its type stay on the page grid / the L2 steps. */
 .methodIntro {
   position: relative;
-  padding: calc(48 * var(--method-pu)) calc(50 * var(--method-pu)) calc(28 * var(--method-pu))
-    calc(50 * var(--method-pu));
+  inline-size: var(--method-content-w);
+  margin-inline: auto;
+  padding-block: calc(48 * var(--method-pu)) calc(28 * var(--method-pu));
 }
 
-.methodIntro__eyebrow {
-  display: flex;
-  align-items: baseline;
-  gap: calc(18 * var(--method-pu));
-  color: var(--method-gold-ink);
-  font-size: calc(15 * var(--method-pu));
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.methodIntro .sectionEyebrow {
+  margin: 0;
 }
 
+/* The section-anatomy header from DESIGN-CONTRACT.md, identical to section 03
+   and to the shipped sections 05–13: 53px at weight 600, line-height 1.1, and
+   a balanced wrap at a 58vw measure so the sentence breaks over two lines.
+   This section previously set its own 47px/700 heading and a 17px lead, tuned
+   to its reference PNG — which is precisely why its hierarchy read as foreign
+   next to its neighbours. */
+/* 64vw rather than section 03's 58vw: this heading's em dash is bound to the
+   word before it (see MethodIntroduction), and "…après le salon —" needs the
+   extra measure to fit. At 58vw it wrapped to three lines, which broke both
+   the section's two-line silhouette and the 1024 fit. */
 .methodIntro__heading {
-  max-width: calc(820 * var(--method-pu));
-  margin-block: calc(16 * var(--method-pu)) calc(10 * var(--method-pu));
-  font-size: calc(47 * var(--method-pu));
-  line-height: 1.2;
-  font-weight: 700;
+  max-width: 64vw;
+  margin: 0.91vw 0 0;
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
   letter-spacing: -0.014em;
   color: var(--method-ink);
+  text-wrap: balance;
 }
 
 .methodIntro__support {
-  max-width: calc(652 * var(--method-pu));
-  font-size: calc(17 * var(--method-pu));
-  line-height: 1.5;
+  max-width: 50vw;
+  margin: 0.91vw 0 0;
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
   color: #43423f;
 }
 
-/* Gold CTA pinned to the upper-right zone, flush with the page gutter. */
-.methodIntro__cta {
+/* The action is the repository's `.button`; only its placement is section
+   local. Fill, ink, radius, label anatomy and hover all come from the global
+   rule, so this is the same pill as every other primary action on the page. */
+.methodIntro__actions {
   position: absolute;
   inset-block-start: calc(112 * var(--method-pu));
-  inset-inline-end: calc(50 * var(--method-pu));
-  display: inline-flex;
-  align-items: center;
-  gap: calc(12 * var(--method-pu));
-  block-size: calc(61 * var(--method-pu));
-  padding-inline: calc(25 * var(--method-pu)) calc(29 * var(--method-pu));
-  border-radius: calc(10 * var(--method-pu));
-  background: var(--method-gold);
-  color: #241a07;
-  font-size: calc(13.5 * var(--method-pu));
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-.methodIntro__cta:hover,
-.methodIntro__cta:focus-visible {
-  background: #e0ab48;
-}
-.methodIntro__cta .methodArrow {
-  font-weight: 500;
+  inset-inline-end: 0;
+  display: block;
 }
 
 /* ================================================================ stage */
 
 .methodStage {
   position: relative;
-  margin-inline: var(--method-stage-inline);
+  /* Width and height both in stage units, so the box and the coordinate system
+     its children are placed in can never drift apart. */
+  inline-size: var(--method-content-w);
+  margin-inline: auto;
   margin-block-end: calc(26 * var(--method-pu));
   block-size: calc(712 * var(--method-u));
   border-radius: var(--method-stage-radius);
@@ -335,21 +346,23 @@
   white-space: nowrap;
 }
 
-.methodCopy__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(10 * var(--method-u));
+.methodCopy__actions {
+  display: block;
   margin-block-start: calc(35 * var(--method-u));
-  color: var(--method-ivory);
-  font-size: calc(15 * var(--method-u));
-  font-weight: 500;
-  text-decoration: none;
-  border-block-end: 1px solid var(--method-gold-line);
-  padding-block-end: calc(6 * var(--method-u));
 }
-.methodCopy__cta:hover,
-.methodCopy__cta:focus-visible {
-  color: var(--method-gold-bright);
+
+/* The repository's `.button.outline`, re-inked for the obsidian stage. The
+   global variant draws itself in --hoy-ink for paper surfaces, which is
+   invisible here; geometry, label anatomy and hover behaviour are untouched,
+   so it stays the same control as everywhere else on the site. */
+.methodCopy__cta.outline {
+  color: var(--method-ivory);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 38%);
+}
+.methodCopy__cta.outline:hover,
+.methodCopy__cta.outline:focus-visible {
+  background: var(--method-ivory);
+  color: var(--method-ink);
 }
 
 /* ------------------------------------------------------------ dossier */
@@ -639,25 +652,32 @@
   }
 }
 @media (max-width: 1023px) {
+  /* The desktop content column is 1486 stage units wide, which below the
+     desktop regime resolves to ~116vw. Both blocks take the viewport back.
+     Non-initial values throughout: `auto` would be stripped as an initial. */
   .methodIntro {
+    inline-size: 100%;
     padding: 6vw 5vw 4vw;
   }
-  .methodIntro__heading {
-    max-width: none;
-    font-size: 5.2vw;
-  }
+  /* Only the desktop measures are dropped. The sizes stay on the L2 steps,
+     which carry their own 580px restatement, so the header keeps tracking the
+     site ladder down the breakpoints instead of forking from it here. */
+  .methodIntro__heading,
   .methodIntro__support {
     max-width: none;
-    font-size: 2.4vw;
   }
-  .methodIntro__cta {
-    position: static;
+  /* Only the placement is unpinned; the pill's own type and geometry stay with
+     the global `.button` rule. `relative` rather than `static` because the
+     optimizer strips initial-value declarations (see the journey steps). */
+  .methodIntro__actions {
+    position: relative;
+    inset-block-start: 0;
+    inset-inline-end: 0;
     margin-block-start: 4vw;
-    block-size: 8vw;
-    font-size: 2.2vw;
   }
   .methodStage {
-    margin-inline: 3vw;
+    inline-size: 94vw;
+    margin-inline: auto;
     block-size: auto;
     border-radius: 3vw;
     padding: 5vw 4vw;
@@ -674,10 +694,6 @@
     block-size: auto;
     margin: 0 0 5vw;
     transform: none;
-  }
-  .methodIntro__eyebrow {
-    font-size: 2.4vw;
-    gap: 2vw;
   }
   .methodStage__etape {
     font-size: 2vw;
@@ -721,8 +737,9 @@
   .methodCopy__title {
     font-size: 4.6vw;
   }
-  .methodCopy__body,
-  .methodCopy__cta {
+  /* The CTA is intentionally absent here: it is a `.button` now, and the
+     global rule owns its type and geometry at every breakpoint. */
+  .methodCopy__body {
     font-size: 2.4vw;
   }
   .methodCopy__chips {

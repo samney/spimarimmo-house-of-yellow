@@ -6,19 +6,32 @@ import type { MethodPhase } from "./method-types";
    1436/1486 and 688/712 are the same ratio — so these stay valid after the
    section was inset to the 1436-wide page rhythm.
 
-   Card centres (y) and the cards' left edge (x) are measured off the live DOM.
+   The dossier figure occupies x 487…1107, y 2…602 in this space, at the
+   artwork's 1:1 intrinsic scale, so artwork pixel (ax, ay) is stage
+   (487 + ax, 2 + ay). */
+const DOSSIER_X = 487;
+const DOSSIER_Y = 2;
 
-   `DOSSIER_ANCHOR` deliberately sits *inside* the figure's right margin rather
-   than on its outer edge: the artwork carries its own gold nodes and dashes
-   there, and the DOM paths have to meet them or the folder reads as unlinked
-   from the deliverables. Anchoring to the outer edge (1107) leaves a dead gap. */
+/* Where the artwork's OWN gold stubs leave the folder, measured by scanning
+   the three supplied WebPs for gold in their right margin: all three phases
+   put them at the same three points, which is what makes one connector layer
+   valid for every phase.
+
+   This is the crux of the "detached folder" defect. Earlier passes anchored
+   the DOM paths at an arbitrary offset from each card, so the gold dots landed
+   on blank folder instead of on the artwork's own stubs, and the network read
+   as two unrelated drawings. */
+const ARTWORK_STUBS = [
+  { x: 595, y: 238 },
+  { x: 577, y: 320 },
+  { x: 562, y: 441 },
+].map((s) => ({ x: DOSSIER_X + s.x, y: DOSSIER_Y + s.y }));
+
+/* Card centres and the cards' left edge, measured off the live DOM. */
 const CARD_CENTERS = [130, 249, 368, 487];
 const CARD_LEFT = 1159;
-const DOSSIER_ANCHOR = 1064;
-const SPINE_X = 1122;
-/* Vertical drop from a card's centre to where its path leaves the dossier —
-   what gives the network its staircase read instead of four parallel rules. */
-const ANCHOR_DROP = 18;
+/* The shared vertical trunk, in the gutter between figure and cards. */
+const SPINE_X = 1130;
 const NODE_R = 4;
 
 /* Right-hand deliverable stack: four ivory cards, each carrying the supplied
@@ -39,12 +52,22 @@ export function MethodDeliverables({ phase }: { phase: MethodPhase }) {
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        {CARD_CENTERS.map((y, i) => (
-          <g key={i}>
-            <path d={`M ${DOSSIER_ANCHOR} ${y + ANCHOR_DROP} H ${SPINE_X} V ${y} H ${CARD_LEFT}`} />
-            {/* A node at each end, as in the reference: the run has to read as
-                a link between two objects, not as a line trailing off. */}
-            <circle cx={DOSSIER_ANCHOR} cy={y + ANCHOR_DROP} r={NODE_R} />
+        {/* One trunk spanning every card, so the four runs read as a single
+            network rather than four unrelated rules. */}
+        <path d={`M ${SPINE_X} ${CARD_CENTERS[0]} V ${CARD_CENTERS[CARD_CENTERS.length - 1]}`} />
+
+        {/* Folder side: each artwork stub continues into the trunk. */}
+        {ARTWORK_STUBS.map((stub) => (
+          <g key={`stub-${stub.y}`}>
+            <path d={`M ${stub.x} ${stub.y} H ${SPINE_X}`} />
+            <circle cx={stub.x} cy={stub.y} r={NODE_R} />
+          </g>
+        ))}
+
+        {/* Card side: the trunk branches to each card's left edge. */}
+        {CARD_CENTERS.map((y) => (
+          <g key={`card-${y}`}>
+            <path d={`M ${SPINE_X} ${y} H ${CARD_LEFT}`} />
             <circle cx={CARD_LEFT} cy={y} r={NODE_R} />
           </g>
         ))}
