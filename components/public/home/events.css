@@ -124,6 +124,18 @@
   white-space: nowrap;
 }
 
+/* Demo marker: the edition figures on this card are samples, not validated
+   facts, and the card says so on its face. Ink on paper reversed out so it
+   reads as a caveat rather than another status pill, and it is real text — the
+   ring is a reinforcement, never the only signal. */
+.eventCard .tag.isDemo {
+  background: var(--hoy-ink);
+  color: var(--hoy-paper);
+  box-shadow: inset 0 0 0 1px var(--hoy-paper);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 /* Hover action, revealed from opacity 0 and a 9px offset. */
 .eventCard .bottomButton {
   position: absolute;

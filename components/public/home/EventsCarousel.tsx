@@ -36,6 +36,15 @@ export type EventOpportunity = {
   country: string;
   city: string;
   status: EventStatus;
+  /* Sample edition figures so the card can be judged with content in it.
+     These are NOT owner-validated: any card carrying them renders a visible
+     DÉMO badge and says so in its accessible name (owner decision,
+     2026-08-05 — the design contract's demo-badge pattern). Replace with real
+     values and drop `demo` to publish. */
+  demo?: {
+    dateAndVenue: string;
+    expectedVisitors: string;
+  };
 };
 
 /* Destinations with owner-supplied photography in public/destinations. */
@@ -148,6 +157,9 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                 <span className="tags">
                   <span className="tag textTitle">{STATUS_LABEL[event.status]}</span>
                   <span className="tag textTitle">{event.country}</span>
+                  {/* Real text, not a colour cue: the figures on this card are
+                      samples and a visitor is told so on the card itself. */}
+                  {event.demo ? <span className="tag textTitle isDemo">Démo</span> : null}
                 </span>
                 {/* Revealed on hover, as in the reference: hidden at rest and
                     offset 9px, so the media reads first. The card is a link, so
@@ -186,11 +198,15 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                 <span className="bottomContent">
                   <span className="row">
                     <span className="label">Date et lieu</span>
-                    <span className="info">à confirmer</span>
+                    <span className="info">
+                      {event.demo ? event.demo.dateAndVenue : "à confirmer"}
+                    </span>
                   </span>
                   <span className="row">
                     <span className="label">Visiteurs attendus</span>
-                    <span className="info">à publier</span>
+                    <span className="info">
+                      {event.demo ? event.demo.expectedVisitors : "à publier"}
+                    </span>
                   </span>
                 </span>
               </span>

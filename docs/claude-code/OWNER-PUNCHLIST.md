@@ -51,8 +51,11 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       and the gold fill had no edge against a bright photograph or against this
       section's gold surface. The pill takes the marquee inner label and the
       `dark` variant, matching the section's own CTA. → `f93536a`
-- [ ] **C3 · [02] Salons par pays — replace the static "date à confirmer"** with
-      mock data.
+- [x] **C3 · [02] Salons par pays — sample edition data with a demo badge.**
+      Owner chose the demo-badge route over publishing unvalidated dates: every
+      card carrying sample figures shows a "DÉMO" pill on its face, in real
+      text. Dropping a card's `demo` block returns it to "à confirmer" /
+      "à publier". → `COMMIT`
 - [ ] **C4 · [08] Ils nous font confiance — merge the two duplicate versions**,
       keeping the first direction's UI/UX.
 - [ ] **C5 · [08] — approved copy.** "Les promoteurs au cœur de l'expérience

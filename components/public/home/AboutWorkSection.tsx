@@ -16,22 +16,59 @@ import { SectionEyebrow } from "./SectionEyebrow";
 
    Content discipline, from §07 and §19:
    - Country, city and status come from the specification.
-   - Date, venue and expected-visitor counts must never appear unvalidated, so
-     those stats state their readiness instead of carrying a figure.
+   - Date, venue and expected-visitor counts are NOT owner-validated. They
+     carry sample values so the card can be judged with content in it, and
+     every card that does says "Démo" on its face (owner decision, 2026-08-05,
+     using the design contract's demo-badge pattern). Dropping a card's `demo`
+     block returns it to the honest "à confirmer" / "à publier" state.
    - Ordering follows §07: upcoming editions first, historical last. */
 
 const EVENTS: EventOpportunity[] = [
-  { slug: "paris", country: "France", city: "Paris", status: "prochaine-edition" },
-  { slug: "bruxelles", country: "Belgique", city: "Bruxelles", status: "prochaine-edition" },
-  { slug: "laval", country: "Canada", city: "Laval", status: "prochaine-edition" },
+  {
+    slug: "paris",
+    country: "France",
+    city: "Paris",
+    status: "prochaine-edition",
+    demo: { dateAndVenue: "14–16 mars 2026 · Paris Expo", expectedVisitors: "4 200 attendus" },
+  },
+  {
+    slug: "bruxelles",
+    country: "Belgique",
+    city: "Bruxelles",
+    status: "prochaine-edition",
+    demo: { dateAndVenue: "11–12 avril 2026 · Brussels Expo", expectedVisitors: "2 600 attendus" },
+  },
+  {
+    slug: "laval",
+    country: "Canada",
+    city: "Laval",
+    status: "prochaine-edition",
+    demo: { dateAndVenue: "9–10 mai 2026 · Place Bell", expectedVisitors: "3 100 attendus" },
+  },
   {
     slug: "abu-dhabi",
     country: "Émirats Arabes Unis",
     city: "Abu Dhabi",
     status: "prochaine-edition",
+    demo: { dateAndVenue: "6–7 juin 2026 · ADNEC", expectedVisitors: "1 900 attendus" },
   },
-  { slug: "londres", country: "Royaume-Uni", city: "Londres", status: "a-venir" },
-  { slug: "montreal", country: "Canada", city: "Montréal", status: "historique" },
+  {
+    slug: "londres",
+    country: "Royaume-Uni",
+    city: "Londres",
+    status: "a-venir",
+    demo: { dateAndVenue: "Automne 2026 · Olympia London", expectedVisitors: "2 400 attendus" },
+  },
+  {
+    slug: "montreal",
+    country: "Canada",
+    city: "Montréal",
+    status: "historique",
+    demo: {
+      dateAndVenue: "18–19 octobre 2025 · Palais des congrès",
+      expectedVisitors: "2 800 reçus",
+    },
+  },
 ];
 
 /* Social proof — "Ils nous font confiance" (§14).
