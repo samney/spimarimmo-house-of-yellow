@@ -1116,3 +1116,37 @@ on its first run — a value that had been sitting in plain sight through every
 previous read of that file. The rule is scoped to the primitives, which are the
 shared layer every section inherits; section-level choreography legitimately
 composes its own timings _from_ these roles, and is not policed.
+
+## D-034 — Reduced motion is pinned by a spec, and the spec proves its own premise
+
+**Date:** 2026-08-05 · **Scope:** `F-07` · **Status:** implemented
+
+`tests/e2e/reduced-motion.spec.ts` makes the Phase F reduced-motion claims
+repeatable: content fully rendered on all five content routes, page titles not
+stranded mid-reveal, Lenis not engaged, the custom cursor absent,
+`document.getAnimations()` empty, and the marquee resting legibly with
+`animation-name: none` rather than a 0.01ms duration.
+
+**The first draft of this spec was worthless, and that is the point worth
+recording.** It used `test.use({ reducedMotion: "reduce" })` — the idiomatic
+Playwright form — which silently does nothing under this configuration. Probed
+directly, the page reported `prefers-reduced-motion: no-preference` while the
+spec was busy asserting reduced-motion behaviour. Its failures were real
+(motion genuinely was running) but its name was a lie, and had the assertions
+been slightly looser it would have passed green forever while testing the
+opposite of what it claimed.
+
+So every test now emulates the media feature explicitly with
+`page.emulateMedia()` and then **asserts the precondition before testing
+anything**: if the page will not confirm the state the test is named after, the
+test fails rather than proceeding. A test that cannot demonstrate the condition
+it claims to exercise is not evidence.
+
+This is the third time in one phase that a check passed for the wrong reason —
+after the orphan guard matching a word in a comment, and the earlier manual
+reduced-motion check reading the DOM before hydration could run. The pattern is
+consistent enough to state as a rule: **a guard is not trustworthy until it has
+been observed failing.** The marquee assertion was mutation-tested for exactly
+this reason — the reduced-motion rule was removed, the site rebuilt, and the
+spec confirmed failing (`expected "none", received "hoy-marquee"`) before the
+rule was restored.
