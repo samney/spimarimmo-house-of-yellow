@@ -22,12 +22,19 @@ export default async function PourquoiSpimar({ params }: { params: Promise<{ loc
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("pourquoiSpimar");
+  const tn = await getTranslations("nav");
   return (
     <SpimarStandingPage
       index="03"
       label={t("label")}
       statement={t("statement")}
       pending={t("pending")}
+      relatedTitle={tn("relatedTitle")}
+      related={[
+        { href: "/salons", label: tn("salons") },
+        { href: "/etudes-de-cas", label: tn("etudesDeCas") },
+        { href: "/exposer", label: tn("exposer") },
+      ]}
     />
   );
 }

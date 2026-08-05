@@ -22,6 +22,7 @@ export default async function Visiteurs({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("visiteurs");
+  const tn = await getTranslations("nav");
   return (
     <SpimarStandingPage
       index="18"
@@ -29,6 +30,11 @@ export default async function Visiteurs({ params }: { params: Promise<{ locale: 
       statement={t("statement")}
       pending={t("pending")}
       action={{ href: "/salons", label: t("actionLabel") }}
+      relatedTitle={tn("relatedTitle")}
+      related={[
+        { href: "/salons", label: tn("salons") },
+        { href: "/faq", label: tn("faq") },
+      ]}
     />
   );
 }

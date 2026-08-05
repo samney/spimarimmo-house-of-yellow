@@ -22,6 +22,11 @@ export type StandingPageProps = {
   statement: string;
   pending: string;
   action?: { href: string; label: string };
+  /** Where a visitor can usefully go from here (N-03). A page that states it
+      is not finished and then offers nothing is a dead end; the related routes
+      are the difference between "come back later" and "meanwhile, this". */
+  related?: readonly { href: string; label: string }[];
+  relatedTitle?: string;
 };
 
 export function SpimarStandingPage({
@@ -30,6 +35,8 @@ export function SpimarStandingPage({
   statement,
   pending,
   action = { href: "/exposer/devenir-exposant", label: "Devenir exposant" },
+  related,
+  relatedTitle,
 }: StandingPageProps) {
   return (
     <div className="pageBlocks">
@@ -46,6 +53,29 @@ export function SpimarStandingPage({
           </span>
         </Link>
       </PageHeader>
+      {related?.length ? (
+        <section className="spimarListPage">
+          <div className="contentWrapper">
+            <div className="hoyCols">
+              <div className="colLabel" aria-hidden="true" />
+              <div className="colMain">
+                <nav className="standingRelated" aria-label={relatedTitle}>
+                  <h2 className="text medium">{relatedTitle}</h2>
+                  <ul>
+                    {related.map((item) => (
+                      <li key={item.href}>
+                        <Link className="text medium" href={item.href}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

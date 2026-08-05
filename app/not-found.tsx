@@ -19,9 +19,17 @@ export default function RootNotFound() {
           <div className="interimSurface__eyebrow">404</div>
           <h1>This page does not exist.</h1>
           <p>The page you are looking for has moved or is not available.</p>
-          <Link href="/" title="Home">
-            Home
-          </Link>
+          {/* A 404 that offers only "Home" makes the visitor start over. These
+              are the routes someone who mistyped a URL most often wanted, and
+              they are English because this boundary cannot use the localized
+              provider without opting the whole route tree out of static
+              generation (see the note above). */}
+          <nav className="interimSurface__links" aria-label="Useful pages">
+            <Link href="/">Home</Link>
+            <Link href="/fr/salons">Exhibitions</Link>
+            <Link href="/fr/exposer">Exhibit with us</Link>
+            <Link href="/fr/contact">Contact</Link>
+          </nav>
         </section>
       </body>
     </html>

@@ -390,7 +390,7 @@
   color: var(--on-surface-muted);
 }
 
-.interimSurface a {
+.interimSurface__links a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -406,11 +406,11 @@
   transition: background var(--dur-micro) var(--ease-out-ref);
 }
 
-.interimSurface a:hover {
+.interimSurface__links a:hover {
   background: var(--action-primary-hover);
 }
 
-.interimSurface a:focus-visible {
+.interimSurface__links a:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
@@ -787,4 +787,51 @@
   .enquiryForm textarea {
     min-height: 40vw;
   }
+}
+
+/* ===== Related links on a standing page (N-03) =====
+   A page that says it is not finished and then offers nothing is a dead end. */
+.standingRelated h2 {
+  margin-bottom: var(--space-xs);
+  color: var(--on-surface-muted);
+  font-weight: 600;
+}
+
+.standingRelated ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.standingRelated a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-sm);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
+  text-decoration: none;
+  transition:
+    border-color var(--dur-micro) var(--ease-out-ref),
+    background var(--dur-micro) var(--ease-out-ref);
+}
+
+.standingRelated a:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.standingRelated a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.interimSurface__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
 }

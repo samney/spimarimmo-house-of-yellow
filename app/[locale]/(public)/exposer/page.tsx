@@ -22,12 +22,19 @@ export default async function Exposer({ params }: { params: Promise<{ locale: st
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("exposerHub");
+  const tn = await getTranslations("nav");
   return (
     <SpimarStandingPage
       index="04"
       label={t("label")}
       statement={t("statement")}
       pending={t("pending")}
+      relatedTitle={tn("relatedTitle")}
+      related={[
+        { href: "/exposer/offres", label: tn("offres") },
+        { href: "/exposer/methode", label: tn("methode") },
+        { href: "/exposer/visibilite", label: tn("visibilite") },
+      ]}
     />
   );
 }

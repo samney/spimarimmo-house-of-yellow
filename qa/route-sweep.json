@@ -56,7 +56,7 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 91,
+      "words": 94,
       "lang": "fr",
       "title": "Salons — SPIMARIMMO",
       "h2Count": 8,
@@ -88,7 +88,7 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 68,
+      "words": 73,
       "lang": "fr",
       "title": "Études de cas — SPIMARIMMO",
       "h2Count": 7,
@@ -120,10 +120,10 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 45,
+      "words": 55,
       "lang": "fr",
       "title": "Exposer — SPIMARIMMO",
-      "h2Count": 0,
+      "h2Count": 1,
       "imagesNoAlt": 0
     }
   },
@@ -154,7 +154,7 @@
       "hasLead": false,
       "words": 164,
       "lang": "fr",
-      "title": "Devenez exposant — SPIMARIMMO",
+      "title": "Notre méthode — SPIMARIMMO",
       "h2Count": 0,
       "imagesNoAlt": 0
     }
@@ -440,10 +440,10 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 45,
+      "words": 67,
       "lang": "fr",
       "title": "Contact — SPIMARIMMO",
-      "h2Count": 0,
+      "h2Count": 1,
       "imagesNoAlt": 0
     }
   },
@@ -472,10 +472,10 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 46,
+      "words": 57,
       "lang": "fr",
       "title": "Pourquoi SPIMAR — SPIMARIMMO",
-      "h2Count": 0,
+      "h2Count": 1,
       "imagesNoAlt": 0
     }
   },
@@ -504,10 +504,10 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 43,
+      "words": 51,
       "lang": "fr",
       "title": "Visiteurs — SPIMARIMMO",
-      "h2Count": 0,
+      "h2Count": 1,
       "imagesNoAlt": 0
     }
   },
@@ -536,10 +536,10 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 40,
+      "words": 47,
       "lang": "fr",
       "title": "Confidentialité — SPIMARIMMO",
-      "h2Count": 0,
+      "h2Count": 1,
       "imagesNoAlt": 0
     }
   },
@@ -568,10 +568,10 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 35,
+      "words": 42,
       "lang": "fr",
       "title": "Mentions légales — SPIMARIMMO",
-      "h2Count": 0,
+      "h2Count": 1,
       "imagesNoAlt": 0
     }
   },
@@ -600,7 +600,7 @@
       "hasEyebrow": false,
       "eyebrowColor": null,
       "hasLead": false,
-      "words": 19,
+      "words": 24,
       "lang": "en",
       "title": "SPIMARIMMO",
       "h2Count": 0,
@@ -632,7 +632,7 @@
       "hasEyebrow": true,
       "eyebrowColor": "rgb(122, 102, 0)",
       "hasLead": true,
-      "words": 114,
+      "words": 117,
       "lang": "en",
       "title": "Exhibitions — SPIMARIMMO",
       "h2Count": 8,

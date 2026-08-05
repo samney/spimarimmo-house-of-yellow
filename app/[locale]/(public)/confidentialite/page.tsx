@@ -24,6 +24,7 @@ export default async function Confidentialite({ params }: { params: Promise<{ lo
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("confidentialite");
+  const tn = await getTranslations("nav");
   return (
     <SpimarStandingPage
       index="19"
@@ -31,6 +32,8 @@ export default async function Confidentialite({ params }: { params: Promise<{ lo
       statement={t("statement")}
       pending={t("pending")}
       action={{ href: "/cookies", label: t("actionLabel") }}
+      relatedTitle={tn("relatedTitle")}
+      related={[{ href: "/contact", label: tn("contact") }]}
     />
   );
 }
