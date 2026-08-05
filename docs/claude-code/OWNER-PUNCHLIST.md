@@ -98,7 +98,7 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       35px past the padded edge — a third of the hamburger sat off-screen and
       could not be tapped. Below 1024 the sides now share what is left. Inside
       the fixed bar, so it never scrolled the document and the contract's
-      overflow check never caught it. → `COMMIT`
+      overflow check never caught it. → `de44fd3`
 - [ ] **G3 · Six routes are thin stubs** (260–340 characters of body text):
       `/visiteurs`, `/contact`, `/pourquoi-spimar`, `/exposer`,
       `/confidentialite`, `/mentions-legales`. `/contact` has no form;
