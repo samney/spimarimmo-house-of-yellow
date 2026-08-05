@@ -371,18 +371,46 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
             )}
 
             {phase.key === "during" && (
-              <div className="visFrame visSchedule" aria-hidden="true">
-                <span className="visScheduleHead">
-                  <CalendarIcon className="visScheduleIcon" />
-                  {t("stage.scheduleTitle")}
+              /* Pendant's canvas: the salon being captured. A wide capture
+                 frame carries the scene, a live social phone sits at its right
+                 edge, an interview frame overlaps the lower middle, and the
+                 appointment sheet stays a real list — it holds times, parties
+                 and statuses, which the manifest requires as DOM rather than
+                 flattened into the photograph. */
+              <div className="visCanvas" aria-hidden="true">
+                <span className="visCapture">
+                  <Image alt="" fill sizes="30vw" src={MEDIA.liveCapture} />
                 </span>
-                {[0, 1, 2, 3].map((i) => (
-                  <span className="visScheduleRow" key={i}>
-                    <span className="visScheduleTime">{t(`stage.slots.${i}.time`)}</span>
-                    <span className="visScheduleWho">{t(`stage.slots.${i}.who`)}</span>
-                    <CheckCircleIcon className="visScheduleState" />
+
+                <span className="visLivePhone">
+                  <span className="visLivePhoneScreen">
+                    <Image alt="" fill sizes="10vw" src={MEDIA.attendance} />
+                    <span className="visLiveBadge">{t("stage.live")}</span>
+                    <span className="visLiveBar" />
                   </span>
-                ))}
+                </span>
+
+                <span className="visInterview">
+                  <Image alt="" fill sizes="18vw" src={MEDIA.interview} />
+                </span>
+
+                <span className="visFrame visSchedule">
+                  <span className="visScheduleHead">
+                    <CalendarIcon className="visScheduleIcon" />
+                    {t("stage.scheduleTitle")}
+                  </span>
+                  <span className="visScheduleDay">{t("stage.today")}</span>
+                  {[0, 1, 2, 3].map((i) => (
+                    <span className="visScheduleRow" key={i}>
+                      <span className="visScheduleTime">{t(`stage.slots.${i}.time`)}</span>
+                      <span className="visScheduleWho">{t(`stage.slots.${i}.who`)}</span>
+                      <span className="visScheduleOk">
+                        <CheckCircleIcon className="visScheduleState" />
+                        {t("stage.confirmed")}
+                      </span>
+                    </span>
+                  ))}
+                </span>
               </div>
             )}
 

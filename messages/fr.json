@@ -348,7 +348,10 @@
       "postCta": "En savoir plus",
       "postActions": ["J’aime", "Commenter", "Partager"],
       "inviteTitle": "Invitation privée",
-      "inviteSub": "Salon international de l’immobilier"
+      "inviteSub": "Salon international de l’immobilier",
+      "live": "EN DIRECT",
+      "today": "Aujourd’hui",
+      "confirmed": "Confirmé"
     },
     "benefits": {
       "audience": {

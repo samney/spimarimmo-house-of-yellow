@@ -818,8 +818,102 @@
   margin: auto auto 0;
 }
 
+/* ---- Centre canvas, phase 02 --------------------------------------------
+   The salon being captured: a wide capture frame under a live social phone,
+   with the interview frame overlapping its lower middle and the appointment
+   sheet held forward at the left. Same stacking context as phase 01's canvas,
+   so the overlaps read as one scene. */
+
+.visCapture {
+  border-radius: 0.5vw;
+  box-shadow: 0 1.2vw 2.6vw rgb(0 0 0 / 45%);
+  display: block;
+  inline-size: 74%;
+  inset-block-start: 0;
+  inset-inline-start: 3%;
+  overflow: hidden;
+  position: absolute;
+  aspect-ratio: 16 / 10;
+}
+.visCapture img {
+  object-fit: cover;
+}
+
+.visLivePhone {
+  aspect-ratio: 1 / 2;
+  background: #05070a;
+  border: 0.26vw solid #2b3036;
+  border-radius: 1vw;
+  box-shadow: 0 1.4vw 3vw rgb(0 0 0 / 55%);
+  display: block;
+  inline-size: 15%;
+  inset-block-start: 6%;
+  inset-inline-end: 0;
+  padding: 0.2vw;
+  position: absolute;
+  z-index: 3;
+}
+.visLivePhoneScreen {
+  block-size: 100%;
+  border-radius: 0.8vw;
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+.visLivePhoneScreen img {
+  object-fit: cover;
+}
+
+/* The one red on the page, and it earns it: this is the live-broadcast marker
+   the reference puts on the social phone. */
+.visLiveBadge {
+  background: #d8352a;
+  border-radius: 0.15vw;
+  color: #fff;
+  font-size: 0.34vw;
+  font-weight: 700;
+  inset-block-start: 0.35vw;
+  inset-inline-start: 0.35vw;
+  letter-spacing: 0.08em;
+  padding: 0.1vw 0.28vw;
+  position: absolute;
+}
+
+.visLiveBar {
+  background: rgb(255 255 255 / 45%);
+  block-size: 0.12vw;
+  border-radius: 0.1vw;
+  inline-size: 34%;
+  inset-block-end: 0.3vw;
+  inset-inline-start: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.visInterview {
+  aspect-ratio: 16 / 10;
+  border: 0.18vw solid rgb(255 255 255 / 16%);
+  border-radius: 0.5vw;
+  box-shadow: 0 1.2vw 2.6vw rgb(0 0 0 / 50%);
+  display: block;
+  inline-size: 34%;
+  inset-block-end: 4%;
+  inset-inline-end: 14%;
+  overflow: hidden;
+  position: absolute;
+  z-index: 2;
+}
+.visInterview img {
+  object-fit: cover;
+}
+
 /* Schedule frame (phase 02) */
 .visSchedule {
+  inline-size: 40%;
+  inset-block-end: 8%;
+  inset-inline-start: 0;
+  position: absolute;
+  z-index: 4;
   background: var(--surface-page);
   color: var(--on-surface);
   display: flex;

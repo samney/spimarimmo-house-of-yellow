@@ -348,7 +348,10 @@
       "postCta": "Learn more",
       "postActions": ["Like", "Comment", "Share"],
       "inviteTitle": "Private invitation",
-      "inviteSub": "International real-estate show"
+      "inviteSub": "International real-estate show",
+      "live": "LIVE",
+      "today": "Today",
+      "confirmed": "Confirmed"
     },
     "benefits": {
       "audience": {
