@@ -19,35 +19,53 @@
 
 /* --- Header (sibling hierarchy: title < statement) ------------------------- */
 
+/* The site's header row: label left, action right on the eyebrow line, heading
+   and lead running the full column beneath. */
 .visHeader {
-  align-items: flex-start;
-  display: flex;
-  gap: var(--space-lg);
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--space-lg);
   margin-bottom: var(--space-md);
 }
 
-.visEyebrow {
-  color: var(--spimar-gold-text); /* WCAG AA on paper */
-  font-size: var(--text-support);
-  font-weight: 600;
-  letter-spacing: 0.14em;
+.visHeadings {
+  display: contents;
+}
+
+.visSection .sectionEyebrow {
+  grid-column: 1;
+  grid-row: 1;
   margin: 0 0 var(--space-sm);
-  text-transform: uppercase;
 }
 
-.visEyebrowIndex {
-  font-variant-numeric: tabular-nums;
+.visCta {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
 }
 
+.visTitle,
+.visLead {
+  grid-column: 1 / -1;
+}
+
+/* On the L2 ladder, like every other section heading. It rendered at 13.4px
+   weight 500 — smaller than its own lead — because sections 05, 06 and 07 all
+   took the same "small title, larger statement" convention from each other.
+   That convention was wrong at its source and is corrected in all three. */
 .visTitle {
-  font-size: var(--text-support);
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.1;
   margin: 0 0 var(--space-sm);
+  max-width: 58vw;
+  text-wrap: balance;
 }
 
 .visLead {
+  color: var(--on-surface-muted);
   font-size: var(--text-small-title);
   font-weight: 400;
   line-height: 1.2;
@@ -171,11 +189,20 @@
 
 /* --- Detail grid -------------------------------------------------------------- */
 
+/* One stable stage, not three. Measured across the phases the detail pane ran
+   787 / 769 / 750px, so the whole panel resized under the tab rail every time
+   a phase was selected — the layout jump the audit calls out as P0. The floor
+   is the tallest phase, expressed in vw so it tracks the composition rather
+   than pinning a pixel height.
+
+   Anything shorter than the floor sits in intentional space: the reference's
+   sparser phases are meant to breathe, not to close the stage up. */
 .visDetail {
   animation: vis-detail-in 240ms ease both;
   display: grid;
   gap: var(--space-md);
   grid-template-columns: 17vw minmax(0, 1fr);
+  min-block-size: 51.3vw;
   padding: var(--space-md) 0;
 }
 

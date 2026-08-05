@@ -106,12 +106,35 @@ const PHASES: readonly Phase[] = [
   },
 ];
 
-const STRIP_IMAGES = [
-  "/images/mre/residence-principale.jpg",
-  "/images/mre/investissement-patrimonial.jpg",
-  "/images/mre/retour-au-maroc.jpg",
-  "/images/mre/residence-principale.jpg",
-];
+/* Section 07's own photography (repair v2 ASSET_MANIFEST.md). The composition
+   previously borrowed three of section 06's MRE motivation photographs, which
+   put the same interiors on screen twice on one page and illustrated "campagne
+   média" with a client meeting. Each phase now shows what it is about:
+   campaign and project material before the salon, field capture during it. */
+const MEDIA = {
+  campaignHero: "/images/visibility/campaign-property-hero.webp",
+  rivieraBay: "/images/visibility/project-riviera-bay.webp",
+  atlasHorizon: "/images/visibility/project-atlas-horizon.webp",
+  oceanView: "/images/visibility/project-ocean-view.webp",
+  videoProduction: "/images/visibility/campaign-video-production.webp",
+  consultation: "/images/visibility/investor-consultation.webp",
+  interior: "/images/visibility/show-apartment-interior.webp",
+  liveCapture: "/images/visibility/live-event-capture.webp",
+  interview: "/images/visibility/interview.webp",
+  attendance: "/images/visibility/affluence.webp",
+  stand: "/images/visibility/stand-presentation.webp",
+  meeting: "/images/visibility/rendez-vous-qualifie.webp",
+  networking: "/images/visibility/networking.webp",
+} as const;
+
+/* The filmstrip under the canvas, per phase. Avant runs campaign and project
+   material; Pendant runs the field-proof set; Après reprises both, because the
+   after-salon story is about what the earlier phases produced. */
+const STRIP_IMAGES: Record<Phase["key"], readonly string[]> = {
+  before: [MEDIA.rivieraBay, MEDIA.videoProduction, MEDIA.atlasHorizon, MEDIA.interior],
+  during: [MEDIA.stand, MEDIA.interview, MEDIA.networking, MEDIA.attendance],
+  after: [MEDIA.consultation, MEDIA.meeting, MEDIA.campaignHero, MEDIA.oceanView],
+};
 
 const PIPELINE: readonly { key: string; count: number; offset: number }[] = [
   { key: "new", count: 3, offset: 0 },
@@ -216,7 +239,10 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                   <span className="visBrowserCta">{t("stage.heroCta")}</span>
                 </span>
                 <span className="visBrowserRow">
-                  {STRIP_IMAGES.slice(0, 3).map((src, i) => (
+                  {/* The landing page's own project cards, not the filmstrip's
+                      frames: this is the site being advertised, so it shows
+                      projects rather than campaign or field photography. */}
+                  {[MEDIA.rivieraBay, MEDIA.atlasHorizon, MEDIA.oceanView].map((src, i) => (
                     <span className="visBrowserThumb" key={i}>
                       <Image src={src} alt="" fill sizes="8vw" />
                     </span>
@@ -272,7 +298,7 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
 
             {/* Film strip, shared: the captured-content band from the mocks. */}
             <div className="visStrip" aria-hidden="true">
-              {STRIP_IMAGES.map((src, i) => (
+              {STRIP_IMAGES[phase.key].map((src, i) => (
                 <span className="visStripCell" key={i}>
                   <Image src={src} alt="" fill sizes="10vw" />
                 </span>

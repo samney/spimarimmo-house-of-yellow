@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { SectionEyebrow } from "./SectionEyebrow";
 import { VisibilityPhases } from "./VisibilityPhases";
 import { ArrowRightIcon } from "./impactIcons";
 
@@ -22,9 +23,7 @@ export function VisibilitySection({ deviceHref = "/exposer" }: VisibilitySection
       <div className="visInner">
         <header className="visHeader">
           <div className="visHeadings">
-            <p className="visEyebrow">
-              [ <span className="visEyebrowIndex">07</span> ] {t("eyebrow")}
-            </p>
+            <SectionEyebrow index="07" label={t("eyebrow")} />
             <h2 className="visTitle" id="vis-title">
               {t("title")}
             </h2>
