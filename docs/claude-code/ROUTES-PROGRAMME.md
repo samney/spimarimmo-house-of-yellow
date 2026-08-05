@@ -106,18 +106,16 @@ That rule exists to stop invented facts reaching visitors, and it still holds:
 the fixtures are demo, they are gated, and they are labelled. `F-02` records
 the scoping decision rather than letting the two rules silently contradict.
 
-- [ ] **C-01 · Fixture contract.** One typed fixture module per collection,
-      conforming to `lib/spimar/types.ts`. No component reads it directly.
-- [ ] **C-02 · Honesty gate.** One switch decides whether demo content is
-      served. Production without it falls back to today's honest pending states; every card or page rendering demo values carries the `DÉMO` marker already shipped on the salon cards (`b910b14`).
-- [ ] **C-03 · Text fixtures.** Destinations, editions, case studies, insight
-      articles, resources, FAQ entries — plausible French copy at realistic lengths, including the awkward ones: longest title, empty summary, missing date, single-item list.
+- [x] **C-01 · Fixture contract.** → `lib/spimar/fixtures/demo-content.ts` + `DemoContentRepository`, D-039. A third `ContentRepository` implementation beside the file adapter, mirroring its two easily-missed rules (drafts filtered, undated editions sorted last). A test enumerates importers so no component can read the fixtures directly.
+- [x] **C-02 · Honesty gate.** `SPIMAR_DEMO_CONTENT=1` is opt-in and never a fallback; a production build refuses outright rather than serving fixtures, **verified by watching it return 500**. `demo: true` travels through the seam to the `Démo` badge, so the marker does not depend on a component remembering to ask.
+- [~] **C-03 · Text fixtures.** Editions and case studies done, including the awkward cases (long title, empty summary, undated, draft). Remaining: insights, resources, FAQ. _Original:_ **Text fixtures.** Destinations, editions, case studies, insight
+  articles, resources, FAQ entries — plausible French copy at realistic lengths, including the awkward ones: longest title, empty summary, missing date, single-item list.
 - [ ] **C-04 · Image fixtures.** Reuse owner-supplied assets already in
       `public/` (`destinations/`, `gallery/`, `images/why-exhibit/`) mapped through `MediaAsset`. No new photography, nothing hotlinked, and `pnpm validate:media` still passes.
-- [ ] **C-05 · Empty and edge states.** Every listing gets a zero-result state,
-      a one-result state and a long-list state, so Phase P designs all three rather than only the happy path.
-- [ ] **C-06 · EN parity.** Fixtures carry both locales so `/en` stops
-      rendering French (`N-05` depends on this).
+- [~] **C-05 · Empty and edge states.** The fixtures supply the zero/one/many and undated cases; designing all three per listing is Phase P. _Original:_ **Empty and edge states.** Every listing gets a zero-result state,
+  a one-result state and a long-list state, so Phase P designs all three rather than only the happy path.
+- [~] **C-06 · EN parity.** Fixture-backed collections render English end to end (`/en/salons` measured). Remaining: the hard-coded section copy that still shows French under `/en`. _Original:_ **EN parity.** Fixtures carry both locales so `/en` stops
+  rendering French (`N-05` depends on this).
 - [ ] **C-07 · Swap rehearsal.** Prove the components are source-agnostic by
       pointing the repository at a second adapter and re-running the route sweep with no component change.
 

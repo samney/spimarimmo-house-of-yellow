@@ -1318,3 +1318,51 @@ clean where it matters most: 0 Axe violations across all 21 routes, uniform
 header anatomy, and 0 unmarked figures or dates. The gaps that remain are
 absences — stubs, missing filters, French copy under `/en` — rather than
 incorrect claims, which is the cheaper class of problem to be left with.
+
+## D-039 — Demo content is a third adapter, not a seed
+
+**Date:** 2026-08-05 · **Scope:** `C-01`, `C-02` · **Status:** implemented
+
+Layouts cannot be designed against empty slots, and every listing on a clean
+checkout renders its empty state because `.data/` is gitignored. On a machine
+that has run the e2e suite it is worse: the listings show **31 test records**
+with slugs like `e2e-edition-1785696125733805405`, no titles and no dates,
+because the suite writes into the same local store the public site reads.
+Neither state is something a layout can be designed against.
+
+**The fixtures are served through a third `ContentRepository` implementation**,
+beside the file adapter and the Supabase one still to be written — not seeded
+into the store. That choice does the work: components proved source-agnostic
+against two live sources are proved rather than asserted, which is `C-07`'s swap
+rehearsal arriving for free. The demo adapter deliberately mirrors the file
+adapter's two easily-missed behaviours — drafts filtered out, and undated
+editions sorted **last**, because "dates à confirmer" is not an upcoming edition
+and must never lead the index. A demo adapter that behaved differently from the
+real one would defeat the purpose of designing against it.
+
+**`D-021` is scoped, not weakened.** It forbids the repository shipping seeded
+content so that invented facts cannot reach visitors. Three mechanisms keep that
+true, each asserted rather than trusted:
+
+- **No component may import the fixtures.** A test enumerates importers. If a
+  component could read them directly, demo and real content would be
+  indistinguishable at the call site and the badge would depend on whoever wrote
+  that component remembering.
+- **The marker travels through the seam.** `demo: true` is on the normalized
+  record, so the `Démo` badge is a property of the data rather than of a
+  component's diligence.
+- **The switch is opt-in and never a fallback**, and a production build refuses
+  outright. That guard was verified by watching it fire: `SPIMAR_DEMO_CONTENT=1`
+  against a production build returns 500 naming the staging escape hatch. Loud
+  failure is deliberate and matches how the composition root already treats a
+  configured-but-unimplemented `SUPABASE_DATABASE_URL` — a silent fallback is
+  how a deployment quietly serves the wrong thing.
+
+Measured with the gate open: four published editions render and the draft does
+not; London's unconfirmed edition renders "Dates à confirmer" and sorts last;
+`/en/salons` renders English throughout, closing route-audit gap #1 for this
+collection; every card carries its badge.
+
+The fixtures include what a layout actually breaks on — a title long enough to
+wrap, an empty summary, an undated edition, a draft in each collection — because
+a layout that only survives tidy data is not designed yet.
