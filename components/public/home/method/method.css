@@ -13,8 +13,26 @@
    are intentionally quieter than the site-wide accent. */
 
 .methodSection {
-  /* 1 reference px at the golden viewport. */
-  --method-u: 0.06510417vw;
+  /* One reference pixel of the PAGE grid (100vw / 1536), capped by the height
+     left in the viewport — the same fitting rule section 03 uses, so the
+     section always lands on screen instead of pushing a scrollbar.
+
+     Section stack at the golden viewport, in page px:
+       intro 287 + stage 688 + tail 26 = 1001
+     On a normal display the width term wins and one page px is exactly one
+     pixel; on a short viewport the height term shrinks the whole composition
+     uniformly rather than cropping it. */
+  --method-pu: min(0.06510417vw, calc(98vh / 1001));
+
+  /* One reference pixel of the STAGE grid.
+
+     The approved composition is measured against a 1486-wide stage. The
+     owner's page rhythm (2026-08-05) insets this section to the same 50px
+     gutters as section 03, making the stage 1436 wide, so every interior
+     coordinate scales by that one ratio. The composition is preserved exactly
+     — proportions, gaps and overlaps all hold — instead of being re-laid out,
+     and every stage rule below keeps reading in --method-u unchanged. */
+  --method-u: calc(var(--method-pu) * 1436 / 1486);
 
   /* Sampled palette (reference: notre-methode-01-avant.png). */
   --method-paper: #f4ece4; /* warm ivory canvas (page zone) */
@@ -37,7 +55,8 @@
   --method-ink: #16181b; /* text on ivory */
 
   --method-stage-radius: calc(28 * var(--method-u));
-  --method-stage-inline: calc(25 * var(--method-u));
+  /* Page gutters, not stage coordinates: 50px each side, matching section 03. */
+  --method-stage-inline: calc(50 * var(--method-pu));
 
   position: relative;
   background: var(--method-paper);
@@ -47,27 +66,29 @@
 
 /* ================================================================ intro */
 
+/* The introduction lives on the PAGE grid, so its gutters line up with the
+   stage below it and with section 03 above it. */
 .methodIntro {
   position: relative;
-  padding: calc(48 * var(--method-u)) calc(59 * var(--method-u)) calc(28 * var(--method-u))
-    calc(54 * var(--method-u));
+  padding: calc(48 * var(--method-pu)) calc(50 * var(--method-pu)) calc(28 * var(--method-pu))
+    calc(50 * var(--method-pu));
 }
 
 .methodIntro__eyebrow {
   display: flex;
   align-items: baseline;
-  gap: calc(18 * var(--method-u));
+  gap: calc(18 * var(--method-pu));
   color: var(--method-gold-ink);
-  font-size: calc(15 * var(--method-u));
+  font-size: calc(15 * var(--method-pu));
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .methodIntro__heading {
-  max-width: calc(820 * var(--method-u));
-  margin-block: calc(16 * var(--method-u)) calc(10 * var(--method-u));
-  font-size: calc(47 * var(--method-u));
+  max-width: calc(820 * var(--method-pu));
+  margin-block: calc(16 * var(--method-pu)) calc(10 * var(--method-pu));
+  font-size: calc(47 * var(--method-pu));
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: -0.014em;
@@ -75,26 +96,26 @@
 }
 
 .methodIntro__support {
-  max-width: calc(652 * var(--method-u));
-  font-size: calc(17 * var(--method-u));
+  max-width: calc(652 * var(--method-pu));
+  font-size: calc(17 * var(--method-pu));
   line-height: 1.5;
   color: #43423f;
 }
 
-/* Gold CTA pinned to the upper-right zone (x1138–1477, y112–173). */
+/* Gold CTA pinned to the upper-right zone, flush with the page gutter. */
 .methodIntro__cta {
   position: absolute;
-  inset-block-start: calc(112 * var(--method-u));
-  inset-inline-end: calc(59 * var(--method-u));
+  inset-block-start: calc(112 * var(--method-pu));
+  inset-inline-end: calc(50 * var(--method-pu));
   display: inline-flex;
   align-items: center;
-  gap: calc(12 * var(--method-u));
-  block-size: calc(61 * var(--method-u));
-  padding-inline: calc(25 * var(--method-u)) calc(29 * var(--method-u));
-  border-radius: calc(10 * var(--method-u));
+  gap: calc(12 * var(--method-pu));
+  block-size: calc(61 * var(--method-pu));
+  padding-inline: calc(25 * var(--method-pu)) calc(29 * var(--method-pu));
+  border-radius: calc(10 * var(--method-pu));
   background: var(--method-gold);
   color: #241a07;
-  font-size: calc(13.5 * var(--method-u));
+  font-size: calc(13.5 * var(--method-pu));
   font-weight: 600;
   text-decoration: none;
   transition: background 0.3s;
@@ -112,7 +133,7 @@
 .methodStage {
   position: relative;
   margin-inline: var(--method-stage-inline);
-  margin-block-end: calc(26 * var(--method-u));
+  margin-block-end: calc(26 * var(--method-pu));
   block-size: calc(712 * var(--method-u));
   border-radius: var(--method-stage-radius);
   background:
@@ -256,8 +277,14 @@
 
 /* --------------------------------------------------------- phase copy */
 
+/* The copy column deliberately overlaps the dossier's left edge and is drawn
+   over it. Measured on the approved reference: the phase body's rightmost lit
+   pixel is x≈558, while the dossier figure begins at x≈512 — the artwork's
+   left margin is stage-dark, so the type reads as if it were on the stage.
+   Without this z-index the raster paints over the last words of every line. */
 .methodCopy {
   position: absolute;
+  z-index: 3;
   inset-block-start: calc(60 * var(--method-u));
   inset-inline-start: calc(213 * var(--method-u));
   inline-size: calc(320 * var(--method-u));
@@ -327,307 +354,53 @@
 
 /* ------------------------------------------------------------ dossier */
 
+/* The central "Dossier exposant" is the supplied editorial artwork, not a CSS
+   recreation (repair v2 ASSET_MANIFEST.md). The wrapper is the invariant:
+   one fixed 620 × 600 box at a stable stage-local anchor, identical in all
+   three phases, so a phase change never moves or resizes the figure.
+
+   All three scenes are stacked in this box and cross-faded by opacity. They
+   co-exist in the DOM on purpose: it is what makes a real crossfade possible
+   and what keeps the first phase switch from flashing an unfetched image. */
 .methodDossier {
   position: absolute;
-  inset-block-start: calc(20 * var(--method-u));
-  inset-inline-start: calc(515 * var(--method-u));
-  inline-size: calc(590 * var(--method-u));
+  inset-block-start: calc(2 * var(--method-u));
+  inset-inline-start: calc(487 * var(--method-u));
+  inline-size: calc(620 * var(--method-u));
   block-size: calc(600 * var(--method-u));
-}
-
-/* Matte black folder with gold binding edge. */
-.methodDossier__base {
-  position: absolute;
-  inset: calc(12 * var(--method-u)) calc(55 * var(--method-u)) calc(6 * var(--method-u))
-    calc(43 * var(--method-u));
-  border-radius: calc(14 * var(--method-u));
-  background: linear-gradient(155deg, #1a1f24 0%, #12161a 45%, #0f1317 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 calc(26 * var(--method-u)) calc(50 * var(--method-u)) rgba(0, 0, 0, 0.55);
-}
-/* Gold spine on the folder's left edge. */
-.methodDossier__base::before {
-  content: "";
-  position: absolute;
-  inset-block: calc(8 * var(--method-u));
-  inset-inline-start: calc(6 * var(--method-u));
-  inline-size: calc(5 * var(--method-u));
-  border-radius: calc(3 * var(--method-u));
-  background: linear-gradient(to bottom, #c69a45, #8a6a2c 55%, #c69a45);
-  opacity: 0.85;
-}
-/* Paper layers peeking beneath the folder's lower-right edge. */
-.methodDossier__base::after {
-  content: "";
-  position: absolute;
-  inset-inline: calc(330 * var(--method-u)) calc(28 * var(--method-u));
-  inset-block-end: calc(-7 * var(--method-u));
-  block-size: calc(15 * var(--method-u));
-  border-radius: calc(4 * var(--method-u));
-  background: linear-gradient(
-    to bottom,
-    var(--method-card) 0 45%,
-    var(--method-card-deep) 45% 75%,
-    #d8cec1 75%
-  );
-  box-shadow: 0 calc(8 * var(--method-u)) calc(18 * var(--method-u)) rgba(0, 0, 0, 0.35);
-  transform: rotate(-0.8deg);
-}
-
-.methodDossier__title {
-  position: absolute;
+  margin: 0;
+  /* Sits above the connector layer, below the deliverable cards. */
   z-index: 2;
-  inset-block-start: calc(79 * var(--method-u));
-  inset-inline-start: calc(41 * var(--method-u));
-  font-size: calc(26 * var(--method-u));
-  line-height: 1.08;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: #d8c9a4;
-  text-transform: uppercase;
 }
 
-/* Binder clip silhouette at the folder's top edge. */
-.methodDossier__clip {
+.methodDossier__scene {
   position: absolute;
-  z-index: 3;
-  inset-block-start: calc(4 * var(--method-u));
-  inset-inline-start: calc(190 * var(--method-u));
-  inline-size: calc(46 * var(--method-u));
-  block-size: calc(32 * var(--method-u));
-  border-radius: calc(5 * var(--method-u)) calc(5 * var(--method-u)) calc(3 * var(--method-u))
-    calc(3 * var(--method-u));
-  background: linear-gradient(to bottom, #454c54 0%, #23282d 55%, #171b1f 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 calc(4 * var(--method-u)) calc(10 * var(--method-u)) rgba(0, 0, 0, 0.5);
-}
-.methodDossier__clip::before {
-  content: "";
-  position: absolute;
-  inset-block-start: calc(-15 * var(--method-u));
-  inset-inline-start: calc(8 * var(--method-u));
-  inline-size: calc(22 * var(--method-u));
-  block-size: calc(17 * var(--method-u));
-  border: calc(3 * var(--method-u)) solid #83898f;
-  border-block-end: none;
-  border-radius: calc(9 * var(--method-u)) calc(9 * var(--method-u)) 0 0;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  /* Never crop or letterbox differently per phase: every scene ships at the
+     same intrinsic aspect, so `contain` is a guarantee, not a fit strategy. */
+  object-fit: contain;
+  opacity: 0;
+  transition:
+    opacity 320ms ease,
+    transform 320ms ease;
+  /* Outgoing scenes lift by the 8px the motion contract allows — no more. */
+  transform: translate3d(0, calc(-8 * var(--method-u)), 0);
+  pointer-events: none;
 }
 
-/* Gold pen resting along the folder's right edge. */
-.methodDossier__pen {
-  position: absolute;
-  z-index: 3;
-  inset-block-start: calc(112 * var(--method-u));
-  inset-inline-end: calc(40 * var(--method-u));
-  inline-size: calc(9 * var(--method-u));
-  block-size: calc(296 * var(--method-u));
-  border-radius: calc(5 * var(--method-u));
-  background: linear-gradient(
-    to bottom,
-    #8f6f33 0%,
-    #c9a254 8%,
-    #2b2f34 16%,
-    #3a3f45 46%,
-    #23272c 78%,
-    #b08a41 86%,
-    #6f5626 100%
-  );
-  box-shadow:
-    inset 1px 0 0 rgba(255, 255, 255, 0.28),
-    calc(3 * var(--method-u)) calc(6 * var(--method-u)) calc(12 * var(--method-u))
-      rgba(0, 0, 0, 0.5);
-}
-
-/* Document panels inside the dossier. */
-.methodDoc {
-  position: absolute;
-  z-index: 2;
-  border-radius: calc(8 * var(--method-u));
-  overflow: hidden;
-}
-.methodDoc--paper {
-  background: linear-gradient(170deg, var(--method-card) 0%, var(--method-card-deep) 100%);
-  color: var(--method-ink);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
-    0 calc(14 * var(--method-u)) calc(28 * var(--method-u)) rgba(0, 0, 0, 0.45);
-}
-.methodDoc--panel {
-  background: linear-gradient(165deg, #1c2126 0%, var(--method-obsidian-soft) 100%);
-  color: var(--method-ivory);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
-    0 calc(14 * var(--method-u)) calc(28 * var(--method-u)) rgba(0, 0, 0, 0.5);
-}
-
-.methodDoc__label {
-  display: block;
-  padding: calc(12 * var(--method-u)) calc(16 * var(--method-u)) calc(8 * var(--method-u));
-  font-size: calc(13 * var(--method-u));
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.methodDoc--panel .methodDoc__label {
-  color: var(--method-ivory);
-}
-
-/* Neutral layout bars: approved stand-in for unapproved document microcopy. */
-.methodDoc__body {
-  padding: 0 calc(16 * var(--method-u)) calc(14 * var(--method-u));
-  display: grid;
-  gap: calc(8 * var(--method-u));
-}
-.methodDoc__bar {
-  block-size: calc(8 * var(--method-u));
-  border-radius: calc(2 * var(--method-u));
-  background: currentColor;
-  opacity: 0.16;
-}
-.methodDoc__bar--gold {
-  background: var(--method-gold);
-  opacity: 0.75;
-}
-.methodDoc--paper .methodDoc__bar {
-  opacity: 0.22;
-}
-.methodDoc__row {
-  display: flex;
-  align-items: center;
-  gap: calc(8 * var(--method-u));
-}
-.methodDoc__inner {
-  margin: 0 calc(14 * var(--method-u)) calc(14 * var(--method-u));
-  padding: calc(14 * var(--method-u));
-  border-radius: calc(6 * var(--method-u));
-  background: linear-gradient(170deg, var(--method-card) 0%, var(--method-card-deep) 100%);
-  color: var(--method-ink);
-  display: grid;
-  gap: calc(12 * var(--method-u));
-}
-.methodDoc__inner .methodDoc__bar {
-  opacity: 0.3;
-}
-.methodDoc__dot {
-  flex: none;
-  inline-size: calc(14 * var(--method-u));
-  block-size: calc(14 * var(--method-u));
-  border-radius: 50%;
-  border: 1px solid currentColor;
-  opacity: 0.5;
-}
-.methodDoc__dot--filled {
-  background: var(--method-gold);
-  border-color: var(--method-gold);
+.methodDossier__scene[data-active="true"] {
   opacity: 1;
-}
-.methodDoc__media {
-  margin: 0 calc(16 * var(--method-u)) calc(10 * var(--method-u));
-  border-radius: calc(4 * var(--method-u));
-  block-size: calc(64 * var(--method-u));
-  background: linear-gradient(140deg, #5a636b 0%, #39424a 45%, #2a3138 100%);
-  opacity: 0.95;
-}
-.methodDoc--paper .methodDoc__media {
-  background: linear-gradient(135deg, #cfc5b6 0%, #b9ae9d 60%);
-}
-/* Gantt-style schedule bars. */
-.methodDoc__gantt {
-  display: grid;
-  gap: calc(7 * var(--method-u));
-}
-.methodDoc__ganttRow {
-  display: flex;
-  gap: calc(6 * var(--method-u));
-  align-items: center;
-}
-.methodDoc__ganttRow .methodDoc__bar {
-  block-size: calc(9 * var(--method-u));
+  transform: translate3d(0, 0, 0);
 }
 
-/* Document slot placement, measured from the Phase 01 reference. Slots are
-   part of the locked dossier geometry: every phase pours its documents into
-   the same five slots (slot 4 is only occupied by the five-document phases). */
-.methodDoc--slot0 {
-  inset-block-start: calc(26 * var(--method-u));
-  inset-inline-start: calc(217 * var(--method-u));
-  inline-size: calc(260 * var(--method-u));
-  block-size: calc(150 * var(--method-u));
-  transform: rotate(-1.2deg);
+@media (prefers-reduced-motion: reduce) {
+  .methodDossier__scene {
+    transition: none;
+    transform: none;
+  }
 }
-.methodDoc--slot1 {
-  inset-block-start: calc(181 * var(--method-u));
-  inset-inline-start: calc(33 * var(--method-u));
-  inline-size: calc(237 * var(--method-u));
-  block-size: calc(282 * var(--method-u));
-  transform: rotate(-0.6deg);
-}
-.methodDoc--slot2 {
-  inset-block-start: calc(168 * var(--method-u));
-  inset-inline-start: calc(272 * var(--method-u));
-  inline-size: calc(228 * var(--method-u));
-  block-size: calc(220 * var(--method-u));
-}
-.methodDoc--slot3 {
-  inset-block-start: calc(343 * var(--method-u));
-  inset-inline-start: calc(160 * var(--method-u));
-  inline-size: calc(375 * var(--method-u));
-  block-size: calc(150 * var(--method-u));
-  transform: rotate(0.8deg);
-}
-.methodDoc--slot4 {
-  inset-block-start: calc(414 * var(--method-u));
-  inset-inline-start: calc(58 * var(--method-u));
-  inline-size: calc(164 * var(--method-u));
-  block-size: calc(114 * var(--method-u));
-  transform: rotate(0.5deg);
-}
-
-/* ---------------------------------------------------------- status rail */
-
-/* Positioned inside .methodDossier: reference-global (600, 795) minus the
-   dossier's own stage offset. */
-.methodStatus {
-  position: absolute;
-  z-index: 4;
-  inset-block-start: calc(489 * var(--method-u));
-  inset-inline-start: calc(60 * var(--method-u));
-  inline-size: calc(410 * var(--method-u));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: calc(10 * var(--method-u)) calc(20 * var(--method-u));
-  border-radius: calc(24 * var(--method-u));
-  background: rgba(10, 13, 15, 0.92);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-.methodStatus__item {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(9 * var(--method-u));
-  font-size: calc(13 * var(--method-u));
-  color: var(--method-body-dim);
-}
-.methodStatus__item.is-lead {
-  color: var(--method-gold-bright);
-}
-.methodStatus__icon {
-  inline-size: calc(17 * var(--method-u));
-  block-size: calc(17 * var(--method-u));
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10 * var(--method-u));
-}
-.methodStatus__arrow {
-  color: var(--method-stone-dim);
-  font-size: calc(14 * var(--method-u));
-}
-
 /* -------------------------------------------------------- deliverables */
 
 .methodDeliverables {
@@ -667,6 +440,9 @@
     0 calc(10 * var(--method-u)) calc(22 * var(--method-u)) rgba(0, 0, 0, 0.35);
 }
 
+/* Supplied 112 × 80 preview artwork. `cover` on a fixed box keeps all four
+   cards' thumbnails identically sized whatever each preview depicts — the
+   reference's uniform card rhythm depends on it. */
 .methodCard__thumb {
   flex: none;
   inline-size: calc(88 * var(--method-u));
@@ -674,20 +450,8 @@
   border-radius: calc(6 * var(--method-u));
   background: #ffffff;
   box-shadow: inset 0 0 0 1px rgba(22, 24, 27, 0.12);
-  display: grid;
-  align-content: start;
-  gap: calc(6 * var(--method-u));
-  padding: calc(9 * var(--method-u));
-}
-.methodCard__thumbBar {
-  block-size: calc(6 * var(--method-u));
-  border-radius: calc(2 * var(--method-u));
-  background: var(--method-ink);
-  opacity: 0.18;
-}
-.methodCard__thumbBar--gold {
-  background: var(--method-gold);
-  opacity: 0.8;
+  object-fit: cover;
+  object-position: top left;
 }
 
 .methodCard__title {
@@ -721,9 +485,12 @@
   color: transparent;
 }
 
+/* One line, as measured on the reference: lit pixels occupy a single band at
+   y≈850–860 under the last card. At 15px the French string wrapped to two
+   lines and pushed the gold rule off its baseline. */
 .methodDeliverables__annotation {
   margin-block-start: calc(24 * var(--method-u));
-  font-size: calc(15 * var(--method-u));
+  font-size: calc(12.6 * var(--method-u));
   line-height: 1.5;
   color: var(--method-ivory);
   border-block-end: 1px solid var(--method-gold-line);
@@ -895,7 +662,6 @@
   .methodRail,
   .methodCopy,
   .methodDossier,
-  .methodStatus,
   .methodDeliverables,
   .methodJourney {
     position: static;
@@ -912,23 +678,17 @@
   .methodRail::before {
     display: none;
   }
+  /* The dossier stays the dominant figure and keeps its aspect ratio; only
+     the absolute anchoring is dropped (repair v2 MOTION_RESPONSIVE.md). */
   .methodDossier {
-    display: grid;
-    gap: 3vw;
+    position: relative;
+    inline-size: min(100%, 620px);
+    aspect-ratio: 620 / 600;
+    margin-inline: auto;
   }
-  .methodDossier__base,
-  .methodDossier__clip,
-  .methodDossier__pen {
-    display: none;
-  }
-  .methodDossier__title {
-    position: static;
-    font-size: 3.4vw;
-  }
-  .methodDoc {
-    position: static;
-    inline-size: auto;
-    block-size: auto;
+  .methodDossier__scene {
+    position: absolute;
+    inset: 0;
     transform: none;
   }
   .methodCopy__number {
@@ -947,11 +707,6 @@
   .methodCopy__chip {
     block-size: 6vw;
     font-size: 2vw;
-  }
-  .methodStatus {
-    inline-size: auto;
-    flex-wrap: wrap;
-    gap: 2vw;
   }
   .methodDeliverables {
     inline-size: auto;

@@ -1,18 +1,28 @@
+import Image from "next/image";
 import type { MethodPhase } from "./method-types";
 
-/* Card-center Y coordinates in reference pixels (stage-relative), matching
-   the four measured cards (y 366/486/604/723, height ~103). The connector
-   spine and branches are drawn in the same coordinate space as the stage so
-   the SVG scales with it. */
-const CARD_CENTERS = [131, 250, 368, 487];
-const CARD_LEFT = 1159;
-const DOSSIER_EDGE = 1064;
-const SPINE_X = 1122;
+/* Connector geometry in the stage's own 1486 × 712 reference space. The SVG
+   keeps that viewBox and stretches to the rendered stage, so these stay valid
+   after the section was inset to the 1436-wide page rhythm.
 
-/* Right-hand deliverable stack: four ivory cards with a neutral document
-   thumbnail, real title and explicit status (never color-only — the check
-   ring plus text carry it). Thin connectors map each card back to the
-   dossier; they are decorative and hidden from assistive technology. */
+   All four values are measured off the live DOM, not guessed: card centres sit
+   at y 130/249/368/487 and the cards' left edge at x 1160. `DOSSIER_EDGE` is
+   the dossier figure's right edge (x 1107) — it must not sit inside the
+   artwork, or the gold paths are drawn across the pen and the paper stack. */
+const CARD_CENTERS = [130, 249, 368, 487];
+const CARD_LEFT = 1160;
+const DOSSIER_EDGE = 1107;
+const SPINE_X = 1134;
+
+/* Right-hand deliverable stack: four ivory cards, each carrying the supplied
+   112 × 80 preview artwork for that deliverable (repair v2 ASSET_MANIFEST.md —
+   the previous neutral bar stack made all four cards interchangeable, and
+   Lucide-style icons are explicitly forbidden as a substitute).
+
+   The preview is decorative: title and status stay DOM text and are never
+   baked into the raster. Status is never color-only — the check ring plus the
+   word carry it. Thin connectors map each card back to the dossier and are
+   hidden from assistive technology. */
 export function MethodDeliverables({ phase }: { phase: MethodPhase }) {
   return (
     <>
@@ -40,15 +50,14 @@ export function MethodDeliverables({ phase }: { phase: MethodPhase }) {
             const pending = i === phase.deliverables.length - 1;
             return (
               <li className="methodCard" key={deliverable.id}>
-                <span className="methodCard__thumb" aria-hidden="true">
-                  <span
-                    className="methodCard__thumbBar methodCard__thumbBar--gold"
-                    style={{ inlineSize: "55%" }}
-                  />
-                  <span className="methodCard__thumbBar" />
-                  <span className="methodCard__thumbBar" style={{ inlineSize: "80%" }} />
-                  <span className="methodCard__thumbBar" style={{ inlineSize: "62%" }} />
-                </span>
+                <Image
+                  className="methodCard__thumb"
+                  src={deliverable.previewSrc}
+                  width={112}
+                  height={80}
+                  alt=""
+                  sizes="112px"
+                />
                 <span>
                   <span className="methodCard__title">{deliverable.title}</span>
                   <span className="methodCard__status">

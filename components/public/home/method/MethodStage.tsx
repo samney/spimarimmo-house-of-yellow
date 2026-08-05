@@ -1,7 +1,7 @@
 import type { MethodPhaseId, MethodSectionContent } from "./method-types";
 import { MethodPhaseNavigation } from "./MethodPhaseNavigation";
 import { MethodPhaseCopy } from "./MethodPhaseCopy";
-import { ExhibitorDossier } from "./ExhibitorDossier";
+import { MethodDossierFigure } from "./MethodDossierFigure";
 import { MethodDeliverables } from "./MethodDeliverables";
 import { MethodJourneyProgress } from "./MethodJourneyProgress";
 
@@ -31,7 +31,7 @@ export function MethodStage({
         onSelectPhase={onSelectPhase}
       />
       <MethodPhaseCopy phase={phase} />
-      <ExhibitorDossier phase={phase} />
+      <MethodDossierFigure phases={content.phases} activePhase={phase.id} />
       <MethodDeliverables phase={phase} />
       <MethodJourneyProgress
         phases={content.phases}

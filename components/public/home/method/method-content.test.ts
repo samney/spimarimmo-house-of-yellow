@@ -72,44 +72,47 @@ describe("method section content contract", () => {
     ]);
   });
 
-  it("keeps the approved dossier documents per phase", () => {
-    const [before, during, after] = METHOD_CONTENT.phases;
-    expect(before.documents.map((d) => d.label)).toEqual([
-      "PLAN DE CAMPAGNE",
-      "LANDING PAGE",
-      "QUALIFICATION",
-      "AGENDA EXPOSANT",
+  it("binds each phase to its supplied dossier scene", () => {
+    expect(METHOD_CONTENT.phases.map((p) => p.dossier.src)).toEqual([
+      "/images/method/dossier/01-avant-dossier.webp",
+      "/images/method/dossier/02-pendant-dossier.webp",
+      "/images/method/dossier/03-apres-dossier.webp",
     ]);
-    expect(during.documents.map((d) => d.label)).toEqual([
-      "SALON EN DIRECT",
-      "AGENDA LIVE",
-      "PLAN DU SALON",
-      "CAPTATION DES LEADS",
-      "SUPPORT EXPOSANT",
-    ]);
-    expect(after.documents.map((d) => d.label)).toEqual([
-      "RAPPORT DE SUIVI",
-      "BASE TRANSMISE",
-      "ANALYSE",
-      "SUIVI COMMERCIAL",
-      "PLAN D’ACTION",
-    ]);
-    // The locked dossier composition renders at most five document slots.
+  });
+
+  it("keeps one identical dossier box across phases", () => {
+    /* The invariant that makes a phase change a crossfade instead of a
+       relayout: every scene declares the same intrinsic 620 × 600 box, so no
+       phase can introduce a per-phase crop or scale. */
     for (const phase of METHOD_CONTENT.phases) {
-      expect(phase.documents.length).toBeGreaterThanOrEqual(4);
-      expect(phase.documents.length).toBeLessThanOrEqual(5);
-      for (const doc of phase.documents) {
-        expect(doc.accessibleSummary.length).toBeGreaterThan(0);
-      }
+      expect(phase.dossier.width).toBe(620);
+      expect(phase.dossier.height).toBe(600);
+      expect(phase.dossier.summary.length).toBeGreaterThan(0);
     }
   });
 
-  it("keeps the approved statuses and deliverables per phase", () => {
-    const [before, during, after] = METHOD_CONTENT.phases;
-    expect(before.statuses).toEqual(["Préparé", "Validé", "Planifié"]);
-    expect(during.statuses).toEqual(["En direct", "Confirmé", "Accompagné"]);
-    expect(after.statuses).toEqual(["Transmis", "Analysé", "À suivre"]);
+  it("gives every deliverable its own supplied preview", () => {
+    const previews = METHOD_CONTENT.phases.flatMap((p) => p.deliverables.map((d) => d.previewSrc));
+    expect(previews).toEqual([
+      "/images/method/deliverables/01-avant-plan-media.webp",
+      "/images/method/deliverables/01-avant-landing-page.webp",
+      "/images/method/deliverables/01-avant-profils-qualifies.webp",
+      "/images/method/deliverables/01-avant-agenda-exposant.webp",
+      "/images/method/deliverables/02-pendant-agenda-live.webp",
+      "/images/method/deliverables/02-pendant-plan-salon.webp",
+      "/images/method/deliverables/02-pendant-leads-captes.webp",
+      "/images/method/deliverables/02-pendant-support-exposant.webp",
+      "/images/method/deliverables/03-apres-base-transmise.webp",
+      "/images/method/deliverables/03-apres-rapport-suivi.webp",
+      "/images/method/deliverables/03-apres-analyse.webp",
+      "/images/method/deliverables/03-apres-plan-suivi.webp",
+    ]);
+    // No card may reuse another card's artwork.
+    expect(new Set(previews).size).toBe(previews.length);
+  });
 
+  it("keeps the approved deliverables per phase", () => {
+    const [before, during, after] = METHOD_CONTENT.phases;
     expect(before.deliverables.map((d) => [d.title, d.status])).toEqual([
       ["Plan média", "Préparé"],
       ["Landing page", "Validé"],
@@ -161,12 +164,19 @@ describe("method section content contract", () => {
   it("introduces no fabricated metrics, dates or venues", () => {
     /* The contract forbids invented numbers, dates and venue names. The only
        digits allowed in any visible string are the fixed phase numerals.
-       (Structural fields like titleBreakAfterWord are layout data, not copy.) */
+       (Structural fields like titleBreakAfterWord are layout data, not copy;
+       `*Src` fields are asset paths, so they are skipped rather than allowed
+       to pass incidentally on their phase-numbered filenames.) */
     const strings: string[] = [];
     const collect = (value: unknown) => {
       if (typeof value === "string") strings.push(value);
       else if (Array.isArray(value)) value.forEach(collect);
-      else if (value && typeof value === "object") Object.values(value).forEach(collect);
+      else if (value && typeof value === "object") {
+        for (const [key, nested] of Object.entries(value)) {
+          if (key === "src" || key.endsWith("Src")) continue;
+          collect(nested);
+        }
+      }
     };
     collect(METHOD_CONTENT);
     for (const text of strings) {

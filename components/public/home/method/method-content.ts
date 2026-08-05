@@ -1,5 +1,12 @@
 import type { MethodSectionContent } from "./method-types";
 
+const PREVIEWS = "/images/method/deliverables";
+
+/* Every phase scene is supplied at the same intrinsic size, which is what lets
+   one fixed wrapper hold all three without a phase-specific crop or scale
+   (repair v2 ASSET_MANIFEST.md, "Production dossier scenes"). */
+const DOSSIER_BOX = { width: 620, height: 600 } as const;
+
 /* Section 04 — "Notre méthode". All strings below are approved implementation
    copy from specs/03_CONTENT_CONTRACT_ALL_PHASES.md, verbatim. Do not
    paraphrase without explicit product approval.
@@ -36,41 +43,38 @@ export const METHOD_CONTENT: MethodSectionContent = {
         "Qualification",
         "Rendez-vous",
       ],
-      documents: [
-        {
-          id: "campaign-plan",
-          label: "PLAN DE CAMPAGNE",
-          kind: "schedule",
-          accessibleSummary: "Aperçu du plan de campagne : calendrier des actions avant le salon.",
-        },
-        {
-          id: "landing-page",
-          label: "LANDING PAGE",
-          kind: "media",
-          accessibleSummary: "Aperçu de la landing page dédiée à l’immobilier marocain.",
-        },
-        {
-          id: "qualification",
-          label: "QUALIFICATION",
-          kind: "flow",
-          accessibleSummary:
-            "Aperçu du parcours de qualification : intérêt détecté, information envoyée, profil qualifié, rendez-vous planifié.",
-        },
-        {
-          id: "agenda",
-          label: "AGENDA EXPOSANT",
-          kind: "schedule",
-          accessibleSummary:
-            "Aperçu de l’agenda exposant : rendez-vous planifiés avant l’ouverture.",
-        },
-      ],
-      statuses: ["Préparé", "Validé", "Planifié"],
+      dossier: {
+        ...DOSSIER_BOX,
+        src: "/images/method/dossier/01-avant-dossier.webp",
+        summary:
+          "Dossier exposant en phase Avant : plan de campagne, landing page, parcours de qualification et agenda exposant réunis avant l’ouverture du salon.",
+      },
       deliverablesHeading: "LIVRABLES AVANT",
       deliverables: [
-        { id: "media-plan", title: "Plan média", status: "Préparé" },
-        { id: "landing", title: "Landing page", status: "Validé" },
-        { id: "qualified-profiles", title: "Profils qualifiés", status: "Validé" },
-        { id: "exhibitor-agenda", title: "Agenda exposant", status: "Planifié" },
+        {
+          id: "media-plan",
+          title: "Plan média",
+          status: "Préparé",
+          previewSrc: `${PREVIEWS}/01-avant-plan-media.webp`,
+        },
+        {
+          id: "landing",
+          title: "Landing page",
+          status: "Validé",
+          previewSrc: `${PREVIEWS}/01-avant-landing-page.webp`,
+        },
+        {
+          id: "qualified-profiles",
+          title: "Profils qualifiés",
+          status: "Validé",
+          previewSrc: `${PREVIEWS}/01-avant-profils-qualifies.webp`,
+        },
+        {
+          id: "exhibitor-agenda",
+          title: "Agenda exposant",
+          status: "Planifié",
+          previewSrc: `${PREVIEWS}/01-avant-agenda-exposant.webp`,
+        },
       ],
       annotation: "Tout est visible avant l’ouverture du salon.",
       contextualCta: { label: "Voir la préparation", href: "/exposer#avant" },
@@ -93,45 +97,38 @@ export const METHOD_CONTENT: MethodSectionContent = {
         "Captation des leads",
         "Support commercial",
       ],
-      documents: [
-        {
-          id: "live-salon",
-          label: "SALON EN DIRECT",
-          kind: "media",
-          accessibleSummary: "Aperçu du salon en direct : le stand en activité.",
-        },
-        {
-          id: "live-agenda",
-          label: "AGENDA LIVE",
-          kind: "schedule",
-          accessibleSummary: "Aperçu de l’agenda live : rendez-vous du jour confirmés.",
-        },
-        {
-          id: "floor-plan",
-          label: "PLAN DU SALON",
-          kind: "flow",
-          accessibleSummary: "Aperçu du plan du salon avec l’emplacement du stand.",
-        },
-        {
-          id: "lead-capture",
-          label: "CAPTATION DES LEADS",
-          kind: "flow",
-          accessibleSummary: "Aperçu de la captation des leads : contacts structurés en direct.",
-        },
-        {
-          id: "support",
-          label: "SUPPORT EXPOSANT",
-          kind: "checklist",
-          accessibleSummary: "Aperçu du support exposant : accompagnement commercial sur place.",
-        },
-      ],
-      statuses: ["En direct", "Confirmé", "Accompagné"],
+      dossier: {
+        ...DOSSIER_BOX,
+        src: "/images/method/dossier/02-pendant-dossier.webp",
+        summary:
+          "Dossier exposant en phase Pendant : salon en direct, agenda live, plan du salon, captation des leads et support exposant sur place.",
+      },
       deliverablesHeading: "LIVRABLES PENDANT",
       deliverables: [
-        { id: "live-agenda-output", title: "Agenda live", status: "Confirmé" },
-        { id: "salon-plan", title: "Plan du salon", status: "Disponible" },
-        { id: "captured-leads", title: "Leads captés", status: "En direct" },
-        { id: "exhibitor-support", title: "Support exposant", status: "Actif" },
+        {
+          id: "live-agenda-output",
+          title: "Agenda live",
+          status: "Confirmé",
+          previewSrc: `${PREVIEWS}/02-pendant-agenda-live.webp`,
+        },
+        {
+          id: "salon-plan",
+          title: "Plan du salon",
+          status: "Disponible",
+          previewSrc: `${PREVIEWS}/02-pendant-plan-salon.webp`,
+        },
+        {
+          id: "captured-leads",
+          title: "Leads captés",
+          status: "En direct",
+          previewSrc: `${PREVIEWS}/02-pendant-leads-captes.webp`,
+        },
+        {
+          id: "exhibitor-support",
+          title: "Support exposant",
+          status: "Actif",
+          previewSrc: `${PREVIEWS}/02-pendant-support-exposant.webp`,
+        },
       ],
       annotation: "Chaque interaction est structurée pendant le salon.",
       contextualCta: { label: "Voir le dispositif salon", href: "/exposer#pendant" },
@@ -153,45 +150,38 @@ export const METHOD_CONTENT: MethodSectionContent = {
         "Analyse des performances",
         "Plan d’action",
       ],
-      documents: [
-        {
-          id: "followup-report",
-          label: "RAPPORT DE SUIVI",
-          kind: "report",
-          accessibleSummary: "Aperçu du rapport de suivi remis après le salon.",
-        },
-        {
-          id: "lead-handoff",
-          label: "BASE TRANSMISE",
-          kind: "flow",
-          accessibleSummary: "Aperçu de la base de contacts transmise à l’exposant.",
-        },
-        {
-          id: "analysis",
-          label: "ANALYSE",
-          kind: "report",
-          accessibleSummary: "Aperçu de l’analyse des performances du salon.",
-        },
-        {
-          id: "sales-followup",
-          label: "SUIVI COMMERCIAL",
-          kind: "flow",
-          accessibleSummary: "Aperçu du suivi commercial : prochaines actions structurées.",
-        },
-        {
-          id: "action-plan",
-          label: "PLAN D’ACTION",
-          kind: "checklist",
-          accessibleSummary: "Aperçu du plan d’action établi après le salon.",
-        },
-      ],
-      statuses: ["Transmis", "Analysé", "À suivre"],
+      dossier: {
+        ...DOSSIER_BOX,
+        src: "/images/method/dossier/03-apres-dossier.webp",
+        summary:
+          "Dossier exposant en phase Après : rapport de suivi, base de contacts transmise, analyse des performances et plan d’action structurés après le salon.",
+      },
       deliverablesHeading: "LIVRABLES APRÈS",
       deliverables: [
-        { id: "transmitted-base", title: "Base transmise", status: "Livré" },
-        { id: "followup-report-output", title: "Rapport de suivi", status: "Livré" },
-        { id: "analysis-output", title: "Analyse", status: "Validée" },
-        { id: "followup-plan", title: "Plan de suivi", status: "À activer" },
+        {
+          id: "transmitted-base",
+          title: "Base transmise",
+          status: "Livré",
+          previewSrc: `${PREVIEWS}/03-apres-base-transmise.webp`,
+        },
+        {
+          id: "followup-report-output",
+          title: "Rapport de suivi",
+          status: "Livré",
+          previewSrc: `${PREVIEWS}/03-apres-rapport-suivi.webp`,
+        },
+        {
+          id: "analysis-output",
+          title: "Analyse",
+          status: "Validée",
+          previewSrc: `${PREVIEWS}/03-apres-analyse.webp`,
+        },
+        {
+          id: "followup-plan",
+          title: "Plan de suivi",
+          status: "À activer",
+          previewSrc: `${PREVIEWS}/03-apres-plan-suivi.webp`,
+        },
       ],
       annotation: "La valeur du salon continue après sa fermeture.",
       contextualCta: { label: "Voir le processus de suivi", href: "/exposer#apres" },
