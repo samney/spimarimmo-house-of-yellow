@@ -55,7 +55,13 @@
    took the same "small title, larger statement" convention from each other.
    That convention was wrong at its source and is corrected in all three. */
 .visTitle {
-  font-size: var(--text-heading-lg);
+  /* --text-heading-sm (44.2px), not -lg (53px). The approved design for THIS
+     section sets its heading a rung lower than its neighbours', and 44.2 is
+     what the reference measures; the parity spec's 183px header cannot be met
+     at 53. It is still an L2 token, so the heading stays on the ladder — it
+     just sits on the step this section's own design chose. Section 09's
+     reference does use 53, and keeps it. */
+  font-size: var(--text-heading-sm);
   font-weight: 600;
   letter-spacing: -0.014em;
   line-height: 1.1;
@@ -64,14 +70,15 @@
   text-wrap: balance;
 }
 
+/* One line, as the reference sets it. At --measure-prose it wrapped to two,
+   which is most of why the header measured 233 against a 183 reference. */
 .visLead {
   color: var(--on-surface-muted);
   font-size: var(--text-small-title);
   font-weight: 400;
   line-height: 1.2;
   margin: 0;
-  max-width: var(--measure-prose);
-  text-wrap: balance;
+  max-width: none;
 }
 
 .visCta {
@@ -114,7 +121,7 @@
   background: var(--surface-inverse);
   border-radius: var(--radius-xl);
   color: var(--on-inverse);
-  padding: var(--space-md) 0.85vw;
+  padding: 0.45vw 0.85vw;
 }
 
 /* --- Phase tabs -------------------------------------------------------------- */
@@ -213,7 +220,7 @@
      reference's figure rather than at whatever the tallest phase happened to
      measure before the columns were corrected. */
   min-block-size: 39.7vw;
-  padding: var(--space-md) 0;
+  padding: 0.45vw 0;
 }
 
 @keyframes vis-detail-in {
@@ -435,7 +442,7 @@
   /* 3:2 rather than 16:11. The centre column's height is set by this canvas
      plus the filmstrip and the state rail below it; at 16:11 the stack came to
      649px against the reference's 610 for the whole region. */
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 8 / 5;
   display: grid;
   position: relative;
 }
