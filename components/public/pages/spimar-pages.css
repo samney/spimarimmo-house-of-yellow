@@ -340,3 +340,90 @@
   max-width: var(--measure-prose);
   margin-bottom: var(--space-lg);
 }
+
+/* ===== 404 boundary =====
+
+   `app/not-found.tsx` renders `.interimSurface`, which was styled nowhere.
+   Tailwind's preflight resets headings to `font-size: inherit`, so the page's
+   `h1` inherited body text and measured **10.8px at 1440** (A-02) — a heading
+   indistinguishable from a paragraph, on the one page a lost visitor reads.
+
+   It cannot use the site shell: importing the localized provider would opt the
+   whole route tree out of static generation, so this boundary is deliberately
+   self-contained (see the note in `not-found.tsx`). The anatomy is therefore
+   restated here rather than inherited — same eyebrow, title and lead ladder as
+   `.pageHeader`, so a 404 still reads as this product. */
+.interimSurface {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-2xl) var(--space-gutter);
+  background: var(--surface-page);
+  color: var(--on-surface);
+}
+
+.interimSurface__eyebrow {
+  margin-bottom: var(--space-sm);
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+}
+
+.interimSurface h1 {
+  max-width: 58vw;
+  margin: 0;
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.interimSurface p {
+  max-width: var(--measure-prose);
+  margin: var(--space-sm) 0 var(--space-md);
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  color: var(--on-surface-muted);
+}
+
+.interimSurface a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-pill);
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background var(--dur-micro) var(--ease-out-ref);
+}
+
+.interimSurface a:hover {
+  background: var(--action-primary-hover);
+}
+
+.interimSurface a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1080px) {
+  .interimSurface h1 {
+    max-width: 76vw;
+  }
+}
+
+@media (max-width: 580px) {
+  .interimSurface h1,
+  .interimSurface p {
+    max-width: none;
+  }
+}

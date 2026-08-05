@@ -20,12 +20,17 @@ import { MethodStage } from "./MethodStage";
    Deep linking: `?methodPhase=` is read once on mount (spec 04 URL-state
    requirement). It is applied through the same setter as every other input so
    scroll, click, keyboard and URL never own competing states. */
+/* When this section IS the page, its heading is the document's only heading
+   and must be an `h1` — A-02 measured five such routes rendering no `h1` at
+   all. Under the homepage hero it stays an `h2`. */
 export function MethodSection({
   initialPhase = "before",
   staticRender = false,
+  headingLevel = "h2",
 }: {
   initialPhase?: MethodPhaseId;
   staticRender?: boolean;
+  headingLevel?: "h1" | "h2";
 }) {
   const [activePhase, setActivePhase] = useState<MethodPhaseId>(initialPhase);
   const headingId = useId();
@@ -56,7 +61,11 @@ export function MethodSection({
       data-static={staticRender ? "true" : undefined}
       data-method-phase={activePhase}
     >
-      <MethodIntroduction content={METHOD_CONTENT} headingId={headingId} />
+      <MethodIntroduction
+        content={METHOD_CONTENT}
+        headingId={headingId}
+        headingLevel={headingLevel}
+      />
       <MethodStage
         content={METHOD_CONTENT}
         activePhase={activePhase}

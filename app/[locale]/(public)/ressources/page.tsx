@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
 import { Reveal } from "@/components/primitives/motion/Reveal";
@@ -10,6 +12,15 @@ import { Link } from "@/i18n/navigation";
    and routes the request through contact. Nothing is linked that does not
    exist. */
 const RESOURCES = ["r1", "r2", "r3", "r4", "r5"] as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return metadataFromNamespace({ namespace: "resourcesPage", path: "/ressources", locale });
+}
 
 export default async function Ressources({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

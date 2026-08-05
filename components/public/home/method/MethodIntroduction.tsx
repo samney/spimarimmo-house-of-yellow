@@ -21,9 +21,11 @@ import type { MethodSectionContent } from "./method-types";
 export function MethodIntroduction({
   content,
   headingId,
+  headingLevel: Heading = "h2",
 }: {
   content: MethodSectionContent;
   headingId: string;
+  headingLevel?: "h1" | "h2";
 }) {
   const { label, href } = content.globalCta;
   /* The heading breaks at its em dash, always — two lines at every viewport.
@@ -39,7 +41,7 @@ export function MethodIntroduction({
   return (
     <header className="methodIntro">
       <SectionEyebrow index={content.eyebrowIndex} label={content.eyebrowLabel} />
-      <h2 className="methodIntro__heading" id={headingId}>
+      <Heading className="methodIntro__heading" id={headingId}>
         {headingTail ? (
           <>
             {headingHead} {"\u2014"}
@@ -49,7 +51,7 @@ export function MethodIntroduction({
         ) : (
           content.heading
         )}
-      </h2>
+      </Heading>
       <p className="methodIntro__support">{content.description}</p>
       <span className="methodIntro__actions">
         <Link className="button methodIntro__cta" href={href} title={label}>

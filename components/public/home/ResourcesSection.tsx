@@ -18,6 +18,7 @@ import {
   QuestionIcon,
 } from "./resourcesIcons";
 import { CheckCircleIcon } from "./visibilityIcons";
+import type { SectionHeadingProps } from "./section-heading";
 
 /* Section 12 — Ressources exposants.
  *
@@ -51,7 +52,11 @@ const TOOLS: readonly { key: string; format: string; Icon: IconComponent }[] = [
 
 const FAQ_KEYS = ["choose", "proposal", "qualified", "leads"] as const;
 
-export function ResourcesSection() {
+/* When this section IS the page (`/exposer/visibilite` and friends), its
+   heading is the document's only heading and must be an `h1` — measured
+   A-02: five routes rendered no `h1` at all. On the homepage it stays an
+   `h2` under the hero, which is why this is a prop and not a change. */
+export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadingProps = {}) {
   const t = useTranslations("resources");
   const [open, setOpen] = useState<string | null>(null);
 
@@ -63,9 +68,9 @@ export function ResourcesSection() {
             <p className="resEyebrow">
               [ <span className="resEyebrowIndex">12</span> ] {t("eyebrow")}
             </p>
-            <h2 className="resTitle" id="res-title">
+            <Heading className="resTitle" id="res-title">
               {t("title")}
-            </h2>
+            </Heading>
             <p className="resLead">{t("lead")}</p>
           </header>
 

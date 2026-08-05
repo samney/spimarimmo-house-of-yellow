@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
 import { Reveal } from "@/components/primitives/motion/Reveal";
@@ -8,6 +10,15 @@ import { Link } from "@/i18n/navigation";
    article is fabricated — the index states honestly that the first articles
    are in preparation, and each will link to a salon, destination or offer. */
 const TERRITORIES = ["t1", "t2", "t3", "t4", "t5", "t6"] as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return metadataFromNamespace({ namespace: "insights", path: "/insights", locale });
+}
 
 export default async function Insights({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

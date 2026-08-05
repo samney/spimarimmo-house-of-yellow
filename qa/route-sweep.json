@@ -1,0 +1,674 @@
+[
+  {
+    "route": "/fr",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 165,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "home/hero",
+      "h1": "Le partenaire de référence des promoteurs immo",
+      "h1Count": 2,
+      "h1Size": 54,
+      "h1Weight": "600",
+      "h1Color": "rgb(244, 242, 237)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": false,
+      "words": 1489,
+      "lang": "fr",
+      "title": "SPIMARIMMO",
+      "h2Count": 9,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/salons",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Les destinations et les éditions.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 91,
+      "lang": "fr",
+      "title": "Salons — SPIMARIMMO",
+      "h2Count": 8,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/etudes-de-cas",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "La preuve par les résultats.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 68,
+      "lang": "fr",
+      "title": "Études de cas — SPIMARIMMO",
+      "h2Count": 7,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/exposer",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Une clientèle qualifiée, une présence internat",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 45,
+      "lang": "fr",
+      "title": "Exposer — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/exposer/methode",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 165,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "section-as-page",
+      "h1": "Avant, pendant et après le salon —rien n’est l",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(22, 24, 27)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": false,
+      "words": 164,
+      "lang": "fr",
+      "title": "Devenez exposant — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/exposer/offres",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "section-as-page",
+      "h1": "Choisissez votre niveau de présence, en toute ",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": false,
+      "eyebrowColor": null,
+      "hasLead": false,
+      "words": 124,
+      "lang": "fr",
+      "title": "Offres exposants — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/exposer/visibilite",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "section-as-page",
+      "h1": "Une présence amplifiée avant, pendant et après",
+      "h1Count": 1,
+      "h1Size": 41.4,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": false,
+      "words": 206,
+      "lang": "fr",
+      "title": "Votre visibilité — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/exposer/devenir-exposant",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "section-as-page",
+      "h1": "Choisissez votre niveau de présence, en toute ",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": false,
+      "eyebrowColor": null,
+      "hasLead": false,
+      "words": 124,
+      "lang": "fr",
+      "title": "Offres exposants — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/ressources",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Une bibliothèque utile pour la vente.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 120,
+      "lang": "fr",
+      "title": "Ressources — SPIMARIMMO",
+      "h2Count": 5,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/ressources/exposants",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "section-as-page",
+      "h1": "Préparez votre salon avec des informations uti",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": false,
+      "eyebrowColor": null,
+      "hasLead": false,
+      "words": 266,
+      "lang": "fr",
+      "title": "Ressources exposants — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/ressources/galerie",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Les éditions, vues de l’intérieur.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 143,
+      "lang": "fr",
+      "title": "Galerie — SPIMARIMMO",
+      "h2Count": 5,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/insights",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Le marché, la diaspora, l'investissement.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 95,
+      "lang": "fr",
+      "title": "Blog — SPIMARIMMO",
+      "h2Count": 1,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/faq",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Les dernières questions avant de réserver.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 93,
+      "lang": "fr",
+      "title": "FAQ exposants — SPIMARIMMO",
+      "h2Count": 7,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/contact",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Parlez à un conseiller SPIMARIMMO.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 45,
+      "lang": "fr",
+      "title": "Contact — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/pourquoi-spimar",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Le partenaire de référence des promoteurs immo",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 46,
+      "lang": "fr",
+      "title": "Pourquoi SPIMAR — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/visiteurs",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Trouvez le salon de votre ville, découvrez le ",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 43,
+      "lang": "fr",
+      "title": "Visiteurs — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/confidentialite",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Protection des données et politique de confide",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 40,
+      "lang": "fr",
+      "title": "Confidentialité — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/mentions-legales",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "Informations légales de SPIMARIMMO.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 35,
+      "lang": "fr",
+      "title": "Mentions légales — SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/fr/cette-page-nexiste-pas",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 404,
+    "structure": {
+      "template": "section-as-page",
+      "h1": "This page does not exist.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": false,
+      "eyebrowColor": null,
+      "hasLead": false,
+      "words": 19,
+      "lang": "en",
+      "title": "SPIMARIMMO",
+      "h2Count": 0,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/en/salons",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "The destinations and the editions.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 114,
+      "lang": "en",
+      "title": "Exhibitions — SPIMARIMMO",
+      "h2Count": 8,
+      "imagesNoAlt": 0
+    }
+  },
+  {
+    "route": "/en/faq",
+    "overflow": {
+      "390": 0,
+      "768": 0,
+      "1024": 0,
+      "1536": 0,
+      "1920": 0
+    },
+    "axe": {
+      "total": 0,
+      "serious": 0,
+      "ids": []
+    },
+    "status": 200,
+    "structure": {
+      "template": "PageHeader",
+      "h1": "The last questions before you book.",
+      "h1Count": 1,
+      "h1Size": 49.65,
+      "h1Weight": "600",
+      "h1Color": "rgb(20, 20, 15)",
+      "hasEyebrow": true,
+      "eyebrowColor": "rgb(122, 102, 0)",
+      "hasLead": true,
+      "words": 85,
+      "lang": "en",
+      "title": "Exhibitor FAQ — SPIMARIMMO",
+      "h2Count": 7,
+      "imagesNoAlt": 0
+    }
+  }
+]

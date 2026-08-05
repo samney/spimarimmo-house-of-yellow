@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { buildMetadata } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
@@ -10,6 +12,34 @@ import { getBackendSeams } from "@/lib/spimar/repositories";
 
    Server-rendered per request so publication state changes apply immediately. */
 export const dynamic = "force-dynamic";
+
+/* The detail pages are where per-item metadata actually earns its keep: an
+   edition's own name is what someone searches for and what a shared link should
+   read. Unpublished or unknown slugs get no metadata — the page 404s. */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: "salonsPage" });
+  const event = await getBackendSeams().content.getEvent({
+    siteId: "spimar",
+    locale: locale === "en" ? "en" : "fr",
+    slug,
+  });
+  if (!event || event.publicationState !== "published") return {};
+
+  /* Venue and dates are stated only when validated; otherwise the page's own
+     pending copy is the description, never an invented date. */
+  const place = event.venue ? `${event.venue.city} — ${event.venue.countryCode}` : t("venueTbc");
+  return buildMetadata({
+    label: event.name || slug,
+    description: `${place}. ${t("detailPending")}`,
+    path: `/salons/${slug}`,
+    locale,
+  });
+}
 
 export default async function SalonDetail({
   params,

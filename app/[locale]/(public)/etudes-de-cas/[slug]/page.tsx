@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { buildMetadata } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Play } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -10,6 +12,33 @@ import { getBackendSeams } from "@/lib/spimar/repositories";
    is a 404, never a leak. The video slot renders its honest pending state:
    no case video is published without validated media. */
 export const dynamic = "force-dynamic";
+
+/* Per-case metadata: the study's own title is the searchable thing. The
+   description reuses the published intro, so nothing is written here that an
+   editor has not already approved; a case with no intro falls back to the
+   listing's own lead rather than to an invented summary. */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: "caseStudies" });
+  const page = await getBackendSeams().content.getPage({
+    siteId: "spimar",
+    locale: locale === "en" ? "en" : "fr",
+    slug: `etudes/${slug}`,
+  });
+  if (!page || page.publicationState !== "published") return {};
+
+  const intro = String(page.sections[0]?.body.intro ?? "").trim();
+  return buildMetadata({
+    label: page.title || slug,
+    description: intro || t("lead"),
+    path: `/etudes-de-cas/${slug}`,
+    locale,
+  });
+}
 
 export default async function EtudeDeCas({
   params,

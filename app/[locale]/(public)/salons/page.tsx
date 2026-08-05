@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
 import { Reveal } from "@/components/primitives/motion/Reveal";
@@ -12,6 +14,15 @@ import { getBackendSeams } from "@/lib/spimar/repositories";
    Server-rendered per request so a CMS publish is visible immediately — the
    integration contract (publish -> public visibility) depends on it. */
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return metadataFromNamespace({ namespace: "salonsPage", path: "/salons", locale });
+}
 
 export default async function Salons({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
 import { Reveal } from "@/components/primitives/motion/Reveal";
@@ -9,6 +11,15 @@ import { Link } from "@/i18n/navigation";
    plainly that the detail is delivered during the commercial exchange.
    No figure, date or claim is invented. */
 const QUESTIONS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"] as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return metadataFromNamespace({ namespace: "faq", path: "/faq", locale });
+}
 
 export default async function Faq({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

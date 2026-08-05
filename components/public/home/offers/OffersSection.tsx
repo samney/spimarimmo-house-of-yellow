@@ -20,6 +20,7 @@ import {
   MedalIcon,
   PinIcon,
 } from "./offersIcons";
+import type { SectionHeadingProps } from "../section-heading";
 
 /* Section 10 — Offres exposants: the lead-generation wizard.
  *
@@ -105,7 +106,13 @@ const SELECT_CHOICES: Record<SelectField, readonly string[]> = {
   surface: ["compact", "medium", "large", "tbd"],
 };
 
-export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
+/* When this section IS the page, its heading is the document's only heading
+   and must be an `h1` — A-02 measured five such routes rendering no `h1` at
+   all. Under the homepage hero it stays an `h2`. */
+export function OffersSection({
+  detailHref,
+  headingLevel: Heading = "h2",
+}: { detailHref?: string } & SectionHeadingProps = {}) {
   const t = useTranslations("offers");
   const locale = useLocale();
   const pathname = usePathname();
@@ -238,9 +245,9 @@ export function OffersSection({ detailHref }: { detailHref?: string } = {}) {
             <p className="offEyebrow">
               [ <span className="offEyebrowIndex">10</span> ] {t("eyebrow")}
             </p>
-            <h2 className="offTitle" id="off-title" ref={titleRef} tabIndex={-1}>
+            <Heading className="offTitle" id="off-title" ref={titleRef} tabIndex={-1}>
               {t(`header.${headerKey}.title`)}
-            </h2>
+            </Heading>
             <p className="offLead">
               {headerKey === "request"
                 ? tierEntry
