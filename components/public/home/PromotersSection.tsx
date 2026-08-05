@@ -52,6 +52,21 @@ const PROMOTERS: readonly Promoter[] = [
    identical halves make the -50% translate loop seamless. */
 const HALF: readonly Promoter[] = [...PROMOTERS, ...PROMOTERS, ...PROMOTERS];
 
+/* The expanded grid is filled to 30 tiles by cycling the five marks (owner
+   direction, 2026-08-05, after the shortfall was raised).
+
+   This is placeholder density, not thirty partners: each of the five appears
+   six times, under its own name. Only five logo files exist — `public/
+   promoters/`, mirrored from `docs/assets-UX-UI/logoproof/`. Drop further
+   authorised files in and extend PROMOTERS, and the repetition disappears on
+   its own as the real marks take the slots. */
+const GRID_TILES = 30;
+
+const GRID: readonly (Promoter & { key: string })[] = Array.from({ length: GRID_TILES }, (_, i) => {
+  const promoter = PROMOTERS[i % PROMOTERS.length];
+  return { ...promoter, key: `${promoter.slug}-${i}` };
+});
+
 function LogoBandHalf({ clone }: { clone?: boolean }) {
   return (
     <span className="promoHalf" data-clone={clone ? "" : undefined}>
@@ -144,8 +159,8 @@ export function PromotersSection() {
           <div aria-hidden={!expanded} className="promoAll" id="promo-all">
             <div className="promoAllInner">
               <ul className="promoGrid">
-                {PROMOTERS.map((p) => (
-                  <li className="promoCard" key={p.slug}>
+                {GRID.map((p) => (
+                  <li className="promoCard" data-slug={p.slug} key={p.key}>
                     {/* The visible name labels the tile, so the mark is decorative. */}
                     <Image
                       alt=""

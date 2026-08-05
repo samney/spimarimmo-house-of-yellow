@@ -380,10 +380,16 @@
   block-size: 3.2vw;
 }
 
-.promoCard:nth-child(2) .promoCardMark,
-.promoCard:nth-child(5) .promoCardMark {
-  /* Saham and CGI: same squarish-mark compensation as in the band. */
+/* Saham and CGI: same squarish-mark compensation as in the band. Keyed to the
+   slug, not to nth-child — the grid cycles the marks, so a positional selector
+   would compensate whichever tile happened to land in slot 2 and 5. */
+.promoCard[data-slug="saham-immobilier"] .promoCardMark,
+.promoCard[data-slug="cgi"] .promoCardMark {
   block-size: 3.9vw;
+}
+
+.promoCard[data-slug="addoha"] .promoCardMark {
+  block-size: 2.8vw;
 }
 
 .promoCardName {
