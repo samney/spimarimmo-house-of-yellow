@@ -349,8 +349,6 @@
     "showAll": "Voir tous les promoteurs",
     "hideAll": "Masquer les promoteurs",
     "allLabel": "Tous les promoteurs partenaires",
-    "consent": "Logos affichés avec l’accord des promoteurs.",
-    "auto": "Défilement automatique",
     "pause": "Suspendre le défilement",
     "resume": "Reprendre le défilement"
   },
@@ -985,6 +983,8 @@
     "playVideo": "Voir la vidéo",
     "playerLabel": "Vidéo de présentation SPIMARIMMO",
     "closePlayer": "Fermer la vidéo",
-    "proofLabel": "Ils exposent avec SPIMARIMMO"
+    "proofLabel": "Ils exposent avec SPIMARIMMO",
+    "cursorPlay": "Voir",
+    "cursorVideo": "la vidéo"
   }
 }

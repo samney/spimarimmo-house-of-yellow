@@ -166,11 +166,6 @@ export function AboutWorkSection() {
               </div>
             </div>
           </div>
-          <div className="contentWrapper">
-            <p className="text smaller logoSection__consent">
-              Logos affichés avec l’accord des promoteurs.
-            </p>
-          </div>
           {/* The marquee is decorative and hidden from assistive tech, so the
               partners are also listed once in text. */}
           <ul className="sr-only">

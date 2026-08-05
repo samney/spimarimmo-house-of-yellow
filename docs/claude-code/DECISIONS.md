@@ -845,3 +845,33 @@ the same provider the header uses.
 
 **Still owner-blocked.** Real Instagram and LinkedIn URLs. Until they arrive the
 marks stay inert by design.
+
+## D-028 — 2026-08-05 — Hero: consent line removed, one boxed video cursor with a close state
+
+**Authority.** Repository-owner direction in session.
+
+**Decisions.**
+
+- **"Logos affichés avec l'accord des promoteurs" is removed** from all three
+  places it appeared: the hero proof strip, the `AboutWorkSection` logo band
+  and the section-08 band footer. "Défilement automatique" goes with it. The
+  rights statement lives in the partner agreements, not under the marks. The
+  orphaned `promoters.consent` and `promoters.auto` keys are dropped from both
+  locales and the dead CSS with them.
+- **One cursor, boxed, with a close state.** The hero drew its own gold pill on
+  hover while the site-wide `CustomCursor` already replicated the reference
+  behaviour — two competing pointer treatments on the same surface, and an
+  affordance no other video on the site had. The pill is gone; the stage now
+  carries `data-cursor="play"` and the player backdrop `data-cursor="close"`.
+  The expanded cursor is a rounded **box** rather than a circle, and the new
+  close state draws a cross in with two bars that scale from nothing, so the
+  player closes under the same affordance that opened it.
+
+**Defect fixed on the way.** The cursor's looping labels were hard-coded
+`"Play"` / `"Video"` — English copy, visible, on a French-first site. They now
+come from `hero.cursorPlay` / `hero.cursorVideo` in both locales, so the hero
+reads "VOIR / LA VIDÉO".
+
+**Unchanged.** The cursor is still pointer-only decoration, hidden for touch
+and reduced motion; the stage button keeps its `sr-only` label and the dialog
+keeps its focus trap, Escape handling and scroll lock.

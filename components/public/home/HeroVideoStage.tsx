@@ -1,17 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Play, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
 
-/* Hero media stage: the autoplaying muted background, a hover "play" cursor
-   box, and the modal player.
+/* Hero media stage: the autoplaying muted background and the modal player.
+
+   The hover affordance is the site-wide `CustomCursor` — `data-cursor="play"`
+   here, `data-cursor="close"` on the player backdrop — rather than a second
+   cursor of its own. Until 2026-08-05 this component drew its own gold pill,
+   which meant two competing pointer treatments on the same surface and an
+   affordance no other video on the site had.
 
    Accessibility: the stage is a real button (keyboard reachable, labelled);
    the dialog traps focus, closes on Escape and backdrop click, restores focus
-   to the trigger, and locks body scroll while open. The hover cursor box is
-   pointer-only decoration — the button is what carries the semantics. */
+   to the trigger, and locks body scroll while open. The cursor is pointer-only
+   decoration — the button is what carries the semantics. */
 export function HeroVideoStage({
   src,
   poster,
@@ -23,7 +28,6 @@ export function HeroVideoStage({
 }) {
   const t = useTranslations("hero");
   const [open, setOpen] = useState(false);
-  const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
 
@@ -77,12 +81,8 @@ export function HeroVideoStage({
         ref={triggerRef}
         aria-haspopup="dialog"
         className="heroStage"
+        data-cursor="play"
         onClick={() => setOpen(true)}
-        onMouseLeave={() => setCursor(null)}
-        onMouseMove={(event) => {
-          const box = event.currentTarget.getBoundingClientRect();
-          setCursor({ x: event.clientX - box.left, y: event.clientY - box.top });
-        }}
         type="button"
       >
         <ResilientVideo
@@ -94,22 +94,13 @@ export function HeroVideoStage({
           priority
         />
         <span className="heroScrim" aria-hidden="true" />
-        {cursor && (
-          <span
-            aria-hidden="true"
-            className="heroCursor"
-            style={{ transform: `translate3d(${cursor.x}px, ${cursor.y}px, 0)` }}
-          >
-            <Play className="heroCursorIcon" strokeWidth={2} />
-            <span className="heroCursorLabel">{t("playVideo")}</span>
-          </span>
-        )}
         <span className="sr-only">{t("playVideo")}</span>
       </button>
 
       {open && (
         <div
           className="heroModal"
+          data-cursor="close"
           onClick={(event) => {
             if (event.target === event.currentTarget) close();
           }}

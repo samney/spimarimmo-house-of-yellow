@@ -26,7 +26,6 @@ const PROOF_LOGOS: readonly { slug: string; name: string; width: number; height:
 
 export async function HeroSection() {
   const t = await getTranslations("hero");
-  const tp = await getTranslations("promoters");
 
   return (
     <section className="headerBigBlock noMargin scrollSection">
@@ -59,7 +58,6 @@ export async function HeroSection() {
               </li>
             ))}
           </ul>
-          <p className="heroProofConsent">{tp("consent")}</p>
         </div>
       </div>
     </section>

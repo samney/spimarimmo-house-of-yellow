@@ -3,15 +3,18 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { ShieldCheckIcon } from "./impactIcons";
 import { GridIcon, PauseIcon, PlayIcon, PlusThinIcon } from "./promotersIcons";
 
 /* Section 08 — Ils nous font confiance.
  *
  * Social proof strip from the approved section-08 design: gold eyebrow, bold
  * statement, an auto-scrolling logo band with a synced progress line and a
- * pause control, and a consent note under the band. The header action expands
- * the section downward into a grid naming every partner promoter.
+ * pause control. The header action expands the section downward into a grid
+ * naming every partner promoter.
+ *
+ * The consent note and the "défilement automatique" caption were removed on
+ * 2026-08-05 (owner direction); the rights statement lives in the partner
+ * agreements, not under the band.
  *
  * The whole section is one client island: the expand toggle lives in the
  * header row and the pause state spans the band and its controls, so there is
@@ -156,18 +159,6 @@ export function PromotersSection() {
               ))}
             </ul>
           </div>
-        </div>
-
-        {/* A div, not <footer>: shell.css styles the bare footer tag as the
-            fixed site footer, which this row must not inherit. */}
-        <div className="promoFoot">
-          <p className="promoConsent">
-            <span className="promoConsentBadge" aria-hidden="true">
-              <ShieldCheckIcon className="promoConsentIcon" />
-            </span>
-            {t("consent")}
-          </p>
-          <p className="promoAuto">{t("auto")}</p>
         </div>
       </div>
     </section>

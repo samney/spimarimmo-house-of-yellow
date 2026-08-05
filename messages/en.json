@@ -349,8 +349,6 @@
     "showAll": "View all developers",
     "hideAll": "Hide the developers",
     "allLabel": "All partner developers",
-    "consent": "Logos displayed with the developers’ consent.",
-    "auto": "Automatic scrolling",
     "pause": "Pause the scrolling",
     "resume": "Resume the scrolling"
   },
@@ -985,6 +983,8 @@
     "playVideo": "Watch the video",
     "playerLabel": "SPIMARIMMO presentation video",
     "closePlayer": "Close the video",
-    "proofLabel": "They exhibit with SPIMARIMMO"
+    "proofLabel": "They exhibit with SPIMARIMMO",
+    "cursorPlay": "Watch",
+    "cursorVideo": "the video"
   }
 }

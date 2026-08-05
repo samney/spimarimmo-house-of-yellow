@@ -323,43 +323,6 @@
 
 /* --- Consent footnote row --------------------------------------------------- */
 
-.promoFoot {
-  align-items: center;
-  display: flex;
-  gap: var(--space-md);
-  justify-content: space-between;
-  margin-top: var(--space-md);
-}
-
-.promoConsent {
-  align-items: center;
-  display: flex;
-  font-size: var(--text-support);
-  gap: var(--space-xs);
-  margin: 0;
-}
-
-.promoConsentBadge {
-  align-items: center;
-  border: 1px solid var(--action-primary);
-  border-radius: var(--radius-md);
-  color: var(--action-primary);
-  display: inline-flex;
-  justify-content: center;
-  padding: 0.3vw;
-}
-
-.promoConsentIcon {
-  height: 1.1vw;
-  width: 1.1vw;
-}
-
-.promoAuto {
-  color: var(--on-surface-muted);
-  font-size: var(--text-support);
-  margin: 0;
-}
-
 /* --- Reduced motion ---------------------------------------------------------
    Documented fallback: no auto-scroll at all. The band becomes a manually
    scrollable row (the clone half is removed so nothing repeats), and the
@@ -381,8 +344,7 @@
   }
 
   .promoProgress,
-  .promoPauseBtn,
-  .promoAuto {
+  .promoPauseBtn {
     display: none;
   }
 
@@ -460,20 +422,5 @@
   .promoCard:nth-child(2) .promoCardMark,
   .promoCard:nth-child(5) .promoCardMark {
     block-size: 11vw;
-  }
-
-  .promoFoot {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .promoConsentIcon {
-    height: 3.6vw;
-    width: 3.6vw;
-  }
-
-  .promoConsentBadge {
-    padding: 1vw;
   }
 }

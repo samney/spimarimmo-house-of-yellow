@@ -374,18 +374,55 @@ header.menuOpen .hamburgerIcon .bar:nth-child(3) {
   transition: opacity 0.3s;
 }
 .customCursor.statePlay,
-.customCursor.stateVideo {
+.customCursor.stateVideo,
+.customCursor.stateClose {
   width: 6.5vw;
   height: 6.5vw;
   margin: -3.25vw 0 0 -3.25vw;
 }
+/* Boxed, not round (owner direction, 2026-08-05). */
 .customCursor.statePlay .background,
-.customCursor.stateVideo .background {
-  border-radius: 50%;
+.customCursor.stateVideo .background,
+.customCursor.stateClose .background {
+  border-radius: 0.9vw;
 }
 .customCursor.statePlay .playCursor,
 .customCursor.stateVideo .playCursor {
   opacity: 1;
+}
+
+/* Close state: the same box, with a cross that draws itself in. */
+.customCursor .closeCursor {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.customCursor.stateClose .closeCursor {
+  opacity: 1;
+}
+.customCursor .closeBar {
+  position: absolute;
+  width: 2.2vw;
+  height: 0.13vw;
+  border-radius: 0.13vw;
+  background: var(--hoy-ink);
+  transform: rotate(45deg) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.34s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.customCursor .closeBar:last-child {
+  transform: rotate(-45deg) scaleX(0);
+}
+.customCursor.stateClose .closeBar {
+  transform: rotate(45deg) scaleX(1);
+}
+.customCursor.stateClose .closeBar:last-child {
+  transform: rotate(-45deg) scaleX(1);
+  transition-delay: 0.08s;
 }
 .customCursor .label {
   font-size: 0.75vw;
