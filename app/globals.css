@@ -1,4 +1,10 @@
 @import "tailwindcss";
+/* Lenis ships its own stylesheet and the engine assumes it: `html.lenis`
+   height handling, `overscroll-behavior: contain` for every
+   `[data-lenis-prevent]` region (the header's mobile menu is one), and the
+   iframe/stopped rules. SmoothScroll imported the engine but never this,
+   so those behaviours were running on assumption (F-01 §3). */
+@import "lenis/dist/lenis.css";
 @import "../components/public/global/shell.css";
 @import "../components/public/home/home.css";
 @import "../components/public/home/hero.css";

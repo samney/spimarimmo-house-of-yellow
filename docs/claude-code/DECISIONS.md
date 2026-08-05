@@ -920,3 +920,49 @@ ladder (measured bottom edge 4.95vw above 1080, 7.32vw at tablet, 15.6vw at
 section as the entire page body, so their opening is that section's own header
 by design. Converting them means editing `components/public/home/*`, which a
 parallel session is holding; left deliberately, not overlooked.
+
+## D-030 — 2026-08-05 — F-02: Lenis stylesheet wired, unported clone CSS retired
+
+**Authority.** Owner direction to restore the foundation
+(`ROUTES-PROGRAMME.md` Phase F), acting on the `F-01` inventory
+(`FOUNDATION-INVENTORY.md`).
+
+**Decisions.**
+
+- **Lenis's own stylesheet is now imported.** `SmoothScroll` imported the
+  engine and stamped `lenis lenis-smooth` onto `<html>`, but the library's CSS
+  was imported nowhere and nothing defined those classes. That sheet is not
+  decoration: it carries `html.lenis { height: auto }`,
+  `overscroll-behavior: contain` for every `[data-lenis-prevent]` region — the
+  header's mobile menu is one — and the iframe and stopped-scroll rules.
+  Verified after the change: the mobile menu now computes
+  `overscroll-behavior: contain`, `html` height is released from `h-full`, and
+  `scroll-behavior` is `auto` so native smoothing no longer fights the engine.
+- **The unported House of Yellow CSS is retired**, `pages.css` first:
+  2446 → 260 lines, 475 rules and 1126 declarations removed. Every one styled a
+  block no component produces — `.contactBlock`, `.cultureWorkBlock`,
+  `.howWeRollTextItemsBlock`, `.cookiesBlock`, `.instagramWrapper`,
+  `.sbi_photo`. Git history keeps them if a real port ever needs them.
+
+**Why retire rather than keep.** `F-01` measured 122 of 1155 styled classes as
+never produced by any component. Dead rules read exactly like shipped features:
+a session opening `pages.css` and finding `.contactBlock` reasonably concludes
+the contact page has a designed block, and builds against a ghost. That is the
+drift the owner asked this programme to prevent, and it is worth more than the
+option value of unported CSS.
+
+**How it was verified.** Not by eye. Screenshot comparison proved useless on
+`/exposer/visibilite`, where two identical runs differ by 99.8% — the page is
+28,669px tall and its scroll position is not reproducible. Computed style is
+scroll-independent, so 1683 elements across `/salons`, `/faq`, `/contact` and
+`/exposer/visibilite` were captured under both stylesheets and compared
+property by property. **Five differences, all of them the marquee's in-flight
+animation `transform`.** Nothing else changed. The other 16 routes were also
+pixel-identical on full-page screenshots.
+
+Independently, none of the 293 removed or trimmed selectors can match any class
+present in the `/exposer/visibilite` DOM — checked mechanically, not assumed.
+
+**Deliberately not done here.** `events.css` (136 dormant declarations) and
+`home.css` (113) are homepage files held by a parallel session. They are
+carried in `F-02` and will be pruned the same way once that session lands.

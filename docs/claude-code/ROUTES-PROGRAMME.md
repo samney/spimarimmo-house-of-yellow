@@ -64,14 +64,23 @@ These are the facts the plan rests on. Re-measure before contradicting them.
       `pages.css` alone.
 
       _Original scope:_ Diff what
-          `components/primitives/motion/` provides against what the reference
-          actually drove, and list every CSS rule that expects a runtime class
-          (`.inview`, `.scrollSection`, `setDarkCursor`, …). Output: one table of
-          _alive / dormant / retired_.
+                  `components/primitives/motion/` provides against what the reference
+                  actually drove, and list every CSS rule that expects a runtime class
+                  (`.inview`, `.scrollSection`, `setDarkCursor`, …). Output: one table of
+                  _alive / dormant / retired_.
 
-- [ ] **F-02 · Decide each dormant piece: rewire or retire.** Recorded in
+- [~] **F-02 · Decide each dormant piece: rewire or retire.** Recorded in
+  `DECISIONS.md` D-030. Done: Lenis stylesheet wired (its
+  `[data-lenis-prevent]` and height rules now apply); `pages.css` pruned
+  2446 → 260 lines, verified by computed style across 1683 elements.
+  Remaining: `events.css` (136) and `home.css` (113) are homepage files
+  held by a parallel session; `Inview` retires with `F-03`;
+  `.scrollSection` still to decide.
+
+      _Original scope:_ Recorded in
       `DECISIONS.md`. Retiring means deleting the CSS too — dead rules are how
       the next session hallucinates a feature that does not exist.
+
 - [ ] **F-03 · Rebuild scroll reveal on GSAP + ScrollTrigger.** Replace the
       `IntersectionObserver` + `.inview` class mechanism with the same
       `useGSAP` / `matchMedia` pattern §03 uses, so the site has **one** motion
@@ -119,11 +128,55 @@ These are the facts the plan rests on. Re-measure before contradicting them.
       route traced to validation, or marked pending.
 - [ ] **A-04 · Gap register.** One ranked list feeding Phase P.
 
+## Phase C — CMS-shaped demo content (owner direction, 2026-08-05)
+
+Pages cannot be judged, and layouts cannot be designed honestly, against empty
+slots. This phase fills every route with realistic text and imagery **in the
+exact shape the CMS will deliver**, so Phase P builds against real content and
+the eventual API swap changes nothing in the components.
+
+**It goes through the seam, never into the components.** `lib/spimar/types.ts`
+already models `Destination`, `SpimarEvent`, `Page`, `MediaAsset` and `Lead`
+with `Localized` (fr/en), `PublishState` and audit fields;
+`lib/spimar/repository.ts` reads and writes them as JSONL under `.data/` and is
+documented as swappable for a Supabase adapter "in this file alone". Demo
+content is a fixture set loaded through that same API — so it exercises the
+real shape, the real locale fallback and the real published/draft filter.
+
+**This scopes `D-021`, which says the repository ships no seeded content.**
+That rule exists to stop invented facts reaching visitors, and it still holds:
+the fixtures are demo, they are gated, and they are labelled. `F-02` records
+the scoping decision rather than letting the two rules silently contradict.
+
+- [ ] **C-01 · Fixture contract.** One typed fixture module per collection,
+      conforming to `lib/spimar/types.ts`. No component reads it directly.
+- [ ] **C-02 · Honesty gate.** One switch decides whether demo content is
+      served. Production without it falls back to today's honest pending
+      states; every card or page rendering demo values carries the `DÉMO`
+      marker already shipped on the salon cards (`b910b14`).
+- [ ] **C-03 · Text fixtures.** Destinations, editions, case studies, insight
+      articles, resources, FAQ entries — plausible French copy at realistic
+      lengths, including the awkward ones: longest title, empty summary,
+      missing date, single-item list.
+- [ ] **C-04 · Image fixtures.** Reuse owner-supplied assets already in
+      `public/` (`destinations/`, `gallery/`, `images/why-exhibit/`) mapped
+      through `MediaAsset`. No new photography, nothing hotlinked, and
+      `pnpm validate:media` still passes.
+- [ ] **C-05 · Empty and edge states.** Every listing gets a zero-result state,
+      a one-result state and a long-list state, so Phase P designs all three
+      rather than only the happy path.
+- [ ] **C-06 · EN parity.** Fixtures carry both locales so `/en` stops
+      rendering French (`N-05` depends on this).
+- [ ] **C-07 · Swap rehearsal.** Prove the components are source-agnostic by
+      pointing the repository at a second adapter and re-running the route
+      sweep with no component change.
+
 ## Phase P — Page by page
 
 Each page is one bounded item and follows the same five steps: **context →
 connections → design → build → verify**. No page starts before its predecessor
-is committed.
+is committed. Every page is built against the Phase C fixtures, so it is
+designed with real content in it and needs no rework when the API lands.
 
 - [ ] **P-01 · `/salons`** — listing. Filters by country and status, real card
       anatomy, empty and pending states, links to detail.
