@@ -4,41 +4,34 @@
    Golden viewport: 1536 × 1024 (3:2). Every measured value below was taken
    from the approved Phase 01 reference at that viewport.
 
-   Unit system: --method-u is one reference pixel (100vw / 1536), so rules read
-   in reference pixels while remaining fluid, matching the foundation's
-   vw-based regime. Colors are scoped custom properties sampled from the
+   Unit system: --method-u is one reference pixel of the 1486-wide stage grid,
+   so rules read in reference pixels while remaining fluid. It is derived from
+   the site's content column (95vw) and capped by viewport height — see the
+   token block below. Colors are scoped custom properties sampled from the
    approved references — the owner decision for Phase 01 forbids new global
    tokens, and the global --spimar-gold (#efc337) is untouched: the method
    section's restrained golds (#d79e3b flat CTA gold, #f2be38 small-label gold)
    are intentionally quieter than the site-wide accent. */
 
 .methodSection {
-  /* One reference pixel of the PAGE grid (100vw / 1536), capped by the height
-     the introduction leaves behind — the same fitting rule section 03 uses.
+  /* One reference pixel of the stage grid — the section's single unit.
 
-     The introduction is sized in raw vw off the L2 type steps, exactly like
-     every other section header, so it is NOT on this unit and cannot be
-     divided into the total. It measures ~21vw as laid out (measured: 322px at
-     1536, the same as section 03's header). What remains is the stage:
+     WIDTH. The approved composition is measured against a 1486-wide stage, and
+     that stage spans the site's own content column: the `.contentWrapper`
+     gutters of 2.5vw a side, so 95vw (owner direction, 2026-08-05 — sections
+     03 and 04 line up with section 01 "Pourquoi SPIMARIMMO"). Dividing the
+     column by 1486 is what keeps the whole interior — proportions, gaps,
+     overlaps — exactly as approved instead of re-laid out.
 
-       stage 712 stage-px = 688 page-px, plus a 26 page-px tail = 714
+     HEIGHT. Capped by what the introduction leaves behind. The introduction is
+     sized in raw vw off the L2 type steps, like every other section header, so
+     it is not on this unit and cannot be divided into the total; it measures
+     ~19.2vw as laid out. Below it sit the stage and its tail, 712 + 26 = 738.
 
-     so  --method-pu <= (98vh - 21vw) / 714
-
-     and the section always lands at ~98vh. The stage takes whatever height is
-     left rather than pushing a scrollbar, while the header type stays exactly
-     on the site ladder. */
-  --method-pu: min(0.06510417vw, calc((98vh - 21vw) / 714));
-
-  /* One reference pixel of the STAGE grid.
-
-     The approved composition is measured against a 1486-wide stage. The
-     owner's page rhythm (2026-08-05) insets this section to the same 50px
-     gutters as section 03, making the stage 1436 wide, so every interior
-     coordinate scales by that one ratio. The composition is preserved exactly
-     — proportions, gaps and overlaps all hold — instead of being re-laid out,
-     and every stage rule below keeps reading in --method-u unchanged. */
-  --method-u: calc(var(--method-pu) * 1436 / 1486);
+     At 1536 × 1024 the width term wins (0.982 against 0.988), so the column is
+     exactly the site's; on a shorter viewport the height term shrinks the
+     composition uniformly rather than pushing a scrollbar. */
+  --method-u: min(calc(95vw / 1486), calc((100vh - 19.2vw) / 738));
 
   /* Sampled palette (reference: notre-methode-01-avant.png). */
   --method-paper: #f4ece4; /* warm ivory canvas (page zone) */
@@ -62,16 +55,14 @@
 
   --method-stage-radius: calc(28 * var(--method-u));
 
-  /* The content column, sized in stage units and centred — the same shape as
-     section 03's `max-width: calc(1536 * var(--why-u))` inner.
+  /* The content column, sized in stage units and centred.
 
-     It must be measured in --method-u, not "viewport minus 50px gutters".
-     Those agree only while --method-u is exactly one pixel; the moment the
-     height cap engages, a viewport-derived width leaves the stage box wider
-     than the coordinate system its children are laid out in, the right-anchored
-     deliverables slide away from the left-anchored dossier, and the connector
-     SVG — stretched to the box — distorts non-uniformly. At the golden
-     viewport this resolves to 1436, so the gutters are still 50. */
+     It must be measured in --method-u, never as "viewport minus fixed
+     gutters". The two agree only while --method-u is exactly one pixel; the
+     moment the height cap engages, a viewport-derived width leaves the stage
+     box wider than the coordinate system its children are laid out in, the
+     right-anchored deliverables slide away from the left-anchored dossier, and
+     the connector SVG — stretched to the box — distorts non-uniformly. */
   --method-content-w: calc(1486 * var(--method-u));
 
   position: relative;
@@ -89,7 +80,7 @@
   position: relative;
   inline-size: var(--method-content-w);
   margin-inline: auto;
-  padding-block: calc(48 * var(--method-pu)) calc(28 * var(--method-pu));
+  padding-block: calc(48 * var(--method-u)) calc(28 * var(--method-u));
 }
 
 .methodIntro .sectionEyebrow {
@@ -97,15 +88,15 @@
 }
 
 /* The section-anatomy header from DESIGN-CONTRACT.md, identical to section 03
-   and to the shipped sections 05–13: 53px at weight 600, line-height 1.1, and
-   a balanced wrap at a 58vw measure so the sentence breaks over two lines.
-   This section previously set its own 47px/700 heading and a 17px lead, tuned
-   to its reference PNG — which is precisely why its hierarchy read as foreign
-   next to its neighbours. */
-/* 64vw rather than section 03's 58vw: this heading's em dash is bound to the
-   word before it (see MethodIntroduction), and "…après le salon —" needs the
-   extra measure to fit. At 58vw it wrapped to three lines, which broke both
-   the section's two-line silhouette and the 1024 fit. */
+   and the shipped sections 05–13: 53px at weight 600, line-height 1.1, wrapped
+   over two lines. This section previously set its own 47px/700 heading and a
+   17px lead, tuned to its reference PNG — which is precisely why its hierarchy
+   read as foreign next to its neighbours.
+
+   The measure is 64vw rather than section 03's 58vw because this heading's em
+   dash is bound to the word before it (see MethodIntroduction): at 58vw the
+   bound "…le salon —" pushed the wrap to three lines, breaking both the
+   two-line silhouette and the viewport fit. */
 .methodIntro__heading {
   max-width: 64vw;
   margin: 0.91vw 0 0;
@@ -131,7 +122,7 @@
    rule, so this is the same pill as every other primary action on the page. */
 .methodIntro__actions {
   position: absolute;
-  inset-block-start: calc(112 * var(--method-pu));
+  inset-block-start: calc(112 * var(--method-u));
   inset-inline-end: 0;
   display: block;
 }
@@ -144,7 +135,7 @@
      its children are placed in can never drift apart. */
   inline-size: var(--method-content-w);
   margin-inline: auto;
-  margin-block-end: calc(26 * var(--method-pu));
+  margin-block-end: calc(26 * var(--method-u));
   block-size: calc(712 * var(--method-u));
   border-radius: var(--method-stage-radius);
   background:
@@ -647,8 +638,7 @@
     /* Below the desktop regime the composition changes shape rather than
        shrinking, so both grids collapse to the same restated pixel and the
        viewport-height cap is dropped — the stage is auto-height here. */
-    --method-pu: 0.078125vw; /* 1 reference px at 1280 */
-    --method-u: 0.078125vw;
+    --method-u: 0.078125vw; /* 1 reference px at 1280 */
   }
 }
 @media (max-width: 1023px) {

@@ -712,3 +712,68 @@
 .sectionEyebrow .numIndex {
   font-variant-numeric: tabular-nums;
 }
+
+/* ====================================================== stacked sections */
+
+/* Sections 03 onward pile rather than scroll past one another: each member
+   pins to the top of the viewport and the next slides up and covers it, so the
+   page reads as a deck being dealt (owner direction, 2026-08-05).
+
+   Pure cover: the pinned member is never transformed, scaled or dimmed. That
+   is a deliberate choice, not an omission — nothing animates on the covered
+   layer, so the effect is carried entirely by scroll position and needs no
+   `prefers-reduced-motion` fallback beyond the browser's own scrolling. It
+   also keeps the pinned phase interactions inside sections 03 and 04 (their
+   tab rails and dossier crossfade) free of a competing transform.
+
+   Three requirements every member must meet, all of them silent failures:
+
+     1. no taller than the viewport, or its bottom is cut while it is pinned;
+     2. a fully opaque background, or the members beneath show through;
+     3. no `overflow: hidden/clip` on an ancestor, which disables sticky
+        outright — verified clear on html/body/main here.
+
+   Membership is therefore opt-in: a section joins the stack only once it has
+   been measured against (1). */
+.sectionStack > * {
+  position: sticky;
+  top: 0;
+}
+
+/* Paint order has to be explicit. Several members set their own `z-index` on
+   an inner wrapper, and equal-z siblings would otherwise resolve by paint
+   order in ways those inner values can disturb. Ascending values guarantee a
+   later section always covers an earlier one. */
+.sectionStack > :nth-child(1) {
+  z-index: 1;
+}
+.sectionStack > :nth-child(2) {
+  z-index: 2;
+}
+.sectionStack > :nth-child(3) {
+  z-index: 3;
+}
+.sectionStack > :nth-child(4) {
+  z-index: 4;
+}
+.sectionStack > :nth-child(5) {
+  z-index: 5;
+}
+.sectionStack > :nth-child(6) {
+  z-index: 6;
+}
+.sectionStack > :nth-child(7) {
+  z-index: 7;
+}
+.sectionStack > :nth-child(8) {
+  z-index: 8;
+}
+
+/* Below the desktop regime the members are recomposed and stack taller than
+   the viewport, so pinning them would cut content. `relative` rather than
+   `static`: the build's CSS optimizer drops initial-value declarations. */
+@media (max-width: 1023px) {
+  .sectionStack > * {
+    position: relative;
+  }
+}

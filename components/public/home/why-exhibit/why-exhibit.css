@@ -39,9 +39,12 @@
        --why-u <= (94vh - header) / 640,  header ~= 21vw as laid out above
 
      so the whole section always lands at ~94vh and is never cut off, while the
-     type never shrinks away from the site ladder. At the golden viewport the
-     width term wins and one reference px is exactly one pixel. */
-  --why-u: min(0.06510417vw, calc((94vh - 21vw) / 640));
+     type never shrinks away from the site ladder.
+
+     The width term is the site's content column (95vw) divided by the stage's
+     1436-wide grid, so at the golden viewport one reference px is 1.016px and
+     the column matches section 01 exactly. */
+  --why-u: min(calc(95vw / 1436), calc((94vh - 21vw) / 640));
 
   /* Type ladder — the L2 steps themselves, exactly as sections 05–13 use them
      (measured: h2 53px/600/1.1 at max-width 58vw with text-wrap balance, lead
@@ -120,12 +123,21 @@
   pointer-events: none;
 }
 
+/* The content column is the site's own — the `.contentWrapper` gutters of
+   2.5vw a side, so 95vw — which is what lines this section up with section 01
+   "Pourquoi SPIMARIMMO" and with section 04 (owner direction, 2026-08-05).
+
+   Expressed as a width in --why-u rather than as vw padding on purpose: the
+   stage's children are placed on a 1436-wide grid in that unit, so the column
+   and the coordinate system must scale together. Padding in raw vw would widen
+   the box without moving its contents, leaving the right-hand rail short of
+   the edge. */
 .whyExhibit__inner {
   position: relative;
   z-index: 1;
-  max-width: calc(1536 * var(--why-u));
+  inline-size: calc(1436 * var(--why-u));
   margin: 0 auto;
-  padding: 2.6vw calc(50 * var(--why-u)) calc(18 * var(--why-u));
+  padding: 2.6vw 0 calc(18 * var(--why-u));
 }
 
 /* ================================================================== header */

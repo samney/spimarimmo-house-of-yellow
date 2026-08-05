@@ -19,8 +19,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <HeroSection />
       <AboutWorkSection />
-      <ServicesSection />
-      <MethodSection />
+      {/* Sections 03 onward pile instead of scrolling past one another: each
+          pins to the top and the next slides over it (owner direction,
+          2026-08-05). The stack is opt-in per section because a member has to
+          be no taller than the viewport, or its bottom is cut while pinned.
+          03 and 04 are composed to the viewport and are in; 05–10 are being
+          measured one at a time and join as each is confirmed. */}
+      <div className="sectionStack">
+        <ServicesSection />
+        <MethodSection />
+      </div>
       <ImpactMetricsSection />
       <MreMarketSection />
       <VisibilitySection />
