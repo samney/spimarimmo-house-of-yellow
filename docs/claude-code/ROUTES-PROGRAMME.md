@@ -78,13 +78,13 @@ the pointer, so it stays skimmable.
 
 ## Phase A — Audit and map
 
-- [ ] **A-01 · Route map.** All 20 non-home routes: purpose, template, data
-      source, entry points, exits, and where each sits in the funnel.
-- [ ] **A-02 · Automated sweep.** Per route: Axe, horizontal overflow at
-      390/768/1024/1536/1920, header conformance, contrast, focus order, reduced-motion behaviour. Numbers, not impressions.
-- [ ] **A-03 · Content-honesty sweep.** Every figure, date and claim on every
-      route traced to validation, or marked pending.
-- [ ] **A-04 · Gap register.** One ranked list feeding Phase P.
+Complete. → [`ROUTE-AUDIT.md`](ROUTE-AUDIT.md), D-038. Instruments live in
+`qa/route-sweep.mjs` and `qa/honesty-sweep.mjs`; both self-check before running.
+
+- [x] **A-01 · Route map.** 21 routes, three templates: `PageHeader` (a real page), `section-as-page` (a homepage section served at its own URL, 5 routes), and the homepage itself.
+- [x] **A-02 · Automated sweep.** Axe **0 violations across all 21 routes**; header anatomy uniform at 49.65px/600; no overflow except `/fr` and `/fr/exposer/methode` at 1024. Three defects found and fixed in-phase: one shared `<title>` across every route, five routes with **no `h1`**, and a 404 whose heading rendered at 10.8px.
+- [x] **A-03 · Content-honesty sweep.** **0 unmarked figures or dates across 18 rendered routes** — the homepage's edition dates each sit in a card carrying a visible `Démo` badge. Verified by a detector that proves itself on ten fixtures before each run, after its first two versions were shown to be untrustworthy.
+- [x] **A-04 · Gap register.** Ten ranked gaps feeding Phases C and P; three belong to the parallel session and are flagged, not edited.
 
 ## Phase C — CMS-shaped demo content (owner direction, 2026-08-05)
 

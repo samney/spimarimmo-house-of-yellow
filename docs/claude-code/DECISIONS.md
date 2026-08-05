@@ -1273,3 +1273,48 @@ layer for the few genuinely repeating shapes.
 Deliberately **not** proposing a refactor of 39 card classes. The reference
 exists so a new section starts from the shared set instead of a blank
 stylesheet, which is the cheap half of the fix.
+
+## D-038 — The route audit, and two instruments that had to be repaired first
+
+**Date:** 2026-08-05 · **Scope:** `A-01`–`A-04` · **Status:** implemented
+
+21 routes measured against a production build. Results and the ranked gap
+register are in `ROUTE-AUDIT.md`; this records what the phase changed and what
+it taught.
+
+**Three defects were found by measurement and fixed in-phase.** Every route
+served the identical `<title>SPIMARIMMO</title>` — the app's only metadata
+export was the static one in the locale layout, so search results and shared
+links were indistinguishable; there are now 19 distinct titles plus canonical
+and hreflang, composed from copy that is already validated. Five routes rendered
+**no `h1` at all** — the ones that are a homepage section served at their own
+URL; sections now take an optional `headingLevel` so they stay `h2` under the
+homepage hero and become the document heading when they _are_ the document. And
+the 404's heading measured **10.8px**, because Tailwind's preflight resets
+headings to `inherit` and `.interimSurface` was styled nowhere.
+
+**Both instruments were wrong before they were right, and that is the finding
+worth keeping.**
+
+The first route sweep was void: I had rebuilt while a server still held
+`.next`, so the page's only stylesheet returned 500 and every `h1` measured at
+the browser default. It read as a coherent design defect — a plausible story
+about inconsistent title sizes — and it was an artefact of my own harness.
+
+The honesty sweep then reported 24 violations, every one false: it looked for a
+pending marker only in the same text node as the figure, while the salon cards
+put `Démo` in a badge several elements away. Corrected to check the enclosing
+card, it reported **zero** — and zero is exactly the result one must not trust.
+A self-test on ten fixtures immediately failed, because a trailing `\b` after
+`€` can never match: `€`, `%`, `$` and `m²` are non-word characters, so **every
+price in euros was invisible to the sweep**. Fixed, self-checked on every run.
+
+That is three times in two phases that a green result was green for the wrong
+reason. The rule already recorded in D-034 holds and is now the working
+practice: **a check is not evidence until it has been observed failing.**
+
+**The substantive good news** is that with sound instruments the site measures
+clean where it matters most: 0 Axe violations across all 21 routes, uniform
+header anatomy, and 0 unmarked figures or dates. The gaps that remain are
+absences — stubs, missing filters, French copy under `/en` — rather than
+incorrect claims, which is the cheaper class of problem to be left with.
