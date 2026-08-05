@@ -41,6 +41,7 @@ export function buildMetadata({
   label,
   description,
   path,
+  canonicalPath,
   locale,
 }: {
   /** Short page name. Becomes "<label> — SPIMARIMMO". */
@@ -49,6 +50,11 @@ export function buildMetadata({
   description: string;
   /** Locale-less route path, e.g. "/salons". */
   path: string;
+  /** When this route deliberately serves the same content as another, the
+      path that owns it. Two URLs with identical bodies compete with each other
+      in search; naming one as canonical is the honest resolution, and is
+      reversible if the routes are later differentiated. */
+  canonicalPath?: string;
   locale: string;
 }): Metadata {
   const languages = Object.fromEntries(
@@ -60,7 +66,7 @@ export function buildMetadata({
     title: `${name} — ${SITE}`,
     description,
     alternates: {
-      canonical: localised(path, locale),
+      canonical: localised(canonicalPath ?? path, locale),
       languages: { ...languages, "x-default": localised(path, routing.defaultLocale) },
     },
     openGraph: {

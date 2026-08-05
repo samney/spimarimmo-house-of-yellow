@@ -15,10 +15,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "offers" });
+  /* This route renders the same wizard as /exposer/offres. Until the two are
+     genuinely differentiated (owner IA decision, see ROUTE-AUDIT gap #4), the
+     catalogue URL owns the content and this one canonicalises to it rather
+     than competing with it for the same queries. */
   return buildMetadata({
     label: t("eyebrow"),
     description: t("header.choose.lead"),
     path: "/exposer/devenir-exposant",
+    canonicalPath: "/exposer/offres",
     locale,
   });
 }
