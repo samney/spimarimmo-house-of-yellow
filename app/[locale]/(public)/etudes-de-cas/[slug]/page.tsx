@@ -71,10 +71,21 @@ export default async function EtudeDeCas({
               </div>
             </div>
             <div className="colMain">
+              {/* Same back-path-before-the-title as the edition detail (P-02):
+                  one detail template, so a visitor who has seen one knows where
+                  the exit is on the other. */}
+              <nav className="detailCrumb" aria-label={t("breadcrumb")}>
+                <Link className="text medium" href="/etudes-de-cas">
+                  ← {t("backToList")}
+                </Link>
+              </nav>
               <header className="pageIntro">
-                <div className="label text medium">{t("detailLabel")}</div>
+                <div className="label text medium">
+                  {t("detailLabel")}
+                  {page.demo ? <span className="cardItem__demo">Démo</span> : null}
+                </div>
                 <SplitTitle as="h1" className="normalTitle" text={page.title || slug} />
-                {intro ? <p className="text medium">{intro}</p> : null}
+                {intro ? <p className="detailLead text medium">{intro}</p> : null}
               </header>
 
               <div className="caseVideoSlot" aria-label={t("videoPending")}>

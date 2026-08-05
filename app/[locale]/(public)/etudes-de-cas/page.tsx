@@ -46,23 +46,28 @@ export default async function EtudesDeCas({ params }: { params: Promise<{ locale
               {cases.length === 0 ? (
                 <p className="text medium">{t("empty")}</p>
               ) : (
-                <Reveal as="ul" className="spimarCardList" role="list">
-                  {cases.map((page) => {
-                    const intro = String(page.sections[0]?.body.intro ?? "");
-                    return (
-                      <li key={page.slug} className="cardItem">
-                        {page.demo ? <span className="cardItem__demo">Démo</span> : null}
-                        <span className="cardKicker text medium">{t("cardKicker")}</span>
-                        <h2 className="text medium">
-                          <Link href={`/etudes-de-cas/${page.slug.slice(PREFIX.length)}`}>
-                            {page.title || page.slug.slice(PREFIX.length)}
-                          </Link>
-                        </h2>
-                        {intro ? <span className="cardNote text medium">{intro}</span> : null}
-                      </li>
-                    );
-                  })}
-                </Reveal>
+                <>
+                  <p className="listCount text medium" aria-live="polite">
+                    {cases.length === 1 ? t("countOne") : t("countMany", { count: cases.length })}
+                  </p>
+                  <Reveal as="ul" className="spimarCardList" role="list">
+                    {cases.map((page) => {
+                      const intro = String(page.sections[0]?.body.intro ?? "");
+                      return (
+                        <li key={page.slug} className="cardItem">
+                          {page.demo ? <span className="cardItem__demo">Démo</span> : null}
+                          <span className="cardKicker text medium">{t("cardKicker")}</span>
+                          <h2 className="text medium">
+                            <Link href={`/etudes-de-cas/${page.slug.slice(PREFIX.length)}`}>
+                              {page.title || page.slug.slice(PREFIX.length)}
+                            </Link>
+                          </h2>
+                          {intro ? <span className="cardNote text medium">{intro}</span> : null}
+                        </li>
+                      );
+                    })}
+                  </Reveal>
+                </>
               )}
               <footer className="pageOutro">
                 <p className="text medium">

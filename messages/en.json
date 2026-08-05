@@ -1042,7 +1042,10 @@
     "videoPending": "This case study’s video is published after its rights and provenance are validated.",
     "backToList": "All case studies",
     "outro": "Your project deserves the same setup:",
-    "outroCta": "Become an exhibitor"
+    "outroCta": "Become an exhibitor",
+    "countOne": "1 published case study",
+    "countMany": "{count} published case studies",
+    "breadcrumb": "You are here"
   },
   "hero": {
     "eyebrow": "Property developers",
