@@ -56,11 +56,19 @@ These are the facts the plan rests on. Re-measure before contradicting them.
 
 ## Phase F — Restore the foundation (blocks everything else)
 
-- [ ] **F-01 · Inventory the clone's motion foundation.** Diff what
-      `components/primitives/motion/` provides against what the reference
-      actually drove, and list every CSS rule that expects a runtime class
-      (`.inview`, `.scrollSection`, `setDarkCursor`, …). Output: one table of
-      _alive / dormant / retired_.
+- [x] **F-01 · Inventory the clone's motion foundation.** →
+      [`FOUNDATION-INVENTORY.md`](FOUNDATION-INVENTORY.md). Found: the
+      `.inview` reveal is dormant (17 rules, 0 mounts) but hides nothing;
+      Lenis runs without its stylesheet; `.scrollSection` is inert; 122 of
+      1155 styled classes are never produced, 789 declarations of that in
+      `pages.css` alone.
+
+      _Original scope:_ Diff what
+          `components/primitives/motion/` provides against what the reference
+          actually drove, and list every CSS rule that expects a runtime class
+          (`.inview`, `.scrollSection`, `setDarkCursor`, …). Output: one table of
+          _alive / dormant / retired_.
+
 - [ ] **F-02 · Decide each dormant piece: rewire or retire.** Recorded in
       `DECISIONS.md`. Retiring means deleting the CSS too — dead rules are how
       the next session hallucinates a feature that does not exist.
