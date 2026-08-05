@@ -29,27 +29,38 @@
    buttons are the site's buttons. */
 
 .whyExhibit {
-  /* One reference pixel. Width-driven at the golden viewport, but capped by
-     viewport height so the whole section is always on screen at once instead of
-     being cut off on short or very wide displays: the composition is 954
-     reference px tall, so 0.098vh holds it at ~93.5% of any viewport height.
-     `data-hide-header` lets the section reclaim the viewport — that only pays
-     off if the section actually fits in it. */
-  --why-u: min(0.06510417vw, 0.098vh);
+  /* One reference pixel — the unit of the STAGE only.
 
-  /* Type ladder. Each step equals the site's own step at the golden viewport,
-     so this section reads on the same ladder as its neighbours, while staying
-     in --why-u so the viewport-fit cap above governs the type too.
-       display  = --text-h1        (3.75vw  = 57.6px @1536)
-       title    = method §04 phase title (33px)
-       lede     = method §04 support line (17px)
-       body     = 16px, one step under the lede
-       detail   = 15px */
-  --why-text-display: calc(57.6 * var(--why-u));
-  --why-text-title: calc(33 * var(--why-u));
-  --why-text-lede: calc(17 * var(--why-u));
-  --why-text-body: calc(16 * var(--why-u));
-  --why-text-detail: calc(15 * var(--why-u));
+     The header (eyebrow, title, lead) and the tab rail are sized in raw vw off
+     the L2 tokens, exactly like every other section, so this section's header
+     is the site's header at any viewport. The stage below it is a fixed-aspect
+     composition 640 reference px tall, and it takes whatever height is left:
+
+       --why-u <= (94vh - header) / 640,  header ~= 21vw as laid out above
+
+     so the whole section always lands at ~94vh and is never cut off, while the
+     type never shrinks away from the site ladder. At the golden viewport the
+     width term wins and one reference px is exactly one pixel. */
+  --why-u: min(0.06510417vw, calc((94vh - 21vw) / 640));
+
+  /* Type ladder — the L2 steps themselves, exactly as sections 05–13 use them
+     (measured: h2 53px/600/1.1 at max-width 58vw with text-wrap balance, lead
+     23px/400, body 13.4px). Each step is the token, capped by its --why-u
+     equivalent so a short viewport shrinks the type with the rest of the
+     composition instead of pushing the section off screen. On a normal display
+     the token always wins, so this section's type is the site's type.
+       numeral = --text-mega       (5.517vw = 84.7px @1536)
+       title   = --text-heading-sm (2.875vw = 44.2px) — benefit header
+       body    = --text-support    (0.875vw = 13.4px)
+       detail  = --text-base       (0.75vw  = 11.5px)
+
+     These four live inside the stage, so they are expressed in --why-u and
+     scale with it. The header steps above them (--text-heading-lg for the
+     section title, --text-small-title for the lead) are used raw. */
+  --why-text-numeral: calc(84.7 * var(--why-u));
+  --why-text-title: calc(44.2 * var(--why-u));
+  --why-text-body: calc(13.4 * var(--why-u));
+  --why-text-detail: calc(11.5 * var(--why-u));
 
   /* Editorial palette, sampled from 01-clientele-qualifiee.png. */
   --why-paper: #f7f0e9; /* warm page canvas */
@@ -114,7 +125,7 @@
   z-index: 1;
   max-width: calc(1536 * var(--why-u));
   margin: 0 auto;
-  padding: calc(40 * var(--why-u)) calc(50 * var(--why-u)) calc(18 * var(--why-u));
+  padding: 2.6vw calc(50 * var(--why-u)) calc(18 * var(--why-u));
 }
 
 /* ================================================================== header */
@@ -123,24 +134,27 @@
   margin: 0;
 }
 
-/* The reference sets this line at ~78px in a narrower grotesk. Poppins is
-   wider, so the size is tuned down until the headline holds the reference's
-   single line across the same 1436px measure. */
+/* The section-anatomy header from DESIGN-CONTRACT.md, matching the shipped
+   sections 05–13 measurement for measurement: 53px, weight 600, line-height
+   1.1, balanced wrap at a 58vw measure so it breaks over two lines. The
+   reference's full-width single line was the one thing in this section that
+   did not read as part of the product. */
 .whyExhibit__heading {
-  margin: calc(16 * var(--why-u)) 0 0;
-  font-size: var(--why-text-display);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.024em;
-  white-space: nowrap;
+  max-width: 58vw;
+  margin: 0.91vw 0 0;
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  text-wrap: balance;
 }
 
 .whyExhibit__subtitle {
-  max-width: calc(720 * var(--why-u));
-  margin: calc(16 * var(--why-u)) 0 0;
+  max-width: 50vw;
+  margin: 0.91vw 0 0;
   color: var(--why-ink-soft);
-  font-size: var(--why-text-lede);
-  line-height: 1.5;
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
 }
 
 /* ====================================================== tab rail (buttons) */
@@ -151,19 +165,19 @@
 .whyTabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: calc(6 * var(--why-u));
-  margin-top: calc(26 * var(--why-u));
+  gap: 0.39vw;
+  margin-top: 1.7vw;
 }
 
 .whyTab {
   position: relative;
   display: flex;
   align-items: center;
-  gap: calc(18 * var(--why-u));
-  min-height: calc(64 * var(--why-u));
-  padding: 0 calc(22 * var(--why-u));
+  gap: 1.17vw;
+  min-height: 4.17vw;
+  padding: 0 1.43vw;
   border: 1px solid rgb(184 120 30 / 30%);
-  border-radius: calc(14 * var(--why-u));
+  border-radius: 0.91vw;
   background: rgb(255 255 255 / 45%);
   box-shadow: var(--why-lift-1);
   color: var(--why-ink);
@@ -187,7 +201,7 @@
    the label is the read. */
 .whyTab__num {
   color: var(--why-gold-ink);
-  font-size: calc(20 * var(--why-u));
+  font-size: var(--text-small-title);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
@@ -195,9 +209,8 @@
 }
 
 .whyTab__label {
-  font-size: var(--why-text-detail);
+  font-size: var(--text-support);
   font-weight: 500;
-  letter-spacing: -0.005em;
 }
 
 .whyTab.is-active {
@@ -216,11 +229,11 @@
    below the track all move together, and aria-selected carries it. */
 .whyTab__dot {
   position: absolute;
-  bottom: calc(-6 * var(--why-u));
+  bottom: -0.39vw;
   left: 50%;
-  width: calc(12 * var(--why-u));
-  height: calc(12 * var(--why-u));
-  border: calc(2 * var(--why-u)) solid var(--why-paper);
+  width: 0.78vw;
+  height: 0.78vw;
+  border: 0.13vw solid var(--why-paper);
   border-radius: 50%;
   background: var(--why-gold);
   transform: translateX(-50%) scale(0);
@@ -241,7 +254,7 @@
 .whyStage {
   position: relative;
   height: calc(640 * var(--why-u));
-  margin-top: calc(22 * var(--why-u));
+  margin-top: 1.43vw;
 }
 
 /* ------------------------------------------------ copy column (left, 35%) */
@@ -251,29 +264,30 @@
   top: calc(24 * var(--why-u));
   left: 0;
   z-index: 3;
-  width: calc(462 * var(--why-u));
+  /* Exactly the 35% share of the stage, to the left rail's edge. */
+  width: calc(500 * var(--why-u));
 }
 
 .whyCopy__number {
   margin: 0;
   color: var(--why-gold);
-  font-size: calc(92 * var(--why-u));
+  font-size: var(--why-text-numeral);
   font-weight: 700;
   line-height: 0.86;
   letter-spacing: -0.03em;
 }
 
 .whyCopy__title {
-  margin: calc(22 * var(--why-u)) 0 0;
+  margin: calc(20 * var(--why-u)) 0 0;
   font-size: var(--why-text-title);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.022em;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
 }
 
 .whyCopy__body {
-  max-width: calc(404 * var(--why-u));
-  margin: calc(22 * var(--why-u)) 0 0;
+  max-width: calc(400 * var(--why-u));
+  margin: calc(20 * var(--why-u)) 0 0;
   color: var(--why-ink-soft);
   font-size: var(--why-text-body);
   line-height: 1.6;
@@ -586,7 +600,7 @@
 /* ------------------------------------------------------------- card: form */
 
 .whyForm {
-  gap: calc(10 * var(--why-u));
+  gap: calc(8 * var(--why-u));
 }
 
 .whyForm__caption {
@@ -640,7 +654,10 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(8 * var(--why-u));
+  gap: calc(6 * var(--why-u));
+  /* Without this the four rows keep their intrinsic height, the column
+     overflows and the submit rides the panel's bottom border. */
+  min-height: 0;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -650,7 +667,7 @@
   display: flex;
   flex: 1;
   align-items: center;
-  min-height: calc(24 * var(--why-u));
+  min-height: calc(16 * var(--why-u));
   padding: 0 calc(9 * var(--why-u));
   border: 1px solid #e4ded3;
   border-radius: calc(7 * var(--why-u));
@@ -666,9 +683,10 @@
 /* Depicted submit control: same fill as the site's primary action. */
 .whyForm__submit {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  height: calc(28 * var(--why-u));
+  height: calc(26 * var(--why-u));
   border-radius: calc(7 * var(--why-u));
   background: var(--action-primary);
   box-shadow: var(--why-lift-1);
@@ -1457,7 +1475,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: calc(6 * var(--why-u));
+  gap: calc(5 * var(--why-u));
+  min-height: 0;
   margin: 0;
   padding: 0 0 0 calc(15 * var(--why-u));
   list-style: none;
@@ -1497,7 +1516,7 @@
   flex: 1;
   align-items: center;
   gap: calc(8 * var(--why-u));
-  padding: calc(8 * var(--why-u)) calc(9 * var(--why-u));
+  padding: calc(6 * var(--why-u)) calc(9 * var(--why-u));
   border-radius: calc(9 * var(--why-u));
   background: var(--why-screen-row);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
@@ -1508,16 +1527,16 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: calc(28 * var(--why-u));
-  height: calc(28 * var(--why-u));
+  width: calc(25 * var(--why-u));
+  height: calc(25 * var(--why-u));
   border-radius: 50%;
   background: #cfcabf;
   color: #4b4a47;
 }
 
 .whyQualify__avatar svg {
-  width: calc(16 * var(--why-u));
-  height: calc(16 * var(--why-u));
+  width: calc(14 * var(--why-u));
+  height: calc(14 * var(--why-u));
 }
 
 .whyQualify__text {
@@ -1550,7 +1569,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: calc(4 * var(--why-u));
-  height: calc(30 * var(--why-u));
+  height: calc(26 * var(--why-u));
 }
 
 .whyQualify__thumb {
@@ -1859,7 +1878,7 @@
   flex-direction: column;
   gap: calc(3 * var(--why-u));
   justify-content: center;
-  width: calc(78 * var(--why-u));
+  width: calc(70 * var(--why-u));
   height: calc(30 * var(--why-u));
   padding: calc(4 * var(--why-u));
   overflow: hidden;
@@ -1869,6 +1888,14 @@
 
 .whyDeliver__sheet .whySceneBar {
   background: #b9b4ab;
+}
+
+/* The sheet is a fixed thumbnail: its bars share the space rather than
+   stacking past the edge. */
+.whyDeliver__sheet .whySceneBars {
+  gap: calc(2 * var(--why-u));
+  min-height: 0;
+  overflow: hidden;
 }
 
 .whyDeliver__sheet--paper.is-cols-2 {
@@ -1898,8 +1925,9 @@
 }
 
 .whyDeliver__chart {
-  width: calc(42 * var(--why-u));
-  height: calc(24 * var(--why-u));
+  flex-shrink: 0;
+  width: calc(34 * var(--why-u));
+  height: calc(22 * var(--why-u));
 }
 
 .whyDeliver__chart rect {

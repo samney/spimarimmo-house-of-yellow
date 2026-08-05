@@ -766,6 +766,45 @@ frame by frame: cards start at scale 0.5 on the device centre, overshoot at
   1920×1080 and 2560×1440, with no horizontal overflow at any of them. A
   section marked `data-hide-header` only earns that treatment if it fits.
 
+**Correction, same day — the header is the site's header.**
+
+The first pass at "consistency" invented its own ladder and capped every step
+by the stage unit, which made the type shrink away from the rest of the site on
+any screen wider than the golden viewport. Measured against the shipped
+sections, section 03's header was the outlier: 57.6px/700 on one nowrap line
+with a 17px lead, against 53px/600 over two balanced lines with a 23px lead in
+`promoSection`, `proofSection`, `galSection` and `offTeaser`.
+
+Fixed by splitting the two concerns that were fighting each other:
+
+- The **header and the tab rail** are sized in raw vw off the L2 tokens —
+  `--text-heading-lg` / 600 / 1.1 / `text-wrap: balance` at a 58vw measure,
+  lead `--text-small-title` / 400. Measured after the change, section 03's
+  header is byte-for-byte the same as `promoSection`, `proofSection` and
+  `galSection` at every viewport (53px→66.2px→88.3px across 1536/1920/2560).
+- The **stage** keeps `--why-u`, now
+  `min(0.06510417vw, calc((94vh - 21vw) / 640))`: the header takes its natural
+  height and the fixed-aspect stage takes what is left, so the section lands at
+  ~98% of the viewport and is never cut off, while the type never leaves the
+  ladder. At the golden viewport the width term wins and one reference px is
+  exactly one pixel, so reference geometry is unchanged.
+- Stage-internal type stays in `--why-u` because it belongs to the composition:
+  numeral `--text-mega`, benefit title `--text-heading-sm`, body
+  `--text-support`, proof `--text-base` — the L2 steps, scaled with the stage.
+
+**Card and device audit.** Three real defects were found and fixed: the
+Formulaire card's submit rode the panel's bottom border (the four input rows
+kept their intrinsic height and pushed it out — they now shrink), the
+qualification scene overflowed its screen by 8px, and the deliverable sheets
+overflowed their thumbnail box. An automated pass now checks every card and
+device descendant for vertical/horizontal overflow, for children breaking out
+of a card's padding box, and for clipped text: 4 states × 5 viewports
+(1280×900, 1366×768, 1536×1024, 1920×1080, 2560×1440) report zero issues.
+
+**Note.** Section 04 (`methodSection`) is also off the shipped header pattern
+at 47px/700 with a 17px lead. It is left as-is here — that is its own slice —
+but it should be reconciled.
+
 **Open.** The mobile floor for the copy CTA (44px target, 12px label) is scoped
 to this section rather than fixed in `.button` globally — the global rule's
 `line-height: 4.167vw` collapses to ~16px at 390 for every section that uses it.

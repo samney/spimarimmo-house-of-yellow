@@ -29,8 +29,8 @@ function Sheet({ sheet }: { sheet: SupportSheet }) {
       className={`whyDeliver__sheet whyDeliver__sheet--paper is-cols-${sheet.columns}`}
       aria-hidden="true"
     >
-      <SceneBars widths={[100, 82, 94, 70, 88]} />
-      {sheet.columns === 2 && <SceneBars widths={[100, 76, 92, 84, 66]} />}
+      <SceneBars widths={[100, 82, 70]} />
+      {sheet.columns === 2 && <SceneBars widths={[100, 76, 84]} />}
     </span>
   );
 }
