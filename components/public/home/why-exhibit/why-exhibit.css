@@ -43,8 +43,13 @@
 
      The width term is the site's content column (95vw) divided by the stage's
      1436-wide grid, so at the golden viewport one reference px is 1.016px and
-     the column matches section 01 exactly. */
-  --why-u: min(calc(95vw / 1436), calc((94vh - 21vw) / 640));
+     the column matches section 01 exactly.
+
+     The height budget is 96vh rather than 94: at 94 the height term resolved to
+     exactly 1.0 and won the `min`, which pinned the column back to 1436 and
+     left this section visibly narrower than section 01. 96vh lets the width
+     term win at the golden viewport while the section still lands ~1012px. */
+  --why-u: min(calc(95vw / 1436), calc((96vh - 21vw) / 640));
 
   /* Type ladder — the L2 steps themselves, exactly as sections 05–13 use them
      (measured: h2 53px/600/1.1 at max-width 58vw with text-wrap balance, lead

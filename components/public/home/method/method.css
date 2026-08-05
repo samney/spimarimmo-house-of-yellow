@@ -76,11 +76,26 @@
 /* The introduction shares the stage's content column, so their gutters line up
    at every viewport rather than only at the golden one. Its vertical rhythm
    and its type stay on the page grid / the L2 steps. */
+/* Two columns: the text block, and the action beside it rather than stacked
+   under it (owner direction, 2026-08-05). The action spans every text row and
+   centres against them, so it reads as a peer of the header instead of a
+   trailing item — and it stays put whether the heading wraps to two lines or
+   three, unlike the hard-coded top-right offset this replaces. */
 .methodIntro {
   position: relative;
   inline-size: var(--method-content-w);
   margin-inline: auto;
-  padding-block: calc(48 * var(--method-u)) calc(28 * var(--method-u));
+  padding-block: calc(28 * var(--method-u)) calc(18 * var(--method-u));
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 4vw;
+}
+
+.methodIntro .sectionEyebrow,
+.methodIntro__heading,
+.methodIntro__support {
+  grid-column: 1;
 }
 
 .methodIntro .sectionEyebrow {
@@ -99,7 +114,7 @@
    two-line silhouette and the viewport fit. */
 .methodIntro__heading {
   max-width: 64vw;
-  margin: 0.91vw 0 0;
+  margin: 0.5vw 0 0;
   font-size: var(--text-heading-lg);
   font-weight: 600;
   line-height: 1.1;
@@ -110,20 +125,21 @@
 
 .methodIntro__support {
   max-width: 50vw;
-  margin: 0.91vw 0 0;
+  margin: 0.6vw 0 0;
   font-size: var(--text-small-title);
   font-weight: 400;
   line-height: 1.2;
   color: #43423f;
 }
 
-/* The action is the repository's `.button`; only its placement is section
-   local. Fill, ink, radius, label anatomy and hover all come from the global
-   rule, so this is the same pill as every other primary action on the page. */
+/* The action occupies the second column, spanning the text rows so it sits
+   beside the header rather than after it. The pill itself is the repository's
+   `.button`: fill, ink, radius, label anatomy and hover all come from the
+   global rule. */
 .methodIntro__actions {
-  position: absolute;
-  inset-block-start: calc(112 * var(--method-u));
-  inset-inline-end: 0;
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: center;
   display: block;
 }
 
@@ -135,7 +151,7 @@
      its children are placed in can never drift apart. */
   inline-size: var(--method-content-w);
   margin-inline: auto;
-  margin-block-end: calc(26 * var(--method-u));
+  margin-block-end: calc(8 * var(--method-u));
   block-size: calc(712 * var(--method-u));
   border-radius: var(--method-stage-radius);
   background:
@@ -342,13 +358,30 @@
   margin-block-start: calc(35 * var(--method-u));
 }
 
-/* The repository's `.button.outline`, re-inked for the obsidian stage. The
-   global variant draws itself in --hoy-ink for paper surfaces, which is
-   invisible here; geometry, label anatomy and hover behaviour are untouched,
-   so it stays the same control as everywhere else on the site. */
+/* The repository's `.button.outline`, re-inked for the obsidian stage and
+   re-based onto the stage unit.
+
+   The global pill sizes itself in raw vw (--text-base, 2.8125vw line-height,
+   1.25vw padding). That is right for a button on the page, but this one lives
+   inside a fixed-grid composition, and measured across the desktop range it
+   fell from 11.5px/43px tall at 1536 to 8.25px/31px at 1100 — illegible, below
+   any sane touch target, and out of proportion with the chips right above it.
+   In --method-u it holds its proportion to the stage at every width.
+
+   `nowrap` because the pill's height comes from its line-height: a label that
+   wrapped would overflow its own background rather than grow it. The three
+   labels measure 211–248 against a 314 column, so none wraps today; this keeps
+   a longer future label from breaking the shape silently. */
 .methodCopy__cta.outline {
   color: var(--method-ivory);
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 38%);
+}
+.methodCopy__cta {
+  padding-inline: calc(24 * var(--method-u));
+  font-size: calc(14 * var(--method-u));
+  line-height: calc(46 * var(--method-u));
+  border-radius: calc(23 * var(--method-u));
+  white-space: nowrap;
 }
 .methodCopy__cta.outline:hover,
 .methodCopy__cta.outline:focus-visible {
@@ -645,9 +678,16 @@
   /* The desktop content column is 1486 stage units wide, which below the
      desktop regime resolves to ~116vw. Both blocks take the viewport back.
      Non-initial values throughout: `auto` would be stripped as an initial. */
+  /* One column below the desktop regime: there is no room to set the action
+     beside the header, so it returns to the flow under the lead. */
   .methodIntro {
     inline-size: 100%;
+    grid-template-columns: 1fr;
     padding: 6vw 5vw 4vw;
+  }
+  .methodIntro__actions {
+    grid-column: 1;
+    grid-row: auto;
   }
   /* Only the desktop measures are dropped. The sizes stay on the L2 steps,
      which carry their own 580px restatement, so the header keeps tracking the
@@ -656,13 +696,7 @@
   .methodIntro__support {
     max-width: none;
   }
-  /* Only the placement is unpinned; the pill's own type and geometry stay with
-     the global `.button` rule. `relative` rather than `static` because the
-     optimizer strips initial-value declarations (see the journey steps). */
   .methodIntro__actions {
-    position: relative;
-    inset-block-start: 0;
-    inset-inline-end: 0;
     margin-block-start: 4vw;
   }
   .methodStage {
