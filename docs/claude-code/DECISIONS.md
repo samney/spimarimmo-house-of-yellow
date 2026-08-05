@@ -1080,3 +1080,39 @@ same selector in the same file. An infinite animation is where it matters most,
 because there is no natural end for a kill-switch to land on. The guard found
 `.promoProgressLine` on its first run — the class of defect was invisible to
 review precisely because the global rule makes every animation _look_ handled.
+
+## D-033 — `motion-tokens.ts` is the single source, enforced
+
+**Date:** 2026-08-05 · **Scope:** `F-06` · **Status:** implemented
+
+The tokens existed but nothing obliged anyone to use them, so the primitives
+still carried their own numbers: `0.9`, `"power2.out"`, `0.012`, `"top 85%"`,
+`2`, `"power1.out"`, `0.25`, `1.2`. A vocabulary that half the code ignores is
+documentation, not a system.
+
+Every role is now named — `DUR` (micro, follow, fade, reveal, stage, count,
+scroll), `STAGGER`, `EASE`, `TRIGGER`, `REVEAL_SHIFT` — and all six primitives
+were migrated onto it. The migration is a **pure symbol substitution**: every
+value is byte-identical to what it replaced, so nothing about the site's feel
+changed. That matters because `SplitTitle` is shared with homepage sections
+held by another branch; verified afterwards in a production build — 37
+characters split, 0 stranded, Lenis active, cursor mounted.
+
+Two additions were judgement calls worth recording:
+
+- **`TRIGGER`** names the ScrollTrigger `start` positions. Without it, reveals
+  drift onto slightly different lines across the site — `top 85%` here, `top
+88%` there — which reads as sloppiness rather than as a decision. `block` is
+  the ordinary case; `late` is deliberately later, for things that should not
+  be half-finished by the time they are readable.
+- **`DUR.scroll`** is Lenis's scroll-easing constant, not a tween duration. It
+  is documented as such rather than silently filed beside `reveal`, because
+  treating them as interchangeable is how someone eventually "harmonises" the
+  page's scroll feel with a card's fade.
+
+**Enforced, not merely intended.** A test fails on any hard-coded `duration:`,
+`ease:` or `start:` inside `primitives/motion/`. It caught Lenis's bare `1.2`
+on its first run — a value that had been sitting in plain sight through every
+previous read of that file. The rule is scoped to the primitives, which are the
+shared layer every section inherits; section-level choreography legitimately
+composes its own timings _from_ these roles, and is not policed.

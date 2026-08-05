@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
+import { DUR, EASE, STAGGER, TRIGGER } from "./motion-tokens";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -42,10 +43,10 @@ export function SplitTitle({
       gsap.set(split.chars, { yPercent: 110 });
       gsap.to(split.chars, {
         yPercent: 0,
-        duration: 0.9,
-        ease: "power2.out",
-        stagger: 0.012,
-        scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        duration: DUR.stage,
+        ease: EASE.out,
+        stagger: STAGGER.dense,
+        scrollTrigger: { trigger: el, start: TRIGGER.block, once: true },
       });
       return () => split.revert();
     },

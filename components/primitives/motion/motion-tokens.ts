@@ -12,12 +12,23 @@
 export const DUR = {
   /** Micro-interaction: hover, focus, small state flips. `--dur-micro`. */
   micro: 0.2,
+  /** Continuous pointer tracking — the lag that makes a follower feel weighted
+      rather than glued. Short enough not to read as latency. */
+  follow: 0.25,
   /** Cross-fade between two states. `--dur-fade`. */
   fade: 0.3,
   /** Entrance of a block or a card. `--dur-reveal`. */
   reveal: 0.45,
   /** A composed set piece: the device rising, a title landing. */
   stage: 0.9,
+  /** A value counting up to its real figure. Long on purpose — the number has
+      to be legible while it moves, not just when it lands. */
+  count: 2,
+  /** Not a tween: Lenis's scroll-easing time constant, how long the page keeps
+      travelling after the wheel stops. Verbatim from the reference. It lives
+      here so it is a named decision rather than a bare 1.2 in the engine
+      setup, but it is not interchangeable with the tween durations above. */
+  scroll: 1.2,
 } as const;
 
 export const STAGGER = {
@@ -34,6 +45,20 @@ export const EASE = {
   stage: "power3.out",
   /** Overshoot, used only where an object is thrown into place. */
   throw: "back.out(1.25)",
+  /** A value settling onto its figure: gentler than `out`, so the last digits
+      are readable instead of snapping. */
+  count: "power1.out",
+} as const;
+
+/** Where a scroll-driven animation begins, in ScrollTrigger's `start` syntax.
+    Naming these keeps the site's reveals landing on the same line rather than
+    each component picking its own percentage. */
+export const TRIGGER = {
+  /** A block entering — starts while it is still below the fold. */
+  block: "top 85%",
+  /** Deliberately later, for things that should not be half-finished by the
+      time they are readable (a figure counting up). */
+  late: "top 90%",
 } as const;
 
 /** Distance a revealed block travels, in viewport width units, per the

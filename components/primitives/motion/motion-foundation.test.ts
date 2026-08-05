@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { DUR, EASE, STAGGER } from "./motion-tokens";
+import { DUR, EASE, STAGGER, TRIGGER } from "./motion-tokens";
 
 /* Foundation guards (F-07).
 
@@ -204,5 +204,42 @@ describe("every looping animation states its own reduced-motion rest state", () 
     }
 
     expect(offenders).toEqual([]);
+  });
+});
+
+describe("the primitives take their numbers from the vocabulary", () => {
+  /* F-06. `motion-tokens.ts` is only a single source if nothing beside it
+     invents its own duration or easing. The primitives are the shared layer —
+     every section inherits their feel — so they are held to it strictly. This
+     does not police section choreography, which legitimately composes its own
+     timings from these roles. */
+  const dir = join(ROOT, "components", "primitives", "motion");
+  const files = readdirSync(dir).filter((f) => f.endsWith(".tsx"));
+
+  it("hard-codes no gsap duration or ease outside motion-tokens.ts", () => {
+    const offenders: string[] = [];
+
+    for (const file of files) {
+      const src = readFileSync(join(dir, file), "utf8");
+      for (const [, value] of src.matchAll(/\bduration:\s*([0-9.]+)/g)) {
+        offenders.push(`${file}: duration: ${value} — name it in motion-tokens.ts`);
+      }
+      for (const [, value] of src.matchAll(/\bease:\s*"([^"]+)"/g)) {
+        offenders.push(`${file}: ease: "${value}" — name it in motion-tokens.ts`);
+      }
+      /* ScrollTrigger start strings are part of the vocabulary too: without
+         this, reveals drift onto slightly different lines across the site. */
+      for (const [, value] of src.matchAll(/\bstart:\s*"([^"]+)"/g)) {
+        offenders.push(`${file}: start: "${value}" — use TRIGGER`);
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
+
+  it("keeps TRIGGER values in ScrollTrigger's start syntax", () => {
+    for (const value of Object.values(TRIGGER)) {
+      expect(value).toMatch(/^(top|center|bottom|\d+%)\s+(top|center|bottom|\d+%)$/);
+    }
   });
 });

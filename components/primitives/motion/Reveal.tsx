@@ -4,7 +4,7 @@ import { useRef, type ElementType, type ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { DUR, EASE, REVEAL_SHIFT, STAGGER } from "./motion-tokens";
+import { DUR, EASE, REVEAL_SHIFT, STAGGER, TRIGGER } from "./motion-tokens";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,7 +35,7 @@ export function Reveal({
   className,
   children,
   /** Viewport position at which the block begins revealing. */
-  start = "top 85%",
+  start = TRIGGER.block,
   /** Seconds between siblings. */
   stagger = STAGGER.step,
   ...rest

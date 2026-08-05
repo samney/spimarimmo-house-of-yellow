@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import { Marquee } from "@/components/primitives/motion/Marquee";
+import { DUR, EASE } from "./motion-tokens";
 
 /* Custom cursor replicating the reference: a small gold mark following the
    pointer, expanding into a rounded BOX over video surfaces
@@ -28,8 +29,8 @@ export function CustomCursor() {
     if (!window.matchMedia("(pointer: fine)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const xTo = gsap.quickTo(el, "x", { duration: 0.25, ease: "power2.out" });
-    const yTo = gsap.quickTo(el, "y", { duration: 0.25, ease: "power2.out" });
+    const xTo = gsap.quickTo(el, "x", { duration: DUR.follow, ease: EASE.out });
+    const yTo = gsap.quickTo(el, "y", { duration: DUR.follow, ease: EASE.out });
 
     const move = (e: MouseEvent) => {
       el.classList.remove("hidden");

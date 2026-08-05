@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { DUR, EASE, TRIGGER } from "./motion-tokens";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,9 +33,9 @@ export function Counter({
       const obj = { n: 0 };
       gsap.to(obj, {
         n: value,
-        duration: 2,
-        ease: "power1.out",
-        scrollTrigger: { trigger: el, start: "top 90%", once: true },
+        duration: DUR.count,
+        ease: EASE.count,
+        scrollTrigger: { trigger: el, start: TRIGGER.late, once: true },
         onUpdate: () => {
           el.textContent = prefix + fmt(obj.n);
         },
