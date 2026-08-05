@@ -7,6 +7,9 @@ import { FileCmsRepository, FileCrmRepository } from "./file-admin-repository";
 import { PgSqlClient } from "./pg-sql-client";
 import { PostgresContentRepository } from "./postgres-content-repository";
 import { PostgresSubmissionRepository } from "./postgres-submission-repository";
+import { PostgresAcquisitionRepository } from "./postgres-acquisition-repository";
+import { FileAcquisitionRepository } from "./file-acquisition-repository";
+import type { AcquisitionRepository } from "@/lib/backend/acquisition-seams";
 
 /* Composition root for the backend seams.
 
@@ -78,12 +81,40 @@ export function getAdminSeams(): AdminSeams {
   return cachedAdmin;
 }
 
+let cachedAcquisition: AcquisitionRepository | null = null;
+
+/**
+ * The public funnel's write path (Wave 3).
+ *
+ * Unlike the console seams, this one HAS a database implementation, so a
+ * configured deployment gets the canonical acquisition contract
+ * (`acquire_lead_edge_v1` plus the assignment and follow-up task the SQL
+ * leaves to its caller) and an unconfigured one gets the development store
+ * with the same semantics.
+ */
+export function getAcquisitionRepository(): AcquisitionRepository {
+  if (cachedAcquisition) return cachedAcquisition;
+
+  if (hasDatabase()) {
+    const sql = new PgSqlClient(process.env.SUPABASE_DATABASE_URL as string);
+    // The acquisition functions take the site SLUG, not its uuid.
+    const siteSlug = process.env.SPIMAR_SITE_SLUG ?? "reference-foundation";
+    cachedAcquisition = new PostgresAcquisitionRepository(sql, siteSlug);
+    return cachedAcquisition;
+  }
+
+  cachedAcquisition = new FileAcquisitionRepository();
+  return cachedAcquisition;
+}
+
 export {
   FileContentRepository,
   FileSubmissionRepository,
   FileCmsRepository,
   FileCrmRepository,
+  FileAcquisitionRepository,
   PostgresContentRepository,
   PostgresSubmissionRepository,
+  PostgresAcquisitionRepository,
   PgSqlClient,
 };

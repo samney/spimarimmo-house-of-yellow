@@ -27,6 +27,7 @@ import type {
   Page,
   SpimarEvent,
 } from "@/lib/spimar/types";
+import type { AcquisitionAttribution } from "./acquisition-seams";
 
 export interface ListOptions {
   /** Include drafts. Requires an authorized caller; the public never sets it. */
@@ -91,6 +92,41 @@ export interface CrmRepository {
     patch: Partial<Pick<Lead, "stage" | "assignee">>,
     activity: { by: string; kind: LeadActivity["kind"]; detail: string },
   ): Promise<Lead | null>;
+
+  /**
+   * The acquisition records behind a lead, newest first. Empty for a lead that
+   * predates the acquisition path — an honest empty list, not a fabricated
+   * submission.
+   */
+  listAcquisitions(leadId: string): Promise<readonly LeadAcquisitionRecord[]>;
+}
+
+/**
+ * What the acquisition transaction recorded alongside a lead: the consent
+ * decisions, the attribution captured at submission time, the assignment and
+ * the follow-up task. The console reads it to answer the questions blueprint
+ * 03 §5 requires of every lead.
+ */
+export interface LeadAcquisitionRecord {
+  readonly reference: string;
+  readonly submittedAt: string;
+  readonly disposition: string;
+  readonly formKey: string;
+  readonly formVersion: number | null;
+  readonly noticeVersion: string;
+  readonly consents: readonly {
+    readonly consentDefinitionId: string;
+    readonly purpose: string;
+    readonly granted: boolean;
+  }[];
+  readonly attribution: AcquisitionAttribution;
+  readonly assignment: { readonly queueKey: string; readonly owner: string | null };
+  readonly followUpTask: {
+    readonly id: string;
+    readonly title: string;
+    readonly dueAt: string;
+    readonly completedAt: string | null;
+  };
 }
 
 export interface AdminSeams {

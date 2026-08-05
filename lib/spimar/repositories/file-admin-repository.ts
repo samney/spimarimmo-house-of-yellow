@@ -3,6 +3,7 @@ import type {
   CmsRepository,
   ContentCollection,
   CrmRepository,
+  LeadAcquisitionRecord,
   LeadCreateInput,
   ListOptions,
 } from "@/lib/backend/admin-seams";
@@ -76,5 +77,32 @@ export class FileCrmRepository implements CrmRepository {
     activity: { by: string; kind: Lead["activity"][number]["kind"]; detail: string },
   ): Promise<Lead | null> {
     return store.updateLead(id, patch, activity);
+  }
+
+  async listAcquisitions(leadId: string): Promise<readonly LeadAcquisitionRecord[]> {
+    const tasks = store.listOpenTasks();
+    return store
+      .listAcquisitionsForLead(leadId)
+      .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
+      .map((record) => ({
+        reference: record.reference,
+        submittedAt: record.submittedAt,
+        disposition: record.disposition,
+        formKey: record.formKey,
+        formVersion: record.formVersion,
+        noticeVersion: record.noticeVersion,
+        consents: record.consents,
+        attribution: record.attribution,
+        assignment: record.assignment,
+        followUpTask: {
+          ...record.followUpTask,
+          // The stored copy is a snapshot from submission time; completion is
+          // read from the live task so a closed follow-up is not shown as open.
+          completedAt:
+            tasks.find((t) => t.id === record.followUpTask.id) === undefined
+              ? record.followUpTask.completedAt
+              : null,
+        },
+      }));
   }
 }

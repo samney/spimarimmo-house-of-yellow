@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import { requirePermission } from "@/lib/admin/session";
 import { isAssignedScopeOnly } from "@/lib/admin/permissions";
@@ -22,8 +23,11 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
   if (denied) return <PermissionState permission="crm.read_assigned" />;
 
   const { id } = await params;
-  const lead = await getAdminSeams().crm.getLead(id);
+  const { crm } = getAdminSeams();
+  const lead = await crm.getLead(id);
   if (!lead) notFound();
+  const acquisitions = await crm.listAcquisitions(id);
+  const latest = acquisitions[0];
 
   // An assigned-scope actor may not read a lead owned by someone else. The
   // refusal is explicit rather than a 404, which would be a different claim.
@@ -82,8 +86,63 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
               <dd>
                 <span className="mono">{lead.createdAt.slice(0, 16).replace("T", " ")}</span>
               </dd>
+              {latest ? (
+                <>
+                  <dt>Formulaire</dt>
+                  <dd>
+                    {latest.formKey}
+                    {latest.formVersion !== null ? ` · version ${latest.formVersion}` : ""}
+                  </dd>
+                  <dt>Référence</dt>
+                  <dd>
+                    <span className="mono">{latest.reference}</span>
+                  </dd>
+                  <dt>Campagne</dt>
+                  <dd>{latest.attribution.campaign || "—"}</dd>
+                  <dt>Support</dt>
+                  <dd>
+                    {[latest.attribution.source, latest.attribution.medium]
+                      .filter(Boolean)
+                      .join(" / ") || "—"}
+                  </dd>
+                </>
+              ) : null}
             </dl>
+            {acquisitions.length > 1 ? (
+              <p className="field__hint" style={{ marginBlockStart: 12 }}>
+                {acquisitions.length} soumissions rattachées à ce lead. Les demandes répétées sont
+                liées au même dossier plutôt que dupliquées.
+              </p>
+            ) : null}
           </section>
+
+          {latest ? (
+            <section className="card" aria-labelledby="followup-heading">
+              <h2 id="followup-heading" className="card__label">
+                Suivi
+              </h2>
+              <dl className="facts" style={{ marginBlockStart: 12 }}>
+                <dt>File</dt>
+                <dd>{latest.assignment.queueKey}</dd>
+                <dt>Action</dt>
+                <dd>{latest.followUpTask.title}</dd>
+                <dt>Échéance</dt>
+                <dd>
+                  <span className="mono">
+                    {latest.followUpTask.dueAt.slice(0, 16).replace("T", " ")}
+                  </span>
+                </dd>
+                <dt>État</dt>
+                <dd>
+                  {latest.followUpTask.completedAt ? (
+                    <StatusBadge tone="success">Terminée</StatusBadge>
+                  ) : (
+                    <StatusBadge tone="gold">À faire</StatusBadge>
+                  )}
+                </dd>
+              </dl>
+            </section>
+          ) : null}
 
           <section className="card" aria-labelledby="consent-heading">
             <h2 id="consent-heading" className="card__label">
@@ -101,6 +160,24 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
                   : "Aucun consentement enregistré pour cette soumission."}
               </span>
             </div>
+            {latest ? (
+              <dl className="facts" style={{ marginBlockStart: 16 }}>
+                {latest.consents.map((consent) => (
+                  <Fragment key={consent.consentDefinitionId}>
+                    <dt>{consent.purpose}</dt>
+                    <dd>
+                      <StatusBadge tone={consent.granted ? "success" : "danger"}>
+                        {consent.granted ? "accordé" : "refusé"}
+                      </StatusBadge>
+                    </dd>
+                  </Fragment>
+                ))}
+                <dt>Version de la notice</dt>
+                <dd>
+                  <span className="mono">{latest.noticeVersion}</span>
+                </dd>
+              </dl>
+            ) : null}
           </section>
 
           <section className="card" aria-labelledby="contact-heading">

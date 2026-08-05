@@ -6,7 +6,9 @@ import { pathToFileURL } from "node:url";
 import type { SqlClient } from "./sql-client";
 import { PostgresContentRepository } from "./postgres-content-repository";
 import { PostgresSubmissionRepository } from "./postgres-submission-repository";
+import { PostgresAcquisitionRepository } from "./postgres-acquisition-repository";
 import { describeContentContract, describeSubmissionContract } from "./contract-suites";
+import { describeAcquisitionContract } from "./acquisition-contract";
 
 /* Database-adapter contract run.
 
@@ -54,8 +56,13 @@ class PgliteSqlClient implements SqlClient {
 let db: PgliteDb;
 let client: SqlClient;
 
-/** Filled during fixture setup; the shared submission suite reads it lazily. */
+/** Filled during fixture setup; the shared suites read these lazily. */
 const submissionDefaults: Record<string, unknown> = {};
+const acquisitionDefaults: Record<string, unknown> = {};
+
+/** The seed provisions exactly one site, and the acquisition functions key on
+    its slug rather than its uuid. */
+const SITE_SLUG = "reference-foundation";
 
 async function importRuntime(relativePath: string): Promise<Record<string, unknown>> {
   try {
@@ -133,6 +140,10 @@ beforeAll(async () => {
   );
   const consentDefId = String(consentDef.rows[0].id);
   submissionDefaults.consents = [{ consentDefinitionId: consentDefId, granted: true }];
+  acquisitionDefaults.consents = [
+    { consentDefinitionId: consentDefId, purpose: "lead_follow_up", granted: true },
+  ];
+  acquisitionDefaults.siteId = SITE_ID;
 
   const form = await db.query(
     `insert into public.form_definitions
@@ -321,6 +332,15 @@ describeSubmissionContract(
 describeContentContract(
   "PostgresContentRepository (PGlite)",
   () => new PostgresContentRepository(client, SITE_ID),
+);
+
+/* The acquisition adapter runs the same describes as the file store, against
+   the real acquire_lead_edge_v1 contract plus the assignment and follow-up
+   task it leaves to its caller (ADR-A5). */
+describeAcquisitionContract(
+  "PostgresAcquisitionRepository (PGlite)",
+  () => new PostgresAcquisitionRepository(client, SITE_SLUG),
+  acquisitionDefaults,
 );
 
 /* --- schema-specific assertions ------------------------------------------- */

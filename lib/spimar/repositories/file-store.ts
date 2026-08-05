@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import type { Destination, Lead, MediaAsset, Page, PublishState, SpimarEvent } from "../types";
+import type { AcquisitionAttribution } from "@/lib/backend/acquisition-seams";
 
 /* File-backed store engine.
 
@@ -22,7 +23,8 @@ function dataDir(): string {
   return process.env.SPIMAR_DATA_DIR ?? path.join(process.cwd(), ".data");
 }
 
-type Collection = "destinations" | "events" | "pages" | "media" | "leads";
+type Collection =
+  "destinations" | "events" | "pages" | "media" | "leads" | "acquisitions" | "tasks";
 
 function file(collection: Collection): string {
   return path.join(dataDir(), `spimar-${collection}.jsonl`);
@@ -260,3 +262,150 @@ export function updateLead(
 }
 
 type LeadActivityKind = "note" | "stage" | "assignment";
+
+/* ----------------------------------------------------------- acquisition
+
+   Records the public funnel writes. Kept beside the leads rather than inside
+   them because a submission is evidence in its own right: a deduplicated
+   enquiry produces no new lead but must still leave a record that it happened.
+   The canonical schema models these as form_submissions, consents,
+   campaign_attribution, lead_assignments and tasks; this is their local
+   equivalent. */
+
+export type StoredAssignment = { queueKey: string; owner: string | null };
+
+export type StoredTask = {
+  id: string;
+  leadId: string;
+  title: string;
+  dueAt: string;
+  queueKey: string;
+  createdAt: string;
+  completedAt: string | null;
+};
+
+export type StoredAcquisition = {
+  id: string;
+  idempotencyKey: string;
+  reference: string;
+  leadId: string;
+  submittedAt: string;
+  disposition: string;
+  formKey: string;
+  formVersion: number | null;
+  noticeVersion: string;
+  consents: { consentDefinitionId: string; purpose: string; granted: boolean }[];
+  /* The seam's own type rather than a loose record: an interface with optional
+     members is not assignable to an index signature, and widening it here
+     would let a typo in an attribution key pass silently. */
+  attribution: AcquisitionAttribution;
+  assignment: StoredAssignment;
+  followUpTask: StoredTask;
+};
+
+export function findAcquisitionByIdempotencyKey(key: string): StoredAcquisition | null {
+  return readAll<StoredAcquisition>("acquisitions").find((a) => a.idempotencyKey === key) ?? null;
+}
+
+export function findAcquisitionByReference(reference: string): StoredAcquisition | null {
+  return readAll<StoredAcquisition>("acquisitions").find((a) => a.reference === reference) ?? null;
+}
+
+export function listAcquisitionsForLead(leadId: string): StoredAcquisition[] {
+  return readAll<StoredAcquisition>("acquisitions").filter((a) => a.leadId === leadId);
+}
+
+export function recordAcquisition(input: Omit<StoredAcquisition, "id">): StoredAcquisition {
+  const record: StoredAcquisition = { ...input, id: newId() };
+  const rows = readAll<StoredAcquisition>("acquisitions");
+  rows.push(record);
+  writeAll("acquisitions", rows);
+  return record;
+}
+
+export function findLeadByDedupeKey(dedupeKey: string): Lead | null {
+  return readAll<Lead>("leads").find((l) => l.dedupeKey === dedupeKey) ?? null;
+}
+
+/** Creates the lead an acquisition produced, with its own dedupe key. */
+export function createAcquiredLead(input: {
+  dedupeKey: string;
+  kind: Lead["kind"];
+  name: string;
+  email: string;
+  organisation: string;
+  organisationKey: string;
+  message: string;
+  locale: Lead["locale"];
+  sourcePath: string;
+  cta: string;
+  eventSlug: string;
+  consent: boolean;
+}): string {
+  const record: Lead = {
+    id: newId(),
+    createdAt: now(),
+    updatedAt: now(),
+    kind: input.kind,
+    name: input.name,
+    email: input.email,
+    organisation: input.organisation,
+    message: input.message,
+    locale: input.locale,
+    sourcePath: input.sourcePath,
+    cta: input.cta,
+    eventSlug: input.eventSlug,
+    consent: input.consent,
+    stage: "new",
+    assignee: "",
+    activity: [
+      {
+        at: now(),
+        by: "système",
+        kind: "note",
+        detail: "Lead créé depuis le formulaire public.",
+      },
+    ],
+    dedupeKey: input.dedupeKey,
+  };
+  const rows = readAll<Lead>("leads");
+  rows.push(record);
+  writeAll("leads", rows);
+  return record.id;
+}
+
+export function createFollowUpTask(input: {
+  leadId: string;
+  title: string;
+  dueAt: string;
+  queueKey: string;
+}): StoredTask {
+  const record: StoredTask = {
+    id: newId(),
+    leadId: input.leadId,
+    title: input.title,
+    dueAt: input.dueAt,
+    queueKey: input.queueKey,
+    createdAt: now(),
+    completedAt: null,
+  };
+  const rows = readAll<StoredTask>("tasks");
+  rows.push(record);
+  writeAll("tasks", rows);
+  return record;
+}
+
+export function listOpenTasks(): StoredTask[] {
+  return readAll<StoredTask>("tasks")
+    .filter((t) => t.completedAt === null)
+    .sort((a, b) => a.dueAt.localeCompare(b.dueAt));
+}
+
+export function completeTask(id: string): StoredTask | null {
+  const rows = readAll<StoredTask>("tasks");
+  const index = rows.findIndex((t) => t.id === id);
+  if (index < 0) return null;
+  rows[index] = { ...rows[index], completedAt: now() };
+  writeAll("tasks", rows);
+  return rows[index];
+}

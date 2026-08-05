@@ -31,36 +31,78 @@ to Wave 3); route conflict resolved by ADR-A1; role mismatch resolved by ADR-A4.
 
 ## WAVE 1 — DESIGN SYSTEM
 
-| ID                                                   | Status |
-| ---------------------------------------------------- | ------ |
-| ADM-010 SPIMAR semantic color tokens                 | TODO   |
-| ADM-011 Admin surface and elevation tokens           | TODO   |
-| ADM-012 Admin typography and numeric system          | TODO   |
-| ADM-013 Spacing, grid and radius tokens              | TODO   |
-| ADM-014 Buttons and icon buttons                     | TODO   |
-| ADM-015 Inputs, select, textarea and validation      | TODO   |
-| ADM-016 Checkbox, radio, switch, segmented controls  | TODO   |
-| ADM-017 Badge and status system                      | TODO   |
-| ADM-018 Tooltip, popover and command items           | TODO   |
-| ADM-019 Dialog, drawer and confirmation patterns     | TODO   |
-| ADM-020 Tables and entity rows                       | TODO   |
-| ADM-021 Cards, metrics and chart containers          | TODO   |
-| ADM-022 Skeleton, empty, error and permission states | TODO   |
-| ADM-023 RTL and reduced-motion foundations           | TODO   |
-| ADM-024 Component laboratory / documentation         | TODO   |
-| ADM-025 Visual regression baseline                   | TODO   |
+Token layer: `styles/tokens/admin.css`. Components: `styles/admin/control.css`
+plus `components/admin/**`. Evidence: `qa/control/*.png`.
+
+| ID                                                   | Status                                                |
+| ---------------------------------------------------- | ----------------------------------------------------- |
+| ADM-010 SPIMAR semantic color tokens                 | VERIFIED                                              |
+| ADM-011 Admin surface and elevation tokens           | VERIFIED                                              |
+| ADM-012 Admin typography and numeric system          | VERIFIED                                              |
+| ADM-013 Spacing, grid and radius tokens              | VERIFIED                                              |
+| ADM-014 Buttons and icon buttons                     | VERIFIED                                              |
+| ADM-015 Inputs, select, textarea and validation      | VERIFIED                                              |
+| ADM-016 Checkbox and segmented controls              | DONE — radio/switch not yet needed by a screen        |
+| ADM-017 Badge and status system                      | VERIFIED                                              |
+| ADM-018 Tooltip, popover and command items           | TODO — arrives with ADM-034                           |
+| ADM-019 Dialog, drawer and confirmation patterns     | TODO — arrives with ADM-077                           |
+| ADM-020 Tables and entity rows                       | VERIFIED — incl. mobile card transformation           |
+| ADM-021 Cards, metrics and chart containers          | DONE — charts not yet required                        |
+| ADM-022 Skeleton, empty, error and permission states | VERIFIED                                              |
+| ADM-023 RTL and reduced-motion foundations           | VERIFIED — RTL asserted in `control-evidence.spec.ts` |
+| ADM-024 Component laboratory / documentation         | TODO                                                  |
+| ADM-025 Visual regression baseline                   | DONE — captures committed; diffing not yet wired      |
 
 ## WAVE 2 — SHELL, AUTH AND ONBOARDING
 
-ADM-030 … ADM-046: TODO.
+| ID                                             | Status                                                   |
+| ---------------------------------------------- | -------------------------------------------------------- |
+| ADM-030 Admin route group and protected layout | VERIFIED — `app/[locale]/(admin)/admin/**`               |
+| ADM-031 Global rail                            | VERIFIED                                                 |
+| ADM-032 Contextual sidebar                     | VERIFIED                                                 |
+| ADM-033 Command bar                            | VERIFIED                                                 |
+| ADM-034 Command palette                        | TODO — the search control is disabled and says so        |
+| ADM-035 Site and event switchers               | DONE — one site is provisioned; the control states it    |
+| ADM-036 Notification panel                     | VERIFIED — honest empty state, no source connected (P-2) |
+| ADM-037 Mobile shell                           | VERIFIED — captures at 390 with zero page overflow       |
+| ADM-038 Login                                  | VERIFIED                                                 |
+| ADM-039/040/041/042 Reset, invite, expiry, MFA | BLOCKED on P-1 — needs Supabase Auth                     |
+| ADM-043 Role-aware route guard                 | VERIFIED — `lib/admin/session.ts`                        |
+| ADM-044 Access denied                          | VERIFIED — names the missing permission                  |
+| ADM-045 First-run onboarding                   | TODO                                                     |
+| ADM-046 Auth browser journey suite             | VERIFIED — `integration.spec.ts`                         |
 
 ## WAVE 3 — PUBLIC ACQUISITION VERTICAL SLICE
 
-ADM-050 … ADM-062: TODO.
+| ID                                                | Status                                                 |
+| ------------------------------------------------- | ------------------------------------------------------ |
+| ADM-050 Form-definition repository adapter        | VERIFIED — `lib/spimar/exhibitor-form.ts`, versioned   |
+| ADM-051 Public exhibitor form connected to schema | VERIFIED — `/exposer`                                  |
+| ADM-052 Consent version capture                   | VERIFIED — notice version stored per submission        |
+| ADM-053 Attribution context capture               | VERIFIED — captured at submission, never inferred      |
+| ADM-054 Idempotent durable submission             | VERIFIED — replay returns the original records         |
+| ADM-055 Contact and organization deduplication    | VERIFIED                                               |
+| ADM-056 Lead creation or duplicate linkage        | VERIFIED — disposition returned, never inferred        |
+| ADM-057 Queue and owner assignment                | VERIFIED — written in the same transaction (ADR-A5)    |
+| ADM-058 Initial activity and follow-up task       | VERIFIED — same transaction                            |
+| ADM-059 Durable acknowledgement screen            | VERIFIED — speaks only about the stored record         |
+| ADM-060 Public reference status screen            | VERIFIED — `/suivi`, coarse status, no PII             |
+| ADM-061 Full exhibitor enquiry browser test       | VERIFIED — `exhibitor-slice.spec.ts` 4/4               |
+| ADM-062 Negative and retry cases                  | VERIFIED — invalid, consent-refused, unknown reference |
+
+**Exit gate: PASSED.**
+
+| Criterion                                     | Evidence                                                                                                                               |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Public form creates correct records           | `exhibitor-slice.spec.ts` walks form → lead → assignment → task                                                                        |
+| Duplicate retries do not create duplicates    | replay + dedupe cases in the contract suite and the journey                                                                            |
+| Consent and attribution are stored            | asserted on the lead detail page                                                                                                       |
+| UI never reports provider success prematurely | acknowledgement states no e-mail was sent (P-2)                                                                                        |
+| RLS verified in browser context               | **NOT MET** — no hosted database (P-1). The adapter passes 24/24 against the real migrations in PGlite, which is not hosted authority. |
 
 ## WAVES 4–8
 
-TODO. Not started; not scheduled ahead of the Wave 3 exit gate.
+TODO. Not started; not scheduled ahead of the Wave 3 review.
 
 ---
 
