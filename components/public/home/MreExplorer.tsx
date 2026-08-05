@@ -8,7 +8,6 @@ import {
   BuildingsIcon,
   FamilyIcon,
   HouseIcon,
-  ImagePendingIcon,
   ParasolIcon,
   SuitcaseIcon,
 } from "./mreIcons";
@@ -27,11 +26,13 @@ import {
  * would make the same motivation change name between visits. The rail count
  * and the dots' active position are the only things a filter changes.
  *
- * Three of the six photos exist as validated assets. The other three render a
- * designed pending state rather than a borrowed or invented visual, matching
- * the section-05 rule that unvalidated material is shown as such. Dropping the
- * validated file into /public/images/mre and filling `image` here is the whole
- * swap. */
+ * All six photographs are now owner-supplied and validated (repair v2
+ * ASSET_MANIFEST.md). Three of them previously rendered a designed pending
+ * state because only three files existed; that state is gone with its cause.
+ *
+ * `focal` is the manifest's approved crop for each frame. The images are all
+ * 1672 × 941 and render in one fixed media box with `object-fit: cover`, so
+ * the focal point is the only per-image variable — the box never changes. */
 
 type FilterKey = "all" | "life" | "investment" | "transmission";
 
@@ -40,7 +41,8 @@ type Motivation = {
   readonly num: string;
   readonly filter: Exclude<FilterKey, "all">;
   readonly Icon: (props: { className?: string }) => React.JSX.Element;
-  readonly image: string | null;
+  readonly image: string;
+  readonly focal: string;
 };
 
 const MOTIVATIONS: readonly Motivation[] = [
@@ -49,25 +51,49 @@ const MOTIVATIONS: readonly Motivation[] = [
     num: "01",
     filter: "life",
     Icon: HouseIcon,
-    image: "/images/mre/residence-principale.jpg",
+    image: "/images/mre/residence-principale.webp",
+    focal: "50% 50%",
   },
-  { key: "secondaire", num: "02", filter: "life", Icon: ParasolIcon, image: null },
+  {
+    key: "secondaire",
+    num: "02",
+    filter: "life",
+    Icon: ParasolIcon,
+    image: "/images/mre/residence-secondaire.webp",
+    focal: "50% 48%",
+  },
   {
     key: "retour",
     num: "03",
     filter: "life",
     Icon: SuitcaseIcon,
-    image: "/images/mre/retour-au-maroc.jpg",
+    image: "/images/mre/retour-au-maroc.webp",
+    focal: "50% 50%",
   },
-  { key: "retraite", num: "04", filter: "life", Icon: ArmchairIcon, image: null },
+  {
+    key: "retraite",
+    num: "04",
+    filter: "life",
+    Icon: ArmchairIcon,
+    image: "/images/mre/retraite.webp",
+    focal: "50% 52%",
+  },
   {
     key: "patrimonial",
     num: "05",
     filter: "investment",
     Icon: BuildingsIcon,
-    image: "/images/mre/investissement-patrimonial.jpg",
+    image: "/images/mre/investissement-patrimonial.webp",
+    focal: "50% 52%",
   },
-  { key: "transmission", num: "06", filter: "transmission", Icon: FamilyIcon, image: null },
+  {
+    key: "transmission",
+    num: "06",
+    filter: "transmission",
+    Icon: FamilyIcon,
+    image: "/images/mre/transmission-familiale.webp",
+    focal: "50% 52%",
+  },
 ];
 
 const FILTERS: readonly FilterKey[] = ["all", "life", "investment", "transmission"];
@@ -153,22 +179,19 @@ export function MreExplorer() {
             ))}
           </ul>
 
-          {active.image ? (
-            <div className="mreMedia">
-              <Image
-                src={active.image}
-                alt={t(`motivations.${active.key}.imageAlt`)}
-                fill
-                sizes="(max-width: 580px) 92vw, (max-width: 1024px) 88vw, 46vw"
-                className="mreMediaImage"
-              />
-            </div>
-          ) : (
-            <div className="mreMedia mreMediaPending">
-              <ImagePendingIcon className="mreMediaPendingIcon" aria-hidden="true" />
-              <p className="mreMediaPendingNote">{t("mediaPending")}</p>
-            </div>
-          )}
+          <div className="mreMedia">
+            <Image
+              src={active.image}
+              alt={t(`motivations.${active.key}.imageAlt`)}
+              fill
+              sizes="(max-width: 580px) 92vw, (max-width: 1024px) 88vw, 46vw"
+              className="mreMediaImage"
+              /* The manifest's approved crop. One fixed media box for all six
+                 frames, so the focal point is the only thing that varies. */
+              style={{ objectPosition: active.focal }}
+              priority={active.num === "01"}
+            />
+          </div>
 
           <div className="mreProgress">
             <span className="mreProgressStart">

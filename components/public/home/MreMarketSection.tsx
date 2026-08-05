@@ -1,6 +1,9 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { MreExplorer } from "./MreExplorer";
+import { SectionEyebrow } from "./SectionEyebrow";
 import { DownloadIcon } from "./mreIcons";
 import {
   ArrowRightIcon,
@@ -12,10 +15,14 @@ import {
 
 /* Section 06 — Comprendre le marché MRE.
  *
- * Server shell around one client island (the motivations explorer). Header
- * follows the sibling-section hierarchy: gold eyebrow, small title, larger
- * statement — the title is always smaller than the statement, per the pattern
- * set with section 05.
+ * Server shell around one client island (the motivations explorer).
+ *
+ * The header is the site's section anatomy: shared eyebrow, then the research
+ * question as the section heading on the L2 ladder, then the lead. It
+ * previously took "small title, larger statement" from section 05 — a pattern
+ * that was itself a mistake there, and which rendered this question at 13.4px,
+ * smaller than the sentence beneath it. The question is the whole point of the
+ * section, so it is the heading.
  *
  * The study CTA links to the resources route rather than to a file: the étude
  * is a governed resource and its download belongs to the published resource
@@ -36,31 +43,48 @@ export function MreMarketSection({
   return (
     <section className="mreSection" aria-labelledby="mre-title">
       <div className="mreInner">
-        {/* One download CTA for the whole section — it lives on the study card,
-            where the étude itself is presented. */}
         <header className="mreHeader">
           <div className="mreHeadings">
-            <p className="mreEyebrow">
-              [ <span className="mreEyebrowIndex">06</span> ] {t("eyebrow")}
-            </p>
+            <SectionEyebrow index="06" label={t("eyebrow")} />
             <h2 className="mreTitle" id="mre-title">
               {t("title")}
             </h2>
             <p className="mreLead">{t("lead")}</p>
           </div>
+          {/* The approved composition carries the study action twice: once in
+              the header row, once on the study panel. They are the same
+              destination, not two offers — the header one is reachable without
+              scrolling past the explorer, which is the point of it. */}
+          <Link className="button mreHeaderCta" href={studyHref} title={t("downloadStudy")}>
+            <span className="label">
+              <span className="fixedLabel">{t("downloadStudy")}</span>
+              <span className="innerLabel">
+                <Marquee text={t("downloadStudy")} direction="left" speed={90} />
+              </span>
+            </span>
+            <span className="icon">
+              <DownloadIcon />
+            </span>
+          </Link>
         </header>
 
         <div className="mreLayout">
           <MreExplorer />
 
           <aside className="mreStudyCard" aria-labelledby="mre-study-title">
-            <div className="mreStudyCovers" aria-hidden="true">
-              <span className="mreStudyCover" data-i="3" />
-              <span className="mreStudyCover" data-i="2" />
-              <span className="mreStudyCover" data-i="1">
-                <span className="mreStudyCoverTitle">{t("study.coverTitle")}</span>
-              </span>
-            </div>
+            {/* The approved magazine-stack figure, supplied as artwork (repair
+                v2 ASSET_MANIFEST.md). It replaces three CSS-composed cover
+                rectangles whose top card carried the study name as live text —
+                a stack of blank slabs reads as a placeholder, which is exactly
+                what the audit calls out. Everything below it stays DOM. */}
+            <Image
+              className="mreStudyStack"
+              src="/images/mre/mre-study-cover-stack.webp"
+              alt=""
+              width={520}
+              height={620}
+              sizes="26vw"
+            />
             <p className="mreStudyEyebrow">{t("study.eyebrow")}</p>
             <h3 className="mreStudyTitle" id="mre-study-title">
               {t("study.title")}

@@ -20,37 +20,54 @@
 
 /* --- Header (sibling-section hierarchy: title < statement) ---------------- */
 
+/* The site's header row: label left, action right on the eyebrow line, with
+   the heading and lead running the full column beneath. */
 .mreHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-lg);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--space-lg);
   margin-bottom: var(--space-md);
 }
 
-.mreEyebrow {
-  /* WCAG AA: the action gold fails at eyebrow size on paper; see
-     --spimar-gold-text in globals.css. */
-  color: var(--spimar-gold-text);
-  font-size: var(--text-support);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.mreHeadings {
+  display: contents;
+}
+
+.mreSection .sectionEyebrow {
+  grid-column: 1;
+  grid-row: 1;
   margin: 0 0 var(--space-sm);
 }
 
-.mreEyebrowIndex {
-  font-variant-numeric: tabular-nums;
+.mreHeaderCta {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
 }
 
+.mreTitle,
+.mreLead {
+  grid-column: 1 / -1;
+}
+
+/* The research question is the section heading, on the L2 ladder. It used to
+   take --text-support at weight 500 — 13.4px, smaller than the lead sentence
+   below it — inherited from section 05's header, where the same inversion has
+   since been corrected. This question is the section's entire premise; it
+   cannot be its smallest type. */
 .mreTitle {
-  font-size: var(--text-support);
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.1;
   margin: 0 0 var(--space-sm);
+  max-width: 58vw;
+  text-wrap: balance;
 }
 
 .mreLead {
+  color: var(--on-surface-muted);
   font-size: var(--text-small-title);
   font-weight: 400;
   line-height: 1.2;
@@ -408,8 +425,13 @@
 
 /* --- Study sidebar ----------------------------------------------------------- */
 
+/* The panel takes the artwork's own surround rather than the pure-black
+   inverse token. The supplied stack figure is matted at rgb(15 21 24) — a cool
+   near-black designed to blend into the obsidian panel — and against #000 it
+   read as a visible lighter rectangle sitting on the card. Matching the two
+   exactly is what makes the figure sit in the panel instead of on it. */
 .mreStudyCard {
-  background: var(--surface-inverse);
+  background: rgb(15 21 24);
   border-radius: var(--radius-xl);
   color: var(--on-inverse);
   display: flex;
@@ -422,67 +444,18 @@
    covers, fanned duplicates behind, the front cover carrying the study title
    over the photograph. The soft shadow depicts the physical stack shown in
    the mock, not generic card chrome. */
-.mreStudyCovers {
-  display: flex;
-  justify-content: center;
-  padding: var(--space-md) 0 var(--space-sm);
-  position: relative;
-}
+/* The supplied magazine-stack figure. It replaced three CSS-composed cover
+   rectangles that all shared one motivation photograph as their fill and put
+   the study name on the top card as live text — a stack of near-identical
+   slabs, which is what made the panel read as a generic promo card.
 
-.mreStudyCover {
-  aspect-ratio: 3 / 4;
-  background-color: var(--spimar-ink);
-  background-image: url("/images/mre/investissement-patrimonial.jpg");
-  background-position: center;
-  background-size: cover;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 0.6vw 1.6vw rgb(0 0 0 / 0.45);
+   The artwork's own dark surround is designed to blend into the obsidian
+   panel, so it needs no frame, no radius and no shadow of its own. */
+.mreStudyStack {
   display: block;
-  width: 10.5vw;
-}
-
-.mreStudyCover[data-i="2"],
-.mreStudyCover[data-i="3"] {
-  position: absolute;
-  top: var(--space-md);
-}
-
-.mreStudyCover[data-i="2"] {
-  transform: rotate(6deg) translateX(1.1vw);
-}
-
-.mreStudyCover[data-i="3"] {
-  transform: rotate(11deg) translateX(2.2vw);
-}
-
-.mreStudyCover[data-i="1"] {
-  align-items: flex-start;
-  display: flex;
-  padding: var(--space-sm);
-  position: relative;
-  transform: rotate(-3deg);
-  z-index: 1;
-}
-
-/* Legibility scrim behind the cover title, top-weighted like the mock. */
-.mreStudyCover[data-i="1"]::before {
-  background: linear-gradient(to bottom, rgb(0 0 0 / 0.55), transparent 55%);
-  border-radius: inherit;
-  content: "";
-  inset: 0;
-  position: absolute;
-}
-
-.mreStudyCoverTitle {
-  color: var(--spimar-white);
-  font-size: var(--text-base);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  line-height: 1.35;
-  position: relative;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
+  block-size: auto;
+  inline-size: 100%;
+  margin-block: var(--space-sm) var(--space-md);
 }
 
 .mreStudyEyebrow {
