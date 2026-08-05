@@ -26,16 +26,29 @@ export function MethodIntroduction({
   headingId: string;
 }) {
   const { label, href } = content.globalCta;
-  /* Presentational only, like `titleBreakAfterWord` on the phases: bind the em
-     dash to the word before it so a balanced wrap cannot open a line with it,
-     which French typography does not do. The stored copy stays verbatim — this
-     swaps one space character, so the accessible text is unchanged. */
-  const heading = content.heading.replace(" \u2014 ", "\u00a0\u2014 ");
+  /* The heading breaks at its em dash, always — two lines at every viewport.
+
+     Presentational only, like `titleBreakAfterWord` on the phases: the stored
+     copy stays verbatim and the accessible text is unchanged, because the break
+     replaces a space that was already there. An explicit break rather than a
+     measure plus `text-wrap: balance`, which depended on whatever column was
+     left beside the action and tipped to three lines whenever that narrowed.
+     The dash stays on the first line, where French typography puts it. */
+  const [headingHead, ...headingRest] = content.heading.split(" \u2014 ");
+  const headingTail = headingRest.join(" \u2014 ");
   return (
     <header className="methodIntro">
       <SectionEyebrow index={content.eyebrowIndex} label={content.eyebrowLabel} />
       <h2 className="methodIntro__heading" id={headingId}>
-        {heading}
+        {headingTail ? (
+          <>
+            {headingHead} {"\u2014"}
+            <br />
+            {headingTail}
+          </>
+        ) : (
+          content.heading
+        )}
       </h2>
       <p className="methodIntro__support">{content.description}</p>
       <span className="methodIntro__actions">

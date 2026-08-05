@@ -76,11 +76,15 @@
 /* The introduction shares the stage's content column, so their gutters line up
    at every viewport rather than only at the golden one. Its vertical rhythm
    and its type stay on the page grid / the L2 steps. */
-/* Two columns: the text block, and the action beside it rather than stacked
-   under it (owner direction, 2026-08-05). The action spans every text row and
-   centres against them, so it reads as a peer of the header instead of a
-   trailing item — and it stays put whether the heading wraps to two lines or
-   three, unlike the hard-coded top-right offset this replaces. */
+/* The action sits beside the eyebrow, on the top line, right-aligned (owner
+   direction, 2026-08-05) — the same "label left, action right" header row
+   section 01 uses.
+
+   It deliberately does NOT span the heading and lead rows. Doing that centred
+   it against the whole block, which left dead space above and below it, and it
+   took a column's worth of width away from the heading, squeezing it onto a
+   third line. Confined to row 1, the heading and lead run the full column and
+   the action has type beside it rather than emptiness. */
 .methodIntro {
   position: relative;
   inline-size: var(--method-content-w);
@@ -92,10 +96,14 @@
   column-gap: 4vw;
 }
 
-.methodIntro .sectionEyebrow,
+.methodIntro .sectionEyebrow {
+  grid-column: 1;
+  grid-row: 1;
+}
+
 .methodIntro__heading,
 .methodIntro__support {
-  grid-column: 1;
+  grid-column: 1 / -1;
 }
 
 .methodIntro .sectionEyebrow {
@@ -108,19 +116,16 @@
    17px lead, tuned to its reference PNG — which is precisely why its hierarchy
    read as foreign next to its neighbours.
 
-   The measure is 64vw rather than section 03's 58vw because this heading's em
-   dash is bound to the word before it (see MethodIntroduction): at 58vw the
-   bound "…le salon —" pushed the wrap to three lines, breaking both the
-   two-line silhouette and the viewport fit. */
+   No measure and no `text-wrap: balance`: the break is explicit in the markup
+   (see MethodIntroduction), so the heading is two lines at every viewport
+   instead of depending on whatever width was left beside the action. */
 .methodIntro__heading {
-  max-width: 64vw;
   margin: 0.5vw 0 0;
   font-size: var(--text-heading-lg);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.014em;
   color: var(--method-ink);
-  text-wrap: balance;
 }
 
 .methodIntro__support {
@@ -138,7 +143,8 @@
    global rule. */
 .methodIntro__actions {
   grid-column: 2;
-  grid-row: 1 / -1;
+  grid-row: 1;
+  justify-self: end;
   align-self: center;
   display: block;
 }
