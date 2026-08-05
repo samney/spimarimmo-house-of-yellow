@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { Reveal } from "@/components/primitives/motion/Reveal";
 import { Link } from "@/i18n/navigation";
 
 /* Spec §16 — Ressources et SEO. The five-resource library comes from the
@@ -23,7 +24,7 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
           <div className="hoyCols">
             <div className="colLabel" aria-hidden="true" />
             <div className="colMain">
-              <ul className="spimarCardList" role="list">
+              <Reveal as="ul" className="spimarCardList" role="list">
                 {RESOURCES.map((key) => (
                   <li key={key} className="cardItem">
                     <h2 className="text medium">{t(`resources.${key}.name`)}</h2>
@@ -31,7 +32,7 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
                     <span className="cardNote text medium">{t("availability")}</span>
                   </li>
                 ))}
-              </ul>
+              </Reveal>
               <footer className="pageOutro">
                 <p className="text medium">
                   {t("outro")} <Link href="/contact">{t("outroContact")}</Link>

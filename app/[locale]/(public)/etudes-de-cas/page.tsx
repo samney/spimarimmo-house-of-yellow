@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { Reveal } from "@/components/primitives/motion/Reveal";
 import { Link } from "@/i18n/navigation";
 import { getBackendSeams } from "@/lib/spimar/repositories";
 
@@ -34,7 +35,7 @@ export default async function EtudesDeCas({ params }: { params: Promise<{ locale
               {cases.length === 0 ? (
                 <p className="text medium">{t("empty")}</p>
               ) : (
-                <ul className="spimarCardList" role="list">
+                <Reveal as="ul" className="spimarCardList" role="list">
                   {cases.map((page) => {
                     const intro = String(page.sections[0]?.body.intro ?? "");
                     return (
@@ -49,7 +50,7 @@ export default async function EtudesDeCas({ params }: { params: Promise<{ locale
                       </li>
                     );
                   })}
-                </ul>
+                </Reveal>
               )}
               <footer className="pageOutro">
                 <p className="text medium">

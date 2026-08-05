@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { Reveal } from "@/components/primitives/motion/Reveal";
 import { Link } from "@/i18n/navigation";
 import { getBackendSeams } from "@/lib/spimar/repositories";
 
@@ -33,7 +34,7 @@ export default async function Salons({ params }: { params: Promise<{ locale: str
               {events.length === 0 ? (
                 <p className="text medium">{t("empty")}</p>
               ) : (
-                <ul className="spimarCardList" role="list">
+                <Reveal as="ul" className="spimarCardList" role="list">
                   {events.map((event) => (
                     <li key={event.slug} className="cardItem">
                       <span className="cardKicker text medium">
@@ -53,7 +54,7 @@ export default async function Salons({ params }: { params: Promise<{ locale: str
                       </span>
                     </li>
                   ))}
-                </ul>
+                </Reveal>
               )}
               <footer className="pageOutro">
                 <p className="text medium">

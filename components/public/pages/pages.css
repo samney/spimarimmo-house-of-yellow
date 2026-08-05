@@ -39,8 +39,6 @@
 .pageBlocks .grainBackground.dark {
   opacity: 0.2;
 }
-/* Reference: #pageContainer .blocks section{margin:10vw 0}; first/last spacing */
-
 /* Media wrappers (reference .imageWrapper.playerBackground) */
 .pageBlocks .imageWrapper {
   position: relative;
@@ -75,46 +73,23 @@
   fill: currentColor;
 }
 
-/* Shared inview reveal (reference: translateY(1.25vw) + fade, .45s stagger) */
-.pageBlocks section .reveal,
-.pageBlocks section .cols .col .text,
-.pageBlocks section .cols .col .normalTitle,
-.pageBlocks section .cols .col .smallTitle,
-.pageBlocks section .cols .col .buttons {
-  transform: translateY(1.25vw);
-  opacity: 0;
-  transition:
-    transform 0.45s 0.15s,
-    opacity 0.45s 0.15s;
-}
-.pageBlocks section.inview .reveal,
-.pageBlocks section.inview .cols .col .text,
-.pageBlocks section.inview .cols .col .normalTitle,
-.pageBlocks section.inview .cols .col .smallTitle,
-.pageBlocks section.inview .cols .col .buttons {
-  transform: translateY(0);
-  opacity: 1;
-}
-.pageBlocks section .cols .col:last-child .text,
-.pageBlocks section .cols .col .normalTitle {
-  transition-delay: 0.3s;
-}
-.pageBlocks section .cols .col .smallTitle,
-.pageBlocks section .cols .col .buttons {
-  transition-delay: 0.45s;
-}
+/* The reveal used to live here as `opacity: 0` plus an `.inview` class that a
+   mounted-nowhere observer was supposed to add — so the pre-reveal state was
+   one selector away from hiding real content, and it never animated anything.
+   `components/primitives/motion/Reveal.tsx` owns it now: the DOM's natural
+   state is the finished state and GSAP animates from an offset, so no-JS
+   renders finished content rather than blank space (F-03, D-031).
+
+   The stagger that used to live here as `transition-delay` on .text /
+   .normalTitle / .smallTitle / .buttons went with it. Those delays were
+   already inert — no rule anywhere gave those elements a transition-duration,
+   so there was never a transition to delay — and the stagger is now GSAP's,
+   expressed once as STAGGER.step. */
 
 /* ===== headerCultureBlock / headerHowWeRollBlock ===== */
 .pageBlocks .cultureQuoteAnimationBlock .cols .col .text.number {
   display: none;
 }
-/* Culture header wireframe (anim-1) */
-/* How-we-roll header squircle */
-
-/* ===== cultureItemBlock ===== */
-
-/* ===== cultureQuoteBlock ===== */
-
 /* ===== cultureQuoteAnimationBlock (reference structure, overrides home.css) ===== */
 .pageBlocks .cultureQuoteAnimationBlock {
   position: relative;
@@ -156,39 +131,12 @@
   margin-top: 1.25vw;
 }
 
-/* ===== cultureWorkBlock ===== */
-
-/* ===== projectTwoImagesBlock (page variant) ===== */
-
-/* ===== howWeRollTitleBlock ===== */
-
-/* ===== howWeRollTextItemsBlock ===== */
 /* squares variant (Phase 2) */
-
-/* ===== howWeRollDividerAnimationBlock ===== */
-
-/* ===== contactBlock (/connect) ===== */
-
-/* WhatsApp pill (reference .button.whatsappButton) */
-
-/* Form (reference .formWrapper / CF7 geometry) */
-.pageBlocks section.inview .cols .col .formWrapper.sended .formTitle {
-  pointer-events: none;
-  opacity: 0;
-}
-
-/* Instagram feed (reference Smash Balloon geometry, snapshot rendered locally) */
-
-/* ===== notFoundBlock (404 — deliberate addition, see DECISIONS D-007) ===== */
 
 /* ===== cookiesBlock (/cookies — dark policy document) ===== */
 .contentWrapper.small {
   padding: 0 26.25vw;
 }
-/* Embedded consent widget (reference Complianz manage-consent styling) */
-
-/* Works block light variant (/connect: .project.dark = ink text on paper) */
-
 /* =========================================================================
    Tablet regime (<=1080px)
 ========================================================================= */

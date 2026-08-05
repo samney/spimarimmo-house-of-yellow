@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { Reveal } from "@/components/primitives/motion/Reveal";
 import { Link } from "@/i18n/navigation";
 
 /* Spec §17 — Conversion et réassurance. The seven exhibitor questions come
@@ -22,7 +23,7 @@ export default async function Faq({ params }: { params: Promise<{ locale: string
           <div className="hoyCols">
             <div className="colLabel" aria-hidden="true" />
             <div className="colMain">
-              <div className="faqList">
+              <Reveal className="faqList">
                 {QUESTIONS.map((q, i) => (
                   <details key={q}>
                     <summary>
@@ -37,7 +38,7 @@ export default async function Faq({ params }: { params: Promise<{ locale: string
                     </div>
                   </details>
                 ))}
-              </div>
+              </Reveal>
               <footer className="pageOutro">
                 <p className="text medium">
                   {t("outro")} <Link href="/contact">{t("outroContact")}</Link>

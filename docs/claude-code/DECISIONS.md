@@ -966,3 +966,60 @@ present in the `/exposer/visibilite` DOM — checked mechanically, not assumed.
 **Deliberately not done here.** `events.css` (136 dormant declarations) and
 `home.css` (113) are homepage files held by a parallel session. They are
 carried in `F-02` and will be pruned the same way once that session lands.
+
+## D-031 — One motion engine: `Reveal` on GSAP, `Inview` deleted
+
+**Date:** 2026-08-05 · **Scope:** `F-03`, `F-04` · **Status:** implemented
+
+The site had two motion engines. Section 03 and the title/counter primitives
+drive GSAP through `useGSAP` + `ScrollTrigger`; route pages were supposed to be
+driven by `Inview`, an `IntersectionObserver` that added an `.inview` class
+which CSS then reacted to. `Inview` was imported nowhere, so that half never
+ran at all.
+
+The component file itself turned out to have been deleted long ago, in
+`50e4280` — its 17 `.inview` CSS rules were simply left behind, which is
+precisely how the reveal became dormant without anyone noticing. The stylesheet
+kept describing a feature whose engine had been removed.
+
+**The reveal is now `components/primitives/motion/Reveal.tsx`.** Two properties
+of it are deliberate:
+
+- **The DOM's natural state is the finished state.** `Reveal` uses `gsap.from`,
+  animating _from_ an offset rather than _to_ a visible state. The old design
+  put `opacity: 0` in the stylesheet and depended on a class arriving to undo
+  it — content one selector away from invisible, with no script to add the
+  class. Now a failed script, a blocked bundle, no-JS and reduced motion all
+  render finished content.
+- **Targets are explicit** — `[data-reveal]` descendants, else direct children.
+  Nothing is inferred from class names, so restyling cannot silently detach the
+  choreography, which is how the original went dormant unnoticed.
+
+Reduced motion is _no_ animation rather than a fast one: the `matchMedia`
+branch never creates the tween, and the content is already in its end state.
+
+**Applied to** the five routes that own content below the header — `/faq`,
+`/insights`, `/ressources`, `/salons`, `/etudes-de-cas`. `PageHeader` is
+excluded on purpose: `SplitTitle` already animates the title and wrapping the
+header would animate it twice.
+
+**Verified in the browser, production build**, not by inspection. All five
+routes settle at `opacity: 1` with no residual transform; a mid-flight sample
+catches partially-faded frames and siblings out of step, which is what proves
+the tween is real rather than a no-op that would pass an end-state check;
+reduced motion is fully visible immediately; with JavaScript disabled all
+content renders; no horizontal overflow at 1920 or 390.
+
+**A note on the guard that was supposed to catch this.** The first version of
+the orphaned-primitive test substring-matched the primitive's name and so
+passed on the word "Revealed" inside an unrelated comment. It reported a clean
+run while both `Reveal` and `Counter` were mounted nowhere — the same class of
+defect it existed to prevent, one level up. It now matches the import path and
+asserts orphan-set _equality_, so wiring one up fails the test until the
+allowlist is corrected and it cannot decay into a standing excuse.
+
+`Counter` is that remaining tracked orphan, and it is the sharper version of
+the same hazard: it renders `{prefix}0` as its initial DOM, so a script failure
+shows a literal "0" where a real figure belongs. Its only designed home is the
+homepage impact figures, held by a parallel session, so it is recorded rather
+than mounted somewhere convenient. `F-05` resolves it.

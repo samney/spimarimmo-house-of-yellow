@@ -64,10 +64,10 @@ These are the facts the plan rests on. Re-measure before contradicting them.
       `pages.css` alone.
 
       _Original scope:_ Diff what
-                  `components/primitives/motion/` provides against what the reference
-                  actually drove, and list every CSS rule that expects a runtime class
-                  (`.inview`, `.scrollSection`, `setDarkCursor`, …). Output: one table of
-                  _alive / dormant / retired_.
+                          `components/primitives/motion/` provides against what the reference
+                          actually drove, and list every CSS rule that expects a runtime class
+                          (`.inview`, `.scrollSection`, `setDarkCursor`, …). Output: one table of
+                          _alive / dormant / retired_.
 
 - [~] **F-02 · Decide each dormant piece: rewire or retire.** Recorded in
   `DECISIONS.md` D-030. Done: Lenis stylesheet wired (its
@@ -81,23 +81,60 @@ These are the facts the plan rests on. Re-measure before contradicting them.
       `DECISIONS.md`. Retiring means deleting the CSS too — dead rules are how
       the next session hallucinates a feature that does not exist.
 
-- [ ] **F-03 · Rebuild scroll reveal on GSAP + ScrollTrigger.** Replace the
-      `IntersectionObserver` + `.inview` class mechanism with the same
-      `useGSAP` / `matchMedia` pattern §03 uses, so the site has **one** motion
-      engine. Must honour `prefers-reduced-motion` with a documented no-motion
-      end state and must never leave content at `opacity: 0` if the script
-      fails.
-- [ ] **F-04 · Restore the reveal to the route pages** that were designed for
-      it, using the new engine.
+- [x] **F-03 · Rebuild scroll reveal on GSAP + ScrollTrigger.** →
+      `components/primitives/motion/Reveal.tsx`, `Inview.tsx` deleted, D-031.
+      The engine now animates **from** an offset with `gsap.from`, so the DOM's
+      natural state _is_ the finished state: no-JS, no-GSAP and reduced-motion
+      all render finished content instead of relying on a class arriving.
+      Targets are explicit (`[data-reveal]`, else direct children), so a
+      restyle cannot silently detach the choreography. The dead
+      `transition-delay` stagger left in `pages.css` went with it — verified
+      inert first (no rule gave those elements a transition-duration).
+
+      _Original scope:_ Replace the
+          `IntersectionObserver` + `.inview` class mechanism with the same
+          `useGSAP` / `matchMedia` pattern §03 uses, so the site has **one** motion
+          engine. Must honour `prefers-reduced-motion` with a documented no-motion
+          end state and must never leave content at `opacity: 0` if the script
+          fails.
+
+- [x] **F-04 · Restore the reveal to the route pages** that were designed for
+      it, using the new engine. Applied to the five routes that own content
+      below the header — `/faq`, `/insights`, `/ressources`, `/salons`,
+      `/etudes-de-cas`. `PageHeader` is deliberately excluded: `SplitTitle`
+      already owns the title, and wrapping the header would animate it twice.
 - [ ] **F-05 · Audit `SmoothScroll`, `CustomCursor`, `Counter`, `SplitTitle`,
       `Marquee`** — each gets a reduced-motion path, a keyboard path where it
       carries meaning, and a documented fallback.
-- [ ] **F-06 · Motion vocabulary.** One set of durations, eases and stagger
-      steps as L2 tokens (`--dur-*`, `--ease-*`, `--stagger-*` already exist —
-      make them the only source). Every animation binds to them.
-- [ ] **F-07 · Foundation regression tests.** One spec that fails if a reveal
-      leaves content invisible, if reduced motion still animates, or if a
-      primitive is mounted with no effect.
+
+      Two already have findings waiting: **`Counter`** is a second orphan of
+          exactly the `Inview` kind — imported nowhere, and it renders `{prefix}0`
+          as its initial DOM, so a script failure shows a literal "0" where a real
+          figure belongs. Its only designed home is the homepage impact figures,
+          held by a parallel session, so it is tracked in `KNOWN_ORPHANS` rather
+          than mounted somewhere convenient. **`Marquee`** still relies on the
+          global `prefers-reduced-motion` kill-switch (`animation-duration:
+          0.01ms`), which is a stop, not a designed fallback.
+
+- [~] **F-06 · Motion vocabulary.** One set of durations, eases and stagger
+  steps as L2 tokens. Done: `motion-tokens.ts` is the GSAP-side source
+  (`DUR`, `STAGGER`, `EASE`, `REVEAL_SHIFT`) and a test asserts it mirrors
+  the `--dur-*` / `--stagger-step` CSS ladder exactly, so the two cannot
+  drift apart silently. Remaining: migrate the animations that still
+  hard-code their own numbers onto it.
+
+- [~] **F-07 · Foundation regression tests.** →
+  `components/primitives/motion/motion-foundation.test.ts`, 5 guards.
+  Covers: tokens mirror the CSS ladder; no `opacity: 0` rule is gated on a
+  class nothing produces; no primitive ships unmounted. Remaining: an
+  automated reduced-motion assertion (verified in-browser for F-03, not
+  yet pinned by a spec).
+
+      Note the guard was written wrong first and **passed vacuously** — it
+      substring-matched the primitive's name, which the word "Revealed" in an
+      unrelated comment satisfied. It reported clean while `Reveal` and
+      `Counter` were both mounted nowhere. It now matches the import path, and
+      asserts orphan-set *equality* so the allowlist cannot rot.
 
 ## Phase D — Design system deep dive and update
 
@@ -209,6 +246,40 @@ designed with real content in it and needs no rework when the API lands.
 - [ ] **N-05 · Locale parity** — `/en` renders English everywhere (`F3`).
 
 ---
+
+## Autonomous mode — run the checklist without asking
+
+Owner direction, 2026-08-05: work the list continuously rather than stopping
+after each item for permission. The list itself is the instruction; a session
+picks up the topmost unchecked item and keeps going.
+
+**Proceed without asking when** the item is unchecked, its inputs already exist
+in the repository, and it is not marked `[?]`. Land it as its own commit with
+the gates green, tick it here, and start the next one. Do not summarise between
+items — summarise once, at the end of the run.
+
+**Stop and ask only for these.** Everything else is a judgement call to make,
+not a question to raise.
+
+1. **Owner input is genuinely missing** — an item marked `[?]`, or one that
+   needs a fact only the owner has (a URL, a phone number, a real date, a legal
+   text). Skip it, note it, carry on with the next item.
+2. **It would require inventing content.** Never fabricate a figure, date,
+   price, partner or claim to unblock a task. Use the honest pending state or
+   the demo-badge pattern and move on.
+3. **It touches files a parallel session is holding.** Check `git status`
+   first; skip and note.
+4. **It is destructive or outward-facing** — deleting owner assets, force
+   push, deploy, or writing to a production service.
+5. **A gate cannot be made green honestly.** Never weaken a lint rule, a type
+   check or a test to pass. Stop, report the real failure.
+
+**Definition of done, per item.** Measured evidence in the commit message ·
+`tsc` clean · ESLint no new errors · Prettier clean · relevant tests pass ·
+deviations recorded in `DECISIONS.md` · the checkbox ticked with its commit.
+
+**If the run is interrupted**, the next session reads this file, finds the
+topmost unchecked item, and continues. Nothing is carried in conversation.
 
 ## Working rules — how this programme avoids drift
 
