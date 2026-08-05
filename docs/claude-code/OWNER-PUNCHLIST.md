@@ -50,7 +50,7 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       the label to nothing and the pill read as empty the moment it appeared;
       and the gold fill had no edge against a bright photograph or against this
       section's gold surface. The pill takes the marquee inner label and the
-      `dark` variant, matching the section's own CTA. → `COMMIT`
+      `dark` variant, matching the section's own CTA. → `f93536a`
 - [ ] **C3 · [02] Salons par pays — replace the static "date à confirmer"** with
       mock data.
 - [ ] **C4 · [08] Ils nous font confiance — merge the two duplicate versions**,
