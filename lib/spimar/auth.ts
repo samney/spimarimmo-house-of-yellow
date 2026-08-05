@@ -83,26 +83,48 @@ export async function endSession(): Promise<void> {
   jar.delete(COOKIE);
 }
 
-export async function readSession(): Promise<Session | null> {
+/**
+ * Why a session is absent.
+ *
+ * `expired` is distinguished from `absent` on purpose: an operator whose
+ * session timed out mid-task should be told so, not silently shown a blank
+ * sign-in form as though they had never authenticated. `tampered` covers a
+ * present-but-invalid cookie, which is reported as absent to the visitor —
+ * naming it would tell an attacker their forgery was detected.
+ */
+export type SessionAbsence = "absent" | "expired" | "tampered";
+
+export type SessionResult =
+  { session: Session; absence: null } | { session: null; absence: SessionAbsence };
+
+/** The full result, including WHY there is no session. */
+export async function resolveSession(): Promise<SessionResult> {
   const key = secret();
-  if (!key) return null;
+  if (!key) return { session: null, absence: "absent" };
   const jar = await cookies();
   const raw = jar.get(COOKIE)?.value;
-  if (!raw) return null;
+  if (!raw) return { session: null, absence: "absent" };
 
   const [payload, signature] = raw.split(".");
-  if (!payload || !signature) return null;
-  if (!safeEqual(signature, sign(payload, key))) return null;
+  if (!payload || !signature) return { session: null, absence: "tampered" };
+  if (!safeEqual(signature, sign(payload, key))) return { session: null, absence: "tampered" };
 
   try {
     const session = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as Session;
     const age = Date.now() - new Date(session.issuedAt).getTime();
-    if (age > MAX_AGE_SECONDS * 1000) return null;
-    return session;
+    if (age > MAX_AGE_SECONDS * 1000) return { session: null, absence: "expired" };
+    return { session, absence: null };
   } catch {
-    return null;
+    return { session: null, absence: "tampered" };
   }
 }
+
+export async function readSession(): Promise<Session | null> {
+  return (await resolveSession()).session;
+}
+
+/** How long a session lasts, for surfaces that need to state it. */
+export const SESSION_MAX_AGE_SECONDS = MAX_AGE_SECONDS;
 
 /** Authorization is server-side. Hiding UI is never the control. */
 export function canPublish(session: Session): boolean {

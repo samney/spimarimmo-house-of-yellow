@@ -1324,6 +1324,131 @@
   color: var(--text-tertiary);
 }
 
+/* -------------------------------------------- command palette (ADM-034)
+
+   Also the console's dialog and command-item primitives (ADM-018/019): the
+   scrim, the raised panel and the selectable row are the shapes every later
+   overlay reuses. */
+
+.paletteScrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dialog);
+  background: rgb(20 16 12 / 28%);
+}
+
+.palette {
+  position: fixed;
+  z-index: var(--z-dialog);
+  inset-block-start: 12vh;
+  inset-inline: 50%;
+  transform: translateX(-50%);
+  inline-size: min(38rem, calc(100vw - 2 * var(--space-5)));
+  background: var(--surface-0);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-shell);
+  overflow: hidden;
+}
+
+.palette__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-block-end: 1px solid var(--border-soft);
+  color: var(--text-tertiary);
+}
+
+.palette__input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-card);
+  color: var(--text-primary);
+}
+
+.palette__input:focus {
+  outline: none;
+}
+
+.palette__list {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2);
+  max-block-size: 46vh;
+  overflow-y: auto;
+}
+
+.palette__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  inline-size: 100%;
+  padding: var(--space-3) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  font: inherit;
+  text-align: start;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.palette__item--active {
+  background: var(--brand-gold-soft);
+}
+
+.palette__label {
+  font-weight: var(--weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.palette__detail {
+  font-size: var(--text-label);
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-inline-size: 14rem;
+}
+
+.palette__badge {
+  font-size: var(--text-meta);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.palette__empty {
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: var(--text-body);
+}
+
+@media (max-width: 860px) {
+  .palette {
+    inset-block-start: 0;
+    inset-inline: 0;
+    transform: none;
+    inline-size: 100%;
+    border-radius: 0;
+    block-size: 100vh;
+  }
+
+  .palette__list {
+    max-block-size: calc(100vh - 4.5rem);
+  }
+}
+
 /* ----------------------------------------------------------- gate layout */
 
 .gate {

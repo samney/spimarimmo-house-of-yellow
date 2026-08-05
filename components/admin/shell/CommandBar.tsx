@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "../icons";
+import { CommandPalette } from "../CommandPalette";
 import { logout } from "@/app/actions/cms";
 import type { Session } from "@/lib/spimar/types";
 
@@ -21,16 +22,7 @@ export function CommandBar({
 }) {
   return (
     <header className="commandbar">
-      <button
-        type="button"
-        className="commandbar__search"
-        disabled
-        title="La recherche globale arrive avec la palette de commandes (ADM-034)."
-      >
-        {Icon.search({ size: 16 })}
-        <span>Rechercher un exposant, un lead, une page ou un événement…</span>
-        <kbd className="commandbar__shortcut">Ctrl K</kbd>
-      </button>
+      <CommandPalette />
 
       <span className="commandbar__spacer" />
 

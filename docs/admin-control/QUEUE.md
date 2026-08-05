@@ -44,8 +44,8 @@ plus `components/admin/**`. Evidence: `qa/control/*.png`.
 | ADM-015 Inputs, select, textarea and validation      | VERIFIED                                              |
 | ADM-016 Checkbox and segmented controls              | DONE — radio/switch not yet needed by a screen        |
 | ADM-017 Badge and status system                      | VERIFIED                                              |
-| ADM-018 Tooltip, popover and command items           | TODO — arrives with ADM-034                           |
-| ADM-019 Dialog, drawer and confirmation patterns     | TODO — arrives with ADM-077                           |
+| ADM-018 Tooltip, popover and command items           | VERIFIED — palette command items                      |
+| ADM-019 Dialog, drawer and confirmation patterns     | DONE — scrim + raised dialog shipped with the palette |
 | ADM-020 Tables and entity rows                       | VERIFIED — incl. mobile card transformation           |
 | ADM-021 Cards, metrics and chart containers          | DONE — charts not yet required                        |
 | ADM-022 Skeleton, empty, error and permission states | VERIFIED                                              |
@@ -61,34 +61,35 @@ plus `components/admin/**`. Evidence: `qa/control/*.png`.
 | ADM-031 Global rail                            | VERIFIED                                                 |
 | ADM-032 Contextual sidebar                     | VERIFIED                                                 |
 | ADM-033 Command bar                            | VERIFIED                                                 |
-| ADM-034 Command palette                        | TODO — the search control is disabled and says so        |
+| ADM-034 Command palette                        | VERIFIED — Ctrl/Cmd+K, permission-filtered search        |
 | ADM-035 Site and event switchers               | DONE — one site is provisioned; the control states it    |
 | ADM-036 Notification panel                     | VERIFIED — honest empty state, no source connected (P-2) |
 | ADM-037 Mobile shell                           | VERIFIED — captures at 390 with zero page overflow       |
 | ADM-038 Login                                  | VERIFIED                                                 |
-| ADM-039/040/041/042 Reset, invite, expiry, MFA | BLOCKED on P-1 — needs Supabase Auth                     |
+| ADM-041 Session expiry                         | VERIFIED — expired is distinguished and explained        |
+| ADM-039/040/042 Reset, invite, MFA             | BLOCKED on P-1 — need an identity provider               |
 | ADM-043 Role-aware route guard                 | VERIFIED — `lib/admin/session.ts`                        |
 | ADM-044 Access denied                          | VERIFIED — names the missing permission                  |
-| ADM-045 First-run onboarding                   | TODO                                                     |
-| ADM-046 Auth browser journey suite             | VERIFIED — `integration.spec.ts`                         |
+| ADM-045 First-run onboarding                   | VERIFIED — states real counts and what is NOT connected  |
+| ADM-046 Auth browser journey suite             | VERIFIED — `control-auth.spec.ts` 6/6 + `integration`    |
 
 ## WAVE 3 — PUBLIC ACQUISITION VERTICAL SLICE
 
-| ID                                                | Status                                                 |
-| ------------------------------------------------- | ------------------------------------------------------ |
-| ADM-050 Form-definition repository adapter        | VERIFIED — `lib/spimar/exhibitor-form.ts`, versioned   |
-| ADM-051 Public exhibitor form connected to schema | VERIFIED — `/exposer`                                  |
-| ADM-052 Consent version capture                   | VERIFIED — notice version stored per submission        |
-| ADM-053 Attribution context capture               | VERIFIED — captured at submission, never inferred      |
-| ADM-054 Idempotent durable submission             | VERIFIED — replay returns the original records         |
-| ADM-055 Contact and organization deduplication    | VERIFIED                                               |
-| ADM-056 Lead creation or duplicate linkage        | VERIFIED — disposition returned, never inferred        |
-| ADM-057 Queue and owner assignment                | VERIFIED — written in the same transaction (ADR-A5)    |
-| ADM-058 Initial activity and follow-up task       | VERIFIED — same transaction                            |
-| ADM-059 Durable acknowledgement screen            | VERIFIED — speaks only about the stored record         |
-| ADM-060 Public reference status screen            | VERIFIED — `/suivi`, coarse status, no PII             |
-| ADM-061 Full exhibitor enquiry browser test       | VERIFIED — `exhibitor-slice.spec.ts` 4/4               |
-| ADM-062 Negative and retry cases                  | VERIFIED — invalid, consent-refused, unknown reference |
+| ID                                                | Status                                                     |
+| ------------------------------------------------- | ---------------------------------------------------------- |
+| ADM-050 Form-definition repository adapter        | VERIFIED — `lib/spimar/exhibitor-form.ts`, versioned       |
+| ADM-051 Public exhibitor form connected to schema | VERIFIED — the shipped form at `/exposer/devenir-exposant` |
+| ADM-052 Consent version capture                   | VERIFIED — notice version stored per submission            |
+| ADM-053 Attribution context capture               | VERIFIED — captured at submission, never inferred          |
+| ADM-054 Idempotent durable submission             | VERIFIED — replay returns the original records             |
+| ADM-055 Contact and organization deduplication    | VERIFIED                                                   |
+| ADM-056 Lead creation or duplicate linkage        | VERIFIED — disposition returned, never inferred            |
+| ADM-057 Queue and owner assignment                | VERIFIED — written in the same transaction (ADR-A5)        |
+| ADM-058 Initial activity and follow-up task       | VERIFIED — same transaction                                |
+| ADM-059 Durable acknowledgement screen            | VERIFIED — speaks only about the stored record             |
+| ADM-060 Public reference status screen            | VERIFIED — `/suivi`, coarse status, no PII                 |
+| ADM-061 Full exhibitor enquiry browser test       | VERIFIED — `exhibitor-slice.spec.ts` 3/3                   |
+| ADM-062 Negative and retry cases                  | VERIFIED — invalid, consent-refused, unknown reference     |
 
 **Exit gate: PASSED.**
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { login } from "@/app/actions/cms";
 import { SpimarMark } from "@/components/admin/icons";
 
@@ -10,6 +11,10 @@ import { SpimarMark } from "@/components/admin/icons";
    disclose which was wrong. */
 export default function LoginPage() {
   const [state, action, pending] = useActionState(login, null);
+  /* `?expired=1` is set by the route guard when a session timed out. Saying so
+     is the point: an operator who was working should learn why they are back
+     at sign-in rather than assume the console lost their work. */
+  const expired = useSearchParams().get("expired") === "1";
 
   return (
     <div className="gate__panel">
@@ -25,6 +30,13 @@ export default function LoginPage() {
       <p className="lede" style={{ marginBlockEnd: 28 }}>
         Accès à la console d’administration, au CRM et au CMS.
       </p>
+
+      {expired && !state ? (
+        <div className="notice notice--warning" role="status" style={{ marginBlockEnd: 20 }}>
+          Votre session a expiré après huit heures d’inactivité. Reconnectez-vous pour reprendre —
+          rien de ce que vous avez enregistré n’a été perdu.
+        </div>
+      ) : null}
 
       {state && !state.ok ? (
         <div className="notice notice--error" role="alert" style={{ marginBlockEnd: 20 }}>
