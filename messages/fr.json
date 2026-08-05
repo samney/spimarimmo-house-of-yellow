@@ -322,7 +322,12 @@
         "opportunities": "Opportunités"
       },
       "companyLabel": "Société {letter}",
-      "nav": ["Projets", "À propos", "Actualités", "Contact"],
+      "nav": [
+        "Projets",
+        "À propos",
+        "Actualités",
+        "Contact"
+      ],
       "navCta": "Nous rencontrer",
       "projectsTitle": "Nos projets",
       "projects": [
@@ -346,7 +351,11 @@
       "sponsored": "Sponsorisé",
       "postCaption": "Investissez au Maroc, progressez à l’international.",
       "postCta": "En savoir plus",
-      "postActions": ["J’aime", "Commenter", "Partager"],
+      "postActions": [
+        "J’aime",
+        "Commenter",
+        "Partager"
+      ],
       "inviteTitle": "Invitation privée",
       "inviteSub": "Salon international de l’immobilier",
       "live": "EN DIRECT",
@@ -1073,5 +1082,39 @@
     "rateLimited": "Trop de demandes envoyées depuis cet appareil. Réessayez dans quelques minutes.",
     "error": "L'envoi n'a pas abouti. Réessayez ou écrivez directement à contact@spimarimmo.com.",
     "invalid": "Certaines informations sont incomplètes. Corrigez les champs signalés."
+  },
+  "pourquoiSpimar": {
+    "label": "Pourquoi SPIMAR",
+    "statement": "Le partenaire de référence des promoteurs immobiliers marocains à l'international.",
+    "pending": "Les chiffres clés — salons organisés, visiteurs accueillis, exposants accompagnés — sont publiés avec leur période et leur source."
+  },
+  "visiteurs": {
+    "label": "Visiteurs",
+    "statement": "Trouvez le salon de votre ville, découvrez le programme et préparez vos rendez-vous.",
+    "pending": "La pré-inscription ouvre avec le calendrier des éditions.",
+    "actionLabel": "Trouver un salon"
+  },
+  "confidentialite": {
+    "label": "Confidentialité",
+    "statement": "Protection des données et politique de confidentialité.",
+    "pending": "Responsable de traitement, finalités, durées de conservation et exercice des droits RGPD sont publiés après validation juridique.",
+    "actionLabel": "Préférences cookies"
+  },
+  "mentionsLegales": {
+    "label": "Mentions légales",
+    "statement": "Informations légales de SPIMARIMMO.",
+    "pending": "Éditeur, hébergeur, immatriculation et directeur de la publication sont publiés après validation juridique. Aucune mention légale n'est rédigée sans vérification.",
+    "actionLabel": "Contact"
+  },
+  "exposerHub": {
+    "label": "Exposer",
+    "statement": "Une clientèle qualifiée, une présence internationale, des campagnes massives et un accompagnement complet.",
+    "pending": "Le détail des offres, des surfaces et des conditions de réservation est publié après validation commerciale."
+  },
+  "contactPage": {
+    "label": "Contact",
+    "statement": "Parlez à un conseiller SPIMARIMMO.",
+    "pending": "Chaque demande est enregistrée et suivie par un conseiller. La prise de rendez-vous en ligne ouvre avec le raccordement du CRM.",
+    "directTitle": "Nous joindre directement"
   }
 }

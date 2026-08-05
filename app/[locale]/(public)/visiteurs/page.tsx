@@ -1,18 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/page-metadata";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SpimarStandingPage } from "@/components/public/pages/SpimarStandingPage";
-
-/* One source for the page's copy: the component renders it and
-   `generateMetadata` describes it, so the title and the heading can
-   never drift apart. Moves into `messages` with the Phase P rewrite. */
-const PAGE = {
-  index: "18",
-  label: "Visiteurs",
-  statement: "Trouvez le salon de votre ville, découvrez le programme et préparez vos rendez-vous.",
-  pending: "La pré-inscription ouvre avec le calendrier des éditions.",
-  action: { href: "/salons", label: "Trouver un salon" },
-} as const;
 
 export async function generateMetadata({
   params,
@@ -20,9 +9,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "visiteurs" });
   return buildMetadata({
-    label: PAGE.label,
-    description: PAGE.pending,
+    label: t("label"),
+    description: t("pending"),
     path: "/visiteurs",
     locale,
   });
@@ -31,5 +21,14 @@ export async function generateMetadata({
 export default async function Visiteurs({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <SpimarStandingPage {...PAGE} />;
+  const t = await getTranslations("visiteurs");
+  return (
+    <SpimarStandingPage
+      index="18"
+      label={t("label")}
+      statement={t("statement")}
+      pending={t("pending")}
+      action={{ href: "/salons", label: t("actionLabel") }}
+    />
+  );
 }

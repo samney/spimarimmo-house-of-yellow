@@ -322,7 +322,12 @@
         "opportunities": "Opportunities"
       },
       "companyLabel": "Company {letter}",
-      "nav": ["Projects", "About", "News", "Contact"],
+      "nav": [
+        "Projects",
+        "About",
+        "News",
+        "Contact"
+      ],
       "navCta": "Meet us",
       "projectsTitle": "Our projects",
       "projects": [
@@ -346,7 +351,11 @@
       "sponsored": "Sponsored",
       "postCaption": "Invest in Morocco, grow internationally.",
       "postCta": "Learn more",
-      "postActions": ["Like", "Comment", "Share"],
+      "postActions": [
+        "Like",
+        "Comment",
+        "Share"
+      ],
       "inviteTitle": "Private invitation",
       "inviteSub": "International real-estate show",
       "live": "LIVE",
@@ -1073,5 +1082,39 @@
     "rateLimited": "Too many enquiries from this device. Please try again in a few minutes.",
     "error": "The enquiry could not be sent. Please try again or write to contact@spimarimmo.com.",
     "invalid": "Some information is incomplete. Please correct the highlighted fields."
+  },
+  "pourquoiSpimar": {
+    "label": "Why SPIMAR",
+    "statement": "The reference partner for Moroccan property developers abroad.",
+    "pending": "Key figures — exhibitions held, visitors welcomed, exhibitors supported — are published with their period and their source."
+  },
+  "visiteurs": {
+    "label": "Visitors",
+    "statement": "Find the exhibition in your city, discover the programme and prepare your meetings.",
+    "pending": "Pre-registration opens with the calendar of editions.",
+    "actionLabel": "Find an exhibition"
+  },
+  "confidentialite": {
+    "label": "Privacy",
+    "statement": "Data protection and privacy policy.",
+    "pending": "The data controller, purposes, retention periods and how to exercise GDPR rights are published after legal validation.",
+    "actionLabel": "Cookie preferences"
+  },
+  "mentionsLegales": {
+    "label": "Legal notice",
+    "statement": "Legal information for SPIMARIMMO.",
+    "pending": "Publisher, host, registration and publication director are published after legal validation. No legal notice is written without verification.",
+    "actionLabel": "Contact"
+  },
+  "exposerHub": {
+    "label": "Exhibit",
+    "statement": "A qualified audience, an international presence, large-scale campaigns and complete support.",
+    "pending": "Details of the packages, floor space and booking conditions are published after commercial validation."
+  },
+  "contactPage": {
+    "label": "Contact",
+    "statement": "Talk to a SPIMARIMMO adviser.",
+    "pending": "Every enquiry is recorded and followed up by an adviser. Online appointment booking opens with the CRM connection.",
+    "directTitle": "Reach us directly"
   }
 }
