@@ -193,6 +193,22 @@ test("an editor cannot publish, and the server enforces it", async ({ page }) =>
 
 test("an editor cannot export CRM data — crm.export is not granted", async ({ page }) => {
   await signIn(page, EDITOR);
-  const response = await page.request.get("/admin/crm/leads/export", { maxRedirects: 0 });
-  expect(response.status()).toBe(403);
+
+  /* Navigated, not fetched: `page.request` uses a separate context that does
+     not carry the session cookie, so it would report 401 for every caller and
+     prove nothing about the permission. A navigation carries the real session,
+     which is what makes the 403 meaningful. */
+  const response = await page.goto("/admin/crm/leads/export");
+  expect(response?.status()).toBe(403);
+  await expect(page.getByText(/cannot export/i)).toBeVisible();
+});
+
+test("an admin can export, and the download is a real CSV", async ({ page }) => {
+  await signIn(page, ADMIN);
+  await page.goto("/admin/crm/leads");
+
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Exporter en CSV" }).click();
+  const file = await download;
+  expect(file.suggestedFilename()).toMatch(/^spimar-leads-\d{4}-\d{2}-\d{2}\.csv$/);
 });
