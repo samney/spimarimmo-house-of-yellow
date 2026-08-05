@@ -1236,3 +1236,40 @@ list, so it is now protected from regressing rather than merely tolerated. The
 loose-hex baseline drops **112 → 102**; the remainder is `why-exhibit.css` (57),
 `method.css` (21), `visibility.css` (20) and three single-hex files, all held by
 a parallel session.
+
+## D-037 — Component inventory: three orphans, and duplication caused by a rule
+
+**Date:** 2026-08-05 · **Scope:** `D-04`, `D-06` · **Status:** implemented
+
+Eight components are genuinely shared (`Marquee` 10 imports, `SectionEyebrow` 8,
+`PageHeader` 7, `SplitTitle` 7, `SpimarStandingPage` 6, `Reveal` 5,
+`ResilientVideo` 2, plus the global `.button`). Three ship mounted nowhere.
+
+**`ContactForm` is the significant one.** It is complete and hardened — client
+and server Zod, honeypot, rate limiting, `aria-live` status, floating labels,
+success and error states — and imported by nothing, while `/contact` renders a
+standing page saying the form "opens with the CRM connection".
+
+It would be easy to read that as an oversight and simply mount it. It is not.
+`submitContact` persists via `storeSubmission`, which appends to a local
+`.data/contact-submissions.jsonl` — durable on one machine, ephemeral on a
+serverless deployment where instances share no filesystem. Mounting it today
+would report success to a visitor after a write that does not survive, which the
+contract forbids outright. **The blocker is `P-1` (link the store to Supabase),
+not the wiring.** Recorded so the next session does not "fix" it by connecting a
+form to a store that drops submissions.
+
+`PageMedia` and `Counter` are the other two; `Counter` additionally renders
+`{prefix}0`, so a script failure shows a literal "0" where a figure belongs.
+
+**On duplication.** 55 distinct `Title` classes, 47 `Head`, 39 `Card`, 37
+`Label`. This is produced by a rule, not by carelessness: the contract mandates
+a unique class prefix per section, which prevents collisions and guarantees that
+every section re-solves card, panel, pill and badge from scratch. Each re-solve
+then picks its own colour — which is precisely where the 102 loose hexes of
+D-035 come from. The convention is sound; what is missing beneath it is a shared
+layer for the few genuinely repeating shapes.
+
+Deliberately **not** proposing a refactor of 39 card classes. The reference
+exists so a new section starts from the shared set instead of a blank
+stylesheet, which is the cheap half of the fix.
