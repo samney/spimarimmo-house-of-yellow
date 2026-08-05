@@ -12,7 +12,6 @@
     "home": "Accueil",
     "methode": "Méthode",
     "visibilite": "Visibilité",
-    "offres": "Offres",
     "blog": "Blog",
     "faq": "FAQ",
     "bibliotheque": "Bibliothèque",
@@ -22,7 +21,8 @@
       "linkedin": "LinkedIn"
     },
     "ressourcesExposants": "Ressources exposants",
-    "galerie": "Galerie"
+    "galerie": "Galerie",
+    "whatsapp": "Nous écrire sur WhatsApp"
   },
   "impact": {
     "eyebrow": "Chiffres clés",

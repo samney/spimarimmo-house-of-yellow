@@ -708,14 +708,17 @@ footer .bottomFooter a {
     text-decoration: none;
   }
   .stickyWhatsappButton {
-    width: 10.345vw;
-    height: 10.345vw;
-    left: calc(100vw - 14.05vw);
+    /* 10.345vw is 40px at 390 — under the 44px touch minimum, so the vw sizing
+       gets a floor here rather than a new breakpoint. */
+    width: max(10.345vw, 48px);
+    height: max(10.345vw, 48px);
+    left: auto;
+    right: 3.704vw;
     bottom: 3.704vw;
   }
   .stickyWhatsappButton .icon svg {
-    width: 6.897vw;
-    height: 6.897vw;
+    width: max(6.897vw, 24px);
+    height: max(6.897vw, 24px);
   }
   footer {
     position: relative;
@@ -862,17 +865,52 @@ header .menu .subMenu a:focus-visible {
 .headerSocials .socialLink {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  width: 2.08vw;
+  min-width: 30px;
+  height: 2.08vw;
+  min-height: 30px;
+  border-radius: 50%;
   color: inherit;
+  transition:
+    color var(--dur-micro) var(--ease-out-ref),
+    background-color var(--dur-micro) var(--ease-out-ref);
 }
+a.socialLink:hover {
+  background: rgb(255 255 255 / 12%);
+  color: var(--action-primary);
+}
+a.socialLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+/* Pending, not hidden: the mark keeps the bar's own colour so it stays legible
+   on the dark hero and on paper, and the tooltip says why it is inert. 0.45
+   rendered it as a ghost. */
 .headerSocials .socialLink.isPending {
-  opacity: 0.45;
+  opacity: 0.72;
   cursor: default;
 }
 .headerSocials .socialLink svg {
-  width: 1.15vw;
-  height: 1.15vw;
-  min-width: 14px;
-  min-height: 14px;
+  width: 1.35vw;
+  height: 1.35vw;
+  min-width: 18px;
+  min-height: 18px;
+}
+
+/* Inside the mobile menu the row is a normal block, not a bar item. */
+.headerSocials.isMobile {
+  gap: 2.4vw;
+  margin: 4vw 0 0;
+}
+.headerSocials.isMobile .socialLink {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-subtle);
+}
+.headerSocials.isMobile .socialLink svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* Anchored homepage sections land below the fixed bar, not underneath it. */
@@ -882,7 +920,8 @@ header .menu .subMenu a:focus-visible {
 }
 
 @media (max-width: 1023px) {
-  .headerSocials {
+  /* The bar has no room for them below 1024; the mobile menu carries them. */
+  .right > .headerSocials {
     display: none;
   }
 }

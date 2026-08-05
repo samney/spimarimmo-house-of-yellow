@@ -809,3 +809,39 @@ but it should be reconciled.
 to this section rather than fixed in `.button` globally — the global rule's
 `line-height: 4.167vw` collapses to ~16px at 390 for every section that uses it.
 That is a site-wide fix and a separate slice; this entry raises it.
+
+## D-027 — 2026-08-05 — Header chrome: Offres out of the nav, WhatsApp back, socials legible
+
+**Authority.** Repository-owner direction in session.
+
+**Decisions.**
+
+- **Offres leaves the top-level nav.** The route stays alive and linked — the
+  FAQ answer and the section-03 CTA both point at it — it simply is not a
+  top-level destination. The now-orphaned `nav.offres` key is removed from both
+  locales.
+- **The floating WhatsApp action is restored**, reversing the note in the
+  public layout that it "stays removed with the rest of the reference product".
+  It points at SPIMARIMMO's own published line, the same number the header's
+  mobile menu already dials, so no contact detail is invented. The number,
+  display form and e-mail now live in `lib/spimar/contact-details.ts` and the
+  footer reads them from there, so the two can no longer drift. Clearing
+  `WHATSAPP_NUMBER` removes the button rather than leaving a dead target.
+  It is a plain link, not a third-party script widget: no embed, no tracking,
+  and it works without JavaScript.
+- **Social marks are legible.** They were rendering at `opacity: 0.45` in an
+  18px box — a ghost on the dark hero. They now sit in a 30px round target with
+  an 18px glyph at 0.72 opacity, gain a hover/focus treatment when live, and
+  appear inside the mobile menu (44px targets) instead of vanishing below
+  1024px. The pending state is unchanged in substance: `SOCIALS` still carries
+  no invented URL, and supplying an `href` is all it takes to turn one live.
+
+**Defect found and fixed in the same slice.** `WhatsAppButton` was first
+written as a server component calling `useTranslations`. On the not-found
+boundary there is no request locale, so the whole render failed with
+`DYNAMIC_SERVER_USAGE` and the 404 page lost its `lang` and `title` — two
+serious Axe violations. It is a client component now, reading its label from
+the same provider the header uses.
+
+**Still owner-blocked.** Real Instagram and LinkedIn URLs. Until they arrive the
+marks stay inert by design.

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { SpimarWordmark, PlusIcon, InstagramIcon, LinkedInIcon } from "./logos";
 import { Marquee } from "@/components/primitives/motion/Marquee";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_DISPLAY } from "@/lib/spimar/contact-details";
 
 /* Global header — specification §04.
 
@@ -30,8 +31,11 @@ type NavItem = { href: string; key: string; children?: readonly NavChild[] };
 /* Owner nav contract (2026-08-04): Home first; Exposer's children ANCHOR to
    the homepage sections (the child routes stay alive for deep links); the
    primary CTA button covers Devenir exposant, so it leaves the dropdown;
-   Offres is a top-level item before Ressources, landing on the full-detail
-   page; Ressources keeps its standalone pages. */
+   Ressources keeps its standalone pages.
+
+   Offres left the bar on 2026-08-05 (owner direction). The route stays alive
+   and reachable — the FAQ and the section-03 CTA both link to it — it simply
+   is not a top-level destination. */
 const NAV: readonly NavItem[] = [
   { href: "/", key: "home" },
   { href: "/salons", key: "salons" },
@@ -45,7 +49,6 @@ const NAV: readonly NavItem[] = [
     ],
   },
   { href: "/etudes-de-cas", key: "etudesDeCas" },
-  { href: "/exposer/offres", key: "offres" },
   {
     href: "/ressources",
     key: "ressources",
@@ -70,6 +73,44 @@ const SOCIALS: readonly { key: "instagram" | "linkedin"; href: string | null }[]
 /* §07 primary conversion. The brochure is the deliberately lighter secondary
    action and lives in the hero, not the header. */
 const PRIMARY_CTA = "/exposer/devenir-exposant";
+
+/* The social row, used in the bar and again inside the mobile menu so the
+   links do not simply vanish below 1024px.
+
+   Pending state stays honest — no invented URLs — but it is now legible rather
+   than a 45% ghost: the mark keeps the header's own colour at a readable
+   opacity, and the tooltip says why it is inert. Supplying an href in SOCIALS
+   is all it takes to turn one live. */
+function HeaderSocials({ t, className }: { t: (key: string) => string; className?: string }) {
+  return (
+    <div className={`headerSocials${className ? ` ${className}` : ""}`}>
+      {SOCIALS.map((social) => {
+        const mark = social.key === "instagram" ? <InstagramIcon /> : <LinkedInIcon />;
+        return social.href ? (
+          <a
+            key={social.key}
+            className="socialLink"
+            href={social.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={t(`socials.${social.key}`)}
+          >
+            {mark}
+          </a>
+        ) : (
+          <span
+            key={social.key}
+            className="socialLink isPending"
+            title={t("socialsPending")}
+            aria-hidden="true"
+          >
+            {mark}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -187,31 +228,7 @@ export function SiteHeader() {
             </div>
           </div>
           <div className="right">
-            <div className="headerSocials">
-              {SOCIALS.map((social) =>
-                social.href ? (
-                  <a
-                    key={social.key}
-                    className="socialLink"
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={t(`socials.${social.key}`)}
-                  >
-                    {social.key === "instagram" ? <InstagramIcon /> : <LinkedInIcon />}
-                  </a>
-                ) : (
-                  <span
-                    key={social.key}
-                    className="socialLink isPending"
-                    title={t("socialsPending")}
-                    aria-hidden="true"
-                  >
-                    {social.key === "instagram" ? <InstagramIcon /> : <LinkedInIcon />}
-                  </span>
-                ),
-              )}
-            </div>
+            <HeaderSocials t={t} />
             <div className="buttons">
               <Link className="button" href={PRIMARY_CTA} title={t("becomeExhibitor")}>
                 <span className="label">
@@ -276,6 +293,7 @@ export function SiteHeader() {
               </li>
             </ul>
           </nav>
+          <HeaderSocials t={t} className="isMobile" />
           <div className="footerCols">
             {/* Contact details are SPIMARIMMO's own published facts. No postal
                 address has been supplied, so none is shown. */}
@@ -283,9 +301,9 @@ export function SiteHeader() {
               <div className="colTitle">{t("contact")}</div>
               <div className="text">
                 <p>
-                  <a href="tel:+212661903190">+212 661 903 190</a>
+                  <a href={`tel:${CONTACT_PHONE}`}>{CONTACT_PHONE_DISPLAY}</a>
                   <br />
-                  <a href="mailto:contact@spimarimmo.com">contact@spimarimmo.com</a>
+                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
                 </p>
               </div>
             </div>
