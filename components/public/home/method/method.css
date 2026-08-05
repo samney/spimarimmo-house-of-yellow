@@ -631,7 +631,11 @@
    receive a readable stacked fallback rather than a broken absolute layout. */
 @media (max-width: 1279px) {
   .methodSection {
-    --method-u: 0.078125vw; /* 1 reference px at 1280 */
+    /* Below the desktop regime the composition changes shape rather than
+       shrinking, so both grids collapse to the same restated pixel and the
+       viewport-height cap is dropped — the stage is auto-height here. */
+    --method-pu: 0.078125vw; /* 1 reference px at 1280 */
+    --method-u: 0.078125vw;
   }
 }
 @media (max-width: 1023px) {
@@ -671,12 +675,32 @@
     margin: 0 0 5vw;
     transform: none;
   }
+  .methodIntro__eyebrow {
+    font-size: 2.4vw;
+    gap: 2vw;
+  }
+  .methodStage__etape {
+    font-size: 2vw;
+  }
   .methodRail {
     flex-direction: row;
     gap: 6vw;
   }
   .methodRail::before {
     display: none;
+  }
+  /* The desktop rail staggers items 2 and 3 down the vertical rule; in the
+     horizontal mobile rail those offsets read as a diagonal. */
+  .methodRail__item:nth-child(2),
+  .methodRail__item:nth-child(3) {
+    inset-block-start: auto;
+    margin-block-start: 0;
+  }
+  .methodRail__num {
+    font-size: 4vw;
+  }
+  .methodRail__label {
+    font-size: 2vw;
   }
   /* The dossier stays the dominant figure and keeps its aspect ratio; only
      the absolute anchoring is dropped (repair v2 MOTION_RESPONSIVE.md). */
@@ -711,9 +735,41 @@
   .methodDeliverables {
     inline-size: auto;
   }
+  .methodDeliverables__heading {
+    font-size: 2.4vw;
+    margin-block-end: 3vw;
+  }
   .methodCard {
     block-size: auto;
+    gap: 3vw;
     padding-block: 2.4vw;
+    padding-inline: 3vw;
+    border-radius: 2vw;
+  }
+  /* Without these the card contents stay on the desktop reference pixel and
+     render at ~4px — legible only on a 1280 stage, not on a phone. */
+  .methodCard__thumb {
+    inline-size: 16vw;
+    block-size: 13vw;
+    border-radius: 1.4vw;
+  }
+  .methodCard__title {
+    font-size: 3vw;
+    white-space: normal;
+  }
+  .methodCard__status {
+    font-size: 2.4vw;
+    gap: 1.6vw;
+  }
+  .methodCard__statusIcon {
+    inline-size: 3vw;
+    block-size: 3vw;
+    font-size: 2vw;
+  }
+  .methodDeliverables__annotation {
+    margin-block-start: 3vw;
+    font-size: 2.4vw;
+    padding-block-end: 1.6vw;
   }
   .methodConnectors {
     display: none;
@@ -726,11 +782,32 @@
   .methodJourney__track {
     display: none;
   }
+  /* Three absolutely-placed steps on one row overflow the stage below ~700px
+     and the last label ("03 TRANSFORMER") is clipped by the stage's overflow.
+     Let them flow and wrap instead.
+
+     Written with non-initial values on purpose: the build's CSS optimizer
+     drops declarations whose value is the property's initial one, so
+     `position: static` / `inset: auto` / `transform: none` are silently
+     removed and the desktop absolute placement survives. `relative` + an
+     explicit `0` offset expresses the same reset and actually ships.
+
+     The per-child selectors are repeated because `:nth-child()` outranks the
+     bare class, so the desktop offsets would otherwise still win. */
   .methodJourney__steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw 5vw;
     margin-inline-end: 0;
     inline-size: 100%;
+    block-size: auto;
   }
-  .methodJourney__step {
+  .methodJourney__step,
+  .methodJourney__step:nth-child(1),
+  .methodJourney__step:nth-child(2),
+  .methodJourney__step:nth-child(3) {
+    position: relative;
+    inset-inline-start: 0;
     font-size: 2.2vw;
   }
   .methodJourney__next {

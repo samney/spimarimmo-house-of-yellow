@@ -2,17 +2,24 @@ import Image from "next/image";
 import type { MethodPhase } from "./method-types";
 
 /* Connector geometry in the stage's own 1486 × 712 reference space. The SVG
-   keeps that viewBox and stretches to the rendered stage, so these stay valid
-   after the section was inset to the 1436-wide page rhythm.
+   keeps that viewBox and stretches to the rendered stage — uniformly, since
+   1436/1486 and 688/712 are the same ratio — so these stay valid after the
+   section was inset to the 1436-wide page rhythm.
 
-   All four values are measured off the live DOM, not guessed: card centres sit
-   at y 130/249/368/487 and the cards' left edge at x 1160. `DOSSIER_EDGE` is
-   the dossier figure's right edge (x 1107) — it must not sit inside the
-   artwork, or the gold paths are drawn across the pen and the paper stack. */
+   Card centres (y) and the cards' left edge (x) are measured off the live DOM.
+
+   `DOSSIER_ANCHOR` deliberately sits *inside* the figure's right margin rather
+   than on its outer edge: the artwork carries its own gold nodes and dashes
+   there, and the DOM paths have to meet them or the folder reads as unlinked
+   from the deliverables. Anchoring to the outer edge (1107) leaves a dead gap. */
 const CARD_CENTERS = [130, 249, 368, 487];
-const CARD_LEFT = 1160;
-const DOSSIER_EDGE = 1107;
-const SPINE_X = 1134;
+const CARD_LEFT = 1159;
+const DOSSIER_ANCHOR = 1064;
+const SPINE_X = 1122;
+/* Vertical drop from a card's centre to where its path leaves the dossier —
+   what gives the network its staircase read instead of four parallel rules. */
+const ANCHOR_DROP = 18;
+const NODE_R = 4;
 
 /* Right-hand deliverable stack: four ivory cards, each carrying the supplied
    112 × 80 preview artwork for that deliverable (repair v2 ASSET_MANIFEST.md —
@@ -34,10 +41,11 @@ export function MethodDeliverables({ phase }: { phase: MethodPhase }) {
       >
         {CARD_CENTERS.map((y, i) => (
           <g key={i}>
-            <path
-              d={`M ${DOSSIER_EDGE} ${y + 18} L ${SPINE_X} ${y + 18} L ${SPINE_X} ${y} L ${CARD_LEFT} ${y}`}
-            />
-            <circle cx={DOSSIER_EDGE} cy={y + 18} r="3.5" />
+            <path d={`M ${DOSSIER_ANCHOR} ${y + ANCHOR_DROP} H ${SPINE_X} V ${y} H ${CARD_LEFT}`} />
+            {/* A node at each end, as in the reference: the run has to read as
+                a link between two objects, not as a line trailing off. */}
+            <circle cx={DOSSIER_ANCHOR} cy={y + ANCHOR_DROP} r={NODE_R} />
+            <circle cx={CARD_LEFT} cy={y} r={NODE_R} />
           </g>
         ))}
       </svg>
