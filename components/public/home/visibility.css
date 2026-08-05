@@ -1315,11 +1315,14 @@
 .visStripPlay {
   align-items: center;
   background: rgb(10 12 15 / 88%);
-  block-size: 2.6vw;
-  border: 0.12vw solid var(--action-primary);
+  /* ~65% of the strip's height, as the reference sets it. At 2.6vw it read as
+     an afterthought pinned to the edge rather than the control that opens the
+     captured content. */
+  block-size: 4.4vw;
+  border: 0.14vw solid var(--action-primary);
   border-radius: 50%;
   display: flex;
-  inline-size: 2.6vw;
+  inline-size: 4.4vw;
   inset-block-start: 50%;
   inset-inline-start: 0;
   justify-content: center;
@@ -1329,9 +1332,9 @@
 }
 
 .visStripPlayIcon {
-  block-size: 1vw;
+  block-size: 1.7vw;
   color: var(--spimar-white);
-  inline-size: 1vw;
+  inline-size: 1.7vw;
 }
 
 .visStripCell {

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon, VisitorsIcon } from "./impactIcons";
+import { PlaySolidIcon } from "./proofIcons";
 import {
   BarsIcon,
   BulbIcon,
@@ -524,8 +525,12 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
 
             {/* Film strip, shared: the captured-content band from the mocks. */}
             <div className="visStrip" aria-hidden="true">
+              {/* A solid triangle, not the badge glyph: the badge is a marker
+                  that says "this is video", which is right in a deliverable
+                  tile. Here the ring already carries that, so the reference
+                  puts a plain play mark inside it. */}
               <span className="visStripPlay">
-                <PlayBadgeIcon className="visStripPlayIcon" />
+                <PlaySolidIcon className="visStripPlayIcon" />
               </span>
               {STRIP_IMAGES[phase.key].map((src, i) => (
                 <span className="visStripCell" key={i}>
