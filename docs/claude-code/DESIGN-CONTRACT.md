@@ -14,15 +14,33 @@ All colors, type, spacing, radii come from the L2 layer in `app/globals.css`:
 (vw). A component may declare an L3 token derived beside it (commented) —
 never a loose hex in a rule.
 
+**An L3 token derives from L2; it does not restate a value.** `--why-panel:
+color-mix(in srgb, var(--surface-raised) 92%, var(--spimar-ink))` is an L3
+token. `--why-panel: #f3efe8` is a loose hex with a longer name, and it breaks
+the one property the layer exists for: re-pointing `--spimar-gold` must re-skin
+the product. Measured 2026-08-05, only **16%** of L3 properties actually
+derived from L2 and **112** loose hexes sat outside `globals.css`, so this rule
+is now enforced by `tests/design-system/token-layers.test.ts` against a
+recorded baseline — the count may fall, never rise. Audit:
+[`DESIGN-SYSTEM-AUDIT.md`](DESIGN-SYSTEM-AUDIT.md).
+
 ## Section anatomy (the repeating skeleton)
 
 - `<section class="xxxSection">` on `--surface-page`, padding
   `var(--space-xl) var(--space-gutter)`; inner wrapper `max-width: 95vw`.
-- Header: gold eyebrow `[ NN ] LABEL` (`--action-primary`, `--text-support`,
-  uppercase, letter-spacing 0.18em, `tabular-nums` index), bold title
-  (`--text-heading-lg`, weight 600, line-height 1.1, `text-wrap: balance`,
-  max-width tuned for a two-line break), lead (`--text-small-title`,
-  weight 400).
+- Header: gold eyebrow `[ NN ] LABEL` — `--spimar-gold-text` on paper,
+  `--action-primary` only via `.isInverse` on dark surfaces; `--text-support`,
+  weight 600, uppercase, letter-spacing **0.14em**, `tabular-nums` index. The
+  bright gold is not an option on paper: it measures 1.49:1 there and fails AA
+  at this size. Then a bold title (`--text-heading-lg`, weight 600,
+  line-height 1.1, `text-wrap: balance`, max-width tuned for a two-line break)
+  and a lead (`--text-small-title`, weight 400).
+
+  Measured on the shipped build at 1920: eyebrow 16.8px/600 letter-spacing
+  2.352px, title 66.2px/600 with 72.82px line box, section padding 120px top
+  and bottom. Nine sections agree on all of it — treat a deviation as a bug in
+  the section, not a variant.
+
 - Devices sit on ONE dark rounded panel (`--surface-inverse`,
   `--radius-xl`) or raised cards (`--surface-raised` + `--border-subtle`,
   `--radius-lg/-xl`) — the paper/dark rhythm of sections 05–13.

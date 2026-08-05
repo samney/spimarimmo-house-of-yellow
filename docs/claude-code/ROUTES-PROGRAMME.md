@@ -69,10 +69,8 @@ the pointer, so it stays skimmable.
 
 ## Phase D — Design system deep dive and update
 
-- [ ] **D-01 · Extract what the homepage rebuild proved.** The section-header
-      anatomy, the elevation ladder, the depth layers (wash / grain / rings), the reference-pixel unit and its viewport-fit cap, the demo-badge pattern, the GSAP choreography shape, the honest-pending vocabulary.
-- [ ] **D-02 · Write them into `DESIGN-CONTRACT.md`** as rules with measured
-      values, so they are checkable rather than remembered.
+- [x] **D-01 · Extract what the homepage rebuild proved.** → [`DESIGN-SYSTEM-AUDIT.md`](DESIGN-SYSTEM-AUDIT.md), D-035. Measured against the production build, not inferred. The section skeleton is genuinely universal — nine `h2`s all render 66.2px/600 with a 72.82px line box, eyebrows 16.8px/600, sections 120px top and bottom. The failure is one layer down: only **16%** of L3 custom properties derive from L2, **67%** hard-code a colour, and **112** loose hexes sit outside `globals.css`. Re-pointing `--spimar-gold` today would change almost nothing, because sections carry private copies of the brand.
+- [x] **D-02 · Write them into `DESIGN-CONTRACT.md`** as rules with measured values, so they are checkable rather than remembered. → D-035. Two stale rules corrected against the shipped build (the eyebrow is `--spimar-gold-text` at `0.14em`, not `--action-primary` at `0.18em` — the bright gold measures 1.49:1 on paper and fails AA at that size), measured values recorded beside the anatomy, and the no-loose-hex rule — which already existed and had been ignored 112 times — is now enforced by `tests/design-system/token-layers.test.ts` as a ratchet.
 - [ ] **D-03 · Token audit.** Every L3 block declared in a section, promoted to
       L2 where it is used twice or more; every loose hex hunted down.
 - [ ] **D-04 · Component inventory.** What exists, what is duplicated, what

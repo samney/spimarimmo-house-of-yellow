@@ -1150,3 +1150,49 @@ been observed failing.** The marquee assertion was mutation-tested for exactly
 this reason — the reduced-motion rule was removed, the site rebuilt, and the
 spec confirmed failing (`expected "none", received "hoy-marquee"`) before the
 rule was restored.
+
+## D-035 — The design system's problem was enforcement, not rules
+
+**Date:** 2026-08-05 · **Scope:** `D-01`, `D-02` · **Status:** implemented
+
+Measured against the production build at 1920 (`DESIGN-SYSTEM-AUDIT.md`), the
+section anatomy turned out to be genuinely universal: nine `h2`s all render
+66.2px at weight 600 with a 72.82px line box, every eyebrow is 16.8px/600, and
+sections sit on 120px of vertical rhythm. The skeleton the contract describes is
+real and shipped.
+
+The failure is one layer down. Of 57 L3 custom properties, **9 derive from L2
+and 38 hard-code a colour** — and **112 loose hexes** sit in component
+stylesheets outside `globals.css`. The practical consequence: re-pointing
+`--spimar-gold` today would change almost nothing, because sections carry
+private copies of the brand. `#d79e3b`, `#f2be38`, `#b8781e`, `#d7a549`,
+`#c9902f`, `#a8813f` and `#8a6420` are all gold; none of them is _the_ gold. The
+layer that exists to make the product re-skinnable is where the drift lives.
+
+**The rule already existed.** `DESIGN-CONTRACT.md` has said "never a loose hex
+in a rule" since it was written. It was ignored 112 times because nothing
+checked, and each violation looked locally reasonable. So the response is not
+more prose — it is `tests/design-system/token-layers.test.ts`, a ratchet: the
+count may fall, never rise; a stylesheet that is clean today may not become
+dirty; and the shared route-page and primitive layers are held to **zero**,
+since a raw colour there is inherited by every page at once.
+
+The baseline is deliberately paired with a lower bound, so that paying the debt
+down _fails_ the test until the recorded number is corrected. Without that, a
+baseline silently becomes a licence.
+
+**Two contract rules were stale and have been corrected to match the site**,
+not the reverse: the eyebrow is `--spimar-gold-text` at `0.14em`, not
+`--action-primary` at `0.18em`. The bright gold measures 1.49:1 on paper and
+fails AA at eyebrow size, so the shipped value is the accessible one and the
+document was simply out of date.
+
+**The guard's own first run was wrong, and that is recorded too.** It reported
+121 by counting a hex inside a block comment in `mre.css` and a `mask-image`
+coverage stop in `spimar-pages.css` — prose that _mentions_ a colour, and an
+alpha channel that no L2 token could correctly replace. Both were fixed before
+the number was trusted or written into the contract. Same lesson as `F-07`: a
+guard is not evidence until its failures have been inspected.
+
+**Deliberately not fixed here.** Sections 03, 04 and 11 hold 98 of the 112 and
+are homepage files held by a parallel session — `D-03` works them down.
