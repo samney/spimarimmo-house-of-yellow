@@ -84,6 +84,22 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
   wired to the CRM for support and lead capture. Large; needs a scoped
   brief before estimation.
 
+## G — Route pages (worked while the homepage is held by another session)
+
+- [x] **G1 · Horizontal overflow at 390 on six content routes.** `/salons`,
+      `/etudes-de-cas`, `/ressources`, `/ressources/galerie`, `/insights` and
+      `/faq` all scrolled sideways. One cause: `shell.css` styles the bare
+      `footer` tag as the site's fixed reveal (`width: 100vw`), and the
+      in-page `<footer class="pageOutro">` inherited it, hanging past its
+      column. → `COMMIT`
+- [ ] **G2 · `header .right` overruns the bar at 390** by ~21px. It is inside
+      the fixed bar so it never scrolled the document, which is why it survived
+      the contract's overflow check — but it is still laid out off-screen.
+- [ ] **G3 · Six routes are thin stubs** (260–340 characters of body text):
+      `/visiteurs`, `/contact`, `/pourquoi-spimar`, `/exposer`,
+      `/confidentialite`, `/mentions-legales`. `/contact` has no form;
+      the two legal pages are legally thin. Likely the `D2` candidates.
+
 ## F — Debt surfaced while working
 
 - [ ] **F1 · Global `.button` collapses on mobile.** `line-height: 4.167vw` is

@@ -113,6 +113,18 @@
   color: var(--on-surface-muted);
 }
 
+/* shell.css styles the bare `footer` tag as the site's fixed yellow reveal:
+   `position: fixed; left: 0; width: 100vw`. This in-page outro is a <footer>
+   too, so it inherited that 100vw width and hung past its own column — the
+   single source of horizontal overflow at 390 on /salons, /etudes-de-cas,
+   /ressources, /ressources/galerie, /insights and /faq. `100%` ties it back to
+   the column it actually lives in. (`width: auto` would be the initial value
+   and the build strips initial-value resets.) */
+.pageOutro {
+  position: relative;
+  width: 100%;
+}
+
 .spimarListPage .pageOutro {
   margin-top: var(--space-lg);
 }
