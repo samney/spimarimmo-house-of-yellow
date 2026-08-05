@@ -85,6 +85,9 @@ Owner remarks captured directly in session — homepage and chrome punch-list
 items that are not `SPI-*` work packages — are tracked in
 [`OWNER-PUNCHLIST.md`](OWNER-PUNCHLIST.md) and closed against real commits.
 
+The ordered programme for the motion foundation, the design-system update and
+every non-home route is [`ROUTES-PROGRAMME.md`](ROUTES-PROGRAMME.md).
+
 **Queue/reality divergence (2026-08-04).** Application implementation ran ahead
 of this queue on owner-directed PRs #23–#32 while `SPI-010` was still open; the
 verified record, including an `UNRESOLVED` authorization flag, lives in

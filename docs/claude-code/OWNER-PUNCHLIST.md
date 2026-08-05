@@ -6,6 +6,11 @@ execution order, and each item here closes against a real commit.
 
 Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input.
 
+**The route, foundation and design-system work has moved into its own ordered
+programme:** [`ROUTES-PROGRAMME.md`](ROUTES-PROGRAMME.md). Items `F1`, `F2`,
+`F3`, `G3` and `D2` below are carried there as `D-05`, `D-05`, `N-05`, Phase P
+and `A-01`. This file keeps the loose homepage and chrome remarks.
+
 ---
 
 ## A — Global chrome
