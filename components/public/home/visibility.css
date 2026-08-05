@@ -1273,14 +1273,65 @@
 }
 
 /* Film strip */
+/* Actual film: a black band with sprocket perforations running along both
+   edges, not a bordered row of thumbnails. The holes are a repeating gradient
+   on the strip's own padding, so they stay evenly spaced at any width and cost
+   no extra elements.
+
+   `position: relative` anchors the play button that overlaps its left edge. */
 .visStrip {
   background: var(--spimar-ink);
-  border: 1px solid var(--border-inverse);
   border-radius: var(--radius-md);
   display: grid;
   gap: var(--space-2xs);
   grid-template-columns: repeat(4, 1fr);
-  padding: var(--space-2xs);
+  padding: 0.62vw var(--space-2xs);
+  position: relative;
+}
+
+.visStrip::before,
+.visStrip::after {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgb(255 255 255 / 34%) 0 0.34vw,
+    transparent 0.34vw 0.78vw
+  );
+  block-size: 0.26vw;
+  border-radius: 0.05vw;
+  content: "";
+  inset-inline: 0.5vw;
+  position: absolute;
+}
+.visStrip::before {
+  inset-block-start: 0.18vw;
+}
+.visStrip::after {
+  inset-block-end: 0.18vw;
+}
+
+/* The play control the reference seats on the strip's left edge, half on the
+   film and half off it. Gold ring, white triangle — the same play mark the
+   deliverable video tile uses, at the scale of the whole strip. */
+.visStripPlay {
+  align-items: center;
+  background: rgb(10 12 15 / 88%);
+  block-size: 2.6vw;
+  border: 0.12vw solid var(--action-primary);
+  border-radius: 50%;
+  display: flex;
+  inline-size: 2.6vw;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  justify-content: center;
+  position: absolute;
+  transform: translate(-45%, -50%);
+  z-index: 2;
+}
+
+.visStripPlayIcon {
+  block-size: 1vw;
+  color: var(--spimar-white);
+  inline-size: 1vw;
 }
 
 .visStripCell {

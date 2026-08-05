@@ -524,6 +524,9 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
 
             {/* Film strip, shared: the captured-content band from the mocks. */}
             <div className="visStrip" aria-hidden="true">
+              <span className="visStripPlay">
+                <PlayBadgeIcon className="visStripPlayIcon" />
+              </span>
               {STRIP_IMAGES[phase.key].map((src, i) => (
                 <span className="visStripCell" key={i}>
                   <Image src={src} alt="" fill sizes="10vw" />
