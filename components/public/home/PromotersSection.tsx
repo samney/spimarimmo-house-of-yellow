@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { GridIcon, PauseIcon, PlayIcon, PlusThinIcon } from "./promotersIcons";
+import { SectionEyebrow } from "./SectionEyebrow";
 
 /* Section 08 — Ils nous font confiance.
  *
@@ -80,9 +81,11 @@ export function PromotersSection() {
       <div className="promoInner">
         <header className="promoHeader">
           <div className="promoHeadings">
-            <p className="promoEyebrow">
-              [ <span className="promoEyebrowIndex">08</span> ] {t("eyebrow")}
-            </p>
+            {/* The shared section header, not a local re-implementation: this
+                section used to hand-roll the bracketed index and label, which
+                is how its eyebrow drifted off the site's treatment. Its ink is
+                re-tinted in CSS for the yellow surface. */}
+            <SectionEyebrow index="08" label={t("eyebrow")} />
             <h2 className="promoTitle" id="promo-title">
               {t("title")}
             </h2>
@@ -101,63 +104,62 @@ export function PromotersSection() {
           </button>
         </header>
 
-        <div className={`promoPanel${paused ? " isPaused" : ""}`}>
-          <div className="promoViewport" aria-hidden="true">
-            <div className="promoTrack">
-              <LogoBandHalf />
-              <LogoBandHalf clone />
+        {/* One stage holding both readings of the same five marks. The band
+            does not stay put and push a second list below it — it collapses as
+            the grid opens, so the carousel reads as unrolling into the grid
+            rather than spawning a duplicate of itself. Both children animate
+            on grid-template-rows, so the stage's own height carries the
+            transition and nothing jumps. */}
+        <div className="promoStage" data-expanded={expanded ? "true" : "false"}>
+          <div className={`promoBand${paused ? " isPaused" : ""}`} aria-hidden={expanded}>
+            <div className="promoBandInner">
+              <div className={`promoPanel${paused ? " isPaused" : ""}`}>
+                <div className="promoViewport" aria-hidden="true">
+                  <div className="promoTrack">
+                    <LogoBandHalf />
+                    <LogoBandHalf clone />
+                  </div>
+                </div>
+                <div className="promoProgress" aria-hidden="true">
+                  <span className="promoProgressLine" />
+                </div>
+                <button
+                  aria-pressed={paused}
+                  className="promoPauseBtn"
+                  onClick={() => setPaused((state) => !state)}
+                  tabIndex={expanded ? -1 : undefined}
+                  type="button"
+                >
+                  <span className="sr-only">{paused ? t("resume") : t("pause")}</span>
+                  {paused ? (
+                    <PlayIcon aria-hidden="true" className="promoPauseIcon" />
+                  ) : (
+                    <PauseIcon aria-hidden="true" className="promoPauseIcon" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
-          <div className="promoProgress" aria-hidden="true">
-            <span className="promoProgressLine" />
-          </div>
-          <button
-            aria-pressed={paused}
-            className="promoPauseBtn"
-            onClick={() => setPaused((state) => !state)}
-            type="button"
-          >
-            <span className="sr-only">{paused ? t("resume") : t("pause")}</span>
-            {paused ? (
-              <PlayIcon aria-hidden="true" className="promoPauseIcon" />
-            ) : (
-              <PauseIcon aria-hidden="true" className="promoPauseIcon" />
-            )}
-          </button>
-        </div>
 
-        <div
-          aria-hidden={!expanded}
-          className={`promoAll${expanded ? " isOpen" : ""}`}
-          id="promo-all"
-        >
-          <div className="promoAllInner">
-            <div className="promoAllHead">
-              <p className="promoAllLabel">{t("allLabel")}</p>
-              <p className="promoAllCount">
-                [{" "}
-                <span className="promoEyebrowIndex">
-                  {String(PROMOTERS.length).padStart(2, "0")}
-                </span>{" "}
-                ]
-              </p>
+          <div aria-hidden={!expanded} className="promoAll" id="promo-all">
+            <div className="promoAllInner">
+              <ul className="promoGrid">
+                {PROMOTERS.map((p) => (
+                  <li className="promoCard" key={p.slug}>
+                    {/* The visible name labels the tile, so the mark is decorative. */}
+                    <Image
+                      alt=""
+                      className="promoMark promoCardMark"
+                      height={p.height}
+                      sizes="12vw"
+                      src={`/promoters/${p.slug}.png`}
+                      width={p.width}
+                    />
+                    <span className="promoCardName">{p.name}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="promoGrid">
-              {PROMOTERS.map((p) => (
-                <li className="promoCard" key={p.slug}>
-                  {/* The visible name labels the tile, so the mark is decorative. */}
-                  <Image
-                    alt=""
-                    className="promoMark promoCardMark"
-                    height={p.height}
-                    sizes="12vw"
-                    src={`/promoters/${p.slug}.png`}
-                    width={p.width}
-                  />
-                  <span className="promoCardName">{p.name}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

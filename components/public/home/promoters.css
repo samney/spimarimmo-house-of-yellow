@@ -50,21 +50,15 @@
   grid-column: 1 / -1;
 }
 
-.promoEyebrow {
+/* The shared `SectionEyebrow`, re-inked for this surface. Its two variants are
+   drawn for paper (deep gold) and for dark (bright gold); on the yellow block
+   both disappear, so the ink is overridden here while the markup, size,
+   tracking and index treatment stay the site's. */
+.promoSection .sectionEyebrow {
   grid-column: 1;
   grid-row: 1;
-  /* Ink, not gold: the gold eyebrow is for paper surfaces and is unreadable on
-     the yellow block this section now sits inside. */
   color: var(--hoy-ink);
-  font-size: var(--text-support);
-  font-weight: 600;
-  letter-spacing: 0.14em;
   margin: 0 0 var(--space-sm);
-  text-transform: uppercase;
-}
-
-.promoEyebrowIndex {
-  font-variant-numeric: tabular-nums;
 }
 
 .promoTitle {
@@ -279,51 +273,72 @@
 
 /* --- Expandable all-promoters grid ----------------------------------------- */
 
+/* The band and the grid are two readings of the same five marks occupying one
+   stage. Expanding does not reveal a second list under the first: the band
+   collapses on exactly the timing the grid opens, so the strip reads as
+   unrolling into the grid. Both sides animate `grid-template-rows` between 0fr
+   and 1fr, which is what lets the stage's height carry the change without
+   either child needing a measured pixel height. */
+.promoBand,
 .promoAll {
   display: grid;
-  grid-template-rows: 0fr;
   transition: grid-template-rows 460ms ease;
 }
 
-.promoAll.isOpen {
+.promoBand {
+  grid-template-rows: 1fr;
+}
+.promoAll {
+  grid-template-rows: 0fr;
+}
+
+.promoStage[data-expanded="true"] .promoBand {
+  grid-template-rows: 0fr;
+}
+.promoStage[data-expanded="true"] .promoAll {
   grid-template-rows: 1fr;
 }
 
+.promoBandInner,
 .promoAllInner {
   min-block-size: 0;
   overflow: hidden;
-  /* Discrete visibility swap keeps collapsed text out of find/select while
-     the row animation still has content to measure. */
+}
+
+/* Discrete visibility swap keeps collapsed content out of find/select and out
+   of the tab order, while the row animation still has content to measure. */
+.promoAllInner {
   transition: visibility 0s 460ms;
   visibility: hidden;
 }
-
-.promoAll.isOpen .promoAllInner {
+.promoStage[data-expanded="true"] .promoAllInner {
   transition-delay: 0s;
   visibility: visible;
 }
 
-.promoAllHead {
-  align-items: baseline;
-  display: flex;
-  justify-content: space-between;
-  padding-block: var(--space-md) var(--space-sm);
+.promoBandInner {
+  transition: visibility 0s 0s;
+  visibility: visible;
+}
+.promoStage[data-expanded="true"] .promoBandInner {
+  transition-delay: 460ms;
+  visibility: hidden;
 }
 
-.promoAllLabel {
-  font-size: var(--text-support);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  margin: 0;
-  text-transform: uppercase;
+@media (prefers-reduced-motion: reduce) {
+  .promoBand,
+  .promoAll {
+    transition: none;
+  }
+  .promoAllInner,
+  .promoBandInner {
+    transition: none;
+  }
 }
 
-.promoAllCount {
-  color: rgb(20 20 15 / 55%);
-  font-size: var(--text-support);
-  font-weight: 500;
-  margin: 0;
-}
+/* The grid's own label and count row is gone: the band it replaces already
+   sits under the section heading, so repeating a heading inside the expanded
+   state restated what the header had just said. */
 
 /* Expanded, the band becomes a bordered grid — this is where the section draws
    structure, in contrast to the collapsed strip which draws none. One outer
