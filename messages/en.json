@@ -351,7 +351,33 @@
       "inviteSub": "International real-estate show",
       "live": "LIVE",
       "today": "Today",
-      "confirmed": "Confirmed"
+      "confirmed": "Confirmed",
+      "reportTitle": "Performance report",
+      "threadTitle": "Sales follow-up",
+      "threadInput": "Add a note…",
+      "thread": {
+        "0": {
+          "role": "Development lead"
+        },
+        "1": {
+          "role": "Sales director"
+        }
+      },
+      "dossierTitle": "Lead record",
+      "dossier": {
+        "0": {
+          "key": "Source",
+          "value": "Show"
+        },
+        "1": {
+          "key": "Interest",
+          "value": "B2B solutions"
+        },
+        "2": {
+          "key": "Status",
+          "value": "Qualified"
+        }
+      }
     },
     "benefits": {
       "audience": {

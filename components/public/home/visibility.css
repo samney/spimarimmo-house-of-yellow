@@ -965,15 +965,232 @@
   width: 1.1vw;
 }
 
-/* Pipeline frame (phase 03) */
-.visPipeline {
+/* ---- Centre canvas, phase 03 --------------------------------------------
+   What the salon produced: the CRM board across the top, then the performance
+   report, the follow-up thread and one lead dossier. A four-cell grid rather
+   than absolute placement — these are documents laid out, not objects
+   overlapping, which is how the reference sets this phase apart from the two
+   before it. */
+.visCanvasAfter {
+  display: grid;
+  gap: 0.55vw;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.visCanvasAfter .visPipeline {
+  grid-column: 1 / -1;
+}
+
+.visReport,
+.visThread,
+.visDossier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
+  min-block-size: 0;
+  padding: 0.55vw 0.6vw;
+}
+
+.visReportHead,
+.visThreadHead,
+.visDossierHead {
+  color: var(--on-inverse-muted);
+  font-size: 0.5vw;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* -- Performance report -- */
+.visReport {
+  background: rgb(255 255 255 / 3.5%);
+}
+.visReportBody {
+  align-items: flex-end;
+  display: flex;
+  gap: 0.5vw;
+  min-block-size: 0;
+  flex: 1;
+}
+.visReportBars {
+  align-items: flex-end;
+  display: flex;
+  flex: 1;
+  gap: 0.18vw;
+  block-size: 100%;
+}
+.visReportBars i {
+  background: rgb(255 255 255 / 26%);
+  border-radius: 0.06vw;
+  display: block;
+  flex: 1;
+}
+.visReportBars i[data-gold] {
+  background: var(--action-primary);
+  opacity: 0.85;
+}
+/* A ring, drawn: no slice values are stated because none is validated. */
+.visReportDonut {
+  aspect-ratio: 1;
+  background: conic-gradient(
+    var(--action-primary) 0 38%,
+    rgb(255 255 255 / 30%) 38% 72%,
+    rgb(255 255 255 / 14%) 72% 100%
+  );
+  border-radius: 50%;
+  display: block;
+  flex: none;
+  inline-size: 2.4vw;
+  mask: radial-gradient(circle, transparent 52%, #000 53%);
+}
+.visReportLines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.16vw;
+}
+.visReportLines i {
+  background: rgb(255 255 255 / 14%);
+  block-size: 0.1vw;
+  display: block;
+}
+.visReportLines i:last-child {
+  inline-size: 62%;
+}
+
+/* -- Follow-up thread -- */
+.visThread {
   background: var(--surface-page);
   color: var(--on-surface);
+}
+.visThread .visThreadHead {
+  color: var(--on-surface-muted);
+}
+.visThreadMsg {
+  display: flex;
+  gap: 0.35vw;
+}
+.visThreadAvatar {
+  background: linear-gradient(140deg, #cbb27e, #8c7a52);
+  block-size: 1vw;
+  border-radius: 50%;
+  flex: none;
+  inline-size: 1vw;
+}
+.visThreadBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18vw;
+  min-inline-size: 0;
+  flex: 1;
+}
+.visThreadRole {
+  color: var(--on-surface);
+  font-size: 0.44vw;
+  font-weight: 600;
+}
+.visThreadLines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.14vw;
+}
+.visThreadLines i {
+  background: rgb(20 20 15 / 16%);
+  block-size: 0.1vw;
+  display: block;
+}
+.visThreadLines i:last-child {
+  inline-size: 70%;
+}
+.visThreadInput {
+  border: 1px solid rgb(20 20 15 / 16%);
+  border-radius: 0.2vw;
+  color: var(--on-surface-muted);
+  font-size: 0.42vw;
+  margin-block-start: auto;
+  padding: 0.24vw 0.35vw;
+}
+
+/* -- Lead dossier -- */
+.visDossier {
+  background: var(--surface-page);
+  color: var(--on-surface);
+}
+.visDossier .visDossierHead {
+  color: var(--on-surface-muted);
+}
+.visDossierTop {
+  display: flex;
+  gap: 0.35vw;
+}
+.visDossierShot {
+  aspect-ratio: 1;
+  border-radius: 0.16vw;
+  display: block;
+  flex: none;
+  inline-size: 1.6vw;
+  overflow: hidden;
+  position: relative;
+}
+.visDossierShot img {
+  object-fit: cover;
+}
+.visDossierWho {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18vw;
+  justify-content: center;
+  min-inline-size: 0;
+}
+.visDossierWho b {
+  font-size: 0.46vw;
+  font-weight: 600;
+}
+.visDossierWho i {
+  background: rgb(20 20 15 / 16%);
+  block-size: 0.1vw;
+  display: block;
+  inline-size: 3vw;
+}
+.visDossierRow {
+  align-items: center;
+  border-block-start: 1px solid rgb(20 20 15 / 10%);
+  display: flex;
+  gap: 0.3vw;
+  justify-content: space-between;
+  padding-block-start: 0.22vw;
+}
+.visDossierKey {
+  color: var(--on-surface-muted);
+  font-size: 0.4vw;
+}
+.visDossierValue {
+  font-size: 0.4vw;
+  font-weight: 500;
+}
+.visDossierChip {
+  border: 1px solid var(--action-primary);
+  border-radius: 0.5vw;
+  color: var(--spimar-gold-text, var(--action-primary));
+  font-size: 0.38vw;
+  font-weight: 600;
+  padding: 0.06vw 0.3vw;
+}
+
+/* Pipeline frame (phase 03) */
+/* The board is dark in the reference, not paper. It is the phase's dominant
+   object and sits directly on the stage; a light slab that size flipped the
+   canvas's whole value structure and left the two light panels beneath it with
+   nothing to contrast against. */
+.visPipeline {
+  background: rgb(255 255 255 / 3.5%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%);
+  color: var(--on-inverse);
 }
 
 .visPipelineHead {
   align-items: center;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
   display: flex;
   font-size: var(--text-base);
   font-weight: 600;
@@ -1008,7 +1225,7 @@
 
 .visPipelineCard {
   align-items: center;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgb(255 255 255 / 14%);
   border-radius: var(--radius-sm);
   display: flex;
   gap: var(--space-xs);

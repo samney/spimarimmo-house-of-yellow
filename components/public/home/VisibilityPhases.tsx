@@ -415,28 +415,107 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
             )}
 
             {phase.key === "after" && (
-              <div className="visFrame visPipeline" aria-hidden="true">
-                <span className="visPipelineHead">
-                  <VisitorsIcon className="visScheduleIcon" />
-                  {t("stage.pipelineTitle")}
-                </span>
-                <span className="visPipelineCols">
-                  {PIPELINE.map((col) => (
-                    <span className="visPipelineCol" key={col.key}>
-                      <span className="visPipelineColTitle">{t(`stage.pipeline.${col.key}`)}</span>
-                      {Array.from({ length: col.count }, (_, i) => (
-                        <span className="visPipelineCard" key={i}>
-                          <span className="visPipelineAvatar" />
-                          <span className="visPipelineLines">
-                            <span>
-                              {t("stage.companyLabel", {
-                                letter: String.fromCharCode(65 + col.offset + i),
-                              })}
-                            </span>
-                            <i />
-                          </span>
+              /* Après's canvas: what the salon produced. The CRM board across
+                 the top, then the performance report, the follow-up thread and
+                 one lead dossier.
+
+                 All four are DOM. The manifest forbids flattening contact data
+                 or charts into images, and this canvas is nothing but contact
+                 data and charts — it is the section's proof, so it has to be
+                 readable rather than depicted. */
+              <div className="visCanvas visCanvasAfter" aria-hidden="true">
+                <span className="visFrame visPipeline">
+                  <span className="visPipelineHead">
+                    <VisitorsIcon className="visScheduleIcon" />
+                    {t("stage.pipelineTitle")}
+                  </span>
+                  <span className="visPipelineCols">
+                    {PIPELINE.map((col) => (
+                      <span className="visPipelineCol" key={col.key}>
+                        <span className="visPipelineColTitle">
+                          {t(`stage.pipeline.${col.key}`)}
                         </span>
+                        {Array.from({ length: col.count }, (_, i) => (
+                          <span className="visPipelineCard" key={i}>
+                            <span className="visPipelineAvatar" />
+                            <span className="visPipelineLines">
+                              <span>
+                                {t("stage.companyLabel", {
+                                  letter: String.fromCharCode(65 + col.offset + i),
+                                })}
+                              </span>
+                              <i />
+                            </span>
+                          </span>
+                        ))}
+                      </span>
+                    ))}
+                  </span>
+                </span>
+
+                {/* Performance report. Deliberately value-free: bars and a ring
+                    with no numbers and no axis, because no figure has been
+                    validated for publication. The shape says a report exists;
+                    it does not claim a result. */}
+                <span className="visFrame visReport">
+                  <span className="visReportHead">{t("stage.reportTitle")}</span>
+                  <span className="visReportBody">
+                    <span className="visReportBars">
+                      {[38, 62, 46, 78, 54, 88, 66].map((h, i) => (
+                        <i
+                          key={i}
+                          style={{ blockSize: `${h}%` }}
+                          data-gold={i % 3 === 1 || undefined}
+                        />
                       ))}
+                    </span>
+                    <span className="visReportDonut" />
+                  </span>
+                  <span className="visReportLines">
+                    <i />
+                    <i />
+                  </span>
+                </span>
+
+                {/* Follow-up thread. Roles, not names: the reference prints
+                    invented individuals and the content contract requires demo
+                    records stay anonymised. */}
+                <span className="visFrame visThread">
+                  <span className="visThreadHead">{t("stage.threadTitle")}</span>
+                  {[0, 1].map((i) => (
+                    <span className="visThreadMsg" key={i}>
+                      <span className="visThreadAvatar" />
+                      <span className="visThreadBody">
+                        <span className="visThreadRole">{t(`stage.thread.${i}.role`)}</span>
+                        <span className="visThreadLines">
+                          <i />
+                          <i />
+                        </span>
+                      </span>
+                    </span>
+                  ))}
+                  <span className="visThreadInput">{t("stage.threadInput")}</span>
+                </span>
+
+                <span className="visFrame visDossier">
+                  <span className="visDossierHead">{t("stage.dossierTitle")}</span>
+                  <span className="visDossierTop">
+                    <span className="visDossierShot">
+                      <Image alt="" fill sizes="6vw" src={MEDIA.campaignHero} />
+                    </span>
+                    <span className="visDossierWho">
+                      <b>{t("stage.companyLabel", { letter: "D" })}</b>
+                      <i />
+                    </span>
+                  </span>
+                  {[0, 1, 2].map((i) => (
+                    <span className="visDossierRow" key={i}>
+                      <span className="visDossierKey">{t(`stage.dossier.${i}.key`)}</span>
+                      {i === 2 ? (
+                        <span className="visDossierChip">{t(`stage.dossier.${i}.value`)}</span>
+                      ) : (
+                        <span className="visDossierValue">{t(`stage.dossier.${i}.value`)}</span>
+                      )}
                     </span>
                   ))}
                 </span>

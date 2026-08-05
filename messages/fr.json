@@ -351,7 +351,33 @@
       "inviteSub": "Salon international de l’immobilier",
       "live": "EN DIRECT",
       "today": "Aujourd’hui",
-      "confirmed": "Confirmé"
+      "confirmed": "Confirmé",
+      "reportTitle": "Rapport de performance",
+      "threadTitle": "Suivi commercial",
+      "threadInput": "Ajouter une note…",
+      "thread": {
+        "0": {
+          "role": "Responsable développement"
+        },
+        "1": {
+          "role": "Directeur commercial"
+        }
+      },
+      "dossierTitle": "Dossier lead",
+      "dossier": {
+        "0": {
+          "key": "Source",
+          "value": "Salon"
+        },
+        "1": {
+          "key": "Intérêt",
+          "value": "Solutions B2B"
+        },
+        "2": {
+          "key": "Statut",
+          "value": "Qualifié"
+        }
+      }
     },
     "benefits": {
       "audience": {
