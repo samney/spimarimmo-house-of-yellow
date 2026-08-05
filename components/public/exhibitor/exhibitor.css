@@ -242,6 +242,70 @@
   background: var(--surface-raised);
 }
 
+/* ------------------------------------------------------------------ salons */
+
+.salonsPage {
+  padding-block: var(--space-xl) var(--space-2xl);
+  padding-inline: var(--space-gutter);
+}
+
+.salonsPage__empty {
+  margin-block-start: var(--space-md);
+  color: var(--on-surface-muted);
+  max-inline-size: var(--measure-prose);
+}
+
+.salonsPage__list {
+  list-style: none;
+  padding: 0;
+  margin-block-start: var(--space-lg);
+  display: grid;
+  gap: var(--space-md);
+  max-inline-size: var(--measure-document);
+}
+
+.salonsPage__item {
+  border-block-end: 1px solid var(--border-subtle);
+  padding-block-end: var(--space-md);
+}
+
+.salonsPage__item:last-child {
+  border-block-end: 0;
+}
+
+.salonsPage__title {
+  font-size: var(--text-small-title);
+}
+
+.salonsPage__meta {
+  margin-block-start: var(--space-2xs);
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+}
+
+.salonsPage__summary {
+  margin-block-start: var(--space-xs);
+  max-inline-size: var(--measure-prose);
+}
+
+.salonsPage__facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--space-md);
+  margin-block-start: var(--space-md);
+  max-inline-size: var(--measure-document);
+}
+
+.salonsPage__facts dt {
+  font-weight: 600;
+  font-size: var(--text-support);
+  padding-block: var(--space-2xs);
+}
+
+.salonsPage__facts dd {
+  padding-block: var(--space-2xs);
+}
+
 @media (max-width: 900px) {
   .exposerPage__grid {
     grid-template-columns: minmax(0, 1fr);

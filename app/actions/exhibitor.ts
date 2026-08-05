@@ -3,10 +3,13 @@
 import { headers } from "next/headers";
 import {
   CONSENT_DEFINITIONS,
+  CONTACT_FORM_KEY,
   FORM_KEY,
   FORM_VERSION,
   NOTICE_VERSION,
+  contactEnquirySchema,
   exhibitorEnquirySchema,
+  splitFullName,
   type ExhibitorEnquiryResult,
 } from "@/lib/spimar/exhibitor-form";
 import { getAcquisitionRepository } from "@/lib/spimar/repositories";
@@ -109,6 +112,85 @@ export async function submitExhibitorEnquiry(
   } catch {
     // Nothing durable happened, so the caller must not report success. The
     // body is never logged — it contains personal data.
+    return { status: "error" };
+  }
+}
+
+/**
+ * General contact enquiry.
+ *
+ * Same acquisition path as the exhibitor form — one funnel, so consent,
+ * attribution, deduplication and the follow-up task behave identically
+ * wherever a person writes in. Only the acquisition kind differs.
+ */
+export async function submitContactEnquiry(
+  _previous: ExhibitorEnquiryResult | null,
+  form: FormData,
+): Promise<ExhibitorEnquiryResult> {
+  const parsed = contactEnquirySchema.safeParse(Object.fromEntries(form));
+
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    for (const issue of parsed.error.issues) {
+      const key = String(issue.path[0] ?? "form");
+      if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+    }
+    return { status: "invalid", fieldErrors };
+  }
+
+  const input = parsed.data;
+  if (input.companyWebsite && input.companyWebsite.length > 0) {
+    return { status: "error" };
+  }
+
+  try {
+    const headerList = await headers();
+    const forwarded = headerList.get("x-forwarded-for") ?? "";
+    const client = forwarded.split(",")[0]?.trim() || "unknown";
+    if (isRateLimited(client)) {
+      return { status: "rate_limited" };
+    }
+
+    const { firstName, lastName } = splitFullName(input.fullName);
+
+    const receipt = await getAcquisitionRepository().submitEnquiry({
+      siteId: SITE_ID,
+      locale: input.locale as Locale,
+      acquisitionKind: "contact_request",
+      formKey: CONTACT_FORM_KEY,
+      formVersion: FORM_VERSION,
+      noticeVersion: NOTICE_VERSION,
+      contact: { email: input.email, firstName, lastName },
+      organizationName: input.organizationName || undefined,
+      message: input.message,
+      consents: [
+        {
+          consentDefinitionId: CONSENT_DEFINITIONS[0].id,
+          purpose: CONSENT_DEFINITIONS[0].purpose,
+          granted: true,
+        },
+      ],
+      attribution: {
+        source: input.source || "site",
+        medium: input.medium || undefined,
+        campaign: input.campaign || undefined,
+        referrer: input.referrer || undefined,
+        landingPath: input.landingPath || "/contact",
+        ctaPosition: input.ctaPosition || undefined,
+      },
+      idempotencyKey: input.idempotencyKey,
+    });
+
+    if (receipt.disposition === "rate_limited" || !receipt.publicReference) {
+      return { status: "rate_limited" };
+    }
+
+    return {
+      status: "received",
+      reference: receipt.publicReference,
+      deduplicated: receipt.disposition !== "accepted",
+    };
+  } catch {
     return { status: "error" };
   }
 }

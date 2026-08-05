@@ -1,11 +1,16 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import legacyVideoMap from "../content/local-videos.json";
-import { PROJECTS } from "../content/projects";
-import { getProjectPoster } from "./posters";
 import { getVideoDeliveryAssets, resolveLegacyVideoPath, resolveVideoId } from "./video-registry";
 
+/* TRF-004 deleted the reference project and legacy-video-map fixtures this suite
+   previously asserted against. The registry's own contract is unchanged and is
+   still worth guarding, so the coverage is re-pointed rather than dropped: every
+   published asset must be unique, approved and traceable, and anything not
+   published must resolve to null.
+
+   The manifest currently declares zero deployable assets (limitation L2), so the
+   per-asset invariants iterate an empty set. They are kept deliberately — they
+   are what will catch a bad entry the moment SPIMAR media is added in TRF-022,
+   rather than something to write after the fact. */
 describe("video delivery registry", () => {
   it("publishes only unique, approved and traceable assets", () => {
     const assets = getVideoDeliveryAssets();
@@ -20,7 +25,6 @@ describe("video delivery registry", () => {
       expect(ids.has(asset.id)).toBe(false);
       expect(paths.has(asset.legacyPath)).toBe(false);
       expect(sources.has(asset.src)).toBe(false);
-      expect(legacyVideoMap[asset.id as keyof typeof legacyVideoMap]).toBe(asset.legacyPath);
 
       ids.add(asset.id);
       paths.add(asset.legacyPath);
@@ -30,16 +34,21 @@ describe("video delivery registry", () => {
     }
   });
 
-  it("does not publish an unapproved reference mapping", () => {
+  it("resolves nothing for an unpublished id or legacy path", () => {
     expect(resolveVideoId("not-approved")).toBeNull();
     expect(resolveLegacyVideoPath("/videos/not-approved.mp4")).toBeNull();
   });
 
-  it("provides a deployable poster for every project card", () => {
-    for (const project of PROJECTS) {
-      const poster = getProjectPoster(project);
-      expect(poster.startsWith("/images/")).toBe(true);
-      expect(existsSync(join(process.cwd(), "public", poster))).toBe(true);
-    }
+  it("rejects empty and nullish lookups", () => {
+    expect(resolveVideoId(null)).toBeNull();
+    expect(resolveVideoId(undefined)).toBeNull();
+    expect(resolveVideoId("")).toBeNull();
+    expect(resolveLegacyVideoPath(null)).toBeNull();
+    expect(resolveLegacyVideoPath(undefined)).toBeNull();
+    expect(resolveLegacyVideoPath("")).toBeNull();
+  });
+
+  it("declares no deployable asset at this baseline (limitation L2)", () => {
+    expect(getVideoDeliveryAssets()).toHaveLength(0);
   });
 });

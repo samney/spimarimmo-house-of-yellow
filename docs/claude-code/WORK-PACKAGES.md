@@ -13,7 +13,7 @@ replaced_by: null
 
 # WORK PACKAGES — `TRF-*` execution state
 
-Updated: 2026-08-02
+Updated: 2026-08-04
 
 This register holds **mutable execution state only**. It deliberately does not
 restate two things that already have canonical owners:
@@ -35,17 +35,23 @@ Statuses: `PENDING` · `IN PROGRESS` · `PR REVIEW` · `DONE` · `BLOCKED` ·
 
 ## Epic A — Baseline and neutralization
 
-| TRF       | Status      | SPI       | Stage  | Exit gate | Depends on | Branch / PR                                               | Evidence                                                             |
-| --------- | ----------- | --------- | ------ | --------- | ---------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
-| `TRF-000` | `DONE`      | `SPI-000` | `P1.0` | `GATE-0`  | —          | PR #12, merged `d1e96548feafab6bef11bffeca8d759f4ac60f4f` | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md) |
-| `TRF-001` | `DONE`      | `SPI-000` | `P1.0` | `GATE-0`  | `TRF-000`  | PR #14, merged `477f5ae31c1e0135122010148e868fc96bb8f7eb` | this file and [`GATES.md`](GATES.md)                                 |
-| `TRF-002` | `DONE`      | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-000`  | PR #17, merged `8dbfca92d96a4059561b2cdbf174a6bf00a6225f` | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md)     |
-| `TRF-003` | `PR REVIEW` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-002`  | `claude/spi-010-trf-003-neutral-primitives`               | [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md)   |
-| `TRF-004` | `PENDING`   | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-003`  | —                                                         | —                                                                    |
-| `TRF-005` | `PENDING`   | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-004`  | —                                                         | —                                                                    |
+| TRF       | Status | SPI       | Stage  | Exit gate | Depends on | Branch / PR                                               | Evidence                                                                 |
+| --------- | ------ | --------- | ------ | --------- | ---------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `TRF-000` | `DONE` | `SPI-000` | `P1.0` | `GATE-0`  | —          | PR #12, merged `d1e96548feafab6bef11bffeca8d759f4ac60f4f` | [`FOUNDATION-BASELINE.md`](../spimar-phase-1/FOUNDATION-BASELINE.md)     |
+| `TRF-001` | `DONE` | `SPI-000` | `P1.0` | `GATE-0`  | `TRF-000`  | PR #14, merged `477f5ae31c1e0135122010148e868fc96bb8f7eb` | this file and [`GATES.md`](GATES.md)                                     |
+| `TRF-002` | `DONE` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-000`  | PR #17, merged `8dbfca92d96a4059561b2cdbf174a6bf00a6225f` | [`RESIDUE-INVENTORY.md`](../spimar-phase-1/RESIDUE-INVENTORY.md)         |
+| `TRF-003` | `DONE` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-002`  | PR #18, merged `3675c0206c0f819e9af0760763627934be7de304` | [`NEUTRAL-PRIMITIVES.md`](../spimar-phase-1/NEUTRAL-PRIMITIVES.md)       |
+| `TRF-004` | `DONE` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-003`  | PR #19, merged `452c411c7003c699377011cc08eee2191427731b` | [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md)               |
+| `TRF-005` | `DONE` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-004`  | PR #20, merged `6f7cc3283d5926321189f0230dde49578b7f5d6d` | [`RECOVERY-VERIFICATION.md`](../spimar-phase-1/RECOVERY-VERIFICATION.md) |
+| `TRF-006` | `DONE` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-005`  | PR #21, merged `43ca164bda5fed9b6c65cc50e8e2700d27b862c1` | [`NEUTRALIZATION.md`](../spimar-phase-1/NEUTRALIZATION.md) § 9           |
+| `TRF-007` | `DONE` | `SPI-010` | `P1.1` | `GATE-1`  | `TRF-006`  | PR #22, merged `4bb9e61a7d4f587e3ab5f4efbb9e1adddacce37b` | `tests/e2e/accessibility.spec.ts`                                        |
 
 Labels: `002` residue inventory · `003` extract neutral primitives ·
-`004` remove/quarantine reference-brand residue · `005` verify recovery/rollback.
+`004` remove/quarantine reference-brand residue · `005` verify recovery/rollback ·
+`006` `GATE-1` review remediation · `007` accessibility gate and contrast fix.
+
+`TRF-006` and `TRF-007` are review-driven additions to Epic A, not part of the
+original `17-IMPLEMENTATION-BACKLOG` numbering. Both close `GATE-1` findings.
 
 ## Epic B — Design system and experience shell
 

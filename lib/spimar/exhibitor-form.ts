@@ -86,6 +86,48 @@ export const exhibitorEnquirySchema = z.object({
 
 export type ExhibitorEnquiryInput = z.infer<typeof exhibitorEnquirySchema>;
 
+/**
+ * General contact form. A smaller field set — a general enquiry should not
+ * demand a job title — but the same consent, attribution and idempotency
+ * contract, because it writes through the same acquisition path.
+ */
+export const CONTACT_FORM_KEY = "contact_request";
+
+export const contactEnquirySchema = z.object({
+  fullName: z.string().trim().min(1, "Le nom est requis.").max(160),
+  email: z.string().trim().email("Adresse e-mail invalide.").max(200),
+  organizationName: z.string().trim().max(160).default(""),
+  message: z.string().trim().min(1, "Votre message est requis.").max(4000),
+
+  consentFollowUp: z.literal("on", {
+    message: "Votre accord est nécessaire pour traiter la demande.",
+  }),
+
+  locale: z.enum(["fr", "en"]),
+
+  landingPath: z.string().trim().max(300).default(""),
+  ctaPosition: z.string().trim().max(80).default(""),
+  campaign: z.string().trim().max(120).default(""),
+  source: z.string().trim().max(80).default(""),
+  medium: z.string().trim().max(80).default(""),
+  referrer: z.string().trim().max(300).default(""),
+
+  idempotencyKey: z.string().trim().min(8).max(80),
+  companyWebsite: z.string().max(0).optional().default(""),
+});
+
+export type ContactEnquiryInput = z.infer<typeof contactEnquirySchema>;
+
+/** Splits a free-text full name into the two columns the schema stores.
+    Everything after the first token is the family name, which is wrong for
+    some naming conventions — so the original string is preserved as the
+    organization-free display name rather than being discarded. */
+export function splitFullName(fullName: string): { firstName: string; lastName: string } {
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length === 1) return { firstName: parts[0], lastName: "" };
+  return { firstName: parts[0], lastName: parts.slice(1).join(" ") };
+}
+
 /** What the public form is told. Mirrors the acquisition dispositions plus the
     refusals that never reach the repository. */
 export type ExhibitorEnquiryResult =

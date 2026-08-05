@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { type Page } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 /* End-to-end release journey:
 
@@ -62,20 +63,24 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
   const name = `E2E Visitor ${id}`;
   const message = `Integration enquiry ${id}`;
 
-  // public page -> CTA -> form
-  await page.goto("/");
+  /* Straight to the contact route rather than through a homepage CTA: the
+     homepage is still the untransformed clone and belongs to a later phase,
+     so depending on its links would couple this test to work it is not about.
+     What the test asserts — durable storage, then the CRM — is unchanged. */
+  await page.goto("/contact");
   await dismissConsent(page);
-  await page.getByRole("link", { name: "Make an enquiry" }).first().click();
-  await expect(page.getByRole("heading", { name: "Contact" })).toBeVisible();
+  // Level 1: the shared footer also carries a "Contact" heading, so an
+  // unscoped lookup matches two elements.
+  await expect(page.getByRole("heading", { name: "Contact", level: 1 })).toBeVisible();
 
-  await page.getByLabel(/Full name/).fill(name);
-  await page.getByLabel(/Email address/).fill(`e2e-${id}@example.test`);
-  await page.getByLabel(/Your message/).fill(message);
-  await page.getByLabel(/I agree that SPIMARIMMO/).check();
-  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await page.locator("#fullName").fill(name);
+  await page.locator("#email").fill(`e2e-${id}@example.test`);
+  await page.locator("#message").fill(message);
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Envoyer le message" }).click();
 
   // The confirmation appears only after a durable write.
-  await expect(page.getByText("Enquiry received")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Message enregistré" })).toBeVisible();
 
   // -> CRM lead, with attribution captured at submission.
   await signIn(page, ADMIN);
@@ -87,6 +92,7 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
     .click();
   await expect(page.getByText(message)).toBeVisible();
   await expect(page.getByText("contact-page")).toBeVisible();
+  await expect(page.getByText("contact_request")).toBeVisible();
 
   // Operational workflow: stage, assignment and a note, each audited.
   await page.getByLabel("Étape actuelle").selectOption("qualified");
@@ -114,18 +120,18 @@ test("duplicate submissions are refused without a false confirmation", async ({ 
   for (const attempt of [1, 2]) {
     await page.goto("/contact");
     await dismissConsent(page);
-    await page.getByLabel(/Full name/).fill(`Dupe ${id}`);
-    await page.getByLabel(/Email address/).fill(email);
-    await page.getByLabel(/Your message/).fill(message);
-    await page.getByLabel(/I agree that SPIMARIMMO/).check();
-    await page.getByRole("button", { name: "Send enquiry" }).click();
+    await page.locator("#fullName").fill(`Dupe ${id}`);
+    await page.locator("#email").fill(email);
+    await page.locator("#message").fill(message);
+    await page.getByRole("checkbox").check();
+    await page.getByRole("button", { name: "Envoyer le message" }).click();
 
     if (attempt === 1) {
-      await expect(page.getByText("Enquiry received")).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Message enregistré" })).toBeVisible();
     } else {
-      // Honest: says already recorded, does NOT claim a new enquiry was created.
-      await expect(page.getByText("Already received")).toBeVisible();
-      await expect(page.getByText("Enquiry received")).toHaveCount(0);
+      // Honest: says already recorded, does NOT claim a new message was created.
+      await expect(page.getByRole("heading", { name: "Message déjà enregistré" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Message enregistré" })).toHaveCount(0);
     }
   }
 });
