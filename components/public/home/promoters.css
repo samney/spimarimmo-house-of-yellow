@@ -7,12 +7,20 @@
    The logo files are white on transparent, rendered as ink via invert.
    ========================================================================== */
 
+/* The section renders inside the yellow block (owner direction, 2026-08-05),
+   so it paints no surface of its own: no background, no panel, no border. The
+   heading, lead and logo band sit directly on the yellow, and every line the
+   section draws is inked rather than tinted, because a tinted hairline
+   disappears against that fill. */
 .promoSection {
-  background: var(--surface-page);
-  color: var(--on-surface);
-  padding: var(--space-xl) var(--space-gutter);
+  --promo-rule: rgb(20 20 15 / 14%);
+
+  color: var(--hoy-ink);
+  padding: var(--space-xl) 0;
 }
 
+/* Aligned to the yellow block's own wrapper, not re-gutered: the parent
+   `.contentWrapper` already sets the page column. */
 .promoInner {
   margin-inline: auto;
   max-width: 95vw;
@@ -20,16 +28,34 @@
 
 /* --- Header (large statement, per the section-08 design) ------------------- */
 
+/* Grid rather than a flex row, so the action can sit on the eyebrow line while
+   the heading and lead run their own measure beneath it — the same "label
+   left, action right" header row sections 01 and 04 use. As a flex row the
+   button floated against the middle of the whole text block, which left dead
+   space above and below it and read as unanchored. */
 .promoHeader {
-  align-items: flex-start;
-  display: flex;
-  gap: var(--space-lg);
-  justify-content: space-between;
-  margin-bottom: var(--space-md);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.promoHeadings {
+  display: contents;
+}
+
+.promoTitle,
+.promoLead {
+  grid-column: 1 / -1;
 }
 
 .promoEyebrow {
-  color: var(--spimar-gold-text); /* WCAG AA on paper */
+  grid-column: 1;
+  grid-row: 1;
+  /* Ink, not gold: the gold eyebrow is for paper surfaces and is unreadable on
+     the yellow block this section now sits inside. */
+  color: var(--hoy-ink);
   font-size: var(--text-support);
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -59,20 +85,25 @@
   max-width: var(--measure-prose);
 }
 
-/* Outlined gold toggle. Sits at the title's optical level, not the eyebrow's. */
+/* Outlined toggle, anchored to the eyebrow row (see .promoHeader). Inked
+   rather than gold-on-gold, and it states what it does: the label switches
+   between showing and hiding, and the plus rotates into a cross, so the
+   control reads as an expander before it is used. */
 .promoToggle {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
   align-items: center;
   background: transparent;
-  border: 1px solid var(--action-primary);
-  border-radius: var(--radius-md);
-  color: var(--on-surface);
+  border: 1px solid var(--hoy-ink);
+  border-radius: var(--radius-pill);
+  color: var(--hoy-ink);
   cursor: pointer;
   display: inline-flex;
   flex: none;
   font-size: var(--text-support);
   font-weight: 500;
   gap: var(--space-xs);
-  margin-top: var(--space-lg);
   padding: var(--space-xs) var(--space-sm);
   transition:
     background-color 160ms ease,
@@ -80,8 +111,8 @@
 }
 
 .promoToggle:hover {
-  background: var(--action-primary);
-  color: var(--action-on-primary);
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
 }
 
 .promoToggle:focus-visible {
@@ -105,10 +136,14 @@
 
 /* --- Logo band -------------------------------------------------------------- */
 
+/* Collapsed, the band carries no surface at all — the yellow shows through it.
+   Structure comes from the thin rules between marks, nothing else.
+
+   The block-end padding reserves a control strip: without it the absolutely
+   positioned pause button sits on top of whichever mark happens to scroll
+   under it. The progress line and the button share that strip. */
 .promoPanel {
-  background: var(--surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xl);
+  padding-block-end: 3.6vw;
   position: relative;
 }
 
@@ -126,32 +161,37 @@
   display: flex;
 }
 
+/* A single thin rule between marks — the only structure the collapsed band
+   draws. Inked, not tinted: a light hairline vanishes on yellow. */
 .promoItem {
   align-items: center;
-  border-inline-end: 1px solid var(--border-subtle);
+  border-inline-end: 1px solid var(--promo-rule);
   display: inline-flex;
   flex: none;
   justify-content: center;
   min-inline-size: 12vw;
-  padding: var(--space-md) var(--space-md);
+  padding: var(--space-md) var(--space-lg);
 }
 
-/* White-on-transparent source marks become ink on the raised band. */
+/* White-on-transparent source marks become ink. Sized up (2.9vw -> 4.1vw) so
+   the marks carry the band rather than floating in it — they are the content
+   here, and at the old height the rules read louder than the logos. Full
+   opacity for the same reason. */
 .promoMark {
-  block-size: 2.9vw;
+  block-size: 4.1vw;
   filter: invert(1);
   inline-size: auto;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 /* Squarish marks read smaller at equal cap height; give them more body. */
 .promoItem[data-slug="saham-immobilier"] .promoMark,
 .promoItem[data-slug="cgi"] .promoMark {
-  block-size: 3.6vw;
+  block-size: 5vw;
 }
 
 .promoItem[data-slug="addoha"] .promoMark {
-  block-size: 2.5vw;
+  block-size: 3.5vw;
 }
 
 @keyframes promoScroll {
@@ -207,8 +247,8 @@
 
 .promoPauseBtn {
   align-items: center;
-  background: var(--surface-raised);
-  border: 1px solid var(--border-subtle);
+  background: transparent;
+  border: 1px solid var(--promo-rule);
   border-radius: 50%;
   block-size: 2.9vw;
   color: var(--on-surface);
@@ -279,30 +319,46 @@
 }
 
 .promoAllCount {
-  color: var(--action-primary);
+  color: rgb(20 20 15 / 55%);
   font-size: var(--text-support);
   font-weight: 500;
   margin: 0;
 }
 
+/* Expanded, the band becomes a bordered grid — this is where the section draws
+   structure, in contrast to the collapsed strip which draws none. One outer
+   rule plus shared inner rules, achieved with a 1px gap over a ruled
+   background so every cell edge is exactly one line thick and no cell doubles
+   its neighbour's border. */
 .promoGrid {
+  background: var(--promo-rule);
+  border: 1px solid var(--promo-rule);
   display: grid;
-  gap: var(--space-sm);
+  gap: 1px;
   grid-template-columns: repeat(auto-fill, minmax(16vw, 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* Each cell is a plain box on the yellow, holding its mark and its name. */
 .promoCard {
   align-content: center;
-  background: var(--surface-raised);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  background: var(--hoy-yellow);
   display: grid;
   gap: var(--space-sm);
   justify-items: center;
-  padding: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  transition: background-color 0.3s ease;
+}
+.promoCard:hover {
+  background: var(--hoy-yellow-hover, var(--hoy-yellow));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promoCard {
+    transition: none;
+  }
 }
 
 .promoCardMark {
@@ -316,7 +372,7 @@
 }
 
 .promoCardName {
-  color: var(--on-surface-muted);
+  color: rgb(20 20 15 / 70%);
   font-size: var(--text-support);
   font-weight: 500;
 }

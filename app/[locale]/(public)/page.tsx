@@ -6,7 +6,6 @@ import { MethodSection } from "@/components/public/home/method/MethodSection";
 import { ImpactMetricsSection } from "@/components/public/home/ImpactMetricsSection";
 import { MreMarketSection } from "@/components/public/home/MreMarketSection";
 import { VisibilitySection } from "@/components/public/home/VisibilitySection";
-import { PromotersSection } from "@/components/public/home/PromotersSection";
 import { ProofSection } from "@/components/public/home/ProofSection";
 import { OffersTeaser } from "@/components/public/home/offers/OffersTeaser";
 import { GallerySection } from "@/components/public/home/GallerySection";
@@ -18,6 +17,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   return (
     <>
       <HeroSection />
+      {/* The trust band is no longer mounted here: it moved out of its old slot
+          between 07 and 09 and now renders inside the yellow block above, in
+          the row the bare logo marquee used to occupy (owner direction,
+          2026-08-05). */}
       <AboutWorkSection />
       {/* Sections 03 onward pile instead of scrolling past one another: each
           pins to the top and the next slides over it (owner direction,
@@ -32,7 +35,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <ImpactMetricsSection />
       <MreMarketSection />
       <VisibilitySection />
-      <PromotersSection />
       <ProofSection />
       <OffersTeaser />
       <GallerySection fullGalleryHref="/ressources/galerie" />

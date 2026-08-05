@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { EventsCarousel, type EventOpportunity } from "./EventsCarousel";
+import { PromotersSection } from "./PromotersSection";
 import { SectionEyebrow } from "./SectionEyebrow";
 
 /* The works -> Salons par pays (specification §05, §07).
@@ -71,26 +71,14 @@ const EVENTS: EventOpportunity[] = [
   },
 ];
 
-/* Social proof — "Ils nous font confiance" (§14).
+/* Social proof — "Ils nous font confiance" (§14) — used to run here as a bare
+   `logoSection` marquee: a label and a scrolling strip of the same five marks,
+   with no eyebrow, no lead, no pause control and no way to see the full list.
 
-   Restored to the reference's `logoSection` marquee architecture. The previous
-   occupant of this row was 32 House of Yellow client logos, which presented
-   other companies' trademarks as SPIMARIMMO's clients; that content was the
-   problem, not the component.
-
-   The marks were previously set as type because their usage rights were not
-   recorded. The owner has since supplied the logo files directly
-   (`docs/assets-UX-UI/logoproof/`, mirrored to `public/promoters/`) and
-   authorized them for this band (2026-08-04), so the reference component now
-   runs the real logos, as it does below its own project cards. Section 12
-   publishes the same set with the consent line, which is repeated here. */
-const PARTNERS: readonly { slug: string; name: string; width: number; height: number }[] = [
-  { slug: "prestigia", name: "Prestigia", width: 500, height: 230 },
-  { slug: "saham-immobilier", name: "Saham Immobilier", width: 1200, height: 1054 },
-  { slug: "addoha", name: "Addoha", width: 200, height: 107 },
-  { slug: "coralia", name: "Coralia", width: 1136, height: 568 },
-  { slug: "cgi", name: "CGI", width: 300, height: 300 },
-];
+   It was removed on 2026-08-05 (owner direction). The trust band is now a
+   single component, `PromotersSection`, mounted directly after this section —
+   one social-proof moment on the page instead of two competing ones, and the
+   surviving copy is the stronger of the two. */
 
 function PillButton({
   href,
@@ -177,40 +165,11 @@ export function AboutWorkSection() {
             <EventsCarousel events={EVENTS} />
           </div>
         </div>
-        <div className="logoSection">
-          <div className="contentWrapper">
-            <div className="text smaller medium logoSection__label">Ils nous font confiance</div>
-          </div>
-          <div className="marquees" aria-hidden="true">
-            <div className="marqueeWrapper">
-              <div className="marquee" style={{ ["--marquee-duration" as string]: "40s" }}>
-                <div className="marqueeScroll">
-                  {[0, 1, 2, 3].map((copy) => (
-                    <span className="itemsContainer" key={copy}>
-                      {PARTNERS.map((partner) => (
-                        <span className="partnerMark" key={partner.slug}>
-                          <Image
-                            alt=""
-                            height={partner.height}
-                            src={`/promoters/${partner.slug}.png`}
-                            width={partner.width}
-                          />
-                        </span>
-                      ))}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* The marquee is decorative and hidden from assistive tech, so the
-              partners are also listed once in text. */}
-          <ul className="sr-only">
-            {PARTNERS.map((partner) => (
-              <li key={partner.slug}>{partner.name}</li>
-            ))}
-          </ul>
-        </div>
+        {/* The trust band lives inside the yellow block (owner direction,
+            2026-08-05), in the row the bare logo marquee used to occupy. It
+            draws no surface of its own so the yellow reads straight through
+            it. */}
+        <PromotersSection />
       </div>
     </section>
   );
