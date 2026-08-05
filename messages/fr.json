@@ -1057,5 +1057,21 @@
     "proofLabel": "Ils exposent avec SPIMARIMMO",
     "cursorPlay": "Voir",
     "cursorVideo": "la vidéo"
+  },
+  "enquiryForm": {
+    "intro": "Écrivez-nous et un conseiller vous répond sous 48 heures ouvrées.",
+    "name": "Nom et prénom",
+    "email": "E-mail",
+    "organisation": "Société",
+    "optional": "(facultatif)",
+    "message": "Votre message",
+    "consent": "J'accepte que SPIMARIMMO utilise ces informations pour répondre à ma demande.",
+    "submit": "Envoyer",
+    "sending": "Envoi en cours…",
+    "success": "Votre demande a bien été enregistrée. Un conseiller vous répond sous 48 heures ouvrées.",
+    "duplicate": "Cette demande a déjà été enregistrée. Un conseiller vous recontacte.",
+    "rateLimited": "Trop de demandes envoyées depuis cet appareil. Réessayez dans quelques minutes.",
+    "error": "L'envoi n'a pas abouti. Réessayez ou écrivez directement à contact@spimarimmo.com.",
+    "invalid": "Certaines informations sont incomplètes. Corrigez les champs signalés."
   }
 }

@@ -1057,5 +1057,21 @@
     "proofLabel": "They exhibit with SPIMARIMMO",
     "cursorPlay": "Watch",
     "cursorVideo": "the video"
+  },
+  "enquiryForm": {
+    "intro": "Write to us and an adviser will reply within two working days.",
+    "name": "Full name",
+    "email": "Email",
+    "organisation": "Company",
+    "optional": "(optional)",
+    "message": "Your message",
+    "consent": "I agree that SPIMARIMMO may use this information to answer my enquiry.",
+    "submit": "Send",
+    "sending": "Sending…",
+    "success": "Your enquiry has been recorded. An adviser will reply within two working days.",
+    "duplicate": "This enquiry has already been recorded. An adviser will be in touch.",
+    "rateLimited": "Too many enquiries from this device. Please try again in a few minutes.",
+    "error": "The enquiry could not be sent. Please try again or write to contact@spimarimmo.com.",
+    "invalid": "Some information is incomplete. Please correct the highlighted fields."
   }
 }

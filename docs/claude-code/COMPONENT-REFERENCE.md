@@ -28,18 +28,14 @@ Plus the vocabulary itself: `motion-tokens.ts` (`DUR`, `STAGGER`, `EASE`,
 
 Three components ship unused. Two are opportunities, one is a hazard.
 
-- **`ContactForm`** — a complete, hardened form: client + server Zod, honeypot,
-  rate limiting, `aria-live` status, floating labels, success and error states.
-  It is imported by nothing, while `/contact` renders a standing page saying the
-  form "opens with the CRM connection".
-
-  **It is not simply forgotten — it is blocked, and correctly so.** Its action
-  `submitContact` persists through `storeSubmission`, which appends to a local
-  `.data/contact-submissions.jsonl`. That is durable on one machine and
-  ephemeral on a serverless deployment, where instances share no filesystem.
-  Mounting it publicly today would report success after a write that does not
-  survive — which the contract forbids outright. Unblocked by `P-1` (link the
-  store to Supabase), not by wiring the component.
+- ~~**`ContactForm`**~~ — **retired 2026-08-05 (P-09).** It posted to
+  `submitContact`, a second acquisition path writing to its own store, while
+  the architecture rules name `submitEnquiry` as the one hardened action every
+  public lead form must use. Two lead pipelines is one too many. `/contact` now
+  renders `EnquiryForm`, which posts to `submitEnquiry` — honeypot, rate limit,
+  server-side Zod, durable write, and only then a success result — and an e2e
+  test asserts the lead is actually in the store before the success message is
+  allowed to count.
 
 - **`PageMedia`** — poster-backed media plane, unused since the route pages that
   called it were retired. Keep or delete deliberately; do not rebuild it.
