@@ -105,11 +105,16 @@
 
 /* --- Device panel ----------------------------------------------------------- */
 
+/* Horizontal padding is much tighter than vertical. Measured on the reference,
+   the stage spans 25..1511 and its three regions run 38..348, 350..1155 and
+   1155..1485 — contiguous, with ~13px of stage padding and no real gap between
+   them. Ours carried --space-md (31px) on both axes plus 31px column gaps,
+   which took 175px out of the centre proof alone. */
 .visPanel {
   background: var(--surface-inverse);
   border-radius: var(--radius-xl);
   color: var(--on-inverse);
-  padding: var(--space-md);
+  padding: var(--space-md) 0.85vw;
 }
 
 /* --- Phase tabs -------------------------------------------------------------- */
@@ -200,9 +205,14 @@
 .visDetail {
   animation: vis-detail-in 240ms ease both;
   display: grid;
-  gap: var(--space-md);
-  grid-template-columns: 17vw minmax(0, 1fr);
-  min-block-size: 51.3vw;
+  gap: 0.5vw;
+  /* 19.8vw = 304px, the reference's 310 scaled to our 1459 stage. */
+  grid-template-columns: 19.8vw minmax(0, 1fr);
+  /* 39.7vw = 610px, the reference's centre-region height. The floor still
+     equalises the three phases — that is what it is for — but at the
+     reference's figure rather than at whatever the tallest phase happened to
+     measure before the columns were corrected. */
+  min-block-size: 39.7vw;
   padding: var(--space-md) 0;
 }
 
@@ -261,7 +271,7 @@
 .visLevers {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: 0.35vw;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -275,7 +285,7 @@
   font-size: var(--text-support);
   font-weight: 500;
   gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
+  padding: 0.45vw var(--space-sm);
 }
 
 .visLever[data-first] {
@@ -291,10 +301,14 @@
 
 /* --- Stage: channels + artifacts + rail ------------------------------------------ */
 
+/* Channel rail, proof canvas, deliverables. The reference's centre proof
+   region (805px) is the channel rail plus the canvas together, so the rail
+   narrows and the canvas takes what it gives up; the deliverables column is
+   the reference's 330 scaled to our stage. */
 .visStage {
   display: grid;
-  gap: var(--space-md);
-  grid-template-columns: 9vw minmax(0, 1fr) 18vw;
+  gap: 0.5vw;
+  grid-template-columns: 7.2vw minmax(0, 1fr) 21.1vw;
 }
 
 .visChannels {
@@ -357,7 +371,10 @@
    Sized in vw so the whole assembly scales with the stage rather than
    resolving to fixed pixels at one width. */
 .visCanvas {
-  aspect-ratio: 16 / 11;
+  /* 3:2 rather than 16:11. The centre column's height is set by this canvas
+     plus the filmstrip and the state rail below it; at 16:11 the stack came to
+     649px against the reference's 610 for the whole region. */
+  aspect-ratio: 3 / 2;
   display: grid;
   position: relative;
 }
@@ -1067,7 +1084,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   list-style: none;
   margin: 0;
-  padding: var(--space-md) 0 var(--space-xs);
+  padding: var(--space-md) 0 var(--space-md);
 }
 
 .visBenefit {
