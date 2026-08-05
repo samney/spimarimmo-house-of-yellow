@@ -1,0 +1,657 @@
+/* ==========================================================================
+   Section 13 — Devenez exposant (closing conversion form)
+   ==========================================================================
+   Binds only to L2 semantic tokens. Paper header with the informational
+   three-step strip, the dark project card beside the proposal form, and the
+   closing reassurance strip. The design's footer band is deliberately not
+   built — the owner keeps the existing site footer.
+   ========================================================================== */
+
+.bexSection {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.bexInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header + step strip ------------------------------------------------------ */
+
+.bexHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.bexEyebrow {
+  color: var(--spimar-gold-text); /* WCAG AA on paper */
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.bexEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.bexTitle {
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 var(--space-sm);
+  max-width: 44vw;
+  text-wrap: balance;
+}
+
+.bexLead {
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+.bexSteps {
+  display: flex;
+  flex: none;
+  list-style: none;
+  margin: var(--space-xs) 0 0;
+  padding: 0;
+}
+
+.bexStep {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  position: relative;
+  text-align: center;
+  width: 10vw;
+}
+
+/* Dashed connector between step circles. */
+.bexStep:not(:last-child)::after {
+  border-top: 1px dashed var(--border-subtle);
+  content: "";
+  inset-block-start: 1.9vw;
+  inset-inline-start: calc(50% + 2.6vw);
+  inline-size: calc(100% - 5.2vw);
+  position: absolute;
+}
+
+.bexStepCircle {
+  align-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: 50%;
+  block-size: 3.8vw;
+  color: var(--action-primary);
+  display: inline-flex;
+  inline-size: 3.8vw;
+  justify-content: center;
+}
+
+.bexStepIcon {
+  height: 1.6vw;
+  width: 1.6vw;
+}
+
+.bexStepNum {
+  color: var(--spimar-gold-text); /* WCAG AA on paper */
+  font-size: var(--text-support);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.bexStepLabel {
+  font-size: var(--text-support);
+  line-height: 1.3;
+}
+
+/* --- Project card (dark) -------------------------------------------------------- */
+
+.bexGrid {
+  align-items: stretch;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr 1.2fr;
+  margin-bottom: var(--space-md);
+}
+
+.bexProject {
+  background: var(--surface-inverse);
+  border-radius: var(--radius-xl);
+  color: var(--on-inverse);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.bexProjectTitle {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-xs);
+}
+
+.bexProjectTitleIcon {
+  color: var(--action-primary);
+  height: 2vw;
+  width: 2vw;
+}
+
+.bexFieldLabel {
+  font-size: var(--text-support);
+  font-weight: 500;
+}
+
+.bexFieldLabel.isInverse {
+  color: var(--on-inverse);
+  margin: 0;
+}
+
+.bexSelectShell {
+  position: relative;
+}
+
+.bexSelectShell::after {
+  border-block-end: 1.5px solid currentColor;
+  border-inline-end: 1.5px solid currentColor;
+  block-size: 0.55vw;
+  content: "";
+  inline-size: 0.55vw;
+  inset-block-start: 42%;
+  inset-inline-end: var(--space-sm);
+  pointer-events: none;
+  position: absolute;
+  transform: rotate(45deg);
+}
+
+.bexEditionSelect {
+  appearance: none;
+  background: var(--surface-raised);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 500;
+  inline-size: 100%;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-sm);
+}
+
+.bexEditionSelect:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.bexObjectives {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.bexObjective {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
+  color: var(--on-inverse);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  line-height: 1.3;
+  padding: var(--space-sm) var(--space-xs);
+  text-align: center;
+  transition: border-color 160ms ease;
+}
+
+.bexObjective:hover {
+  border-color: var(--action-primary);
+}
+
+.bexObjective.isActive {
+  border-color: var(--action-primary);
+  box-shadow: inset 0 0 0 1px var(--action-primary);
+}
+
+.bexObjective:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.bexObjectiveIcon {
+  color: var(--action-primary);
+  height: 1.8vw;
+  width: 1.8vw;
+}
+
+.bexChips {
+  border-top: 1px solid var(--border-inverse);
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+
+.bexChip {
+  align-items: center;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-md);
+  color: var(--on-inverse-muted);
+  display: inline-flex;
+  flex: 1;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  justify-content: center;
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.bexChipIcon {
+  color: var(--on-inverse);
+  flex: none;
+  height: 1.2vw;
+  width: 1.2vw;
+}
+
+/* --- Proposal form ---------------------------------------------------------------- */
+
+.bexFormCard {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+}
+
+.bexFormCard form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.bexFormTitle {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-xs);
+}
+
+.bexFormTitleBubble {
+  align-items: center;
+  background: var(--surface-muted);
+  border-radius: 50%;
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  padding: 0.7vw;
+}
+
+.bexFormTitleIcon {
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+.bexFieldGrid {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.bexField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.bexOptional {
+  color: var(--on-surface-muted);
+  font-weight: 400;
+}
+
+.bexInput {
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  font-family: inherit;
+  font-size: var(--text-support);
+  inline-size: 100%;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.bexInput::placeholder {
+  color: var(--on-surface-muted);
+}
+
+.bexInput:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.15em;
+}
+
+.bexInput[aria-invalid="true"] {
+  border-color: var(--feedback-critical);
+}
+
+.bexTextarea {
+  resize: vertical;
+}
+
+.bexTrap {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+}
+
+.bexConsentRow {
+  align-items: center;
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.bexConsentBox {
+  accent-color: var(--action-primary);
+  block-size: 1.1vw;
+  inline-size: 1.1vw;
+}
+
+.bexConsentBox:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.15em;
+}
+
+.bexSubmit {
+  align-items: center;
+  background: var(--action-primary);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-xs);
+  justify-content: center;
+  padding: var(--space-sm);
+  transition: background-color 160ms ease;
+}
+
+.bexSubmit:hover {
+  background: var(--action-primary-hover);
+}
+
+.bexSubmit:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.bexSubmit:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.bexBtnIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+.bexFieldError {
+  color: var(--feedback-critical);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+.bexDisclaimer {
+  align-items: center;
+  color: var(--on-surface-muted);
+  display: flex;
+  font-size: var(--text-base);
+  gap: var(--space-2xs);
+  justify-content: center;
+  margin: 0;
+}
+
+.bexDisclaimerIcon {
+  flex: none;
+  height: 1.1em;
+  width: 1.1em;
+}
+
+/* --- Confirmation state -------------------------------------------------------------- */
+
+.bexSent {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+}
+
+.bexSentShield {
+  color: var(--action-primary);
+  height: 3.4vw;
+  width: 3.4vw;
+}
+
+.bexSentBadge {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.bexSentTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  margin: 0;
+}
+
+.bexSentText {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+  max-inline-size: 30vw;
+}
+
+/* --- Reassurance strip ----------------------------------------------------------------- */
+
+.bexReassure {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.bexReassureItem {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: var(--space-sm);
+}
+
+.bexReassureItem + .bexReassureItem {
+  border-inline-start: 1px solid var(--border-subtle);
+  margin-inline-start: var(--space-md);
+  padding-inline-start: var(--space-md);
+}
+
+.bexReassureBubble {
+  align-items: center;
+  background: var(--surface-muted);
+  border-radius: 50%;
+  block-size: 3.2vw;
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  inline-size: 3.2vw;
+  justify-content: center;
+}
+
+.bexReassureIcon {
+  height: 1.5vw;
+  width: 1.5vw;
+}
+
+.bexReassureTitle {
+  display: block;
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.bexReassureSub {
+  color: var(--on-surface-muted);
+  display: block;
+  font-size: var(--text-support);
+}
+
+/* --- Reduced motion ---------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bexObjective,
+  .bexSubmit {
+    transition: none;
+  }
+}
+
+/* --- Mobile regime (matches the global 580 restatement) ------------------------------------ */
+
+@media (max-width: 580px) {
+  .bexHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .bexTitle {
+    max-width: 100%;
+  }
+
+  .bexSteps {
+    inline-size: 100%;
+    justify-content: space-between;
+  }
+
+  .bexStep {
+    width: 30%;
+  }
+
+  .bexStep:not(:last-child)::after {
+    inset-block-start: 6.5vw;
+    inset-inline-start: calc(50% + 8.5vw);
+    inline-size: calc(100% - 17vw);
+  }
+
+  .bexStepCircle {
+    block-size: 13vw;
+    inline-size: 13vw;
+  }
+
+  .bexStepIcon {
+    height: 5.5vw;
+    width: 5.5vw;
+  }
+
+  .bexGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bexProjectTitleIcon {
+    height: 6vw;
+    width: 6vw;
+  }
+
+  .bexSelectShell::after {
+    block-size: 2vw;
+    inline-size: 2vw;
+  }
+
+  .bexObjectives {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bexObjectiveIcon {
+    height: 6vw;
+    width: 6vw;
+  }
+
+  .bexChips {
+    flex-direction: column;
+  }
+
+  .bexChipIcon {
+    height: 4.2vw;
+    width: 4.2vw;
+  }
+
+  .bexFormTitleBubble {
+    padding: 2.4vw;
+  }
+
+  .bexFormTitleIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .bexFieldGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bexConsentBox {
+    block-size: 4.5vw;
+    inline-size: 4.5vw;
+  }
+
+  .bexSentShield {
+    height: 10vw;
+    width: 10vw;
+  }
+
+  .bexSentText {
+    max-inline-size: 100%;
+  }
+
+  .bexReassure {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .bexReassureItem + .bexReassureItem {
+    border-inline-start: 0;
+    border-top: 1px solid var(--border-subtle);
+    margin-inline-start: 0;
+    padding-inline-start: 0;
+    padding-top: var(--space-sm);
+  }
+
+  .bexReassureBubble {
+    block-size: 10vw;
+    inline-size: 10vw;
+  }
+
+  .bexReassureIcon {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+}

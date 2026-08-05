@@ -180,6 +180,9 @@ export interface ContentQuery {
 
 export interface ContentRepository {
   getPage(query: ContentQuery & { slug: string }): Promise<NormalizedPage | null>;
+  /** Additive (2026-08-04): the case-study listing needs enumeration, not just
+      lookup. Published-only unless `includeUnpublished`. */
+  listPages(query: ContentQuery): Promise<readonly NormalizedPage[]>;
   listEvents(query: ContentQuery): Promise<readonly NormalizedEvent[]>;
   getEvent(query: ContentQuery & { slug: string }): Promise<NormalizedEvent | null>;
   listResources(query: ContentQuery): Promise<readonly NormalizedResource[]>;

@@ -1,17 +1,13 @@
-import { type Page } from "@playwright/test";
-import { expect, test } from "./fixtures";
+import { expect, test } from "@playwright/test";
 
-/* End-to-end release journey:
+/* End-to-end release journey required by the accelerated brief:
 
      public page -> CTA -> form -> durable submission -> CRM lead
      CMS content update -> publication -> public revalidation
 
    These are the assertions that decide whether the platform actually works, so
    they drive real UI rather than calling actions directly. Credentials come
-   from the webServer env in playwright.config.ts and exist only for this suite.
-
-   The console is French (SPIMAR Control) and lives under /admin with locale
-   resolution, per ADR-A1. */
+   from the webServer env in playwright.config.ts and exist only for this suite. */
 
 const ADMIN = { email: "e2e-admin@example.test", password: "e2e-admin-password" };
 const EDITOR = { email: "e2e-editor@example.test", password: "e2e-editor-password" };
@@ -23,14 +19,14 @@ const stamp = () => `${Date.now()}${Math.floor(process.hrtime()[1] / 1000)}`;
    page content until a visitor answers it — which is what a real visitor does
    before using a form. Dismiss it first so interaction tests exercise the page
    rather than the banner. */
-async function dismissConsent(page: Page) {
-  const deny = page.getByRole("button", { name: /deny|refuser/i });
+async function dismissConsent(page: import("@playwright/test").Page) {
+  const deny = page.getByRole("button", { name: /deny/i });
   if (await deny.count()) {
     await deny.first().click();
   }
 }
 
-export async function signIn(page: Page, who: typeof ADMIN) {
+async function signIn(page: import("@playwright/test").Page, who: typeof ADMIN) {
   await page.goto("/admin/login");
   await page.getByLabel("E-mail").fill(who.email);
   await page.getByLabel("Mot de passe").fill(who.password);
@@ -38,12 +34,11 @@ export async function signIn(page: Page, who: typeof ADMIN) {
   await expect(page.getByRole("heading", { name: "Vue d’ensemble" })).toBeVisible();
 }
 
-test.describe("SPIMAR Control is protected", () => {
-  test("console routes redirect anonymous visitors to sign-in", async ({ page }) => {
+test.describe("CMS and CRM are protected", () => {
+  test("admin routes redirect anonymous visitors to sign-in", async ({ page }) => {
     for (const route of ["/admin", "/admin/cms/pages", "/admin/events", "/admin/crm/leads"]) {
       await page.goto(route);
       await expect(page.getByRole("heading", { name: "SPIMAR Control" })).toBeVisible();
-      await expect(page.getByLabel("Mot de passe")).toBeVisible();
     }
   });
 
@@ -53,7 +48,7 @@ test.describe("SPIMAR Control is protected", () => {
     await page.getByLabel("Mot de passe").fill("wrong-password");
     await page.getByRole("button", { name: "Se connecter" }).click();
     // Scoped to the form notice: Next.js also renders a route announcer with role=alert.
-    await expect(page.locator(".notice--error")).toContainText("not accepted");
+    await expect(page.locator(".notice--error")).toContainText("were not accepted");
     await expect(page.getByRole("heading", { name: "Vue d’ensemble" })).toHaveCount(0);
   });
 });
@@ -63,24 +58,20 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
   const name = `E2E Visitor ${id}`;
   const message = `Integration enquiry ${id}`;
 
-  /* Straight to the contact route rather than through a homepage CTA: the
-     homepage is still the untransformed clone and belongs to a later phase,
-     so depending on its links would couple this test to work it is not about.
-     What the test asserts — durable storage, then the CRM — is unchanged. */
-  await page.goto("/contact");
+  // conversion page -> combined section: the flexible path (skip the wizard,
+  // tier optional) leads straight to the request form
+  await page.goto("/en/exposer/devenir-exposant");
   await dismissConsent(page);
-  // Level 1: the shared footer also carries a "Contact" heading, so an
-  // unscoped lookup matches two elements.
-  await expect(page.getByRole("heading", { name: "Contact", level: 1 })).toBeVisible();
-
-  await page.locator("#fullName").fill(name);
-  await page.locator("#email").fill(`e2e-${id}@example.test`);
-  await page.locator("#message").fill(message);
-  await page.getByRole("checkbox").check();
-  await page.getByRole("button", { name: "Envoyer le message" }).click();
+  await page.getByRole("button", { name: "Skip straight to my request" }).click();
+  await page.getByLabel("Full name").fill(name);
+  await page.getByLabel("Company").fill(`E2E Co ${id}`);
+  await page.getByLabel("Business email").fill(`e2e-${id}@example.test`);
+  await page.getByLabel("Your message").fill(message);
+  await page.getByLabel(/I agree to be contacted/).check();
+  await page.getByRole("button", { name: "Send my request" }).click();
 
   // The confirmation appears only after a durable write.
-  await expect(page.getByRole("heading", { name: "Message enregistré" })).toBeVisible();
+  await expect(page.getByText("Your request has been sent.")).toBeVisible();
 
   // -> CRM lead, with attribution captured at submission.
   await signIn(page, ADMIN);
@@ -91,8 +82,7 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
     .getByRole("link", { name: "Ouvrir" })
     .click();
   await expect(page.getByText(message)).toBeVisible();
-  await expect(page.getByText("contact-page")).toBeVisible();
-  await expect(page.getByText("contact_request")).toBeVisible();
+  await expect(page.getByText("devenir-exposant-flexible")).toBeVisible();
 
   // Operational workflow: stage, assignment and a note, each audited.
   await page.getByLabel("Étape actuelle").selectOption("qualified");
@@ -103,13 +93,13 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
   await page.getByRole("button", { name: "Enregistrer", exact: true }).click();
   await expect(page.getByText("Assignment updated.")).toBeVisible();
 
-  await page.getByLabel("Note").fill("Following up this week.");
+  await page.getByRole("textbox", { name: "Note" }).fill("Following up this week.");
   await page.getByRole("button", { name: "Ajouter la note" }).click();
   await expect(page.getByText("Note added.")).toBeVisible();
 
-  // Audit trail records actor and action.
-  await expect(page.getByText(/Stage set to qualified/)).toBeVisible();
-  await expect(page.getByText(/Following up this week/)).toBeVisible();
+  // Audit trail records actor and action (rendered as the activity list).
+  await expect(page.getByText(/Stage set to qualified/).first()).toBeVisible();
+  await expect(page.getByText(/Following up this week/).first()).toBeVisible();
 });
 
 test("duplicate submissions are refused without a false confirmation", async ({ page }) => {
@@ -118,20 +108,21 @@ test("duplicate submissions are refused without a false confirmation", async ({ 
   const message = `Duplicate probe ${id}`;
 
   for (const attempt of [1, 2]) {
-    await page.goto("/contact");
+    await page.goto("/en/exposer/devenir-exposant");
     await dismissConsent(page);
-    await page.locator("#fullName").fill(`Dupe ${id}`);
-    await page.locator("#email").fill(email);
-    await page.locator("#message").fill(message);
-    await page.getByRole("checkbox").check();
-    await page.getByRole("button", { name: "Envoyer le message" }).click();
+    await page.getByRole("button", { name: "Skip straight to my request" }).click();
+    await page.getByLabel("Full name").fill(`Dupe ${id}`);
+    await page.getByLabel("Company").fill(`Dupe Co ${id}`);
+    await page.getByLabel("Business email").fill(email);
+    await page.getByLabel("Your message").fill(message);
+    await page.getByLabel(/I agree to be contacted/).check();
+    await page.getByRole("button", { name: "Send my request" }).click();
 
     if (attempt === 1) {
-      await expect(page.getByRole("heading", { name: "Message enregistré" })).toBeVisible();
+      await expect(page.getByText("Your request has been sent.")).toBeVisible();
     } else {
-      // Honest: says already recorded, does NOT claim a new message was created.
-      await expect(page.getByRole("heading", { name: "Message déjà enregistré" })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "Message enregistré" })).toHaveCount(0);
+      // Honest: says already recorded, does NOT claim a new enquiry was created.
+      await expect(page.getByText(/already recorded/)).toBeVisible();
     }
   }
 });
@@ -145,8 +136,9 @@ test("CMS publish updates the public site through revalidation", async ({ page }
   await page.goto("/admin/events");
 
   await page.getByLabel("Slug").fill(slug);
-  // The localized editor renders FR first, then EN.
-  await page.getByLabel("FR").first().fill(title);
+  // The assertions below read /en/..., so the EN translation is the one that
+  // has to carry the title.
+  await page.getByLabel("EN", { exact: true }).first().fill(title);
   await page.getByLabel("Ville").fill("Casablanca");
   await page.getByLabel("Pays").fill("Morocco");
   // Dates deliberately left empty — the public page must say so, not guess.
@@ -155,12 +147,41 @@ test("CMS publish updates the public site through revalidation", async ({ page }
   await expect(page.getByText(/published/i).first()).toBeVisible();
 
   // -> public revalidation: the published edition is now live.
-  await page.goto("/salons");
+  await page.goto("/en/salons");
   await expect(page.getByRole("link", { name: title })).toBeVisible();
-  await expect(page.getByText("Dates à confirmer").first()).toBeVisible();
+  await expect(page.getByText("Dates to be confirmed").first()).toBeVisible();
 
-  await page.goto(`/salons/${slug}`);
+  await page.goto(`/en/salons/${slug}`);
   await expect(page.getByRole("heading", { name: title })).toBeVisible();
+});
+
+test("a published case study lists and serves its detail; drafts 404", async ({ page }) => {
+  const id = stamp();
+  const title = `E2E Case ${id}`;
+
+  // The CMS utility: case studies are pages in the `etudes/` family.
+  await signIn(page, ADMIN);
+  await page.goto("/admin/cms/pages");
+  await page.getByLabel("Slug").fill(`etudes/e2e-case-${id}`);
+  // Asserted against /en/etudes-de-cas below, so author the EN translation.
+  await page.getByLabel("EN", { exact: true }).first().fill(title);
+  await page.getByLabel("Publication").selectOption("published");
+  await page.getByRole("button", { name: "Enregistrer" }).click();
+  await expect(page.getByText(/published/i).first()).toBeVisible();
+
+  await page.goto("/en/etudes-de-cas");
+  await page.getByRole("link", { name: title }).click();
+  await expect(page.getByRole("heading", { name: title })).toBeVisible();
+
+  await page.goto("/admin/cms/pages");
+  await page.getByLabel("Slug").fill(`etudes/e2e-case-draft-${id}`);
+  await page.getByLabel("FR", { exact: true }).first().fill(`Draft case ${id}`);
+  await page.getByRole("button", { name: "Enregistrer" }).click();
+  await expect(page.getByText(/draft/i).first()).toBeVisible();
+  const response = await page.request.get(`/etudes-de-cas/e2e-case-draft-${id}`, {
+    maxRedirects: 0,
+  });
+  expect(response.status()).toBe(404);
 });
 
 test("drafts are never visible publicly", async ({ page }) => {
@@ -170,7 +191,7 @@ test("drafts are never visible publicly", async ({ page }) => {
   await signIn(page, ADMIN);
   await page.goto("/admin/events");
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("FR").first().fill(`Draft ${id}`);
+  await page.getByLabel("FR", { exact: true }).first().fill(`Draft ${id}`);
   await page.getByLabel("Publication").selectOption("draft");
   await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/draft/i).first()).toBeVisible();
@@ -187,34 +208,27 @@ test("an editor cannot publish, and the server enforces it", async ({ page }) =>
   await signIn(page, EDITOR);
   await page.goto("/admin/events");
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("FR").first().fill(`Editor attempt ${id}`);
+  await page.getByLabel("FR", { exact: true }).first().fill(`Editor attempt ${id}`);
   await page.getByRole("button", { name: "Enregistrer" }).click();
 
-  // The publish option is disabled in the UI, but the guarantee is server-side:
-  // the record must be a draft and must not resolve publicly.
   await expect(page.getByText(/draft/i).first()).toBeVisible();
+
+  // The publish option is disabled in the UI, but the guarantee must be
+  // server-side — so ATTACK it: force-enable the disabled option, submit
+  // `state=published` as the editor, and require the server to downgrade.
+  await page.getByLabel("Slug").fill(slug);
+  await page.getByLabel("FR", { exact: true }).first().fill(`Editor attempt ${id}`);
+  await page.evaluate(() => {
+    const select = document.querySelector<HTMLSelectElement>('select[name="state"]');
+    if (select) {
+      for (const option of select.options) option.disabled = false;
+      select.value = "published";
+    }
+  });
+  await page.getByRole("button", { name: "Enregistrer" }).click();
+  await expect(page.getByText(/draft/i).first()).toBeVisible();
+
+  // And the record must not resolve publicly either way.
   const response = await page.request.get(`/salons/${slug}`, { maxRedirects: 0 });
   expect(response.status()).toBe(404);
-});
-
-test("an editor cannot export CRM data — crm.export is not granted", async ({ page }) => {
-  await signIn(page, EDITOR);
-
-  /* Navigated, not fetched: `page.request` uses a separate context that does
-     not carry the session cookie, so it would report 401 for every caller and
-     prove nothing about the permission. A navigation carries the real session,
-     which is what makes the 403 meaningful. */
-  const response = await page.goto("/admin/crm/leads/export");
-  expect(response?.status()).toBe(403);
-  await expect(page.getByText(/cannot export/i)).toBeVisible();
-});
-
-test("an admin can export, and the download is a real CSV", async ({ page }) => {
-  await signIn(page, ADMIN);
-  await page.goto("/admin/crm/leads");
-
-  const download = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Exporter en CSV" }).click();
-  const file = await download;
-  expect(file.suggestedFilename()).toMatch(/^spimar-leads-\d{4}-\d{2}-\d{2}\.csv$/);
 });

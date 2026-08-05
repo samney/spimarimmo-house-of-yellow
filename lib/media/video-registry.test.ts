@@ -48,7 +48,17 @@ describe("video delivery registry", () => {
     expect(resolveLegacyVideoPath("")).toBeNull();
   });
 
-  it("declares no deployable asset at this baseline (limitation L2)", () => {
-    expect(getVideoDeliveryAssets()).toHaveLength(0);
+  /* Limitation L2 (no deployable asset) was lifted for exactly one
+     owner-supplied, rights-approved asset under D-024. The assertion is not
+     deleted: it now pins the declared set, so any undeclared addition — the
+     regression L2 actually guarded against — still fails here. */
+  it("declares only the rights-approved hero asset (D-024, lifting L2)", () => {
+    const assets = getVideoDeliveryAssets();
+    expect(assets.map((asset) => asset.id)).toEqual(["hero-real-estate-exhibition"]);
+    for (const asset of assets) {
+      expect(asset.rightsStatus).toBe("approved");
+      expect(asset.rightsOwner).toBe("SPIMARIMMO");
+      expect(asset.delivery).toBe("repository");
+    }
   });
 });

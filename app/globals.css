@@ -1,22 +1,25 @@
 @import "tailwindcss";
 @import "../components/public/global/shell.css";
-@import "../components/public/exhibitor/exhibitor.css";
-
-/* TRF-004 deleted the reference home, works, project-detail and pages
-   stylesheets along with the surfaces they styled. `shell.css` is retained for
-   now because the consent banner and 404 boundary still use its primitives; it
-   is replaced wholesale by the SPIMAR design system in TRF-010 to TRF-012.
-
-   `exhibitor.css` is SPIMAR's own: it styles the acquisition funnel
-   (/exposer, /contact, /salons, /suivi), which is the first genuinely SPIMAR
-   public surface rather than reference residue. */
+@import "../components/public/home/home.css";
+@import "../components/public/home/hero.css";
+@import "../components/public/home/events.css";
+@import "../components/public/home/pillars.css";
+@import "../components/public/home/method/method.css";
+@import "../components/public/home/impact.css";
+@import "../components/public/home/mre.css";
+@import "../components/public/home/visibility.css";
+@import "../components/public/home/promoters.css";
+@import "../components/public/home/proof.css";
+@import "../components/public/home/offers/offers.css";
+@import "../components/public/home/gallery.css";
+@import "../components/public/home/resources.css";
+@import "../components/public/home/become.css";
+@import "../components/public/pages/pages.css";
+@import "../components/public/pages/spimar-pages.css";
+@import "../components/public/status/status.css";
 
 /* ---------------------------------------------------------------------------
-   Reference-derived design tokens (`--hoy-*`)
-
-   These names are reference-namespace residue, deliberately retained: renaming
-   them is a mechanical sweep across every stylesheet and belongs to the SPIMAR
-   token layer in TRF-010, not to a bulk find-and-replace here.
+   House of Yellow — extracted design tokens
    Source of truth: docs/design-system/DESIGN-SYSTEM.md (observed values only).
    The reference scales typography linearly with vw in three regimes switched
    at 1080px and 580px — replicated verbatim (no clamp()).
@@ -93,9 +96,15 @@
   --spimar-gold: #efc337;
   --spimar-gold-hover: #f2ce55;
   --spimar-gold-deep: #d4a91f;
+  /* Gold for SMALL TEXT on paper. #efc337 reads at 1.49:1 on #f4f2ed and
+     #d4a91f at ~2:1 — both fail WCAG AA (4.5:1) at eyebrow sizes. This deep
+     text gold measures ~5.0:1 on paper. Dark surfaces keep the bright gold. */
+  --spimar-gold-text: #7a6600;
   --spimar-black: #000000;
   --spimar-ink: #14140f;
   --spimar-paper: #f4f2ed;
+  /* Warm ivory of the approved Section-1 reference. */
+  --spimar-ivory: #f7f2e9;
   --spimar-white: #ffffff;
   /* Muted text meeting 4.5:1 on --spimar-paper. Explicit colour, never opacity. */
   --spimar-muted: #55554f;
@@ -104,6 +113,8 @@
   --spimar-positive: #1f7a3d;
   --spimar-critical: #a3231d;
   --spimar-focus: #0b5cd5;
+  /* Elevation for floating panels (submenus). One place, so depth is uniform. */
+  --shadow-raised: 0 0.55vw 1.6vw rgb(20 20 15 / 10%);
 
   /* --- L1: spacing scale ---------------------------------------------------
      Viewport-relative like the type ladder so rhythm scales with composition
@@ -307,75 +318,4 @@ body {
   .mediaPlane__video {
     display: none !important;
   }
-}
-
-/* ---------------------------------------------------------------------------
-   Interim neutral surfaces (TRF-006)
-
-   TRF-004 deleted the reference stylesheets, but the two surviving routes —
-   the homepage placeholder and the 404 boundary — still carried reference
-   class names. Nothing matched them, and `body { font-size: var(--text-base) }`
-   (0.75vw) left both headings rendering at roughly 10px.
-
-   These rules exist so the shell is legible between now and the SPIMAR design
-   system (TRF-010 to TRF-012), which replaces this block wholesale. They are
-   deliberately plain: no brand, no decoration, nothing that could be mistaken
-   for an approved SPIMAR treatment.
-   --------------------------------------------------------------------------- */
-
-.interimSurface {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 1rem;
-  min-height: 60vh;
-  max-width: 44rem;
-  margin: 0 auto;
-  padding: 4rem 1.5rem;
-}
-
-.interimSurface__eyebrow {
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  /* An explicit colour, not `opacity`. TRF-006 used `opacity: 0.6`, which
-     composited --hoy-ink over --hoy-paper to #71716f — 4.21:1, below the 4.5:1
-     WCAG AA minimum, and shipped a serious axe violation on the 404. Opacity on
-     text is a contrast hazard precisely because the resulting value is implicit
-     and nothing recomputes it when either colour changes. The axe gate added in
-     TRF-007 now fails on regressions like this one. */
-  color: #55554f;
-}
-
-.interimSurface h1 {
-  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
-  font-weight: 600;
-  line-height: 1.15;
-  text-wrap: balance;
-}
-
-.interimSurface p {
-  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
-  line-height: 1.6;
-  max-width: 38rem;
-}
-
-.interimSurface a {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-  color: inherit;
-}
-
-.interimSurface a:hover,
-.interimSurface a:focus-visible {
-  background: var(--hoy-ink);
-  color: var(--hoy-paper);
 }

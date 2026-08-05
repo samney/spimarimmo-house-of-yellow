@@ -1,12 +1,23 @@
 # Frontend quality rules
 
-- **`taste-skill` / `design-taste-frontend` is subordinate, never authoritative.** It is vendored at `.claude/skills/taste-skill/` and encodes a generative greenfield house style (Motion/Framer Motion, shadcn, hotlinked `picsum.photos`, Geist type, its own breakpoints, anti-centered-hero and eyebrow-count rules). Every one of those contradicts a rule in this file, `architecture.md`, or `TOOLING-MATRIX.md`. **Where they disagree, this file wins, without exception.** Use it for its AI-tell detection (§9) and pre-flight output-quality checklist (§14) — em-dash ban, copy self-audit, WCAG contrast on buttons and forms, CTA wrap, motion-must-be-motivated. Do not use it for reference-fidelity work or CMS/CRM console surfaces. Full conflict table: `docs/claude-code/PUBLIC-SKILLS-LOCK.md` §9.B.
-- Fidelity to the reference site is the priority. Do not modernize, simplify, or "improve" the public UI. No generic card chrome, template patterns, default shadcn styling on public routes, or unobserved decoration.
-- All colors, type sizes, spacing, radii, and z-indices come from extracted design tokens (CSS custom properties + Tailwind theme). Known anchors: paper `#EEEEEE`, ink `#1D1D1B`, yellow `#F2EFA3`, Poppins 300–700 self-hosted.
-- Typography in the reference is viewport-relative (`vw`-based). Derive real clamping and mobile overrides from evidence — never copy desktop `vw` values blindly.
-- GSAP (+ ScrollTrigger, `@gsap/react`) owns timelines, scroll choreography, text reveals, pinning, transitions, counters. Native CSS for simple hover/focus. No Framer Motion. Lenis only if smooth-scroll evidence requires it (it does: `lenis` classes observed — verify before adopting).
-- Every animation respects `prefers-reduced-motion` with a documented fallback, and cleans up on unmount (no ScrollTrigger leaks).
-- Responsive validation at all eight required viewports (1920, 1440, 1280, 1024×768, 768×1024, 430, 390, 360 widths) plus fluid behavior between them. No horizontal overflow, no layout shift.
-- Media: `next/image`/optimized pipeline, correct poster frames, correct crops and focal points, lazy-load noncritical video.
-- Accessibility is part of fidelity: semantic HTML, keyboard navigation, visible focus, accessible forms, accurate alt text, sufficient contrast.
-- Performance budget: fast first render, route-level code splitting, no unnecessary client JS; measure with Lighthouse; never trade visual fidelity for a synthetic score without a recorded decision.
+- Full contract: `docs/claude-code/DESIGN-CONTRACT.md` — read it before
+  touching public UI.
+- Fidelity is to the approved SPIMAR section designs in `docs/assets-UX-UI/`
+  (owner-approved mocks), implemented with the shipped section anatomy —
+  never modernize, never invent undesigned states; omit and report them.
+- All visual values bind to the L2 tokens in `app/globals.css`; sizes are
+  viewport-relative with the single 580px mobile restatement.
+- Content honesty is part of design: no unvalidated figure/date/price/
+  availability; pending states rendered honestly; dead controls disabled.
+- Every animation respects `prefers-reduced-motion` with a documented
+  fallback and cleans up on unmount.
+- Accessibility ships with the section: semantic HTML, keyboard + visible
+  focus, `aria-expanded/pressed/current` on stateful controls, decorative
+  media `aria-hidden` with accessible equivalents.
+- No horizontal overflow at any viewport; verify at 1920 and 390 minimum.
+- **`taste-skill` is subordinate, never authoritative (`D-022`).** Vendored at
+  `.claude/skills/taste-skill/`; its house style (Framer Motion, shadcn,
+  hotlinked media, its own breakpoints) contradicts this file — where they
+  disagree, this file wins without exception. Use it only for AI-tell
+  detection and its output-quality checklist. Conflict table:
+  `docs/claude-code/PUBLIC-SKILLS-LOCK.md` §9.B.

@@ -67,6 +67,15 @@ export async function logout(): Promise<void> {
 
 /* ------------------------------------------------------------------- content */
 
+/** Revalidates the CONSOLE surface the operator is looking at.
+
+    Without this an editor saves a record and the list beside the form still
+    shows the previous state until they navigate away and back — the save looks
+    like it did nothing. The public revalidation below is a separate concern. */
+function revalidateConsole(paths: string[]): void {
+  for (const path of paths) revalidatePath(path);
+}
+
 /** Revalidates the public surfaces a content change can affect. Targeted rather
     than a blanket purge, so a page edit does not invalidate the whole site. */
 function revalidatePublic(paths: string[]): void {
@@ -101,6 +110,7 @@ export async function savePageAction(
     session.email,
   );
 
+  revalidateConsole(["/admin/cms/pages", "/admin"]);
   revalidatePublic([`/${slug}`, "/"]);
   return {
     ok: true,
@@ -149,6 +159,7 @@ export async function saveEventAction(
     session.email,
   );
 
+  revalidateConsole(["/admin/events", "/admin"]);
   revalidatePublic([`/salons/${slug}`, "/salons", "/"]);
   return {
     ok: true,
@@ -181,6 +192,7 @@ export async function saveDestinationAction(
     session.email,
   );
 
+  revalidateConsole(["/admin/destinations", "/admin"]);
   revalidatePublic(["/salons", "/"]);
   return {
     ok: true,
@@ -222,6 +234,7 @@ export async function saveMediaAction(
     },
     session.email,
   );
+  revalidateConsole(["/admin/cms/media", "/admin"]);
   return { ok: true, message: "Media record saved." };
 }
 
@@ -234,6 +247,7 @@ export async function deleteContentAction(
     return { ok: false, message: "Deleting content requires an administrator." };
   }
   const removed = await getAdminSeams().cms.deleteRecord(collection, id);
+  revalidateConsole(["/admin/events", "/admin/cms/pages", "/admin"]);
   revalidatePublic(["/", "/salons"]);
   return removed
     ? { ok: true, message: "Deleted." }

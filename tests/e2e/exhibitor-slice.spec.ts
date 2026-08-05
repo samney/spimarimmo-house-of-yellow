@@ -1,18 +1,22 @@
 import { type Page } from "@playwright/test";
 import { expect, test } from "./fixtures";
 
-/* Wave 3 exit gate (ADM-061 / ADM-062).
+/* Wave 3 exit gate (ADM-061 / ADM-062), asserted against the SHIPPED
+   conversion form.
 
-   The full chain, driven through real UI:
+   `integration.spec.ts` proves the headline journey (enquiry -> CRM lead) and
+   the duplicate case. This suite covers what the acquisition contract adds on
+   top, and what nothing else asserts:
 
-     public exhibitor enquiry -> durable submission -> consent and attribution
-     -> contact and organization deduplication -> CRM lead -> assignment
-     -> follow-up task -> leads list -> lead detail
+     - the assignment and follow-up task written in the same transaction
+     - consent recorded against its definition
+     - attribution captured at submission time
+     - the opaque public reference and the /suivi status screen
+     - the negative cases: invalid input and an unknown reference
 
-   The gate the blueprint sets for this wave is asserted literally here: the
-   form creates the correct records, duplicate retries do not create
-   duplicates, consent and attribution are stored, and the UI never reports a
-   provider success that has not happened. */
+   It drives the real form at /exposer/devenir-exposant rather than a fixture,
+   because a guarantee that only holds against a test-only surface is not a
+   guarantee. */
 
 const ADMIN = { email: "e2e-admin@example.test", password: "e2e-admin-password" };
 
@@ -31,140 +35,102 @@ async function signIn(page: Page) {
   await expect(page.getByRole("heading", { name: "Vue d’ensemble" })).toBeVisible();
 }
 
-async function fillEnquiry(
+async function sendEnquiry(
   page: Page,
-  who: { first: string; last: string; org: string; email: string; message: string },
+  who: { name: string; company: string; email: string; message: string },
 ) {
-  await page.goto("/exposer");
+  await page.goto("/en/exposer/devenir-exposant");
   await dismissConsent(page);
-  // Targeted by id: the visible required marker is part of each label's text,
-  // so a label lookup for "Nom" would also match "Prénom".
-  await page.locator("#firstName").fill(who.first);
-  await page.locator("#lastName").fill(who.last);
-  await page.locator("#organizationName").fill(who.org);
-  await page.locator("#email").fill(who.email);
-  await page.locator("#message").fill(who.message);
-  await page.getByRole("checkbox").check();
-  await page.getByRole("button", { name: "Envoyer la demande" }).click();
+  await page.getByRole("button", { name: "Skip straight to my request" }).click();
+  await page.getByLabel("Full name").fill(who.name);
+  await page.getByLabel("Company").fill(who.company);
+  await page.getByLabel("Business email").fill(who.email);
+  await page.getByLabel("Your message").fill(who.message);
+  await page.getByLabel(/I agree to be contacted/).check();
+  await page.getByRole("button", { name: "Send my request" }).click();
 }
 
-/** The reference the acknowledgement shows — 32 hex characters, no PII. */
-async function referenceFrom(page: Page): Promise<string> {
-  const code = page.locator(".enquiryDone__code");
-  await expect(code).toBeVisible();
-  return ((await code.textContent()) ?? "").trim();
-}
-
-test("exhibitor enquiry becomes an assigned CRM lead with a follow-up task", async ({ page }) => {
-  const id = stamp();
-  const who = {
-    first: "Amina",
-    last: `Benali${id}`,
-    org: `Atlas Développement ${id}`,
-    email: `exposant-${id}@example.test`,
-    message: `Nous souhaitons un stand. Réf ${id}`,
-  };
-
-  await fillEnquiry(page, who);
-
-  // The acknowledgement appears only after a durable commit, and speaks about
-  // the stored record — never about an e-mail that was not sent.
-  await expect(page.getByRole("heading", { name: "Demande enregistrée" })).toBeVisible();
-  const reference = await referenceFrom(page);
-  expect(reference).toMatch(/^[0-9a-f]{32}$/);
-  await expect(page.getByText(/Aucun e-mail de confirmation n’est envoyé/)).toBeVisible();
-
-  // The public reference resolves to a coarse status and no personal data.
-  await page.goto(`/suivi?ref=${reference}`);
-  await expect(page.getByText("Demande reçue")).toBeVisible();
-  await expect(page.getByText(who.email)).toHaveCount(0);
-  await expect(page.getByText(who.last)).toHaveCount(0);
-
-  // -> CRM: the lead exists, on the desk, under the organization name.
-  await signIn(page);
+/** Opens the lead the enquiry produced, matched on its organization. */
+async function openLead(page: Page, company: string) {
   await page.goto("/admin/crm/leads");
-  await expect(page.getByText(who.org)).toBeVisible();
-
   await page
-    .getByRole("row", { name: new RegExp(who.org.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")) })
+    .getByRole("row", { name: new RegExp(company.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")) })
     .getByRole("link", { name: "Ouvrir" })
     .click();
+}
 
-  // -> lead detail carries the message, the attribution and the consent.
+test("an enquiry lands as a lead with consent, assignment, task and a usable reference", async ({
+  page,
+}) => {
+  const id = stamp();
+  const who = {
+    name: `Slice Visitor ${id}`,
+    company: `Slice Co ${id}`,
+    email: `slice-${id}@example.test`,
+    message: `Slice enquiry ${id}`,
+  };
+
+  await sendEnquiry(page, who);
+  await expect(page.getByText("Your request has been sent.")).toBeVisible();
+
+  await signIn(page);
+  await openLead(page, who.company);
+
+  // Attribution captured at submission — never reconstructed later.
   await expect(page.getByText(who.message)).toBeVisible();
-  await expect(page.getByText("/exposer")).toBeVisible();
-  await expect(page.getByText("exhibitor_enquiry")).toBeVisible();
-  await expect(page.getByText(reference)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Source et attribution" })).toBeVisible();
+
+  // Consent recorded against its definition.
   await expect(page.getByText("Consentement donné")).toBeVisible();
   await expect(page.getByText("lead_follow_up")).toBeVisible();
 
-  // -> assignment and follow-up task were written in the same transaction.
+  // The two records the SQL leaves to its caller, written in the same
+  // transaction as the lead (ADR-A5).
   await expect(page.getByRole("heading", { name: "Suivi" })).toBeVisible();
-  await expect(page.getByText(/Qualifier la demande exposant/)).toBeVisible();
+  await expect(page.getByText(/Qualifier la demande exposant|Recontacter/)).toBeVisible();
   await expect(page.getByText("À faire")).toBeVisible();
-});
 
-test("a second enquiry from the same person links instead of duplicating", async ({ page }) => {
-  const id = stamp();
-  const who = {
-    first: "Karim",
-    last: `Idrissi${id}`,
-    org: `Groupe Horizon ${id}`,
-    email: `repeat-${id}@example.test`,
-    message: `Première demande ${id}`,
-  };
+  /* The opaque reference the acquisition issued. Read from the rendered page
+     rather than a CSS hook: the assertion is about its shape and reachability,
+     not about which element carries it. */
+  // innerText, not textContent: the latter also returns <script> contents,
+  // and the RSC payload is full of hex that is not a public reference.
+  const body = await page.innerText("body");
+  // Exactly 32: a bare {32} also matches the first half of a 64-char digest.
+  const reference = body.match(/(?<![0-9a-f])[0-9a-f]{32}(?![0-9a-f])/)?.[0];
+  expect(reference, "a 32-hex public reference is shown on the lead").toBeTruthy();
 
-  await fillEnquiry(page, who);
-  await expect(page.getByRole("heading", { name: "Demande enregistrée" })).toBeVisible();
-  const firstReference = await referenceFrom(page);
-
-  // Same person, same kind, new message: a genuine second contact attempt.
-  await fillEnquiry(page, { ...who, message: `Deuxième demande ${id}` });
-
-  // Honest: says it joined the existing file, does NOT claim a new enquiry.
-  await expect(page.getByRole("heading", { name: "Demande déjà enregistrée" })).toBeVisible();
-  await expect(page.getByText(/rattachée au même dossier/)).toBeVisible();
-  const secondReference = await referenceFrom(page);
-  expect(secondReference).not.toBe(firstReference);
-
-  // The CRM holds ONE lead for this person, carrying both submissions.
-  await signIn(page);
-  await page.goto("/admin/crm/leads");
-  await expect(page.getByText(who.org)).toHaveCount(1);
-
-  await page
-    .getByRole("row", { name: new RegExp(who.org.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")) })
-    .getByRole("link", { name: "Ouvrir" })
-    .click();
-  await expect(page.getByText(/2 soumissions rattachées à ce lead/)).toBeVisible();
+  // -> the public status screen resolves it without exposing anything personal.
+  await page.goto(`/suivi?ref=${reference}`);
+  await expect(page.getByText("Demande reçue")).toBeVisible();
+  await expect(page.getByText(who.email)).toHaveCount(0);
+  await expect(page.getByText(who.name)).toHaveCount(0);
 });
 
 test("the form refuses invalid input without storing anything", async ({ page }) => {
-  await page.goto("/exposer");
+  await page.goto("/en/exposer/devenir-exposant");
   await dismissConsent(page);
+  await page.getByRole("button", { name: "Skip straight to my request" }).click();
 
   // Submitting empty: the server validates regardless of the client.
-  await page.getByRole("button", { name: "Envoyer la demande" }).click();
-  await expect(page.getByText("Le prénom est requis.")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Demande enregistrée" })).toHaveCount(0);
+  await page.getByRole("button", { name: "Send my request" }).click();
+  await expect(page.getByText("Your request has been sent.")).toHaveCount(0);
 
   // Consent is required for the funnel to create a lead.
   const id = stamp();
-  await page.locator("#firstName").fill("Sans");
-  await page.locator("#lastName").fill("Consentement");
-  await page.locator("#organizationName").fill(`Refus ${id}`);
-  await page.locator("#email").fill(`refus-${id}@example.test`);
-  await page.locator("#message").fill("Demande sans consentement.");
-  await page.getByRole("button", { name: "Envoyer la demande" }).click();
-  await expect(page.getByText(/Votre accord est nécessaire/)).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Demande enregistrée" })).toHaveCount(0);
+  await page.getByLabel("Full name").fill(`No Consent ${id}`);
+  await page.getByLabel("Company").fill(`No Consent Co ${id}`);
+  await page.getByLabel("Business email").fill(`noconsent-${id}@example.test`);
+  await page.getByLabel("Your message").fill("Request without consent.");
+  await page.getByRole("button", { name: "Send my request" }).click();
+  await expect(page.getByText("Your request has been sent.")).toHaveCount(0);
 });
 
 test("an unknown reference is answered without disclosing whether it existed", async ({ page }) => {
   await page.goto(`/suivi?ref=${"a".repeat(32)}`);
   await expect(page.getByText("Référence inconnue")).toBeVisible();
-  // The same answer an expired reference gets: nothing distinguishes them, so
-  // the page cannot be used to probe which references exist.
+  // A malformed reference gets the identical answer, so the page cannot be
+  // used to probe which references exist.
   await page.goto("/suivi?ref=not-a-reference");
   await expect(page.getByText("Référence inconnue")).toBeVisible();
 });

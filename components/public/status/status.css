@@ -1,0 +1,74 @@
+/* Public reference status page (/suivi).
+
+   The only surface left from the acquisition slice that has no equivalent in
+   the SPIMAR page system: a visitor pastes the reference they were given and
+   gets a coarse state back. Everything else in the funnel is rendered by the
+   approved page components.
+
+   Bound to the L2 semantic tokens and the viewport-relative scales, like the
+   rest of the public site. Logical properties throughout. */
+
+.statusPage {
+  padding-block: var(--space-xl) var(--space-2xl);
+  padding-inline: var(--space-gutter);
+}
+
+.statusPage__lede {
+  max-inline-size: var(--measure-prose);
+  color: var(--on-surface-muted);
+  margin-block-start: var(--space-sm);
+}
+
+.statusPage__form {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin-block-start: var(--space-md);
+  max-inline-size: var(--measure-document);
+}
+
+.statusPage__form input {
+  flex: 1 1 18em;
+  min-inline-size: 0;
+  font: inherit;
+  font-size: var(--text-support);
+  padding: 0.7em 0.8em;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--on-surface);
+}
+
+.statusPage__submit {
+  font: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  padding: 0.7em 1.6em;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+  cursor: pointer;
+}
+
+.statusPage__panel {
+  margin-block-start: var(--space-md);
+  border: 1px solid var(--border-subtle);
+  border-inline-start: 4px solid var(--surface-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  background: var(--surface-raised);
+  max-inline-size: var(--measure-document);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.statusPage__state {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+}
+
+.statusPage__meta {
+  font-size: var(--text-support);
+  color: var(--on-surface-muted);
+}

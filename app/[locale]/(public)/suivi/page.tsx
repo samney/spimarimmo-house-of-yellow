@@ -58,7 +58,7 @@ export default async function StatusPage({
   return (
     <main className="statusPage">
       <h1>Suivi de demande</h1>
-      <p className="exposerPage__lede">
+      <p className="statusPage__lede">
         Saisissez la référence qui vous a été communiquée après l’envoi de votre demande.
       </p>
 
@@ -73,7 +73,7 @@ export default async function StatusPage({
           placeholder="référence à 32 caractères"
           autoComplete="off"
         />
-        <button className="enquiry__submit" type="submit">
+        <button className="statusPage__submit" type="submit">
           Vérifier
         </button>
       </form>
@@ -84,7 +84,7 @@ export default async function StatusPage({
             <>
               <p className="statusPage__state">{label.title}</p>
               <p>{label.body}</p>
-              <p className="enquiry__meta">
+              <p className="statusPage__meta">
                 Déposée le{" "}
                 <time dateTime={status.submittedAt}>{status.submittedAt.slice(0, 10)}</time>. Cette
                 page n’affiche aucune donnée personnelle.

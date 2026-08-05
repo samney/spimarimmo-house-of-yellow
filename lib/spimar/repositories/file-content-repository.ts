@@ -116,6 +116,14 @@ export class FileContentRepository implements ContentRepository {
     return toPage(page, locale);
   }
 
+  async listPages(query: ContentQuery): Promise<readonly NormalizedPage[]> {
+    const locale = toStoreLocale(query.locale);
+    if (!locale) return [];
+    return storeListPages({ includeDrafts: query.includeUnpublished })
+      .filter((page) => visible(page.state, query.includeUnpublished))
+      .map((page) => toPage(page, locale));
+  }
+
   async listEvents(query: ContentQuery): Promise<readonly NormalizedEvent[]> {
     const locale = toStoreLocale(query.locale);
     if (!locale) return [];

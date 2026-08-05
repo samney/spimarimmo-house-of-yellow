@@ -1,0 +1,585 @@
+/* ==========================================================================
+   Section 12 — Ressources exposants (resources hub)
+   ==========================================================================
+   Binds only to L2 semantic tokens. Paper header beside a dark feature card,
+   one dark toolbox bar of pending downloadables, and the analyses + FAQ pair
+   on raised cards. The pending-validation notes are part of the design.
+   ========================================================================== */
+
+.resSection {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.resInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header + dossier feature ------------------------------------------------- */
+
+.resTopGrid {
+  align-items: stretch;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr 1.15fr;
+  margin-bottom: var(--space-md);
+}
+
+.resHeader {
+  align-self: center;
+}
+
+.resEyebrow {
+  color: var(--spimar-gold-text); /* WCAG AA on paper */
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.resEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.resTitle {
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 var(--space-sm);
+  text-wrap: balance;
+}
+
+.resLead {
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+.resFeature {
+  align-items: center;
+  border-radius: var(--radius-xl);
+  display: flex;
+  min-block-size: 20vw;
+  overflow: hidden;
+  position: relative;
+}
+
+.resFeatureImg {
+  object-fit: cover;
+}
+
+.resFeatureScrim {
+  background: linear-gradient(90deg, rgb(0 0 0 / 0.82) 32%, rgb(0 0 0 / 0.25) 75%, transparent);
+  inset: 0;
+  position: absolute;
+}
+
+/* In flow (not absolute) so the card always grows with its content. */
+.resFeatureBody {
+  color: var(--on-inverse);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-inline-size: 26vw;
+  padding: var(--space-md);
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.resFeatureChip {
+  align-self: flex-start;
+  background: var(--surface-accent);
+  border-radius: var(--radius-sm);
+  color: var(--on-accent);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin: 0;
+  padding: 0.3vw var(--space-xs);
+  text-transform: uppercase;
+}
+
+.resFeatureTitle {
+  border-block-end: 1px solid rgb(255 255 255 / 0.35);
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+  padding-block-end: var(--space-sm);
+  text-wrap: balance;
+}
+
+.resPendingNote {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-2xs);
+  margin: 0;
+}
+
+.resPendingNote.isMuted {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+}
+
+.resNoteIcon {
+  flex: none;
+  height: 1.1em;
+  width: 1.1em;
+}
+
+.resCtaGold {
+  align-items: center;
+  align-self: flex-start;
+  background: var(--action-primary);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.resCtaGold:hover {
+  background: var(--action-primary-hover);
+}
+
+.resCtaGold:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.resBtnIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+/* --- Toolbox bar ----------------------------------------------------------------- */
+
+.resToolbox {
+  /* L3: the positive state restated for the dark plane — the L2 positive is
+     tuned for paper and would fail contrast on black. */
+  --feedback-positive-inverse: #74c48d;
+
+  background: var(--surface-inverse);
+  border-radius: var(--radius-xl);
+  color: var(--on-inverse);
+  margin-bottom: var(--space-md);
+  padding: var(--space-md);
+}
+
+.resToolboxLabel {
+  align-items: center;
+  color: var(--action-primary);
+  display: flex;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-xs);
+  letter-spacing: 0.14em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.resToolboxLabelIcon {
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+.resTools {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resTool {
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+}
+
+.resToolHead {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.resToolIconWrap {
+  align-items: center;
+  background: var(--surface-raised);
+  border-radius: var(--radius-md);
+  color: var(--spimar-ink);
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  padding: 0.6vw;
+}
+
+.resToolIcon {
+  height: 1.6vw;
+  width: 1.6vw;
+}
+
+.resToolName {
+  display: block;
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.resToolState {
+  align-items: center;
+  color: var(--feedback-positive-inverse);
+  display: flex;
+  font-size: var(--text-base);
+  gap: var(--space-3xs);
+}
+
+.resToolStateIcon {
+  height: 1em;
+  width: 1em;
+}
+
+.resToolMeta {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-base);
+  margin: 0;
+}
+
+.resToolDownload {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-md);
+  color: var(--on-inverse);
+  display: inline-flex;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  justify-content: center;
+  margin-top: auto;
+  padding: var(--space-xs);
+}
+
+.resToolDownload:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* --- Bottom pair ------------------------------------------------------------------- */
+
+.resBottomGrid {
+  align-items: stretch;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr 1fr;
+}
+
+.resCard {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.resCardLabel {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-xs);
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.resCardLabelIcon {
+  color: var(--action-primary);
+  height: 1.5vw;
+  width: 1.5vw;
+}
+
+.resAnalysisFeature {
+  align-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+}
+
+.resAnalysisThumb {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  flex: none;
+  inline-size: 11vw;
+  overflow: hidden;
+  position: relative;
+}
+
+.resAnalysisMeta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.resAnalysisTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+  margin: 0;
+}
+
+.resCtaGhost {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) var(--space-sm);
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.resCtaGhost:hover {
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+}
+
+.resCtaGhost:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.resAnalysisList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resAnalysisRow {
+  align-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--on-surface);
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+
+.resAnalysisRow:hover {
+  border-color: var(--border-strong);
+}
+
+.resAnalysisRow:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.resAnalysisRowIcon {
+  flex: none;
+  height: 1.6vw;
+  width: 1.6vw;
+}
+
+.resAnalysisRowMeta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.resAnalysisRowTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.resAnalysisRowChevron {
+  color: var(--on-surface-muted);
+  flex: none;
+  height: 1.2vw;
+  width: 1.2vw;
+}
+
+/* --- FAQ ----------------------------------------------------------------------------- */
+
+.resFaq {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resFaqItem {
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.resFaqQuestion {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--on-surface);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-sm);
+  inline-size: 100%;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-2xs);
+  text-align: start;
+}
+
+.resFaqQuestion:hover {
+  color: var(--action-primary-hover);
+}
+
+.resFaqQuestion:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.resFaqPlus {
+  flex: none;
+  height: 1.2vw;
+  transition: transform 240ms ease;
+  width: 1.2vw;
+}
+
+.resFaqPlus.isOpen {
+  transform: rotate(45deg);
+}
+
+.resFaqAnswer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms ease;
+}
+
+.resFaqAnswer.isOpen {
+  grid-template-rows: 1fr;
+}
+
+.resFaqAnswerText {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.55;
+  margin: 0;
+  min-block-size: 0;
+  overflow: hidden;
+  padding: 0 var(--space-2xs);
+}
+
+.resFaqAnswer.isOpen .resFaqAnswerText {
+  padding-block-end: var(--space-sm);
+}
+
+.resFaqCta {
+  justify-content: center;
+  margin-top: auto;
+}
+
+/* --- Reduced motion -------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .resCtaGold,
+  .resCtaGhost,
+  .resAnalysisRow,
+  .resFaqPlus,
+  .resFaqAnswer {
+    transition: none;
+  }
+}
+
+/* --- Mobile regime (matches the global 580 restatement) ---------------------------------- */
+
+@media (max-width: 580px) {
+  .resTopGrid,
+  .resBottomGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .resFeature {
+    min-block-size: 62vw;
+  }
+
+  .resFeatureBody {
+    max-inline-size: 74vw;
+  }
+
+  .resToolboxLabelIcon {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .resTools {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .resToolIcon {
+    height: 5.5vw;
+    width: 5.5vw;
+  }
+
+  .resCardLabelIcon {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .resAnalysisFeature {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resAnalysisThumb {
+    inline-size: 100%;
+  }
+
+  .resAnalysisRowIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .resAnalysisRowChevron {
+    height: 3.8vw;
+    width: 3.8vw;
+  }
+
+  .resFaqPlus {
+    height: 4vw;
+    width: 4vw;
+  }
+}

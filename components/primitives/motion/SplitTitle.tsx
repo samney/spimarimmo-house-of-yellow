@@ -16,10 +16,12 @@ export function SplitTitle({
   text,
   as: Tag = "div",
   className = "",
+  id,
 }: {
   text: string;
   as?: "h1" | "h2" | "div";
   className?: string;
+  id?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
 
@@ -28,7 +30,15 @@ export function SplitTitle({
       const el = ref.current;
       if (!el) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const split = SplitText.create(el, { type: "lines,chars", linesClass: "row" });
+      /* SplitText's default aria handling writes aria-label onto the split
+         element. That is permitted on headings but prohibited on a plain div
+         (axe: aria-prohibited-attr), so div renders opt out — their char spans
+         carry no aria attributes and read as continuous text. */
+      const split = SplitText.create(el, {
+        type: "lines,chars",
+        linesClass: "row",
+        aria: Tag === "div" ? "none" : "auto",
+      });
       gsap.set(split.chars, { yPercent: 110 });
       gsap.to(split.chars, {
         yPercent: 0,
@@ -43,7 +53,7 @@ export function SplitTitle({
   );
 
   return (
-    <Tag ref={ref as never} className={`${className} splitTitle`}>
+    <Tag ref={ref as never} className={`${className} splitTitle`} id={id}>
       {text}
     </Tag>
   );

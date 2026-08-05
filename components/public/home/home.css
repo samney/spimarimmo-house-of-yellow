@@ -1,0 +1,700 @@
+/* Homepage blocks — geometry from reference theme CSS (DESIGN-SYSTEM.md).
+   Desktop regime values; 1080/580 overrides mirror the reference. */
+
+/* ===== Hero (.headerBigBlock) ===== */
+.headerBigBlock {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--hoy-ink);
+  color: var(--hoy-paper);
+}
+.headerBigBlock .background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.headerBigBlock .heroMediaPlane::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(8 13 15 / 78%) 0%,
+      rgb(8 13 15 / 26%) 31%,
+      transparent 48%,
+      rgb(8 13 15 / 22%) 69%,
+      rgb(8 13 15 / 72%) 100%
+    ),
+    linear-gradient(180deg, rgb(8 13 15 / 10%) 0%, transparent 58%, rgb(8 13 15 / 34%) 100%);
+}
+.headerBigBlock video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.headerBigBlock .leftContent {
+  position: absolute;
+  left: 2.5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22.8125vw;
+  z-index: 1;
+}
+.headerBigBlock .rightContent {
+  position: absolute;
+  left: calc(100vw - 17.3125vw);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14.8125vw;
+  text-align: right;
+  z-index: 1;
+}
+.headerBigBlock .centerContent {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 13.75vw;
+  height: 13.75vw;
+  color: var(--hoy-yellow);
+  z-index: 1;
+}
+.headerBigBlock .centerContent svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+.headerBigBlock h1.text.smaller {
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-bottom: 1vw;
+}
+.headerBigBlock .smallTitle {
+  font-size: var(--text-small-title);
+  line-height: 1.2;
+  font-weight: 400;
+}
+.headerBigBlock .rightContent .text.smaller {
+  font-size: var(--text-base);
+  line-height: 1.4;
+}
+
+/* ===== Shared editorial type ===== */
+.smallTitle {
+  font-size: var(--text-small-title);
+  line-height: 1.2;
+  font-weight: 400;
+}
+.normalTitle {
+  font-size: var(--text-h1);
+  line-height: 1.12;
+  font-weight: 500;
+  margin-bottom: 1.25vw;
+}
+.normalTitle.smaller {
+  font-size: var(--text-heading-sm);
+}
+.text {
+  font-size: var(--text-support);
+  line-height: 1.4;
+}
+.text.smaller {
+  font-size: var(--text-base);
+}
+.text.medium {
+  font-weight: 500;
+}
+
+/* Reveal rows for split headings */
+.split-reveal .row {
+  display: block;
+  overflow: hidden;
+}
+.split-reveal .row > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.45s ease-out;
+}
+.split-reveal.inview .row > span {
+  transform: translateY(0);
+}
+
+/* ===== Yellow about/work block ===== */
+.aboutWorkBlock {
+  position: relative;
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+}
+.grainBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/images/noise.png");
+  opacity: 0.5;
+  pointer-events: none;
+}
+.aboutWorkBlock .contentWrapper,
+.servicesBlock .contentWrapper {
+  position: relative;
+  z-index: 1;
+}
+.hoyCols {
+  display: flex;
+  gap: 2.5vw;
+  padding: 4.375vw 0;
+}
+.hoyCols .colLabel {
+  width: 15vw;
+  flex-shrink: 0;
+}
+.hoyCols .colMain {
+  flex: 1;
+}
+.hoyCols .colIndex {
+  width: 8vw;
+  flex-shrink: 0;
+  text-align: right;
+}
+/* The reference carries the yellow band's vertical rhythm here — 108px top and
+   bottom at 1440 — rather than on the column rows. Ours had no rule at all, so
+   once the column padding was removed to match the reference the opening
+   statement sat hard against the hero with no breathing room. */
+.aboutWorkBlock .innerAnimContainer {
+  padding: 7.5vw 0;
+}
+
+/* ===== "Pourquoi SPIMARIMMO" — reference architecture =====
+
+   Measured from the reference at 1440 and expressed in vw so the band stays
+   fluid like the rest of the foundation.
+
+   The three columns are contiguous — there is no gap. 36 + 347 = 383,
+   383 + 906 = 1289, 1289 + 115 + 36 = 1440. The earlier flex `gap` was an
+   approximation; the reference lays these out as inline-blocks in a plain
+   block container, which is why the column edges meet exactly.
+
+   `font-size: 0` on the container removes the whitespace between inline-block
+   children, which is the only reason the widths can total 100% and still fit. */
+/* The glyph cluster that used to sit under this row carried its bottom
+   rhythm; with the cluster removed (owner note) the padding is stated here
+   instead, or the next section rides up into the copy. */
+.aboutSection .cols {
+  display: block;
+  font-size: 0;
+  padding: 0 0 12vw;
+}
+.aboutSection .cols > .col {
+  display: inline-block;
+  vertical-align: top;
+  font-size: var(--text-base);
+}
+/* 347 / 906 / 115 of the 1368 content wrapper. */
+.aboutSection .cols > .col:nth-child(1) {
+  width: 25.365%;
+}
+.aboutSection .cols > .col:nth-child(2) {
+  width: 66.228%;
+}
+.aboutSection .cols > .col:nth-child(3) {
+  width: 8.406%;
+  text-align: right;
+}
+
+/* The reference title carries no max-width: it fills its column, which is what
+   produces the 906px measure and the seven-line wrap. */
+.aboutSection .normalTitle {
+  max-width: none;
+}
+/* Owner note (2026-08-04): the supporting message read as four narrow lines;
+   the measure now lets it settle on two. */
+.aboutSection .smallTitle {
+  max-width: 44vw;
+  margin: 2vw 0 2.5vw;
+}
+
+.aboutSection .buttons {
+  display: block;
+}
+.aboutSection .buttons .button {
+  margin-right: 0.625vw;
+}
+/* The outline is drawn as an inset shadow rather than a border: the pill's
+   height comes from its line-height, so a real border adds 2px and the
+   secondary action stops matching the primary's 41px. */
+.button.outline {
+  background: transparent;
+  color: var(--hoy-ink);
+  box-shadow: inset 0 0 0 1px var(--hoy-ink);
+}
+.button.outline:hover {
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+}
+
+/* Glyph cluster. Block 328.5px, inner 234px, offset -90px / 747px at 1440. */
+.aboutSection .animation {
+  position: relative;
+  width: 22.8125vw;
+  height: 22.8125vw;
+  margin: -6.25vw 0 0 51.875vw;
+  pointer-events: none;
+}
+.aboutSection .innerAnimation {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 16.25vw;
+  height: 16.25vw;
+  transform: translate(-50%, -50%);
+}
+.aboutSection .svgWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  color: var(--hoy-ink);
+}
+.aboutSection .svgWrapper svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.buttonsRow {
+  display: flex;
+  gap: 1vw;
+}
+.button.dark {
+  background: var(--hoy-ink);
+  color: var(--hoy-yellow);
+}
+.button.dark:hover {
+  background: #000;
+}
+
+/* ===== "Salons par pays" — reference architecture =====
+
+   The reference header row here is TWO columns of 684, not the three-column
+   band used by the section above: label and statement on the left, chapter
+   marker and action right-aligned on the right. Same `.cols` / `.col`
+   inline-block system, so both sections share one layout language. */
+.projectsSection .cols {
+  display: block;
+  font-size: 0;
+  padding: 0;
+}
+.projectsSection .cols > .col {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  font-size: var(--text-base);
+}
+.projectsSection .cols > .col:last-child {
+  text-align: right;
+}
+/* The action sits under the chapter marker, right-aligned, not beside it. */
+.projectsSection .cols > .col:last-child .buttons {
+  margin-top: 2.5vw;
+}
+
+/* Featured projects.
+
+   The reference pulls this section up by 125.1px at 1440 so it overlaps the
+   band above. That negative margin is what opens the space the glyph cluster
+   sits in — without it the two sections stack flush and the composition loses
+   the overlap the reference is built around. */
+.projectsSection {
+  margin-top: -8.6875vw;
+  padding-bottom: 2.5vw;
+}
+/* 560px measure at 1440, set 9px below the label as in the reference. */
+.projectsSection .smallTitle {
+  max-width: 38.889vw;
+  margin-top: 0.625vw;
+  margin-bottom: 2.5vw;
+}
+.projectsSection .projects {
+  display: flex;
+  width: calc(100% + 1.25vw);
+  margin-left: -0.625vw;
+}
+.projectsSection .project {
+  display: block;
+  width: 33.333%;
+  padding: 0 0.625vw;
+  color: var(--hoy-ink);
+  text-decoration: none;
+}
+/* The reference media frame is square — 444x444 inside a 444-wide card — not
+   the 600/439 landscape crop this had. Squares are also the right frame for a
+   destination card, where no single crop suits every venue photograph. */
+.project .media {
+  position: relative;
+  border-radius: 0.5vw;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: var(--hoy-ink);
+}
+.project .media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.project .tags {
+  position: absolute;
+  top: 0.75vw;
+  left: 0.75vw;
+  display: flex;
+  gap: 0.4vw;
+}
+.project .tag {
+  font-size: 0.625vw;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--hoy-paper);
+  color: var(--hoy-ink);
+  border-radius: 1vw;
+  padding: 0.25vw 0.7vw;
+}
+.project .projectTitle {
+  font-size: 1.111vw;
+  font-weight: 500;
+  margin: 1vw 0 0.5vw;
+}
+.project .stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-base);
+}
+.project .stats .statLabel {
+  font-weight: 500;
+}
+
+/* Client logo marquee */
+.logoSection {
+  margin-top: 3.75vw;
+  padding-bottom: 5vw;
+  overflow: hidden;
+}
+.logoSection .itemsContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 3.5vw;
+  padding-right: 3.5vw;
+}
+.logoSection img {
+  height: 1.8vw;
+  width: auto;
+  opacity: 0.85;
+}
+
+/* ===== Dark services block ===== */
+.servicesBlock {
+  position: relative;
+  min-height: 70vh;
+  /* Approved Section-1 reference: warm ivory surface, ink type — the pillars
+     read as an editorial diagram, not a dark panel. */
+  background: var(--spimar-ivory);
+  color: var(--on-surface);
+}
+.grainBackground.dark {
+  opacity: 0.35;
+}
+.videoIntroBlock {
+  color: var(--hoy-yellow);
+}
+.videoIntroBlock .smallTitle {
+  max-width: 40vw;
+}
+.videoIntroBlock .square {
+  width: 0.75vw;
+  height: 0.75vw;
+  background: var(--hoy-yellow);
+  margin-bottom: 1vw;
+}
+.videoIntroBlock .colIndex .text {
+  max-width: 14vw;
+  text-align: left;
+}
+
+/* Phones + metrics */
+.videoBlock {
+  padding: 3vw 0 5vw;
+}
+.videoBlock .phones {
+  display: flex;
+  gap: 1.25vw;
+  justify-content: center;
+  margin-bottom: 4vw;
+}
+.videoBlock .phone {
+  width: 13vw;
+  aspect-ratio: 400 / 533;
+  border-radius: 1.4vw;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+.videoBlock .metrics {
+  display: flex;
+  justify-content: space-between;
+  gap: 2vw;
+  border-top: 1px solid rgba(238, 238, 238, 0.2);
+  padding-top: 2vw;
+}
+.videoBlock .metric {
+  flex: 1;
+}
+.videoBlock .metric .metricLabel {
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-bottom: 0.5vw;
+}
+.videoBlock .metric .metricValue {
+  font-size: 2.5vw;
+  font-weight: 500;
+  color: var(--hoy-yellow);
+}
+
+/* How we roll intro + items */
+.howWeRollIntroBlock .smallTitle {
+  max-width: 40vw;
+  margin-bottom: 1.5vw;
+}
+.howWeRollIntroBlock .text.medium {
+  max-width: 26vw;
+}
+.howWeRollItemsBlock .item {
+  border-top: 1px solid rgba(238, 238, 238, 0.2);
+  padding: 2.5vw 0;
+  display: flex;
+  gap: 2.5vw;
+}
+.howWeRollItemsBlock .item .num {
+  width: 8vw;
+  flex-shrink: 0;
+  font-weight: 500;
+  font-size: var(--text-base);
+}
+.howWeRollItemsBlock .item h2 {
+  font-size: var(--text-heading-sm);
+  font-weight: 500;
+  line-height: 1.15;
+  margin-bottom: 1vw;
+  max-width: 42vw;
+}
+.howWeRollItemsBlock .item .text {
+  max-width: 30vw;
+}
+
+/* ===== Closing block ===== */
+.cultureQuoteAnimationBlock {
+  position: relative;
+  background: var(--hoy-ink);
+  color: var(--hoy-paper);
+  padding: 6vw 0 8vw;
+}
+.cultureQuoteAnimationBlock .label {
+  font-weight: 500;
+  font-size: var(--text-base);
+  margin-bottom: 2vw;
+}
+.cultureQuoteAnimationBlock .normalTitle {
+  max-width: 62vw;
+  margin-bottom: 3vw;
+}
+/* WCAG AA: bright gold fails at this size on paper (1.49:1); light blocks use
+   the deep text gold, dark blocks keep the bright accent. */
+.cultureQuoteAnimationBlock .numIndex {
+  color: var(--spimar-gold-text);
+}
+.cultureQuoteAnimationBlock.dark .numIndex {
+  color: var(--hoy-yellow);
+}
+.button.light {
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+}
+
+/* ===== Tablet regime ===== */
+@media (max-width: 1080px) {
+  .headerBigBlock .leftContent {
+    left: 3.704vw;
+    width: 31.482vw;
+  }
+  .headerBigBlock .rightContent {
+    left: calc(100vw - 25.648vw);
+    width: 21.944vw;
+  }
+  .headerBigBlock .centerContent {
+    width: 16.667vw;
+    height: 16.667vw;
+  }
+  .smallTitle,
+  .headerBigBlock .smallTitle {
+    font-size: 2.222vw;
+  }
+  .text {
+    font-size: 1.296vw;
+  }
+  .text.smaller {
+    font-size: 1.111vw;
+  }
+  .normalTitle {
+    margin-bottom: 1.852vw;
+  }
+  .hoyCols {
+    padding: 6.481vw 0;
+  }
+  .projectsSection .projects {
+    width: calc(100% + 1.852vw);
+    margin-left: -0.926vw;
+  }
+  .logoSection {
+    margin-top: 5.556vw;
+    padding-bottom: 7.407vw;
+  }
+  .logoSection img {
+    height: 2.6vw;
+  }
+}
+
+/* ===== Mobile regime ===== */
+@media (max-width: 580px) {
+  .headerBigBlock .heroMediaPlane::after {
+    background: linear-gradient(
+      180deg,
+      rgb(8 13 15 / 18%) 0%,
+      rgb(8 13 15 / 8%) 38%,
+      rgb(8 13 15 / 30%) 58%,
+      rgb(8 13 15 / 84%) 100%
+    );
+  }
+  .headerBigBlock .leftContent {
+    left: 6.897vw;
+    top: auto;
+    bottom: 20vw;
+    transform: none;
+    width: 70vw;
+  }
+  .headerBigBlock .rightContent {
+    display: none;
+  }
+  .headerBigBlock .centerContent {
+    width: 41.379vw;
+    height: 41.379vw;
+  }
+  .smallTitle,
+  .headerBigBlock .smallTitle {
+    font-size: 4.828vw;
+  }
+  .text {
+    font-size: 3.448vw;
+  }
+  .text.smaller {
+    font-size: 3.103vw;
+  }
+  .hoyCols {
+    flex-direction: column;
+    gap: 4vw;
+    padding: 10.345vw 0;
+  }
+  .hoyCols .colLabel,
+  .hoyCols .colIndex {
+    width: auto;
+    text-align: left;
+  }
+  .aboutSection .normalTitle,
+  .aboutSection .smallTitle,
+  .projectsSection .smallTitle,
+  .videoIntroBlock .smallTitle,
+  .howWeRollIntroBlock .smallTitle,
+  .cultureQuoteAnimationBlock .normalTitle {
+    max-width: none;
+  }
+  .projectsSection .projects {
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0;
+    gap: 6.897vw;
+  }
+  .projectsSection .project {
+    width: 100%;
+    padding: 0;
+  }
+  .project .projectTitle {
+    font-size: 4.828vw;
+  }
+  .project .stats {
+    font-size: 3.103vw;
+  }
+  .project .tag {
+    font-size: 2.4vw;
+    padding: 1vw 2.4vw;
+    border-radius: 4vw;
+  }
+  .logoSection img {
+    height: 5.5vw;
+  }
+  .videoBlock .phones {
+    flex-wrap: wrap;
+    gap: 3.448vw;
+  }
+  .videoBlock .phone {
+    width: 42vw;
+  }
+  .videoBlock .metrics {
+    flex-wrap: wrap;
+  }
+  .videoBlock .metric {
+    flex: 1 1 40%;
+  }
+  .videoBlock .metric .metricValue {
+    font-size: 6.897vw;
+  }
+  .howWeRollItemsBlock .item {
+    flex-direction: column;
+    gap: 2vw;
+  }
+  .howWeRollItemsBlock .item h2,
+  .howWeRollItemsBlock .item .text {
+    max-width: none;
+    font-size: 5.517vw;
+  }
+  .howWeRollItemsBlock .item .text {
+    font-size: 3.448vw;
+  }
+}
+
+/* ==========================================================================
+   Shared section header (owner note 2026-08-04)
+   ==========================================================================
+   Section 04 "NOTRE MÉTHODE" set the pattern; every section renders it through
+   <SectionEyebrow> so index and label can never drift apart again. */
+.sectionEyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-sm);
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.sectionEyebrow.isInverse {
+  color: var(--action-primary);
+}
+.sectionEyebrow__index {
+  flex: none;
+}
+.sectionEyebrow .numIndex {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,16 +1,29 @@
 # Documentation System
 
-This repository separates active execution, approved product specifications, runtime control, evidence, and archive material. Start SPIMAR product work at [`docs/spimar/README.md`](spimar/README.md).
+Lean index after the 2026-08-04 owner cleanup. Start SPIMAR product work at
+[`docs/spimar/README.md`](spimar/README.md); execution state lives in
+[`docs/claude-code/`](claude-code/). The authority order remains defined by
+[`CLAUDE.md`](../CLAUDE.md).
 
-| Area                                   | Role                                                                                  | Lifecycle                                   |
-| -------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `docs/claude-code/`                    | Current execution state, queue, decisions, blockers, validation, and handoff          | Dynamic                                     |
-| `docs/spimar/transformation-phase-1/`  | Active SPIMAR Transformation Phase 1 implementation contract                          | Active                                      |
-| `docs/spimar/official-specifications/` | Approved product, UX, identity, design-system, HIF, and architecture source contracts | Frozen unless a decision reopens a contract |
-| `docs/spimar/parity-history/`          | Accepted foundation history and limitations                                           | Frozen evidence                             |
-| `docs/spimar/supporting-audits/`       | Business and UX research                                                              | Supporting evidence                         |
-| `docs/spimar/archive/`                 | Superseded, rejected, binary, and provenance material                                 | Archived and non-executable                 |
-| `docs/audit/`, `docs/design-system/`   | House of Yellow reference-foundation audit and implementation evidence                | Frozen reference evidence                   |
-| `docs/migration/`                      | Repository migration integrity and disclosed exceptions                               | Controlled integrity evidence               |
+## Active
 
-The authority order remains defined by [`CLAUDE.md`](../CLAUDE.md). A ZIP or exported document is a distribution artifact, never a second source of truth. Normalize reusable material into repository Markdown and record its provenance before implementation.
+| Area                                                          | Role                                                                     |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `docs/claude-code/`                                           | Execution state: status, queue, decisions, blockers, validation, evidence |
+| `docs/spimar/`                                                | Canonical contracts: transformation phase, specifications, governance     |
+| `docs/assets-UX-UI/`                                          | Approved section designs and owner-supplied media assets                  |
+| `docs/backend/`                                               | Ported backend inventory and canonical corrections                        |
+| `docs/audit/`                                                 | Reference audit; target of future accessibility audit records             |
+| `docs/pdf/`, `SPIMARIMMO_Dossier_…2026.pdf`, `…Contenus_V1.md` | Source documents (distribution artifacts, never a second source of truth) |
+
+## Archive
+
+| Area                     | Role                                                                                              |
+| ------------------------ | ------------------------------------------------------------------------------------------------- |
+| `docs/archive/phase-1/`  | Past-phase plans and evidence: agency-360 specs, foundation freeze, migration, implementation, design-system, master prompt |
+| `docs/spimar/archive/`   | Superseded, rejected, and provenance material                                                      |
+
+Deleted deprecated artifacts (patch/zip distributions, Codex handoff, reference
+screenshots, superseded mockup PNGs) remain recoverable from Git history. See
+`docs/spimar/governance/DOCUMENT-REGISTRY.md` for lifecycle rules and the
+cleanup record.

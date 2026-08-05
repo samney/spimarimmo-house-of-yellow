@@ -1,0 +1,1649 @@
+/* ==========================================================================
+   Section 10 — Offres exposants (lead-generation wizard)
+   ==========================================================================
+   Binds only to L2 semantic tokens. Paper section carrying a three-step
+   wizard: dark edition card + locked tier previews, the unlocked tier
+   comparison, the qualification form beside the offer recap, and the
+   confirmation composition. Same paper/dark-panel rhythm as sections 05-09.
+   ========================================================================== */
+
+.offSection {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.offInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header + stepper -------------------------------------------------------- */
+
+.offHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.offEyebrow {
+  /* WCAG AA: action gold fails at this size on paper; see --spimar-gold-text. */
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.offEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.offTitle {
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 var(--space-sm);
+  max-width: 52vw;
+  text-wrap: balance;
+}
+
+.offTitle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offLead {
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+.offStepper {
+  display: flex;
+  flex: none;
+  list-style: none;
+  margin: var(--space-xs) 0 0;
+  padding: 0;
+}
+
+.offStepperItem {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  position: relative;
+  width: 8vw;
+}
+
+/* Connector between stepper circles. */
+.offStepperItem:not(:last-child)::after {
+  background: var(--border-subtle);
+  block-size: 1px;
+  content: "";
+  inset-block-start: 1.25vw;
+  inset-inline-start: calc(50% + 1.7vw);
+  inline-size: calc(100% - 3.4vw);
+  position: absolute;
+}
+
+.offStepperItem.isdone:not(:last-child)::after {
+  background: var(--action-primary);
+}
+
+.offStepperCircle {
+  align-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  block-size: 2.5vw;
+  color: var(--on-surface-muted);
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  inline-size: 2.5vw;
+  justify-content: center;
+}
+
+.offStepperItem.isactive .offStepperCircle {
+  border-color: var(--action-primary);
+  color: var(--on-surface);
+}
+
+.offStepperItem.isdone .offStepperCircle {
+  border-color: var(--action-primary);
+  color: var(--action-primary);
+}
+
+.offStepperCheck {
+  height: 1.2vw;
+  width: 1.2vw;
+}
+
+.offStepperLabel {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.offStepperItem.isactive .offStepperLabel,
+.offStepperItem.isdone .offStepperLabel {
+  color: var(--on-surface);
+}
+
+/* --- Selected-edition summary bar -------------------------------------------- */
+
+.offSummaryBar {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.offSummaryBadge {
+  align-items: center;
+  background: var(--surface-muted);
+  border-radius: 50%;
+  block-size: 2.8vw;
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  inline-size: 2.8vw;
+  justify-content: center;
+}
+
+.offSummaryBadgeIcon {
+  height: 1.3vw;
+  width: 1.3vw;
+}
+
+.offSummaryMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.offSummaryLabel {
+  color: var(--action-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.offSummaryValue {
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.offSummaryState {
+  align-items: center;
+  border-inline-start: 1px solid var(--border-subtle);
+  color: var(--on-surface-muted);
+  display: inline-flex;
+  font-size: var(--text-support);
+  gap: var(--space-2xs);
+  margin-inline-start: var(--space-md);
+  padding-inline-start: var(--space-md);
+}
+
+.offSummaryStateIcon {
+  color: var(--action-primary);
+  height: 1.1vw;
+  width: 1.1vw;
+}
+
+.offSummaryEdit {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--on-surface);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-2xs);
+  margin-inline-start: auto;
+  padding: var(--space-2xs);
+}
+
+.offSummaryEdit:hover {
+  color: var(--action-primary-hover);
+}
+
+.offSummaryEdit:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offBtnIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+/* --- Dark card ---------------------------------------------------------------- */
+
+.offIntroGrid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1.15fr 1fr;
+}
+
+.offDarkCard {
+  background: var(--surface-inverse);
+  border-radius: var(--radius-xl);
+  color: var(--on-inverse);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.offStepTag {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.offDarkTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  line-height: 1.12;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.offDarkText {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.offSelectShell {
+  position: relative;
+}
+
+.offSelectShell::after {
+  border-inline-end: 1.5px solid currentColor;
+  border-block-end: 1.5px solid currentColor;
+  block-size: 0.55vw;
+  content: "";
+  inline-size: 0.55vw;
+  inset-block-start: 45%;
+  inset-inline-end: var(--space-sm);
+  pointer-events: none;
+  position: absolute;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.offEditionSelect {
+  appearance: none;
+  background: var(--surface-raised);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  inline-size: 100%;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-sm);
+}
+
+.offEditionSelect:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offConfigNote {
+  align-items: center;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-md);
+  color: var(--on-inverse-muted);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.offShieldNote {
+  align-items: center;
+  color: var(--on-surface-muted);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.offShieldNoteInverse {
+  border-top: 1px solid var(--border-inverse);
+  color: var(--on-inverse-muted);
+  margin-top: var(--space-2xs);
+  padding-top: var(--space-sm);
+}
+
+.offNoteIcon {
+  flex: none;
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+.offNoteIconGold {
+  color: var(--action-primary);
+}
+
+/* --- Locked tier preview rail -------------------------------------------------- */
+
+.offRailLabel {
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.offRailLabelGold {
+  color: var(--spimar-gold-text);
+}
+
+.offPreview {
+  border-top: 1px solid var(--action-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-top: var(--space-sm);
+}
+
+.offPreviewList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.offPreviewCard {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+}
+
+.offTierBubble {
+  align-items: center;
+  background: var(--surface-muted);
+  border-radius: 50%;
+  block-size: 3.2vw;
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  inline-size: 3.2vw;
+  justify-content: center;
+}
+
+.offTierBubble.isInverse {
+  background: transparent;
+  border: 1px solid var(--action-primary);
+  color: var(--action-primary);
+}
+
+.offTierBubbleIcon {
+  height: 1.5vw;
+  width: 1.5vw;
+}
+
+.offPreviewMeta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.offPreviewName {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  gap: var(--space-sm);
+}
+
+.offRecoChip {
+  background: var(--surface-accent);
+  border-radius: var(--radius-sm);
+  color: var(--on-accent);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 0.2vw var(--space-xs);
+  text-transform: uppercase;
+}
+
+.offPreviewSub {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+}
+
+.offLockIcon {
+  color: var(--on-surface-muted);
+  flex: none;
+  height: 1.3vw;
+  width: 1.3vw;
+}
+
+.offPreviewNote {
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--on-surface-muted);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  margin: 0;
+  padding-top: var(--space-sm);
+}
+
+/* --- Reassurance strip ---------------------------------------------------------- */
+
+.offReassure {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.offReassureItem {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: var(--space-sm);
+}
+
+.offReassureItem + .offReassureItem {
+  border-inline-start: 1px solid var(--border-subtle);
+  margin-inline-start: var(--space-md);
+  padding-inline-start: var(--space-md);
+}
+
+.offReassureBubble {
+  align-items: center;
+  background: var(--surface-muted);
+  border-radius: 50%;
+  block-size: 3vw;
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  inline-size: 3vw;
+  justify-content: center;
+}
+
+.offReassureIcon {
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+.offReassureTitle {
+  display: block;
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.offReassureSub {
+  color: var(--on-surface-muted);
+  display: block;
+  font-size: var(--text-support);
+}
+
+.offReassureTitle.isInverse {
+  color: var(--on-inverse);
+}
+
+.offReassureSub.isInverse {
+  color: var(--on-inverse-muted);
+}
+
+/* --- Tier comparison ------------------------------------------------------------- */
+
+.offTierGrid {
+  align-items: stretch;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.offTierCard {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  position: relative;
+}
+
+.offTierCard.isRecommended {
+  border-color: var(--action-primary);
+}
+
+.offTierFlag {
+  background: var(--surface-accent);
+  border-radius: var(--radius-sm);
+  color: var(--on-accent);
+  font-size: var(--text-base);
+  font-weight: 500;
+  inset-block-start: calc(-1 * var(--space-xs));
+  inset-inline-end: var(--space-md);
+  letter-spacing: 0.1em;
+  margin: 0;
+  padding: 0.2vw var(--space-xs);
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.offTierHead {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.offTierName {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-2xs);
+}
+
+.offTierChip {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 0.15vw var(--space-xs);
+  text-transform: uppercase;
+}
+
+.offTierChip.isInverse {
+  border-color: var(--action-primary);
+  color: var(--action-primary);
+}
+
+.offTierDesc {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.offTierFeatures {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.offTierFeature {
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-sm);
+  padding-block: var(--space-xs);
+}
+
+.offTierFeature > span {
+  flex: 1;
+}
+
+.offTierFeatures.isInverse .offTierFeature {
+  border-top-color: var(--border-inverse);
+}
+
+.offFeatureIcon {
+  flex: none;
+  height: 1.25vw;
+  width: 1.25vw;
+}
+
+.offFeatureCheck {
+  color: var(--action-primary);
+  flex: none;
+  height: 1.2vw;
+  width: 1.2vw;
+}
+
+.offTierQuote {
+  font-size: var(--text-support);
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+.offTierCta {
+  background: var(--surface-inverse);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--on-inverse);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 500;
+  padding: var(--space-sm);
+  transition: background-color 160ms ease;
+}
+
+.offTierCta.isGold {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.offTierCta:hover {
+  background: var(--action-primary-hover);
+  color: var(--action-on-primary);
+}
+
+.offTierCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offBarNote {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* --- Locked options bar ------------------------------------------------------------ */
+
+.offOptionsBar {
+  align-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.offOptionsBarLabel {
+  flex: none;
+  margin: 0;
+  max-inline-size: 14vw;
+}
+
+.offOptionsLocked {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.offOptionLocked {
+  align-items: center;
+  border-inline-start: 1px solid var(--border-subtle);
+  color: var(--on-surface-muted);
+  display: inline-flex;
+  flex: 1;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  justify-content: center;
+  padding-inline: var(--space-sm);
+}
+
+.offOptionIcon {
+  flex: none;
+  height: 1.3vw;
+  width: 1.3vw;
+}
+
+/* --- Request phase: recap + form ----------------------------------------------------- */
+
+.offRequestGrid {
+  align-items: start;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1fr 2.1fr;
+}
+
+.offRecapCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.offRecapHead {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.offRecapName {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-2xs);
+}
+
+.offGhostBtn {
+  background: transparent;
+  border: 1px solid var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--on-inverse);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 500;
+  padding: var(--space-sm);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.offGhostBtn.isOnPaper {
+  color: var(--on-surface);
+}
+
+.offGhostBtn:hover {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.offGhostBtn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offForm {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.offFormTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  margin: 0;
+}
+
+.offFieldset {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: var(--space-2xs) 0 0;
+}
+
+.offFieldset > legend {
+  margin-bottom: var(--space-sm);
+  padding: 0;
+}
+
+.offSelectRow {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.offField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.offFieldLabel {
+  font-size: var(--text-support);
+  font-weight: 500;
+}
+
+.offSelectShell.isLight::after {
+  color: var(--on-surface-muted);
+}
+
+.offFieldSelect,
+.offFieldInput {
+  appearance: none;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  font-family: inherit;
+  font-size: var(--text-support);
+  inline-size: 100%;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.offFieldSelect {
+  cursor: pointer;
+  padding-inline-end: var(--space-md);
+}
+
+.offFieldInput::placeholder {
+  color: var(--on-surface-muted);
+}
+
+.offFieldSelect:focus-visible,
+.offFieldInput:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.15em;
+}
+
+.offFieldInput[aria-invalid="true"] {
+  border-color: var(--feedback-critical);
+}
+
+.offOptionsPick {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.offOptionTile {
+  align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-xs);
+  transition: border-color 160ms ease;
+}
+
+.offOptionTile:hover {
+  border-color: var(--border-strong);
+}
+
+.offOptionTile.isActive {
+  border-color: var(--action-primary);
+  box-shadow: inset 0 0 0 1px var(--action-primary);
+}
+
+.offOptionTile:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offContactGrid {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Honeypot: removed from all human presentation, still in the DOM for bots. */
+.offTrap {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+}
+
+.offConsentRow {
+  align-items: center;
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.offConsentBox {
+  accent-color: var(--action-primary);
+  block-size: 1.1vw;
+  inline-size: 1.1vw;
+}
+
+.offConsentBox:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.15em;
+}
+
+.offConsentLabel {
+  font-size: var(--text-support);
+}
+
+.offSubmit {
+  align-items: center;
+  background: var(--action-primary);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-xs);
+  justify-content: center;
+  padding: var(--space-sm);
+  transition: background-color 160ms ease;
+}
+
+.offSubmit:hover {
+  background: var(--action-primary-hover);
+}
+
+.offSubmit:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.offSubmit:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offFieldError,
+.offFormError {
+  color: var(--feedback-critical);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+.offAdvisorNote {
+  align-items: center;
+  color: var(--on-surface-muted);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  justify-content: center;
+  margin: 0;
+}
+
+.offAdvisorNote.isInverse {
+  border-top: 1px solid var(--border-inverse);
+  color: var(--on-inverse-muted);
+  justify-content: flex-start;
+  padding-top: var(--space-sm);
+}
+
+/* --- Confirmation phase ---------------------------------------------------------- */
+
+.offSentGrid {
+  align-items: stretch;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 1.8fr 1fr;
+}
+
+.offSentCard {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.offSentShield {
+  color: var(--action-primary);
+  height: 3.4vw;
+  width: 3.4vw;
+}
+
+.offSentTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  margin: 0;
+}
+
+.offSentText {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+  max-inline-size: 34vw;
+}
+
+.offSentRecapLabel {
+  border-top: 1px solid var(--border-subtle);
+  color: var(--on-surface-muted);
+  inline-size: 100%;
+  padding-top: var(--space-sm);
+  text-align: center;
+}
+
+.offSentRecap {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  inline-size: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.offSentRecapItem {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.offSentActions {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xs);
+}
+
+.offSentLink {
+  align-items: center;
+  color: var(--on-surface);
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-2xs);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.offSentLink:hover {
+  color: var(--action-primary-hover);
+}
+
+.offSentLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.offNextCard {
+  gap: var(--space-md);
+}
+
+.offNextSteps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.offNextStep {
+  display: flex;
+  gap: var(--space-sm);
+  position: relative;
+}
+
+/* Vertical connector between numbered circles. */
+.offNextStep:not(:last-child)::after {
+  background: var(--border-inverse);
+  content: "";
+  inline-size: 1px;
+  inset-block: 2.6vw calc(-1 * var(--space-md));
+  inset-inline-start: 1.25vw;
+  position: absolute;
+}
+
+.offNextNum {
+  align-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: 50%;
+  block-size: 2.5vw;
+  color: var(--action-primary);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  inline-size: 2.5vw;
+  justify-content: center;
+}
+
+/* --- Reduced motion ---------------------------------------------------------------
+   The wizard has no animation — phase changes are instant renders — so only
+   the colour transitions are neutralised for parity with the siblings. */
+
+@media (prefers-reduced-motion: reduce) {
+  .offTierCta,
+  .offGhostBtn,
+  .offSubmit,
+  .offOptionTile {
+    transition: none;
+  }
+}
+
+/* --- Mobile regime (matches the global 580 restatement) ---------------------------- */
+
+@media (max-width: 580px) {
+  .offHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .offTitle {
+    max-width: 100%;
+  }
+
+  .offStepper {
+    inline-size: 100%;
+    justify-content: space-between;
+  }
+
+  .offStepperItem {
+    width: 30%;
+  }
+
+  .offStepperItem:not(:last-child)::after {
+    inset-block-start: 5vw;
+    inset-inline-start: calc(50% + 6.5vw);
+    inline-size: calc(100% - 13vw);
+  }
+
+  .offStepperCircle {
+    block-size: 10vw;
+    inline-size: 10vw;
+  }
+
+  .offStepperCheck {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .offSummaryBar {
+    flex-wrap: wrap;
+  }
+
+  .offSummaryBadge {
+    block-size: 10vw;
+    inline-size: 10vw;
+  }
+
+  .offSummaryBadgeIcon {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .offSummaryState {
+    border-inline-start: 0;
+    margin-inline-start: 0;
+    padding-inline-start: 0;
+  }
+
+  .offSummaryStateIcon {
+    height: 4vw;
+    width: 4vw;
+  }
+
+  .offIntroGrid,
+  .offTierGrid,
+  .offRequestGrid,
+  .offSentGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .offSelectShell::after {
+    block-size: 2vw;
+    inline-size: 2vw;
+  }
+
+  .offNoteIcon {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .offTierBubble {
+    block-size: 11vw;
+    inline-size: 11vw;
+  }
+
+  .offTierBubbleIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .offLockIcon {
+    height: 4.2vw;
+    width: 4.2vw;
+  }
+
+  .offReassure {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .offReassureItem + .offReassureItem {
+    border-inline-start: 0;
+    border-top: 1px solid var(--border-subtle);
+    margin-inline-start: 0;
+    padding-inline-start: 0;
+    padding-top: var(--space-sm);
+  }
+
+  .offReassureBubble {
+    block-size: 10vw;
+    inline-size: 10vw;
+  }
+
+  .offReassureIcon {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .offFeatureIcon,
+  .offFeatureCheck {
+    height: 4.2vw;
+    width: 4.2vw;
+  }
+
+  .offOptionsBar {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .offOptionsBarLabel {
+    max-inline-size: 100%;
+  }
+
+  .offOptionsLocked {
+    flex-direction: column;
+    gap: var(--space-2xs);
+    inline-size: 100%;
+  }
+
+  .offOptionLocked {
+    border-inline-start: 0;
+    justify-content: flex-start;
+    padding-inline: 0;
+  }
+
+  .offOptionIcon {
+    height: 4.2vw;
+    width: 4.2vw;
+  }
+
+  .offSelectRow,
+  .offContactGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .offOptionsPick {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .offConsentBox {
+    block-size: 4.5vw;
+    inline-size: 4.5vw;
+  }
+
+  .offSentShield {
+    height: 10vw;
+    width: 10vw;
+  }
+
+  .offSentText {
+    max-inline-size: 100%;
+  }
+
+  .offSentRecap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .offNextNum {
+    block-size: 9vw;
+    inline-size: 9vw;
+  }
+
+  .offNextStep:not(:last-child)::after {
+    inset-block: 10vw calc(-1 * var(--space-md));
+    inset-inline-start: 4.5vw;
+  }
+}
+
+/* Link from the homepage instance to the canonical full-detail page. */
+.offDetailLink {
+  display: inline-block;
+  margin-top: var(--space-xs);
+  color: var(--on-surface);
+  font-size: var(--text-support);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.offDetailLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+/* --- Homepage CTA band (full configurator lives on the standalone pages) ---
+   The one inverse band between paper sections: layered surface (gold radial
+   glow + grain + ghost numeral) so the action moment carries the same depth
+   language as the accepted sections. Hierarchy: eyebrow -> statement ->
+   lead -> primary action; the pack cards are themselves actions. */
+.offTeaser {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+  padding: var(--space-2xl) var(--space-gutter);
+}
+.offTeaserGlow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(38vw 30vw at 82% 12%, rgb(239 195 55 / 9%), transparent 65%),
+    radial-gradient(30vw 26vw at 8% 96%, rgb(239 195 55 / 5%), transparent 60%);
+  pointer-events: none;
+}
+.offTeaserGrain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url("/images/noise.png");
+  opacity: 0.35;
+  pointer-events: none;
+}
+.offTeaserGhost {
+  position: absolute;
+  right: -2vw;
+  bottom: -7vw;
+  z-index: -1;
+  font-size: 26vw;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgb(244 242 237 / 3.5%);
+  pointer-events: none;
+  user-select: none;
+}
+.offTeaserInner {
+  max-width: 95vw;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: center;
+}
+.offTeaserCopy {
+  max-width: var(--measure-prose);
+}
+.offTeaserEyebrow {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-sm);
+}
+.offTeaserEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+.offTeaserTitle {
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin: 0 0 var(--space-sm);
+}
+.offTeaserLead {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  line-height: 1.55;
+  margin: 0 0 var(--space-md);
+}
+.offTeaserActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+.offTeaserCta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-support);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 0.4vw 1.4vw rgb(239 195 55 / 22%);
+  transition:
+    background-color var(--dur-micro) var(--ease-out-ref),
+    box-shadow var(--dur-micro) var(--ease-out-ref),
+    translate var(--dur-micro) var(--ease-out-ref);
+}
+.offTeaserCta:hover {
+  background: var(--action-primary-hover);
+  box-shadow: 0 0.6vw 1.8vw rgb(239 195 55 / 30%);
+  translate: 0 -0.15vw;
+}
+.offTeaserCta:hover .offTeaserCtaIcon {
+  translate: 0.2em 0;
+}
+.offTeaserCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.25em;
+}
+.offTeaserCtaIcon {
+  width: 1.1em;
+  height: 1.1em;
+  transition: translate var(--dur-micro) var(--ease-out-ref);
+}
+.offTeaserSecondary {
+  color: var(--on-inverse);
+  font-size: var(--text-support);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  text-decoration-color: rgb(244 242 237 / 35%);
+  transition: text-decoration-color var(--dur-micro) var(--ease-out-ref);
+}
+.offTeaserSecondary:hover {
+  text-decoration-color: var(--action-primary);
+}
+.offTeaserSecondary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+.offTeaserNote {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--on-inverse-muted);
+  font-size: var(--text-base);
+  margin: 0;
+}
+.offTeaserNoteIcon {
+  width: 1.2em;
+  height: 1.2em;
+  color: var(--action-primary);
+  flex: none;
+}
+
+/* Pack cards — each one IS an action into the configurator.
+   Internal hierarchy: icon bubble | name + chip / description | reveal arrow. */
+.offTeaserTiers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.offTeaserTier {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-sm);
+  background: rgb(244 242 237 / 4%);
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-md);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color var(--dur-micro) var(--ease-out-ref),
+    background-color var(--dur-micro) var(--ease-out-ref),
+    translate var(--dur-micro) var(--ease-out-ref);
+}
+.offTeaserTier:hover {
+  border-color: var(--on-inverse-muted);
+  background: rgb(244 242 237 / 7%);
+  translate: 0 -0.12vw;
+}
+.offTeaserTier:hover .offTeaserTierArrow {
+  opacity: 1;
+  translate: 0 0;
+}
+.offTeaserTier:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.25em;
+}
+.offTeaserTier.isHighlighted {
+  border-color: var(--action-primary);
+  background: rgb(239 195 55 / 7%);
+}
+.offTeaserTierBubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8vw;
+  height: 2.8vw;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 50%;
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+  flex: none;
+}
+.offTeaserTierIcon {
+  width: 52%;
+  height: 52%;
+}
+.offTeaserTierMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  min-width: 0;
+}
+.offTeaserTierName {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+.offTeaserTierChip {
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-pill);
+  padding: 0.1em 0.7em;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--on-inverse-muted);
+}
+.offTeaserTier.isHighlighted .offTeaserTierChip {
+  border-color: var(--action-primary);
+  color: var(--action-primary);
+}
+.offTeaserTierDesc {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+.offTeaserTierArrow {
+  width: 1.1vw;
+  height: 1.1vw;
+  min-width: 14px;
+  min-height: 14px;
+  color: var(--action-primary);
+  opacity: 0;
+  translate: -0.3em 0;
+  transition:
+    opacity var(--dur-micro) var(--ease-out-ref),
+    translate var(--dur-micro) var(--ease-out-ref);
+}
+@media (prefers-reduced-motion: reduce) {
+  .offTeaserCta,
+  .offTeaserCtaIcon,
+  .offTeaserTier,
+  .offTeaserTierArrow {
+    transition: none;
+  }
+  .offTeaserTierArrow {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (max-width: 580px) {
+  .offTeaserInner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .offTeaserCta {
+    width: 100%;
+    justify-content: center;
+  }
+  .offTeaserGhost {
+    font-size: 60vw;
+    bottom: -14vw;
+  }
+}
+
+/* --- Combined conversion section (flexible path) --------------------------- */
+.offSkipBtn {
+  margin-top: var(--space-sm);
+}
+.offFieldWide {
+  margin-top: var(--space-sm);
+}
+.offFieldTextarea {
+  min-height: 8vw;
+  resize: vertical;
+}
+@media (max-width: 580px) {
+  .offFieldTextarea {
+    min-height: 30vw;
+  }
+}

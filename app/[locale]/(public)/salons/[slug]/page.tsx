@@ -1,68 +1,69 @@
 import { notFound } from "next/navigation";
-import { hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
-import { getAdminSeams } from "@/lib/spimar/repositories";
-import { localized, type Locale as StoreLocale } from "@/lib/spimar/types";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
+import { getBackendSeams } from "@/lib/spimar/repositories";
 
+/* Spec §04 /salons/{event} — the canonical edition page, served from the CMS
+   seam. Published editions only: a draft or unknown slug is a 404, never a
+   leak. Missing dates and venues render their honest pending state.
+
+   Server-rendered per request so publication state changes apply immediately. */
 export const dynamic = "force-dynamic";
 
-/* Public salon detail.
-
-   A draft must 404 rather than resolve on a guessable URL, so the read is the
-   published-only one — a `includeDrafts` read here would leak unpublished
-   editions to anyone who knew the slug. */
 export default async function SalonDetail({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const t = await getTranslations("salonsPage");
 
-  const event = await getAdminSeams().cms.getEvent(slug);
-  if (!event) notFound();
+  const event = await getBackendSeams().content.getEvent({
+    siteId: "spimar",
+    locale: locale === "en" ? "en" : "fr",
+    slug,
+  });
 
-  const store = locale as StoreLocale;
-  const title = localized(event.title, store) || event.slug;
-  const summary = localized(event.summary, store);
-  const place = [event.city, event.country].filter(Boolean).join(", ");
+  if (!event || event.publicationState !== "published") notFound();
 
   return (
-    <main className="salonsPage">
-      <p>
-        <Link href="/salons">← Tous les salons</Link>
-      </p>
-      <h1>{title}</h1>
-
-      <dl className="salonsPage__facts">
-        <dt>Dates</dt>
-        <dd>
-          {event.startDate ? (
-            <time dateTime={event.startDate}>
-              {[event.startDate, event.endDate].filter(Boolean).join(" – ")}
-            </time>
-          ) : (
-            "Dates à confirmer"
-          )}
-        </dd>
-        {place ? (
-          <>
-            <dt>Lieu</dt>
-            <dd>{place}</dd>
-          </>
-        ) : null}
-      </dl>
-
-      {summary ? <p className="salonsPage__summary">{summary}</p> : null}
-
-      <p style={{ marginBlockStart: "2em" }}>
-        <Link className="button" href="/exposer">
-          Devenir exposant sur ce salon
-        </Link>
-      </p>
-    </main>
+    <div className="pageBlocks">
+      <section className="spimarListPage">
+        <div className="contentWrapper">
+          <div className="hoyCols">
+            <div className="colLabel">
+              <div className="text medium">
+                [ <span className="numIndex">04</span> ]
+              </div>
+            </div>
+            <div className="colMain">
+              <header className="pageIntro">
+                <div className="label text medium">{t("detailLabel")}</div>
+                <SplitTitle as="h1" className="normalTitle" text={event.name || slug} />
+                <p className="text medium">
+                  {event.venue ? `${event.venue.city} — ${event.venue.countryCode}` : t("venueTbc")}
+                  {" · "}
+                  {event.startsAt
+                    ? new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
+                        new Date(event.startsAt),
+                      )
+                    : t("datesTbc")}
+                </p>
+              </header>
+              <p className="text medium">{t("detailPending")}</p>
+              <footer className="pageOutro">
+                <p className="text medium">
+                  <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
+                  {" · "}
+                  <Link href="/salons">{t("backToIndex")}</Link>
+                </p>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

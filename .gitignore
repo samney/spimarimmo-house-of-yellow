@@ -62,7 +62,13 @@ qa/implementation/eng014c/
 qa/implementation/ENG-014C-EVIDENCE-PACKAGE.zip
 
 # Large local video corpus: keep out of Git; deploy through external object/CDN storage.
-/public/videos/
+# (Contents, not the directory itself: Git cannot re-include a file inside an
+# excluded directory, so the exception below would never apply.)
+/public/videos/*
+# Exception: manifest-declared, rights-approved assets ship with the repository
+# so they actually deploy. Keep this list short — anything sizeable belongs in
+# object storage, which is what the rule above is for. (D-024)
+!/public/videos/hero-real-estate-exhibition.mp4
 
 # Codex-generated audit evidence and local runtime output.
 /qa/codex/

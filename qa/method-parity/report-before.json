@@ -1,0 +1,57 @@
+{
+  "phase": "before",
+  "reference": "docs\\codex-implimentation\\SPIMARIMMO_NOTRE_METHODE_CLAUDE_HANDOFF_v1\\references\\generated\\notre-methode-01-avant.png",
+  "actual": "qa\\method-parity\\actual-before.png",
+  "actualSize": {
+    "width": 1536,
+    "height": 1025
+  },
+  "goldenSize": {
+    "width": 1536,
+    "height": 1024
+  },
+  "tolerancePerChannel": 24,
+  "total": {
+    "pixels": 1572864,
+    "different": 290341,
+    "ratio": 0.1846
+  },
+  "regions": {
+    "introduction": {
+      "mode": "strict",
+      "pixels": 440832,
+      "different": 50323,
+      "ratio": 0.1142
+    },
+    "phase-rail": {
+      "mode": "strict",
+      "pixels": 106400,
+      "different": 6253,
+      "ratio": 0.0588
+    },
+    "phase-copy": {
+      "mode": "strict",
+      "pixels": 176400,
+      "different": 31702,
+      "ratio": 0.1797
+    },
+    "dossier": {
+      "mode": "perceptual",
+      "pixels": 371700,
+      "different": 140193,
+      "ratio": 0.3772
+    },
+    "deliverables": {
+      "mode": "strict",
+      "pixels": 246330,
+      "different": 48776,
+      "ratio": 0.198
+    },
+    "footer-progress": {
+      "mode": "strict",
+      "pixels": 191694,
+      "different": 14289,
+      "ratio": 0.0745
+    }
+  }
+}

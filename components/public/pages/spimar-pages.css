@@ -1,0 +1,223 @@
+/* Editorial list pages — /faq, /insights, /ressources, /salons.
+
+   Same composition family as the standing pages (side index column, editorial
+   statement) so specification routes graduate from standing page to content
+   page without changing the visual system.
+
+   Binds to the L2 tokens and the vw ladders only: spacing and type restate
+   themselves in the 1080/580 regimes through :root, so this file needs no
+   parallel scale of its own. */
+
+.spimarListPage {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-2xl) 0 var(--space-xl);
+}
+
+.spimarListPage .pageIntro {
+  margin-bottom: var(--space-lg);
+  max-width: var(--measure-document);
+}
+
+.spimarListPage .pageIntro .label {
+  margin-bottom: var(--space-sm);
+}
+
+.spimarListPage .pageIntro .text.medium {
+  margin-top: var(--space-sm);
+  max-width: var(--measure-prose);
+}
+
+/* FAQ — native disclosure widgets: keyboard and reduced-motion safe. */
+.faqList {
+  border-top: 1px solid var(--border-subtle);
+  max-width: var(--measure-document);
+}
+
+.faqList details {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.faqList summary {
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0;
+  list-style: none;
+}
+
+.faqList summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqList summary .numIndex {
+  flex: none;
+}
+
+.faqList summary .faqMarker {
+  margin-left: auto;
+  flex: none;
+  transition: rotate var(--dur-micro) var(--ease-out-ref);
+}
+
+.faqList details[open] summary .faqMarker {
+  rotate: 45deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faqList summary .faqMarker {
+    transition: none;
+  }
+}
+
+.faqList summary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+
+.faqList .faqAnswer {
+  padding: 0 0 var(--space-md);
+  max-width: var(--measure-prose);
+}
+
+.faqList .faqAnswer a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Topic / resource card lists */
+.spimarCardList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
+  gap: 1px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.spimarCardList .cardItem {
+  background: var(--surface-page);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-height: 14vw;
+}
+
+.spimarCardList .cardItem .cardKicker {
+  color: var(--on-surface-muted);
+}
+
+.spimarCardList .cardItem .cardNote {
+  margin-top: auto;
+  color: var(--on-surface-muted);
+}
+
+.spimarListPage .pageOutro {
+  margin-top: var(--space-lg);
+}
+
+/* 580 regime: type and spacing restate through :root; only the layout that
+   cannot derive from a token changes here. */
+@media (max-width: 580px) {
+  .spimarCardList {
+    grid-template-columns: 1fr;
+  }
+
+  .spimarCardList .cardItem {
+    min-height: 0;
+  }
+}
+
+/* Standing pages: pages.css renders .cultureQuoteAnimationBlock transparent
+   inside .pageBlocks, so on a non-dark page the block sits on paper even
+   though it carries the `dark` class. The bright gold index fails WCAG AA
+   there (1.49:1); follow the effective surface, not the class. */
+.pageBlocks:not(.dark) .cultureQuoteAnimationBlock .numIndex {
+  color: var(--spimar-gold-text);
+}
+
+/* Gallery listing: category anchor nav + grouped grids. The homepage section
+   is a bounded teaser; this composition scales with the library. */
+.galListNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+.galListNavPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs) var(--space-sm);
+  font-size: var(--text-support);
+  font-weight: 500;
+  color: var(--on-surface);
+  text-decoration: none;
+  transition: border-color var(--dur-micro) var(--ease-out-ref);
+}
+.galListNavPill:hover {
+  border-color: var(--border-strong);
+}
+.galListNavPill:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+.galListNavCount {
+  color: var(--on-surface-muted);
+  font-variant-numeric: tabular-nums;
+}
+.galListGroup {
+  margin-bottom: var(--space-lg);
+  scroll-margin-top: 6vw;
+}
+.galListGroup > h2 {
+  margin-bottom: var(--space-sm);
+}
+@media (max-width: 580px) {
+  .galListGroup {
+    scroll-margin-top: 16vw;
+  }
+}
+
+/* Case-study detail: video slot (honest pending state) + prose body. */
+.caseVideoSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  aspect-ratio: 16 / 9;
+  max-width: var(--measure-document);
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  text-align: center;
+}
+.caseVideoBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.4vw;
+  height: 3.4vw;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+}
+.caseVideoIcon {
+  width: 45%;
+  height: 45%;
+}
+.caseBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: var(--measure-prose);
+  margin-bottom: var(--space-lg);
+}

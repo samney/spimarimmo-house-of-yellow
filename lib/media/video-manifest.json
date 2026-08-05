@@ -1,5 +1,16 @@
 {
   "schemaVersion": 1,
   "deliveryPolicy": "Only rights-approved, deployment-safe assets may be added. Reference mappings that are not listed here render their poster fallback and make no video request.",
-  "assets": []
+  "assets": [
+    {
+      "id": "hero-real-estate-exhibition",
+      "legacyPath": "hero",
+      "src": "/videos/hero-real-estate-exhibition.mp4",
+      "delivery": "repository",
+      "sourceProvenance": "Owner-supplied SPIMARIMMO footage, delivered in docs/assets-UX-UI/hero video/ and authorized for the homepage hero on 2026-08-04 (D-024).",
+      "rightsOwner": "SPIMARIMMO",
+      "rightsStatus": "approved",
+      "expiresAt": null
+    }
+  ]
 }

@@ -1,0 +1,1014 @@
+/* ==========================================================================
+   Section 07 — Votre visibilité
+   ==========================================================================
+   Binds only to L2 semantic tokens. Paper header, one dark rounded device
+   panel carrying the three phases, and a benefits band inside the panel —
+   the same dark-panel-on-paper rhythm as sections 05 and 06.
+   ========================================================================== */
+
+.visSection {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.visInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header (sibling hierarchy: title < statement) ------------------------- */
+
+.visHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.visEyebrow {
+  color: var(--spimar-gold-text); /* WCAG AA on paper */
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.visEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.visTitle {
+  font-size: var(--text-support);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 var(--space-sm);
+}
+
+.visLead {
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  max-width: var(--measure-prose);
+  text-wrap: balance;
+}
+
+.visCta {
+  align-items: center;
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.visCta:hover {
+  background: var(--action-primary-hover);
+}
+
+.visCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.visCtaIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+/* --- Device panel ----------------------------------------------------------- */
+
+.visPanel {
+  background: var(--surface-inverse);
+  border-radius: var(--radius-xl);
+  color: var(--on-inverse);
+  padding: var(--space-md);
+}
+
+/* --- Phase tabs -------------------------------------------------------------- */
+
+.visTabs {
+  border-bottom: 1px solid var(--border-inverse);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.visTab {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--on-inverse-muted);
+  cursor: pointer;
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  text-align: start;
+}
+
+.visTab + .visTab {
+  border-inline-start: 1px solid var(--border-inverse);
+}
+
+.visTab[aria-selected="true"] {
+  border-bottom-color: var(--action-primary);
+  color: var(--on-inverse);
+}
+
+.visTab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.visTabNum {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-heading-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.visTab[aria-selected="true"] .visTabNum {
+  color: var(--action-primary);
+}
+
+.visTabLabel {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.visTabStatus {
+  border: 1px solid var(--action-primary);
+  border-radius: var(--radius-pill);
+  color: var(--action-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 0.1em 0.8em;
+  white-space: nowrap;
+}
+
+.visTabSub {
+  color: var(--on-inverse-muted);
+  display: block;
+  font-size: var(--text-base);
+}
+
+/* --- Detail grid -------------------------------------------------------------- */
+
+.visDetail {
+  animation: vis-detail-in 240ms ease both;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 17vw minmax(0, 1fr);
+  padding: var(--space-md) 0;
+}
+
+@keyframes vis-detail-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5vw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Phase card ---------------------------------------------------------------- */
+
+.visPhaseCard {
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.visPhaseCount {
+  color: var(--action-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.visPhaseNum {
+  color: var(--action-primary);
+  font-size: var(--text-mega);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 0.9;
+  margin: 0 0 var(--space-sm);
+}
+
+.visPhaseTitle {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 var(--space-sm);
+  text-wrap: balance;
+}
+
+.visPhaseText {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0 0 var(--space-md);
+}
+
+.visLevers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.visLever {
+  align-items: center;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-md);
+  display: flex;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.visLever[data-first] {
+  border-color: var(--action-primary);
+  color: var(--action-primary);
+}
+
+.visLeverIcon {
+  flex: none;
+  height: 1.2vw;
+  width: 1.2vw;
+}
+
+/* --- Stage: channels + artifacts + rail ------------------------------------------ */
+
+.visStage {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 9vw minmax(0, 1fr) 18vw;
+}
+
+.visChannels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.visChannel {
+  align-items: center;
+  color: var(--on-inverse-muted);
+  display: flex;
+  font-size: var(--text-base);
+  font-weight: 500;
+  gap: var(--space-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.visChannelIcon {
+  color: var(--action-primary);
+  flex: none;
+  height: 1.2vw;
+  width: 1.2vw;
+}
+
+.visChannelLine {
+  border-top: 1px dashed var(--spimar-gold-deep, var(--action-primary));
+  flex: 1;
+  margin-inline-start: var(--space-2xs);
+  opacity: 0.6;
+}
+
+/* --- Artifacts ------------------------------------------------------------------- */
+
+.visArtifacts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.visFrame {
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Browser frame (phase 01) */
+.visBrowser {
+  background: var(--surface-page);
+  color: var(--on-surface);
+}
+
+.visBrowserBar {
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  font-size: var(--text-base);
+  font-weight: 600;
+  gap: var(--space-2xs);
+  letter-spacing: 0.1em;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.visBrowserBar b {
+  flex: 1;
+  font-weight: 600;
+}
+
+.visBrowserBar i {
+  background: var(--border-subtle);
+  border-radius: 50%;
+  display: block;
+  height: 0.45vw;
+  width: 0.45vw;
+}
+
+.visBrowserHero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-sm) var(--space-sm);
+}
+
+.visBrowserHeadline {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.1;
+  max-width: 22vw;
+}
+
+.visBrowserSub {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  max-width: 24vw;
+}
+
+.visBrowserCta {
+  align-self: flex-start;
+  background: var(--action-primary);
+  border-radius: var(--radius-sm);
+  color: var(--action-on-primary);
+  font-size: var(--text-base);
+  font-weight: 500;
+  padding: var(--space-3xs) var(--space-sm);
+}
+
+.visBrowserRow {
+  display: grid;
+  gap: var(--space-xs);
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0 var(--space-sm) var(--space-sm);
+}
+
+.visBrowserThumb {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.visBrowserThumb img {
+  object-fit: cover;
+}
+
+/* Schedule frame (phase 02) */
+.visSchedule {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  display: flex;
+  flex-direction: column;
+}
+
+.visScheduleHead {
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  font-size: var(--text-base);
+  font-weight: 600;
+  gap: var(--space-xs);
+  letter-spacing: 0.14em;
+  padding: var(--space-xs) var(--space-sm);
+  text-transform: uppercase;
+}
+
+.visScheduleIcon {
+  height: 1vw;
+  width: 1vw;
+}
+
+.visScheduleRow {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.visScheduleRow + .visScheduleRow {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.visScheduleTime {
+  color: var(--on-surface-muted);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.visScheduleWho {
+  flex: 1;
+}
+
+.visScheduleState {
+  color: var(--feedback-positive);
+  height: 1.1vw;
+  width: 1.1vw;
+}
+
+/* Pipeline frame (phase 03) */
+.visPipeline {
+  background: var(--surface-page);
+  color: var(--on-surface);
+}
+
+.visPipelineHead {
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  font-size: var(--text-base);
+  font-weight: 600;
+  gap: var(--space-xs);
+  letter-spacing: 0.14em;
+  padding: var(--space-xs) var(--space-sm);
+  text-transform: uppercase;
+}
+
+.visPipelineCols {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(4, 1fr);
+  padding: var(--space-sm);
+}
+
+.visPipelineCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+
+.visPipelineColTitle {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.visPipelineCard {
+  align-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+}
+
+.visPipelineAvatar {
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  flex: none;
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+.visPipelineLines {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.25vw;
+  min-width: 0;
+}
+
+.visPipelineLines span {
+  font-size: var(--text-base);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.visPipelineLines i {
+  background: var(--border-subtle);
+  border-radius: var(--radius-xs);
+  display: block;
+  height: 0.3vw;
+  width: 70%;
+}
+
+/* Film strip */
+.visStrip {
+  background: var(--spimar-ink);
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: var(--space-2xs);
+  grid-template-columns: repeat(4, 1fr);
+  padding: var(--space-2xs);
+}
+
+.visStripCell {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  position: relative;
+}
+
+.visStripCell img {
+  object-fit: cover;
+}
+
+/* Flow strip */
+.visFlow {
+  align-items: center;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-pill);
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: var(--space-xs) var(--space-md);
+}
+
+.visFlowStep {
+  align-items: center;
+  color: var(--on-inverse-muted);
+  display: flex;
+  font-size: var(--text-base);
+  font-weight: 600;
+  gap: var(--space-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.visFlowStep[data-state="done"] {
+  color: var(--action-primary);
+}
+
+.visFlowIcon {
+  height: 1.2vw;
+  width: 1.2vw;
+}
+
+.visFlowArrow {
+  height: 1vw;
+  margin-inline: var(--space-md);
+  width: 2vw;
+}
+
+/* --- Deliverables rail ------------------------------------------------------------ */
+
+.visRailTitle {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.visRailList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  list-style: none;
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+}
+
+.visRailCard {
+  align-items: center;
+  background: var(--surface-page);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.visRailThumb {
+  align-items: center;
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex: none;
+  height: 3vw;
+  justify-content: center;
+  width: 3.8vw;
+}
+
+.visRailThumbIcon {
+  color: var(--on-surface);
+  height: 1.4vw;
+  width: 1.4vw;
+}
+
+.visRailText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vw;
+  min-width: 0;
+}
+
+.visRailLabel {
+  font-size: var(--text-support);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.visRailState {
+  align-items: center;
+  color: var(--on-surface-muted);
+  display: flex;
+  font-size: var(--text-base);
+  gap: 0.3vw;
+}
+
+.visRailState[data-state="done"] .visRailStateIcon {
+  color: var(--feedback-positive);
+}
+
+.visRailState[data-state="progress"] .visRailStateIcon,
+.visRailState[data-state="planned"] .visRailStateIcon {
+  color: var(--spimar-gold-deep, var(--action-primary));
+}
+
+.visRailStateIcon {
+  height: 1vw;
+  width: 1vw;
+}
+
+.visRailClosing {
+  color: var(--on-inverse-muted);
+  font-size: var(--text-support);
+  line-height: 1.4;
+  margin: 0 0 var(--space-sm);
+}
+
+.visNext {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--action-primary);
+  border-radius: var(--radius-pill);
+  color: var(--action-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.visNext:hover {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.visNext:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.visNextIcon {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+/* --- Benefits band ------------------------------------------------------------------ */
+
+.visBenefits {
+  border-top: 1px solid var(--border-inverse);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: var(--space-md) 0 var(--space-xs);
+}
+
+.visBenefit {
+  align-items: center;
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  padding: 0 var(--space-sm);
+}
+
+.visBenefit + .visBenefit {
+  border-inline-start: 1px solid var(--border-inverse);
+}
+
+.visBenefitIcon {
+  align-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: 50%;
+  color: var(--action-primary);
+  display: flex;
+  flex: none;
+  height: 2.6vw;
+  justify-content: center;
+  width: 2.6vw;
+}
+
+.visBenefitGlyph {
+  height: 45%;
+  width: 45%;
+}
+
+.visBenefitTitle {
+  display: block;
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.visBenefitSub {
+  color: var(--on-inverse-muted);
+  display: block;
+  font-size: var(--text-base);
+}
+
+/* --- Reduced motion ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .visDetail {
+    animation: none;
+  }
+
+  .visCta,
+  .visNext {
+    transition: none;
+  }
+}
+
+/* --- Tablet ---------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .visDetail {
+    grid-template-columns: 1fr;
+  }
+
+  .visStage {
+    grid-template-columns: 1fr;
+  }
+
+  .visChannels {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .visChannel {
+    gap: var(--space-2xs);
+  }
+
+  .visChannelLine {
+    display: none;
+  }
+
+  .visChannelIcon {
+    height: 2.2vw;
+    width: 2.2vw;
+  }
+
+  .visLeverIcon {
+    height: 2.2vw;
+    width: 2.2vw;
+  }
+
+  .visBrowserHeadline,
+  .visBrowserSub {
+    max-width: none;
+  }
+
+  .visScheduleIcon {
+    height: 2vw;
+    width: 2vw;
+  }
+
+  .visScheduleState {
+    height: 2.2vw;
+    width: 2.2vw;
+  }
+
+  .visPipelineAvatar {
+    height: 3vw;
+    width: 3vw;
+  }
+
+  .visPipelineLines i {
+    height: 0.6vw;
+  }
+
+  .visStrip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .visFlowIcon {
+    height: 2.2vw;
+    width: 2.2vw;
+  }
+
+  .visFlowArrow {
+    height: 1.8vw;
+    margin-inline: var(--space-sm);
+    width: 3vw;
+  }
+
+  .visRailThumb {
+    height: 6vw;
+    width: 7.5vw;
+  }
+
+  .visRailThumbIcon {
+    height: 2.8vw;
+    width: 2.8vw;
+  }
+
+  .visRailStateIcon {
+    height: 1.8vw;
+    width: 1.8vw;
+  }
+
+  .visBenefitIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+}
+
+/* --- Mobile: the 580 regime -------------------------------------------------------------- */
+
+@media (max-width: 580px) {
+  .visSection {
+    padding: var(--space-2xl) var(--space-gutter);
+  }
+
+  .visInner {
+    max-width: 100%;
+  }
+
+  .visHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .visLead {
+    max-width: 100%;
+  }
+
+  .visPanel {
+    padding: var(--space-sm);
+  }
+
+  .visTabs {
+    grid-template-columns: 1fr;
+  }
+
+  .visTab {
+    justify-content: flex-start;
+    padding: var(--space-sm);
+  }
+
+  .visTab + .visTab {
+    border-inline-start: 0;
+    border-top: 1px solid var(--border-inverse);
+  }
+
+  .visTab[aria-selected="true"] {
+    border-bottom-color: transparent;
+    border-inline-start: 2px solid var(--action-primary);
+  }
+
+  .visChannels {
+    justify-content: flex-start;
+  }
+
+  .visChannelIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .visLeverIcon {
+    height: 5vw;
+    width: 5vw;
+  }
+
+  .visBrowserBar i {
+    height: 1.6vw;
+    width: 1.6vw;
+  }
+
+  .visScheduleIcon,
+  .visScheduleState {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .visPipelineCols {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .visPipelineAvatar {
+    height: 6vw;
+    width: 6vw;
+  }
+
+  .visPipelineLines i {
+    height: 1.2vw;
+  }
+
+  .visStrip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .visFlow {
+    border-radius: var(--radius-lg);
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+  }
+
+  .visFlowArrow {
+    display: none;
+  }
+
+  .visFlowIcon {
+    height: 4.5vw;
+    width: 4.5vw;
+  }
+
+  .visRailThumb {
+    height: 12vw;
+    width: 15vw;
+  }
+
+  .visRailThumbIcon {
+    height: 6vw;
+    width: 6vw;
+  }
+
+  .visRailStateIcon {
+    height: 3.6vw;
+    width: 3.6vw;
+  }
+
+  .visBenefits {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .visBenefit {
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  .visBenefit + .visBenefit {
+    border-inline-start: 0;
+  }
+
+  .visBenefitIcon {
+    height: 10vw;
+    width: 10vw;
+  }
+}

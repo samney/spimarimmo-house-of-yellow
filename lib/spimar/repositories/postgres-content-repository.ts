@@ -124,6 +124,54 @@ export class PostgresContentRepository implements ContentRepository {
     };
   }
 
+  /**
+   * Enumeration for listings that need every page, not one lookup.
+   *
+   * Sections are deliberately NOT loaded here: a listing renders titles and
+   * slugs, and fetching every section of every page would be a query per row
+   * for data the caller discards. A caller that needs a page's body asks for
+   * that page by slug.
+   */
+  async listPages(query: ContentQuery): Promise<readonly NormalizedPage[]> {
+    const showDrafts = query.includeUnpublished === true;
+    const rows = await this.sql.query<{
+      id: string;
+      slug: string;
+      canonical_publication_state: string;
+      lock_version: number;
+      updated_at: unknown;
+      title: string;
+      t_updated_at: unknown;
+    }>(
+      `select p.id, p.slug,
+              coalesce(p.canonical_publication_state::text, p.status::text)
+                as canonical_publication_state,
+              p.lock_version, p.updated_at, t.title, t.updated_at as t_updated_at
+       from public.pages p
+       join public.page_translations t on t.page_id = p.id and t.locale = $2
+       where p.site_id = $1 and p.deleted_at is null
+         and ${SITE_ACTIVE.replace("$1", "p.site_id")}
+         ${showDrafts ? "" : "and p.status = 'published' and t.status = 'published'"}
+       order by p.slug asc`,
+      [this.siteId, query.locale],
+    );
+
+    return rows.map((page) => ({
+      slug: page.slug,
+      locale: query.locale,
+      title: page.title,
+      publicationState: page.canonical_publication_state as PublicationState,
+      sections: [],
+      seo: null,
+      contentVersion: version(
+        page.id,
+        page.lock_version,
+        iso(page.updated_at),
+        iso(page.t_updated_at),
+      ),
+    }));
+  }
+
   private async queryEvents(
     locale: Locale,
     showDrafts: boolean,

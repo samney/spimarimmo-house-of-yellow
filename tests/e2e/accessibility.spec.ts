@@ -13,7 +13,21 @@ import { expect, test } from "@playwright/test";
    nothing checked. This spec closes that gap.
 
    Extend ROUTES as TRF-025 scaffolds the SPIMAR route families. */
-const ROUTES = ["/", "/fr", "/this-route-does-not-exist"];
+const ROUTES = [
+  "/",
+  "/fr",
+  "/salons",
+  "/exposer",
+  "/exposer/methode",
+  "/exposer/offres",
+  "/insights",
+  "/faq",
+  "/ressources",
+  "/ressources/galerie",
+  "/exposer/devenir-exposant",
+  "/contact",
+  "/this-route-does-not-exist",
+];
 
 const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
 

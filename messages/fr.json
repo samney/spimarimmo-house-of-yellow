@@ -1,7 +1,645 @@
 {
   "nav": {
+    "salons": "Salons",
+    "exposer": "Exposer",
+    "pourquoiSpimar": "Pourquoi SPIMAR",
+    "etudesDeCas": "Études de cas",
+    "ressources": "Ressources",
+    "visiteurs": "Visiteurs",
+    "becomeExhibitor": "Devenir exposant",
+    "contact": "Contact",
+    "menu": "Menu",
     "home": "Accueil",
-    "menu": "Menu"
+    "methode": "Méthode",
+    "visibilite": "Visibilité",
+    "offres": "Offres",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "bibliotheque": "Bibliothèque",
+    "socialsPending": "Réseaux sociaux — liens à confirmer",
+    "socials": {
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    },
+    "ressourcesExposants": "Ressources exposants",
+    "galerie": "Galerie"
+  },
+  "impact": {
+    "eyebrow": "Chiffres clés",
+    "title": "L’impact, mesuré.",
+    "lead": "Six indicateurs pour suivre la portée et la performance de chaque édition.",
+    "status": "Sources en validation",
+    "note": "Données officielles publiées après validation des sources.",
+    "methodology": "Voir la méthodologie",
+    "indicators": {
+      "events": {
+        "label": "Salons organisés",
+        "caption": "Éditions internationales"
+      },
+      "visitors": {
+        "label": "Visiteurs accueillis",
+        "caption": "Audience qualifiée"
+      },
+      "exhibitors": {
+        "label": "Exposants accompagnés",
+        "caption": "Suivi de bout en bout"
+      },
+      "countries": {
+        "label": "Pays couverts",
+        "caption": "Réseau international"
+      },
+      "leads": {
+        "label": "Leads générés",
+        "caption": "Intentions détectées"
+      },
+      "satisfaction": {
+        "label": "Taux de satisfaction",
+        "caption": "Expérience mesurée"
+      }
+    }
+  },
+  "mre": {
+    "eyebrow": "Comprendre le marché MRE",
+    "title": "Pourquoi les MRE achètent-ils au Maroc ?",
+    "lead": "Six motivations structurent la demande et orientent des opportunités commerciales des promoteurs.",
+    "downloadStudy": "Télécharger l’étude",
+    "filtersLabel": "Filtrer les motivations",
+    "filters": {
+      "all": "Tous les moteurs",
+      "life": "Projet de vie",
+      "investment": "Investissement",
+      "transmission": "Transmission"
+    },
+    "railCount": "{count, plural, one {# motivation} other {# motivations}}",
+    "detailCounter": "Motivation {num} / 0{total}",
+    "explore": "Explorer",
+    "mediaPending": "Visuel en validation",
+    "motivations": {
+      "principale": {
+        "label": "Résidence principale",
+        "description": "S’installer durablement au Maroc avec un logement adapté à un mode de vie local.",
+        "tags": "Projet de vie|Installation durable|Logement adapté",
+        "imageAlt": "Une famille visite un salon lumineux avec un conseiller immobilier."
+      },
+      "secondaire": {
+        "label": "Résidence secondaire",
+        "description": "Disposer d’un pied-à-terre au Maroc pour les séjours en famille tout au long de l’année.",
+        "tags": "Projet de vie|Pied-à-terre|Séjours",
+        "imageAlt": ""
+      },
+      "retour": {
+        "label": "Retour au Maroc",
+        "description": "Préparer un retour définitif ou progressif dans de bonnes conditions.",
+        "tags": "Projet de vie|Retour progressif|Installation",
+        "imageAlt": "Un couple avec ses valises est accueilli devant une maison traditionnelle."
+      },
+      "retraite": {
+        "label": "Retraite",
+        "description": "Préparer une retraite au Maroc dans un cadre de vie serein et accessible.",
+        "tags": "Projet de vie|Cadre de vie|Retraite",
+        "imageAlt": ""
+      },
+      "patrimonial": {
+        "label": "Investissement patrimonial",
+        "description": "Constituer et valoriser un patrimoine immobilier sécurisé au Maroc.",
+        "tags": "Investissement|Valorisation|Patrimoine",
+        "imageAlt": "Un conseiller présente une maquette de résidence à un couple d’investisseurs."
+      },
+      "transmission": {
+        "label": "Transmission familiale",
+        "description": "Préparer l’avenir et transmettre un patrimoine immobilier durable à ses proches.",
+        "tags": "Transmission|Famille|Patrimoine durable",
+        "imageAlt": ""
+      }
+    },
+    "study": {
+      "coverTitle": "Le marché MRE au Maroc",
+      "eyebrow": "Étude Spimarimmo",
+      "title": "Le marché MRE, en synthèse",
+      "text": "Motivations, tendances et enseignements clés pour orienter vos stratégies.",
+      "note": "Sources vérifiées avant publication."
+    },
+    "scope": {
+      "label": "Source & périmètre",
+      "study": "Étude qualitative auprès de MRE investisseurs et accédants",
+      "countries": "France · Canada · Belgique · Royaume-Uni · Émirats Arabes Unis",
+      "recency": "Données récentes"
+    },
+    "methodology": "Voir la méthodologie complète"
+  },
+  "visibility": {
+    "eyebrow": "Votre visibilité",
+    "title": "Une présence amplifiée avant, pendant et après chaque salon.",
+    "lead": "Un dispositif média et commercial coordonné pour attirer, engager et convertir une audience qualifiée.",
+    "cta": "Découvrir le dispositif",
+    "tabsLabel": "Phases du dispositif",
+    "channelsLabel": "Canaux activés",
+    "phaseCounter": "Phase {num} / 03",
+    "nextPhase": "Phase suivante",
+    "phases": {
+      "before": {
+        "label": "Avant le salon",
+        "sub": "Préparer l’audience",
+        "status": "Actif",
+        "heading": "Créer l’attention avant l’ouverture.",
+        "body": "Nous préparons l’audience et installons votre marque avant le premier rendez-vous.",
+        "levers": {
+          "0": "Vidéos sponsorisées",
+          "1": "Campagnes Meta",
+          "2": "Google Ads",
+          "3": "Emailing & SMS",
+          "4": "Influence & presse"
+        },
+        "channels": {
+          "meta": "Meta",
+          "google": "Google",
+          "youtube": "YouTube",
+          "email": "Email",
+          "sms": "SMS",
+          "press": "Presse",
+          "influence": "Influence"
+        },
+        "deliverablesTitle": "Livrables avant",
+        "deliverables": {
+          "0": {
+            "label": "Film sponsorisé",
+            "status": "Préparé"
+          },
+          "1": {
+            "label": "Kit social ads",
+            "status": "Prêt"
+          },
+          "2": {
+            "label": "Landing page",
+            "status": "Validée"
+          },
+          "3": {
+            "label": "Séquence CRM",
+            "status": "Planifiée"
+          },
+          "4": {
+            "label": "Presse & influence",
+            "status": "Coordonné"
+          }
+        },
+        "closing": "Tout est visible avant l’ouverture du salon.",
+        "flow": {
+          "0": "Préparé",
+          "1": "Validé",
+          "2": "Planifié"
+        }
+      },
+      "during": {
+        "label": "Pendant le salon",
+        "sub": "Activer l’engagement",
+        "status": "En direct",
+        "heading": "Activer les rencontres en temps réel.",
+        "body": "Nous captons les temps forts, animons les échanges et facilitons les rendez-vous qualifiés pendant le salon.",
+        "levers": {
+          "0": "Captation vidéo",
+          "1": "Interviews",
+          "2": "Diffusion réseaux sociaux",
+          "3": "Live",
+          "4": "Rendez-vous qualifiés"
+        },
+        "channels": {
+          "captation": "Captation",
+          "interviews": "Interviews",
+          "social": "Social",
+          "live": "Live",
+          "meetings": "Rendez-vous"
+        },
+        "deliverablesTitle": "Livrables pendant",
+        "deliverables": {
+          "0": {
+            "label": "Capsules vidéo",
+            "status": "En tournage"
+          },
+          "1": {
+            "label": "Interviews exposants",
+            "status": "En cours"
+          },
+          "2": {
+            "label": "Publications live",
+            "status": "Diffusées"
+          },
+          "3": {
+            "label": "Rendez-vous qualifiés",
+            "status": "Confirmés"
+          },
+          "4": {
+            "label": "Banque de contenus",
+            "status": "Alimentée"
+          }
+        },
+        "closing": "Chaque temps fort est capté et activé pendant le salon.",
+        "flow": {
+          "0": "Capté",
+          "1": "Diffusé",
+          "2": "Qualifié"
+        }
+      },
+      "after": {
+        "label": "Après le salon",
+        "sub": "Prolonger la conversion",
+        "status": "Suivi actif",
+        "heading": "Transformer l’intérêt en opportunités.",
+        "body": "Nous remettons les leads, mesurons les performances et accompagnons le suivi commercial après le salon.",
+        "levers": {
+          "0": "Remise des leads",
+          "1": "Reporting",
+          "2": "Suivi commercial",
+          "3": "Analyse des performances",
+          "4": "Recommandations"
+        },
+        "channels": {
+          "leads": "Leads",
+          "reporting": "Reporting",
+          "followup": "Suivi",
+          "analysis": "Analyse",
+          "advice": "Conseils"
+        },
+        "deliverablesTitle": "Livrables après",
+        "deliverables": {
+          "0": {
+            "label": "Leads qualifiés",
+            "status": "Transmis"
+          },
+          "1": {
+            "label": "Rapport de performance",
+            "status": "Disponible"
+          },
+          "2": {
+            "label": "Suivi commercial",
+            "status": "En cours"
+          },
+          "3": {
+            "label": "Bilan de campagne",
+            "status": "Consolidé"
+          },
+          "4": {
+            "label": "Recommandations",
+            "status": "Partagées"
+          }
+        },
+        "closing": "Chaque contact reste exploitable après le salon.",
+        "flow": {
+          "0": "Remis",
+          "1": "Qualifié",
+          "2": "Suivi"
+        },
+        "cta": "Voir le bilan"
+      }
+    },
+    "stage": {
+      "heroTitle": "L’immobilier marocain à l’international.",
+      "heroSub": "Des projets d’exception, conçus pour les investisseurs d’aujourd’hui.",
+      "heroCta": "Découvrir les projets",
+      "scheduleTitle": "Rendez-vous",
+      "slots": {
+        "0": {
+          "time": "10:00",
+          "who": "Investisseur – Paris"
+        },
+        "1": {
+          "time": "11:30",
+          "who": "Family Office – Casablanca"
+        },
+        "2": {
+          "time": "14:00",
+          "who": "Promoteur – Tanger"
+        },
+        "3": {
+          "time": "15:30",
+          "who": "Investisseur – Londres"
+        }
+      },
+      "pipelineTitle": "Pipeline CRM",
+      "pipeline": {
+        "new": "Nouveaux leads",
+        "qualified": "Qualifiés",
+        "meetings": "Rendez-vous",
+        "opportunities": "Opportunités"
+      },
+      "companyLabel": "Société {letter}"
+    },
+    "benefits": {
+      "audience": {
+        "title": "Audience qualifiée",
+        "sub": "Ciblage par projet et zone"
+      },
+      "engagement": {
+        "title": "Engagement continu",
+        "sub": "Présence sur tout le parcours"
+      },
+      "reach": {
+        "title": "Visibilité multicanale",
+        "sub": "Des contenus sur chaque levier"
+      },
+      "performance": {
+        "title": "Performance mesurable",
+        "sub": "Actions et résultats suivis"
+      }
+    }
+  },
+  "promoters": {
+    "eyebrow": "Ils nous font confiance",
+    "title": "Les promoteurs au cœur de l’expérience SPIMARIMMO.",
+    "lead": "Un réseau de partenaires accompagné avant, pendant et après chaque salon.",
+    "showAll": "Voir tous les promoteurs",
+    "hideAll": "Masquer les promoteurs",
+    "allLabel": "Tous les promoteurs partenaires",
+    "consent": "Logos affichés avec l’accord des promoteurs.",
+    "auto": "Défilement automatique",
+    "pause": "Suspendre le défilement",
+    "resume": "Reprendre le défilement"
+  },
+  "proof": {
+    "eyebrow": "La preuve par les résultats",
+    "title": "Des résultats documentés, pas seulement des promesses.",
+    "lead": "Chaque étude de cas relie nos dispositifs à vos objectifs : contacts qualifiés, opportunités générées, visites projet et ventes attribuées.",
+    "ctaAll": "Voir toutes les études de cas",
+    "caseLabel": "Cas client",
+    "badge": "Données en validation",
+    "logoSlot": "Logo client",
+    "caseTitle": "Du salon au pipeline commercial.",
+    "caseText": "Un parcours documenté, des premières interactions aux ventes attribuées.",
+    "caseCta": "Découvrir l’étude de cas",
+    "voicesLabel": "La parole aux décideurs",
+    "voiceTitle": "Direction commerciale",
+    "voiceText": "Témoignage lié à cette étude de cas",
+    "voiceCta": "Voir le témoignage",
+    "steps": {
+      "interactions": "Interactions",
+      "leads": "Leads acceptés",
+      "opportunities": "Opportunités",
+      "visits": "Visites projet",
+      "bookings": "Réservations",
+      "sales": "Ventes attribuées"
+    },
+    "funnelNote": "Indicateurs publiés après validation des sources et de la période d’attribution.",
+    "method": {
+      "framed": {
+        "title": "Méthodologie cadrée",
+        "text": "Définitions, sources et attribution validées."
+      },
+      "transparent": {
+        "title": "Transparence totale",
+        "text": "Indicateurs vérifiables, sans promesse générique."
+      },
+      "informed": {
+        "title": "Décisions éclairées",
+        "text": "Des preuves pour comparer et prioriser."
+      }
+    },
+    "methodCta": "Voir la méthodologie"
+  },
+  "offers": {
+    "eyebrow": "Offres exposants",
+    "stepperLabel": "Progression de la demande",
+    "stepper": {
+      "edition": "Édition",
+      "offer": "Offre",
+      "request": "Demande"
+    },
+    "header": {
+      "choose": {
+        "title": "Choisissez votre niveau de présence, en toute transparence.",
+        "lead": "Les contenus, disponibilités et conditions sont configurés salon par salon."
+      },
+      "request": {
+        "title": "Précisez votre projet pour recevoir une proposition adaptée.",
+        "lead": "Quelques informations suffisent pour contextualiser votre offre {tier}.",
+        "leadFlexible": "Décrivez votre projet librement — l’équipe qualifie votre besoin et revient avec une proposition adaptée. Le choix d’une offre reste possible à tout moment."
+      },
+      "sent": {
+        "title": "Votre demande a bien été transmise.",
+        "lead": "Notre équipe commerciale va vérifier les informations et préparer une proposition contextualisée."
+      }
+    },
+    "intro": {
+      "stepTag": "Étape 01 / 03",
+      "title": "Commencez par choisir une édition.",
+      "text": "Nous chargerons les offres, disponibilités et options correspondant au salon sélectionné.",
+      "selectLabel": "Choisir une édition",
+      "configNote": "Configuration requise"
+    },
+    "notes": {
+      "noPublication": "Aucun prix, avantage ou disponibilité n’est publié sans validation commerciale.",
+      "pendingValidation": "Les disponibilités finales restent soumises à validation commerciale.",
+      "confirmedInProposal": "Les disponibilités et conditions finales seront confirmées dans la proposition commerciale."
+    },
+    "preview": {
+      "label": "Aperçu des niveaux de présence",
+      "recommended": "Recommandé",
+      "lockedNote": "Les détails seront disponibles après sélection du salon."
+    },
+    "summary": {
+      "label": "Édition sélectionnée",
+      "offersAvailable": "Offres disponibles",
+      "edit": "Modifier"
+    },
+    "tiers": {
+      "quote": "Sur devis",
+      "standard": {
+        "name": "Standard",
+        "chip": "Présence",
+        "preview": "Présence essentielle",
+        "desc": "L’essentiel pour exposer et rencontrer une audience qualifiée.",
+        "features": {
+          "0": "Espace & stand",
+          "1": "Visibilité campagne",
+          "2": "Accès aux leads",
+          "3": "Reporting"
+        },
+        "cta": "Choisir Standard"
+      },
+      "premium": {
+        "name": "Premium",
+        "chip": "Visibilité",
+        "preview": "Visibilité renforcée",
+        "desc": "Une visibilité renforcée avant, pendant et après le salon.",
+        "features": {
+          "0": "Espace & stand",
+          "1": "Visibilité renforcée",
+          "2": "Prise de parole",
+          "3": "Leads & reporting"
+        },
+        "cta": "Choisir Premium"
+      },
+      "sponsor": {
+        "name": "Sponsor",
+        "chip": "Leadership",
+        "preview": "Positionnement prioritaire",
+        "desc": "Une présence prioritaire pour porter votre marque au premier plan.",
+        "features": {
+          "0": "Espace signature",
+          "1": "Visibilité prioritaire",
+          "2": "Prise de parole premium",
+          "3": "Exclusivité & leads"
+        },
+        "cta": "Choisir Sponsor"
+      }
+    },
+    "optionsBar": {
+      "title": "Options disponibles",
+      "sub": "après sélection de l’offre"
+    },
+    "options": {
+      "speaking": "Prise de parole",
+      "interview": "Interview",
+      "placement": "Placement renforcé",
+      "networking": "Networking",
+      "exclusivity": "Exclusivité"
+    },
+    "reassure": {
+      "contextual": {
+        "title": "Offres contextualisées",
+        "sub": "Selon l’édition choisie"
+      },
+      "verified": {
+        "title": "Disponibilités vérifiées",
+        "sub": "Validation commerciale"
+      },
+      "tailored": {
+        "title": "Proposition personnalisée",
+        "sub": "Selon vos objectifs"
+      }
+    },
+    "request": {
+      "recapLabel": "Offre sélectionnée",
+      "editOffer": "Modifier l’offre",
+      "stepTag": "Étape 03 / 03",
+      "formTitle": "Parlez-nous de votre projet.",
+      "flexibleDesc": "Vous décrivez votre projet, l’équipe qualifie et propose le niveau adapté.",
+      "chooseOffer": "Parcourir les offres"
+    },
+    "form": {
+      "objectiveLabel": "Votre objectif",
+      "selectPlaceholder": "Sélectionner",
+      "market": {
+        "label": "Marché visé",
+        "choices": {
+          "france": "France",
+          "belgique": "Belgique",
+          "canada": "Canada",
+          "emirats": "Émirats Arabes Unis",
+          "royaume-uni": "Royaume-Uni",
+          "multi": "Plusieurs marchés"
+        }
+      },
+      "goal": {
+        "label": "Objectif commercial",
+        "choices": {
+          "leads": "Générer des contacts qualifiés",
+          "notoriety": "Renforcer la notoriété",
+          "launch": "Lancer un nouveau programme",
+          "other": "Autre objectif"
+        }
+      },
+      "surface": {
+        "label": "Surface souhaitée",
+        "choices": {
+          "compact": "Stand compact",
+          "medium": "Stand intermédiaire",
+          "large": "Grande surface",
+          "tbd": "À définir avec un conseiller"
+        }
+      },
+      "optionsLabel": "Options souhaitées",
+      "contactLabel": "Vos coordonnées",
+      "name": {
+        "label": "Nom et prénom",
+        "placeholder": "Saisir votre nom et prénom"
+      },
+      "company": {
+        "label": "Entreprise",
+        "placeholder": "Saisir le nom de votre entreprise"
+      },
+      "email": {
+        "label": "E-mail professionnel",
+        "placeholder": "Saisir votre e-mail professionnel"
+      },
+      "phone": {
+        "label": "Téléphone",
+        "placeholder": "Saisir votre numéro de téléphone"
+      },
+      "consent": "J’accepte d’être recontacté au sujet de cette demande.",
+      "submit": "Envoyer ma demande",
+      "sending": "Envoi en cours…",
+      "advisorNote": "Un conseiller exposants vous recontacte avec une proposition contextualisée.",
+      "errors": {
+        "name": "Indiquez votre nom et prénom.",
+        "email": "Saisissez une adresse e-mail valide.",
+        "consent": "Le consentement est requis pour être recontacté.",
+        "rateLimited": "Trop de demandes successives. Merci de réessayer dans quelques minutes.",
+        "generic": "La demande n’a pas pu être transmise. Merci de vérifier les champs et de réessayer."
+      },
+      "skipToRequest": "Passer directement à ma demande",
+      "flexibleBadge": "Demande libre",
+      "emptyMessage": "Demande personnalisée.",
+      "budget": {
+        "label": "Budget indicatif",
+        "placeholder": "Donnez une fourchette si possible"
+      },
+      "message": {
+        "label": "Votre message",
+        "placeholder": "Décrivez votre marché, vos objectifs et toute information utile…"
+      }
+    },
+    "sent": {
+      "badge": "Demande envoyée",
+      "title": "Merci pour votre demande.",
+      "text": "Votre édition, votre offre et vos objectifs ont été transmis à l’équipe exposants.",
+      "duplicateText": "Cette demande était déjà enregistrée : l’équipe exposants dispose de vos informations.",
+      "recapTitle": "Récapitulatif",
+      "recapEdition": "Édition",
+      "recapOffer": "Offre",
+      "recapProject": "Projet",
+      "recapProjectSub": "Informations transmises",
+      "backToOffers": "Retour aux offres",
+      "casesLink": "Découvrir les études de cas"
+    },
+    "next": {
+      "label": "La suite",
+      "title": "Une proposition construite avec vous.",
+      "steps": {
+        "check": {
+          "title": "Vérification commerciale",
+          "text": "Validation des informations et disponibilités."
+        },
+        "adjust": {
+          "title": "Ajustement de l’offre",
+          "text": "Alignement avec vos objectifs et options."
+        },
+        "send": {
+          "title": "Envoi de la proposition",
+          "text": "Présentation d’une offre claire et contextualisée."
+        }
+      },
+      "advisor": "Un conseiller exposants reste votre point de contact."
+    },
+    "reassureSent": {
+      "data": {
+        "title": "Données protégées",
+        "sub": "Traitement limité à votre demande"
+      },
+      "transparency": {
+        "title": "Transparence commerciale",
+        "sub": "Aucune disponibilité publiée sans validation"
+      },
+      "support": {
+        "title": "Accompagnement dédié",
+        "sub": "Une proposition adaptée à votre projet"
+      }
+    },
+    "detailCta": "Voir la page Offres complète",
+    "teaser": {
+      "title": "Trois niveaux d’offre, un dossier sur mesure.",
+      "lead": "Standard, Premium ou Sponsor — chaque niveau précise ce qu’il couvre, et la proposition chiffrée suit la qualification de votre besoin.",
+      "cta": "Composer mon offre",
+      "secondary": "Une question ? FAQ exposants"
+    }
   },
   "placeholder": {
     "title": "SPIMARIMMO",
@@ -12,5 +650,341 @@
     "title": "Cette page n'existe pas.",
     "body": "La page que vous recherchez a été déplacée ou n'est pas disponible.",
     "home": "Accueil"
+  },
+  "gallery": {
+    "eyebrow": "Preuve terrain",
+    "title": "Les salons SPIMAR, vus de l’intérieur",
+    "lead": "Stands, rencontres, conférences et affluence — chaque média est rattaché à une édition et à une source validée.",
+    "trustStrong": "Médias réels uniquement",
+    "trustText": "Aucun visuel n’est publié sans droits et provenance.",
+    "editionSelectLabel": "Filtrer par édition",
+    "allEditions": "Toutes les éditions",
+    "cities": {
+      "paris": "Paris",
+      "montreal": "Montréal",
+      "bruxelles": "Bruxelles",
+      "abu-dhabi": "Abu Dhabi"
+    },
+    "categories": {
+      "all": "Tous",
+      "stands": "Stands",
+      "affluence": "Affluence",
+      "rendezvous": "Rendez-vous",
+      "conferences": "Conférences",
+      "networking": "Networking"
+    },
+    "validatedCount": "médias validés",
+    "demoBadge": "Aperçu de démonstration",
+    "editionPending": "édition à confirmer",
+    "editionPendingUpper": "Édition à confirmer",
+    "items": {
+      "film": {
+        "title": "Film de l’édition"
+      },
+      "stand": {
+        "title": "Stand & présentation"
+      },
+      "rdv": {
+        "title": "Rendez-vous qualifié"
+      },
+      "affluence": {
+        "title": "Affluence"
+      },
+      "conference": {
+        "title": "Conférence"
+      },
+      "interview": {
+        "title": "Interview"
+      },
+      "networking": {
+        "title": "Networking"
+      },
+      "espace": {
+        "title": "Espace stand"
+      }
+    },
+    "meta": {
+      "edition": "Édition",
+      "city": "Ville",
+      "venue": "Lieu",
+      "rights": "Droits",
+      "pending": "À confirmer",
+      "allCities": "Toutes",
+      "rightsPending": "Validation requise"
+    },
+    "showGallery": "Voir toute la galerie",
+    "hideGallery": "Masquer la galerie",
+    "exploreSalons": "Explorer les salons",
+    "prevMedia": "Média précédent",
+    "nextMedia": "Média suivant"
+  },
+  "resources": {
+    "eyebrow": "Ressources exposants",
+    "title": "Préparez votre salon avec des informations utiles.",
+    "lead": "Guides, calendriers, analyses de marché et réponses pratiques pour sécuriser votre décision.",
+    "pendingSourceDate": "Source et date à valider",
+    "feature": {
+      "chip": "Dossier marché",
+      "title": "Comprendre les attentes immobilières des MRE",
+      "cta": "Lire le dossier"
+    },
+    "toolbox": {
+      "label": "Votre boîte à outils",
+      "validatedRequired": "Version validée requise",
+      "sourcePending": "Source à valider",
+      "download": "Télécharger",
+      "items": {
+        "brochure": "Brochure exposant",
+        "calendar": "Calendrier des salons",
+        "checklist": "Checklist de préparation",
+        "report": "Exemple de rapport"
+      }
+    },
+    "analyses": {
+      "label": "Analyses pour décider",
+      "featured": "Les critères qui structurent un projet immobilier MRE",
+      "read": "Lire l’analyse",
+      "items": {
+        "strategy": "Préparer une stratégie salon à l’international",
+        "interview": "Entretien avec une direction commerciale"
+      }
+    },
+    "faq": {
+      "label": "Vos questions avant d’exposer",
+      "all": "Voir toutes les réponses",
+      "items": {
+        "choose": {
+          "q": "Comment choisir le bon salon ?",
+          "a": "Le choix part de vos marchés cibles et de vos objectifs commerciaux : un conseiller exposants vous aide à comparer les éditions et à prioriser."
+        },
+        "proposal": {
+          "q": "Que comprend une proposition ?",
+          "a": "Une proposition détaille l’espace, la visibilité et les options retenues pour votre projet, avec des conditions confirmées lors de la validation commerciale."
+        },
+        "qualified": {
+          "q": "Comment les visiteurs sont-ils qualifiés ?",
+          "a": "Le dispositif d’inscription et d’accueil recueille le projet et les intentions des visiteurs avant et pendant le salon, selon la méthodologie publiée."
+        },
+        "leads": {
+          "q": "Quand et comment les leads sont-ils transmis ?",
+          "a": "Les contacts recueillis sur votre stand et via le dispositif digital vous sont transmis selon le cadre défini dans votre offre, pendant et après le salon."
+        }
+      }
+    }
+  },
+  "exhibit": {
+    "eyebrow": "Devenez exposant",
+    "title": "Construisons votre prochaine présence à l’international.",
+    "lead": "Parlez-nous de votre marché, de vos objectifs et de l’édition qui vous intéresse. Notre équipe préparera une proposition adaptée après validation de votre demande.",
+    "stepsLabel": "Comment ça se passe",
+    "steps": {
+      "edition": "Choisissez une édition",
+      "goals": "Précisez vos objectifs",
+      "team": "Échangez avec notre équipe"
+    },
+    "project": {
+      "title": "Votre projet d’exposition",
+      "editionLabel": "Salon visé",
+      "editionPlaceholder": "Sélectionner une édition",
+      "objectiveLabel": "Objectif principal",
+      "objectives": {
+        "leads": "Générer des leads",
+        "visibility": "Accroître la visibilité",
+        "sales": "Développer les ventes"
+      },
+      "noCommitment": "Aucun engagement",
+      "responseTime": "Délai de réponse à confirmer"
+    },
+    "form": {
+      "title": "Recevoir une proposition personnalisée",
+      "optional": "facultatif",
+      "company": {
+        "label": "Société",
+        "placeholder": "Nom de votre société"
+      },
+      "name": {
+        "label": "Nom et fonction",
+        "placeholder": "Nom complet et fonction"
+      },
+      "email": {
+        "label": "E-mail professionnel",
+        "placeholder": "ex. nom@societe.ma"
+      },
+      "phone": {
+        "label": "Téléphone / WhatsApp",
+        "placeholder": "ex. +212 6 00 00 00 00"
+      },
+      "budget": {
+        "label": "Budget indicatif",
+        "placeholder": "Indiquez une fourchette si possible"
+      },
+      "message": {
+        "label": "Votre message",
+        "placeholder": "Décrivez votre marché, vos objectifs et toute information utile…"
+      },
+      "consent": "J’accepte que SPIMAR utilise mes informations pour traiter cette demande.",
+      "submit": "Envoyer ma demande",
+      "sending": "Envoi en cours…",
+      "disclaimer": "L’envoi du formulaire ne confirme ni disponibilité, ni prix, ni réservation.",
+      "emptyMessage": "Demande de proposition personnalisée.",
+      "errors": {
+        "company": "Indiquez le nom de votre société.",
+        "name": "Indiquez votre nom et votre fonction.",
+        "email": "Saisissez une adresse e-mail valide.",
+        "consent": "Le consentement est requis pour traiter la demande.",
+        "rateLimited": "Trop de demandes successives. Merci de réessayer dans quelques minutes.",
+        "generic": "La demande n’a pas pu être transmise. Merci de vérifier les champs et de réessayer."
+      }
+    },
+    "sent": {
+      "badge": "Demande envoyée",
+      "title": "Merci pour votre demande.",
+      "text": "Votre projet a été transmis à l’équipe exposants. Un conseiller vous recontacte pour préparer une proposition adaptée.",
+      "duplicateText": "Cette demande était déjà enregistrée : l’équipe exposants dispose de vos informations."
+    },
+    "reassure": {
+      "tailored": {
+        "title": "Proposition adaptée",
+        "sub": "Une proposition construite selon votre marché, vos objectifs et l’édition sélectionnée."
+      },
+      "dedicated": {
+        "title": "Interlocuteur dédié",
+        "sub": "Un contact unique vous accompagne à chaque étape de votre projet d’exposition."
+      },
+      "followup": {
+        "title": "Suivi avant, pendant et après",
+        "sub": "Nous restons à vos côtés pour maximiser l’impact de votre participation."
+      }
+    }
+  },
+  "faq": {
+    "label": "FAQ exposants",
+    "title": "Les dernières questions avant de réserver.",
+    "lead": "FAQ, formulaire, WhatsApp et rendez-vous fonctionnent comme un même système : lever la dernière objection et faciliter la prise de contact.",
+    "q1": {
+      "question": "Comment réserver ?",
+      "answer": "Quatre voies mènent au même dossier : le formulaire de qualification, un échange rapide sur WhatsApp, un rendez-vous planifié, ou la demande de brochure pour avancer à votre rythme. Commencez par la voie qui vous convient — l'équipe reprend contact avec une proposition adaptée à votre projet."
+    },
+    "q2": {
+      "question": "Comment les visiteurs sont-ils qualifiés ?",
+      "answer": "Le dispositif de qualification est documenté salon par salon, et chaque chiffre publié l'est avec sa période et sa source. Le détail du dispositif vous est présenté lors de l'échange commercial."
+    },
+    "q3": {
+      "question": "Combien de visiteurs sont attendus ?",
+      "answer": "Aucun chiffre n'est publié sans validation. Les fréquentations sont communiquées salon par salon, avec leur période et leur source, dans la fiche de chaque édition et lors de l'échange commercial."
+    },
+    "q4": {
+      "question": "Quel est le coût ?",
+      "answer": "Les offres sont structurées en niveaux — voir la page Offres. Le tarif dépend du salon, de la surface et du niveau retenu ; une proposition chiffrée vous est remise après qualification de votre besoin."
+    },
+    "q5": {
+      "question": "Comment récupérer les leads ?",
+      "answer": "Les contacts collectés pendant le salon vous sont restitués, et leur suivi s'inscrit dans l'accompagnement avant–pendant–après décrit dans la méthode. Le dispositif exact de restitution est présenté lors de l'échange commercial."
+    },
+    "q6": {
+      "question": "Comment se déroule le montage ?",
+      "answer": "Le guide exposant et la checklist avant–pendant–après couvrent la préparation, le montage et le démontage. Ces documents sont mis à disposition dans les ressources dès leur version validée."
+    },
+    "q7": {
+      "question": "Quel accompagnement est inclus ?",
+      "answer": "L'accompagnement suit la méthode avant–pendant–après ; son périmètre exact dépend du niveau d'offre retenu. Les pages Méthode et Offres décrivent ce que chaque niveau couvre."
+    },
+    "outro": "Une question qui n'est pas ici ?",
+    "outroContact": "Contactez-nous",
+    "outroCta": "Devenir exposant"
+  },
+  "insights": {
+    "label": "Blog",
+    "title": "Le marché, la diaspora, l'investissement.",
+    "lead": "Les ressources réduisent la friction commerciale ; le blog capte les recherches autour du marché immobilier marocain et de la diaspora. Chaque article se relie à un salon, une destination ou une offre.",
+    "territoriesTitle": "Territoires éditoriaux",
+    "territoryKicker": "Territoire",
+    "territories": {
+      "t1": "Marché immobilier marocain",
+      "t2": "Diaspora marocaine",
+      "t3": "Investissement",
+      "t4": "Fiscalité",
+      "t5": "Tendances MRE",
+      "t6": "Interviews"
+    },
+    "pendingNote": "Premiers articles en préparation",
+    "outro": "En attendant les premiers articles :",
+    "outroResources": "Ressources",
+    "outroSalons": "Voir les salons"
+  },
+  "resourcesPage": {
+    "label": "Ressources",
+    "title": "Une bibliothèque utile pour la vente.",
+    "lead": "Chaque ressource possède une présentation avant téléchargement, et les formulaires ne demandent que les informations utiles au suivi.",
+    "resources": {
+      "r1": {
+        "name": "Brochure",
+        "description": "Vision, audiences, salons et offres."
+      },
+      "r2": {
+        "name": "Guide exposant",
+        "description": "Processus et préparation."
+      },
+      "r3": {
+        "name": "Calendrier",
+        "description": "Dates et destinations."
+      },
+      "r4": {
+        "name": "Plans des salons",
+        "description": "Surfaces et circulation."
+      },
+      "r5": {
+        "name": "Checklist",
+        "description": "Avant, pendant, après."
+      }
+    },
+    "availability": "Mis à disposition dès la version validée — sur demande",
+    "outro": "Pour recevoir un document :",
+    "outroContact": "Contactez-nous",
+    "outroInsights": "Lire le blog",
+    "outroExposants": "Ressources exposants",
+    "outroGallery": "Voir la galerie"
+  },
+  "salonsPage": {
+    "label": "Salons",
+    "title": "Les destinations et les éditions.",
+    "lead": "Chaque édition publiée apparaît ici avec sa destination et ses dates. Aucune date, aucun lieu n'est publié sans validation.",
+    "empty": "Le calendrier des prochaines éditions est en cours de validation. Les destinations et les dates sont publiées ici dès leur confirmation.",
+    "datesTbc": "Dates à confirmer",
+    "venueTbc": "Lieu à confirmer",
+    "detailLabel": "Édition",
+    "detailPending": "Le programme, les exposants et les informations pratiques de cette édition sont publiés ici au fur et à mesure de leur validation.",
+    "backToIndex": "Tous les salons",
+    "outro": "Vous préparez une participation ?",
+    "outroCta": "Devenir exposant"
+  },
+  "galleryPage": {
+    "label": "Galerie",
+    "title": "Les éditions, vues de l’intérieur.",
+    "lead": "La bibliothèque complète des visuels de salon, classée par catégorie. Chaque visuel est présenté avec son statut : aucune image n’est rattachée à une édition sans validation.",
+    "navLabel": "Catégories de la galerie",
+    "outro": "Continuer :",
+    "outroLibrary": "Bibliothèque de ressources"
+  },
+  "caseStudies": {
+    "label": "Études de cas",
+    "title": "La preuve par les résultats.",
+    "lead": "Chaque étude de cas publiée documente une participation réelle : contexte, dispositif et résultats. Aucun chiffre n’est publié sans validation.",
+    "empty": "Les premières études de cas sont en cours de validation. Elles sont publiées ici dès leur version approuvée.",
+    "cardKicker": "Étude de cas",
+    "detailLabel": "Étude de cas",
+    "videoPending": "La vidéo de cette étude de cas est publiée après validation des droits et de la provenance.",
+    "backToList": "Toutes les études de cas",
+    "outro": "Votre projet mérite le même dispositif :",
+    "outroCta": "Devenir exposant"
+  },
+  "hero": {
+    "eyebrow": "Promoteurs immobiliers",
+    "title": "Le partenaire de référence des promoteurs immobiliers marocains à l’international.",
+    "lead": "SPIMARIMMO organise des salons dédiés aux MRE et aux investisseurs internationaux, pour rencontrer une clientèle qualifiée prête à concrétiser son projet.",
+    "playVideo": "Voir la vidéo",
+    "playerLabel": "Vidéo de présentation SPIMARIMMO",
+    "closePlayer": "Fermer la vidéo",
+    "proofLabel": "Ils exposent avec SPIMARIMMO"
   }
 }

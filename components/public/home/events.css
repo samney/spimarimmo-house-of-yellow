@@ -1,0 +1,807 @@
+/* Event opportunity cards — homepage chapter 02 (spec §05, §07).
+
+   These cards are deliberately the same component as the featured-project
+   cards in `The works`: same media plane, same tag chip, same title, same
+   stats row. Everything visual comes from home.css. Only the two things a
+   project card gets for free, and an event card cannot, are defined here.
+
+   1. `ResilientVideo` renders a block-level `.mediaPlane`, which is what gives
+      `.project .media` its aspect ratio. An event card has no approved media
+      yet, so its plane must establish the box itself.
+   2. `.projects` holds exactly three featured projects and never wraps. The
+      event network is open-ended, so this row wraps and needs a row gap. */
+
+.projectsSection .projects.eventsGrid {
+  flex-wrap: wrap;
+  row-gap: 2.5vw;
+}
+
+/* Carousel state: the same row, scrolling horizontally instead of wrapping.
+   A real scroll container rather than a transformed strip, so keyboard focus
+   brings a card into view natively and the row stays operable by trackpad and
+   scrollbar. Card width is unchanged, so the reference geometry survives. */
+.projectsSection .projects.eventsGrid.is-carousel {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.projectsSection .projects.eventsGrid.is-carousel::-webkit-scrollbar {
+  display: none;
+}
+.projectsSection .projects.eventsGrid.is-carousel > .project {
+  flex: 0 0 33.333%;
+}
+/* Focus lands on the track itself when it is a scrollable region. */
+.projectsSection .projects.eventsGrid.is-carousel:focus-visible {
+  outline: 2px solid var(--hoy-ink);
+  outline-offset: 4px;
+}
+
+.eventsExpand {
+  margin-top: 2.5vw;
+}
+.eventsExpand .button {
+  border: 0;
+  font-family: inherit;
+}
+
+@media (max-width: 580px) {
+  /* One card at a time on mobile, so a destination is never half-shown. */
+  .projectsSection .projects.eventsGrid.is-carousel > .project {
+    flex: 0 0 100%;
+  }
+  .eventsExpand {
+    margin-top: 6.897vw;
+  }
+}
+
+.eventCard .media {
+  display: block;
+}
+
+/* The designed fallback for an event with no approved media. Inventing
+   imagery is forbidden and reference media may not be reused, so the plane
+   stays an intentional ink surface carrying the foundation's grain. */
+.eventCard .media .grainBackground {
+  position: absolute;
+  inset: 0;
+}
+
+/* ===== Destination card — reference project-card architecture =====
+
+   Measured from the reference at 1440: card 444 wide, square 444 media frame,
+   tag row and hover action both 77 tall and absolutely placed inside the frame,
+   content block 78 tall below it.
+
+   The hover action is hidden at rest at opacity 0 and offset 9px, exactly as
+   the reference does, and the whole card is a link — so the action is
+   decoration over an already-actionable surface rather than the only route in. */
+
+.eventCard .innerProject {
+  display: block;
+}
+
+.eventCard .imageWrapper {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 0.5vw;
+  background: var(--hoy-ink);
+}
+
+.eventCard .innerImage {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.eventCard .destinationPlaceholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Tag row: 77 tall, 18px inset, pills 32 tall. */
+.eventCard .tags {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 2;
+  display: flex;
+  gap: 0.556vw;
+  padding: 1.25vw;
+}
+.eventCard .tag {
+  display: inline-block;
+  height: 2.222vw;
+  line-height: 2.222vw;
+  padding: 0 0.972vw;
+  border-radius: 1.875vw;
+  background: var(--hoy-paper);
+  color: var(--hoy-ink);
+  font-size: var(--text-base);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Hover action, revealed from opacity 0 and a 9px offset. */
+.eventCard .bottomButton {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  z-index: 2;
+  padding: 1.25vw;
+  opacity: 0;
+  transform: translateY(9px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+.eventCard:hover .bottomButton,
+.eventCard:focus-visible .bottomButton {
+  opacity: 1;
+  transform: none;
+}
+
+/* The reveal alone is not a focus indicator: it is identical to the hover
+   state, so a keyboard user cannot tell focus from hover. The card carries a
+   real ring, in the same vocabulary as every other focusable surface. */
+.eventCard:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-md);
+}
+.eventCard .bottomButton .button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Content block below the frame. */
+.eventCard .projectContent {
+  display: block;
+  padding-top: 1vw;
+}
+.eventCard .projectContent .smallTitle {
+  display: block;
+  overflow: hidden;
+}
+.eventCard .divider {
+  display: block;
+  height: 1px;
+  margin: 0.75vw 0;
+  background: currentColor;
+  opacity: 0.2;
+}
+.eventCard .bottomContent {
+  display: flex;
+  justify-content: space-between;
+  gap: 1vw;
+  font-size: var(--text-base);
+}
+.eventCard .bottomContent .row {
+  display: inline-block;
+}
+/* The reference set this label to 0.2 opacity, which measures ~1.6:1 on the
+   card and fails WCAG AA on real content. The intent — label quieter than its
+   value — is kept with an explicit muted colour instead. */
+.eventCard .bottomContent .label {
+  color: var(--on-surface-muted);
+  margin-inline-end: 0.35vw;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eventCard .bottomButton {
+    transition: none;
+  }
+}
+
+@media (max-width: 580px) {
+  .eventCard .tags,
+  .eventCard .bottomButton {
+    padding: 4vw;
+  }
+  .eventCard .tag {
+    height: 7vw;
+    line-height: 7vw;
+    padding: 0 3vw;
+    border-radius: 6vw;
+  }
+  .eventCard .divider {
+    margin: 2.5vw 0;
+  }
+}
+
+/* Partner wordmarks in the social-proof marquee. Set as type rather than logo
+   files until the partners' marks have recorded usage rights. */
+.logoSection__label {
+  margin-bottom: 1.5vw;
+}
+.partnerMark {
+  display: inline-block;
+  font-size: var(--text-small-title);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+@media (max-width: 580px) {
+  .partnerMark {
+    font-size: 4.5vw;
+  }
+}
+
+/* ===== Section 03 — mobile showcase and figures =====
+
+   Reference geometry at 1440: row 1368x738 in four columns of
+   231 / 443 / 579 / 115; phone frame 409x738 with a 43.2px radius; figure
+   blocks 446x78 with a 60px odometer window over a 605px digit strip. */
+
+.videoBlock .cols {
+  display: block;
+  font-size: 0;
+  position: relative;
+}
+.videoBlock .cols > .col {
+  display: inline-block;
+  vertical-align: top;
+  font-size: var(--text-base);
+}
+.videoBlock .cols > .col:nth-child(1) {
+  width: 16.886%;
+}
+.videoBlock .cols > .col:nth-child(2) {
+  width: 32.383%;
+}
+.videoBlock .cols > .col:nth-child(3) {
+  width: 42.325%;
+}
+.videoBlock .cols > .col:nth-child(4) {
+  width: 8.406%;
+  text-align: right;
+}
+
+.videoBlock .square {
+  width: 0.972vw;
+  height: 0.972vw;
+  border-radius: 1.8px;
+  background: var(--hoy-yellow);
+}
+
+/* Phone frame. */
+.videoBlock .videoContainer {
+  position: relative;
+  width: 28.403vw;
+  margin-inline-start: 1.181vw;
+}
+.videoBlock .background {
+  position: relative;
+  aspect-ratio: 409 / 738;
+  border-radius: 3vw;
+  overflow: hidden;
+  background: #0d0d0c;
+}
+.phonePlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(242, 239, 163, 0.16), transparent 70%),
+    repeating-linear-gradient(180deg, rgba(242, 239, 163, 0.05) 0 2px, transparent 2px 26px);
+}
+.phonePlaceholder__label {
+  font-size: var(--text-support);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hoy-yellow);
+  opacity: 0.55;
+}
+
+/* Status bar, drawn over the frame. */
+.videoBlock .phoneInfo {
+  position: absolute;
+  inset-block-start: 1.2vw;
+  inset-inline: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--hoy-paper);
+  pointer-events: none;
+}
+.videoBlock .timeZone {
+  font-size: 1vw;
+  font-weight: 500;
+}
+.videoBlock .camera {
+  width: 7.43vw;
+  height: 1.736vw;
+  border-radius: 1.875vw;
+  background: #000;
+}
+.videoBlock .icons svg {
+  display: block;
+  width: 4.792vw;
+  height: auto;
+}
+
+/* Reaction bubbles beside the frame. */
+.videoBlock .anims {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 100%;
+  width: 8.125vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.videoBlock .anim {
+  width: 2.847vw;
+  height: 2.847vw;
+}
+.videoBlock .innerAnim {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+  animation: spimarFloat 4s ease-in-out infinite;
+}
+.videoBlock .anim:nth-child(even) .innerAnim {
+  animation-delay: -2s;
+}
+.videoBlock .innerAnim svg {
+  width: 1.528vw;
+  height: auto;
+}
+@keyframes spimarFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.7vw);
+  }
+}
+
+/* Figures. */
+.videoBlock .amountContainer {
+  margin-inline-start: 9.236vw;
+  padding-block-end: 1.25vw;
+}
+.videoBlock .amountContainer .text.medium {
+  font-size: var(--text-support);
+  color: var(--hoy-yellow);
+}
+.videoBlock .odometerRow {
+  display: flex;
+}
+.videoBlock .amountWrapper {
+  height: 4.167vw;
+  overflow: hidden;
+  font-size: var(--text-h1);
+  line-height: 4.167vw;
+  font-weight: 500;
+}
+.videoBlock .innerAmountWrapper {
+  display: block;
+}
+.videoBlock .amount {
+  height: 4.167vw;
+  line-height: 4.167vw;
+}
+/* A figure with no validated value keeps the block and states its readiness. */
+.videoBlock .amountWrapper--pending {
+  display: flex;
+  align-items: center;
+  font-size: 1.111vw;
+  line-height: 1.4;
+  opacity: 0.75;
+}
+.videoBlock .amountNote {
+  font-size: var(--text-base);
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .videoBlock .innerAnim {
+    animation: none;
+  }
+}
+
+@media (max-width: 1080px) {
+  .videoBlock .cols > .col:nth-child(1),
+  .videoBlock .cols > .col:nth-child(4) {
+    display: none;
+  }
+  .videoBlock .cols > .col:nth-child(2) {
+    width: 45%;
+  }
+  .videoBlock .cols > .col:nth-child(3) {
+    width: 55%;
+  }
+  .videoBlock .amountContainer {
+    margin-inline-start: 4vw;
+  }
+}
+
+@media (max-width: 580px) {
+  .videoBlock .cols > .col:nth-child(2),
+  .videoBlock .cols > .col:nth-child(3) {
+    display: block;
+    width: 100%;
+  }
+  .videoBlock .videoContainer {
+    /* Near-full width on mobile: at 62vw the frame fell to 242px and its
+       interface rendered at ~6px, which is the "shrunken, not a phone" problem.
+       A phone mockup has to be phone-sized to read as one. */
+    width: 88vw;
+    margin: 0 auto;
+  }
+  .videoBlock .background {
+    border-radius: 8vw;
+  }
+  .videoBlock .anims {
+    display: none;
+  }
+  .videoBlock .phoneInfo {
+    inset-block-start: 3vw;
+    inset-inline: 5vw;
+  }
+  .videoBlock .timeZone {
+    font-size: 3.2vw;
+  }
+  .videoBlock .camera {
+    width: 24vw;
+    height: 5.5vw;
+  }
+  .videoBlock .icons svg {
+    width: 15vw;
+  }
+  .videoBlock .amountContainer {
+    margin: 0;
+    padding-block: 6vw 0;
+  }
+  .videoBlock .amountContainer .text.medium {
+    font-size: 3.2vw;
+  }
+  .videoBlock .amountWrapper,
+  .videoBlock .amount {
+    height: 13vw;
+    line-height: 13vw;
+    font-size: 11vw;
+  }
+  .videoBlock .amountWrapper--pending {
+    height: auto;
+    font-size: 3.8vw;
+  }
+  .videoBlock .amountNote {
+    font-size: 3vw;
+  }
+}
+
+/* ===== Phone screen — the visitor journey, rendered as real interface =====
+
+   The frame is a container and everything inside is sized in `cqw`, so the
+   screen stays a phone at every viewport instead of shrinking into an
+   illegible sliver. 1cqw is one percent of the frame's own width. */
+
+.videoBlock .background {
+  container-type: inline-size;
+}
+
+.phoneScreen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3cqw;
+  padding: 15cqw 5cqw 5cqw;
+  color: var(--hoy-paper);
+}
+
+.pv__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.6cqw;
+}
+.pv__chip {
+  padding: 1.4cqw 3cqw;
+  border: 1px solid rgba(239, 195, 55, 0.45);
+  border-radius: 20cqw;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 2.7cqw;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+}
+.pv__chip.is-active {
+  background: var(--hoy-yellow);
+  border-color: var(--hoy-yellow);
+  color: var(--hoy-ink);
+  font-weight: 500;
+}
+
+.pv__stage {
+  flex: 1;
+  min-height: 0;
+}
+.pv__view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.6cqw;
+  padding: 4cqw;
+  border-radius: 4cqw;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  animation: pvIn 0.5s ease both;
+}
+@keyframes pvIn {
+  from {
+    opacity: 0;
+    transform: translateY(2.5cqw);
+  }
+}
+.pv__viewHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.pv__viewTitle {
+  font-size: 3.6cqw;
+  font-weight: 600;
+}
+.pv__viewStep {
+  font-size: 2.6cqw;
+  color: var(--hoy-yellow);
+}
+
+/* Form */
+.pv__form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4cqw;
+}
+.pv__field {
+  display: flex;
+  flex-direction: column;
+  gap: 1cqw;
+}
+.pv__fieldLabel {
+  font-size: 2.5cqw;
+  opacity: 0.65;
+}
+.pv__fieldBox {
+  height: 7cqw;
+  border-radius: 2cqw;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.pv__submit {
+  margin-top: auto;
+  padding: 3cqw;
+  border-radius: 2.4cqw;
+  background: var(--hoy-yellow);
+  color: var(--hoy-ink);
+  font-size: 3cqw;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Key/value rows */
+.pv__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2cqw;
+}
+.pv__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2cqw;
+  padding: 2.6cqw 3cqw;
+  border-radius: 2.4cqw;
+  background: rgba(255, 255, 255, 0.06);
+}
+.pv__rowKey {
+  font-size: 2.7cqw;
+  opacity: 0.7;
+}
+.pv__rowVal {
+  font-size: 2.9cqw;
+  font-weight: 500;
+  color: var(--hoy-yellow);
+  text-align: end;
+}
+
+/* Verification */
+.pv__verify {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3cqw;
+}
+.pv__ring {
+  width: 24cqw;
+  color: var(--hoy-yellow);
+}
+.pv__ring svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pv__criteria {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8cqw;
+}
+.pv__criteria li {
+  position: relative;
+  padding-inline-start: 6cqw;
+  font-size: 2.7cqw;
+}
+.pv__criteria li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.3cqw;
+  width: 3.6cqw;
+  height: 3.6cqw;
+  border-radius: 50%;
+  background: var(--hoy-yellow);
+}
+
+/* Appointments */
+.pv__meeting {
+  display: flex;
+  flex-direction: column;
+  gap: 2cqw;
+}
+.pv__slot {
+  display: flex;
+  align-items: center;
+  gap: 2.6cqw;
+  padding: 2.8cqw 3cqw;
+  border-radius: 2.4cqw;
+  background: rgba(255, 255, 255, 0.06);
+}
+.pv__slotTime {
+  font-size: 2.8cqw;
+  font-weight: 600;
+  color: var(--hoy-yellow);
+}
+.pv__slotName {
+  flex: 1;
+  font-size: 2.7cqw;
+  opacity: 0.85;
+}
+.pv__slotDot {
+  width: 2.4cqw;
+  height: 2.4cqw;
+  border-radius: 50%;
+  background: var(--hoy-yellow);
+}
+
+.pv__foot {
+  text-align: center;
+}
+.pv__verified {
+  font-size: 2.5cqw;
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv__view {
+    animation: none;
+  }
+}
+
+/* When the frame itself is small, the interface needs a larger share of it —
+   a container query on the frame, not a viewport breakpoint, because what
+   matters is the phone's own width. */
+@container (max-width: 380px) {
+  .pv__chip {
+    font-size: 3.6cqw;
+    padding: 1.8cqw 3.4cqw;
+  }
+  .pv__viewTitle {
+    font-size: 4.6cqw;
+  }
+  .pv__viewStep,
+  .pv__fieldLabel,
+  .pv__rowKey,
+  .pv__criteria li,
+  .pv__slotName,
+  .pv__verified {
+    font-size: 3.4cqw;
+  }
+  .pv__rowVal,
+  .pv__slotTime {
+    font-size: 3.6cqw;
+  }
+  .pv__submit {
+    font-size: 3.8cqw;
+  }
+  .phoneScreen {
+    padding: 16cqw 5cqw 5cqw;
+    gap: 3.4cqw;
+  }
+}
+
+/* Owner-supplied destination photography fills the card media plane. */
+.eventCard .eventCardImage {
+  object-fit: cover;
+}
+
+/* Logo band below the cards: the reference component, now running the real
+   promoter marks (owner-authorized 2026-08-04). Hairline rules top and bottom
+   set the band apart from the cards above and the next section below. */
+.logoSection .marquees {
+  border-block: 1px solid rgb(20 20 15 / 18%);
+  padding-block: var(--space-md);
+}
+.logoSection .partnerMark img {
+  width: auto;
+  height: 4.4vw;
+  min-height: 40px;
+  max-width: 14vw;
+  object-fit: contain;
+  /* The supplied files are WHITE marks; on the yellow surface that is far
+     below AA. Knocked to black, they read at full strength. */
+  filter: brightness(0);
+}
+.logoSection__consent {
+  margin-top: var(--space-sm);
+  color: var(--on-surface-muted);
+}
+@media (max-width: 580px) {
+  .logoSection .partnerMark img {
+    height: 6vw;
+    max-width: 26vw;
+  }
+}
+
+/* Brand overlay on the destination media: the primary gold washes the
+   photography so six different city palettes read as one SPIMAR set, and
+   clears on hover so the destination itself comes forward. */
+.eventCard .imageWrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgb(239 195 55 / 30%) 0%,
+    rgb(239 195 55 / 14%) 45%,
+    rgb(20 20 15 / 42%) 100%
+  );
+  mix-blend-mode: multiply;
+  transition: opacity var(--dur-fade) var(--ease-out-ref);
+}
+.eventCard:hover .imageWrapper::after,
+.eventCard:focus-visible .imageWrapper::after {
+  opacity: 0.35;
+}
+@media (prefers-reduced-motion: reduce) {
+  .eventCard .imageWrapper::after {
+    transition: none;
+  }
+}

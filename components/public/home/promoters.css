@@ -1,0 +1,479 @@
+/* ==========================================================================
+   Section 08 — Ils nous font confiance (promoters social proof)
+   ==========================================================================
+   Binds only to L2 semantic tokens. Paper section, one raised rounded band
+   carrying the auto-scrolling logos with a gold progress line and a pause
+   control, an expandable all-promoters grid, and a consent footnote row.
+   The logo files are white on transparent, rendered as ink via invert.
+   ========================================================================== */
+
+.promoSection {
+  background: var(--surface-page);
+  color: var(--on-surface);
+  padding: var(--space-xl) var(--space-gutter);
+}
+
+.promoInner {
+  margin-inline: auto;
+  max-width: 95vw;
+}
+
+/* --- Header (large statement, per the section-08 design) ------------------- */
+
+.promoHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.promoEyebrow {
+  color: var(--spimar-gold-text); /* WCAG AA on paper */
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0 0 var(--space-sm);
+  text-transform: uppercase;
+}
+
+.promoEyebrowIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.promoTitle {
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 var(--space-sm);
+  /* Wide enough for the design's two-line break; balance keeps the lines even. */
+  max-width: 58vw;
+  text-wrap: balance;
+}
+
+.promoLead {
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+/* Outlined gold toggle. Sits at the title's optical level, not the eyebrow's. */
+.promoToggle {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  margin-top: var(--space-lg);
+  padding: var(--space-xs) var(--space-sm);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.promoToggle:hover {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.promoToggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.promoToggleGrid,
+.promoTogglePlus {
+  height: 1.2em;
+  width: 1.2em;
+}
+
+.promoTogglePlus {
+  transition: transform 240ms ease;
+}
+
+.promoToggle[aria-expanded="true"] .promoTogglePlus {
+  transform: rotate(45deg);
+}
+
+/* --- Logo band -------------------------------------------------------------- */
+
+.promoPanel {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  position: relative;
+}
+
+.promoViewport {
+  overflow: hidden;
+}
+
+.promoTrack {
+  display: flex;
+  width: max-content;
+  animation: promoScroll 40s linear infinite;
+}
+
+.promoHalf {
+  display: flex;
+}
+
+.promoItem {
+  align-items: center;
+  border-inline-end: 1px solid var(--border-subtle);
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  min-inline-size: 12vw;
+  padding: var(--space-md) var(--space-md);
+}
+
+/* White-on-transparent source marks become ink on the raised band. */
+.promoMark {
+  block-size: 2.9vw;
+  filter: invert(1);
+  inline-size: auto;
+  opacity: 0.85;
+}
+
+/* Squarish marks read smaller at equal cap height; give them more body. */
+.promoItem[data-slug="saham-immobilier"] .promoMark,
+.promoItem[data-slug="cgi"] .promoMark {
+  block-size: 3.6vw;
+}
+
+.promoItem[data-slug="addoha"] .promoMark {
+  block-size: 2.5vw;
+}
+
+@keyframes promoScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Gold progress line, synced to one marquee loop; the dot rides its end. */
+.promoProgress {
+  inset-block-end: -1px;
+  inset-inline: var(--space-md);
+  overflow: visible;
+  position: absolute;
+}
+
+.promoProgressLine {
+  animation: promoSweep 40s linear infinite;
+  background: var(--action-primary);
+  block-size: 2px;
+  border-radius: var(--radius-pill);
+  display: block;
+  inline-size: 0%;
+  position: relative;
+}
+
+.promoProgressLine::after {
+  background: var(--action-primary);
+  block-size: 0.55vw;
+  border-radius: 50%;
+  content: "";
+  inline-size: 0.55vw;
+  inset-block-start: 50%;
+  inset-inline-end: 0;
+  position: absolute;
+  transform: translate(50%, -50%);
+}
+
+@keyframes promoSweep {
+  from {
+    inline-size: 0%;
+  }
+
+  to {
+    inline-size: 100%;
+  }
+}
+
+.promoPanel.isPaused .promoTrack,
+.promoPanel.isPaused .promoProgressLine {
+  animation-play-state: paused;
+}
+
+.promoPauseBtn {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  block-size: 2.9vw;
+  color: var(--on-surface);
+  cursor: pointer;
+  display: inline-flex;
+  inline-size: 2.9vw;
+  inset-block-end: var(--space-xs);
+  inset-inline-end: var(--space-xs);
+  justify-content: center;
+  position: absolute;
+  transition: border-color 160ms ease;
+  z-index: var(--z-content);
+}
+
+.promoPauseBtn:hover {
+  border-color: var(--border-strong);
+}
+
+.promoPauseBtn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.promoPauseIcon {
+  height: 1.1vw;
+  width: 1.1vw;
+}
+
+/* --- Expandable all-promoters grid ----------------------------------------- */
+
+.promoAll {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 460ms ease;
+}
+
+.promoAll.isOpen {
+  grid-template-rows: 1fr;
+}
+
+.promoAllInner {
+  min-block-size: 0;
+  overflow: hidden;
+  /* Discrete visibility swap keeps collapsed text out of find/select while
+     the row animation still has content to measure. */
+  transition: visibility 0s 460ms;
+  visibility: hidden;
+}
+
+.promoAll.isOpen .promoAllInner {
+  transition-delay: 0s;
+  visibility: visible;
+}
+
+.promoAllHead {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  padding-block: var(--space-md) var(--space-sm);
+}
+
+.promoAllLabel {
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.promoAllCount {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 500;
+  margin: 0;
+}
+
+.promoGrid {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fill, minmax(16vw, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.promoCard {
+  align-content: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: grid;
+  gap: var(--space-sm);
+  justify-items: center;
+  padding: var(--space-md);
+}
+
+.promoCardMark {
+  block-size: 3.2vw;
+}
+
+.promoCard:nth-child(2) .promoCardMark,
+.promoCard:nth-child(5) .promoCardMark {
+  /* Saham and CGI: same squarish-mark compensation as in the band. */
+  block-size: 3.9vw;
+}
+
+.promoCardName {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  font-weight: 500;
+}
+
+/* --- Consent footnote row --------------------------------------------------- */
+
+.promoFoot {
+  align-items: center;
+  display: flex;
+  gap: var(--space-md);
+  justify-content: space-between;
+  margin-top: var(--space-md);
+}
+
+.promoConsent {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  margin: 0;
+}
+
+.promoConsentBadge {
+  align-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-primary);
+  display: inline-flex;
+  justify-content: center;
+  padding: 0.3vw;
+}
+
+.promoConsentIcon {
+  height: 1.1vw;
+  width: 1.1vw;
+}
+
+.promoAuto {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+/* --- Reduced motion ---------------------------------------------------------
+   Documented fallback: no auto-scroll at all. The band becomes a manually
+   scrollable row (the clone half is removed so nothing repeats), and the
+   progress line, pause control and "automatic scrolling" note — all of which
+   describe motion that no longer exists — are withdrawn. */
+
+@media (prefers-reduced-motion: reduce) {
+  .promoTrack {
+    animation: none;
+    width: auto;
+  }
+
+  .promoHalf[data-clone] {
+    display: none;
+  }
+
+  .promoViewport {
+    overflow-x: auto;
+  }
+
+  .promoProgress,
+  .promoPauseBtn,
+  .promoAuto {
+    display: none;
+  }
+
+  .promoTogglePlus {
+    transition: none;
+  }
+
+  .promoAll {
+    transition: none;
+  }
+
+  .promoAllInner {
+    transition: none;
+  }
+}
+
+/* --- Mobile regime (matches the global 580 restatement) --------------------- */
+
+@media (max-width: 580px) {
+  .promoHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .promoTitle {
+    max-width: 100%;
+  }
+
+  .promoToggle {
+    margin-top: 0;
+  }
+
+  .promoItem {
+    min-inline-size: 34vw;
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .promoMark {
+    block-size: 8vw;
+  }
+
+  .promoItem[data-slug="saham-immobilier"] .promoMark,
+  .promoItem[data-slug="cgi"] .promoMark {
+    block-size: 10vw;
+  }
+
+  .promoItem[data-slug="addoha"] .promoMark {
+    block-size: 7vw;
+  }
+
+  .promoProgressLine::after {
+    block-size: 1.6vw;
+    inline-size: 1.6vw;
+  }
+
+  .promoPauseBtn {
+    block-size: 8.5vw;
+    inline-size: 8.5vw;
+    inset-block-end: var(--space-2xs);
+  }
+
+  .promoPauseIcon {
+    height: 3.4vw;
+    width: 3.4vw;
+  }
+
+  .promoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .promoCardMark {
+    block-size: 9vw;
+  }
+
+  .promoCard:nth-child(2) .promoCardMark,
+  .promoCard:nth-child(5) .promoCardMark {
+    block-size: 11vw;
+  }
+
+  .promoFoot {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .promoConsentIcon {
+    height: 3.6vw;
+    width: 3.6vw;
+  }
+
+  .promoConsentBadge {
+    padding: 1vw;
+  }
+}
