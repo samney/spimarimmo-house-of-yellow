@@ -1011,7 +1011,18 @@
     "detailPending": "Le programme, les exposants et les informations pratiques de cette édition sont publiés ici au fur et à mesure de leur validation.",
     "backToIndex": "Tous les salons",
     "outro": "Vous préparez une participation ?",
-    "outroCta": "Devenir exposant"
+    "outroCta": "Devenir exposant",
+    "filterLabel": "Filtrer par pays",
+    "filterAll": "Tous les pays",
+    "filterApply": "Filtrer",
+    "countOne": "1 édition publiée",
+    "countMany": "{count} éditions publiées",
+    "clearFilter": "Voir tous les pays",
+    "detailFacts": "Informations pratiques",
+    "detailCity": "Ville",
+    "detailDates": "Dates",
+    "detailCountry": "Pays",
+    "breadcrumb": "Vous êtes ici"
   },
   "galleryPage": {
     "label": "Galerie",

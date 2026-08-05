@@ -452,3 +452,188 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* ===== Listing filter and media cards (P-01) ===== */
+
+/* A plain GET form, so it works with no JavaScript and every filtered view has
+   a shareable URL. Laid out as a row that wraps rather than a grid: the label,
+   the select and the button are one control, and they must stay together when
+   the column narrows. */
+.listFilter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.listFilter__label {
+  color: var(--on-surface-muted);
+}
+
+/* Native select, styled — the design contract's rule. A custom listbox would
+   have to re-implement keyboard behaviour the platform already gets right. */
+.listFilter__select {
+  min-height: 44px;
+  padding: 0 var(--space-sm);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--on-surface);
+  font: inherit;
+  font-size: var(--text-base);
+}
+
+.listFilter__submit {
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background var(--dur-micro) var(--ease-out-ref);
+}
+
+.listFilter__submit:hover {
+  background: var(--action-primary-hover);
+}
+
+.listFilter__select:focus-visible,
+.listFilter__submit:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.listCount {
+  margin-bottom: var(--space-sm);
+  color: var(--on-surface-muted);
+}
+
+/* A card with an approved image. Records without one keep the text-only layout
+   rather than reserving an empty frame — an unillustrated card is honest, a
+   grey placeholder box just looks broken. */
+.spimarCardList .cardItem--media {
+  padding: 0;
+}
+
+.cardItem__media {
+  display: block;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--surface-muted);
+}
+
+.cardItem__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardItem__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+}
+
+.cardSummary {
+  color: var(--on-surface-muted);
+}
+
+@media (max-width: 1080px) {
+  .spimarCardList {
+    grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
+  }
+}
+
+@media (max-width: 580px) {
+  .spimarCardList {
+    grid-template-columns: 1fr;
+  }
+  .listFilter__select,
+  .listFilter__submit {
+    flex: 1 1 auto;
+  }
+}
+
+/* ===== Detail template (P-02) =====
+   The shape every future edition and case-study page inherits. */
+
+.detailCrumb {
+  margin-bottom: var(--space-sm);
+}
+
+.detailCrumb a {
+  color: var(--on-surface-muted);
+  text-decoration: none;
+}
+
+.detailCrumb a:hover {
+  color: var(--on-surface);
+  text-decoration: underline;
+}
+
+.detailLead {
+  max-width: var(--measure-prose);
+  margin-top: var(--space-sm);
+  color: var(--on-surface-muted);
+  font-size: var(--text-small-title);
+}
+
+.detailMedia {
+  margin: var(--space-md) 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+}
+
+.detailMedia img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.detailFactsTitle {
+  margin: var(--space-lg) 0 var(--space-sm);
+  font-weight: 600;
+}
+
+/* A description list, not a sentence: each fact is independently known or
+   independently pending, so one can read "à confirmer" without hedging the
+   others. Rows rather than a two-column grid so a long value wraps under its
+   own term instead of stretching the whole table. */
+.detailFacts {
+  margin: 0 0 var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.detailFacts__row {
+  display: grid;
+  grid-template-columns: 12vw 1fr;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.detailFacts dt {
+  color: var(--on-surface-muted);
+}
+
+.detailFacts dd {
+  margin: 0;
+}
+
+@media (max-width: 580px) {
+  .detailFacts__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xs);
+  }
+}

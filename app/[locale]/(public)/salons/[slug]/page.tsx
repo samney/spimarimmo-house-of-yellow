@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
@@ -58,6 +59,14 @@ export default async function SalonDetail({
 
   if (!event || event.publicationState !== "published") notFound();
 
+  const dateRange = event.startsAt
+    ? [event.startsAt, event.endsAt]
+        .filter(Boolean)
+        .map((d) => new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(new Date(d!)))
+        .filter((v, i, a) => a.indexOf(v) === i)
+        .join(" — ")
+    : null;
+
   return (
     <div className="pageBlocks">
       <section className="spimarListPage">
@@ -69,19 +78,56 @@ export default async function SalonDetail({
               </div>
             </div>
             <div className="colMain">
+              {/* Back path before the title, not only in the outro (N-02): on a
+                  detail page reached from search, the way out is part of
+                  orienting, and a visitor should not have to read to the bottom
+                  to find it. */}
+              <nav className="detailCrumb" aria-label={t("breadcrumb")}>
+                <Link className="text medium" href="/salons">
+                  ← {t("backToIndex")}
+                </Link>
+              </nav>
               <header className="pageIntro">
-                <div className="label text medium">{t("detailLabel")}</div>
+                <div className="label text medium">
+                  {t("detailLabel")}
+                  {event.demo ? <span className="cardItem__demo">Démo</span> : null}
+                </div>
                 <SplitTitle as="h1" className="normalTitle" text={event.name || slug} />
-                <p className="text medium">
-                  {event.venue ? `${event.venue.city} — ${event.venue.countryCode}` : t("venueTbc")}
-                  {" · "}
-                  {event.startsAt
-                    ? new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
-                        new Date(event.startsAt),
-                      )
-                    : t("datesTbc")}
-                </p>
+                {event.summary ? <p className="detailLead text medium">{event.summary}</p> : null}
               </header>
+
+              {event.image ? (
+                <figure className="detailMedia">
+                  <Image
+                    src={event.image.src}
+                    alt={event.image.alt}
+                    width={1200}
+                    height={640}
+                    sizes="(max-width: 580px) 100vw, 60vw"
+                    priority
+                  />
+                </figure>
+              ) : null}
+
+              {/* The facts as a description list rather than a sentence: each is
+                  independently known or independently pending, and a list lets
+                  one be "à confirmer" without hedging the others. */}
+              <h2 className="detailFactsTitle text medium">{t("detailFacts")}</h2>
+              <dl className="detailFacts">
+                <div className="detailFacts__row">
+                  <dt className="text medium">{t("detailCity")}</dt>
+                  <dd className="text medium">{event.venue?.city || t("venueTbc")}</dd>
+                </div>
+                <div className="detailFacts__row">
+                  <dt className="text medium">{t("detailCountry")}</dt>
+                  <dd className="text medium">{event.venue?.countryCode || t("venueTbc")}</dd>
+                </div>
+                <div className="detailFacts__row">
+                  <dt className="text medium">{t("detailDates")}</dt>
+                  <dd className="text medium">{dateRange ?? t("datesTbc")}</dd>
+                </div>
+              </dl>
+
               <p className="text medium">{t("detailPending")}</p>
               <footer className="pageOutro">
                 <p className="text medium">

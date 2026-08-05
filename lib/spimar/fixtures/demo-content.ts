@@ -1,4 +1,4 @@
-import type { Locale, Page, SpimarEvent } from "@/lib/spimar/types";
+import type { Locale, MediaAsset, Page, SpimarEvent } from "@/lib/spimar/types";
 
 /* CMS-shaped demo content (C-01).
 
@@ -30,7 +30,11 @@ import type { Locale, Page, SpimarEvent } from "@/lib/spimar/types";
    invented facts reaching visitors; it is not weakened here, because these
    never reach a visitor unmarked and never reach production at all. */
 
-export type DemoEvent = SpimarEvent & { readonly demo: true };
+export type DemoEvent = SpimarEvent & {
+  readonly demo: true;
+  /** Card/hero image, as a `MediaAsset` so the CMS shape is exercised (C-04). */
+  readonly image: MediaAsset | null;
+};
 export type DemoPage = Page & { readonly demo: true };
 
 const AUDIT = {
@@ -56,6 +60,15 @@ export const DEMO_EVENTS: readonly DemoEvent[] = [
   {
     ...AUDIT,
     demo: true,
+    image: {
+      ...AUDIT,
+      id: "media-paris",
+      state: "published",
+      src: "/destinations/paris.png",
+      alt: bilingual("Le salon SPIMARIMMO à Paris", "SPIMARIMMO exhibition in Paris"),
+      rightsOwner: "SPIMARIMMO",
+      sourceProvenance: "docs/assets-UX-UI (owner-supplied)",
+    },
     id: "evt-paris-2026",
     slug: "paris-2026",
     state: "published",
@@ -76,6 +89,15 @@ export const DEMO_EVENTS: readonly DemoEvent[] = [
   {
     ...AUDIT,
     demo: true,
+    image: {
+      ...AUDIT,
+      id: "media-bruxelles",
+      state: "published",
+      src: "/destinations/bruxelles.png",
+      alt: bilingual("Le salon SPIMARIMMO à Bruxelles", "SPIMARIMMO exhibition in Brussels"),
+      rightsOwner: "SPIMARIMMO",
+      sourceProvenance: "docs/assets-UX-UI (owner-supplied)",
+    },
     id: "evt-bruxelles-2026",
     slug: "bruxelles-2026",
     state: "published",
@@ -96,6 +118,15 @@ export const DEMO_EVENTS: readonly DemoEvent[] = [
   {
     ...AUDIT,
     demo: true,
+    image: {
+      ...AUDIT,
+      id: "media-montreal",
+      state: "published",
+      src: "/destinations/montreal.png",
+      alt: bilingual("Le salon SPIMARIMMO à Montréal", "SPIMARIMMO exhibition in Montreal"),
+      rightsOwner: "SPIMARIMMO",
+      sourceProvenance: "docs/assets-UX-UI (owner-supplied)",
+    },
     id: "evt-montreal-2026",
     slug: "montreal-2026",
     state: "published",
@@ -115,6 +146,15 @@ export const DEMO_EVENTS: readonly DemoEvent[] = [
   {
     ...AUDIT,
     demo: true,
+    image: {
+      ...AUDIT,
+      id: "media-londres",
+      state: "published",
+      src: "/destinations/londres.png",
+      alt: bilingual("Le salon SPIMARIMMO à Londres", "SPIMARIMMO exhibition in London"),
+      rightsOwner: "SPIMARIMMO",
+      sourceProvenance: "docs/assets-UX-UI (owner-supplied)",
+    },
     id: "evt-london-2026",
     slug: "london-2026",
     state: "published",
@@ -133,6 +173,9 @@ export const DEMO_EVENTS: readonly DemoEvent[] = [
   {
     ...AUDIT,
     demo: true,
+    /* No approved image for this edition. `null` rather than a stand-in: an
+       unillustrated card is honest, a borrowed photo is not. */
+    image: null,
     id: "evt-dubai-2026",
     slug: "dubai-2026",
     state: "draft",

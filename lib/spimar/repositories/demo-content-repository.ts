@@ -68,6 +68,7 @@ function toEvent(event: DemoEvent, locale: StoreLocale): NormalizedEvent {
     slug: event.slug,
     locale: locale as BackendLocale,
     name: localized(event.title, locale),
+    summary: localized(event.summary, locale),
     /* Same honesty as the file adapter: the fixture shape does not carry the
        three availability axes, so they are reported unresolved rather than
        assumed from the dates. */
@@ -84,6 +85,7 @@ function toEvent(event: DemoEvent, locale: StoreLocale): NormalizedEvent {
         : null,
     publicationState: event.state,
     contentVersion: contentVersion(event.id, event.updatedAt),
+    image: event.image ? { src: event.image.src, alt: localized(event.image.alt, locale) } : null,
     demo: true,
   };
 }

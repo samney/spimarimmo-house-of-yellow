@@ -85,6 +85,7 @@ function toEvent(event: SpimarEvent, locale: StoreLocale): NormalizedEvent {
     slug: event.slug,
     locale: locale as BackendLocale,
     name: localized(event.title, locale),
+    summary: localized(event.summary, locale),
     lifecycleAxis: null,
     exhibitorSales: null,
     visitorRegistration: null,
@@ -104,6 +105,9 @@ function toEvent(event: SpimarEvent, locale: StoreLocale): NormalizedEvent {
         : null,
     publicationState: publicationState(event.state),
     contentVersion: contentVersion(event.id, event.updatedAt),
+    // The local store has no media column. `null` is the honest answer; a
+    // placeholder here would put an unapproved image on a public card.
+    image: null,
   };
 }
 
@@ -141,7 +145,7 @@ export class FileContentRepository implements ContentRepository {
   }
 
   /** The local store has no resource model. Empty is honest; a stub is not. */
-  async listResources(_query: ContentQuery): Promise<readonly NormalizedResource[]> {
+  async listResources(): Promise<readonly NormalizedResource[]> {
     return [];
   }
 
@@ -158,20 +162,16 @@ export class FileContentRepository implements ContentRepository {
    * Blocker `LEG-1` stays open until SPIMAR legal text is authored and
    * approved; the Postgres adapter reads it from the schema.
    */
-  async getLegalDocument(
-    _query: ContentQuery & { kind: string },
-  ): Promise<NormalizedLegalDocument | null> {
+  async getLegalDocument(): Promise<NormalizedLegalDocument | null> {
     return null;
   }
 
   /** Form definitions live in the schema. The local store does not model them. */
-  async getFormDefinition(
-    _query: ContentQuery & { formKey: string },
-  ): Promise<NormalizedFormDefinition | null> {
+  async getFormDefinition(): Promise<NormalizedFormDefinition | null> {
     return null;
   }
 
-  async listLocales(_siteId: string): Promise<readonly LocaleRef[]> {
+  async listLocales(): Promise<readonly LocaleRef[]> {
     // Arabic is structurally supported by the layout but not enabled as a
     // locale until the licensed typeface lands, so it is not advertised here.
     return [

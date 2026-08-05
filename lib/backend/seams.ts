@@ -109,6 +109,9 @@ export interface NormalizedEvent {
   readonly slug: string;
   readonly locale: Locale;
   readonly name: string;
+  /** One-line blurb. Empty string when the editor has not written one — a card
+      must survive that rather than assuming every record is complete. */
+  readonly summary: string;
   readonly lifecycleAxis: EventLifecycleAxis | null;
   readonly exhibitorSales: ExhibitorSalesStatus | null;
   readonly visitorRegistration: VisitorRegistrationStatus | null;
@@ -119,11 +122,21 @@ export interface NormalizedEvent {
   readonly venue: NormalizedVenue | null;
   readonly publicationState: PublicationState;
   readonly contentVersion: string;
+  /** Approved card/hero image, or `null` when none is approved. Never a
+      placeholder: an unillustrated card is honest, a borrowed photo is not. */
+  readonly image: NormalizedImage | null;
   /** True when this record came from the demo fixture adapter rather than from
       real content. Surfaces MUST render a visible `Démo` marker when it is set —
       the honesty gate (`C-02`) depends on it reaching the UI, not on a component
       remembering to ask. Absent for real content. */
   readonly demo?: boolean;
+}
+
+/** An approved image. `null` on a record means no approved asset — surfaces
+    render without one rather than substituting a stand-in. */
+export interface NormalizedImage {
+  readonly src: string;
+  readonly alt: string;
 }
 
 export interface NormalizedVenue {

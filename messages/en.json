@@ -1011,7 +1011,18 @@
     "detailPending": "This edition's programme, exhibitors and practical information are published here as they are validated.",
     "backToIndex": "All exhibitions",
     "outro": "Preparing to exhibit?",
-    "outroCta": "Become an exhibitor"
+    "outroCta": "Become an exhibitor",
+    "filterLabel": "Filter by country",
+    "filterAll": "All countries",
+    "filterApply": "Filter",
+    "countOne": "1 published edition",
+    "countMany": "{count} published editions",
+    "clearFilter": "See all countries",
+    "detailFacts": "Practical information",
+    "detailCity": "City",
+    "detailDates": "Dates",
+    "detailCountry": "Country",
+    "breadcrumb": "You are here"
   },
   "galleryPage": {
     "label": "Gallery",
