@@ -40,7 +40,11 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
 
 ## C — Sections
 
-- [~] **C1 · [01] Pourquoi SPIMARIMMO — stretch the width.**
+- [x] **C1 · [01] Pourquoi SPIMARIMMO — stretch the width.** The lead-in
+      column drops 25.4% → 12%, so the opening claim gets a ~1160px measure
+      instead of 966px and settles on three lines. Below 1080 the two empty
+      spacer columns collapse and the copy takes the full measure, which also
+      aligns it with section 02 underneath. → `a565088`
 - [ ] **C2 · [02] Salons par pays — card bottom-hover contrast.** Button text
       colour still reads against the hover fill; an accessibility defect.
 - [ ] **C3 · [02] Salons par pays — replace the static "date à confirmer"** with

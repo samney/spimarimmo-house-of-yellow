@@ -194,12 +194,15 @@
   vertical-align: top;
   font-size: var(--text-base);
 }
-/* 347 / 906 / 115 of the 1368 content wrapper. */
+/* The reference indents this block 347 / 906 / 115 of its 1368 wrapper. Owner
+   direction (2026-08-05): stretch it. The lead-in column drops to 12% so the
+   opening claim gets a ~1220px measure instead of 966px and sits closer to the
+   left edge every section below it uses; the trailing column is unchanged. */
 .aboutSection .cols > .col:nth-child(1) {
-  width: 25.365%;
+  width: 12%;
 }
 .aboutSection .cols > .col:nth-child(2) {
-  width: 66.228%;
+  width: 79.594%;
 }
 .aboutSection .cols > .col:nth-child(3) {
   width: 8.406%;
@@ -212,9 +215,10 @@
   max-width: none;
 }
 /* Owner note (2026-08-04): the supporting message read as four narrow lines;
-   the measure now lets it settle on two. */
+   the measure now lets it settle on two. Widened with the column (2026-08-05)
+   so it keeps its proportion to the claim above it. */
 .aboutSection .smallTitle {
-  max-width: 44vw;
+  max-width: 52vw;
   margin: 2vw 0 2.5vw;
 }
 
@@ -525,6 +529,16 @@
 
 /* ===== Tablet regime ===== */
 @media (max-width: 1080px) {
+  /* The 12 / 79.6 / 8.4 indent is a desktop composition. Below 1080 the two
+     spacer columns are dead margin on an already narrow screen, so the copy
+     takes the full measure. Both spacers are empty by construction. */
+  .aboutSection .cols > .col:nth-child(1),
+  .aboutSection .cols > .col:nth-child(3) {
+    display: none;
+  }
+  .aboutSection .cols > .col:nth-child(2) {
+    width: 100%;
+  }
   .headerBigBlock .leftContent {
     left: 3.704vw;
     width: 31.482vw;
