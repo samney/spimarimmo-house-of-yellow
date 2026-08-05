@@ -10,6 +10,7 @@ import {
   TargetIcon,
   VisitorsIcon,
 } from "./impactIcons";
+import { SectionEyebrow } from "./SectionEyebrow";
 
 /* Section 05 — Chiffres clés.
  *
@@ -52,9 +53,10 @@ export function ImpactMetricsSection({
       <div className="impactInner">
         <header className="impactHeader">
           <div className="impactHeadings">
-            <p className="impactEyebrow">
-              [ <span className="impactEyebrowIndex">05</span> ] {t("eyebrow")}
-            </p>
+            {/* The shared section header rather than a local copy of the
+                bracketed index and label, which is how this section's eyebrow
+                drifted from the site's treatment. */}
+            <SectionEyebrow index="05" label={t("eyebrow")} />
             <h2 className="impactTitle" id="impact-title">
               {t("title")}
             </h2>

@@ -10,11 +10,20 @@
    of alternating full-bleed themes.
    ========================================================================== */
 
+/* Owner direction 2026-08-05: the section returns to the light surface, and
+   the dark is concentrated into one object that catches light — a lit slab on
+   paper rather than a full-bleed black band. The whole section previously ran
+   at pure #000 with a black card on top of it, so the card had nothing to be
+   raised against and the six indicators read as a flat table. */
 .impactSection {
-  /* Owner direction 2026-08-03: the section continues the dark block above it
-     rather than returning to the paper surface. */
-  background: var(--surface-inverse);
-  color: var(--on-inverse);
+  /* One elevation ladder, warm-tinted: the shadow colour is the page's own
+     ink, so depth reads as light falling on paper rather than as grey haze. */
+  --impact-lift: 0 0.4vw 1vw rgb(20 20 15 / 8%), 0 1.6vw 3.4vw rgb(20 20 15 / 12%);
+  /* Hairlines inside the dark slab. */
+  --impact-rule: rgb(255 255 255 / 10%);
+
+  background: var(--surface-page);
+  color: var(--on-surface);
   padding: var(--space-xl) var(--space-gutter);
 }
 
@@ -25,46 +34,52 @@
 
 /* --- Header --------------------------------------------------------------- */
 
+/* Grid, so the status sits on the eyebrow line while the heading and lead run
+   their own measure beneath it — the same header row sections 01, 04 and 08
+   use. */
 .impactHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-lg);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--space-lg);
   margin-bottom: var(--space-lg);
 }
 
 .impactHeadings {
-  min-width: 0;
+  display: contents;
 }
 
-.impactEyebrow {
-  color: var(--action-primary);
-  font-size: var(--text-support);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.impactSection .sectionEyebrow {
+  grid-column: 1;
+  grid-row: 1;
   margin: 0 0 var(--space-sm);
 }
 
-.impactEyebrowIndex {
-  font-variant-numeric: tabular-nums;
+/* The heading is the section heading, on the L2 ladder: 53px at weight 600,
+   exactly as sections 03, 04 and 08 set theirs.
+
+   It previously took `--text-support` at weight 500 — the same 13.4px as the
+   eyebrow and the captions — because it was matched to what "Notre méthode"
+   used for its *labels* at the time. That reference has since moved onto the
+   ladder, and the copy left behind inverted this section's hierarchy: the h2
+   rendered smaller than the lead paragraph beneath it. */
+.impactTitle,
+.impactLead {
+  grid-column: 1 / -1;
 }
 
-/* The heading follows the sibling sections' hierarchy exactly ("Notre
-   méthode" is the reference): the short title matches their label treatment
-   (.text.medium — 0.875vw, weight 500) and is always smaller than the
-   statement, which matches their .smallTitle (1.5vw, weight 400). */
 .impactTitle {
-  font-size: var(--text-support);
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1.4;
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.1;
   margin: 0 0 var(--space-sm);
+  max-width: 58vw;
   text-wrap: balance;
 }
 
 .impactLead {
-  color: var(--on-inverse);
+  color: var(--on-surface-muted);
   font-size: var(--text-small-title);
   font-weight: 400;
   line-height: 1.2;
@@ -76,9 +91,12 @@
 /* A status, not a control: outlined, muted, and never styled like the gold
    primary action, so it cannot be mistaken for something clickable. */
 .impactStatus {
-  border: 1px solid var(--border-inverse);
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pill);
-  color: var(--on-inverse-muted);
+  color: var(--on-surface-muted);
   flex: none;
   font-size: var(--text-support);
   font-weight: 500;
@@ -91,62 +109,104 @@
 
 /* --- Card ----------------------------------------------------------------- */
 
+/* The lit slab. Three layers make the dark read as a material catching light
+   rather than as a hole in the page: a broad sheen falling from the top edge,
+   a warm gold bloom behind the indicator row, and the base surface. The inset
+   highlight picks out the top edge; the drop shadow seats it on the paper. */
 .impactCard {
-  background: var(--surface-inverse);
-  border: 1px solid var(--border-inverse);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgb(255 255 255 / 9%) 0%, rgb(255 255 255 / 0%) 60%),
+    radial-gradient(60% 70% at 50% 42%, rgb(239 195 55 / 7%) 0%, rgb(239 195 55 / 0%) 70%),
+    var(--surface-inverse);
   border-radius: var(--radius-xl);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 12%),
+    var(--impact-lift);
   color: var(--on-inverse);
-  padding: var(--space-lg) var(--space-md);
+  padding: var(--space-xl) var(--space-lg);
+  position: relative;
 }
 
 .impactGrid {
   display: grid;
+  gap: var(--space-sm);
   grid-template-columns: repeat(6, minmax(0, 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* Each indicator is its own raised tile on the slab, not a table cell. The
+   hard 1px column rules are gone: they were what made this read as a row of
+   boxes, because a rule is the one thing that states "cell" and nothing else.
+   Depth now comes from a lifted surface and a top-edge highlight, so the six
+   read as objects sitting on the dark. */
 .impactItem {
-  border-left: 1px solid var(--border-inverse);
+  background: rgb(255 255 255 / 3.5%);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-lg) var(--space-sm);
   text-align: center;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-/* The rule is a separator between columns, so the first item in each row must
-   not carry one. The selector is restated per breakpoint because the row length
-   changes with the column count. */
-.impactItem:nth-child(6n + 1) {
-  border-left: 0;
+.impactItem:hover {
+  background: rgb(255 255 255 / 6%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 12%),
+    inset 0 0 0 1px rgb(239 195 55 / 18%);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .impactItem {
+    transition: none;
+  }
+}
+
+/* The ring is a lit disc, not an outline. A gold-tinted fill plus a soft outer
+   bloom gives the icon a light source of its own — the same "dark catching
+   light" idea as the slab, at the scale of one indicator. */
 .impactIconRing {
   align-items: center;
-  border: 1px solid var(--action-primary);
+  background: radial-gradient(circle at 50% 30%, rgb(239 195 55 / 16%), rgb(239 195 55 / 5%));
+  border: 1px solid rgb(239 195 55 / 45%);
   border-radius: 50%;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 14%),
+    0 0 1.4vw rgb(239 195 55 / 12%);
   color: var(--action-primary);
   display: flex;
-  height: 4.4vw;
+  height: 4vw;
   justify-content: center;
-  width: 4.4vw;
+  width: 4vw;
 }
 
+/* Larger inside the ring than the old 45%: the marks were floating in a lot of
+   empty disc, which is what made them read as low-quality at a glance. */
 .impactIcon {
-  height: 45%;
-  width: 45%;
+  height: 50%;
+  width: 50%;
 }
 
-/* Box titles carry the same label treatment as the section title
-   (.text.medium: 0.875vw / 500); the caption below differs by weight and
-   colour, exactly like the site's .text.medium / .text relationship. */
+/* The tile's own heading, on --text-small-title. It steps up from the caption
+   in size, weight and colour — previously both sat at --text-support and
+   collapsed into one grey block, so no tile had a readable first line and the
+   six columns read as undifferentiated text.
+
+   Two lines is the expected setting at this size in a 233px column, which is
+   what the reserved min-height below is for: it keeps every caption on one
+   baseline whether its label wraps or not. */
 .impactLabel {
-  font-size: var(--text-support);
+  color: var(--on-inverse);
+  font-size: var(--text-small-title);
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.25;
   margin: 0;
   /* Labels wrap to one or two lines depending on the phrase. Reserving two
      lines keeps every caption on the same baseline across the six columns. */
@@ -159,7 +219,7 @@
 
 .impactCaption {
   color: var(--on-inverse-muted);
-  font-size: var(--text-support);
+  font-size: var(--text-base);
   font-weight: 400;
   line-height: 1.4;
   margin: 0;
@@ -170,7 +230,7 @@
 
 .impactFooter {
   align-items: center;
-  border-top: 1px solid var(--border-inverse);
+  border-top: 1px solid var(--impact-rule);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-md);
