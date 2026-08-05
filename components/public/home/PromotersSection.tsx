@@ -62,8 +62,17 @@ const HALF: readonly Promoter[] = [...PROMOTERS, ...PROMOTERS, ...PROMOTERS];
    its own as the real marks take the slots. */
 const GRID_TILES = 30;
 
+/* Each row is rotated one step further through the set. A straight `i % 5`
+   cycle put the same mark in the same column of every row — Prestigia six
+   times down column one — so the grid read as a stack of identical columns
+   rather than a roster. Rotating by the row index staggers it diagonally.
+
+   Thirty tiles over five marks is six rows, so one mark still recurs in each
+   column; that is arithmetic, not a layout choice. What the rotation removes
+   is the uniform column, which is what made the repetition obvious. */
 const GRID: readonly (Promoter & { key: string })[] = Array.from({ length: GRID_TILES }, (_, i) => {
-  const promoter = PROMOTERS[i % PROMOTERS.length];
+  const row = Math.floor(i / PROMOTERS.length);
+  const promoter = PROMOTERS[(i + row) % PROMOTERS.length];
   return { ...promoter, key: `${promoter.slug}-${i}` };
 });
 
@@ -99,8 +108,13 @@ export function PromotersSection() {
             {/* The shared section header, not a local re-implementation: this
                 section used to hand-roll the bracketed index and label, which
                 is how its eyebrow drifted off the site's treatment. Its ink is
-                re-tinted in CSS for the yellow surface. */}
-            <SectionEyebrow index="08" label={t("eyebrow")} />
+                re-tinted in CSS for the yellow surface.
+
+                No bracketed number: the band no longer stands as its own
+                numbered section. It renders inside the yellow block, between
+                01 and 03, so an "[ 08 ]" there announced a section number out
+                of sequence — page wayfinding pointing at the wrong place. */}
+            <SectionEyebrow label={t("eyebrow")} />
             <h2 className="promoTitle" id="promo-title">
               {t("title")}
             </h2>

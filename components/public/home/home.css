@@ -735,9 +735,38 @@
 
    Membership is therefore opt-in: a section joins the stack only once it has
    been measured against (1). */
-.sectionStack > * {
+/* The doubled class is deliberate. Several members set `position: relative` in
+   their own stylesheet, which ties on specificity with a single `.sectionStack
+   > *` and wins on source order — `.methodSection` and `.offTeaser` both fell
+   out of the stack that way. Repeating the class outranks them without
+   naming every member. */
+.sectionStack.sectionStack > * {
   position: sticky;
+}
+
+/* Members that fit the viewport pin by their top edge. */
+.sectionStack.sectionStack > *:not(.mreSection, .visSection, .proofSection) {
   top: 0;
+}
+
+/* Members taller than the viewport pin by their BOTTOM edge instead.
+
+   `top: 0` would hold their first screenful and cut everything below it. With
+   `bottom: 0` the section scrolls fully into view first and only pins once its
+   bottom reaches the viewport bottom, so the screenful that gets covered is
+   its last one and nothing is ever clipped. Measured at 1536×1024: 06 1290px,
+   07 1474px, 09 1276px against a 1024 viewport.
+
+   These three are not compressed to fit. They carry more content than the
+   bounded compositions above them, and shrinking them would mean type below
+   the L2 ladder or dropped evidence — a worse trade than a taller section.
+
+   Written as two disjoint selectors rather than an override: `top: auto` is an
+   initial value and the build's CSS optimizer strips it. */
+.sectionStack.sectionStack > .mreSection,
+.sectionStack.sectionStack > .visSection,
+.sectionStack.sectionStack > .proofSection {
+  bottom: 0;
 }
 
 /* Paint order has to be explicit. Several members set their own `z-index` on
@@ -773,7 +802,7 @@
    the viewport, so pinning them would cut content. `relative` rather than
    `static`: the build's CSS optimizer drops initial-value declarations. */
 @media (max-width: 1023px) {
-  .sectionStack > * {
+  .sectionStack.sectionStack > * {
     position: relative;
   }
 }

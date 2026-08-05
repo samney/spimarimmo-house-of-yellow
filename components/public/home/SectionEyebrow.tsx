@@ -6,20 +6,25 @@
 
    `surface` picks the gold: bright on inverse surfaces, the AA-safe deep gold
    on paper (see --spimar-gold-text). */
+/* `index` is optional: the bracketed number is page wayfinding, so a block
+   nested inside another section's surface carries the label without it rather
+   than announcing a section number out of sequence. */
 export function SectionEyebrow({
   index,
   label,
   surface = "paper",
 }: {
-  index: string;
+  index?: string;
   label: string;
   surface?: "paper" | "inverse";
 }) {
   return (
     <p className={`sectionEyebrow${surface === "inverse" ? " isInverse" : ""}`}>
-      <span className="sectionEyebrow__index">
-        [ <span className="numIndex">{index}</span> ]
-      </span>
+      {index ? (
+        <span className="sectionEyebrow__index">
+          [ <span className="numIndex">{index}</span> ]
+        </span>
+      ) : null}
       <span>{label}</span>
     </p>
   );
