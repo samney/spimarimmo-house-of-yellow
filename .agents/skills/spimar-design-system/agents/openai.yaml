@@ -1,0 +1,4 @@
+interface:
+  display_name: "SPIMAR Design System"
+  short_description: "Enforce SPIMAR public-UI design rules"
+  default_prompt: "Use $spimar-design-system to check this SPIMAR UI change against current design authorities."

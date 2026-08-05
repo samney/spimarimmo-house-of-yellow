@@ -1,0 +1,4 @@
+interface:
+  display_name: "SPIMAR Spec Compliance"
+  short_description: "Trace SPIMAR work to canonical requirements"
+  default_prompt: "Use $spimar-spec-compliance to trace this task or implementation to current SPIMAR requirements."

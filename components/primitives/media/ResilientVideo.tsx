@@ -2,7 +2,16 @@
 
 import { useState, useSyncExternalStore, type VideoHTMLAttributes } from "react";
 
-type PlaybackPolicy = "allowed" | "poster" | "reduced-motion" | "save-data";
+type PlaybackPolicy = "allowed" | "poster" | "reduced-motion" | "save-data" | "dev-paused";
+
+/* Background autoplay is off in development (2026-08-05, owner request): the
+   hero loop is ~2 MB and every reload refetches it, which burns mobile data
+   while debugging. Production is untouched, and an explicit play request
+   (`interactive`) still loads the video in either environment — same rule the
+   reduced-motion and save-data policies already follow.
+
+   To watch the background loop locally, set this constant to `false`. */
+const AUTOPLAY_PAUSED_IN_DEV = process.env.NODE_ENV === "development";
 
 type NetworkInformation = EventTarget & {
   saveData?: boolean;
@@ -14,6 +23,7 @@ type NavigatorWithConnection = Navigator & {
 
 function getPlaybackPolicy(): PlaybackPolicy {
   if (typeof window === "undefined") return "poster";
+  if (AUTOPLAY_PAUSED_IN_DEV) return "dev-paused";
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return "reduced-motion";
   }

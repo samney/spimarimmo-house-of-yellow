@@ -1,0 +1,11 @@
+# Repository-only Codex safety policy. Model and plugin preferences stay user-scoped.
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = false
+
+# Superseded by the focused reusable/project review skills. Reversible; not deleted.
+[[skills.config]]
+path = ".agents/skills/ui-ux-review/SKILL.md"
+enabled = false
