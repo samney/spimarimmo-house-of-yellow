@@ -46,11 +46,21 @@ import {
 type IconComponent = (props: { className?: string }) => React.JSX.Element;
 type DeliverableState = "done" | "progress" | "planned";
 
+/* What a deliverable tile shows. The reference does not put an icon in every
+   card: Avant and Pendant lead with the campaign's own material — a video
+   frame, a set of phones, a landing page — and only Après is a set of drawn
+   glyph cards. `glyph` keeps that treatment; the rest are compositions built
+   around a supplied photograph. */
+type ThumbKind = "video" | "photo" | "page" | "phones" | "glyph";
+
+type Thumb = { readonly kind: ThumbKind; readonly src?: string };
+
 type Phase = {
   readonly key: "before" | "during" | "after";
   readonly num: string;
   readonly leverIcons: readonly IconComponent[];
   readonly deliverableIcons: readonly IconComponent[];
+  readonly deliverableThumbs: readonly Thumb[];
   readonly deliverableStates: readonly DeliverableState[];
   readonly flowStates: readonly ["done", "outline", "dashed"];
   readonly channels: readonly { key: string; Icon: IconComponent }[];
@@ -60,6 +70,13 @@ const PHASES: readonly Phase[] = [
   {
     key: "before",
     num: "01",
+    deliverableThumbs: [
+      { kind: "video", src: "/images/visibility/campaign-property-hero.webp" },
+      { kind: "phones", src: "/images/visibility/campaign-video-production.webp" },
+      { kind: "page", src: "/images/visibility/project-riviera-bay.webp" },
+      { kind: "glyph" },
+      { kind: "photo", src: "/images/visibility/investor-consultation.webp" },
+    ],
     leverIcons: [PlayBadgeIcon, InfinityIcon, GMarkIcon, MailIcon, MegaphoneIcon],
     deliverableIcons: [PlayBadgeIcon, ShareNodesIcon, PressIcon, MailIcon, MegaphoneIcon],
     deliverableStates: ["done", "done", "done", "planned", "done"],
@@ -77,6 +94,13 @@ const PHASES: readonly Phase[] = [
   {
     key: "during",
     num: "02",
+    deliverableThumbs: [
+      { kind: "video", src: "/images/visibility/live-event-capture.webp" },
+      { kind: "photo", src: "/images/visibility/interview.webp" },
+      { kind: "phones", src: "/images/visibility/affluence.webp" },
+      { kind: "glyph" },
+      { kind: "photo", src: "/images/visibility/stand-presentation.webp" },
+    ],
     leverIcons: [CameraIcon, MicIcon, ShareNodesIcon, LiveIcon, VisitorsIcon],
     deliverableIcons: [CameraIcon, MicIcon, LiveIcon, CalendarIcon, FolderIcon],
     deliverableStates: ["progress", "progress", "done", "done", "done"],
@@ -92,6 +116,15 @@ const PHASES: readonly Phase[] = [
   {
     key: "after",
     num: "03",
+    /* Après is glyph-led in the reference: five drawn marks on warm cards,
+       not photography. */
+    deliverableThumbs: [
+      { kind: "glyph" },
+      { kind: "glyph" },
+      { kind: "glyph" },
+      { kind: "glyph" },
+      { kind: "glyph" },
+    ],
     leverIcons: [HandoffIcon, BarsIcon, UserCheckIcon, TrendIcon, BulbIcon],
     deliverableIcons: [VisitorsIcon, BarsIcon, SmsIcon, TrendIcon, BulbIcon],
     deliverableStates: ["done", "progress", "progress", "done", "done"],
@@ -415,8 +448,42 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
             <ul className="visRailList">
               {phase.deliverableIcons.map((Icon, i) => (
                 <li className="visRailCard" key={i}>
-                  <span className="visRailThumb" aria-hidden="true">
-                    <Icon className="visRailThumbIcon" />
+                  <span
+                    className="visRailThumb"
+                    data-kind={phase.deliverableThumbs[i].kind}
+                    aria-hidden="true"
+                  >
+                    {phase.deliverableThumbs[i].kind === "glyph" ? (
+                      <Icon className="visRailThumbIcon" />
+                    ) : (
+                      <>
+                        <Image
+                          alt=""
+                          className="visRailShot"
+                          fill
+                          sizes="5vw"
+                          src={phase.deliverableThumbs[i].src as string}
+                        />
+                        {phase.deliverableThumbs[i].kind === "video" && (
+                          <span className="visRailPlay">
+                            <PlayBadgeIcon className="visRailPlayIcon" />
+                          </span>
+                        )}
+                        {/* A browser chrome bar for the landing page, and three
+                            handset outlines for the social kit: the frame is
+                            what names the deliverable, not the photograph. */}
+                        {phase.deliverableThumbs[i].kind === "page" && (
+                          <span className="visRailChrome" />
+                        )}
+                        {phase.deliverableThumbs[i].kind === "phones" && (
+                          <span className="visRailPhones">
+                            <i />
+                            <i />
+                            <i />
+                          </span>
+                        )}
+                      </>
+                    )}
                   </span>
                   <span className="visRailText">
                     <span className="visRailLabel">

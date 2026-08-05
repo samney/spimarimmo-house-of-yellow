@@ -346,6 +346,67 @@
   opacity: 0.6;
 }
 
+/* --- Connector spine ------------------------------------------------------
+   The reference links the proof canvas to every deliverable with one gold
+   dashed network: a vertical trunk in the gutter, a branch to each card, and a
+   node where each branch meets the trunk.
+
+   It is drawn from the cards themselves rather than from measured coordinates,
+   so the branches stay on the card centres whatever the card height or the
+   phase's card count turns out to be. That is the audit's complaint about
+   connectors positioned with viewport magic numbers. */
+
+.visRailList {
+  position: relative;
+}
+
+/* The trunk. Inset by half a card at each end so it starts and finishes on the
+   first and last branch rather than overshooting the stack. */
+.visRailList::before {
+  border-inline-start: 1px dashed var(--spimar-gold-deep, var(--action-primary));
+  content: "";
+  inset-block: 9% 9%;
+  inset-inline-start: -1vw;
+  opacity: 0.55;
+  position: absolute;
+}
+
+.visRailCard {
+  position: relative;
+}
+
+/* Branch: from the trunk to the card's left edge, on its centre line. */
+.visRailCard::before {
+  border-block-start: 1px dashed var(--spimar-gold-deep, var(--action-primary));
+  content: "";
+  inline-size: 1vw;
+  inset-block-start: 50%;
+  inset-inline-end: 100%;
+  opacity: 0.55;
+  position: absolute;
+}
+
+/* Node, seated on the trunk at the branch's outer end. */
+.visRailCard::after {
+  background: var(--spimar-gold-deep, var(--action-primary));
+  block-size: 0.3vw;
+  border-radius: 50%;
+  content: "";
+  inline-size: 0.3vw;
+  inset-block-start: 50%;
+  inset-inline-end: calc(100% + 1vw);
+  position: absolute;
+  transform: translate(50%, -50%);
+}
+
+@media (max-width: 1023px) {
+  .visRailList::before,
+  .visRailCard::before,
+  .visRailCard::after {
+    display: none;
+  }
+}
+
 /* --- Artifacts ------------------------------------------------------------------- */
 
 .visArtifacts {
@@ -983,6 +1044,8 @@
   padding: var(--space-xs) var(--space-sm);
 }
 
+/* The tile's preview. Photo-led kinds fill the frame; `glyph` keeps the warm
+   card treatment, which is what the reference uses for the whole Après set. */
 .visRailThumb {
   align-items: center;
   background: var(--surface-muted);
@@ -992,7 +1055,78 @@
   flex: none;
   height: 3vw;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
   width: 3.8vw;
+}
+
+.visRailShot {
+  object-fit: cover;
+}
+
+/* Video: the play badge is what distinguishes a film deliverable from a still. */
+.visRailPlay {
+  align-items: center;
+  /* Above the fill image, which is absolutely positioned and would otherwise
+     share the same paint layer. */
+  z-index: 1;
+  background: rgb(0 0 0 / 55%);
+  block-size: 1.25vw;
+  border: 1px solid rgb(255 255 255 / 80%);
+  border-radius: 50%;
+  display: flex;
+  inline-size: 1.25vw;
+  justify-content: center;
+  position: relative;
+}
+
+.visRailPlayIcon {
+  block-size: 0.6vw;
+  color: var(--spimar-white);
+  inline-size: 0.6vw;
+}
+
+/* Landing page: a browser chrome bar across the top of the shot. */
+.visRailChrome {
+  background: rgb(12 15 18 / 88%);
+  block-size: 0.55vw;
+  inset-block-start: 0;
+  inset-inline: 0;
+  position: absolute;
+}
+.visRailChrome::before {
+  background: rgb(255 255 255 / 55%);
+  block-size: 0.14vw;
+  border-radius: 0.1vw;
+  content: "";
+  inline-size: 0.9vw;
+  inset-block-start: 50%;
+  inset-inline-start: 0.25vw;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+/* Social kit: three handset outlines over the shot. */
+.visRailPhones {
+  align-items: center;
+  display: flex;
+  gap: 0.22vw;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+}
+.visRailPhones i {
+  background: rgb(10 12 15 / 45%);
+  block-size: 2.1vw;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 0.22vw;
+  display: block;
+  inline-size: 0.95vw;
+}
+.visRailPhones i:first-child,
+.visRailPhones i:last-child {
+  block-size: 1.75vw;
+  opacity: 0.75;
 }
 
 .visRailThumbIcon {
