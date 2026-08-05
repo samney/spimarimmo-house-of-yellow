@@ -322,12 +322,7 @@
         "opportunities": "Opportunités"
       },
       "companyLabel": "Société {letter}",
-      "nav": [
-        "Projets",
-        "À propos",
-        "Actualités",
-        "Contact"
-      ],
+      "nav": ["Projets", "À propos", "Actualités", "Contact"],
       "navCta": "Nous rencontrer",
       "projectsTitle": "Nos projets",
       "projects": [
@@ -351,11 +346,7 @@
       "sponsored": "Sponsorisé",
       "postCaption": "Investissez au Maroc, progressez à l’international.",
       "postCta": "En savoir plus",
-      "postActions": [
-        "J’aime",
-        "Commenter",
-        "Partager"
-      ],
+      "postActions": ["J’aime", "Commenter", "Partager"],
       "inviteTitle": "Invitation privée",
       "inviteSub": "Salon international de l’immobilier",
       "live": "EN DIRECT",
