@@ -1,7 +1,7 @@
 import Image from "next/image";
+import { PageHeader } from "./PageHeader";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { GALLERY_CATEGORIES, MEDIA } from "@/components/public/home/galleryData";
 
 /* /ressources/galerie — the full media library.
@@ -23,21 +23,12 @@ export async function GalleryListing() {
 
   return (
     <div className="pageBlocks">
+      <PageHeader index="11" label={tp("label")} title={tp("title")} lead={tp("lead")} />
       <section className="spimarListPage">
         <div className="contentWrapper">
           <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">11</span> ]
-              </div>
-            </div>
+            <div className="colLabel" aria-hidden="true" />
             <div className="colMain">
-              <header className="pageIntro">
-                <div className="label text medium">{tp("label")}</div>
-                <SplitTitle as="h1" className="normalTitle" text={tp("title")} />
-                <p className="text medium">{tp("lead")}</p>
-              </header>
-
               <nav aria-label={tp("navLabel")} className="galListNav">
                 {groups.map(({ category, items }) => (
                   <a key={category} className="galListNavPill" href={`#galerie-${category}`}>

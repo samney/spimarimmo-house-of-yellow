@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { PageHeader } from "@/components/public/pages/PageHeader";
 import { Link } from "@/i18n/navigation";
-import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 /* Spec §17 — Conversion et réassurance. The seven exhibitor questions come
    from the specification verbatim; every answer states only what other
@@ -16,20 +16,12 @@ export default async function Faq({ params }: { params: Promise<{ locale: string
 
   return (
     <div className="pageBlocks">
+      <PageHeader index="17" label={t("label")} title={t("title")} lead={t("lead")} />
       <section className="spimarListPage">
         <div className="contentWrapper">
           <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">17</span> ]
-              </div>
-            </div>
+            <div className="colLabel" aria-hidden="true" />
             <div className="colMain">
-              <header className="pageIntro">
-                <div className="label text medium">{t("label")}</div>
-                <SplitTitle as="h1" className="normalTitle" text={t("title")} />
-                <p className="text medium">{t("lead")}</p>
-              </header>
               <div className="faqList">
                 {QUESTIONS.map((q, i) => (
                   <details key={q}>

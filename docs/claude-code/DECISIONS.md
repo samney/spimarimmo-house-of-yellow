@@ -875,3 +875,48 @@ reads "VOIR / LA VIDÉO".
 **Unchanged.** The cursor is still pointer-only decoration, hidden for touch
 and reduced motion; the stage button keeps its `sr-only` label and the dialog
 keeps its focus trap, Escape handling and scroll lock.
+
+## D-029 — 2026-08-05 — One branded page header for every route
+
+**Authority.** Repository-owner direction in session: every route page should
+open with a page title, on a branded and polished background.
+
+**The problem, measured.** Every route already had an `<h1>` — but there were
+three different openings on the site:
+
+|                               | title        | lead   | h1 top | measure |
+| ----------------------------- | ------------ | ------ | ------ | ------- |
+| Listing pages                 | 57.6px / 500 | 13.4px | y=278  | 799px   |
+| Standing pages                | 57.6px / 500 | 11.5px | y=114  | 1190px  |
+| `DESIGN-CONTRACT.md` §anatomy | 53px / 600   | 23px   | —      | 58vw    |
+
+Neither route family matched the anatomy the contract specifies and sections
+05–13 ship, so a visitor moving between pages met a different opening each
+time.
+
+**Decision.** One `PageHeader` in `components/public/pages/`, used by both
+families. It renders the shared `SectionEyebrow`, a title at
+`--text-heading-lg` / 600 / 1.1 with a balanced wrap, and a lead at
+`--text-small-title` / 400 — the same steps the homepage sections use.
+
+The band is branded rather than bare: a gold wash anchored where the title
+starts, a fine dot field masked to fade across the band, and a hairline gold
+rule closing it. Every layer is `aria-hidden` paint — no layout, no motion.
+
+Measured after: twelve routes open identically — eyebrow 13.4/600, title
+53/600, lead 23/400, `<h1>` top y=134 on every one. Axe 0 violations on all of
+them, no horizontal overflow at 390.
+
+**Defect fixed inside this slice.** The site bar is `position: fixed`, so it
+reserves no space and a page header must clear it itself. The first cut used
+`--space-xl`, which is smaller than the old `--space-2xl`, and the eyebrow
+disappeared under the bar at 390, 768 and 1024. The bar's height rides the vw
+ladder (measured bottom edge 4.95vw above 1080, 7.32vw at tablet, 15.6vw at
+580), so the top pad is now restated per regime. Clearance after: 25px at 390,
+44px at 768, 58px at 1024, 20px at 1536.
+
+**Not converted.** `/exposer/offres`, `/exposer/visibilite`, `/exposer/methode`,
+`/exposer/devenir-exposant` and `/ressources/exposants` render a homepage
+section as the entire page body, so their opening is that section's own header
+by design. Converting them means editing `components/public/home/*`, which a
+parallel session is holding; left deliberately, not overlooked.

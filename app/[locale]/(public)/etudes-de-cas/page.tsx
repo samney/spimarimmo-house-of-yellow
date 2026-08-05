@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { PageHeader } from "@/components/public/pages/PageHeader";
 import { Link } from "@/i18n/navigation";
-import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { getBackendSeams } from "@/lib/spimar/repositories";
 
 /* Owner restructure (2026-08-04): /etudes-de-cas is the CMS-driven listing —
@@ -25,20 +25,12 @@ export default async function EtudesDeCas({ params }: { params: Promise<{ locale
 
   return (
     <div className="pageBlocks">
+      <PageHeader index="09" label={t("label")} title={t("title")} lead={t("lead")} />
       <section className="spimarListPage">
         <div className="contentWrapper">
           <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">09</span> ]
-              </div>
-            </div>
+            <div className="colLabel" aria-hidden="true" />
             <div className="colMain">
-              <header className="pageIntro">
-                <div className="label text medium">{t("label")}</div>
-                <SplitTitle as="h1" className="normalTitle" text={t("title")} />
-                <p className="text medium">{t("lead")}</p>
-              </header>
               {cases.length === 0 ? (
                 <p className="text medium">{t("empty")}</p>
               ) : (

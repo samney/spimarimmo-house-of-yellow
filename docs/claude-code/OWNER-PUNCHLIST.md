@@ -99,6 +99,14 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       could not be tapped. Below 1024 the sides now share what is left. Inside
       the fixed bar, so it never scrolled the document and the contract's
       overflow check never caught it. → `de44fd3`
+- [x] **G4 · One branded page header for every route.** Three different
+      openings became one: shared `SectionEyebrow`, title at
+      `--text-heading-lg` / 600, lead at `--text-small-title`, on a branded band
+      (gold wash, fading dot field, hairline rule). Twelve routes now open
+      identically at y=134. Five `/exposer/*` and `/ressources/exposants`
+      routes render a homepage section as their body and keep that section's
+      header — they need `components/public/home/*`, held by another session.
+      → `COMMIT`
 - [ ] **G3 · Six routes are thin stubs** (260–340 characters of body text):
       `/visiteurs`, `/contact`, `/pourquoi-spimar`, `/exposer`,
       `/confidentialite`, `/mentions-legales`. `/contact` has no form;

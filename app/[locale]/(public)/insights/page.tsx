@@ -1,6 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { PageHeader } from "@/components/public/pages/PageHeader";
 import { Link } from "@/i18n/navigation";
-import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 /* Spec §16 — the blog captures searches around the Moroccan market and the
    diaspora. The six editorial territories come from the specification; no
@@ -15,20 +15,12 @@ export default async function Insights({ params }: { params: Promise<{ locale: s
 
   return (
     <div className="pageBlocks">
+      <PageHeader index="16" label={t("label")} title={t("title")} lead={t("lead")} />
       <section className="spimarListPage">
         <div className="contentWrapper">
           <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">16</span> ]
-              </div>
-            </div>
+            <div className="colLabel" aria-hidden="true" />
             <div className="colMain">
-              <header className="pageIntro">
-                <div className="label text medium">{t("label")}</div>
-                <SplitTitle as="h1" className="normalTitle" text={t("title")} />
-                <p className="text medium">{t("lead")}</p>
-              </header>
               <h2 className="text medium label">{t("territoriesTitle")}</h2>
               <ul className="spimarCardList" role="list">
                 {TERRITORIES.map((key) => (

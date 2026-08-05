@@ -8,6 +8,113 @@
    themselves in the 1080/580 regimes through :root, so this file needs no
    parallel scale of its own. */
 
+/* ===================================================== shared page header ===
+   One opening for every route (owner direction, 2026-08-05). The anatomy is
+   the design contract's section header — eyebrow, title at --text-heading-lg /
+   600 / 1.1 balanced, lead at --text-small-title — so a page and the sections
+   under it read as one product instead of three.
+
+   The band is branded rather than bare. Every layer below is paint: a warm
+   gold wash anchored where the title sits, a fine dot field that fades out,
+   and a hairline rule closing the band. None of it takes part in layout and
+   none of it moves. */
+
+/* The site bar is `position: fixed`, so it reserves no space and a page header
+   has to clear it itself. Its height rides the vw ladder — measured bottom edge
+   4.95vw above 1080, 7.32vw at the tablet regime and 15.6vw at 580 — so the top
+   pad is restated per regime rather than trusting one token. Without this the
+   eyebrow sat under the bar at 390, 768 and 1024. */
+.pageHeader {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--space-xl) 0 var(--space-lg);
+  border-bottom: 1px solid rgb(184 120 30 / 22%);
+  background: var(--surface-page);
+  color: var(--on-surface);
+}
+
+/* Anchored left, where the eyebrow and title start, so the light reads as
+   coming from the type rather than sitting behind it. */
+.pageHeader__wash {
+  position: absolute;
+  inset-block-start: -30%;
+  inset-inline-start: -10%;
+  z-index: -2;
+  width: 70%;
+  height: 160%;
+  background:
+    radial-gradient(closest-side, rgb(239 195 55 / 26%), transparent 72%),
+    radial-gradient(closest-side at 70% 60%, rgb(184 120 30 / 12%), transparent 70%);
+  pointer-events: none;
+}
+
+.pageHeader__grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgb(184 120 30 / 14%) 1px, transparent 1px);
+  background-size: 1.7vw 1.7vw;
+  mask-image: linear-gradient(105deg, #000 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.pageHeader__inner {
+  position: relative;
+  max-width: 78vw;
+}
+
+.pageHeader__title {
+  max-width: 58vw;
+  margin: 0.91vw 0 0;
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.pageHeader__lead {
+  max-width: 50vw;
+  margin: 0.91vw 0 0;
+  color: var(--on-surface-muted);
+  font-size: var(--text-small-title);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.pageHeader__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vw;
+  margin-top: 1.7vw;
+}
+
+@media (max-width: 1080px) {
+  .pageHeader {
+    padding-top: 13vw;
+  }
+
+  .pageHeader__inner,
+  .pageHeader__title,
+  .pageHeader__lead {
+    max-width: none;
+  }
+
+  .pageHeader__grain {
+    background-size: 3.4vw 3.4vw;
+  }
+}
+
+@media (max-width: 580px) {
+  .pageHeader {
+    padding: 22vw 0 var(--space-md);
+  }
+
+  .pageHeader__grain {
+    background-size: 6vw 6vw;
+  }
+}
+
 .spimarListPage {
   background: var(--surface-page);
   color: var(--on-surface);
