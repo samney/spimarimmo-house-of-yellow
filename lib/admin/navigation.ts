@@ -64,12 +64,10 @@ export const WORKSPACES: readonly Workspace[] = [
         items: [
           { href: "/admin/crm/leads", label: "Leads", permission: "crm.read_assigned" },
           { href: "/admin/crm/pipeline", label: "Pipeline", permission: "crm.read_assigned" },
-          {
-            href: "/admin/crm/organizations",
-            label: "Entreprises",
-            permission: "crm.read_assigned",
-          },
-          { href: "/admin/crm/contacts", label: "Contacts", permission: "crm.read_assigned" },
+          /* Entreprises (ADM-088) and Contacts (ADM-089) belong to Wave 4 and
+             have no route yet. They are deliberately absent rather than listed
+             as dead links: a navigation item that goes nowhere is exactly the
+             "dead control" the contract forbids. */
         ],
       },
     ],

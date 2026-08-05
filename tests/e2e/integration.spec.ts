@@ -1,13 +1,16 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
-/* End-to-end release journey required by the accelerated brief:
+/* End-to-end release journey:
 
      public page -> CTA -> form -> durable submission -> CRM lead
      CMS content update -> publication -> public revalidation
 
    These are the assertions that decide whether the platform actually works, so
    they drive real UI rather than calling actions directly. Credentials come
-   from the webServer env in playwright.config.ts and exist only for this suite. */
+   from the webServer env in playwright.config.ts and exist only for this suite.
+
+   The console is French (SPIMAR Control) and lives under /admin with locale
+   resolution, per ADR-A1. */
 
 const ADMIN = { email: "e2e-admin@example.test", password: "e2e-admin-password" };
 const EDITOR = { email: "e2e-editor@example.test", password: "e2e-editor-password" };
@@ -19,37 +22,38 @@ const stamp = () => `${Date.now()}${Math.floor(process.hrtime()[1] / 1000)}`;
    page content until a visitor answers it — which is what a real visitor does
    before using a form. Dismiss it first so interaction tests exercise the page
    rather than the banner. */
-async function dismissConsent(page: import("@playwright/test").Page) {
-  const deny = page.getByRole("button", { name: /deny/i });
+async function dismissConsent(page: Page) {
+  const deny = page.getByRole("button", { name: /deny|refuser/i });
   if (await deny.count()) {
     await deny.first().click();
   }
 }
 
-async function signIn(page: import("@playwright/test").Page, who: typeof ADMIN) {
+export async function signIn(page: Page, who: typeof ADMIN) {
   await page.goto("/admin/login");
-  await page.getByLabel("Email").fill(who.email);
-  await page.getByLabel("Password").fill(who.password);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await page.getByLabel("E-mail").fill(who.email);
+  await page.getByLabel("Mot de passe").fill(who.password);
+  await page.getByRole("button", { name: "Se connecter" }).click();
+  await expect(page.getByRole("heading", { name: "Vue d’ensemble" })).toBeVisible();
 }
 
-test.describe("CMS and CRM are protected", () => {
-  test("admin routes redirect anonymous visitors to sign-in", async ({ page }) => {
-    for (const route of ["/admin", "/admin/pages", "/admin/events", "/admin/leads"]) {
+test.describe("SPIMAR Control is protected", () => {
+  test("console routes redirect anonymous visitors to sign-in", async ({ page }) => {
+    for (const route of ["/admin", "/admin/cms/pages", "/admin/events", "/admin/crm/leads"]) {
       await page.goto(route);
-      await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "SPIMAR Control" })).toBeVisible();
+      await expect(page.getByLabel("Mot de passe")).toBeVisible();
     }
   });
 
   test("bad credentials are refused without disclosing which part was wrong", async ({ page }) => {
     await page.goto("/admin/login");
-    await page.getByLabel("Email").fill(ADMIN.email);
-    await page.getByLabel("Password").fill("wrong-password");
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await page.getByLabel("E-mail").fill(ADMIN.email);
+    await page.getByLabel("Mot de passe").fill("wrong-password");
+    await page.getByRole("button", { name: "Se connecter" }).click();
     // Scoped to the form notice: Next.js also renders a route announcer with role=alert.
-    await expect(page.locator(".adminNotice--error")).toContainText("were not accepted");
-    await expect(page.getByRole("heading", { name: "Dashboard" })).toHaveCount(0);
+    await expect(page.locator(".notice--error")).toContainText("not accepted");
+    await expect(page.getByRole("heading", { name: "Vue d’ensemble" })).toHaveCount(0);
   });
 });
 
@@ -75,31 +79,31 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
 
   // -> CRM lead, with attribution captured at submission.
   await signIn(page, ADMIN);
-  await page.goto("/admin/leads");
+  await page.goto("/admin/crm/leads");
   await expect(page.getByText(name)).toBeVisible();
   await page
     .getByRole("row", { name: new RegExp(name) })
-    .getByRole("link", { name: "Open" })
+    .getByRole("link", { name: "Ouvrir" })
     .click();
   await expect(page.getByText(message)).toBeVisible();
   await expect(page.getByText("contact-page")).toBeVisible();
 
   // Operational workflow: stage, assignment and a note, each audited.
-  await page.getByLabel("Current stage").selectOption("qualified");
-  await page.getByRole("button", { name: "Update stage" }).click();
+  await page.getByLabel("Étape actuelle").selectOption("qualified");
+  await page.getByRole("button", { name: "Faire progresser l’étape" }).click();
   await expect(page.getByText("Stage updated.")).toBeVisible();
 
-  await page.getByLabel("Assignee").fill("ops@example.test");
-  await page.getByRole("button", { name: "Save assignment" }).click();
+  await page.getByLabel("Assigné à").fill("ops@example.test");
+  await page.getByRole("button", { name: "Enregistrer", exact: true }).click();
   await expect(page.getByText("Assignment updated.")).toBeVisible();
 
   await page.getByLabel("Note").fill("Following up this week.");
-  await page.getByRole("button", { name: "Add note" }).click();
+  await page.getByRole("button", { name: "Ajouter la note" }).click();
   await expect(page.getByText("Note added.")).toBeVisible();
 
   // Audit trail records actor and action.
-  await expect(page.getByRole("cell", { name: /Stage set to qualified/ })).toBeVisible();
-  await expect(page.getByRole("cell", { name: /Following up this week/ })).toBeVisible();
+  await expect(page.getByText(/Stage set to qualified/)).toBeVisible();
+  await expect(page.getByText(/Following up this week/)).toBeVisible();
 });
 
 test("duplicate submissions are refused without a false confirmation", async ({ page }) => {
@@ -135,18 +139,19 @@ test("CMS publish updates the public site through revalidation", async ({ page }
   await page.goto("/admin/events");
 
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("EN").first().fill(title);
-  await page.getByLabel("City").fill("Casablanca");
-  await page.getByLabel("Country").fill("Morocco");
+  // The localized editor renders FR first, then EN.
+  await page.getByLabel("FR").first().fill(title);
+  await page.getByLabel("Ville").fill("Casablanca");
+  await page.getByLabel("Pays").fill("Morocco");
   // Dates deliberately left empty — the public page must say so, not guess.
   await page.getByLabel("Publication").selectOption("published");
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/published/i).first()).toBeVisible();
 
   // -> public revalidation: the published edition is now live.
   await page.goto("/salons");
   await expect(page.getByRole("link", { name: title })).toBeVisible();
-  await expect(page.getByText("Dates to be confirmed").first()).toBeVisible();
+  await expect(page.getByText("Dates à confirmer").first()).toBeVisible();
 
   await page.goto(`/salons/${slug}`);
   await expect(page.getByRole("heading", { name: title })).toBeVisible();
@@ -159,9 +164,9 @@ test("drafts are never visible publicly", async ({ page }) => {
   await signIn(page, ADMIN);
   await page.goto("/admin/events");
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("EN").first().fill(`Draft ${id}`);
+  await page.getByLabel("FR").first().fill(`Draft ${id}`);
   await page.getByLabel("Publication").selectOption("draft");
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/draft/i).first()).toBeVisible();
 
   // A draft must 404 rather than leak through a guessable URL.
@@ -176,12 +181,18 @@ test("an editor cannot publish, and the server enforces it", async ({ page }) =>
   await signIn(page, EDITOR);
   await page.goto("/admin/events");
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("EN").first().fill(`Editor attempt ${id}`);
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByLabel("FR").first().fill(`Editor attempt ${id}`);
+  await page.getByRole("button", { name: "Enregistrer" }).click();
 
   // The publish option is disabled in the UI, but the guarantee is server-side:
   // the record must be a draft and must not resolve publicly.
   await expect(page.getByText(/draft/i).first()).toBeVisible();
   const response = await page.request.get(`/salons/${slug}`, { maxRedirects: 0 });
   expect(response.status()).toBe(404);
+});
+
+test("an editor cannot export CRM data — crm.export is not granted", async ({ page }) => {
+  await signIn(page, EDITOR);
+  const response = await page.request.get("/admin/crm/leads/export", { maxRedirects: 0 });
+  expect(response.status()).toBe(403);
 });

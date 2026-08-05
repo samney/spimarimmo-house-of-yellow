@@ -113,14 +113,16 @@
   color: var(--text-primary);
 }
 
+/* The rail is 68px and the link 44px, so 12px of gutter sits on each side.
+   The indicator is inset 8px, which keeps it inside the rail instead of being
+   clipped by the shell's rounded overflow. */
 .rail__link[aria-current]::before {
   content: "";
   position: absolute;
-  inset-inline-start: -14px;
-  inset-block: 25%;
+  inset-inline-start: -8px;
+  inset-block: 22%;
   inline-size: 3px;
-  border-start-end-radius: var(--radius-pill);
-  border-end-end-radius: var(--radius-pill);
+  border-radius: var(--radius-pill);
   background: var(--brand-gold);
 }
 
@@ -273,6 +275,7 @@
 
 .commandbar__search {
   flex: 1 1 auto;
+  min-inline-size: 0;
   max-inline-size: 420px;
   display: flex;
   align-items: center;
@@ -286,6 +289,17 @@
   text-align: start;
   cursor: pointer;
   transition: border-color var(--dur-micro) var(--ease-admin);
+}
+
+/* The placeholder is a single line that ellipsises; without this the label
+   wraps to five lines on a narrow viewport and pushes the bar's controls out
+   of reach. */
+.commandbar__search > span {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .commandbar__search:hover {
@@ -828,6 +842,16 @@
   text-align: end;
 }
 
+/* Some browsers auto-link bare digits and addresses as telephone numbers,
+   which repaints operational figures in the UA's link colour. The console
+   controls its own emphasis, so that detection is refused here. */
+.spimarControl a[href^="tel:"],
+.numeric,
+.mono {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .mono {
   font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, monospace;
   font-size: 12px;
@@ -1145,10 +1169,20 @@
   .commandbar {
     padding: var(--space-2) var(--space-4);
     gap: var(--space-2);
+    flex-wrap: nowrap;
   }
 
   .commandbar__search {
     max-inline-size: none;
+  }
+
+  /* At this width the bar keeps search, sign-out and the primary action. The
+     shortcut hint and the site/role selectors are redundant on a phone — the
+     rail already carries context — so they are removed rather than allowed to
+     push the reachable controls off-screen. */
+  .commandbar__shortcut,
+  .commandbar .selector {
+    display: none;
   }
 
   .main {
