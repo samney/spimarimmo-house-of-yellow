@@ -427,3 +427,28 @@
     max-width: none;
   }
 }
+
+/* ===== Demo marker on listing cards (C-02) =====
+
+   The homepage cards already carry this treatment (`.eventCard .tag.isDemo`);
+   the route listings need it too now that `DemoContentRepository` can supply
+   them. Same visual language on purpose — ink reversed out of paper so it reads
+   as a caveat rather than as another status pill — and it is real text, with
+   the ring only reinforcing it.
+
+   A visitor must never be shown a fabricated date that looks validated, so this
+   is driven by the record's own `demo` flag arriving through the seam, not by a
+   component remembering to ask. */
+.cardItem__demo {
+  display: inline-block;
+  margin-bottom: var(--space-2xs);
+  padding: 0.15em 0.6em;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+  box-shadow: inset 0 0 0 1px var(--on-inverse);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

@@ -51,6 +51,7 @@ export default async function EtudesDeCas({ params }: { params: Promise<{ locale
                     const intro = String(page.sections[0]?.body.intro ?? "");
                     return (
                       <li key={page.slug} className="cardItem">
+                        {page.demo ? <span className="cardItem__demo">Démo</span> : null}
                         <span className="cardKicker text medium">{t("cardKicker")}</span>
                         <h2 className="text medium">
                           <Link href={`/etudes-de-cas/${page.slug.slice(PREFIX.length)}`}>

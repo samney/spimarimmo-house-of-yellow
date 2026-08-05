@@ -76,6 +76,11 @@ export interface NormalizedPage {
   readonly seo: NormalizedSeo | null;
   /** Opaque version of the rendered content, for cache and evidence keys. */
   readonly contentVersion: string;
+  /** True when this record came from the demo fixture adapter rather than from
+      real content. Surfaces MUST render a visible `Démo` marker when it is set —
+      the honesty gate (`C-02`) depends on it reaching the UI, not on a component
+      remembering to ask. Absent for real content. */
+  readonly demo?: boolean;
 }
 
 export interface NormalizedSection {
@@ -114,6 +119,11 @@ export interface NormalizedEvent {
   readonly venue: NormalizedVenue | null;
   readonly publicationState: PublicationState;
   readonly contentVersion: string;
+  /** True when this record came from the demo fixture adapter rather than from
+      real content. Surfaces MUST render a visible `Démo` marker when it is set —
+      the honesty gate (`C-02`) depends on it reaching the UI, not on a component
+      remembering to ask. Absent for real content. */
+  readonly demo?: boolean;
 }
 
 export interface NormalizedVenue {

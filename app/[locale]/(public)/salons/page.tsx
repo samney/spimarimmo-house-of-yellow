@@ -48,6 +48,7 @@ export default async function Salons({ params }: { params: Promise<{ locale: str
                 <Reveal as="ul" className="spimarCardList" role="list">
                   {events.map((event) => (
                     <li key={event.slug} className="cardItem">
+                      {event.demo ? <span className="cardItem__demo">Démo</span> : null}
                       <span className="cardKicker text medium">
                         {event.venue
                           ? `${event.venue.city} — ${event.venue.countryCode}`
