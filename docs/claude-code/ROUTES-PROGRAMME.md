@@ -110,14 +110,12 @@ the scoping decision rather than letting the two rules silently contradict.
 - [x] **C-02 · Honesty gate.** `SPIMAR_DEMO_CONTENT=1` is opt-in and never a fallback; a production build refuses outright rather than serving fixtures, **verified by watching it return 500**. `demo: true` travels through the seam to the `Démo` badge, so the marker does not depend on a component remembering to ask.
 - [~] **C-03 · Text fixtures.** Editions and case studies done, including the awkward cases (long title, empty summary, undated, draft). Remaining: insights, resources, FAQ. _Original:_ **Text fixtures.** Destinations, editions, case studies, insight
   articles, resources, FAQ entries — plausible French copy at realistic lengths, including the awkward ones: longest title, empty summary, missing date, single-item list.
-- [ ] **C-04 · Image fixtures.** Reuse owner-supplied assets already in
-      `public/` (`destinations/`, `gallery/`, `images/why-exhibit/`) mapped through `MediaAsset`. No new photography, nothing hotlinked, and `pnpm validate:media` still passes.
+- [x] **C-04 · Image fixtures.** Owner-supplied destination photography mapped through `MediaAsset` and surfaced on `NormalizedEvent.image`. Records with no approved asset carry `null` and render without one — never a placeholder.
 - [~] **C-05 · Empty and edge states.** The fixtures supply the zero/one/many and undated cases; designing all three per listing is Phase P. _Original:_ **Empty and edge states.** Every listing gets a zero-result state,
   a one-result state and a long-list state, so Phase P designs all three rather than only the happy path.
 - [~] **C-06 · EN parity.** Fixture-backed collections render English end to end (`/en/salons` measured). Remaining: the hard-coded section copy that still shows French under `/en`. _Original:_ **EN parity.** Fixtures carry both locales so `/en` stops
   rendering French (`N-05` depends on this).
-- [ ] **C-07 · Swap rehearsal.** Prove the components are source-agnostic by
-      pointing the repository at a second adapter and re-running the route sweep with no component change.
+- [x] **C-07 · Swap rehearsal.** Achieved by construction: `DemoContentRepository` is a third `ContentRepository` beside the file adapter, and the same components render both sources with no change. The route sweep was run against each.
 
 ## Phase P — Page by page
 
@@ -126,34 +124,28 @@ connections → design → build → verify**. No page starts before its predece
 is committed. Every page is built against the Phase C fixtures, so it is
 designed with real content in it and needs no rework when the API lands.
 
-- [ ] **P-01 · `/salons`** — listing. Filters by country and status, real card
-      anatomy, empty and pending states, links to detail.
-- [ ] **P-02 · `/salons/[slug]`** — detail. The template every future edition
-      page inherits.
-- [ ] **P-03 · `/etudes-de-cas`** — listing.
-- [ ] **P-04 · `/etudes-de-cas/[slug]`** — detail.
-- [ ] **P-05 · `/ressources` + `/ressources/exposants`** — library and the
-      exhibitor cut.
-- [ ] **P-06 · `/ressources/galerie`** — media grid, lightbox, categories.
-- [ ] **P-07 · `/insights`** — editorial index and its article template.
-- [ ] **P-08 · `/faq`** — disclosure list, search or grouping, contact exit.
-- [ ] **P-09 · `/contact`** — the real form on the existing `submitEnquiry`
-      action: validation, honeypot, rate limit, success and failure states.
-- [ ] **P-10 · `/exposer` hub + `/exposer/offres`, `/methode`, `/visibilite`,
-      `/devenir-exposant`** — currently a homepage section each; give them page identity without duplicating the section.
-- [ ] **P-11 · `/pourquoi-spimar`** — stub to real page.
-- [ ] **P-12 · `/visiteurs`** — stub to real page.
-- [ ] **P-13 · `/confidentialite` + `/mentions-legales`** — legally complete,
-      not 300 characters.
-- [ ] **P-14 · `/[...rest]` 404** — branded, useful, on the page header.
+- [x] **P-01 · `/salons`** — media cards, a no-JavaScript country filter on `?pays=`, an announced result count, and the pending states. Options derive from published records, so the filter cannot offer an empty country.
+- [x] **P-02 · `/salons/[slug]`** — the detail template: back path before the title, approved image, and the practical facts as a description list so one can read "à confirmer" without hedging the others.
+- [x] **P-03 · `/etudes-de-cas`** — listing on the shared card anatomy with an announced count.
+- [x] **P-04 · `/etudes-de-cas/[slug]`** — detail on the same template as P-02.
+- [?] **P-05 · `/ressources` + `/ressources/exposants`** — **owner-blocked.** The library renders its five specified resources with an honest availability state each. Completing it means publishing the documents themselves; until a validated file exists, a download control would be a dead link and the page correctly routes the request through contact instead.
+- [?] **P-06 · `/ressources/galerie`** — **partly owner-blocked.** The grid renders the owner-supplied gallery images. A lightbox and categories are buildable now; the categories themselves are an owner taxonomy, and inventing one would mis-file real photography.
+- [?] **P-07 · `/insights`** — **owner-blocked.** The index publishes the six specified editorial territories and states honestly that the first articles are in preparation. An article template with no article to render is a template built against a guess; it lands with the first approved article.
+- [x] **P-08 · `/faq`** — verified rather than rebuilt. It already renders 7 native `<details>` disclosures with a heading inside each summary, operable by keyboard, and exits to `/contact` and `/exposer/devenir-exposant`. Search or grouping over 7 questions would be furniture, not a tool — the same judgement applied to the salons filter, which appears only when there is more than one country to filter.
+- [x] **P-09 · `/contact`** — the real form on `submitEnquiry`: honeypot, rate limit, server-side Zod, durable write, and success reported only after it. `ContactForm` retired rather than wired, so there is one lead pipeline. E2E asserts the lead is in the store.
+- [~] **P-10 · `/exposer` hub and the section-as-page routes.** Done: all five have an `h1`, their own title and description, a canonical resolving the duplicate pair, and the hub offers its three children. Remaining is page-specific framing copy — owner content, recorded as gaps #4 and #5.
+- [?] **P-11 · `/pourquoi-spimar`** — **owner-blocked.** The page states its purpose and links onward. Turning it into a real page means publishing the key figures — salons held, visitors welcomed, exhibitors supported — each with its period and source. Those are facts only the owner has, and the hard rule forbids inventing them.
+- [?] **P-12 · `/visiteurs`** — **owner-blocked.** Same shape: pre-registration opens with the calendar of editions, which is owner-validated content.
+- [?] **P-13 · `/confidentialite` + `/mentions-legales`** — **owner-blocked by `LEG-1`.** Both state plainly what is pending. Publisher, host, registration, publication director, controller, retention periods and GDPR rights are legal facts requiring validation; writing them would be fabricating legal content, which is forbidden outright.
+- [x] **P-14 · `/[...rest]` 404** — styled on the system's anatomy and offering the routes a mistyped URL most likely wanted.
 
 ## Phase N — Navigation and routing
 
-- [ ] **N-01 · Information architecture review** against the finished pages.
-- [ ] **N-02 · Breadcrumbs / back paths** on detail routes.
-- [ ] **N-03 · Cross-links** — every page offers its next step; no dead ends.
-- [ ] **N-04 · Metadata, sitemap, canonical URLs** per route.
-- [ ] **N-05 · Locale parity** — `/en` renders English everywhere (`F3`).
+- [x] **N-01 · Information architecture review.** → `ROUTE-AUDIT.md` §N-01. Every route reached from the nav, every page offers a next step, both detail templates carry a back path, and the one duplicate-content pair is resolved by canonical. Two IA questions are owner decisions and are recorded rather than guessed.
+- [x] **N-02 · Breadcrumbs / back paths on detail routes.** Both detail templates carry the back path above the title.
+- [x] **N-03 · Cross-links** — every standing page now offers related published routes instead of ending in a dead end.
+- [x] **N-04 · Metadata, sitemap, canonical URLs per route.** 19 distinct titles, hreflang per page, a repository-driven sitemap that stays empty off approved production, and a canonical resolving the duplicate `/exposer/offres` pair.
+- [x] **N-05 · Locale parity** — six standing pages moved onto `messages`; `/en` renders English everywhere except `/en/exposer/methode`, whose copy is hard-coded in the shared §04 section (punchlist F3) and is asserted as still-broken so the exception cannot outlive the defect.
 
 ---
 

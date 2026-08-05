@@ -20,13 +20,13 @@ Phase 2 goals, in order:
 
 ## The contracts (load per task, not per session)
 
-| Task touches…            | Read                                      |
-| ------------------------ | ----------------------------------------- |
-| Public UI                | `docs/claude-code/DESIGN-CONTRACT.md`     |
-| Any code                 | `docs/claude-code/ENGINEERING-CONTRACT.md` |
-| Product scope/copy       | `docs/spimar/` canonical specs, section mocks in `docs/assets-UX-UI/` |
-| Backend/data             | `docs/backend/`, `lib/spimar/`, `lib/contact/` |
-| Past decisions           | `docs/claude-code/DECISIONS.md` (append-only) |
+| Task touches…      | Read                                                                  |
+| ------------------ | --------------------------------------------------------------------- |
+| Public UI          | `docs/claude-code/DESIGN-CONTRACT.md`                                 |
+| Any code           | `docs/claude-code/ENGINEERING-CONTRACT.md`                            |
+| Product scope/copy | `docs/spimar/` canonical specs, section mocks in `docs/assets-UX-UI/` |
+| Backend/data       | `docs/backend/`, `lib/spimar/`, `lib/contact/`                        |
+| Past decisions     | `docs/claude-code/DECISIONS.md` (append-only)                         |
 
 `.claude/rules/` holds the always-loaded short rules; the contracts carry the
 detail. If a rule and a contract disagree, the newest owner decision wins —

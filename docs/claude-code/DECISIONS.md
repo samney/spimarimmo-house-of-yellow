@@ -1366,3 +1366,55 @@ collection; every card carries its badge.
 The fixtures include what a layout actually breaks on — a title long enough to
 wrap, an empty summary, an undated edition, a draft in each collection — because
 a layout that only survives tidy data is not designed yet.
+
+## D-040 — Phases P and N: what shipped, and where the programme stops
+
+**Date:** 2026-08-05 · **Scope:** `P-*`, `N-*` · **Status:** implemented
+
+Thirty of the programme's items are done, seven are partial with the remainder
+named, and six are blocked on owner-supplied content. Nothing is left merely
+unstarted.
+
+**The route work.** `/salons` and `/etudes-de-cas` are real listings — media
+cards, an announced result count, and a country filter that is a plain GET form
+on `?pays=`. That last choice is worth recording as a decision rather than a
+default: it works with no JavaScript, gives every filtered view a shareable URL,
+and keeps the page a Server Component. A client filter would have bought nothing
+over a short, server-rendered list.
+
+Both detail routes share one template, so a visitor who has read an edition page
+knows where the exit is on a case study. `/contact` is a working form on
+`submitEnquiry` — the one hardened lead action — which retired `ContactForm`
+rather than wiring it, because two acquisition pipelines is one too many.
+
+**The navigation work.** 19 distinct titles where there was one, hreflang per
+page, a repository-driven sitemap that stays empty off approved production, and
+a canonical resolving the `/exposer/offres` duplicate pair. Six standing pages
+moved onto `messages`, so `/en` stops serving French.
+
+**Two judgements against building something.** The FAQ was verified rather than
+rebuilt: 7 native disclosures with headings, keyboard-operable, exits present —
+search or grouping over 7 questions is furniture. And `/salons` originally had a
+"no results" state, which I removed on discovering it was unreachable by
+construction: the filter options derive from the published records. Unreachable
+code that reads like a designed state is how a later session builds against
+something that cannot happen — the same defect class as the dead `.inview` CSS
+this programme opened by deleting.
+
+**Where it stops, and why that is the right place.** Six items are blocked
+because finishing them means publishing facts only the owner has: key figures
+with their period and source (`P-11`), the editions calendar (`P-12`), the
+resource documents themselves (`P-05`), the first articles (`P-07`), a gallery
+taxonomy (`P-06`), and legal text (`P-13`, blocker `LEG-1`). Each page states
+its pending condition honestly today. Writing any of it would be exactly the
+fabrication the hard rules forbid, and would be far more expensive to detect
+later than to decline now.
+
+**A closing note on method.** Five separate times this session a check passed or
+failed for a reason unrelated to what it tested: an orphan guard matching a word
+in a comment, a route sweep run against a 500ing stylesheet, `test.use({
+reducedMotion })` silently doing nothing, an honesty detector blind to every
+price in euros, and a link check reading escaped HTML instead of the DOM. Every
+one was caught by testing the instrument rather than trusting its output. That
+is now the recorded practice: **a check is not evidence until it has been
+observed failing.**

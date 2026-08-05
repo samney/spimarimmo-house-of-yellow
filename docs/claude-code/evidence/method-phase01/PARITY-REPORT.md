@@ -11,15 +11,15 @@
 
 Full data: `report-before.json`. Tolerance 24/channel; ratios are differing-pixel shares.
 
-| Region | Mode | Diff ratio | Assessment |
-| --- | --- | --- | --- |
-| introduction | strict | 0.114 | Anchors aligned: heading glyphs 94 vs 96 ref, support top 217 = ref, CTA box 1138×61 = ref. Residual is glyph-form difference (Poppins vs reference grotesk) plus heading line pitch (ref ≈ 1.23 lh vs 1.2). |
-| phase-rail | strict | 0.059 | Item tops 383/545/707 = ref (measured 382/535/698 glyph rows; ±2 px). Residual is glyph antialiasing. |
-| phase-copy | strict | 0.180 | Numeral bounds match; title breaks Préparer / la demande as ref (controlled break — see intentional deltas); body 3 lines = ref; chips 2×3 = ref; CTA underline y ≈ 800 = ref. Residual is glyph forms and chip pill widths (Poppins ~15 % wider). |
-| dossier | perceptual | 0.377 | Reviewed by overlay: folder bounds, DOSSIER EXPOSANT label rows 394–446 = ref, document slot bounds within ~10 px, status rail top 796 = ref. Material is a CSS recreation of generated photography (see intentional deltas). |
-| deliverables | strict | 0.198 | Heading row 330, cards y 366/486/604/723 h 103, stack x 1184 w 266 = ref. Residual: thumb interiors are neutral bars (no approved imagery) and title x-offset 118 vs 143 (kept single-line with repo font). |
-| footer-progress | strict | 0.075 | Track y 921 = ref; markers x 80/573/963 = ref; pill 36 px on line = ref. |
-| **whole image** | — | **0.185** | The 0.001 global target is not met and is not claimed. |
+| Region          | Mode       | Diff ratio | Assessment                                                                                                                                                                                                                                         |
+| --------------- | ---------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| introduction    | strict     | 0.114      | Anchors aligned: heading glyphs 94 vs 96 ref, support top 217 = ref, CTA box 1138×61 = ref. Residual is glyph-form difference (Poppins vs reference grotesk) plus heading line pitch (ref ≈ 1.23 lh vs 1.2).                                       |
+| phase-rail      | strict     | 0.059      | Item tops 383/545/707 = ref (measured 382/535/698 glyph rows; ±2 px). Residual is glyph antialiasing.                                                                                                                                              |
+| phase-copy      | strict     | 0.180      | Numeral bounds match; title breaks Préparer / la demande as ref (controlled break — see intentional deltas); body 3 lines = ref; chips 2×3 = ref; CTA underline y ≈ 800 = ref. Residual is glyph forms and chip pill widths (Poppins ~15 % wider). |
+| dossier         | perceptual | 0.377      | Reviewed by overlay: folder bounds, DOSSIER EXPOSANT label rows 394–446 = ref, document slot bounds within ~10 px, status rail top 796 = ref. Material is a CSS recreation of generated photography (see intentional deltas).                      |
+| deliverables    | strict     | 0.198      | Heading row 330, cards y 366/486/604/723 h 103, stack x 1184 w 266 = ref. Residual: thumb interiors are neutral bars (no approved imagery) and title x-offset 118 vs 143 (kept single-line with repo font).                                        |
+| footer-progress | strict     | 0.075      | Track y 921 = ref; markers x 80/573/963 = ref; pill 36 px on line = ref.                                                                                                                                                                           |
+| **whole image** | —          | **0.185**  | The 0.001 global target is not met and is not claimed.                                                                                                                                                                                             |
 
 ## Intentional differences (each per an allowed category)
 
@@ -32,15 +32,15 @@ Full data: `report-before.json`. Tolerance 24/channel; ratios are differing-pixe
 
 ## Commands and results (final state)
 
-| Command | Result |
-| --- | --- |
-| `pnpm typecheck` | PASS |
-| `pnpm lint` | 1 pre-existing error (`SiteHeader.tsx:63`, present in the inherited uncommitted diff; absent at HEAD) + 6 pre-existing warnings. New method files are clean. |
-| `pnpm test` (vitest) | 81/81 PASS (includes 9 new content-contract tests) |
-| `pnpm build` | PASS (`/[locale]/visual-test/method` is ƒ dynamic) |
-| `pnpm playwright test tests/e2e/method-section.spec.ts` | 7/7 PASS (content per phase, geometry lock across phases, tablist keyboard, Phase suivante, homepage order) |
-| `pnpm test:e2e` (full) | 40 pass / 4 fail — all 4 in flows untouched by this change set (salons draft leak ×1, editor publish ×1, project-detail inventory ×2); the failing routes belong to the inherited uncommitted work captured in `pre-existing-working-tree.diff`. |
-| axe scan (`.methodSection`, all 3 phases) | 0 violations |
+| Command                                                 | Result                                                                                                                                                                                                                                           |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm typecheck`                                        | PASS                                                                                                                                                                                                                                             |
+| `pnpm lint`                                             | 1 pre-existing error (`SiteHeader.tsx:63`, present in the inherited uncommitted diff; absent at HEAD) + 6 pre-existing warnings. New method files are clean.                                                                                     |
+| `pnpm test` (vitest)                                    | 81/81 PASS (includes 9 new content-contract tests)                                                                                                                                                                                               |
+| `pnpm build`                                            | PASS (`/[locale]/visual-test/method` is ƒ dynamic)                                                                                                                                                                                               |
+| `pnpm playwright test tests/e2e/method-section.spec.ts` | 7/7 PASS (content per phase, geometry lock across phases, tablist keyboard, Phase suivante, homepage order)                                                                                                                                      |
+| `pnpm test:e2e` (full)                                  | 40 pass / 4 fail — all 4 in flows untouched by this change set (salons draft leak ×1, editor publish ×1, project-detail inventory ×2); the failing routes belong to the inherited uncommitted work captured in `pre-existing-working-tree.diff`. |
+| axe scan (`.methodSection`, all 3 phases)               | 0 violations                                                                                                                                                                                                                                     |
 
 Interaction evidence (production build, console error-free): `?methodPhase=` deep link applies; Arrow/Home/End move the tablist with roving tabindex; Phase suivante advances 01→02→03 and is hidden on 03.
 

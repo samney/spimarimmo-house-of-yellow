@@ -77,3 +77,35 @@ Ranked by cost to a visitor, not by effort.
 Items 2, 6 and 9 are in homepage files held by a parallel session and are
 flagged rather than edited, per the programme's stop conditions. Everything else
 is Phase C or Phase P work.
+
+---
+
+## N-01 · Information architecture, reviewed against the finished pages
+
+Re-checked 2026-08-05 after Phases P and N landed.
+
+**What holds.** Every route in the navigation resolves — none 404s, and none is
+a dead end: each page now offers at least one published next step, either as a
+listing, a header CTA, or the related-routes block on a standing page. Both
+detail templates (`/salons/[slug]`, `/etudes-de-cas/[slug]`) carry their back
+path above the title rather than only in the outro. The funnel reads
+consistently: evidence surfaces (`/salons`, `/etudes-de-cas`) lead to the offer
+(`/exposer/*`), which leads to the two conversion exits (`/contact`,
+`/exposer/devenir-exposant`).
+
+**What was fixed.** `/exposer/offres` and `/exposer/devenir-exposant` served
+identical bodies at two URLs and competed with each other in search; the
+catalogue URL now owns the content by canonical.
+
+**Two questions are the owner's, and are not guessed here.**
+
+1. **Should `/exposer/devenir-exposant` become a distinct page**, or redirect to
+   `/exposer/offres`? Today it is an alias with a canonical. Making it a real
+   page means deciding what it does that the catalogue does not — a commercial
+   decision about where the application starts, not a technical one.
+2. **Do the five section-as-page routes want their own framing?** They serve a
+   homepage section at their own URL, which works and is honest, but none has a
+   lead written for the page rather than for the section. Writing one means
+   writing copy, which is content the owner validates.
+
+Both are recorded as gaps #4 and #5 and neither blocks anything shipped.
