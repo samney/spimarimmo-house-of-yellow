@@ -55,7 +55,7 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       Owner chose the demo-badge route over publishing unvalidated dates: every
       card carrying sample figures shows a "DÉMO" pill on its face, in real
       text. Dropping a card's `demo` block returns it to "à confirmer" /
-      "à publier". → `COMMIT`
+      "à publier". → `b910b14`
 - [ ] **C4 · [08] Ils nous font confiance — merge the two duplicate versions**,
       keeping the first direction's UI/UX.
 - [ ] **C5 · [08] — approved copy.** "Les promoteurs au cœur de l'expérience
