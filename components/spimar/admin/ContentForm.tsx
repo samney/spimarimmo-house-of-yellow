@@ -19,7 +19,7 @@ export function ContentForm({
   initial,
   canPublish,
   state: initialState,
-  submitLabel = "Save",
+  submitLabel = "Enregistrer",
 }: {
   action: (prev: ActionResult | null, form: FormData) => Promise<ActionResult>;
   fields: Field[];
@@ -31,10 +31,10 @@ export function ContentForm({
   const [result, formAction, pending] = useActionState(action, null);
 
   return (
-    <form className="adminForm" action={formAction}>
+    <form className="form" action={formAction}>
       {result ? (
         <div
-          className={`adminNotice ${result.ok ? "adminNotice--ok" : "adminNotice--error"}`}
+          className={`notice ${result.ok ? "notice--success" : "notice--error"}`}
           role="status"
           aria-live="polite"
         >
@@ -47,21 +47,28 @@ export function ContentForm({
       {fields.map((field) => {
         if (field.kind === "localized") {
           return (
-            <fieldset key={field.name}>
-              <legend>{field.label}</legend>
-              {field.hint ? <p className="adminHint">{field.hint}</p> : null}
-              <div className="adminRow">
-                {(["en", "fr"] as const).map((loc) => (
-                  <div key={loc}>
-                    <label htmlFor={`${field.name}_${loc}`}>{loc.toUpperCase()}</label>
+            <fieldset
+              key={field.name}
+              style={{ border: 0, padding: 0, margin: 0, minInlineSize: 0 }}
+            >
+              <legend className="field__label">{field.label}</legend>
+              {field.hint ? <p className="field__hint">{field.hint}</p> : null}
+              <div className="row" style={{ marginBlockStart: 8 }}>
+                {(["fr", "en"] as const).map((loc) => (
+                  <div className="field" key={loc}>
+                    <label className="field__label" htmlFor={`${field.name}_${loc}`}>
+                      {loc.toUpperCase()}
+                    </label>
                     {field.multiline ? (
                       <textarea
+                        className="textarea"
                         id={`${field.name}_${loc}`}
                         name={`${field.name}_${loc}`}
                         defaultValue={initial[`${field.name}_${loc}`] ?? ""}
                       />
                     ) : (
                       <input
+                        className="input"
                         id={`${field.name}_${loc}`}
                         name={`${field.name}_${loc}`}
                         defaultValue={initial[`${field.name}_${loc}`] ?? ""}
@@ -74,42 +81,49 @@ export function ContentForm({
           );
         }
         return (
-          <div key={field.name}>
-            <label htmlFor={field.name}>
+          <div className="field" key={field.name}>
+            <label className="field__label" htmlFor={field.name}>
               {field.label}
-              {field.kind === "text" && field.required ? " *" : ""}
+              {field.kind === "text" && field.required ? (
+                <span className="field__required" aria-hidden="true">
+                  *
+                </span>
+              ) : null}
             </label>
             <input
+              className="input"
               id={field.name}
               name={field.name}
               type={field.kind === "date" ? "date" : "text"}
               required={field.kind === "text" ? field.required : undefined}
               defaultValue={initial[field.name] ?? ""}
             />
-            {field.hint ? <p className="adminHint">{field.hint}</p> : null}
+            {field.hint ? <p className="field__hint">{field.hint}</p> : null}
           </div>
         );
       })}
 
-      <div>
-        <label htmlFor="state">Publication</label>
-        <select id="state" name="state" defaultValue={initialState}>
-          <option value="draft">Draft — not visible publicly</option>
+      <div className="field">
+        <label className="field__label" htmlFor="state">
+          Publication
+        </label>
+        <select className="select" id="state" name="state" defaultValue={initialState}>
+          <option value="draft">Brouillon — non visible publiquement</option>
           <option value="published" disabled={!canPublish}>
-            Published — visible on the public site
+            Publié — visible sur le site public
           </option>
         </select>
         {!canPublish ? (
-          <p className="adminHint">
-            Your role can edit but not publish. Saving keeps this a draft; the server enforces this
-            regardless of what the form sends.
+          <p className="field__hint">
+            Votre rôle peut modifier mais pas publier. L’enregistrement reste un brouillon ; le
+            serveur applique cette règle quelle que soit la valeur envoyée.
           </p>
         ) : null}
       </div>
 
       <div>
-        <button className="adminButton adminButton--primary" type="submit" disabled={pending}>
-          {pending ? "Saving..." : submitLabel}
+        <button className="btn btn--primary" type="submit" disabled={pending}>
+          {pending ? "Enregistrement…" : submitLabel}
         </button>
       </div>
     </form>

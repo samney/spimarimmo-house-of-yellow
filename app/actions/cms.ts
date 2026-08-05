@@ -258,8 +258,8 @@ export async function updateLeadAction(
      the detail route the activity trail keeps rendering the pre-update server
      snapshot, so a note appears to vanish. */
   const refresh = () => {
-    revalidatePath("/admin/leads");
-    revalidatePath(`/admin/leads/${id}`);
+    revalidatePath("/admin/crm/leads");
+    revalidatePath(`/admin/crm/leads/${id}`);
   };
 
   if (intent === "note") {
@@ -332,8 +332,8 @@ export async function moveLeadStage(form: FormData): Promise<void> {
     );
   }
 
-  revalidatePath("/admin/pipeline");
-  revalidatePath("/admin/leads");
-  revalidatePath(`/admin/leads/${id}`);
-  redirect("/admin/pipeline");
+  revalidatePath("/admin/crm/pipeline");
+  revalidatePath("/admin/crm/leads");
+  revalidatePath(`/admin/crm/leads/${id}`);
+  redirect("/admin/crm/pipeline");
 }

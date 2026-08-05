@@ -1,0 +1,143 @@
+/* ===========================================================================
+   SPIMAR Control — admin token layer (ADM-010 … ADM-013)
+
+   Three layers, per blueprint 05 §1:
+     foundation (raw)  →  brand semantic  →  admin component
+
+   The admin inherits BRAND PRIMITIVES ONLY from the public system — gold, ink,
+   black, paper, Poppins. It never binds to the public `--text-*`, `--space-*`
+   or `--radius-*` scales: those are viewport-relative (vw) because an editorial
+   page should scale with the composition, whereas an operator's table row must
+   not resize with the window. Every value here is fixed px. (ADR-A2)
+   =========================================================================== */
+
+.spimarControl {
+  /* --- environment and surfaces (blueprint 08 §6.1) --------------------- */
+  --admin-bg: #e9e5e2;
+  --admin-shell: #f5f3f1;
+
+  --surface-0: #ffffff;
+  --surface-1: #f7f6f4;
+  --surface-2: #efedea;
+  --surface-inverse: #151515;
+
+  /* --- text ------------------------------------------------------------- */
+  --text-primary: #171717;
+  --text-secondary: #6d6964;
+  /* Blueprint gives #9b9690 (file 08) / #99938d (file 05). #8a857f is the
+     nearest value that still clears 4.5:1 on --surface-0; tertiary text is
+     used for metadata that must stay legible, so contrast wins over the
+     illustrative hex. */
+  --text-tertiary: #8a857f;
+  --text-inverse: #ffffff;
+
+  /* --- borders ---------------------------------------------------------- */
+  --border-soft: #e6e2de;
+  --border-strong: #d5d0ca;
+
+  /* --- brand (ADR-A3: the accepted public gold, not the blueprint's
+         illustrative #c9972f) ------------------------------------------- */
+  --brand-gold: var(--spimar-gold);
+  --brand-gold-deep: var(--spimar-gold-deep);
+  --brand-gold-soft: #fdf6df;
+  --brand-ink: var(--spimar-ink);
+
+  /* --- semantic feedback ------------------------------------------------ */
+  --success: #4f7d59;
+  --warning: #b47a2d;
+  --danger: #bd4f4f;
+  --info: #526f91;
+  --success-soft: #edf3ee;
+  --warning-soft: #f9f1e5;
+  --danger-soft: #f8eded;
+  --info-soft: #eceff3;
+  --neutral-soft: var(--surface-2);
+
+  /* Status hues the blueprint names without hexes (05 §7). Derived here at
+     the same muted saturation as the semantic set, and recorded rather than
+     scattered across components. */
+  --violet-neutral: #6a5f86;
+  --violet-soft: #f0eef5;
+  --teal-neutral: #40736f;
+  --teal-soft: #ebf2f1;
+
+  --focus-ring: var(--spimar-focus);
+  --selection: var(--brand-gold-soft);
+
+  /* --- spacing: 8-point base (blueprint 05 §4) -------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+
+  /* --- radii (blueprint 08 §8.2) ---------------------------------------- */
+  --radius-shell: 32px;
+  --radius-panel: 22px;
+  --radius-card: 16px;
+  --radius-control: 12px;
+  --radius-small: 8px;
+  --radius-pill: 999px;
+
+  /* --- elevation: exactly two shadows exist (blueprint 08 §8.3) --------- */
+  --shadow-shell: 0 24px 70px rgba(20, 16, 12, 0.08), 0 2px 10px rgba(20, 16, 12, 0.04);
+  --shadow-card: 0 5px 18px rgba(20, 16, 12, 0.035);
+
+  /* --- typography (blueprint 08 §7.2) ----------------------------------- */
+  --font-display: "Poppins-font", sans-serif;
+  --font-ui: "Poppins-font", sans-serif;
+  --text-display: 40px;
+  --leading-display: 1.02;
+  --text-metric: 34px;
+  --text-section: 22px;
+  --text-card: 16px;
+  --text-body: 14px;
+  --text-label: 12px;
+  --text-meta: 11px;
+  /* Weights are unspecified in the package; fixed here so components never
+     invent their own. */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* --- shell dimensions (blueprint 05 §4 / 08 §9.2) --------------------- */
+  --rail-width: 68px;
+  --sidebar-width: 248px;
+  --commandbar-height: 60px;
+  --row-height: 54px;
+  --row-height-compact: 46px;
+  --touch-target: 44px;
+
+  /* --- motion (blueprint 08 §19.1) -------------------------------------- */
+  --dur-micro: 140ms;
+  --dur-panel: 210ms;
+  --dur-overlay: 260ms;
+  --dur-chart: 380ms;
+  --ease-admin: cubic-bezier(0.2, 0, 0.15, 1);
+
+  /* --- z-index ladder: unspecified in the package, defined here once
+         (blueprint 05 §2 requires the category) ------------------------- */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-rail: 20;
+  --z-drawer: 40;
+  --z-dialog: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+}
+
+/* Reduced motion is honoured globally by app/globals.css; this keeps the
+   admin's own transitions honest if that rule is ever scoped. */
+@media (prefers-reduced-motion: reduce) {
+  .spimarControl {
+    --dur-micro: 0ms;
+    --dur-panel: 0ms;
+    --dur-overlay: 0ms;
+    --dur-chart: 0ms;
+  }
+}
