@@ -106,7 +106,7 @@ Legend: `[x]` done · `[ ]` open · `[~]` in progress · `[?]` needs owner input
       identically at y=134. Five `/exposer/*` and `/ressources/exposants`
       routes render a homepage section as their body and keep that section's
       header — they need `components/public/home/*`, held by another session.
-      → `COMMIT`
+      → `377f16d`
 - [ ] **G3 · Six routes are thin stubs** (260–340 characters of body text):
       `/visiteurs`, `/contact`, `/pourquoi-spimar`, `/exposer`,
       `/confidentialite`, `/mentions-legales`. `/contact` has no form;
