@@ -84,6 +84,13 @@ export function ProofSection({
             </h2>
             <p className="proofLead">{t("lead")}</p>
           </div>
+          {/* The section's one global action, restrained and outlined so the
+              heading stays the strongest object — the gold CTA inside the
+              stage belongs to the case, not to the section. */}
+          <Link className="proofHeaderCta" href={caseStudiesHref}>
+            <span>{t("allCases")}</span>
+            <ArrowRightIcon className="proofCtaIcon" aria-hidden="true" />
+          </Link>
           {/* Owner note (2026-08-04): one CTA only — the in-panel case CTA
               stays; the duplicate header CTA is removed. */}
         </header>
@@ -98,7 +105,7 @@ export function ProofSection({
                 className="proofVideoPoster"
                 fill
                 sizes="(max-width: 580px) 88vw, 52vw"
-                src="/images/mre/investissement-patrimonial.jpg"
+                src="/images/proof/case-study-video-poster.webp"
               />
               <span className="proofVideoScrim" />
               <span className="proofPlayMain">
@@ -140,7 +147,7 @@ export function ProofSection({
                       className="proofVoiceImg"
                       fill
                       sizes="12vw"
-                      src="/images/mre/retour-au-maroc.jpg"
+                      src="/images/proof/decision-maker-testimonial.webp"
                     />
                     <span className="proofVoicePlay">
                       <PlaySolidIcon className="proofVoicePlayIcon" />

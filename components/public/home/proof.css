@@ -20,8 +20,38 @@
 
 /* --- Header (same hierarchy as section 08) ---------------------------------- */
 
+/* Label and heading left, one restrained action right on the eyebrow line —
+   the same header row every other section uses. The action is outlined, not
+   filled: the spec keeps the heading as the strongest object and reserves the
+   gold fill for the case CTA inside the stage. */
+.proofHeaderCta {
+  align-items: center;
+  align-self: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+.proofHeaderCta:hover {
+  background: var(--on-surface);
+  color: var(--surface-page);
+}
+.proofHeaderCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
 .proofHeader {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   gap: var(--space-lg);
   justify-content: space-between;
@@ -101,7 +131,11 @@
   padding: var(--space-md);
 }
 
+/* 27.7vw = 425px at the reference viewport, the height the spec gives the
+   video and case-summary row. It was left to the case column's content, which
+   made the row 499 and pushed the whole stage 96px past the reference. */
 .proofMain {
+  block-size: 27.7vw;
   display: grid;
   gap: var(--space-md);
   grid-template-columns: 1.55fr 1fr;
@@ -192,7 +226,9 @@
 .proofCase {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: 0.7vw;
+  justify-content: space-between;
+  min-block-size: 0;
   padding-block: var(--space-xs);
 }
 
@@ -373,13 +409,15 @@
 
 /* --- Attribution funnel rail --------------------------------------------------- */
 
+/* The journey band appears once and carries six nodes plus the method note;
+   at 114 it sat tight under the media row against the reference's 130. */
 .proofFunnel {
   align-items: center;
   border-top: 1px solid var(--border-inverse);
   display: flex;
   gap: var(--space-md);
   margin-top: var(--space-md);
-  padding-top: var(--space-md);
+  padding-block: var(--space-md) 0.6vw;
 }
 
 .proofSteps {
@@ -459,6 +497,7 @@
   display: flex;
   gap: var(--space-md);
   margin-top: var(--space-md);
+  padding-block: var(--space-md);
 }
 
 .proofMethodItem {
