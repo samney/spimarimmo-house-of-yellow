@@ -1196,3 +1196,43 @@ guard is not evidence until its failures have been inspected.
 
 **Deliberately not fixed here.** Sections 03, 04 and 11 hold 98 of the 112 and
 are homepage files held by a parallel session — `D-03` works them down.
+
+## D-036 — The button's touch target, and the last loose hexes outside the sections
+
+**Date:** 2026-08-05 · **Scope:** `D-03` (partial), `D-05` (`F1`) · **Status:** implemented
+
+**The button was 16.3px tall at 390.** Measured against 54px at 1920 and 42.7px
+at 1024 — under even the 24px AA minimum of WCAG 2.5.8, on the primary call to
+action of every section on the site.
+
+The cause is worth stating because it explains how a ladder that is otherwise
+restated regime by regime still produced it: the button's height _is_ its
+`line-height`. That was restated at 1080 as `4.167vw` and then never restated at
+580, so the 1080 value kept applying all the way down to 390. **A vw
+line-height cannot express a floor** — every value in a linear-vw system scales
+to zero — so no amount of care in choosing the ratio would have prevented this.
+The floor is now stated as one, `min-height: 44px`, and the flex centring the
+button already had does the rest. The icon was restated with it: at `1.319vw` it
+rendered 5.1px across, present but not usable.
+
+Measured after: **44px at both 580 and 390**, icon 28px and 18.8px, no label
+clipping, no horizontal overflow. Desktop geometry is untouched.
+
+**The consent banner was the last loose-hex cluster outside the section files.**
+Ten raw values — `#fff`, `#222`, `#f2f2f2`, `#444`, `#f9f9f9` — a cold neutral
+grey scale sitting inside a warm paper product, which is what it looked like:
+those greys were the default palette of the component this was ported from, not
+a decision anyone made for SPIMAR. Bound to `--surface-raised`, `--on-surface`,
+`--border-subtle`, `--on-surface-muted`, `--surface-muted`, `--on-inverse`.
+
+It also carried `color: green` where `--feedback-positive` exists. **The hex
+guard walked straight past it**, which is a gap worth more than the single fix:
+named CSS colours are the same violation wearing a friendlier face. The guard
+now checks for them too, and since that was the only one, it is held to zero
+rather than to a baseline.
+
+`shell.css` is consequently clean and has been removed from the known-dirty
+list, so it is now protected from regressing rather than merely tolerated. The
+loose-hex baseline drops **112 → 102**; the remainder is `why-exhibit.css` (57),
+`method.css` (21), `visibility.css` (20) and three single-hex files, all held by
+a parallel session.

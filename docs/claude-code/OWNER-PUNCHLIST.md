@@ -119,9 +119,7 @@ and `A-01`. This file keeps the loose homepage and chrome remarks.
 
 ## F — Debt surfaced while working
 
-- [ ] **F1 · Global `.button` collapses on mobile.** `line-height: 4.167vw` is
-      ~16px at 390 for every section that uses it, and under the 44px touch
-      minimum. Section 03 has a scoped floor; the global fix is its own slice.
+- [x] **F1 · Global `.button` collapses on mobile.** Fixed 2026-08-05 (D-036). Measured 16.3px tall at 390 against 54px at 1920 — under even the 24px AA minimum of WCAG 2.5.8. Cause: the height is the `line-height`, restated at 1080 and never at 580, and a vw line-height cannot express a floor. Now 44px at both 580 and 390, with the icon and label gutter restated to match.
 - [ ] **F2 · Section 04 header is off-pattern.** `methodSection` renders
       47px/700 with a 17px lead against the shipped 53px/600 + 23px.
 - [ ] **F3 · Section 03 copy is hard-coded French.** No `messages` namespace, so

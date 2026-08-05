@@ -64,20 +64,28 @@ function looseHexes() {
 }
 
 /* Recorded 2026-08-05, after the comment and mask-stop false positives were
-   removed. Lower these as D-03 lands; never raise them. */
-const BASELINE = { looseHexTotal: 112 };
+   removed. Was 112; `shell.css` paid off its 10 the same day (D-03). Lower it
+   again as each section lands; never raise it. */
+const BASELINE = { looseHexTotal: 102 };
 
-/* Files already carrying debt when the ratchet was installed. A file NOT on
-   this list is expected to stay clean — that is what catches new drift. */
+/* Files still carrying debt. `shell.css` is deliberately NOT here any more —
+   having been cleaned, it is now held to zero like any other clean file. */
 const KNOWN_DIRTY = new Set([
   "/components/public/home/why-exhibit/why-exhibit.css", // 57
   "/components/public/home/method/method.css", // 21
   "/components/public/home/visibility.css", // 20
-  "/components/public/global/shell.css", // 10
   "/components/public/home/events.css", // 2
   "/components/public/home/home.css", // 1
   "/components/public/home/resources.css", // 1
 ]);
+
+/* Named CSS colours are the same violation wearing a friendlier face, and the
+   hex check walks straight past them. `shell.css` had `color: green` on the
+   consent banner's "always active" label while `--feedback-positive` existed
+   for exactly that. That was the only one; the rule is therefore zero, not a
+   baseline. */
+const NAMED_COLOUR =
+  /:\s*(red|green|blue|black|white|gray|grey|orange|purple|yellow|pink|brown|cyan|magenta|silver|gold|navy|teal|olive|lime|maroon)\s*(;|$|!)/i;
 
 describe("the L3 token layer derives from L2 rather than restating it", () => {
   it("does not grow the loose-hex debt", () => {
@@ -92,7 +100,7 @@ describe("the L3 token layer derives from L2 rather than restating it", () => {
   it("keeps the baseline honest — lower it when the debt is paid down", () => {
     const found = looseHexes();
     /* Without this the baseline silently becomes a licence: the count could
-       drop to zero and the number here would still read 112, so the next
+       drop to zero and the number here would still read 102, so the next
        regression would pass unnoticed. */
     expect(
       found.length,
@@ -119,5 +127,23 @@ describe("the L3 token layer derives from L2 rather than restating it", () => {
         h.file.includes("/components/public/pages/") || h.file.includes("/components/primitives/"),
     );
     expect(shared.map((h) => `${h.file}:${h.line} ${h.value}`)).toEqual([]);
+  });
+});
+
+describe("colour is never named in prose form", () => {
+  it("uses no named CSS colour anywhere in a component stylesheet", () => {
+    const offenders: string[] = [];
+    for (const file of cssFiles(join(ROOT, "components"))) {
+      const source = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, (c) =>
+        c.replace(/[^\n]/g, " "),
+      );
+      source.split("\n").forEach((line, i) => {
+        if (NAMED_COLOUR.test(line)) {
+          const rel = file.replace(ROOT, "").split("\\").join("/");
+          offenders.push(`${rel}:${i + 1} — ${line.trim()}`);
+        }
+      });
+    }
+    expect(offenders, "bind to an L2 token; `green` is not a design decision").toEqual([]);
   });
 });

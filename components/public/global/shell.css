@@ -555,14 +555,20 @@ footer .bottomFooter a {
   color: var(--hoy-ink);
 }
 
-/* ===== Consent banner (bottom-right opt-in dialog) ===== */
+/* ===== Consent banner (bottom-right opt-in dialog) =====
+
+   Bound to L2 (D-03). This was the last loose-hex cluster outside the section
+   files: a cold neutral grey scale — #fff / #222 / #f2f2f2 / #444 / #f9f9f9 —
+   sitting inside a warm paper product, plus a bare `color: green` where
+   `--feedback-positive` exists. The greys were not a design decision, they
+   were the default palette of the component this was ported from. */
 .hoy-consent {
   position: fixed;
   right: 0.694vw;
   bottom: 0.694vw;
   width: min(526px, calc(100vw - 20px));
-  background: #fff;
-  color: #222;
+  background: var(--surface-raised);
+  color: var(--on-surface);
   border-radius: 12px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   z-index: var(--z-consent);
@@ -574,7 +580,7 @@ footer .bottomFooter a {
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid var(--border-subtle);
 }
 .hoy-consent .cmplz-title {
   font-size: 15px;
@@ -598,7 +604,7 @@ footer .bottomFooter a {
   gap: 8px;
 }
 .hoy-consent .cmplz-category {
-  border: 1px solid #f2f2f2;
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 8px 10px;
 }
@@ -613,7 +619,7 @@ footer .bottomFooter a {
   flex: 1;
 }
 .hoy-consent .cmplz-always-active {
-  color: green;
+  color: var(--feedback-positive);
   font-size: 12px;
 }
 .hoy-consent .cmplz-category-toggle {
@@ -624,28 +630,28 @@ footer .bottomFooter a {
 .hoy-consent .cmplz-description {
   margin-top: 6px;
   font-size: 12px;
-  color: #444;
+  color: var(--on-surface-muted);
 }
 .hoy-consent .cmplz-buttons {
   display: flex;
   gap: 8px;
   padding: 12px 16px;
-  border-top: 1px solid #f2f2f2;
+  border-top: 1px solid var(--border-subtle);
 }
 .hoy-consent .cmplz-btn {
   flex: 1;
   padding: 8px 10px;
   font-size: 14px;
   border-radius: 6px;
-  border: 1px solid #f2f2f2;
-  background: #f9f9f9;
-  color: #222;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-muted);
+  color: var(--on-surface);
   cursor: pointer;
 }
 .hoy-consent .cmplz-btn.cmplz-accept {
   background: var(--hoy-ink);
   border-color: var(--hoy-ink);
-  color: #fff;
+  color: var(--on-inverse);
 }
 
 /* ===== Tablet regime (<=1080px) ===== */
@@ -690,6 +696,32 @@ footer .bottomFooter a {
 
 /* ===== Mobile regime (<=580px) ===== */
 @media (max-width: 580px) {
+  /* The button's height is its `line-height`, restated at 1080 as `4.167vw`
+     and then never restated here — so the 1080 value kept applying all the way
+     down and a button measured **16.3px tall at 390** (54px at 1920, 42.7px at
+     1024). That is under even the 24px AA minimum of WCAG 2.5.8, on the
+     primary call to action of every section.
+
+     A vw line-height cannot express a floor, which is why the bug survived a
+     ladder that is otherwise carefully restated per regime. So the floor is
+     stated as one: `min-height` guarantees the target at any width in this
+     regime, and the flex centring the button already had does the rest. The
+     icon and the label's reserved gutter are restated with it — at 1.319vw the
+     icon rendered 5.1px across, present but not usable. */
+  .button {
+    min-height: 44px;
+    line-height: 1.4;
+    padding: 0 var(--space-md);
+    border-radius: var(--radius-pill);
+  }
+  .button .fixedLabel {
+    padding-right: 7vw;
+  }
+  .button .icon svg {
+    width: 4.828vw;
+    height: 4.828vw;
+  }
+
   header .headerBar .contentWrapper {
     line-height: 15.517vw;
   }
