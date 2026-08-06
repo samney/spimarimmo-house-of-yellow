@@ -6,13 +6,11 @@ import { BENEFIT_IDS, isBenefitId, type EvidenceSlot } from "./why-exhibit-types
 
 /* The four-state content contract. These tests pin the approved copy from the
    SPIMARIMMO_WHY_EXHIBIT references — a paraphrase is a failure, not a
-   variation — and guard the rules the section must never break: real CTA
-   routes, no invented figures, every mapped asset present in the repository. */
+   variation — and guard the rules the section must never break: CTAs staged
+   at "#" per D-026 until the owner routes them, no invented figures, every
+   mapped asset present in the repository. */
 
 const REPOSITORY_ROOT = join(import.meta.dirname, "..", "..", "..", "..");
-
-/* Real shipped routes only; the section may never invent a destination. */
-const REAL_ROUTES = new Set(["/exposer/methode", "/salons", "/etudes-de-cas", "/exposer/offres"]);
 
 const REQUIRED_SLOTS: EvidenceSlot[] = [
   "leftTop",
@@ -70,10 +68,10 @@ describe("why-exhibit content contract", () => {
     expect(support.proofLine).toBe("De la préparation au suivi post-salon.");
   });
 
-  it("points every CTA at a real shipped route", () => {
+  it("stages every CTA at '#' until the owner routes them (D-026)", () => {
     for (const benefit of WHY_EXHIBIT_CONTENT.benefits) {
       expect(benefit.cta.label.length).toBeGreaterThan(0);
-      expect(REAL_ROUTES.has(benefit.cta.href)).toBe(true);
+      expect(benefit.cta.href).toBe("#");
     }
   });
 

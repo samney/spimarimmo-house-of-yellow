@@ -20,7 +20,7 @@ import { WHATSAPP_NUMBER } from "@/lib/spimar/contact-details";
    trigger carries aria-expanded/aria-controls. The entrance is a CSS
    transition with a reduced-motion fallback (none). Over the yellow footer
    reveal the widget swaps to its inverse scheme so the gold trigger never
-   sits on gold (IntersectionObserver on the footer). */
+   sits on gold (scroll-position detection — see below). */
 
 const PRESET_KEYS = ["exhibit", "editions", "brochure", "advisor"] as const;
 
@@ -54,17 +54,26 @@ export function WhatsAppWidget() {
     };
   }, [open]);
 
-  /* Contrast switch: when the yellow footer reveal enters the widget's
-     bottom band, swap to the inverse scheme. */
+  /* Contrast switch (owner checklist: "dynamic color switch after reaching
+     the yellow section"). The footer is position: fixed BEHIND the page, so
+     an IntersectionObserver on it fires permanently — the yellow is only
+     actually visible in the last footer-height of scroll space, where the
+     page has scrolled past. Real scroll math instead: swap schemes once the
+     reveal reaches the widget's corner. */
   useEffect(() => {
-    const footer = document.querySelector("footer");
+    const footer = document.querySelector<HTMLElement>("footer");
     if (!footer) return;
-    const io = new IntersectionObserver(
-      (entries) => setOverFooter(entries.some((entry) => entry.isIntersecting)),
-      { rootMargin: "0px 0px -15% 0px", threshold: 0 },
-    );
-    io.observe(footer);
-    return () => io.disconnect();
+    const update = () => {
+      const revealStart = document.documentElement.scrollHeight - footer.offsetHeight;
+      setOverFooter(window.scrollY + window.innerHeight >= revealStart + 48);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   const wantsHandoff = WHATSAPP_NUMBER !== null && selected !== null;

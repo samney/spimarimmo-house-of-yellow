@@ -98,6 +98,24 @@ test("whatsapp assistant drafts a preset and hands off to the published line", a
   await expect(trigger).toBeFocused();
 });
 
+/* Owner checklist "# whatsap": the widget swaps to its inverse ink scheme
+   only once the yellow footer reveal reaches its corner — gold on the page,
+   ink over the footer, and back again on the way up. */
+test("whatsapp widget switches contrast over the yellow footer reveal", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const widget = page.locator(".waWidget");
+  await expect(widget).toBeVisible();
+  await expect(widget).not.toHaveAttribute("data-inverse", "true");
+
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expect(widget).toHaveAttribute("data-inverse", "true");
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(widget).not.toHaveAttribute("data-inverse", "true");
+});
+
 /* Brochure quick preview (D-026): the [01] trigger opens a modal with the
    real PDF embedded and a genuine download action on the same file; Escape
    closes and restores focus. */
