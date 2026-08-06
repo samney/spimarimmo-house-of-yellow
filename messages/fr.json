@@ -988,5 +988,23 @@
     "title": "Le partenaire de référence des promoteurs immobiliers marocains à l’international.",
     "lead": "SPIMARIMMO organise des salons dédiés aux MRE et aux investisseurs internationaux, pour rencontrer une clientèle qualifiée prête à concrétiser son projet.",
     "proofLabel": "Ils exposent avec SPIMARIMMO"
+  },
+  "whatsapp": {
+    "chipTitle": "Besoin d'aide ?",
+    "chipSub": "Notre équipe vous répond",
+    "triggerLabel": "Ouvrir l'assistant WhatsApp",
+    "panelTitle": "Assistant SPIMARIMMO",
+    "status": "Réponse sous 24 h ouvrées",
+    "intro": "Choisissez une question pour préparer la conversation — elle s'ouvrira dans WhatsApp.",
+    "presetsLabel": "Questions préparées",
+    "presets": {
+      "exhibit": "Je souhaite exposer lors d'un prochain salon.",
+      "editions": "Quelles sont les prochaines éditions et destinations ?",
+      "brochure": "Je souhaite recevoir la brochure exposants.",
+      "advisor": "Je souhaite parler à un conseiller."
+    },
+    "draftLabel": "Votre message",
+    "send": "Continuer sur WhatsApp",
+    "pending": "Numéro WhatsApp en cours d'activation — ce bouton s'activera dès sa validation."
   }
 }

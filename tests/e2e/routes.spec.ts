@@ -85,6 +85,38 @@ test("homepage has no horizontal overflow at 390", async ({ page }) => {
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
+/* The floating WhatsApp assistant (D-026): opens a pre-chat panel, a preset
+   fills the draft, and — with no number supplied yet — the handoff button is
+   honestly disabled with the pending note. Escape closes and restores focus
+   to the trigger. */
+test("whatsapp widget opens, drafts a preset, and stays honest about the number", async ({
+  page,
+}) => {
+  await page.goto("/");
+  // The consent banner overlays the corner until answered — as for a real
+  // visitor, it is dealt with before the widget is reachable. A fresh
+  // context always shows it, so the click can rely on auto-wait instead of
+  // a racy count() against hydration.
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const trigger = page.getByRole("button", { name: /assistant WhatsApp/i });
+  await trigger.click();
+
+  const panel = page.locator(".waPanel");
+  await expect(panel).toBeVisible();
+
+  await panel.getByRole("button", { name: /brochure/i }).click();
+  await expect(panel.locator(".waDraft")).toContainText("brochure");
+
+  const send = panel.getByRole("button", { name: /Continuer sur WhatsApp/i });
+  await expect(send).toBeDisabled();
+  await expect(panel.locator(".waPending")).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(panel).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
 /* D-026 removed the hero's interaction entirely: no play cursor, no modal.
    What must hold instead: the stage exposes no interactive element (a hidden
    focusable surface would trap keyboard users on a control that does

@@ -1,0 +1,300 @@
+/* ==========================================================================
+   Floating WhatsApp assistant (D-026)
+   ==========================================================================
+   Chip + round trigger fixed to the bottom end corner, opening a pre-chat
+   panel of prepared questions. Binds only to L2 tokens. Over the yellow
+   footer reveal the widget carries data-inverse and swaps to the ink scheme
+   so gold never sits on gold.
+   ========================================================================== */
+
+.waWidget {
+  align-items: center;
+  bottom: var(--space-md);
+  display: flex;
+  gap: var(--space-xs);
+  inset-inline-end: var(--space-md);
+  position: fixed;
+  z-index: var(--z-whatsapp);
+}
+
+/* --- Idle chip -------------------------------------------------------------- */
+
+.waChip {
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0.4vw 1.4vw rgb(20 20 15 / 14%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1vw;
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+.waChipTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.waChipSub {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+}
+
+.waTrigger {
+  align-items: center;
+  background: var(--action-primary);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 0.4vw 1.4vw rgb(20 20 15 / 18%);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: 3.2vw;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
+  transition: transform var(--dur-micro) var(--ease-out-ref);
+  width: 3.2vw;
+}
+
+.waTrigger:hover {
+  transform: scale(1.06);
+}
+
+.waTrigger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.waTrigger svg {
+  fill: var(--action-on-primary);
+  height: 55%;
+  width: 55%;
+}
+
+/* Inverse scheme over the yellow footer reveal. */
+.waWidget[data-inverse] .waTrigger {
+  background: var(--surface-inverse);
+}
+
+.waWidget[data-inverse] .waTrigger svg {
+  fill: var(--on-inverse);
+}
+
+.waWidget[data-inverse] .waChip {
+  background: var(--surface-inverse);
+  border-color: var(--border-inverse);
+  color: var(--on-inverse);
+}
+
+.waWidget[data-inverse] .waChipSub {
+  color: var(--on-inverse-muted);
+}
+
+/* --- Panel ------------------------------------------------------------------- */
+
+.waPanel {
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  bottom: calc(100% + var(--space-xs));
+  box-shadow: 0 1vw 3vw rgb(20 20 15 / 22%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  inset-inline-end: 0;
+  padding: var(--space-sm);
+  position: absolute;
+  width: min(21vw, 88vw);
+  min-width: 300px;
+  animation: wa-panel-in var(--dur-fade) var(--ease-out-ref) both;
+}
+
+@keyframes wa-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5vw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waPanel {
+    animation: none;
+  }
+
+  .waTrigger {
+    transition: none;
+  }
+
+  .waTrigger:hover {
+    transform: none;
+  }
+}
+
+.waPanelHead {
+  align-items: center;
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.waPanelBadge {
+  align-items: center;
+  background: var(--action-primary);
+  border-radius: 50%;
+  display: inline-flex;
+  flex: none;
+  height: 2.2vw;
+  justify-content: center;
+  min-height: 34px;
+  min-width: 34px;
+  width: 2.2vw;
+}
+
+.waPanelBadge svg {
+  fill: var(--action-on-primary);
+  height: 55%;
+  width: 55%;
+}
+
+.waPanelHeadText {
+  display: flex;
+  flex-direction: column;
+}
+
+.waPanelTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.waPanelStatus {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+}
+
+.waPanelIntro {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.waPresets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.waPreset {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--text-support);
+  padding: var(--space-2xs) var(--space-sm);
+  text-align: start;
+  transition:
+    border-color var(--dur-micro),
+    background-color var(--dur-micro);
+}
+
+.waPreset:hover {
+  border-color: var(--action-primary);
+}
+
+.waPreset[aria-pressed="true"] {
+  background: var(--surface-accent);
+  border-color: var(--action-primary);
+}
+
+.waPreset:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.waDraft {
+  background: var(--surface-muted);
+  border-radius: var(--radius-md);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+.waDraftLabel {
+  color: var(--on-surface-muted);
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.waSend {
+  align-items: center;
+  background: var(--action-primary);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-xs);
+  justify-content: center;
+  padding: var(--space-2xs) var(--space-sm);
+  text-decoration: none;
+}
+
+.waSend svg {
+  fill: var(--action-on-primary);
+  height: 1.1em;
+  width: 1.1em;
+}
+
+.waSend:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.waSend:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.waPending {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  margin: 0;
+  text-align: center;
+}
+
+/* --- 580 restatement --------------------------------------------------------- */
+
+@media (max-width: 580px) {
+  .waWidget {
+    bottom: var(--space-sm);
+    inset-inline-end: var(--space-sm);
+  }
+
+  /* The chip competes with content on small screens; the trigger suffices. */
+  .waChip {
+    display: none;
+  }
+
+  .waTrigger {
+    height: 12vw;
+    width: 12vw;
+  }
+
+  .waPanel {
+    min-width: 0;
+    width: 88vw;
+  }
+}

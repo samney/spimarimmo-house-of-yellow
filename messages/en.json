@@ -988,5 +988,23 @@
     "title": "The reference partner of Moroccan property developers abroad.",
     "lead": "SPIMARIMMO runs exhibitions dedicated to Moroccans living abroad and international investors, to meet a qualified audience ready to act on its project.",
     "proofLabel": "They exhibit with SPIMARIMMO"
+  },
+  "whatsapp": {
+    "chipTitle": "Need help?",
+    "chipSub": "Our team replies to you",
+    "triggerLabel": "Open the WhatsApp assistant",
+    "panelTitle": "SPIMARIMMO assistant",
+    "status": "Reply within 24 business hours",
+    "intro": "Pick a question to prepare the conversation — it will open in WhatsApp.",
+    "presetsLabel": "Prepared questions",
+    "presets": {
+      "exhibit": "I would like to exhibit at an upcoming show.",
+      "editions": "What are the next editions and destinations?",
+      "brochure": "I would like to receive the exhibitor brochure.",
+      "advisor": "I would like to talk to an advisor."
+    },
+    "draftLabel": "Your message",
+    "send": "Continue on WhatsApp",
+    "pending": "WhatsApp number pending activation — this button goes live once validated."
   }
 }
