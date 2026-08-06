@@ -135,10 +135,15 @@
    video and case-summary row. It was left to the case column's content, which
    made the row 499 and pushed the whole stage 96px past the reference. */
 .proofMain {
-  block-size: 27.7vw;
+  /* A FLOOR, not a fixed height: the case column (head, logo, copy, CTA and
+     the voices card) is taller than 27.7vw on wide screens, and a fixed
+     block-size let it overflow the panel straight over the funnel strip
+     below (owner report, 2026-08-07). The video plane still stretches to
+     whatever row the column sets. */
   display: grid;
   gap: var(--space-md);
   grid-template-columns: 1.55fr 1fr;
+  min-block-size: 27.7vw;
 }
 
 /* --- Video plane (decorative illustration) ----------------------------------- */
