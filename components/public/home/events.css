@@ -150,18 +150,17 @@
     transform 0.3s;
 }
 .eventCard:hover .bottomButton,
-.eventCard:focus-visible .bottomButton {
+.eventCard:focus-within .bottomButton {
   opacity: 1;
   transform: none;
 }
 
-/* The reveal alone is not a focus indicator: it is identical to the hover
-   state, so a keyboard user cannot tell focus from hover. The card carries a
-   real ring, in the same vocabulary as every other focusable surface. */
-.eventCard:focus-visible {
+/* The card is a plain surface now (D-026); its action link is the focusable
+   element. focus-within reveals the hidden button when tabbed to, and the
+   link itself carries the ring in the shared focus vocabulary. */
+.eventCard .bottomButton .button:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
-  border-radius: var(--radius-md);
 }
 .eventCard .bottomButton .button {
   display: flex;

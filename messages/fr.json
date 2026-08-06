@@ -36,27 +36,33 @@
     "indicators": {
       "events": {
         "label": "Salons organisés",
-        "caption": "Éditions internationales"
+        "caption": "Éditions internationales",
+        "value": "12"
       },
       "visitors": {
         "label": "Visiteurs accueillis",
-        "caption": "Audience qualifiée"
+        "caption": "Audience qualifiée",
+        "value": "45 000"
       },
       "exhibitors": {
         "label": "Exposants accompagnés",
-        "caption": "Suivi de bout en bout"
+        "caption": "Suivi de bout en bout",
+        "value": "320"
       },
       "countries": {
         "label": "Pays couverts",
-        "caption": "Réseau international"
+        "caption": "Réseau international",
+        "value": "6"
       },
       "leads": {
         "label": "Leads générés",
-        "caption": "Intentions détectées"
+        "caption": "Intentions détectées",
+        "value": "12 500"
       },
       "satisfaction": {
         "label": "Taux de satisfaction",
-        "caption": "Expérience mesurée"
+        "caption": "Expérience mesurée",
+        "value": "94 %"
       }
     }
   },
@@ -133,7 +139,6 @@
     "eyebrow": "Votre visibilité",
     "title": "Une présence amplifiée avant, pendant et après chaque salon.",
     "lead": "Un dispositif média et commercial coordonné pour attirer, engager et convertir une audience qualifiée.",
-    "cta": "Découvrir le dispositif",
     "tabsLabel": "Phases du dispositif",
     "channelsLabel": "Canaux activés",
     "phaseCounter": "Phase {num} / 03",
@@ -813,7 +818,9 @@
         "calendar": "Calendrier des salons",
         "checklist": "Checklist de préparation",
         "report": "Exemple de rapport"
-      }
+      },
+      "available": "Disponible",
+      "validatedVersion": "Version validée 2026"
     },
     "analyses": {
       "label": "Analyses pour décider",
@@ -985,7 +992,19 @@
     "pendingNote": "Premiers articles en préparation",
     "outro": "En attendant les premiers articles :",
     "outroResources": "Ressources",
-    "outroSalons": "Voir les salons"
+    "outroSalons": "Voir les salons",
+    "filterLabel": "Filtrer par catégorie",
+    "filterAll": "Tous les articles",
+    "categories": {
+      "marche": "Marché",
+      "conseils": "Conseils",
+      "analyses": "Analyses"
+    },
+    "fixturesNote": "Articles prévisionnels — sources et signatures publiées après validation.",
+    "readingTime": "{minutes} min de lecture",
+    "readArticle": "Lire l'article",
+    "backToBlog": "Retour au blog",
+    "outroCta": "Devenir exposant"
   },
   "resourcesPage": {
     "label": "Ressources",
@@ -1018,7 +1037,9 @@
     "outroContact": "Contactez-nous",
     "outroInsights": "Lire le blog",
     "outroExposants": "Ressources exposants",
-    "outroGallery": "Voir la galerie"
+    "outroGallery": "Voir la galerie",
+    "availableNow": "Disponible",
+    "requestResource": "Demander ce document"
   },
   "salonsPage": {
     "label": "Salons",
@@ -1051,7 +1072,9 @@
     "lead": "La bibliothèque complète des visuels de salon, classée par catégorie. Chaque visuel est présenté avec son statut : aucune image n’est rattachée à une édition sans validation.",
     "navLabel": "Catégories de la galerie",
     "outro": "Continuer :",
-    "outroLibrary": "Bibliothèque de ressources"
+    "outroLibrary": "Bibliothèque de ressources",
+    "filterAll": "Tout voir",
+    "paginationLabel": "Pages de la galerie"
   },
   "caseStudies": {
     "label": "Études de cas",
@@ -1066,15 +1089,27 @@
     "outroCta": "Devenir exposant",
     "countOne": "1 étude de cas publiée",
     "countMany": "{count} études de cas publiées",
-    "breadcrumb": "Vous êtes ici"
+    "breadcrumb": "Vous êtes ici",
+    "publishedTitle": "Études publiées",
+    "fixturesTitle": "Études de cas",
+    "fixturesNote": "Contenus prévisionnels — clients, chiffres et attributions publiés après validation.",
+    "filterEditionLabel": "Filtrer par salon",
+    "filterObjectiveLabel": "Filtrer par objectif",
+    "filterAll": "Tous les salons",
+    "filterEmpty": "Aucune étude ne correspond à ces filtres.",
+    "objectives": {
+      "notoriete": "Notoriété",
+      "leads": "Leads",
+      "ventes": "Ventes"
+    },
+    "readCase": "Lire l'étude de cas",
+    "resultsTitle": "Résultats",
+    "paginationLabel": "Pages des études de cas"
   },
   "hero": {
     "eyebrow": "Promoteurs immobiliers",
     "title": "Le partenaire de référence des promoteurs immobiliers marocains à l’international.",
     "lead": "SPIMARIMMO organise des salons dédiés aux MRE et aux investisseurs internationaux, pour rencontrer une clientèle qualifiée prête à concrétiser son projet.",
-    "playVideo": "Voir la vidéo",
-    "playerLabel": "Vidéo de présentation SPIMARIMMO",
-    "closePlayer": "Fermer la vidéo",
     "proofLabel": "Ils exposent avec SPIMARIMMO",
     "cursorPlay": "Voir",
     "cursorVideo": "la vidéo"
@@ -1157,5 +1192,10 @@
     "close": "Fermer l'aperçu",
     "frameTitle": "Aperçu du document PDF",
     "fallback": "Si l'aperçu ne s'affiche pas dans votre navigateur, utilisez « Télécharger le PDF »."
+  },
+  "resourcesExposantsPage": {
+    "label": "Ressources exposants",
+    "title": "Tout ce qu'un exposant doit avoir en main.",
+    "lead": "Dossier marché, boîte à outils, analyses et réponses aux questions fréquentes — réunis sur une seule page."
   }
 }

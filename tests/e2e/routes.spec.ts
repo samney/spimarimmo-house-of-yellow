@@ -127,19 +127,16 @@ test("brochure preview opens with a real PDF and download action", async ({ page
   await expect(trigger).toBeFocused();
 });
 
-test("hero video opens in an accessible modal player", async ({ page }) => {
+/* D-026 removed the hero's interaction entirely: no play cursor, no modal.
+   What must hold instead: the stage exposes no keyboard-reachable element
+   (the mounted <video> carries tabindex="-1" by design), and the background
+   footage autoplays muted on its own. */
+test("hero is a non-interactive autoplaying visual", async ({ page }) => {
   await page.goto("/");
-  const deny = page.getByRole("button", { name: /deny/i });
-  if (await deny.count()) await deny.first().click();
-
-  await page.locator(".heroStage").click();
-  // Scoped to the player: the consent banner is also a role=dialog (non-modal).
-  const dialog = page.locator(".heroModalPanel");
-  await expect(dialog).toBeVisible();
-  await expect(dialog).toHaveAttribute("role", "dialog");
-  await expect(dialog).toHaveAttribute("aria-modal", "true");
-  await expect(dialog.locator("video")).toHaveAttribute("controls", "");
-
-  await page.keyboard.press("Escape");
-  await expect(dialog).toHaveCount(0);
+  const stage = page.locator(".headerBigBlock .heroStage");
+  await expect(stage).toBeVisible();
+  await expect(stage.locator('button, a, [tabindex]:not([tabindex="-1"])')).toHaveCount(0);
+  const video = stage.locator("video");
+  await expect(video).toHaveAttribute("autoplay", "");
+  await expect(video).toHaveJSProperty("muted", true);
 });

@@ -194,6 +194,19 @@
   width: 50%;
 }
 
+/* Headline figure per indicator — owner-authorized placeholder values
+   (D-026), disclaimed by the card footer's validation note. Tabular numerals
+   so the six figures share one rhythm; on this dark card it reads in the
+   section's gold. */
+.impactValue {
+  color: var(--action-primary);
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin: 0;
+}
+
 /* The tile's own heading, on --text-small-title. It steps up from the caption
    in size, weight and colour — previously both sat at --text-support and
    collapsed into one grey block, so no tile had a readable first line and the

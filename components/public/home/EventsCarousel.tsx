@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
 import { PlusIcon } from "@/components/public/global/logos";
 import { DestinationPlaceholder } from "./DestinationPlaceholder";
 
@@ -56,12 +55,6 @@ const DESTINATION_IMAGES = new Set([
   "abu-dhabi",
   "londres",
 ]);
-
-const STATUS_LABEL: Record<EventStatus, string> = {
-  "prochaine-edition": "Prochaine édition",
-  "a-venir": "À venir",
-  historique: "Historique disponible",
-};
 
 /* Pixels per second. Slow enough to read a card title while it moves. */
 const SPEED = 22;
@@ -130,12 +123,11 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
         aria-label={expanded ? undefined : "Destinations, défilement horizontal"}
         tabIndex={expanded ? undefined : 0}
       >
+        {/* Owner note (D-026): per-salon routes are retired — the network is
+            small enough for the expanding grid to carry it. Cards are plain
+            surfaces; the reveal button is the staged action. */}
         {events.map((event) => (
-          <Link
-            key={`${event.country}-${event.slug}`}
-            className="project eventCard"
-            href={`/salons/${event.slug}`}
-          >
+          <div key={`${event.country}-${event.slug}`} className="project eventCard">
             <span className="innerProject">
               <span className="imageWrapper">
                 <span className="innerImage">
@@ -155,23 +147,16 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                   )}
                 </span>
                 <span className="tags">
-                  <span className="tag textTitle">{STATUS_LABEL[event.status]}</span>
                   <span className="tag textTitle">{event.country}</span>
                   {/* Real text, not a colour cue: the figures on this card are
                       samples and a visitor is told so on the card itself. */}
                   {event.demo ? <span className="tag textTitle isDemo">Démo</span> : null}
                 </span>
-                {/* Revealed on hover, as in the reference: hidden at rest and
-                    offset 9px, so the media reads first. The card is a link, so
-                    this is decoration over an already-actionable surface and
-                    never the only route to the destination.
-
-                    Dark variant (2026-08-05): the gold pill had no edge against
-                    a bright photograph, and none at all where it met this
-                    section's gold surface. Ink fill separates from any frame
-                    and matches the section's own CTA. */}
-                <span className="bottomButton" aria-hidden="true">
-                  <span className="button dark">
+                {/* Revealed on hover. Staged to "#" (owner note, D-026) until
+                    destination content is validated; the ink fill keeps the
+                    2026-08-05 contrast fix against bright photography. */}
+                <span className="bottomButton">
+                  <a className="button dark" href="#">
                     <span className="icon">
                       <PlusIcon />
                     </span>
@@ -187,7 +172,7 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                     <span className="icon">
                       <PlusIcon />
                     </span>
-                  </span>
+                  </a>
                 </span>
               </span>
               <span className="projectContent">
@@ -211,7 +196,7 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                 </span>
               </span>
             </span>
-          </Link>
+          </div>
         ))}
       </div>
 

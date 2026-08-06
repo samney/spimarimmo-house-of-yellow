@@ -3,9 +3,9 @@
    ==========================================================================
    The accepted fullscreen view, rebuilt on the SPIMAR identity: white
    wordmark, the mobile site's copy on the token type ladder, owner-supplied
-   exhibition footage autoplaying behind, and a click-to-play modal. No side
-   columns, no centred glyph, no stars, no quote, no CTA (the header owns it).
-   Binds only to L2 tokens.
+   exhibition footage autoplaying behind. Non-interactive by owner note
+   (D-026): no cursor box, no modal. No side columns, no centred glyph, no
+   stars, no quote, no CTA (the header owns it). Binds only to L2 tokens.
    ========================================================================== */
 
 .headerBigBlock .heroStage {
@@ -14,16 +14,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
   overflow: hidden;
-}
-
-.headerBigBlock .heroStage:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: -4px;
 }
 
 .heroBackgroundVideo {
@@ -42,8 +33,6 @@
     linear-gradient(180deg, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 25%) 38%, rgb(0 0 0 / 70%) 100%),
     linear-gradient(90deg, rgb(0 0 0 / 45%) 0%, transparent 55%);
 }
-
-/* Pointer-only affordance; the stage button carries the semantics. */
 
 /* Centred hierarchy: eyebrow -> statement -> lead, optically centred in the
    frame with the proof strip anchored below it. */
@@ -142,93 +131,6 @@
   opacity: 0.95;
 }
 
-/* --- Modal player ---------------------------------------------------------- */
-
-.heroModal {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-overlay);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-md);
-  background: rgb(0 0 0 / 92%);
-  backdrop-filter: blur(6px);
-  animation: heroModalIn var(--dur-fade) var(--ease-out-ref) both;
-}
-
-@keyframes heroModalIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.heroModalPanel {
-  position: relative;
-  width: 80%;
-  max-width: 80vw;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--surface-inverse);
-  box-shadow: 0 2vw 6vw rgb(0 0 0 / 55%);
-}
-
-.heroModalMedia,
-.heroModalMedia.mediaPlane {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-}
-
-.heroModalVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: var(--spimar-black);
-}
-
-.heroModalClose {
-  position: absolute;
-  top: var(--space-sm);
-  right: var(--space-sm);
-  z-index: var(--z-content);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.6vw;
-  height: 2.6vw;
-  min-width: 34px;
-  min-height: 34px;
-  border: 1px solid rgb(255 255 255 / 30%);
-  border-radius: 50%;
-  background: rgb(0 0 0 / 55%);
-  color: var(--on-inverse);
-  cursor: pointer;
-}
-
-.heroModalClose:hover {
-  background: rgb(0 0 0 / 80%);
-}
-
-.heroModalClose:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.heroModalCloseIcon {
-  width: 55%;
-  height: 55%;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .heroModal {
-    animation: none;
-  }
-}
-
 @media (max-width: 1080px) {
   .headerBigBlock .heroContent {
     width: min(88vw, 100%);
@@ -255,11 +157,4 @@
     height: 5vw;
     max-width: 22vw;
   }
-
-  .heroModalPanel {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Touch has no hover: the cursor box never applies. */
 }

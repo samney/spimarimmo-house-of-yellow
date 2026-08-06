@@ -1,7 +1,4 @@
-import { Link } from "@/i18n/navigation";
-import { Marquee } from "@/components/primitives/motion/Marquee";
 import { SectionEyebrow } from "../SectionEyebrow";
-import { MethodArrowIcon } from "./method-icons";
 import type { MethodSectionContent } from "./method-types";
 
 /* Warm-ivory editorial introduction: eyebrow, two-line headline, supporting
@@ -27,7 +24,6 @@ export function MethodIntroduction({
   headingId: string;
   headingLevel?: "h1" | "h2";
 }) {
-  const { label, href } = content.globalCta;
   /* The heading breaks at its em dash, always — two lines at every viewport.
 
      Presentational only, like `titleBreakAfterWord` on the phases: the stored
@@ -53,19 +49,7 @@ export function MethodIntroduction({
         )}
       </Heading>
       <p className="methodIntro__support">{content.description}</p>
-      <span className="methodIntro__actions">
-        <Link className="button methodIntro__cta" href={href} title={label}>
-          <span className="label">
-            <span className="fixedLabel">{label}</span>
-            <span className="innerLabel">
-              <Marquee text={label} direction="left" speed={90} />
-            </span>
-          </span>
-          <span className="icon">
-            <MethodArrowIcon />
-          </span>
-        </Link>
-      </span>
+      {/* The global accompaniment CTA was removed by owner note (D-026). */}
     </header>
   );
 }

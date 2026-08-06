@@ -43,8 +43,12 @@ import type { SectionHeadingProps } from "./section-heading";
 
 type IconComponent = (props: { className?: string }) => React.JSX.Element;
 
-const TOOLS: readonly { key: string; format: string; Icon: IconComponent }[] = [
-  { key: "brochure", format: "PDF", Icon: DocIcon },
+/* The brochure is the one validated document (D-026): its tool row carries
+   a real download; the others stay honestly disabled. */
+const BROCHURE_PATH = "/documents/SPIMARIMMO_Brochure_Exposants_2026.pdf";
+
+const TOOLS: readonly { key: string; format: string; Icon: IconComponent; href?: string }[] = [
+  { key: "brochure", format: "PDF", Icon: DocIcon, href: BROCHURE_PATH },
   { key: "calendar", format: "XLSX", Icon: CalendarIcon },
   { key: "checklist", format: "PDF", Icon: ChecklistIcon },
   { key: "report", format: "PPTX", Icon: PieDocIcon },
@@ -104,7 +108,7 @@ export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadin
             {t("toolbox.label")}
           </p>
           <ul className="resTools">
-            {TOOLS.map(({ key, format, Icon }) => (
+            {TOOLS.map(({ key, format, Icon, href }) => (
               <li className="resTool" key={key}>
                 <div className="resToolHead">
                   <span className="resToolIconWrap" aria-hidden="true">
@@ -114,25 +118,34 @@ export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadin
                     <span className="resToolName">{t(`toolbox.items.${key}`)}</span>
                     <span className="resToolState">
                       <CheckCircleIcon className="resToolStateIcon" aria-hidden="true" />
-                      {t("toolbox.validatedRequired")}
+                      {href ? t("toolbox.available") : t("toolbox.validatedRequired")}
                     </span>
                   </span>
                 </div>
                 <p className="resToolMeta">
-                  {format} · FR · {t("toolbox.sourcePending")}
+                  {format} · FR ·{" "}
+                  {href ? t("toolbox.validatedVersion") : t("toolbox.sourcePending")}
                 </p>
-                {/* Disabled until a validated version exists — the button never
-                    fakes a download. */}
-                <button
-                  aria-disabled="true"
-                  className="resToolDownload"
-                  disabled
-                  title={t("toolbox.validatedRequired")}
-                  type="button"
-                >
-                  <DownloadIcon className="resBtnIcon" aria-hidden="true" />
-                  <span>{t("toolbox.download")}</span>
-                </button>
+                {href ? (
+                  /* The one validated document downloads for real (D-026). */
+                  <a className="resToolDownload" download href={href}>
+                    <DownloadIcon className="resBtnIcon" aria-hidden="true" />
+                    <span>{t("toolbox.download")}</span>
+                  </a>
+                ) : (
+                  /* Disabled until a validated version exists — the button
+                     never fakes a download. */
+                  <button
+                    aria-disabled="true"
+                    className="resToolDownload"
+                    disabled
+                    title={t("toolbox.validatedRequired")}
+                    type="button"
+                  >
+                    <DownloadIcon className="resBtnIcon" aria-hidden="true" />
+                    <span>{t("toolbox.download")}</span>
+                  </button>
+                )}
               </li>
             ))}
           </ul>
@@ -161,7 +174,7 @@ export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadin
                   {t("pendingSourceDate")}
                 </p>
               </div>
-              <Link className="resCtaGhost" href="/ressources">
+              <Link className="resCtaGhost" href="/insights/le-marche-mre-en-synthese">
                 <span>{t("analyses.read")}</span>
                 <ArrowRightIcon className="resBtnIcon" aria-hidden="true" />
               </Link>
@@ -169,7 +182,14 @@ export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadin
             <ul className="resAnalysisList">
               {(["strategy", "interview"] as const).map((key) => (
                 <li key={key}>
-                  <Link className="resAnalysisRow" href="/ressources">
+                  <Link
+                    className="resAnalysisRow"
+                    href={
+                      key === "strategy"
+                        ? "/insights/preparer-sa-strategie-salon"
+                        : "/insights/entretien-direction-commerciale"
+                    }
+                  >
                     <DocIcon className="resAnalysisRowIcon" aria-hidden="true" />
                     <span className="resAnalysisRowMeta">
                       <span className="resAnalysisRowTitle">{t(`analyses.items.${key}`)}</span>
@@ -219,7 +239,8 @@ export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadin
                 );
               })}
             </ul>
-            <Link className="resCtaGold resFaqCta" href="/ressources">
+            {/* Owner note (D-026): "all answers" lands on the real FAQ. */}
+            <Link className="resCtaGold resFaqCta" href="/faq">
               <span>{t("faq.all")}</span>
               <ArrowRightIcon className="resBtnIcon" aria-hidden="true" />
             </Link>

@@ -1,10 +1,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import { Marquee } from "@/components/primitives/motion/Marquee";
 import { MreExplorer } from "./MreExplorer";
 import { SectionEyebrow } from "./SectionEyebrow";
-import { DownloadIcon } from "./mreIcons";
 import {
   ArrowRightIcon,
   CalendarIcon,
@@ -29,15 +26,7 @@ import {
  * record, not to a hard-coded asset path. The sidebar's shield line states the
  * same rule the data follows ("Sources vérifiées avant publication"). */
 
-type MreMarketSectionProps = {
-  readonly studyHref?: string;
-  readonly methodologyHref?: string;
-};
-
-export function MreMarketSection({
-  studyHref = "/ressources",
-  methodologyHref = "/ressources",
-}: MreMarketSectionProps) {
+export function MreMarketSection() {
   const t = useTranslations("mre");
 
   return (
@@ -51,21 +40,8 @@ export function MreMarketSection({
             </h2>
             <p className="mreLead">{t("lead")}</p>
           </div>
-          {/* The approved composition carries the study action twice: once in
-              the header row, once on the study panel. They are the same
-              destination, not two offers — the header one is reachable without
-              scrolling past the explorer, which is the point of it. */}
-          <Link className="button mreHeaderCta" href={studyHref} title={t("downloadStudy")}>
-            <span className="label">
-              <span className="fixedLabel">{t("downloadStudy")}</span>
-              <span className="innerLabel">
-                <Marquee text={t("downloadStudy")} direction="left" speed={90} />
-              </span>
-            </span>
-            <span className="icon">
-              <DownloadIcon />
-            </span>
-          </Link>
+          {/* The download CTA was removed by owner note (D-026): the étude is
+              not yet a published resource, so no control promises it. */}
         </header>
 
         <div className="mreLayout">
@@ -90,10 +66,9 @@ export function MreMarketSection({
               {t("study.title")}
             </h3>
             <p className="mreStudyText">{t("study.text")}</p>
-            <Link className="mreCta mreCtaWide" href={studyHref}>
-              <span>{t("downloadStudy")}</span>
-              <DownloadIcon className="mreCtaIcon" aria-hidden="true" />
-            </Link>
+            {/* The download CTA was removed by owner note (D-026): the étude
+                is not yet a published resource, so the card presents it
+                without promising a download. */}
             <p className="mreStudyNote">
               <ShieldCheckIcon className="mreStudyNoteIcon" aria-hidden="true" />
               <span>{t("study.note")}</span>
@@ -120,10 +95,11 @@ export function MreMarketSection({
               <span>{t("scope.recency")}</span>
             </li>
           </ul>
-          <Link className="mreMethodology" href={methodologyHref}>
+          {/* Staged to "#" (D-026) until the owner re-links it. */}
+          <a className="mreMethodology" href="#">
             <span>{t("methodology")}</span>
             <ArrowRightIcon className="mreMethodologyIcon" aria-hidden="true" />
-          </Link>
+          </a>
         </div>
       </div>
     </section>

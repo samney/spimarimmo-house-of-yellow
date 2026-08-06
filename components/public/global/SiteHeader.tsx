@@ -43,7 +43,7 @@ const NAV: readonly NavItem[] = [
     href: "/exposer",
     key: "exposer",
     children: [
-      { href: "/pourquoi-spimar", key: "pourquoiSpimar" },
+      { href: "/#pourquoi-spimar", key: "pourquoiSpimar" },
       { href: "/#methode", key: "methode" },
       { href: "/#visibilite", key: "visibilite" },
     ],

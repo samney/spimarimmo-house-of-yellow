@@ -47,10 +47,8 @@ export function VisibilitySection({
             </Heading>
             <p className="visLead">{t("lead")}</p>
           </div>
-          <Link className="visCta" href={deviceHref}>
-            <span>{t("cta")}</span>
-            <ArrowRightIcon className="visCtaIcon" aria-hidden="true" />
-          </Link>
+          {/* The header CTA was removed by owner note (D-026) — the device's
+              own per-phase action is the section's only exit. */}
         </header>
 
         <VisibilityPhases

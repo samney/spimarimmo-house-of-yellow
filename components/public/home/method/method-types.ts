@@ -69,6 +69,5 @@ export type MethodSectionContent = {
   eyebrowLabel: string;
   heading: string;
   description: string;
-  globalCta: MethodCta;
   phases: MethodPhase[];
 };

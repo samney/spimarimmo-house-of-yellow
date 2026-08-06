@@ -1,0 +1,207 @@
+/* ==========================================================================
+   /insights — blog cards and article detail (D-026)
+   ==========================================================================
+   Card grid: image, category pill, heading, excerpt, reading time. Binds
+   only to L2 tokens; `blog` prefix.
+   ========================================================================== */
+
+.blogHead {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  margin-block-start: var(--space-lg);
+}
+
+.blogFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.blogFilter {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
+  font-size: var(--text-support);
+  font-weight: 500;
+  padding: 0.25vw 0.9vw;
+  text-decoration: none;
+  transition:
+    border-color var(--dur-micro),
+    background-color var(--dur-micro);
+}
+
+.blogFilter:hover {
+  border-color: var(--action-primary);
+}
+
+.blogFilter[aria-current] {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.blogFilter:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.blogDisclaimer {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+/* --- Cards -------------------------------------------------------------------- */
+
+.blogGrid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+}
+
+.blogCard {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: box-shadow var(--dur-micro) var(--ease-out-ref);
+}
+
+.blogCard:hover {
+  box-shadow: var(--shadow-raised);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blogCard {
+    transition: none;
+  }
+}
+
+.blogCardLink {
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+}
+
+.blogCardLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.blogMedia {
+  aspect-ratio: 16 / 10;
+  display: block;
+  position: relative;
+}
+
+.blogPhoto {
+  object-fit: cover;
+}
+
+.blogBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+.blogMeta {
+  align-items: center;
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.blogPill {
+  background: var(--surface-accent);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.15vw 0.7vw;
+  text-transform: uppercase;
+}
+
+.blogMinutes {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+}
+
+.blogTitle {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.blogExcerpt {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.55;
+}
+
+.blogRead {
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+  margin-block-start: auto;
+  padding-block-start: var(--space-2xs);
+}
+
+/* --- Article detail ------------------------------------------------------------- */
+
+.blogHero {
+  aspect-ratio: 21 / 9;
+  border-radius: var(--radius-xl);
+  margin-block-start: var(--space-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.blogHeroPhoto {
+  object-fit: cover;
+}
+
+.blogArticle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-lg);
+  max-width: var(--measure-prose);
+}
+
+.blogParagraph {
+  font-size: var(--text-support);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* --- Responsive ------------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+  .blogGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 580px) {
+  .blogGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .blogFilter {
+    padding: 1.4vw 3.4vw;
+  }
+
+  .blogHero {
+    aspect-ratio: 4 / 3;
+  }
+}

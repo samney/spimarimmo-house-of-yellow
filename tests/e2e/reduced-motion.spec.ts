@@ -30,12 +30,12 @@ import { expect, test, type Page } from "@playwright/test";
 
 const CONTENT_ROUTES = [
   { path: "/fr/faq", list: ".faqList", item: "details" },
-  { path: "/fr/insights", list: ".spimarCardList", item: "li" },
-  { path: "/fr/ressources", list: ".spimarCardList", item: "li" },
+  { path: "/fr/insights", list: ".blogGrid", item: "li" },
+  { path: "/fr/ressources", list: ".bibGrid", item: "li" },
   /* The salons calendar (D-026) renders .salcList rows; the contract —
      every row fully visible, none stranded mid-reveal — is unchanged. */
   { path: "/fr/salons", list: ".salcList", item: "li" },
-  { path: "/fr/etudes-de-cas", list: ".spimarCardList", item: "li" },
+  { path: "/fr/etudes-de-cas", list: ".etuList", item: "li" },
 ];
 
 /** Emulate the preference, navigate, and refuse to continue unless the page
@@ -161,7 +161,7 @@ test.describe("with motion allowed", () => {
 
     /* The counterpart to the assertions above: motion is allowed to happen,
        but it must never be what decides whether content is readable. */
-    const items = page.locator(".spimarCardList > li");
+    const items = page.locator(".bibGrid > li");
     await expect(items.first()).toHaveCSS("opacity", "1", { timeout: 5000 });
 
     await page.waitForTimeout(1200);

@@ -1,4 +1,3 @@
-import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 import { MethodArrowIcon } from "./method-icons";
 import type { MethodPhase } from "./method-types";
@@ -42,8 +41,10 @@ export function MethodPhaseCopy({ phase }: { phase: MethodPhase }) {
           </li>
         ))}
       </ul>
+      {/* Staged to "#" (owner note, D-026) until the destinations are
+          validated; the refined outline pill stays. */}
       <span className="methodCopy__actions">
-        <Link
+        <a
           className="button outline methodCopy__cta"
           href={phase.contextualCta.href}
           title={phase.contextualCta.label}
@@ -57,7 +58,7 @@ export function MethodPhaseCopy({ phase }: { phase: MethodPhase }) {
           <span className="icon">
             <MethodArrowIcon />
           </span>
-        </Link>
+        </a>
       </span>
     </div>
   );

@@ -2,18 +2,24 @@ import type { Metadata } from "next";
 import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
-import { Reveal } from "@/components/primitives/motion/Reveal";
 import { Link } from "@/i18n/navigation";
 import { getBackendSeams } from "@/lib/spimar/repositories";
+import {
+  CaseStudiesListing,
+  type CaseFilters,
+  type CmsCaseCard,
+} from "@/components/public/pages/CaseStudiesListing";
+import type { CaseObjective } from "@/components/public/pages/case-studies-data";
 
-/* Owner restructure (2026-08-04): /etudes-de-cas is the CMS-driven listing —
-   case studies are CMS pages under the `etudes/` slug family, created and
-   published from /admin/pages. Published cases only; an honest empty state
-   while none is published. Server-rendered per request so a publish is
-   visible immediately. */
+/* /etudes-de-cas — the end-to-end listing (owner note, D-026): image rows,
+   URL-driven filters and pagination. CMS-published cases (etudes/ page
+   family) list first with their real detail routes — the publish → visible
+   contract is unchanged. The provisional fixtures render below, disclaimed,
+   until validated case records replace them. */
 export const dynamic = "force-dynamic";
 
 const PREFIX = "etudes/";
+const OBJECTIVES: readonly CaseObjective[] = ["notoriete", "leads", "ventes"];
 
 export async function generateMetadata({
   params,
@@ -24,58 +30,45 @@ export async function generateMetadata({
   return metadataFromNamespace({ namespace: "caseStudies", path: "/etudes-de-cas", locale });
 }
 
-export default async function EtudesDeCas({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+export default async function EtudesDeCas({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ edition?: string; objectif?: string; page?: string }>;
+}) {
+  const { locale: rawLocale } = await params;
+  setRequestLocale(rawLocale);
+  const locale = rawLocale === "en" ? ("en" as const) : ("fr" as const);
   const t = await getTranslations("caseStudies");
 
-  const pages = await getBackendSeams().content.listPages({
-    siteId: "spimar",
-    locale: locale === "en" ? "en" : "fr",
-  });
-  const cases = pages.filter((p) => p.slug.startsWith(PREFIX));
+  const { edition, objectif, page } = await searchParams;
+  const filters: CaseFilters = {
+    edition: edition || undefined,
+    objective: OBJECTIVES.find((o) => o === objectif),
+    page: Number.parseInt(page ?? "1", 10) || 1,
+  };
+
+  const pages = await getBackendSeams().content.listPages({ siteId: "spimar", locale });
+  const cmsCases: CmsCaseCard[] = pages
+    .filter((p) => p.slug.startsWith(PREFIX))
+    .map((p) => ({
+      slug: p.slug.slice(PREFIX.length),
+      title: p.title || p.slug.slice(PREFIX.length),
+      intro: String(p.sections[0]?.body.intro ?? ""),
+    }));
 
   return (
     <div className="pageBlocks">
       <PageHeader index="09" label={t("label")} title={t("title")} lead={t("lead")} />
       <section className="spimarListPage">
         <div className="contentWrapper">
-          <div className="hoyCols">
-            <div className="colLabel" aria-hidden="true" />
-            <div className="colMain">
-              {cases.length === 0 ? (
-                <p className="text medium">{t("empty")}</p>
-              ) : (
-                <>
-                  <p className="listCount text medium" aria-live="polite">
-                    {cases.length === 1 ? t("countOne") : t("countMany", { count: cases.length })}
-                  </p>
-                  <Reveal as="ul" className="spimarCardList" role="list">
-                    {cases.map((page) => {
-                      const intro = String(page.sections[0]?.body.intro ?? "");
-                      return (
-                        <li key={page.slug} className="cardItem">
-                          {page.demo ? <span className="cardItem__demo">Démo</span> : null}
-                          <span className="cardKicker text medium">{t("cardKicker")}</span>
-                          <h2 className="text medium">
-                            <Link href={`/etudes-de-cas/${page.slug.slice(PREFIX.length)}`}>
-                              {page.title || page.slug.slice(PREFIX.length)}
-                            </Link>
-                          </h2>
-                          {intro ? <span className="cardNote text medium">{intro}</span> : null}
-                        </li>
-                      );
-                    })}
-                  </Reveal>
-                </>
-              )}
-              <footer className="pageOutro">
-                <p className="text medium">
-                  {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-                </p>
-              </footer>
-            </div>
-          </div>
+          <CaseStudiesListing locale={locale} cmsCases={cmsCases} filters={filters} />
+          <footer className="pageOutro">
+            <p className="text medium">
+              {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
+            </p>
+          </footer>
         </div>
       </section>
     </div>
