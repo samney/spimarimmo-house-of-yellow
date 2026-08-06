@@ -2,6 +2,7 @@
 
 import { createHash } from "node:crypto";
 import { headers } from "next/headers";
+import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isRateLimited } from "@/lib/contact/rate-limit";
@@ -364,4 +365,78 @@ export async function moveLeadStage(form: FormData): Promise<void> {
   revalidatePath("/admin/crm/leads");
   revalidatePath(`/admin/crm/leads/${id}`);
   redirect("/admin/crm/pipeline");
+}
+
+/* --------------------------------------------------------------- saved views */
+
+/* Every field is validated against the domain, not merely coerced to a string:
+   these values are replayed straight back into the desk's query string, so an
+   unvalidated `stage` would round-trip whatever was posted. `owner` is not in
+   the schema on purpose — it is taken from the session below, never from the
+   form, so one operator cannot save a view into another's list. */
+const savedViewSchema = z.object({
+  id: z.string().trim().max(100).optional(),
+  name: z.string().trim().min(1, "Nommez la vue.").max(60),
+  stage: z.enum(["new", "qualified", "in_progress", "won", "lost"]).or(z.literal("")).default(""),
+  kind: z.enum(["contact", "exhibitor", "brochure", "visitor"]).or(z.literal("")).default(""),
+  owner: z.string().trim().max(160).default(""),
+  event: z.string().trim().max(160).default(""),
+  q: z.string().trim().max(200).default(""),
+});
+
+/** Saves (or renames) one of the current operator's leads-desk views. */
+export async function saveLeadView(
+  _prev: ActionResult | null,
+  form: FormData,
+): Promise<ActionResult> {
+  const session = await readSession();
+  if (!session || !canManageLeads(session)) {
+    return { ok: false, message: "You do not have permission to manage leads." };
+  }
+
+  const parsed = savedViewSchema.safeParse({
+    id: form.get("id") || undefined,
+    name: form.get("name") ?? "",
+    stage: form.get("stage") ?? "",
+    kind: form.get("kind") ?? "",
+    owner: form.get("owner") ?? "",
+    event: form.get("event") ?? "",
+    q: form.get("q") ?? "",
+  });
+  if (!parsed.success) {
+    return { ok: false, message: parsed.error.issues[0]?.message ?? "Vue invalide." };
+  }
+
+  const { id, name, ...filters } = parsed.data;
+  const saved = await getAdminSeams().crm.saveSavedView(
+    { id, name, owner: session.email, filters },
+    session.email,
+  );
+
+  revalidatePath("/admin/crm/leads");
+  // `null` means the id was absent or owned by someone else. Both are reported
+  // the same way: naming the difference would confirm that an id exists.
+  return saved
+    ? { ok: true, message: `Vue « ${saved.name} » enregistrée.` }
+    : { ok: false, message: "Cette vue est introuvable." };
+}
+
+/** Removes one of the current operator's own views. */
+export async function deleteLeadView(
+  _prev: ActionResult | null,
+  form: FormData,
+): Promise<ActionResult> {
+  const session = await readSession();
+  if (!session || !canManageLeads(session)) {
+    return { ok: false, message: "You do not have permission to manage leads." };
+  }
+
+  const id = String(form.get("id") ?? "").trim();
+  if (!id) return { ok: false, message: "Vue introuvable." };
+
+  const removed = await getAdminSeams().crm.deleteSavedView(id, session.email);
+  revalidatePath("/admin/crm/leads");
+  return removed
+    ? { ok: true, message: "Vue supprimée." }
+    : { ok: false, message: "Cette vue est introuvable." };
 }

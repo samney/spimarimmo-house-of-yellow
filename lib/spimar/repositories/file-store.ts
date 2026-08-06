@@ -4,6 +4,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import type { Destination, Lead, MediaAsset, Page, PublishState, SpimarEvent } from "../types";
 import type { AcquisitionAttribution } from "@/lib/backend/acquisition-seams";
+import type { SavedLeadView, SavedLeadViewInput } from "@/lib/backend/admin-seams";
 
 /* File-backed store engine.
 
@@ -24,7 +25,14 @@ function dataDir(): string {
 }
 
 type Collection =
-  "destinations" | "events" | "pages" | "media" | "leads" | "acquisitions" | "tasks";
+  | "destinations"
+  | "events"
+  | "pages"
+  | "media"
+  | "leads"
+  | "acquisitions"
+  | "tasks"
+  | "saved-views";
 
 function file(collection: Collection): string {
   return path.join(dataDir(), `spimar-${collection}.jsonl`);
@@ -408,4 +416,79 @@ export function completeTask(id: string): StoredTask | null {
   rows[index] = { ...rows[index], completedAt: now() };
   writeAll("tasks", rows);
   return rows[index];
+}
+
+/* -------------------------------------------------------------- saved views */
+
+/* Per-owner saved filter sets for the leads desk.
+
+   Ownership is enforced on every read and write here rather than by the
+   caller. The console does filter its own queries, but a view is not sensitive
+   because it is hidden — it is private because this layer refuses to return or
+   mutate another operator's row. */
+
+export function listSavedViews(owner: string): SavedLeadView[] {
+  return readAll<SavedLeadView>("saved-views")
+    .filter((view) => view.owner === owner)
+    .sort((a, b) => a.name.localeCompare(b.name, "fr"));
+}
+
+export function saveSavedView(input: SavedLeadViewInput, actor: string): SavedLeadView | null {
+  const rows = readAll<SavedLeadView>("saved-views");
+  const timestamp = now();
+
+  if (input.id) {
+    const index = rows.findIndex((view) => view.id === input.id);
+    // Absent, or owned by someone else: both answer `null`. Distinguishing them
+    // would confirm to a caller that an id they do not own exists.
+    if (index < 0 || rows[index].owner !== input.owner) return null;
+    const updated: SavedLeadView = {
+      ...rows[index],
+      name: input.name,
+      filters: input.filters,
+      updatedAt: timestamp,
+      updatedBy: actor,
+    };
+    rows[index] = updated;
+    writeAll("saved-views", rows);
+    return updated;
+  }
+
+  /* A second view with the same name would be indistinguishable in the UI, so
+     saving over an existing name updates it rather than creating a twin. */
+  const existing = rows.findIndex((view) => view.owner === input.owner && view.name === input.name);
+  if (existing >= 0) {
+    const updated: SavedLeadView = {
+      ...rows[existing],
+      filters: input.filters,
+      updatedAt: timestamp,
+      updatedBy: actor,
+    };
+    rows[existing] = updated;
+    writeAll("saved-views", rows);
+    return updated;
+  }
+
+  const created: SavedLeadView = {
+    id: newId(),
+    name: input.name,
+    owner: input.owner,
+    filters: input.filters,
+    createdAt: timestamp,
+    updatedAt: timestamp,
+    createdBy: actor,
+    updatedBy: actor,
+  };
+  rows.push(created);
+  writeAll("saved-views", rows);
+  return created;
+}
+
+export function deleteSavedView(id: string, owner: string): boolean {
+  const rows = readAll<SavedLeadView>("saved-views");
+  const index = rows.findIndex((view) => view.id === id && view.owner === owner);
+  if (index < 0) return false;
+  rows.splice(index, 1);
+  writeAll("saved-views", rows);
+  return true;
 }

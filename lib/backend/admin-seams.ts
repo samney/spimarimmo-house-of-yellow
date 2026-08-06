@@ -22,6 +22,7 @@ import type {
   Destination,
   Lead,
   LeadActivity,
+  LeadKind,
   LeadStage,
   MediaAsset,
   Page,
@@ -99,6 +100,95 @@ export interface CrmRepository {
    * submission.
    */
   listAcquisitions(leadId: string): Promise<readonly LeadAcquisitionRecord[]>;
+
+  /**
+   * Saved views are private to their owner. Scoping lives in the repository,
+   * not in the caller: a console that filtered someone else's views in the UI
+   * would be one forgotten `.filter()` away from showing them.
+   */
+  listSavedViews(owner: string): Promise<readonly SavedLeadView[]>;
+
+  /** Creates when `id` is absent, updates in place when it is present and owned. */
+  saveSavedView(input: SavedLeadViewInput, actor: string): Promise<SavedLeadView | null>;
+
+  /** False when it was already gone or belongs to someone else; never throws. */
+  deleteSavedView(id: string, owner: string): Promise<boolean>;
+}
+
+/**
+ * The leads desk's filter state.
+ *
+ * Every field maps to a real column on `Lead`. There is deliberately no
+ * country filter: `Lead` has `locale` and `sourcePath` but no country, and a
+ * filter over a field that does not exist would silently return nothing.
+ */
+export type LeadFilterState = {
+  /** `""` means "any". */
+  readonly stage: LeadStage | "";
+  readonly kind: LeadKind | "";
+  /** Matches `Lead.assignee` exactly; `"unassigned"` selects the empty owner. */
+  readonly owner: string;
+  /** Matches `Lead.eventSlug` exactly. */
+  readonly event: string;
+  /** Case-insensitive substring over name, email, organisation and message. */
+  readonly q: string;
+};
+
+export const EMPTY_LEAD_FILTERS: LeadFilterState = {
+  stage: "",
+  kind: "",
+  owner: "",
+  event: "",
+  q: "",
+};
+
+/** A named filter set on the leads desk, private to the operator who saved it. */
+export type SavedLeadView = {
+  readonly id: string;
+  readonly name: string;
+  readonly owner: string;
+  readonly filters: LeadFilterState;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  readonly createdBy: string;
+  readonly updatedBy: string;
+};
+
+export type SavedLeadViewInput = {
+  readonly id?: string;
+  readonly name: string;
+  readonly owner: string;
+  readonly filters: LeadFilterState;
+};
+
+/**
+ * Applies a filter state to a list of leads.
+ *
+ * Lives beside the contract rather than in the page so that every caller —
+ * the desk, the CSV export, and any adapter that wants to pre-filter in SQL —
+ * agrees on what a saved view means. An export that interpreted the filters
+ * differently from the table above it would be a lie about what was exported.
+ */
+export function applyLeadFilters(leads: readonly Lead[], filters: LeadFilterState): Lead[] {
+  const term = filters.q.trim().toLowerCase();
+  return leads.filter((lead) => {
+    if (filters.stage && lead.stage !== filters.stage) return false;
+    if (filters.kind && lead.kind !== filters.kind) return false;
+    if (
+      filters.owner === "unassigned"
+        ? lead.assignee !== ""
+        : filters.owner && lead.assignee !== filters.owner
+    ) {
+      return false;
+    }
+    if (filters.event && lead.eventSlug !== filters.event) return false;
+    if (term) {
+      const haystack =
+        `${lead.name} ${lead.email} ${lead.organisation} ${lead.message}`.toLowerCase();
+      if (!haystack.includes(term)) return false;
+    }
+    return true;
+  });
 }
 
 /**

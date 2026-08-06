@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import type { ContentRepository, SubmissionRepository } from "@/lib/backend/seams";
+import { EMPTY_LEAD_FILTERS } from "@/lib/backend/admin-seams";
 import type { CmsRepository, CrmRepository } from "@/lib/backend/admin-seams";
 
 /* Shared contract suites.
@@ -287,6 +288,92 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
       expect(
         await crm.updateLead("missing", {}, { by: "a@x.test", kind: "note", detail: "x" }),
       ).toBeNull();
+    });
+
+    /* ------------------------------------------------------------ ADM-076 */
+
+    describe("saved views", () => {
+      const filters = { ...EMPTY_LEAD_FILTERS, stage: "qualified" as const, q: "casablanca" };
+
+      it("round-trips a view and stamps both audit pairs", async () => {
+        const saved = await crm.saveSavedView(
+          { name: "Qualifiés Casablanca", owner: "a@x.test", filters },
+          "a@x.test",
+        );
+
+        expect(saved).not.toBeNull();
+        expect(saved?.name).toBe("Qualifiés Casablanca");
+        expect(saved?.filters).toEqual(filters);
+        expect(saved?.createdBy).toBe("a@x.test");
+        expect(saved?.updatedBy).toBe("a@x.test");
+        expect(saved?.createdAt).not.toBe("");
+        expect(saved?.updatedAt).not.toBe("");
+
+        expect((await crm.listSavedViews("a@x.test")).map((v) => v.name)).toEqual([
+          "Qualifiés Casablanca",
+        ]);
+      });
+
+      it("scopes reads to the owner — another operator's views are not visible", async () => {
+        await crm.saveSavedView({ name: "Mine", owner: "a@x.test", filters }, "a@x.test");
+        await crm.saveSavedView({ name: "Theirs", owner: "b@x.test", filters }, "b@x.test");
+
+        expect((await crm.listSavedViews("a@x.test")).map((v) => v.name)).toEqual(["Mine"]);
+        expect((await crm.listSavedViews("b@x.test")).map((v) => v.name)).toEqual(["Theirs"]);
+      });
+
+      it("updates in place by id, and re-saving a name does not mint a twin", async () => {
+        const first = await crm.saveSavedView(
+          { name: "À suivre", owner: "a@x.test", filters },
+          "a@x.test",
+        );
+
+        const renamed = await crm.saveSavedView(
+          { id: first!.id, name: "À relancer", owner: "a@x.test", filters },
+          "b@x.test",
+        );
+        expect(renamed?.id).toBe(first!.id);
+        expect(renamed?.name).toBe("À relancer");
+        // Creation audit survives an update; only the update pair moves.
+        expect(renamed?.createdBy).toBe("a@x.test");
+        expect(renamed?.updatedBy).toBe("b@x.test");
+
+        await crm.saveSavedView(
+          { name: "À relancer", owner: "a@x.test", filters: EMPTY_LEAD_FILTERS },
+          "a@x.test",
+        );
+        const views = await crm.listSavedViews("a@x.test");
+        expect(views.length).toBe(1);
+        expect(views[0].filters).toEqual(EMPTY_LEAD_FILTERS);
+      });
+
+      it("refuses to update or delete another operator's view", async () => {
+        const mine = await crm.saveSavedView(
+          { name: "Mine", owner: "a@x.test", filters },
+          "a@x.test",
+        );
+
+        expect(
+          await crm.saveSavedView(
+            { id: mine!.id, name: "Hijacked", owner: "b@x.test", filters },
+            "b@x.test",
+          ),
+        ).toBeNull();
+        expect(await crm.deleteSavedView(mine!.id, "b@x.test")).toBe(false);
+
+        // Untouched.
+        expect((await crm.listSavedViews("a@x.test"))[0].name).toBe("Mine");
+      });
+
+      it("deletes idempotently rather than throwing on a missing view", async () => {
+        const view = await crm.saveSavedView(
+          { name: "Temp", owner: "a@x.test", filters },
+          "a@x.test",
+        );
+        expect(await crm.deleteSavedView(view!.id, "a@x.test")).toBe(true);
+        expect(await crm.deleteSavedView(view!.id, "a@x.test")).toBe(false);
+        expect(await crm.listSavedViews("a@x.test")).toEqual([]);
+      });
     });
   });
 }

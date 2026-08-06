@@ -6,6 +6,8 @@ import type {
   LeadAcquisitionRecord,
   LeadCreateInput,
   ListOptions,
+  SavedLeadView,
+  SavedLeadViewInput,
 } from "@/lib/backend/admin-seams";
 import type { Destination, Lead, MediaAsset, Page, SpimarEvent } from "../types";
 import * as store from "./file-store";
@@ -77,6 +79,16 @@ export class FileCrmRepository implements CrmRepository {
     activity: { by: string; kind: Lead["activity"][number]["kind"]; detail: string },
   ): Promise<Lead | null> {
     return store.updateLead(id, patch, activity);
+  }
+
+  async listSavedViews(owner: string): Promise<readonly SavedLeadView[]> {
+    return store.listSavedViews(owner);
+  }
+  async saveSavedView(input: SavedLeadViewInput, actor: string): Promise<SavedLeadView | null> {
+    return store.saveSavedView(input, actor);
+  }
+  async deleteSavedView(id: string, owner: string): Promise<boolean> {
+    return store.deleteSavedView(id, owner);
   }
 
   async listAcquisitions(leadId: string): Promise<readonly LeadAcquisitionRecord[]> {

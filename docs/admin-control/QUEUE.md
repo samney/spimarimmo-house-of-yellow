@@ -101,9 +101,45 @@ plus `components/admin/**`. Evidence: `qa/control/*.png`.
 | UI never reports provider success prematurely | acknowledgement states no e-mail was sent (P-2)                                                                                        |
 | RLS verified in browser context               | **NOT MET** — no hosted database (P-1). The adapter passes 24/24 against the real migrations in PGlite, which is not hosted authority. |
 
-## WAVES 4–8
+## WAVE 4 — CRM
 
-TODO. Not started; not scheduled ahead of the Wave 3 review.
+Scope is `D-041` / `DASHBOARD-SCOPE.md`, not the blueprint's full 26 tasks:
+build what the website actually produces. Slice 1 shipped 2026-08-06.
+
+| Task    | Item                      | Status  | Evidence                                                                     |
+| ------- | ------------------------- | ------- | ---------------------------------------------------------------------------- |
+| ADM-070 | Leads list                | done    | shipped in console v1                                                        |
+| ADM-071 | Lead detail               | done    | shipped in console v1                                                        |
+| ADM-073 | Stage transitions         | done    | `integration.spec.ts` drives stage, assignment and note                      |
+| ADM-074 | Pipeline board            | done    | shipped in console v1                                                        |
+| ADM-075 | Built-in views            | done    | five URL-driven views with counts                                            |
+| ADM-076 | Saved views               | done    | 5 contract tests + `crm-leads.spec.ts` save / replay / delete                |
+| ADM-077 | Lead preview drawer       | done    | `crm-leads.spec.ts` open, tablist, Escape, deep link, axe, 390               |
+| ADM-078 | Filtered export           | done    | export takes the desk's query string and re-applies the same filter          |
+| —       | Organizations screen      | pending | rows exist (the dedupe writes them); no screen yet                           |
+| —       | Contacts screen           | pending | same                                                                         |
+| —       | Lost reason on transition | blocked | needs a `Lead` field, both adapters and a contract test — a slice of its own |
+| —       | Won → onboarding          | pending | closes the funnel the site opens                                             |
+| —       | Export audit trail        | pending | the export works; recording who exported what is the gap                     |
+
+**Honest omissions from `VISUAL_04`, unchanged:** no Pays column or filter
+(`Lead` has no country field), no trend %, CA potentiel, conversion rate or
+sparklines (no monetary or period data exists), no avatars (`P-1`), no
+pagination until volume demands it.
+
+**Found while building slice 1:** the console had never been scanned by Axe —
+`accessibility.spec.ts` covers public routes only. The first scan, run with the
+drawer open, failed `color-contrast` across the whole shell: `--text-tertiary`
+measured 3.65:1 on white and 3.30:1 on `--surface-1` while carrying a comment
+claiming it cleared 4.5:1. The text ramp is now one step darker with both
+remaining steps verified against the darkest surface they sit on.
+
+## WAVES 5–8
+
+Deferred by `D-041`, not merely unstarted. Wave 5 event operations, Wave 7
+analytics, appointments and integration health have no producer: the public
+site has no application, registration, booking or payment flow. Lift them from
+the blueprint when a flow feeds them.
 
 ---
 

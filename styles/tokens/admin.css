@@ -23,12 +23,23 @@
 
   /* --- text ------------------------------------------------------------- */
   --text-primary: #171717;
-  --text-secondary: #6d6964;
-  /* Blueprint gives #9b9690 (file 08) / #99938d (file 05). #8a857f is the
-     nearest value that still clears 4.5:1 on --surface-0; tertiary text is
-     used for metadata that must stay legible, so contrast wins over the
-     illustrative hex. */
-  --text-tertiary: #8a857f;
+  /* The ramp is shifted one step darker (2026-08-06). It previously ended at
+     #8a857f, carrying a comment claiming that value cleared 4.5:1 on
+     --surface-0. It does not: the first Axe scan of the console measured
+     3.65:1 on white and 3.30:1 on --surface-1, failing WCAG AA everywhere it
+     was used — sidebar wordmark and group labels, the command-bar placeholder,
+     `kbd`, view counts and table headers.
+
+     Both remaining steps are now verified against the DARKEST surface they sit
+     on (--surface-2 #efedea), not just against white:
+       --text-secondary  6.5:1 on #efedea, 7.6:1 on white
+       --text-tertiary   4.7:1 on #efedea, 5.5:1 on white
+     Tertiary takes the value secondary used to hold, which keeps three
+     visibly distinct steps rather than collapsing the tier. The blueprint's
+     illustrative #9b9690 / #99938d are lighter still and would fail by more;
+     legibility wins over the swatch. */
+  --text-secondary: #57534e;
+  --text-tertiary: #6d6964;
   --text-inverse: #ffffff;
 
   /* --- borders ---------------------------------------------------------- */
