@@ -63,10 +63,45 @@ function looseHexes() {
   return found;
 }
 
+/* Colour FUNCTIONS are the same violation again, and the hex check walks past
+   every one of them. Measured 2026-08-06: 209 calls across 17 stylesheets,
+   against 102 tracked hexes — so the majority of the colour debt was invisible
+   to the guard that existed. `visibility.css` alone holds 55, including three
+   different near-golds (`rgb(216 178 106 …)`, `rgb(227 201 143 …)`,
+   `rgb(214 176 104 …)`), none of them the identity gold and none derived from
+   it. That is why re-pointing `--spimar-gold` does not re-skin the product.
+
+   A call whose arguments reference a token is NOT counted. `color-mix(in srgb,
+   var(--surface-accent) 45%, transparent)` derives from L2 — it is the fix,
+   not the debt. Counting it would make this ratchet push work away from the
+   correct remedy, which is how a guard starts doing harm. */
+const COLOUR_CALL = /\b(rgba?|hsla?|oklch|oklab|lab|lch|color-mix)\s*\(([^()]*)\)/g;
+
+function looseColourFunctions() {
+  const found: { file: string; line: number; value: string }[] = [];
+  for (const file of cssFiles(join(ROOT, "components"))) {
+    const source = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, (c) =>
+      c.replace(/[^\n]/g, " "),
+    );
+    source.split("\n").forEach((line, i) => {
+      if (/(^|[\s;{])(-webkit-)?mask(-image)?\s*:/.test(line)) return;
+      for (const m of line.matchAll(COLOUR_CALL)) {
+        if (m[2].includes("var(--")) continue;
+        found.push({ file: file.replace(ROOT, "").replace(/\\/g, "/"), line: i + 1, value: m[0] });
+      }
+    });
+  }
+  return found;
+}
+
 /* Recorded 2026-08-05, after the comment and mask-stop false positives were
    removed. Was 112; `shell.css` paid off its 10 the same day (D-03). Lower it
-   again as each section lands; never raise it. */
-const BASELINE = { looseHexTotal: 102 };
+   again as each section lands; never raise it.
+
+   `looseColourTotal` recorded 2026-08-06 by the matcher above. An earlier
+   report of this number said 196 — that was `grep -c`, which counts matching
+   LINES, not occurrences, so every line holding two calls was undercounted. */
+const BASELINE = { looseHexTotal: 102, looseColourTotal: 209 };
 
 /* Files still carrying debt. `shell.css` is deliberately NOT here any more —
    having been cleaned, it is now held to zero like any other clean file. */
@@ -77,6 +112,31 @@ const KNOWN_DIRTY = new Set([
   "/components/public/home/events.css", // 2
   "/components/public/home/home.css", // 1
   "/components/public/home/resources.css", // 1
+]);
+
+/* The colour-function equivalent, with its counts at the 2026-08-06 measure.
+   Note `shell.css` appears here while being absent from KNOWN_DIRTY above: it
+   paid off its hexes and was then held to zero, yet still carries four raw
+   colour calls. That single row is the clearest statement of what a hex-only
+   guard could not see. */
+const KNOWN_DIRTY_COLOUR = new Set([
+  "/components/public/home/visibility.css", // 55
+  "/components/public/home/why-exhibit/why-exhibit.css", // 37
+  "/components/public/home/gallery.css", // 19
+  "/components/public/home/impact.css", // 18
+  "/components/public/home/events.css", // 13
+  "/components/public/home/method/method.css", // 13
+  "/components/public/home/home.css", // 12
+  "/components/public/home/hero.css", // 9
+  "/components/public/home/offers/offers.css", // 9
+  "/components/public/home/proof.css", // 6
+  "/components/public/global/shell.css", // 4
+  "/components/public/pages/spimar-pages.css", // 4
+  "/components/public/global/whatsapp.css", // 3
+  "/components/public/home/resources.css", // 3
+  "/components/public/home/promoters.css", // 2
+  "/components/public/global/brochure.css", // 1
+  "/components/public/home/mre.css", // 1
 ]);
 
 /* Named CSS colours are the same violation wearing a friendlier face, and the
@@ -117,6 +177,32 @@ describe("the L3 token layer derives from L2 rather than restating it", () => {
     const newlyDirty = [...perFile.keys()].filter((f) => !KNOWN_DIRTY.has(f));
 
     expect(newlyDirty, "these stylesheets were clean and now hold a raw colour").toEqual([]);
+  });
+
+  it("does not grow the raw colour-function debt", () => {
+    const found = looseColourFunctions();
+    expect(
+      found.length,
+      `raw colour functions went from ${BASELINE.looseColourTotal} to ${found.length}. ` +
+        `Bind to an L2 token, or derive with var(--…) inside the call. ` +
+        `If you REMOVED some, lower the baseline.`,
+    ).toBeLessThanOrEqual(BASELINE.looseColourTotal);
+  });
+
+  it("keeps the colour baseline honest — lower it when the debt is paid down", () => {
+    const found = looseColourFunctions();
+    expect(
+      found.length,
+      `only ${found.length} raw colour functions remain — lower BASELINE.looseColourTotal to match`,
+    ).toBeGreaterThanOrEqual(BASELINE.looseColourTotal - 10);
+  });
+
+  it("adds no raw colour function to a stylesheet that has none", () => {
+    const perFile = new Map<string, number>();
+    for (const c of looseColourFunctions()) perFile.set(c.file, (perFile.get(c.file) ?? 0) + 1);
+
+    const newlyDirty = [...perFile.keys()].filter((f) => !KNOWN_DIRTY_COLOUR.has(f));
+    expect(newlyDirty, "these stylesheets were clean and now hold a raw colour call").toEqual([]);
   });
 
   it("never lets a loose hex into the route-page or primitive layers", () => {
