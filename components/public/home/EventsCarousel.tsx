@@ -148,9 +148,6 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                 </span>
                 <span className="tags">
                   <span className="tag textTitle">{event.country}</span>
-                  {/* Real text, not a colour cue: the figures on this card are
-                      samples and a visitor is told so on the card itself. */}
-                  {event.demo ? <span className="tag textTitle isDemo">Démo</span> : null}
                 </span>
                 {/* Revealed on hover. Staged to "#" (owner note, D-026) until
                     destination content is validated; the ink fill keeps the

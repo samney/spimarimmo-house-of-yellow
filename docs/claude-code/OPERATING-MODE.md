@@ -3,63 +3,80 @@
 Single onboarding document. Read this, then work; open other documents only
 when the task needs them.
 
-## Current phase — Phase 2 (started 2026-08-04)
+## Current phase — Release (started 2026-08-06)
 
-Phase 1 (House of Yellow foundation, parity, transformation groundwork,
-homepage sections 01–13, backend seams + Supabase port) is closed; its plans
-and evidence live in `docs/archive/phase-1/` and `docs/spimar/`. Control
-documents dated before 2026-08-04 describe Phase 1 state.
+Goal, in order:
 
-Phase 2 goals, in order:
+1. **Website to 100%** against the owner checklist (`docs/pdf/Plan.md`) and
+   the stabilization master
+   (`docs/claude-code/SPIMARIMMO_FINAL_STABILIZATION_CLAUDE_MASTER.md`).
+2. **Deploy** the finished website (Vercel; note: the canonical domain
+   currently serves a legacy site — release is a cutover the owner triggers).
+3. **Admin completion**: SPIMAR Control (CRM/CMS) continues on the SAME
+   branch — Wave 4 slice 1 is already on it; `docs/admin-control/` holds the
+   queue and plans.
 
-1. **System quality**: lean docs, fast sessions, consistent output. The
-   contracts below are the instrument — follow them instead of re-deriving
-   patterns, and keep them updated the moment a pattern changes.
-2. **Product build-out** on the SPIMAR base: remaining routes, CMS/CRM
-   integration on the existing seams, content validation flows, QA matrix.
+## ONE branch, ONE checkout — absolute rule
+
+- Branch: **`finalization/design-system-product-release`**. All work — website
+  AND admin — lands here in scoped commits. `main` stays as the deployed-legacy
+  baseline until cutover. Every historical branch tip is preserved under
+  `archive/20260806/*` tags on origin; branches other than these two are
+  disposable.
+- One checkout, one writer. A second Claude session or a manual
+  `git checkout/reset` in the working folder is what destroyed work twice on
+  2026-08-06 (see D-042). The owner views work via `next start` or GitHub,
+  never by switching the tree.
+- The owner runs the site with:
+  `SPIMAR_DEMO_CONTENT=1 SPIMAR_ALLOW_DEMO=1 npx next start -p 3000`
+  (production build required first: `pnpm build`).
+
+## The owner checklist protocol
+
+`docs/pdf/Plan.md` (committed on the branch) is the owner's remark list and
+the authority for public-UI intent. Conventions from D-026 apply: staged
+`"#"` links for not-yet-validated destinations, owner-authorized placeholder
+data disclaimed in place, no demo badges on the public face. Owner remarks in
+session supersede the file; fold them back into it.
+
+## Identity rule — the design system scales, it is never bypassed
+
+Every new implementation must carry the site's identity:
+
+- Colors/type/spacing/radii bind to the L2 tokens in `app/globals.css` — the
+  unit-test token ratchet enforces this (raw colour calls fail the build;
+  derive with `var(--…)` or `color-mix(… var(--…) …)`).
+- Reuse the established vocabularies before inventing: pill buttons
+  (`.button`, `.salcCta`, outro bands), raised cards (`--surface-raised` +
+  `--border-subtle` + `--radius-lg`), gold eyebrows, month/fact rails, the
+  PageHeader (label-only, no chapter numbers on child pages), dialog chrome
+  (scrim + trap + Escape + focus return).
+- When a genuinely new pattern is needed, add it to
+  `docs/claude-code/DESIGN-CONTRACT.md` in the same PR — that is how the
+  system scales. A one-off style that lives only in one component is drift.
 
 ## The contracts (load per task, not per session)
 
 | Task touches…      | Read                                                                  |
 | ------------------ | --------------------------------------------------------------------- |
-| Public UI          | `docs/claude-code/DESIGN-CONTRACT.md`                                 |
+| Public UI          | `docs/claude-code/DESIGN-CONTRACT.md` + `docs/pdf/Plan.md`            |
 | Any code           | `docs/claude-code/ENGINEERING-CONTRACT.md`                            |
-| Product scope/copy | `docs/spimar/` canonical specs, section mocks in `docs/assets-UX-UI/` |
-| Backend/data       | `docs/backend/`, `lib/spimar/`, `lib/contact/`                        |
+| Admin/CRM/CMS      | `docs/admin-control/` (HANDOFF, QUEUE, ADR, DASHBOARD-SCOPE)          |
+| Release/deploy     | `docs/claude-code/SPIMARIMMO_FINAL_STABILIZATION_CLAUDE_MASTER.md`    |
 | Past decisions     | `docs/claude-code/DECISIONS.md` (append-only)                         |
-
-`.claude/rules/` holds the always-loaded short rules; the contracts carry the
-detail. If a rule and a contract disagree, the newest owner decision wins —
-then fix the stale document in the same PR.
 
 ## Session workflow
 
-1. Take one bounded item (owner request or `QUEUE.md`).
-2. Understand the target: mock, spec, or issue — before writing code.
-3. Implement following the contracts; reuse existing patterns and seams.
-4. Verify: `tsc --noEmit`, ESLint, Prettier, `pnpm test`, browser evidence at
-   1920/390, reduced motion when motion changed. Cheapest sufficient evidence;
-   do not re-verify what did not change.
-5. Record: decision entries if anything deviated; update only control
-   documents whose facts changed.
-6. Commit scoped work with a clear message; the owner merges.
+1. One bounded item (owner remark, Plan.md line, or admin queue item).
+2. Implement on the contracts; reuse seams and vocabularies.
+3. Gate: `tsc --noEmit`, ESLint, Prettier, `pnpm test`, `pnpm build`, full
+   Playwright. Never commit red; never weaken a gate.
+4. Scoped commit with real results in the message; push.
+5. Rebuild so the owner's `next start` shows the state; tell the owner.
 
-## Anti-drift guards
+## Honesty rules (unchanged, non-negotiable)
 
-- Copy comes from `messages/*.json` (FR+EN together), never hard-coded.
-- New UI binds only L2 tokens (`app/globals.css`); no new hex values outside
-  a declared L3 block.
-- Pending/unvalidated content uses the honest-state patterns already shipped
-  (badges, "à confirmer", disabled controls) — never invented data.
-- Undesigned states (a control whose target screen has no mock) are omitted
-  and reported, not invented.
-- Before claiming done: re-read the ask, run the gates, state what was
-  verified and what was not.
-
-## Speed guards
-
-- Do not re-read the full control plane or full specs per session.
-- Prefer targeted file reads over broad sweeps; delegate noisy searches.
-- One writer per checkout; parallel sessions use separate worktrees.
-- Heavy evidence (screenshots, videos) goes to the PR/session output, not the
-  repository, unless a gate requires a committed artifact.
+No invented figures/dates/prices/partners outside D-026's disclaimed
+placeholders; no fake actions; success only after durable writes; server-side
+Zod + honeypot + rate limit on public forms; RLS on every table; never read
+or print real `.env` values.

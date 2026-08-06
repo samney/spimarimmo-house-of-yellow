@@ -67,9 +67,10 @@ test.describe("Pourquoi exposer — four-state benefit system", () => {
 
       const cta = page.locator(".whyCopy__cta");
       await expect(cta).toContainText(benefit.cta);
-      /* Locale prefixing is the router's business; what this pins is that the
-         CTA points at the real shipped route and not at an invented one. */
-      await expect(cta).toHaveAttribute("href", new RegExp(`${benefit.href}$`));
+      /* Owner note (D-026): every benefit CTA is deliberately staged to "#"
+         until the destinations are validated. If a real route appears here,
+         that is a recorded contract change, not a test to relax. */
+      await expect(cta).toHaveAttribute("href", "#");
 
       /* One shared tree: five evidence slots, always. */
       await expect(page.locator(".whyCard")).toHaveCount(5);

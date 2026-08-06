@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 import { ArrowRightIcon } from "./why-exhibit-icons";
 import type { Benefit } from "./why-exhibit-types";
@@ -33,7 +32,7 @@ export function BenefitCopy({ benefit }: { benefit: Benefit }) {
       </h3>
       <p className="whyCopy__body">{benefit.body}</p>
       <span className="whyCopy__actions">
-        <Link className="button whyCopy__cta" href={benefit.cta.href} title={benefit.cta.label}>
+        <a className="button whyCopy__cta" href={benefit.cta.href} title={benefit.cta.label}>
           <span className="label">
             <span className="fixedLabel">{benefit.cta.label}</span>
             <span className="innerLabel">
@@ -43,7 +42,7 @@ export function BenefitCopy({ benefit }: { benefit: Benefit }) {
           <span className="icon">
             <ArrowRightIcon />
           </span>
-        </Link>
+        </a>
       </span>
     </div>
   );

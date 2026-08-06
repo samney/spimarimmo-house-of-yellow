@@ -1508,3 +1508,32 @@ would otherwise be a silent regression:
 provenance; PR #34 is superseded. Parallel work, if ever needed again, uses
 short-lived branches off this one that merge back the same day — long-lived
 lineages are what produced this reconciliation.
+
+## D-042 — 2026-08-06 — One branch, one checkout: the consolidation after the double wipe
+
+**Context.** Two Claude sessions and manual git commands shared one worktree
+during the finalization push; separately, session restarts silently reset the
+assistant's shell to the primary checkout, sending commands to the wrong tree
+three times in one day. Work was destroyed twice; a governance commit landed
+on `main` by mistake (relocated here). 41 branches accumulated; website and
+admin progress lived on different lineages until the unification.
+
+**Decision.** Owner instruction:
+
+1. **One branch**: `finalization/design-system-product-release` carries the
+   website AND the admin. `main` stays the pre-cutover baseline and never
+   advances until the release cutover. Every historical branch tip is
+   preserved under `archive/20260806/*` tags on origin; the branches
+   themselves are disposable at the owner's word.
+2. **One checkout, one writer**: no second session, no manual git state
+   commands in the working tree; the owner reviews via the built site or
+   GitHub. Assistant shell commands pin their directory explicitly.
+3. **Docs re-synced**: `OPERATING-MODE.md` rewritten for the Release phase
+   (website 100% → deploy/cutover → admin completion) with the owner
+   checklist protocol and the design-system identity rule: reuse the
+   vocabularies, scale the contract in the same PR when a new pattern is
+   genuinely needed, token ratchet as the mechanical guard.
+
+**Consequence.** Session startup is OPERATING-MODE plus the task's contract.
+Branch archaeology is over — history lives in tags. Identity drift is a
+review-blocking defect, not a taste note.

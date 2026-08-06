@@ -242,9 +242,7 @@ export function OffersSection({
       <div className="offInner">
         <header className="offHeader">
           <div className="offHeadings">
-            <p className="offEyebrow">
-              [ <span className="offEyebrowIndex">10</span> ] {t("eyebrow")}
-            </p>
+            <p className="offEyebrow">{t("eyebrow")}</p>
             <Heading className="offTitle" id="off-title" ref={titleRef} tabIndex={-1}>
               {t(`header.${headerKey}.title`)}
             </Heading>
