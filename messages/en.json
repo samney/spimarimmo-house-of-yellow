@@ -329,7 +329,12 @@
         "opportunities": "Opportunities"
       },
       "companyLabel": "Company {letter}",
-      "nav": ["Projects", "About", "News", "Contact"],
+      "nav": [
+        "Projects",
+        "About",
+        "News",
+        "Contact"
+      ],
       "navCta": "Meet us",
       "projectsTitle": "Our projects",
       "projects": [
@@ -353,7 +358,11 @@
       "sponsored": "Sponsored",
       "postCaption": "Invest in Morocco, grow internationally.",
       "postCta": "Learn more",
-      "postActions": ["Like", "Comment", "Share"],
+      "postActions": [
+        "Like",
+        "Comment",
+        "Share"
+      ],
       "inviteTitle": "Private invitation",
       "inviteSub": "International real-estate show",
       "live": "LIVE",
@@ -1055,7 +1064,8 @@
     "detailDates": "Dates",
     "detailCountry": "Country",
     "breadcrumb": "You are here",
-    "cardDetail": "Edition details"
+    "cardDetail": "Edition details",
+    "salonSite": "Official show website"
   },
   "galleryPage": {
     "label": "Gallery",

@@ -77,7 +77,6 @@ export async function GalleryListing() {
               <footer className="pageOutro">
                 <p className="text medium">
                   {tp("outro")} <Link href="/salons">{t("exploreSalons")}</Link>
-                  {" · "}
                   <Link href="/ressources">{tp("outroLibrary")}</Link>
                 </p>
               </footer>

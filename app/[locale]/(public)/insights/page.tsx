@@ -102,7 +102,6 @@ export default async function Insights({
           <footer className="pageOutro">
             <p className="text medium">
               {t("outro")} <Link href="/ressources">{t("outroResources")}</Link>
-              {" · "}
               <Link href="/salons">{t("outroSalons")}</Link>
             </p>
           </footer>

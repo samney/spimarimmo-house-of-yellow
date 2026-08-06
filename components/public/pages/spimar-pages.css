@@ -243,7 +243,56 @@
 }
 
 .spimarListPage .pageOutro {
+  border-block-start: 1px solid var(--border-subtle);
   margin-top: var(--space-lg);
+  padding-block-start: var(--space-md);
+}
+
+/* Owner remark (2026-08-06): the outro is a CTA band, not a run of inline
+   text links. Every link in it renders as a system pill; the first carries
+   the gold fill, the rest the outline. */
+.pageOutro p {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+.pageOutro p > a {
+  align-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
+  display: inline-flex;
+  font-weight: 600;
+  min-height: 44px;
+  padding: var(--space-2xs) var(--space-md);
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.pageOutro p > a:first-of-type {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.pageOutro p > a:first-of-type:hover {
+  background: var(--action-primary-hover);
+  border-color: var(--action-primary-hover);
+}
+
+.pageOutro p > a:not(:first-of-type):hover {
+  border-color: var(--action-primary);
+}
+
+.pageOutro p > a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 /* 580 regime: type and spacing restate through :root; only the layout that

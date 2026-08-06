@@ -53,7 +53,6 @@ export default async function Faq({ params }: { params: Promise<{ locale: string
               <footer className="pageOutro">
                 <p className="text medium">
                   {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
-                  {" · "}
                   <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
                 </p>
               </footer>

@@ -83,7 +83,6 @@ export default async function InsightArticle({
           <footer className="pageOutro">
             <p className="text medium">
               <Link href="/insights">{t("backToBlog")}</Link>
-              {" · "}
               <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
             </p>
           </footer>

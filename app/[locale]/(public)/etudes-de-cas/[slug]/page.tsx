@@ -124,7 +124,7 @@ export default async function EtudeDeCas({
             <footer className="pageOutro">
               <p className="text medium">
                 <Link href="/etudes-de-cas">{t("backToList")}</Link>
-                {" · "}
+
                 <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
               </p>
             </footer>
@@ -149,56 +149,42 @@ export default async function EtudeDeCas({
     <div className="pageBlocks">
       <section className="spimarListPage">
         <div className="contentWrapper">
-          <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">09</span> ]
-              </div>
-            </div>
-            <div className="colMain">
-              {/* Same back-path-before-the-title as the edition detail (P-02):
-                  one detail template, so a visitor who has seen one knows where
-                  the exit is on the other. */}
-              <nav className="detailCrumb" aria-label={t("breadcrumb")}>
-                <Link className="text medium" href="/etudes-de-cas">
-                  ← {t("backToList")}
-                </Link>
-              </nav>
-              <header className="pageIntro">
-                <div className="label text medium">
-                  {t("detailLabel")}
-                  {page.demo ? <span className="cardItem__demo">Démo</span> : null}
-                </div>
-                <SplitTitle as="h1" className="normalTitle" text={page.title || slug} />
-                {intro ? <p className="detailLead text medium">{intro}</p> : null}
-              </header>
+          {/* Same designed template as the fixture details (owner remark,
+              2026-08-06): no chapter column, no demo badge on the face. */}
+          <nav className="detailCrumb" aria-label={t("breadcrumb")}>
+            <Link className="text medium" href="/etudes-de-cas">
+              ← {t("backToList")}
+            </Link>
+          </nav>
+          <header className="pageIntro">
+            <div className="label text medium">{t("detailLabel")}</div>
+            <SplitTitle as="h1" className="normalTitle" text={page.title || slug} />
+            {intro ? <p className="detailLead text medium">{intro}</p> : null}
+          </header>
 
-              <div className="caseVideoSlot" aria-label={t("videoPending")}>
-                <span className="caseVideoBadge" aria-hidden="true">
-                  <Play className="caseVideoIcon" strokeWidth={1.75} />
-                </span>
-                <p className="text medium">{t("videoPending")}</p>
-              </div>
-
-              {text ? (
-                <div className="caseBody">
-                  {text.split(/\n\n+/).map((paragraph, i) => (
-                    <p key={i} className="text medium">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              ) : null}
-
-              <footer className="pageOutro">
-                <p className="text medium">
-                  <Link href="/etudes-de-cas">{t("backToList")}</Link>
-                  {" · "}
-                  <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-                </p>
-              </footer>
-            </div>
+          <div className="caseVideoSlot" aria-label={t("videoPending")}>
+            <span className="caseVideoBadge" aria-hidden="true">
+              <Play className="caseVideoIcon" strokeWidth={1.75} />
+            </span>
+            <p className="text medium">{t("videoPending")}</p>
           </div>
+
+          {text ? (
+            <div className="caseBody">
+              {text.split(/\n\n+/).map((paragraph, i) => (
+                <p key={i} className="text medium">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          ) : null}
+
+          <footer className="pageOutro">
+            <p className="text medium">
+              <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
+              <Link href="/etudes-de-cas">{t("backToList")}</Link>
+            </p>
+          </footer>
         </div>
       </section>
     </div>

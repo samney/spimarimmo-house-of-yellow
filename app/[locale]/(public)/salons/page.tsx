@@ -115,7 +115,6 @@ export default async function Salons({
                     {shown.length === 1 ? t("countOne") : t("countMany", { count: shown.length })}
                     {selected ? (
                       <>
-                        {" · "}
                         <Link href="/salons">{t("clearFilter")}</Link>
                       </>
                     ) : null}
@@ -163,9 +162,6 @@ export default async function Salons({
                                     sizes="(max-width: 580px) 88vw, 22vw"
                                     src={event.image.src}
                                   />
-                                  {event.demo ? (
-                                    <span className="salcStatus salcStatus--upcoming">Démo</span>
-                                  ) : null}
                                 </div>
                               ) : (
                                 <div className="salcMedia salcMedia--empty" aria-hidden="true">
