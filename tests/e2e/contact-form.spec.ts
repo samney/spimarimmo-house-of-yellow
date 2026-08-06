@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "@playwright/test";
+import { E2E_DATA_DIR } from "./data-dir";
 
 /* The contact form, end to end (P-09).
 
@@ -12,7 +13,14 @@ import { expect, test } from "@playwright/test";
    It also checks the inverse, which is the failure that actually harms someone:
    an invalid submission must NOT report success. */
 
-const LEADS = join(process.cwd(), ".data", "spimar-leads.jsonl");
+/* The store the SERVER writes to, not the developer's `.data/`.
+
+   This read used to hard-code `.data/`, which silently depended on the suite
+   and the developer sharing one directory. The server now runs with
+   `SPIMAR_DATA_DIR` pointed at a disposable store (playwright.config.ts), so
+   reading `.data/` would report the developer's own leads and never see the
+   one this test just created. */
+const LEADS = join(E2E_DATA_DIR, "spimar-leads.jsonl");
 
 function leadCount(): number {
   if (!existsSync(LEADS)) return 0;

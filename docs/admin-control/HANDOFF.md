@@ -107,10 +107,35 @@ Blueprint = **179 tasks** (not 216 — that was an earlier miscount).
 
 ---
 
-## 5. RESOLVED — the full-suite failure was environmental, not an app defect
+## 5. Suite state, and a resolved false alarm
 
-Diagnosed 2026-08-06. The full 67-test suite passes twice consecutively
-(67/67 in 2.7 min, then 2.2 min) on a fresh production build at head.
+**Measured on this branch after the unification: 102 passed, 4 failed, 3.5 min
+(106 tests — both lineages' suites combined).**
+
+The 4 failures are all `method-section.spec.ts`, and they are **pre-existing on
+`main`, not caused by the port.** The spec asserts `.methodDoc__label` with copy
+like `PLAN DE CAMPAGNE`; `git grep methodDoc origin/main` matches the test file
+and **no component**, and `method-content.ts` no longer carries a `document`
+field at all. Section 04 was redesigned around `methodDossier` / `methodCard__*`
+and the spec was never updated. This is the "stale Section 04 tests" item the
+finalization master document already lists in §2.4. Fixing it needs the approved
+Section 04 copy, so it belongs to the finalization phase, not to a port — and it
+must be fixed by correcting the assertions, never by deleting them.
+
+Two failures were genuine and are fixed here:
+
+- `contact-form.spec.ts` read a hard-coded `.data/spimar-leads.jsonl` while the
+  server now writes to the isolated `SPIMAR_DATA_DIR`. It reads `E2E_DATA_DIR`
+  now — a latent coupling to the developer's own store, exposed rather than
+  introduced by the port.
+- `exhibitor-slice.spec.ts` needed `/suivi`, which was initially left out. The
+  page and its stylesheet are now ported; `app/globals.css` gains exactly one
+  import, scoped to the page's own `.status*` classes.
+
+### The earlier false alarm, kept because the method matters
+
+Diagnosed 2026-08-06 on the console branch. The full suite passed twice
+consecutively there (67/67) on a fresh production build.
 
 What the failing runs actually were:
 
