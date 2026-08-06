@@ -116,13 +116,11 @@ test("whatsapp widget switches contrast over the yellow footer reveal", async ({
   await expect(widget).not.toHaveAttribute("data-inverse", "true");
 });
 
-/* Owner checklist "# nav": the Exposer dropdown anchors must land on the
-   sticky-deck sections' PINNED frames, not their natural tops — a sticky
-   member's measured rect shifts with its stuck offset, and the tall
-   #visibilite member pins at a negative top, so a naive scroll cut off its
-   whole lower half (owner report, 2026-08-06). #methode lands flush with the
-   viewport top; #visibilite lands with its bottom at the viewport bottom
-   (small slack allowed: its sticky offset rounds the height UP on purpose). */
+/* Owner checklist "# nav": the Exposer dropdown anchors land each deck
+   section flush at the viewport top — full cover, title first. A sticky
+   member's measured rect shifts with its stuck offset, so the scroll derives
+   the natural top from the stack instead (owner report, 2026-08-06: the
+   scroll-animated sections landed inaccurately). */
 test("exposer dropdown anchors land on the deck sections' pinned frames", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Deny" }).click();
@@ -141,11 +139,7 @@ test("exposer dropdown anchors land on the deck sections' pinned frames", async 
   await nav.getByRole("link", { name: "Visibilité", exact: true }).click();
   await page.waitForFunction(() => {
     const el = document.querySelector("#visibilite");
-    if (el === null) return false;
-    const bottom = el.getBoundingClientRect().bottom;
-    return (
-      bottom <= window.innerHeight + 3 && bottom >= window.innerHeight - window.innerWidth * 0.1
-    );
+    return el !== null && Math.abs(el.getBoundingClientRect().top) < 3;
   });
 });
 

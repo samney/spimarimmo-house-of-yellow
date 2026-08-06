@@ -41,14 +41,14 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     const scrollToHash = (hash: string) => {
       const el = document.querySelector<HTMLElement>(hash);
       if (!el) return;
-      /* Sticky-deck members (#methode, #visibilite) need their PINNED frame,
-         not their natural top: a sticky element's measured rect already
-         includes its current stuck offset (wrong target once the deck is in
-         play), and tall members pin at a negative top, so the accurate view
-         sits almost a full screen PAST their natural position. Both are
-         derived: natural top = stack top + preceding siblings' heights;
-         pinned frame = natural top − resolved sticky top. No header offset —
-         the pinned frame is the designed full-viewport view. */
+      /* Sticky-deck members (#methode, #visibilite) cannot be targeted by
+         their measured rect: a sticky element's rect already includes its
+         current stuck offset, so the target is wrong once the deck is in
+         play. Derive the NATURAL top instead — stack top + preceding
+         siblings' heights — and land there: the section starts flush at the
+         viewport top (full cover, title first) and the deck pins it as the
+         reader scrolls on. No header offset — deck members are designed as
+         full-viewport covers under the floating header. */
       const stack = el.closest<HTMLElement>(".sectionStack");
       if (stack && el.parentElement === stack) {
         let naturalTop = stack.getBoundingClientRect().top + window.scrollY;
@@ -56,8 +56,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
           if (sibling === el) break;
           naturalTop += (sibling as HTMLElement).offsetHeight;
         }
-        const stickyTop = Number.parseFloat(getComputedStyle(el).top) || 0;
-        lenis.scrollTo(naturalTop - stickyTop);
+        lenis.scrollTo(naturalTop);
         return;
       }
       lenis.scrollTo(el, { offset: headerOffset() });
