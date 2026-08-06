@@ -121,6 +121,16 @@
   padding: var(--space-2xl) 0 var(--space-xl);
 }
 
+/* Owner remark (2026-08-06): no dead band under the page header — content
+   follows at a working distance, not a chapter break. */
+.pageHeader + .spimarListPage {
+  padding-block-start: var(--space-lg);
+}
+
+.pageHeader__plainEyebrow {
+  margin: 0;
+}
+
 .spimarListPage .pageIntro {
   margin-bottom: var(--space-lg);
   max-width: var(--measure-document);

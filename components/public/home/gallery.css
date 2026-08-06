@@ -558,15 +558,17 @@
   min-inline-size: 16vw;
 }
 
+/* Owner remark (2026-08-06): the section's actions carry the site's pill
+   button vocabulary, not their own rectangles. */
 .galCtaGold,
 .galCtaGhost {
   align-items: center;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   cursor: pointer;
   display: inline-flex;
   font-family: inherit;
   font-size: var(--text-support);
-  font-weight: 500;
+  font-weight: 600;
   gap: var(--space-xs);
   justify-content: center;
   padding: var(--space-sm) var(--space-md);

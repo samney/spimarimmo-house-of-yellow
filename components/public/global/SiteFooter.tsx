@@ -58,6 +58,10 @@ export function SiteFooter() {
 
   return (
     <footer className="setDarkCursor" ref={ref}>
+      {/* Branded ground (owner remark, 2026-08-06): an ink radial wash and a
+          fading dot field over the yellow band — paint only, aria-hidden. */}
+      <span className="footerWash" aria-hidden="true" />
+      <span className="footerGrain" aria-hidden="true" />
       <div className="contentWrapper">
         <div className="logo">
           <SpimarWordmark title="SPIMARIMMO" />
