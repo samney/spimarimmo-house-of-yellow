@@ -324,7 +324,12 @@
         "opportunities": "Opportunités"
       },
       "companyLabel": "Société {letter}",
-      "nav": ["Projets", "À propos", "Actualités", "Contact"],
+      "nav": [
+        "Projets",
+        "À propos",
+        "Actualités",
+        "Contact"
+      ],
       "navCta": "Nous rencontrer",
       "projectsTitle": "Nos projets",
       "projects": [
@@ -348,7 +353,11 @@
       "sponsored": "Sponsorisé",
       "postCaption": "Investissez au Maroc, progressez à l’international.",
       "postCta": "En savoir plus",
-      "postActions": ["J’aime", "Commenter", "Partager"],
+      "postActions": [
+        "J’aime",
+        "Commenter",
+        "Partager"
+      ],
       "inviteTitle": "Invitation privée",
       "inviteSub": "Salon international de l’immobilier",
       "live": "EN DIRECT",
@@ -1033,7 +1042,8 @@
     "detailCity": "Ville",
     "detailDates": "Dates",
     "detailCountry": "Pays",
-    "breadcrumb": "Vous êtes ici"
+    "breadcrumb": "Vous êtes ici",
+    "cardDetail": "Découvrir l'édition"
   },
   "galleryPage": {
     "label": "Galerie",
@@ -1118,5 +1128,34 @@
     "statement": "Parlez à un conseiller SPIMARIMMO.",
     "pending": "Chaque demande est enregistrée et suivie par un conseiller. La prise de rendez-vous en ligne ouvre avec le raccordement du CRM.",
     "directTitle": "Nous joindre directement"
+  },
+  "whatsapp": {
+    "chipTitle": "Besoin d'aide ?",
+    "chipSub": "Notre équipe vous répond",
+    "triggerLabel": "Ouvrir l'assistant WhatsApp",
+    "panelTitle": "Assistant SPIMARIMMO",
+    "status": "Réponse sous 24 h ouvrées",
+    "intro": "Choisissez une question pour préparer la conversation — elle s'ouvrira dans WhatsApp.",
+    "presetsLabel": "Questions préparées",
+    "presets": {
+      "exhibit": "Je souhaite exposer lors d'un prochain salon.",
+      "editions": "Quelles sont les prochaines éditions et destinations ?",
+      "brochure": "Je souhaite recevoir la brochure exposants.",
+      "advisor": "Je souhaite parler à un conseiller."
+    },
+    "draftLabel": "Votre message",
+    "send": "Continuer sur WhatsApp",
+    "pending": "Numéro WhatsApp en cours d'activation — ce bouton s'activera dès sa validation.",
+    "chooseFirst": "Choisissez une question pour préparer votre message."
+  },
+  "brochure": {
+    "trigger": "Télécharger la brochure",
+    "dialogLabel": "Aperçu de la brochure exposants",
+    "eyebrow": "Brochure exposants",
+    "title": "SPIMARIMMO — Brochure Exposants 2026",
+    "download": "Télécharger le PDF",
+    "close": "Fermer l'aperçu",
+    "frameTitle": "Aperçu du document PDF",
+    "fallback": "Si l'aperçu ne s'affiche pas dans votre navigateur, utilisez « Télécharger le PDF »."
   }
 }

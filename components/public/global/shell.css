@@ -309,30 +309,8 @@ header.menuOpen .hamburgerIcon .bar:nth-child(3) {
   display: none;
 }
 
-/* ===== Sticky WhatsApp (reference rule) ===== */
-.stickyWhatsappButton {
-  position: fixed;
-  width: 3.75vw;
-  height: 3.75vw;
-  left: calc(100vw - 6.25vw);
-  bottom: 2.5vw;
-  border-radius: 50%;
-  z-index: var(--z-whatsapp);
-  background: var(--hoy-yellow);
-  transition: opacity 0.3s;
-}
-.stickyWhatsappButton a {
-  display: block;
-  position: absolute;
-  inset: 0;
-}
-.stickyWhatsappButton .icon {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* The reference's sticky WhatsApp rules left with WhatsAppButton — the
+   pre-chat assistant (whatsapp.css) owns the corner now (D-026). */
 .stickyWhatsappButton .icon svg {
   width: 2.5vw;
   height: 2.5vw;

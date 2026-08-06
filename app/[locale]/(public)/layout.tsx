@@ -3,14 +3,15 @@ import { SiteHeader } from "@/components/public/global/SiteHeader";
 import { SiteFooter } from "@/components/public/global/SiteFooter";
 import { CustomCursor } from "@/components/primitives/motion/CustomCursor";
 import { ConsentBanner } from "@/components/public/global/ConsentBanner";
-import { WhatsAppButton } from "@/components/public/global/WhatsAppButton";
+import { WhatsAppWidget } from "@/components/public/global/WhatsAppWidget";
 
 /* Public shell. The repository owner keeps the House of Yellow header and
    footer chrome — retargeted to SPIMAR navigation and content — while the
    homepage sections are rebuilt (owner decision, 2026-08-04, superseding the
    TRF-004 neutral shell for this branch). The floating WhatsApp action came
-   back on 2026-08-05 (owner direction), pointing at SPIMARIMMO's own published
-   line. */
+   back on 2026-08-05 (owner direction) and grew into the pre-chat assistant
+   on 2026-08-06 (D-026, aljaridapro reference): prepared questions first,
+   then the live wa.me handoff on SPIMARIMMO's own published line. */
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <SmoothScroll>
@@ -18,7 +19,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <main className="pageContent">{children}</main>
       <SiteFooter />
       <CustomCursor />
-      <WhatsAppButton />
+      <WhatsAppWidget />
       <ConsentBanner />
     </SmoothScroll>
   );

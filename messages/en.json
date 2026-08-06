@@ -324,7 +324,12 @@
         "opportunities": "Opportunities"
       },
       "companyLabel": "Company {letter}",
-      "nav": ["Projects", "About", "News", "Contact"],
+      "nav": [
+        "Projects",
+        "About",
+        "News",
+        "Contact"
+      ],
       "navCta": "Meet us",
       "projectsTitle": "Our projects",
       "projects": [
@@ -348,7 +353,11 @@
       "sponsored": "Sponsored",
       "postCaption": "Invest in Morocco, grow internationally.",
       "postCta": "Learn more",
-      "postActions": ["Like", "Comment", "Share"],
+      "postActions": [
+        "Like",
+        "Comment",
+        "Share"
+      ],
       "inviteTitle": "Private invitation",
       "inviteSub": "International real-estate show",
       "live": "LIVE",
@@ -1033,7 +1042,8 @@
     "detailCity": "City",
     "detailDates": "Dates",
     "detailCountry": "Country",
-    "breadcrumb": "You are here"
+    "breadcrumb": "You are here",
+    "cardDetail": "Edition details"
   },
   "galleryPage": {
     "label": "Gallery",
@@ -1118,5 +1128,34 @@
     "statement": "Talk to a SPIMARIMMO adviser.",
     "pending": "Every enquiry is recorded and followed up by an adviser. Online appointment booking opens with the CRM connection.",
     "directTitle": "Reach us directly"
+  },
+  "whatsapp": {
+    "chipTitle": "Need help?",
+    "chipSub": "Our team replies to you",
+    "triggerLabel": "Open the WhatsApp assistant",
+    "panelTitle": "SPIMARIMMO assistant",
+    "status": "Reply within 24 business hours",
+    "intro": "Pick a question to prepare the conversation — it will open in WhatsApp.",
+    "presetsLabel": "Prepared questions",
+    "presets": {
+      "exhibit": "I would like to exhibit at an upcoming show.",
+      "editions": "What are the next editions and destinations?",
+      "brochure": "I would like to receive the exhibitor brochure.",
+      "advisor": "I would like to talk to an advisor."
+    },
+    "draftLabel": "Your message",
+    "send": "Continue on WhatsApp",
+    "pending": "WhatsApp number pending activation — this button goes live once validated.",
+    "chooseFirst": "Pick a question to prepare your message."
+  },
+  "brochure": {
+    "trigger": "Download the brochure",
+    "dialogLabel": "Exhibitor brochure preview",
+    "eyebrow": "Exhibitor brochure",
+    "title": "SPIMARIMMO — Exhibitor Brochure 2026",
+    "download": "Download the PDF",
+    "close": "Close the preview",
+    "frameTitle": "PDF document preview",
+    "fallback": "If the preview does not display in your browser, use “Download the PDF”."
   }
 }

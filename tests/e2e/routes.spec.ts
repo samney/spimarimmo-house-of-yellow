@@ -73,6 +73,60 @@ test("hero falls back to the poster under reduced motion", async ({ browser }) =
   await context.close();
 });
 
+/* The floating WhatsApp assistant (D-026): opens a pre-chat panel, a preset
+   fills the draft, and the handoff is a LIVE wa.me link on SPIMARIMMO's own
+   published line carrying the chosen question. Escape closes and restores
+   focus to the trigger. */
+test("whatsapp assistant drafts a preset and hands off to the published line", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const trigger = page.getByRole("button", { name: /assistant WhatsApp/i });
+  await trigger.click();
+
+  const panel = page.locator(".waPanel");
+  await expect(panel).toBeVisible();
+
+  await panel.getByRole("button", { name: /brochure/i }).click();
+  await expect(panel.locator(".waDraft")).toContainText("brochure");
+
+  const send = panel.getByRole("link", { name: /Continuer sur WhatsApp/i });
+  await expect(send).toHaveAttribute("href", /wa\.me\/212661903190\?text=/);
+
+  await page.keyboard.press("Escape");
+  await expect(panel).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
+/* Brochure quick preview (D-026): the [01] trigger opens a modal with the
+   real PDF embedded and a genuine download action on the same file; Escape
+   closes and restores focus. */
+test("brochure preview opens with a real PDF and download action", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const trigger = page.getByRole("button", { name: "Télécharger la brochure" }).first();
+  await trigger.click();
+
+  const dialog = page.locator(".brochurePanel");
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAttribute("aria-modal", "true");
+  await expect(dialog.locator("iframe.brochureFrame")).toHaveAttribute(
+    "src",
+    /\/documents\/SPIMARIMMO_Brochure_Exposants_2026\.pdf/,
+  );
+  await expect(dialog.getByRole("link", { name: "Télécharger le PDF" })).toHaveAttribute(
+    "download",
+    "",
+  );
+  const head = await page.request.get("/documents/SPIMARIMMO_Brochure_Exposants_2026.pdf");
+  expect(head.status()).toBe(200);
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
 test("hero video opens in an accessible modal player", async ({ page }) => {
   await page.goto("/");
   const deny = page.getByRole("button", { name: /deny/i });
