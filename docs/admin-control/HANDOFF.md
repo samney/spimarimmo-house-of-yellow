@@ -163,9 +163,14 @@ cleared by `global-setup.ts`. It must never read the developer's `.data/`.
 
 ## 8. Next actions, in order
 
+**Reprioritized 2026-08-06 (owner, D-025): complete the public website to
+100% first; then kick off Wave 4. Slice-1 plan parked at
+`WAVE-4-SLICE-1-PLAN.md`.**
+
 1. ~~Diagnose §5~~ — done, suite is trustworthy (67/67 twice).
-2. Get #34 reviewed and merged — `main` has none of this.
-3. Wave 4 (CRM, 26 tasks) is the largest fully-unblocked body of work:
+2. Public-site completion: implementable gaps + owner-validation checklist.
+3. Get #34 reviewed and merged — `main` has none of this.
+4. Wave 4 (CRM, 26 tasks) is the largest fully-unblocked body of work:
    saved views, lead preview drawer, organizations and contacts screens
    (deliberately absent from navigation rather than dead links), stage
    transitions with lost-reason enforcement, won→onboarding, export audit.

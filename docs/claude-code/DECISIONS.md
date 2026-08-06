@@ -643,3 +643,20 @@ third-party exhibitor trademarks are legible (`DIP`, `Allianz`,
 SPIMARIMMO is recorded as the rights owner; whether those incidental third-party
 marks carry any further clearance requirement is an owner question that this
 entry raises rather than answers.
+
+## D-025 — 2026-08-06 — Public website completion takes priority over Wave 4 CRM
+
+**Context.** The full-suite investigation closed (HANDOFF §5 resolved,
+`3b63c04`) and Wave 4 CRM was next per `docs/admin-control/HANDOFF.md` §8. A
+first slice (ADM-076 saved views + ADM-077 lead preview drawer) was planned
+and not yet implemented.
+
+**Decision.** Owner instruction in session, 2026-08-06: complete the public
+website to 100% first; kick off the CRM work after. The Wave 4 slice-1 plan is
+parked at `docs/admin-control/WAVE-4-SLICE-1-PLAN.md` for that kickoff.
+
+**Consequence.** The next work packages are drawn from the public-site
+completion gap list (implementable items) and the owner-validation checklist
+(content the hard rules forbid inventing: figures, dates, prices, legal text,
+partner confirmations). Waves 4–8 of the admin blueprint stay queued behind
+that.
