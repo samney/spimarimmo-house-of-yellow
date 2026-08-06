@@ -248,6 +248,12 @@ export interface SubmissionInput {
   };
   /** Supplied by the caller so a retried request cannot create a second record. */
   readonly idempotencyKey: string;
+  /**
+   * Version of the privacy notice shown at submission time. Optional because
+   * the development store does not model notices; the database records it and
+   * falls back to the first consent definition's version when absent.
+   */
+  readonly noticeVersion?: string;
 }
 
 /**

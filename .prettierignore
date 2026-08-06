@@ -12,3 +12,8 @@ CLAUDE-CODE-PUBLIC-SKILLS-WORKFLOW-BOOTSTRAP.md
 # donor, so reformatting them here would destroy that provenance. Matches the
 # same exclusion in tsconfig.json and eslint.config.mjs.
 supabase/functions
+
+# The owner-supplied blueprint package. These are delivered specification
+# artifacts, not repository source: reformatting them would alter documents we
+# were given as-is and are meant to cite verbatim.
+docs/ADMIN

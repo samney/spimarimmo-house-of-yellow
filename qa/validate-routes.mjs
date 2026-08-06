@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { readFile } from "node:fs/promises";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -12,6 +13,18 @@ const nextBin = path.join(projectRoot, "node_modules", "next", "dist", "bin", "n
 const coreRoutes = ["/", "/salons", "/exposer", "/exposer/methode", "/exposer/visibilite", "/exposer/offres", "/exposer/devenir-exposant", "/pourquoi-spimar", "/etudes-de-cas", "/ressources", "/ressources/exposants", "/ressources/galerie", "/insights", "/faq", "/visiteurs", "/contact", "/confidentialite", "/mentions-legales"];
 const projectRoutes = [];
 const publicRoutes = [...coreRoutes, ...projectRoutes];
+
+/* The rights-approved video sources, read from the manifest that governs them
+   rather than hard-coded here, so authorizing an asset is a manifest change and
+   this gate follows automatically. */
+const videoManifest = JSON.parse(
+  await readFile(path.join(projectRoot, "lib", "media", "video-manifest.json"), "utf8"),
+);
+const approvedVideoSources = new Set(
+  videoManifest.assets
+    .filter((asset) => asset.rightsStatus === "approved")
+    .map((asset) => asset.src),
+);
 
 async function waitForServer(server) {
   for (let attempt = 0; attempt < 120; attempt += 1) {
@@ -46,8 +59,19 @@ async function inspectRoute(route, expectedStatus) {
   if (expectedStatus === 200 && response.headers.get("x-robots-tag") !== "noindex, nofollow, noarchive") {
     errors.push("missing preview/staging X-Robots-Tag protection");
   }
-  if (expectedStatus === 200 && body.includes("/videos/")) {
-    errors.push("rendered HTML contains an unavailable /videos/ request");
+  /* Video requests must correspond to an approved manifest entry.
+
+     This replaces a blanket ban on "/videos/", which was correct only while the
+     manifest declared zero deployable assets. D-024 authorized owner-supplied
+     hero footage, so a ban would now fail on a legitimately approved asset.
+     The check is not weaker: it still fails any request for a video that is not
+     rights-approved, which is the property that actually matters. */
+  if (expectedStatus === 200) {
+    for (const src of new Set(body.match(/\/videos\/[A-Za-z0-9._-]+/g) ?? [])) {
+      if (!approvedVideoSources.has(src)) {
+        errors.push(`rendered HTML requests an unapproved video: ${src}`);
+      }
+    }
   }
 
   return errors.map((error) => `${route}: ${error}`);

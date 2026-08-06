@@ -17,7 +17,7 @@ import {
   listPages as storeListPages,
   getPage as storeGetPage,
   getEvent as storeGetEvent,
-} from "@/lib/spimar/repository";
+} from "./file-store";
 import {
   localized,
   type Locale as StoreLocale,

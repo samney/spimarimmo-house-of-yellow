@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures";
 
 /* End-to-end release journey required by the accelerated brief:
 
@@ -28,28 +28,28 @@ async function dismissConsent(page: import("@playwright/test").Page) {
 
 async function signIn(page: import("@playwright/test").Page, who: typeof ADMIN) {
   await page.goto("/admin/login");
-  await page.getByLabel("Email").fill(who.email);
-  await page.getByLabel("Password").fill(who.password);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await page.getByLabel("E-mail").fill(who.email);
+  await page.getByLabel("Mot de passe").fill(who.password);
+  await page.getByRole("button", { name: "Se connecter" }).click();
+  await expect(page.getByRole("heading", { name: "Vue d’ensemble" })).toBeVisible();
 }
 
 test.describe("CMS and CRM are protected", () => {
   test("admin routes redirect anonymous visitors to sign-in", async ({ page }) => {
-    for (const route of ["/admin", "/admin/pages", "/admin/events", "/admin/leads"]) {
+    for (const route of ["/admin", "/admin/cms/pages", "/admin/events", "/admin/crm/leads"]) {
       await page.goto(route);
-      await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "SPIMAR Control" })).toBeVisible();
     }
   });
 
   test("bad credentials are refused without disclosing which part was wrong", async ({ page }) => {
     await page.goto("/admin/login");
-    await page.getByLabel("Email").fill(ADMIN.email);
-    await page.getByLabel("Password").fill("wrong-password");
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await page.getByLabel("E-mail").fill(ADMIN.email);
+    await page.getByLabel("Mot de passe").fill("wrong-password");
+    await page.getByRole("button", { name: "Se connecter" }).click();
     // Scoped to the form notice: Next.js also renders a route announcer with role=alert.
-    await expect(page.locator(".adminNotice--error")).toContainText("were not accepted");
-    await expect(page.getByRole("heading", { name: "Dashboard" })).toHaveCount(0);
+    await expect(page.locator(".notice--error")).toContainText("were not accepted");
+    await expect(page.getByRole("heading", { name: "Vue d’ensemble" })).toHaveCount(0);
   });
 });
 
@@ -75,26 +75,26 @@ test("public enquiry is durably stored and appears in the CRM", async ({ page })
 
   // -> CRM lead, with attribution captured at submission.
   await signIn(page, ADMIN);
-  await page.goto("/admin/leads");
+  await page.goto("/admin/crm/leads");
   await expect(page.getByText(name)).toBeVisible();
   await page
     .getByRole("row", { name: new RegExp(name) })
-    .getByRole("link", { name: "Open" })
+    .getByRole("link", { name: "Ouvrir" })
     .click();
   await expect(page.getByText(message)).toBeVisible();
   await expect(page.getByText("devenir-exposant-flexible")).toBeVisible();
 
   // Operational workflow: stage, assignment and a note, each audited.
-  await page.getByLabel("Current stage").selectOption("qualified");
-  await page.getByRole("button", { name: "Update stage" }).click();
+  await page.getByLabel("Étape actuelle").selectOption("qualified");
+  await page.getByRole("button", { name: "Faire progresser l’étape" }).click();
   await expect(page.getByText("Stage updated.")).toBeVisible();
 
-  await page.getByLabel("Assignee").fill("ops@example.test");
-  await page.getByRole("button", { name: "Save assignment" }).click();
+  await page.getByLabel("Assigné à").fill("ops@example.test");
+  await page.getByRole("button", { name: "Enregistrer", exact: true }).click();
   await expect(page.getByText("Assignment updated.")).toBeVisible();
 
   await page.getByRole("textbox", { name: "Note" }).fill("Following up this week.");
-  await page.getByRole("button", { name: "Add note" }).click();
+  await page.getByRole("button", { name: "Ajouter la note" }).click();
   await expect(page.getByText("Note added.")).toBeVisible();
 
   // Audit trail records actor and action (rendered as the activity list).
@@ -136,12 +136,14 @@ test("CMS publish updates the public site through revalidation", async ({ page }
   await page.goto("/admin/events");
 
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("EN").first().fill(title);
-  await page.getByLabel("City").fill("Casablanca");
-  await page.getByLabel("Country").fill("Morocco");
+  // The assertions below read /en/..., so the EN translation is the one that
+  // has to carry the title.
+  await page.getByLabel("EN", { exact: true }).first().fill(title);
+  await page.getByLabel("Ville").fill("Casablanca");
+  await page.getByLabel("Pays").fill("Morocco");
   // Dates deliberately left empty — the public page must say so, not guess.
   await page.getByLabel("Publication").selectOption("published");
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/published/i).first()).toBeVisible();
 
   // -> public revalidation: the published edition is now live.
@@ -159,21 +161,22 @@ test("a published case study lists and serves its detail; drafts 404", async ({ 
 
   // The CMS utility: case studies are pages in the `etudes/` family.
   await signIn(page, ADMIN);
-  await page.goto("/admin/pages");
+  await page.goto("/admin/cms/pages");
   await page.getByLabel("Slug").fill(`etudes/e2e-case-${id}`);
-  await page.getByLabel("EN").first().fill(title);
+  // Asserted against /en/etudes-de-cas below, so author the EN translation.
+  await page.getByLabel("EN", { exact: true }).first().fill(title);
   await page.getByLabel("Publication").selectOption("published");
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/published/i).first()).toBeVisible();
 
   await page.goto("/en/etudes-de-cas");
   await page.getByRole("link", { name: title }).click();
   await expect(page.getByRole("heading", { name: title })).toBeVisible();
 
-  await page.goto("/admin/pages");
+  await page.goto("/admin/cms/pages");
   await page.getByLabel("Slug").fill(`etudes/e2e-case-draft-${id}`);
-  await page.getByLabel("EN").first().fill(`Draft case ${id}`);
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByLabel("FR", { exact: true }).first().fill(`Draft case ${id}`);
+  await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/draft/i).first()).toBeVisible();
   const response = await page.request.get(`/etudes-de-cas/e2e-case-draft-${id}`, {
     maxRedirects: 0,
@@ -188,9 +191,9 @@ test("drafts are never visible publicly", async ({ page }) => {
   await signIn(page, ADMIN);
   await page.goto("/admin/events");
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("EN").first().fill(`Draft ${id}`);
+  await page.getByLabel("FR", { exact: true }).first().fill(`Draft ${id}`);
   await page.getByLabel("Publication").selectOption("draft");
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/draft/i).first()).toBeVisible();
 
   // A draft must 404 rather than leak through a guessable URL.
@@ -205,8 +208,8 @@ test("an editor cannot publish, and the server enforces it", async ({ page }) =>
   await signIn(page, EDITOR);
   await page.goto("/admin/events");
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("EN").first().fill(`Editor attempt ${id}`);
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByLabel("FR", { exact: true }).first().fill(`Editor attempt ${id}`);
+  await page.getByRole("button", { name: "Enregistrer" }).click();
 
   await expect(page.getByText(/draft/i).first()).toBeVisible();
 
@@ -214,7 +217,7 @@ test("an editor cannot publish, and the server enforces it", async ({ page }) =>
   // server-side — so ATTACK it: force-enable the disabled option, submit
   // `state=published` as the editor, and require the server to downgrade.
   await page.getByLabel("Slug").fill(slug);
-  await page.getByLabel("EN").first().fill(`Editor attempt ${id}`);
+  await page.getByLabel("FR", { exact: true }).first().fill(`Editor attempt ${id}`);
   await page.evaluate(() => {
     const select = document.querySelector<HTMLSelectElement>('select[name="state"]');
     if (select) {
@@ -222,7 +225,7 @@ test("an editor cannot publish, and the server enforces it", async ({ page }) =>
       select.value = "published";
     }
   });
-  await page.getByRole("button", { name: "Save" }).click();
+  await page.getByRole("button", { name: "Enregistrer" }).click();
   await expect(page.getByText(/draft/i).first()).toBeVisible();
 
   // And the record must not resolve publicly either way.

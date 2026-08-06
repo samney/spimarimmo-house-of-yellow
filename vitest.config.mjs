@@ -39,6 +39,9 @@ export default defineConfig({
       "tests/e2e/**",
       "qa/backend/edge/**",
       "**/.claude/worktrees/**",
+      // Database-adapter contracts need the out-of-tree PGlite runtime; they
+      // run via vitest.backend.config.mjs inside `pnpm verify:backend`.
+      "**/*.pg.test.ts",
     ],
   },
 });

@@ -20,6 +20,11 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Skip API routes, Next internals, and files with extensions (assets).
-  matcher: "/((?!api|admin|_next|_vercel|.*\\..*).*)",
+  /* Skip API routes, Next internals, and files with extensions (assets).
+
+     `admin` is deliberately NOT excluded any more: SPIMAR Control lives under
+     app/[locale]/(admin)/admin and needs the same locale resolution as the
+     public site (ADR-A1). The CSV export is a route handler, which Next
+     matches before the i18n rewrite, so the download is unaffected. */
+  matcher: "/((?!api|_next|_vercel|.*\\..*).*)",
 };

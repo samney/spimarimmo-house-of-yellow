@@ -85,3 +85,4 @@ qa/backend/**/*.webm
 
 # Local contact-submission store (substitute until Supabase, HOY-100)
 /.data/
+supabase/.temp/

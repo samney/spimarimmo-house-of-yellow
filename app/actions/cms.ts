@@ -1,8 +1,8 @@
 "use server";
 
 import { createHash } from "node:crypto";
-import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isRateLimited } from "@/lib/contact/rate-limit";
 import {
@@ -15,14 +15,8 @@ import {
   startSession,
   verifyCredentials,
 } from "@/lib/spimar/auth";
-import {
-  deleteRecord,
-  saveDestination,
-  saveEvent,
-  saveMedia,
-  savePage,
-  updateLead,
-} from "@/lib/spimar/repository";
+import { getAdminSeams } from "@/lib/spimar/repositories";
+import { LEAD_STAGES } from "@/lib/backend/admin-seams";
 import type { LeadStage, Localized, PublishState } from "@/lib/spimar/types";
 
 /* CMS and CRM server actions.
@@ -87,15 +81,21 @@ export async function logout(): Promise<void> {
 
 /* ------------------------------------------------------------------- content */
 
+/** Revalidates the CONSOLE surface the operator is looking at.
+
+    Without this an editor saves a record and the list beside the form still
+    shows the previous state until they navigate away and back — the save looks
+    like it did nothing. The public revalidation below is a separate concern. */
+function revalidateConsole(paths: string[]): void {
+  for (const path of paths) revalidatePath(path);
+}
+
 /** Revalidates the public surfaces a content change can affect. Targeted rather
     than a blanket purge, so a page edit does not invalidate the whole site. */
 function revalidatePublic(paths: string[]): void {
   for (const locale of ["en", "fr"]) {
     for (const path of paths) {
-      /* French is the default locale (i18n/routing.ts): FR lives unprefixed
-         at /, EN under /en. Getting this backwards leaves retracted content
-         cached on the EN routes while the console reports success. */
-      const prefix = locale === "fr" ? "" : "/en";
+      const prefix = locale === "en" ? "" : "/fr";
       revalidatePath(`${prefix}${path}`);
     }
   }
@@ -112,7 +112,7 @@ export async function savePageAction(
   if (!slug) return { ok: false, message: "A slug is required." };
 
   const state = requestedState(form, canPublish(session));
-  savePage(
+  await getAdminSeams().cms.savePage(
     {
       id: String(form.get("id") ?? "") || undefined,
       slug,
@@ -124,6 +124,7 @@ export async function savePageAction(
     session.email,
   );
 
+  revalidateConsole(["/admin/cms/pages", "/admin"]);
   revalidatePublic([`/${slug}`, "/"]);
   return {
     ok: true,
@@ -154,7 +155,7 @@ export async function saveEventAction(
   }
 
   const state = requestedState(form, canPublish(session));
-  saveEvent(
+  await getAdminSeams().cms.saveEvent(
     {
       id: String(form.get("id") ?? "") || undefined,
       slug,
@@ -172,6 +173,7 @@ export async function saveEventAction(
     session.email,
   );
 
+  revalidateConsole(["/admin/events", "/admin"]);
   revalidatePublic([`/salons/${slug}`, "/salons", "/"]);
   return {
     ok: true,
@@ -193,7 +195,7 @@ export async function saveDestinationAction(
   if (!slug) return { ok: false, message: "A slug is required." };
 
   const state = requestedState(form, canPublish(session));
-  saveDestination(
+  await getAdminSeams().cms.saveDestination(
     {
       id: String(form.get("id") ?? "") || undefined,
       slug,
@@ -204,6 +206,7 @@ export async function saveDestinationAction(
     session.email,
   );
 
+  revalidateConsole(["/admin/destinations", "/admin"]);
   revalidatePublic(["/salons", "/"]);
   return {
     ok: true,
@@ -234,7 +237,7 @@ export async function saveMediaAction(
   }
 
   const state = requestedState(form, canPublish(session));
-  saveMedia(
+  await getAdminSeams().cms.saveMedia(
     {
       id: String(form.get("id") ?? "") || undefined,
       src,
@@ -245,6 +248,7 @@ export async function saveMediaAction(
     },
     session.email,
   );
+  revalidateConsole(["/admin/cms/media", "/admin"]);
   return { ok: true, message: "Media record saved." };
 }
 
@@ -256,7 +260,8 @@ export async function deleteContentAction(
   if (!session || !canPublish(session)) {
     return { ok: false, message: "Deleting content requires an administrator." };
   }
-  const removed = deleteRecord(collection, id);
+  const removed = await getAdminSeams().cms.deleteRecord(collection, id);
+  revalidateConsole(["/admin/events", "/admin/cms/pages", "/admin"]);
   revalidatePublic(["/", "/salons"]);
   return removed
     ? { ok: true, message: "Deleted." }
@@ -270,8 +275,6 @@ export async function updateLeadAction(
   form: FormData,
 ): Promise<ActionResult> {
   const session = await readSession();
-  // Capability, not session presence: matches the reads, the export, and the
-  // PR #29 fix on the seam lineage so the eventual merge converges.
   if (!session || !canManageLeads(session)) {
     return { ok: false, message: "You do not have permission to manage leads." };
   }
@@ -283,14 +286,18 @@ export async function updateLeadAction(
      the detail route the activity trail keeps rendering the pre-update server
      snapshot, so a note appears to vanish. */
   const refresh = () => {
-    revalidatePath("/admin/leads");
-    revalidatePath(`/admin/leads/${id}`);
+    revalidatePath("/admin/crm/leads");
+    revalidatePath(`/admin/crm/leads/${id}`);
   };
 
   if (intent === "note") {
     const detail = String(form.get("note") ?? "").trim();
     if (!detail) return { ok: false, message: "A note cannot be empty." };
-    const updated = updateLead(id, {}, { by: session.email, kind: "note", detail });
+    const updated = await getAdminSeams().crm.updateLead(
+      id,
+      {},
+      { by: session.email, kind: "note", detail },
+    );
     refresh();
     return updated
       ? { ok: true, message: "Note added." }
@@ -299,9 +306,9 @@ export async function updateLeadAction(
 
   if (intent === "stage") {
     const stage = String(form.get("stage") ?? "") as LeadStage;
-    const allowed: LeadStage[] = ["new", "qualified", "in_progress", "won", "lost"];
-    if (!allowed.includes(stage)) return { ok: false, message: "That stage is not recognised." };
-    const updated = updateLead(
+    if (!LEAD_STAGES.includes(stage))
+      return { ok: false, message: "That stage is not recognised." };
+    const updated = await getAdminSeams().crm.updateLead(
       id,
       { stage },
       { by: session.email, kind: "stage", detail: `Stage set to ${stage}` },
@@ -314,7 +321,7 @@ export async function updateLeadAction(
 
   if (intent === "assign") {
     const assignee = String(form.get("assignee") ?? "").trim();
-    const updated = updateLead(
+    const updated = await getAdminSeams().crm.updateLead(
       id,
       { assignee },
       {
@@ -330,4 +337,31 @@ export async function updateLeadAction(
   }
 
   return { ok: false, message: "Unrecognised action." };
+}
+
+/** Pipeline board stage move: a plain form action so the board needs no client
+    JS. Authorization and stage validation are identical to updateLeadAction;
+    the board simply re-renders the moved card in its new column. */
+export async function moveLeadStage(form: FormData): Promise<void> {
+  const session = await readSession();
+  if (!session) redirect("/admin/login");
+  // The lead-desk permission, not just a session — same gate as the export
+  // route, so every lead mutation and read-out shares one boundary.
+  if (!canManageLeads(session)) redirect("/admin");
+
+  const id = String(form.get("id") ?? "");
+  const stage = String(form.get("stage") ?? "") as LeadStage;
+
+  if (id && LEAD_STAGES.includes(stage)) {
+    await getAdminSeams().crm.updateLead(
+      id,
+      { stage },
+      { by: session.email, kind: "stage", detail: `Stage set to ${stage}` },
+    );
+  }
+
+  revalidatePath("/admin/crm/pipeline");
+  revalidatePath("/admin/crm/leads");
+  revalidatePath(`/admin/crm/leads/${id}`);
+  redirect("/admin/crm/pipeline");
 }

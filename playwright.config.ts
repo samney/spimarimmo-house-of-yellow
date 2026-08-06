@@ -1,10 +1,13 @@
 import { defineConfig } from "@playwright/test";
+import { E2E_DATA_DIR } from "./tests/e2e/data-dir";
 
 const port = Number(process.env.E2E_PORT ?? 3212);
 
 export default defineConfig({
   testDir: "./tests/e2e",
   testMatch: "**/*.spec.ts",
+  /* Clears E2E_DATA_DIR so every run starts from an empty store, matching CI. */
+  globalSetup: "./tests/e2e/global-setup.ts",
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
@@ -32,6 +35,10 @@ export default defineConfig({
       /* Enables the deterministic /visual-test/* parity routes (they 404 in any
          deployment that does not set this). */
       SPIMAR_VISUAL_TEST: "1",
+      /* The suite writes real records. They go to a disposable directory, not
+         to the developer's `.data/` — and starting empty is what makes a local
+         pass mean the same thing as a CI pass. */
+      SPIMAR_DATA_DIR: E2E_DATA_DIR,
     },
   },
 });
