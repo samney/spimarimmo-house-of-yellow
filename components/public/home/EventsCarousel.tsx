@@ -208,6 +208,16 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
             <span className="fixedLabel">
               {expanded ? "Réduire" : `Voir les ${events.length} destinations`}
             </span>
+            {/* The system button cross-fades its fixed label to this marquee
+                on hover; without it the pill hover-faded to an empty surface
+                and the control read as broken (owner report, 2026-08-06). */}
+            <span className="innerLabel">
+              <Marquee
+                text={expanded ? "Réduire" : `Voir les ${events.length} destinations`}
+                direction="left"
+                speed={90}
+              />
+            </span>
           </span>
           <span className="icon" aria-hidden="true">
             <svg width="19" height="19" viewBox="0 0 19 19" fill="none">

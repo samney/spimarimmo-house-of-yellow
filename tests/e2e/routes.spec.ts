@@ -143,6 +143,29 @@ test("exposer dropdown anchors land on the deck sections' pinned frames", async 
   });
 });
 
+/* Owner checklist "[ 2 ] Salons par pays": the destinations reveal is a real
+   toggle — the carousel becomes the full wrapped grid and back — and the
+   control keeps a visible label on hover (the system button cross-fades to
+   its inner marquee; without one the pill hover-faded to empty and read as
+   broken). */
+test("destinations grid expands, collapses, and keeps its hover label", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const toggle = page.getByRole("button", { name: /Voir les \d+ destinations/ });
+  await toggle.scrollIntoViewIfNeeded();
+  await expect(toggle.locator(".innerLabel .marquees")).toHaveCount(1);
+
+  const grid = page.locator(".eventsGrid");
+  await expect(grid).toHaveClass(/is-carousel/);
+  await toggle.click();
+  await expect(grid).toHaveClass(/is-expanded/);
+  await expect(page.getByRole("button", { name: "Réduire" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Réduire" }).click();
+  await expect(grid).toHaveClass(/is-carousel/);
+});
+
 /* Brochure quick preview (D-026): the [01] trigger opens a modal with the
    real PDF embedded and a genuine download action on the same file; Escape
    closes and restores focus. */
