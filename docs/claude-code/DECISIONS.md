@@ -660,3 +660,31 @@ completion gap list (implementable items) and the owner-validation checklist
 (content the hard rules forbid inventing: figures, dates, prices, legal text,
 partner confirmations). Waves 4–8 of the admin blueprint stay queued behind
 that.
+
+## D-026 — 2026-08-06 — Website finalization sweep: staging conventions from the owner's notes checklist
+
+**Context.** The owner supplied a top-down notes checklist (`docs/pdf/Plan.md`
+in the primary checkout) to finalize the public website, and answered three
+scoping questions in session.
+
+**Decision.** For the duration of the finalization sweep, by owner instruction:
+
+1. **Staged links.** CTAs and nav entries the notes mark "-> #" render as
+   `href="#"` links, not disabled controls — a deliberate staging state until
+   the owner re-links them. This supersedes the "disabled, never a dead link"
+   pattern in `DESIGN-CONTRACT.md` for the flagged controls only.
+2. **Placeholder figures.** "Chiffres clés" shows plausible dummy numbers with
+   the "Données officielles publiées après validation des sources" disclaimer
+   kept visible. Same convention for pages the notes say to build with mock
+   data (salons calendar, études de cas, ressources, blog) — the owner swaps
+   in real data when the backend is connected.
+3. **Nav.** Only the Exposer item becomes a dropdown; its entries are anchor
+   links (staged to `#`). Other top-level items keep their routes.
+4. **WhatsApp.** A pre-chat popup modeled on the owner's aljaridapro widget
+   ("Besoin d'aide ?" assistant); the WhatsApp number is TBD and the final
+   send action stays staged until supplied.
+
+**Consequence.** Content-honesty enforcement shifts from "render pending
+states" to "owner-authorized placeholders, disclaimed where flagged". The
+production-readiness gate before any real launch is the owner replacing
+placeholders — tracked by the checklist itself.
