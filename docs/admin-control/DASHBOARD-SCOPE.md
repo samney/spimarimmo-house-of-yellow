@@ -31,15 +31,15 @@ Everything else in the blueprint console sits on a flow the site does not have.
 The lead is the only record the product actually earns today, so this is where
 console work compounds.
 
-| Task                | Screen               | Why it is real                                       |
-| ------------------- | -------------------- | ---------------------------------------------------- |
-| ADM-076 saved views | `/admin/crm/leads`   | Filters bind to real `Lead` fields only              |
-| ADM-077 preview drawer | `/admin/crm/leads` | Reads the lead + its acquisitions                    |
-| Stage transitions with lost reason | lead detail | The pipeline already stores stage + audit  |
-| Organizations screen | new                 | Rows exist — the dedupe writes them                  |
-| Contacts screen     | new                  | Same                                                 |
-| Export audit        | `/admin/crm/export`  | Export works; the audit trail is the gap             |
-| Won → onboarding    | lead detail          | Closes the funnel the site opens                     |
+| Task                               | Screen              | Why it is real                            |
+| ---------------------------------- | ------------------- | ----------------------------------------- |
+| ADM-076 saved views                | `/admin/crm/leads`  | Filters bind to real `Lead` fields only   |
+| ADM-077 preview drawer             | `/admin/crm/leads`  | Reads the lead + its acquisitions         |
+| Stage transitions with lost reason | lead detail         | The pipeline already stores stage + audit |
+| Organizations screen               | new                 | Rows exist — the dedupe writes them       |
+| Contacts screen                    | new                 | Same                                      |
+| Export audit                       | `/admin/crm/export` | Export works; the audit trail is the gap  |
+| Won → onboarding                   | lead detail         | Closes the funnel the site opens          |
 
 Slice 1 is planned in detail in `WAVE-4-SLICE-1-PLAN.md`, including its honest
 omissions (Pays, CA potentiel, conversion %, sparklines, avatars, pagination).
@@ -66,12 +66,12 @@ a forced `state=published` (covered by `tests/e2e/integration.spec.ts`).
 Not cancelled. Deferred until the product has the flow that produces the data.
 Roughly **60 of the 127 remaining tasks**.
 
-| Area                             | Why deferred                                              |
-| -------------------------------- | --------------------------------------------------------- |
-| Wave 5 — event operations        | No application, registration, booking or payment flow exists on the public site: packages, exhibitor applications, confirmed exhibitors, visitor registrations, event appointments all have zero producers |
-| Wave 7 — analytics (6 dashboards + report builder) | No volume to measure. A chart over 3 leads is decoration, and a chart over invented leads is a lie |
-| Appointments                     | Same — no booking surface                                  |
-| Integration health / notification preferences | Blocked on P-2 (no email/CRM provider connected) |
+| Area                                               | Why deferred                                                                                                                                                                                               |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wave 5 — event operations                          | No application, registration, booking or payment flow exists on the public site: packages, exhibitor applications, confirmed exhibitors, visitor registrations, event appointments all have zero producers |
+| Wave 7 — analytics (6 dashboards + report builder) | No volume to measure. A chart over 3 leads is decoration, and a chart over invented leads is a lie                                                                                                         |
+| Appointments                                       | Same — no booking surface                                                                                                                                                                                  |
+| Integration health / notification preferences      | Blocked on P-2 (no email/CRM provider connected)                                                                                                                                                           |
 
 When a deferred area acquires a producer, lift it from the blueprint then.
 

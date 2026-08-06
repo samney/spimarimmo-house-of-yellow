@@ -1,8 +1,9 @@
 # Wave 4 — slice 1 plan (parked per D-025)
 
 Planned 2026-08-06, deferred the same day: the owner prioritized public-site
-completion first (D-025). Execute this when CRM work kicks off. Research was
-done at head `3b63c04`; re-verify only what changed since.
+completion first (D-025). Execute this when CRM work kicks off. Researched at
+head `3b63c04`; **re-verified at head `9e87938`** — see §"Verified" at the end.
+Scope authority is `D-027` / `DASHBOARD-SCOPE.md`.
 
 **Slice:** ADM-076 saved views + ADM-077 lead preview drawer, one screen
 (`/admin/crm/leads`), reference `VISUAL_04_CRM_LEADS_LIST.png`. ADM-070/071/
@@ -20,7 +21,7 @@ done at head `3b63c04`; re-verify only what changed since.
 ## Changes
 
 1. `lib/backend/admin-seams.ts` — `SavedLeadView` type + `CrmRepository.
-   listSavedViews(owner) / saveSavedView(input, actor) / deleteSavedView(id, actor)`.
+listSavedViews(owner) / saveSavedView(input, actor) / deleteSavedView(id, actor)`.
    Per-owner views. File adapter only; **no migration** (P-1).
 2. `lib/spimar/repositories/file-store.ts` — `saved-views` jsonl collection.
 3. `lib/spimar/repositories/file-admin-repository.ts` — wire the methods.
@@ -46,3 +47,41 @@ done at head `3b63c04`; re-verify only what changed since.
 Pays column/filter (no country field on `Lead`); trend %, CA potentiel,
 conversion, sparklines (no monetary/period data exists); avatars (P-1);
 pagination (defer until volume demands).
+
+## Verified at head `9e87938` (2026-08-06)
+
+Read against the live code, not re-derived. The plan stands; four points are
+now pinned down.
+
+**Confirmed.**
+
+- `app/[locale]/(admin)/admin/crm/leads/page.tsx` takes
+  `searchParams: Promise<{ view?: string }>` and already URL-drives `?view=`
+  with five built-ins (`all`, `unassigned`, `open`, `won`, `lost`), each
+  rendering its own count and `aria-current`. Saved views slot beside these —
+  do not replace them.
+- Every filter the plan proposes maps to a real field on `Lead`
+  (`lib/spimar/types.ts`): `stage` (`LeadStage`), `kind` (`LeadKind`),
+  `owner` → `assignee`, `event` → `eventSlug`, and `q` over
+  `name`/`email`/`organisation`/`message`. Nothing invented.
+- `CrmRepository.listAcquisitions(leadId)` exists and is documented to return
+  an honest empty list for leads predating the acquisition path — the drawer's
+  Activité tab must render that emptiness, not hide the tab.
+- The no-country omission is real: `Lead` has `locale` and `sourcePath` but no
+  country field.
+- The assigned-scope guard the E2E test must exercise already exists —
+  `isAssignedScopeOnly(actor)` filters to `lead.assignee === session.email` and
+  renders a notice counting the hidden rows.
+
+**Two gaps the plan did not name.**
+
+1. **Lost reason has no home.** `updateLead` accepts only
+   `Partial<Pick<Lead, "stage" | "assignee">>`, and `Lead` has no lost-reason
+   field. The `DASHBOARD-SCOPE.md` line "stage transitions with lost reason"
+   is therefore a **later** slice: it needs a `Lead` field, both adapters, and
+   a contract test. Do not smuggle it into slice 1.
+2. **Export ignores the active view.** The header posts a bare
+   `GET /admin/crm/leads/export` with no parameters, so filtering the list then
+   exporting silently returns everything. Once filters land this becomes a
+   correctness bug, not a nicety — carry the same query string into the export
+   form, or the button lies about what it exports.

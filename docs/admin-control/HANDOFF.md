@@ -128,7 +128,7 @@ serves a stale `.next`.
 - **P-1 — PARTIALLY CLOSED 2026-08-06.** The hosted project exists
   (`hevyrtiydhmbzcnkhemy`) and `supabase migration list --linked` shows all 43
   migrations applied Local↔Remote. Do not re-diagnose this: `supabase inspect db
-  table-stats` returns zero rows for never-queried tables and does **not** mean
+table-stats` returns zero rows for never-queried tables and does **not** mean
   the project is empty — that misreading already cost one session.
   Still open: `supabase/seed.sql` not applied; the 4 Edge Functions not
   deployed; adapter contract suites not yet run against the hosted DB (the Wave
