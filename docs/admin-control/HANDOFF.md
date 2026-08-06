@@ -125,10 +125,16 @@ serves a stale `.next`.
 
 ## 6. Blocked on the owner
 
-- **P-1 — no hosted Supabase project or credentials.** Blocks ADM-039 password
-  reset, ADM-040 invitations, ADM-042 MFA, the Wave 3 "RLS verified in browser"
-  criterion, and switching the funnel to the Postgres adapter that already
-  passes its contract.
+- **P-1 — PARTIALLY CLOSED 2026-08-06.** The hosted project exists
+  (`hevyrtiydhmbzcnkhemy`) and `supabase migration list --linked` shows all 43
+  migrations applied Local↔Remote. Do not re-diagnose this: `supabase inspect db
+  table-stats` returns zero rows for never-queried tables and does **not** mean
+  the project is empty — that misreading already cost one session.
+  Still open: `supabase/seed.sql` not applied; the 4 Edge Functions not
+  deployed; adapter contract suites not yet run against the hosted DB (the Wave
+  3 "RLS verified in browser context" criterion); Supabase **Auth** not wired,
+  which is what still blocks ADM-039 password reset, ADM-040 invitations and
+  ADM-042 MFA.
 - **P-2 — no email/CRM provider.** Delivery is queued in `integration_jobs` and
   never reported as sent.
 - **Merge authority is the owner's.** PR #34 is a draft and is always-review
@@ -163,26 +169,36 @@ cleared by `global-setup.ts`. It must never read the developer's `.data/`.
 
 ## 8. Next actions, in order
 
-**Reprioritized 2026-08-06 (owner, D-025): complete the public website to
-100% first; then kick off Wave 4. Slice-1 plan parked at
-`WAVE-4-SLICE-1-PLAN.md`.**
+**Sequence fixed by the owner: website first, then dashboard (`D-025`).
+Dashboard scope is value-first (`D-027`) — build only what the website
+produces or consumes. The list is `DASHBOARD-SCOPE.md`; do NOT work the
+blueprint's 127 remaining tasks straight through.**
 
 1. ~~Diagnose §5~~ — done, suite is trustworthy (67/67 twice).
-2. Public-site completion: implementable gaps + owner-validation checklist.
-3. Get #34 reviewed and merged — `main` has none of this.
-4. Wave 4 (CRM, 26 tasks) is the largest fully-unblocked body of work:
-   saved views, lead preview drawer, organizations and contacts screens
-   (deliberately absent from navigation rather than dead links), stage
-   transitions with lost-reason enforcement, won→onboarding, export audit.
+2. **Website to 100%** — `D-026` staging conventions; the owner's checklist is
+   `docs/pdf/Plan.md` in the primary checkout. Home slice A is committed
+   (`9a09e57`); a working tree of further home edits was in progress.
+3. Finish Supabase (§6): apply `seed.sql`, deploy the 4 Edge Functions, run
+   `pnpm test:seams:pg` against the hosted DB, then wire Supabase Auth.
+4. Get #34 reviewed and merged — `main` has none of this.
+5. Dashboard, in `DASHBOARD-SCOPE.md` order: CRM depth starting from
+   `WAVE-4-SLICE-1-PLAN.md`, then CMS editors for the content types the public
+   site renders. Wave 5 events, Wave 7 analytics, appointments and integration
+   health are **deferred, not forgotten** — nothing produces their data yet.
 
 ## 9. House rules that have bitten before
 
 - Never weaken a gate to make it pass. The rate limiter and the `/videos/`
   manifest check were both tightened rather than relaxed when they failed.
-- Never invent a figure, date, price, capacity, partner or legal text. Pending
-  states render honestly ("à confirmer", "sur devis").
+- Never invent an **undisclaimed** figure, date, price, capacity, partner or
+  legal text. Pending states render honestly ("à confirmer", "sur devis").
+  Narrowed by owner decision: `D-026` authorises placeholder figures on the
+  website when the "données officielles publiées après validation" disclaimer
+  stays visible, and `D-027` extends the same disclosed-placeholder rule to the
+  console. Disclosed is allowed; undisclosed never is.
 - A control with no real target renders disabled or is not shown — no dead
-  navigation links.
+  navigation links. Exception, `D-026`: controls the owner's checklist marks
+  "-> #" render as staged `href="#"` links for the finalization sweep.
 - Verify against the branch you are on, not `main`. Checking `main` for public
   routes once caused `/contact`, `/exposer` and `/salons` to be rebuilt when
   better versions already existed on the sibling branch.

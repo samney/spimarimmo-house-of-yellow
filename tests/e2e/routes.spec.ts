@@ -15,6 +15,7 @@ const coreRoutes = [
   "/ressources/exposants",
   "/ressources/galerie",
   "/insights",
+  "/insights/preparer-sa-strategie-salon",
   "/faq",
   "/visiteurs",
   "/contact",
@@ -88,6 +89,41 @@ for (const route of coreRoutes) {
     expect(overflow).toBeLessThanOrEqual(0);
   });
 }
+
+/* Ressources family end-to-end (D-026): the library's one real download,
+   the exposants page's real FAQ route and analyses deep-links, the blog's
+   filter → article flow, and the gallery's URL-driven category filter. */
+test("ressources family flows are real end to end", async ({ page }) => {
+  // Library: the brochure card opens the real preview; other cards state
+  // availability honestly and route through contact.
+  await page.goto("/ressources");
+  await expect(page.locator(".bibCard--available")).toHaveCount(1);
+  await expect(page.getByRole("link", { name: "Demander ce document" })).toHaveCount(4);
+
+  // Exposants: the FAQ CTA lands on the real /faq; an analysis row lands on
+  // its article.
+  await page.goto("/ressources/exposants");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("exposant");
+  const brochureDownload = page.locator(".resToolDownload[href]");
+  await expect(brochureDownload).toHaveAttribute(
+    "href",
+    "/documents/SPIMARIMMO_Brochure_Exposants_2026.pdf",
+  );
+  await page.getByRole("link", { name: /Toutes les réponses|réponses/i }).click();
+  await expect(page).toHaveURL(/\/faq$/);
+
+  // Blog: category filter narrows; a card serves its designed article.
+  await page.goto("/insights?categorie=analyses");
+  await expect(page.locator(".blogCard")).toHaveCount(3);
+  await page.locator(".blogCard").first().getByRole("link").click();
+  await expect(page.locator(".blogArticle .blogParagraph").first()).toBeVisible();
+  await expect(page.getByText(/publiées après validation/).first()).toBeVisible();
+
+  // Gallery: the category filter is URL state with honest demo badges.
+  await page.goto("/ressources/galerie?categorie=stands");
+  await expect(page).toHaveURL(/categorie=stands/);
+  await expect(page.locator(".galAllCard").first()).toBeVisible();
+});
 
 /* Études de cas end-to-end (D-026): URL-driven filters narrow the fixture
    rows, pagination is real navigation, and a fixture detail serves the

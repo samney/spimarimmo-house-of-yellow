@@ -743,7 +743,9 @@
         "calendar": "Calendrier des salons",
         "checklist": "Checklist de préparation",
         "report": "Exemple de rapport"
-      }
+      },
+      "available": "Disponible",
+      "validatedVersion": "Version validée 2026"
     },
     "analyses": {
       "label": "Analyses pour décider",
@@ -901,7 +903,7 @@
   "insights": {
     "label": "Blog",
     "title": "Le marché, la diaspora, l'investissement.",
-    "lead": "Les ressources réduisent la friction commerciale ; le blog capte les recherches autour du marché immobilier marocain et de la diaspora. Chaque article se relie à un salon, une destination ou une offre.",
+    "lead": "Conseils, analyses et repères pour les exposants et les acheteurs de la diaspora.",
     "territoriesTitle": "Territoires éditoriaux",
     "territoryKicker": "Territoire",
     "territories": {
@@ -915,7 +917,19 @@
     "pendingNote": "Premiers articles en préparation",
     "outro": "En attendant les premiers articles :",
     "outroResources": "Ressources",
-    "outroSalons": "Voir les salons"
+    "outroSalons": "Voir les salons",
+    "filterLabel": "Filtrer par catégorie",
+    "filterAll": "Tous les articles",
+    "categories": {
+      "marche": "Marché",
+      "conseils": "Conseils",
+      "analyses": "Analyses"
+    },
+    "fixturesNote": "Articles prévisionnels — sources et signatures publiées après validation.",
+    "readingTime": "{minutes} min de lecture",
+    "readArticle": "Lire l'article",
+    "backToBlog": "Retour au blog",
+    "outroCta": "Devenir exposant"
   },
   "resourcesPage": {
     "label": "Ressources",
@@ -948,7 +962,9 @@
     "outroContact": "Contactez-nous",
     "outroInsights": "Lire le blog",
     "outroExposants": "Ressources exposants",
-    "outroGallery": "Voir la galerie"
+    "outroGallery": "Voir la galerie",
+    "availableNow": "Disponible",
+    "requestResource": "Demander ce document"
   },
   "salonsPage": {
     "label": "Salons",
@@ -979,7 +995,9 @@
     "lead": "La bibliothèque complète des visuels de salon, classée par catégorie. Chaque visuel est présenté avec son statut : aucune image n’est rattachée à une édition sans validation.",
     "navLabel": "Catégories de la galerie",
     "outro": "Continuer :",
-    "outroLibrary": "Bibliothèque de ressources"
+    "outroLibrary": "Bibliothèque de ressources",
+    "filterAll": "Tout voir",
+    "paginationLabel": "Pages de la galerie"
   },
   "caseStudies": {
     "label": "Études de cas",
@@ -1041,5 +1059,10 @@
     "close": "Fermer l'aperçu",
     "frameTitle": "Aperçu du document PDF",
     "fallback": "Si l'aperçu ne s'affiche pas dans votre navigateur, utilisez « Télécharger le PDF »."
+  },
+  "resourcesExposantsPage": {
+    "label": "Ressources exposants",
+    "title": "Tout ce qu'un exposant doit avoir en main.",
+    "lead": "Dossier marché, boîte à outils, analyses et réponses aux questions fréquentes — réunis sur une seule page."
   }
 }

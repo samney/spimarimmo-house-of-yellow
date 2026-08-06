@@ -14,6 +14,12 @@
   padding: var(--space-2xl) 0 var(--space-xl);
 }
 
+/* Header-only variant: a full section follows immediately, so the intro
+   keeps its top rhythm but sheds the bottom band. */
+.spimarListPage--flush {
+  padding-block-end: 0;
+}
+
 .spimarListPage .pageIntro {
   margin-bottom: var(--space-lg);
   max-width: var(--measure-document);
@@ -45,6 +51,33 @@
   gap: var(--space-sm);
   padding: var(--space-md) 0;
   list-style: none;
+}
+
+/* Readability pass (owner note, D-026): questions read at title size with a
+   gold numeral; answers get reading leading and a prose measure instead of
+   the compact label type. */
+.faqList summary .numIndex {
+  color: var(--spimar-gold-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.faqList summary h2 {
+  font-size: var(--text-small-title);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.faqList .faqAnswer {
+  max-width: var(--measure-prose);
+  padding-block-end: var(--space-md);
+}
+
+.faqList .faqAnswer p {
+  font-size: var(--text-support);
+  line-height: 1.7;
+  margin: 0;
 }
 
 .faqList summary::-webkit-details-marker {

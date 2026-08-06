@@ -743,7 +743,9 @@
         "calendar": "Exhibition calendar",
         "checklist": "Preparation checklist",
         "report": "Sample report"
-      }
+      },
+      "available": "Available",
+      "validatedVersion": "Validated 2026 version"
     },
     "analyses": {
       "label": "Analyses to decide",
@@ -901,7 +903,7 @@
   "insights": {
     "label": "Blog",
     "title": "The market, the diaspora, investment.",
-    "lead": "Resources reduce commercial friction; the blog captures searches around the Moroccan property market and the diaspora. Every article connects to an exhibition, a destination or an offer.",
+    "lead": "Advice, analyses and reference points for exhibitors and diaspora buyers.",
     "territoriesTitle": "Editorial territories",
     "territoryKicker": "Territory",
     "territories": {
@@ -915,7 +917,19 @@
     "pendingNote": "First articles in preparation",
     "outro": "While the first articles are being prepared:",
     "outroResources": "Resources",
-    "outroSalons": "See the exhibitions"
+    "outroSalons": "See the exhibitions",
+    "filterLabel": "Filter by category",
+    "filterAll": "All articles",
+    "categories": {
+      "marche": "Market",
+      "conseils": "Advice",
+      "analyses": "Analyses"
+    },
+    "fixturesNote": "Provisional articles — sources and bylines publish after validation.",
+    "readingTime": "{minutes} min read",
+    "readArticle": "Read the article",
+    "backToBlog": "Back to the blog",
+    "outroCta": "Become an exhibitor"
   },
   "resourcesPage": {
     "label": "Resources",
@@ -948,7 +962,9 @@
     "outroContact": "Contact us",
     "outroInsights": "Read the blog",
     "outroExposants": "Exhibitor resources",
-    "outroGallery": "See the gallery"
+    "outroGallery": "See the gallery",
+    "availableNow": "Available",
+    "requestResource": "Request this document"
   },
   "salonsPage": {
     "label": "Exhibitions",
@@ -979,7 +995,9 @@
     "lead": "The full library of exhibition visuals, organised by category. Every visual carries its status: no image is attached to an edition without validation.",
     "navLabel": "Gallery categories",
     "outro": "Continue:",
-    "outroLibrary": "Resource library"
+    "outroLibrary": "Resource library",
+    "filterAll": "View all",
+    "paginationLabel": "Gallery pages"
   },
   "caseStudies": {
     "label": "Case studies",
@@ -1041,5 +1059,10 @@
     "close": "Close the preview",
     "frameTitle": "PDF document preview",
     "fallback": "If the preview does not display in your browser, use “Download the PDF”."
+  },
+  "resourcesExposantsPage": {
+    "label": "Exhibitor resources",
+    "title": "Everything an exhibitor needs at hand.",
+    "lead": "Market dossier, toolbox, analyses and answers to frequent questions — gathered on one page."
   }
 }

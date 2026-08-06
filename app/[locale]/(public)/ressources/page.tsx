@@ -1,14 +1,23 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { BookOpen, CalendarDays, ClipboardCheck, FileText, Map } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
+import { BrochureTrigger } from "@/components/public/global/BrochureDialog";
 
-/* Spec §16 — Ressources et SEO. The five-resource library comes from the
-   specification table. Per the content principle every resource keeps a
-   presentation before download; the documents themselves ship once their
-   validated versions exist, so each card carries an honest availability state
-   and routes the request through contact. Nothing is linked that does not
-   exist. */
-const RESOURCES = ["r1", "r2", "r3", "r4", "r5"] as const;
+/* Spec §16 — Ressources et SEO, rebuilt as the designed library (owner note,
+   D-026). Each resource is a card with a truthful action: the brochure is
+   the one validated document, so its card carries the real preview +
+   download popup; every other card states its availability honestly and
+   routes the request through contact. Nothing is linked that does not
+   exist. Icons from the D-023 lucide set. */
+
+const RESOURCES = [
+  { key: "r1", Icon: FileText, available: true },
+  { key: "r2", Icon: BookOpen, available: false },
+  { key: "r3", Icon: CalendarDays, available: false },
+  { key: "r4", Icon: Map, available: false },
+  { key: "r5", Icon: ClipboardCheck, available: false },
+] as const;
 
 export default async function Ressources({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -19,39 +28,49 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
     <div className="pageBlocks">
       <section className="spimarListPage">
         <div className="contentWrapper">
-          <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">13</span> ]
-              </div>
-            </div>
-            <div className="colMain">
-              <header className="pageIntro">
-                <div className="label text medium">{t("label")}</div>
-                <SplitTitle as="h1" className="normalTitle" text={t("title")} />
-                <p className="text medium">{t("lead")}</p>
-              </header>
-              <ul className="spimarCardList" role="list">
-                {RESOURCES.map((key) => (
-                  <li key={key} className="cardItem">
-                    <h2 className="text medium">{t(`resources.${key}.name`)}</h2>
-                    <p className="text medium">{t(`resources.${key}.description`)}</p>
-                    <span className="cardNote text medium">{t("availability")}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="pageOutro">
-                <p className="text medium">
-                  {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
-                  {" · "}
-                  <Link href="/ressources/exposants">{t("outroExposants")}</Link>
-                  {" · "}
-                  <Link href="/ressources/galerie">{t("outroGallery")}</Link>
-                  {" · "}
-                  <Link href="/insights">{t("outroInsights")}</Link>
-                </p>
-              </div>
-            </div>
+          <header className="pageIntro">
+            <div className="label text medium">{t("label")}</div>
+            <SplitTitle as="h1" className="normalTitle" text={t("title")} />
+            <p className="text medium">{t("lead")}</p>
+          </header>
+
+          <ul className="bibGrid" role="list">
+            {RESOURCES.map(({ key, Icon, available }) => (
+              <li className={`bibCard${available ? " bibCard--available" : ""}`} key={key}>
+                <span className="bibIconRing" aria-hidden="true">
+                  <Icon className="bibIcon" strokeWidth={1.25} />
+                </span>
+                <h2 className="bibName">{t(`resources.${key}.name`)}</h2>
+                <p className="bibDescription">{t(`resources.${key}.description`)}</p>
+                <div className="bibAction">
+                  {available ? (
+                    <>
+                      <p className="bibAvailable">{t("availableNow")}</p>
+                      <BrochureTrigger variant="dark" />
+                    </>
+                  ) : (
+                    <>
+                      <p className="bibPending">{t("availability")}</p>
+                      <Link className="bibContactLink" href="/contact">
+                        {t("requestResource")}
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pageOutro">
+            <p className="text medium">
+              {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
+              {" · "}
+              <Link href="/ressources/exposants">{t("outroExposants")}</Link>
+              {" · "}
+              <Link href="/ressources/galerie">{t("outroGallery")}</Link>
+              {" · "}
+              <Link href="/insights">{t("outroInsights")}</Link>
+            </p>
           </div>
         </div>
       </section>

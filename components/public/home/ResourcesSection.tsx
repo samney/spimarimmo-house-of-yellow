@@ -42,16 +42,28 @@ import { CheckCircleIcon } from "./visibilityIcons";
 
 type IconComponent = (props: { className?: string }) => React.JSX.Element;
 
-const TOOLS: readonly { key: string; format: string; Icon: IconComponent }[] = [
-  { key: "brochure", format: "PDF", Icon: DocIcon },
+/* The brochure is the one validated document (D-026): its tool row carries
+   a real download; the others stay honestly disabled. */
+const BROCHURE_PATH = "/documents/SPIMARIMMO_Brochure_Exposants_2026.pdf";
+
+const TOOLS: readonly { key: string; format: string; Icon: IconComponent; href?: string }[] = [
+  { key: "brochure", format: "PDF", Icon: DocIcon, href: BROCHURE_PATH },
   { key: "calendar", format: "XLSX", Icon: CalendarIcon },
   { key: "checklist", format: "PDF", Icon: ChecklistIcon },
   { key: "report", format: "PPTX", Icon: PieDocIcon },
 ];
 
+/* Analyses deep-link into the blog fixtures — one content system serving
+   the section and /insights end to end (D-026). */
+const ANALYSES_LINKS = {
+  featured: "/insights/le-marche-mre-en-synthese",
+  strategy: "/insights/preparer-sa-strategie-salon",
+  interview: "/insights/entretien-direction-commerciale",
+} as const;
+
 const FAQ_KEYS = ["choose", "proposal", "qualified", "leads"] as const;
 
-export function ResourcesSection() {
+export function ResourcesSection({ standalone = false }: { standalone?: boolean }) {
   const t = useTranslations("resources");
   const [open, setOpen] = useState<string | null>(null);
 
@@ -61,7 +73,14 @@ export function ResourcesSection() {
         <div className="resTopGrid">
           <header className="resHeader">
             <p className="resEyebrow">
-              [ <span className="resEyebrowIndex">12</span> ] {t("eyebrow")}
+              {/* On the standalone page the section is the page, so the
+                  homepage chapter index would be a lie there. */}
+              {!standalone && (
+                <>
+                  [ <span className="resEyebrowIndex">12</span> ]{" "}
+                </>
+              )}
+              {t("eyebrow")}
             </p>
             <h2 className="resTitle" id="res-title">
               {t("title")}
@@ -99,7 +118,7 @@ export function ResourcesSection() {
             {t("toolbox.label")}
           </p>
           <ul className="resTools">
-            {TOOLS.map(({ key, format, Icon }) => (
+            {TOOLS.map(({ key, format, Icon, href }) => (
               <li className="resTool" key={key}>
                 <div className="resToolHead">
                   <span className="resToolIconWrap" aria-hidden="true">
@@ -109,25 +128,34 @@ export function ResourcesSection() {
                     <span className="resToolName">{t(`toolbox.items.${key}`)}</span>
                     <span className="resToolState">
                       <CheckCircleIcon className="resToolStateIcon" aria-hidden="true" />
-                      {t("toolbox.validatedRequired")}
+                      {href ? t("toolbox.available") : t("toolbox.validatedRequired")}
                     </span>
                   </span>
                 </div>
                 <p className="resToolMeta">
-                  {format} · FR · {t("toolbox.sourcePending")}
+                  {format} · FR ·{" "}
+                  {href ? t("toolbox.validatedVersion") : t("toolbox.sourcePending")}
                 </p>
-                {/* Disabled until a validated version exists — the button never
-                    fakes a download. */}
-                <button
-                  aria-disabled="true"
-                  className="resToolDownload"
-                  disabled
-                  title={t("toolbox.validatedRequired")}
-                  type="button"
-                >
-                  <DownloadIcon className="resBtnIcon" aria-hidden="true" />
-                  <span>{t("toolbox.download")}</span>
-                </button>
+                {href ? (
+                  /* The one validated document downloads for real (D-026). */
+                  <a className="resToolDownload" download href={href}>
+                    <DownloadIcon className="resBtnIcon" aria-hidden="true" />
+                    <span>{t("toolbox.download")}</span>
+                  </a>
+                ) : (
+                  /* Disabled until a validated version exists — the button
+                     never fakes a download. */
+                  <button
+                    aria-disabled="true"
+                    className="resToolDownload"
+                    disabled
+                    title={t("toolbox.validatedRequired")}
+                    type="button"
+                  >
+                    <DownloadIcon className="resBtnIcon" aria-hidden="true" />
+                    <span>{t("toolbox.download")}</span>
+                  </button>
+                )}
               </li>
             ))}
           </ul>
@@ -156,7 +184,7 @@ export function ResourcesSection() {
                   {t("pendingSourceDate")}
                 </p>
               </div>
-              <Link className="resCtaGhost" href="/ressources">
+              <Link className="resCtaGhost" href={ANALYSES_LINKS.featured}>
                 <span>{t("analyses.read")}</span>
                 <ArrowRightIcon className="resBtnIcon" aria-hidden="true" />
               </Link>
@@ -164,7 +192,7 @@ export function ResourcesSection() {
             <ul className="resAnalysisList">
               {(["strategy", "interview"] as const).map((key) => (
                 <li key={key}>
-                  <Link className="resAnalysisRow" href="/ressources">
+                  <Link className="resAnalysisRow" href={ANALYSES_LINKS[key]}>
                     <DocIcon className="resAnalysisRowIcon" aria-hidden="true" />
                     <span className="resAnalysisRowMeta">
                       <span className="resAnalysisRowTitle">{t(`analyses.items.${key}`)}</span>
@@ -214,7 +242,8 @@ export function ResourcesSection() {
                 );
               })}
             </ul>
-            <Link className="resCtaGold resFaqCta" href="/ressources">
+            {/* Owner note (D-026): "all answers" lands on the real FAQ. */}
+            <Link className="resCtaGold resFaqCta" href="/faq">
               <span>{t("faq.all")}</span>
               <ArrowRightIcon className="resBtnIcon" aria-hidden="true" />
             </Link>

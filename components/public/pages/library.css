@@ -1,0 +1,127 @@
+/* ==========================================================================
+   /ressources — the library (owner rebuild, D-026)
+   ==========================================================================
+   Resource cards on the raised-card rhythm: cover panel, name, description,
+   and a truthful action per resource — the brochure is a real preview +
+   download, everything else states its availability honestly. Binds only to
+   L2 tokens; `bib` prefix.
+   ========================================================================== */
+
+.bibGrid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: var(--space-lg) 0 0;
+  padding: 0;
+}
+
+.bibCard {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  transition: box-shadow var(--dur-micro) var(--ease-out-ref);
+}
+
+.bibCard:hover {
+  box-shadow: 0 0.8vw 2.4vw rgb(20 20 15 / 12%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bibCard {
+    transition: none;
+  }
+}
+
+.bibIconRing {
+  align-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: 50%;
+  color: var(--spimar-gold-text);
+  display: inline-flex;
+  height: 3vw;
+  justify-content: center;
+  margin-block-end: var(--space-2xs);
+  min-height: 44px;
+  min-width: 44px;
+  width: 3vw;
+}
+
+.bibIcon {
+  height: 45%;
+  width: 45%;
+}
+
+.bibName {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.bibDescription {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.bibAction {
+  margin-block-start: auto;
+  padding-block-start: var(--space-sm);
+}
+
+/* Honest availability state for resources without a validated document. */
+.bibPending {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  margin: 0 0 var(--space-2xs);
+}
+
+.bibContactLink {
+  color: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.bibContactLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* The brochure card carries the one real action and reads as available. */
+.bibCard--available {
+  border-color: var(--action-primary);
+}
+
+.bibAvailable {
+  color: var(--spimar-gold-text);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin: 0 0 var(--space-2xs);
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .bibGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 580px) {
+  .bibGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bibIconRing {
+    height: 11vw;
+    width: 11vw;
+  }
+}

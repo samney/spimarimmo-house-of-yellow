@@ -18,42 +18,33 @@ export default async function Faq({ params }: { params: Promise<{ locale: string
     <div className="pageBlocks">
       <section className="spimarListPage">
         <div className="contentWrapper">
-          <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">17</span> ]
-              </div>
-            </div>
-            <div className="colMain">
-              <header className="pageIntro">
-                <div className="label text medium">{t("label")}</div>
-                <SplitTitle as="h1" className="normalTitle" text={t("title")} />
-                <p className="text medium">{t("lead")}</p>
-              </header>
-              <div className="faqList">
-                {QUESTIONS.map((q, i) => (
-                  <details key={q}>
-                    <summary>
-                      <span className="numIndex text medium">{String(i + 1).padStart(2, "0")}</span>
-                      <h2 className="text medium">{t(`${q}.question`)}</h2>
-                      <span className="faqMarker" aria-hidden="true">
-                        +
-                      </span>
-                    </summary>
-                    <div className="faqAnswer text medium">
-                      <p>{t(`${q}.answer`)}</p>
-                    </div>
-                  </details>
-                ))}
-              </div>
-              <div className="pageOutro">
-                <p className="text medium">
-                  {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
-                  {" · "}
-                  <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-                </p>
-              </div>
-            </div>
+          <header className="pageIntro">
+            <div className="label text medium">{t("label")}</div>
+            <SplitTitle as="h1" className="normalTitle" text={t("title")} />
+            <p className="text medium">{t("lead")}</p>
+          </header>
+          <div className="faqList">
+            {QUESTIONS.map((q, i) => (
+              <details key={q}>
+                <summary>
+                  <span className="numIndex text medium">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 className="text medium">{t(`${q}.question`)}</h2>
+                  <span className="faqMarker" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <div className="faqAnswer text medium">
+                  <p>{t(`${q}.answer`)}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+          <div className="pageOutro">
+            <p className="text medium">
+              {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
+              {" · "}
+              <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
+            </p>
           </div>
         </div>
       </section>

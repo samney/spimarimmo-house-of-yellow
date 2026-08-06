@@ -688,3 +688,47 @@ scoping questions in session.
 states" to "owner-authorized placeholders, disclaimed where flagged". The
 production-readiness gate before any real launch is the owner replacing
 placeholders — tracked by the checklist itself.
+
+## D-027 — 2026-08-06 — Dashboard scope is value-first: build what the website actually produces or consumes
+
+**Context.** The blueprint lists 127 remaining tasks across Waves 4–8. The
+owner asked whether the dashboard plan covers exactly what the website
+produces, and stated the preference plainly: no implementation work on mock
+surfaces that are not useful now and only lengthen the work, but frontend-only
+work IS welcome where it gives the product real standing.
+
+Mapping the website against the blueprint answers it. The public site **writes**
+exactly one thing — a lead, with its contact, organization, consent,
+attribution, assignment and follow-up task. It **reads** pages, salons, études
+de cas, ressources, médias, FAQ and insights. Nothing else on the site produces
+or consumes console data: there is no application, registration, booking or
+payment flow, and no connected provider (P-2).
+
+**Decision.** The dashboard phase builds only the two halves the website
+actually touches, in this order:
+
+1. **CRM depth** over real lead data — saved views and the preview drawer
+   (`WAVE-4-SLICE-1-PLAN.md`), then stage transitions with lost reason,
+   organizations and contacts, and the audited export.
+2. **CMS editors** for the content types the public site renders — pages,
+   salons, études de cas, ressources, médias.
+
+**Deferred until a real flow feeds them**, not cancelled: Wave 5 event
+operations (packages, applications, confirmed exhibitors, visitor
+registrations, event appointments), Wave 7 analytics (six dashboards and the
+report builder), appointments, integration health and notification
+preferences. Roughly 60 of the 127 remaining tasks.
+
+**Placeholder policy, consistent with `D-026`.** Where a console surface is
+built ahead of its data, it follows the same convention the owner set for the
+website: plausible placeholder values are permitted **only** with a visible
+disclaimer naming them as unvalidated, and an empty state is preferred where
+one reads honestly. What stays forbidden is an undisclaimed figure — a console
+metric a viewer would reasonably take as measured when it is not. This is why
+`VISUAL_01`'s dashboard figures (2 480 000 MAD, +12.8%, 71% vs objectif) are
+not reproduced as-is: they would be read as real.
+
+**Consequence.** The dashboard phase is ~35–40 tasks of genuine value rather
+than 127. A later session must not build the deferred waves merely because the
+blueprint enumerates them; the blueprint is the catalogue, this decision is the
+scope.
