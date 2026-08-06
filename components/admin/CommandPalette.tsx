@@ -47,12 +47,16 @@ export function CommandPalette() {
   const openerRef = useRef<HTMLElement | null>(null);
   const listId = useId();
 
+  /* Stale results are hidden by derivation rather than cleared by an effect:
+     deleting the query should show the commands again immediately. */
+  const visibleHits = query.trim().length >= 2 ? hits : [];
+
   const commandHits: Command[] = query.trim()
     ? COMMANDS.filter((c) => c.label.toLowerCase().includes(query.trim().toLowerCase()))
     : COMMANDS;
 
   const rows: { key: string; label: string; detail: string; href: string; badge: string }[] = [
-    ...hits.map((hit) => ({
+    ...visibleHits.map((hit) => ({
       key: `${hit.kind}-${hit.id}`,
       label: hit.label,
       detail: hit.detail,
@@ -71,12 +75,17 @@ export function CommandPalette() {
   const close = useCallback(() => {
     setOpen(false);
     setQuery("");
-    setHits([]);
     setActive(0);
-    // Focus returns to whatever opened the palette, so keyboard users are not
-    // dropped at the top of the document.
-    openerRef.current?.focus();
   }, []);
+
+  /* Focus returns to whatever opened the palette, so keyboard users are not
+     dropped at the top of the document. Done in an effect rather than inside
+     `close()`: a function called from JSX cannot be proven to run only in an
+     event handler, so reading a ref there is flagged as a possible render-time
+     read. */
+  useEffect(() => {
+    if (!open) openerRef.current?.focus();
+  }, [open]);
 
   // Global shortcut. Registered once, on the document, so it works wherever
   // focus happens to be.
@@ -100,10 +109,9 @@ export function CommandPalette() {
   useEffect(() => {
     if (!open) return;
     const term = query.trim();
-    if (term.length < 2) {
-      setHits([]);
-      return;
-    }
+    // No setState in the effect body: too-short terms simply do not search,
+    // and `visibleHits` below decides what is shown.
+    if (term.length < 2) return;
     const timer = setTimeout(() => {
       startTransition(async () => {
         setHits(await searchConsole(term));

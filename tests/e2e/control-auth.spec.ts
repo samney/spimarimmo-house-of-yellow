@@ -53,8 +53,19 @@ test("the sign-in screen explains an expired session when the guard says so", as
   await expect(page.getByText(/rien de ce que vous avez enregistré n’a été perdu/i)).toBeVisible();
 });
 
-test("the command palette finds a lead and opens it", async ({ page }) => {
+test("the command palette finds a real record and opens it", async ({ page }) => {
   await signIn(page, ADMIN);
+
+  /* The palette searches stored records, so the test creates the record it
+     will look for. Searching for whatever happens to be in the store would
+     pass or fail on ambient data rather than on the palette. */
+  const id = `${Date.now()}`;
+  const title = `Palette Salon ${id}`;
+  await page.goto("/admin/events");
+  await page.getByLabel("Slug").fill(`palette-salon-${id}`);
+  await page.getByLabel("FR", { exact: true }).first().fill(title);
+  await page.getByRole("button", { name: "Enregistrer" }).click();
+  await expect(page.locator(".notice").first()).toBeVisible();
 
   // Ctrl+K from anywhere in the console.
   await page.keyboard.press("Control+k");
@@ -64,14 +75,14 @@ test("the command palette finds a lead and opens it", async ({ page }) => {
   // Commands are offered before anything is typed.
   await expect(page.getByRole("option", { name: /Ouvrir les leads/ })).toBeVisible();
 
-  // Typing searches real records, filtered to what this actor may read.
-  await page.getByLabel("Rechercher").fill("Example");
-  await expect(page.getByRole("option").first()).toBeVisible();
+  // Typing finds the record just created.
+  await page.getByLabel("Rechercher").fill(`Palette Salon ${id}`);
+  await expect(page.getByRole("option", { name: new RegExp(title) })).toBeVisible();
 
   // Enter opens the highlighted row.
   await page.keyboard.press("Enter");
   await expect(search).toHaveCount(0);
-  await expect(page).toHaveURL(/\/admin\/(crm\/leads|cms|events)/);
+  await expect(page).toHaveURL(/\/admin\/events/);
 });
 
 test("the palette closes on Escape and returns focus", async ({ page }) => {
