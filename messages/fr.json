@@ -984,14 +984,29 @@
   "caseStudies": {
     "label": "Études de cas",
     "title": "La preuve par les résultats.",
-    "lead": "Chaque étude de cas publiée documente une participation réelle : contexte, dispositif et résultats. Aucun chiffre n’est publié sans validation.",
+    "lead": "Des dispositifs documentés, du salon au pipeline commercial — chaque étude relie les actions menées aux résultats attribués.",
     "empty": "Les premières études de cas sont en cours de validation. Elles sont publiées ici dès leur version approuvée.",
     "cardKicker": "Étude de cas",
     "detailLabel": "Étude de cas",
     "videoPending": "La vidéo de cette étude de cas est publiée après validation des droits et de la provenance.",
     "backToList": "Toutes les études de cas",
     "outro": "Votre projet mérite le même dispositif :",
-    "outroCta": "Devenir exposant"
+    "outroCta": "Devenir exposant",
+    "publishedTitle": "Études publiées",
+    "fixturesTitle": "Études de cas",
+    "fixturesNote": "Contenus prévisionnels — clients, chiffres et attributions publiés après validation.",
+    "filterEditionLabel": "Filtrer par salon",
+    "filterObjectiveLabel": "Filtrer par objectif",
+    "filterAll": "Tous les salons",
+    "filterEmpty": "Aucune étude ne correspond à ces filtres.",
+    "objectives": {
+      "notoriete": "Notoriété",
+      "leads": "Leads",
+      "ventes": "Ventes"
+    },
+    "readCase": "Lire l'étude de cas",
+    "resultsTitle": "Résultats",
+    "paginationLabel": "Pages des études de cas"
   },
   "hero": {
     "eyebrow": "Promoteurs immobiliers",

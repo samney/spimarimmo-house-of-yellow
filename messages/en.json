@@ -984,14 +984,29 @@
   "caseStudies": {
     "label": "Case studies",
     "title": "Proof through results.",
-    "lead": "Every published case study documents a real participation: context, setup and results. No figure is published without validation.",
+    "lead": "Documented programmes, from the show floor to the sales pipeline — each study links actions taken to attributed results.",
     "empty": "The first case studies are being validated. They are published here as soon as their approved version exists.",
     "cardKicker": "Case study",
     "detailLabel": "Case study",
     "videoPending": "This case study’s video is published after its rights and provenance are validated.",
     "backToList": "All case studies",
     "outro": "Your project deserves the same setup:",
-    "outroCta": "Become an exhibitor"
+    "outroCta": "Become an exhibitor",
+    "publishedTitle": "Published studies",
+    "fixturesTitle": "Case studies",
+    "fixturesNote": "Provisional content — clients, figures and attribution publish after validation.",
+    "filterEditionLabel": "Filter by show",
+    "filterObjectiveLabel": "Filter by objective",
+    "filterAll": "All shows",
+    "filterEmpty": "No study matches these filters.",
+    "objectives": {
+      "notoriete": "Awareness",
+      "leads": "Leads",
+      "ventes": "Sales"
+    },
+    "readCase": "Read the case study",
+    "resultsTitle": "Results",
+    "paginationLabel": "Case-study pages"
   },
   "hero": {
     "eyebrow": "Property developers",

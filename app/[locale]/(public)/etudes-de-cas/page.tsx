@@ -2,69 +2,67 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { getBackendSeams } from "@/lib/spimar/repositories";
+import {
+  CaseStudiesListing,
+  type CaseFilters,
+  type CmsCaseCard,
+} from "@/components/public/pages/CaseStudiesListing";
+import type { CaseObjective } from "@/components/public/pages/case-studies-data";
 
-/* Owner restructure (2026-08-04): /etudes-de-cas is the CMS-driven listing —
-   case studies are CMS pages under the `etudes/` slug family, created and
-   published from /admin/pages. Published cases only; an honest empty state
-   while none is published. Server-rendered per request so a publish is
-   visible immediately. */
+/* /etudes-de-cas — rebuilt as the end-to-end listing (owner note, D-026):
+   image rows, URL-driven filters and pagination. CMS-published cases
+   (etudes/ page family) list first with their real detail routes — the
+   publish → visible contract is unchanged. The provisional fixtures render
+   below, disclaimed, until validated case records replace them. */
 export const dynamic = "force-dynamic";
 
 const PREFIX = "etudes/";
+const OBJECTIVES: readonly CaseObjective[] = ["notoriete", "leads", "ventes"];
 
-export default async function EtudesDeCas({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
+export default async function EtudesDeCas({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ edition?: string; objectif?: string; page?: string }>;
+}) {
+  const { locale: rawLocale } = await params;
+  setRequestLocale(rawLocale);
+  const locale = rawLocale === "en" ? ("en" as const) : ("fr" as const);
   const t = await getTranslations("caseStudies");
 
-  const pages = await getBackendSeams().content.listPages({
-    siteId: "spimar",
-    locale: locale === "en" ? "en" : "fr",
-  });
-  const cases = pages.filter((p) => p.slug.startsWith(PREFIX));
+  const { edition, objectif, page } = await searchParams;
+  const filters: CaseFilters = {
+    edition: edition || undefined,
+    objective: OBJECTIVES.find((o) => o === objectif),
+    page: Number.parseInt(page ?? "1", 10) || 1,
+  };
+
+  const pages = await getBackendSeams().content.listPages({ siteId: "spimar", locale });
+  const cmsCases: CmsCaseCard[] = pages
+    .filter((p) => p.slug.startsWith(PREFIX))
+    .map((p) => ({
+      slug: p.slug.slice(PREFIX.length),
+      title: p.title || p.slug.slice(PREFIX.length),
+      intro: String(p.sections[0]?.body.intro ?? ""),
+    }));
 
   return (
     <div className="pageBlocks">
       <section className="spimarListPage">
         <div className="contentWrapper">
-          <div className="hoyCols">
-            <div className="colLabel">
-              <div className="text medium">
-                [ <span className="numIndex">09</span> ]
-              </div>
-            </div>
-            <div className="colMain">
-              <header className="pageIntro">
-                <div className="label text medium">{t("label")}</div>
-                <SplitTitle as="h1" className="normalTitle" text={t("title")} />
-                <p className="text medium">{t("lead")}</p>
-              </header>
-              {cases.length === 0 ? (
-                <p className="text medium">{t("empty")}</p>
-              ) : (
-                <ul className="spimarCardList" role="list">
-                  {cases.map((page) => {
-                    const intro = String(page.sections[0]?.body.intro ?? "");
-                    return (
-                      <li key={page.slug} className="cardItem">
-                        <span className="cardKicker text medium">{t("cardKicker")}</span>
-                        <h2 className="text medium">
-                          <Link href={`/etudes-de-cas/${page.slug.slice(PREFIX.length)}`}>
-                            {page.title || page.slug.slice(PREFIX.length)}
-                          </Link>
-                        </h2>
-                        {intro ? <span className="cardNote text medium">{intro}</span> : null}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-              <div className="pageOutro">
-                <p className="text medium">
-                  {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-                </p>
-              </div>
-            </div>
+          <header className="pageIntro">
+            <div className="label text medium">{t("label")}</div>
+            <SplitTitle as="h1" className="normalTitle" text={t("title")} />
+            <p className="text medium">{t("lead")}</p>
+          </header>
+
+          <CaseStudiesListing locale={locale} cmsCases={cmsCases} filters={filters} />
+
+          <div className="pageOutro">
+            <p className="text medium">
+              {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
+            </p>
           </div>
         </div>
       </section>

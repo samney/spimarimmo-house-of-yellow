@@ -10,6 +10,7 @@ const coreRoutes = [
   "/exposer/devenir-exposant",
   "/pourquoi-spimar",
   "/etudes-de-cas",
+  "/etudes-de-cas/promoteur-residentiel-paris",
   "/ressources",
   "/ressources/exposants",
   "/ressources/galerie",
@@ -87,6 +88,37 @@ for (const route of coreRoutes) {
     expect(overflow).toBeLessThanOrEqual(0);
   });
 }
+
+/* Études de cas end-to-end (D-026): URL-driven filters narrow the fixture
+   rows, pagination is real navigation, and a fixture detail serves the
+   designed page with its disclaimed result tiles. */
+test("case studies filter, paginate, and serve fixture details", async ({ page }) => {
+  await page.goto("/etudes-de-cas");
+
+  // Scoped to the fixtures group: CMS-published cases (e.g. records other
+  // suites create) list in their own group above and must not skew counts.
+  const fixtureRows = page.locator('section[aria-labelledby="etu-programme"] .etuRow');
+
+  // Unfiltered: five fixtures paginate 4 + 1.
+  await expect(fixtureRows).toHaveCount(4);
+  await page
+    .getByRole("navigation", { name: /Pages des études/i })
+    .getByText("2")
+    .click();
+  await expect(page).toHaveURL(/page=2/);
+  await expect(fixtureRows).toHaveCount(1);
+
+  // Objective filter narrows and resets pagination.
+  await page.getByRole("link", { name: "Ventes" }).click();
+  await expect(page).toHaveURL(/objectif=ventes/);
+  await expect(fixtureRows).toHaveCount(2);
+
+  // Row action → the designed fixture detail with disclaimed results.
+  await fixtureRows.first().getByRole("link", { name: "Lire l'étude de cas" }).click();
+  await expect(page.getByRole("heading", { name: "Résultats" })).toBeVisible();
+  await expect(page.locator(".etuTile")).toHaveCount(3);
+  await expect(page.getByText(/publiés après validation/).first()).toBeVisible();
+});
 
 /* Brochure quick preview (D-026): the [01] trigger opens a modal with the
    real PDF embedded and a genuine download action on the same file; Escape
