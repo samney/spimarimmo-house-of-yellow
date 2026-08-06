@@ -83,13 +83,15 @@ export async function GalleryListing() {
                 </section>
               ))}
 
-              <footer className="pageOutro">
+              {/* Deliberately a div: shell.css styles the bare <footer> tag
+                  as the fixed 100vw yellow reveal, which overflows 390. */}
+              <div className="pageOutro">
                 <p className="text medium">
                   {tp("outro")} <Link href="/salons">{t("exploreSalons")}</Link>
                   {" · "}
                   <Link href="/ressources">{tp("outroLibrary")}</Link>
                 </p>
-              </footer>
+              </div>
             </div>
           </div>
         </div>

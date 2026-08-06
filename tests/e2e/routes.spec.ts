@@ -73,10 +73,11 @@ test("hero falls back to the poster under reduced motion", async ({ browser }) =
   await context.close();
 });
 
-/* The design contract's no-horizontal-overflow rule, enforced at the page
-   level for the homepage at 390 — the width where implicit grid columns and
-   nowrap rows have repeatedly leaked past the viewport. */
-for (const route of ["/", "/salons"]) {
+/* Mobile audit floor (owner directive 2026-08-06): the no-horizontal-
+   overflow rule is machine-enforced on EVERY public route at 390. What
+   automation cannot judge (touch targets, affordances, rhythm) rides in the
+   per-slice mobile audit. */
+for (const route of coreRoutes) {
   test(`${route} has no horizontal overflow at 390`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(route);
