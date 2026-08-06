@@ -1,9 +1,9 @@
-# Wave 4 — slice 1 plan (parked per D-025)
+# Wave 4 — slice 1 plan
 
 Planned 2026-08-06, deferred the same day: the owner prioritized public-site
-completion first (D-025). Execute this when CRM work kicks off. Researched at
+completion first (D-041). Execute this when CRM work kicks off. Researched at
 head `3b63c04`; **re-verified at head `9e87938`** — see §"Verified" at the end.
-Scope authority is `D-027` / `DASHBOARD-SCOPE.md`.
+Scope authority is `D-041` / `DASHBOARD-SCOPE.md`.
 
 **Slice:** ADM-076 saved views + ADM-077 lead preview drawer, one screen
 (`/admin/crm/leads`), reference `VISUAL_04_CRM_LEADS_LIST.png`. ADM-070/071/

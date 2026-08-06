@@ -3,56 +3,51 @@
 Read this first, then `QUEUE.md` and `ADR.md`. Everything needed to resume is
 here; you should not need to re-derive it from the tree.
 
-Written 2026-08-06. Branch `claude/spimar-admin-control`, head `cbe5ad3`.
+Written 2026-08-06. Branch `finalization/design-system-product-release`,
+based on `origin/main` at `d3e0f6a`.
 
 ---
 
 ## 1. Where the work lives
 
-> **CORRECTED 2026-08-06 — the table below was wrong and the error is the
-> expensive kind.** This section used to say "`main` has almost nothing". That
-> stopped being true. `main` is now the **deployed** lineage and the one the
-> owner's finalization master plan audits.
+**One branch carries everything, by owner instruction (`D-042`):
+`finalization/design-system-product-release`.** Website and console both live
+here. Do not open a second long-lived lineage — that is what produced the
+reconciliation this branch exists to end.
 
-**The two lineages diverged again — they are NOT merged into one branch.**
-Measured at `eccc122`: `git rev-list --left-right --count origin/main...HEAD`
-returns **65 28**. Sixty-five commits exist on `main` that this branch does not
-have; twenty-eight exist here that `main` does not. Across `components/public`
-and `app` alone, **141 files differ, ±23,000 lines**.
+The history behind that: `main` and `claude/spimar-admin-control` had both
+rebuilt the public website, diverging 65 commits to 28, with 141 files differing
+by ~23,000 lines across `components/public` and `app`. `main` was the deployed
+lineage and the one the finalization master document audits, so it became the
+base and the console was ported onto it.
 
-| Branch                        | Contains                                                                                                        | State                                          |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `main` (`d3e0f6a`)            | Website rebuilt through Sections 01–07 and Phases C/P/N. Old console at `app/admin/**`. **No acquisition seam** | **Deployed on Vercel.** Owner's audit baseline |
-| `claude/spimar-admin-control` | SPIMAR Control console under `[locale]`, the acquisition/CRM programme, plus its own D-026 website sweep        | PR **#34** draft, 28 commits unpushed          |
+| Branch                                       | Role                                                                        |
+| -------------------------------------------- | --------------------------------------------------------------------------- |
+| `finalization/design-system-product-release` | **Everything. Work here.** Deployed website + SPIMAR Control + the funnel   |
+| `main` (`d3e0f6a`)                           | The deployed baseline this branch is based on                               |
+| `claude/spimar-admin-control`                | Pushed and **frozen as provenance**. PR #34 superseded — do not build on it |
 
-**What is unique to each side** — this is the part that matters:
+**Never judge project state from `main` alone**: it has no acquisition seam and
+its console is the superseded `app/admin`, removed here.
 
-- **Only on this branch:** `lib/backend/admin-seams.ts`,
-  `lib/backend/acquisition-seams.ts`, the whole ADM-\* console programme, the
-  Postgres adapters, the locale-routed console (ADR-A1). `main` has only
-  `lib/backend/seams.ts` and the older `app/admin/**`.
-- **Only on `main`:** Sections 01–07, Phases C/P/N (case-study listing and
-  detail, salons listing and detail, the real contact form, sitemap, `/en`
-  fixes, per-page next steps), and the deployment.
-- **Duplicated on both, differently:** the public website. This branch's D-026
-  sweep (salons calendar, études de cas, ressources family, offers, WhatsApp,
-  home slices A/B) covers ground `main` also rebuilt. Do not assume either
-  version wins on merit — check which the owner's master plan audits.
-
-**Never judge project state from one branch.** Judging from `main` once caused
-`/contact`, `/exposer` and `/salons` to be rebuilt needlessly; judging from
-this branch would now miss 65 commits of shipped, deployed work.
-
-PRs #27, #28, #29 are already merged (into the branch lineage, not `main`).
+If parallel work is ever needed, take a short-lived branch off this one and
+merge it back the same day.
 
 ---
 
 ## 2. What is built
 
-**Public site (18 routes, FR default / EN prefixed).** Home, `/salons` +
-`[slug]`, `/exposer` + 4 sub-pages, `/etudes-de-cas`, `/ressources`,
-`/pourquoi-spimar`, `/faq`, `/insights`, `/visiteurs`, `/contact`, legal pages,
-plus `/suivi` (public reference status).
+**Public site (18 FR routes, 18 EN-prefixed, FR default).** Home; `/salons` and
+its `[slug]`; `/exposer` with `devenir-exposant`, `methode`, `offres`,
+`visibilite`; `/etudes-de-cas` and its `[slug]`; `/ressources` with
+`exposants` and `galerie`; `/pourquoi-spimar`; `/faq`; `/insights`;
+`/visiteurs`; `/contact`; the legal pages. This is `main`'s deployed website,
+carried over untouched.
+
+`/suivi` (public reference status) is **not** present: porting it would have
+required editing `app/globals.css`, which the unification deliberately left
+alone. The funnel still issues the public reference; only the lookup page is
+missing.
 
 **SPIMAR Control (15 routes)** under `app/[locale]/(admin)/admin/**`, French
 interface: overview, activity, tasks, notifications, settings, onboarding,
@@ -63,7 +58,7 @@ interface: overview, activity, tasks, notifications, settings, onboarding,
 `/exposer/devenir-exposant` → `app/actions/enquiry.ts` → acquisition seam →
 one transaction writing deduplicated contact + organization, lead, submission,
 consent against its definition, attribution, assignment, follow-up task, and a
-32-hex public reference resolvable at `/suivi`.
+32-hex public reference returned to the visitor.
 
 **Backend.** 43 migrations, 90 RLS tables, 205 policies, 4 Edge Functions.
 Postgres adapters exist and pass the _same_ contract suites as the file
@@ -77,8 +72,8 @@ Six decisions in `ADR.md` (A1–A6). The load-bearing ones:
 
 - **A1** — console lives under `[locale]`; `admin` is NOT excluded from the
   i18n matcher in `proxy.ts`. Locale is FR-default: `/` is French, `/en/…` is
-  English, `/fr/…` canonicalises to `/`. (`main` still has EN default; #32
-  carries the change.)
+  English, `/fr/…` canonicalises to `/`. Verified on this branch by
+  `pnpm test:routes`: 18 FR + 18 EN + canonical `/fr` redirects.
 - **A2** — the admin design layer (`styles/tokens/admin.css` +
   `styles/admin/control.css`) is the blueprint's own system, deliberately NOT
   the public `vw` scales. Fixed px throughout.
@@ -192,22 +187,36 @@ cleared by `global-setup.ts`. It must never read the developer's `.data/`.
 
 ## 8. Next actions, in order
 
-**Sequence fixed by the owner: website first, then dashboard (`D-025`).
-Dashboard scope is value-first (`D-027`) — build only what the website
-produces or consumes. The list is `DASHBOARD-SCOPE.md`; do NOT work the
-blueprint's 127 remaining tasks straight through.**
+**The governing plan is now
+`docs/claude-code/SPIMARIMMO_FINAL_STABILIZATION_CLAUDE_MASTER.md`** — the
+owner's finalization master document, latest direction, authority above this
+file. Dashboard scope within it is value-first (`D-041`): build only what the
+website produces or consumes, per `DASHBOARD-SCOPE.md`. Do NOT work the
+blueprint's 127 remaining tasks straight through.
 
-1. ~~Diagnose §5~~ — done, suite is trustworthy (67/67 twice).
-2. **Website to 100%** — `D-026` staging conventions; the owner's checklist is
-   `docs/pdf/Plan.md` in the primary checkout. Home slice A is committed
-   (`9a09e57`); a working tree of further home edits was in progress.
+1. **Run Playwright on this branch.** It has not been run since the
+   unification. The funnel journey (`integration.spec.ts`) drives the
+   conversion page's English labels, which were verified present in
+   `messages/en.json`, but the interaction has not been exercised.
+2. **The master document's start protocol** (§4): baseline SHA, deployment
+   parity against the public domain, full gate run, production inspection at
+   every required viewport, then its delta audit and risk register.
 3. Finish Supabase (§6): apply `seed.sql`, deploy the 4 Edge Functions, run
    `pnpm test:seams:pg` against the hosted DB, then wire Supabase Auth.
-4. Get #34 reviewed and merged — `main` has none of this.
-5. Dashboard, in `DASHBOARD-SCOPE.md` order: CRM depth starting from
+4. Design-system debt, which the master document quantifies: ~16% of L3 tokens
+   derive from L2, ~67% of L3 colour properties hard-code, 102 tracked loose
+   hexes clustered in `why-exhibit.css`, `method.css`, `visibility.css`.
+5. Dashboard, in `DASHBOARD-SCOPE.md` order: CRM depth from
    `WAVE-4-SLICE-1-PLAN.md`, then CMS editors for the content types the public
    site renders. Wave 5 events, Wave 7 analytics, appointments and integration
    health are **deferred, not forgotten** — nothing produces their data yet.
+
+**Two console-side items deliberately not ported**, because they would have
+required touching `app/globals.css` or the public tree: the `/suivi` public
+reference-status page (the funnel still issues the reference; only the lookup
+page is absent) and `insights/[slug]`. Also not ported: the console branch's
+390-viewport no-overflow loop in `routes.spec.ts`, which iterated its own route
+list — worth re-adding against this site's routes.
 
 ## 9. House rules that have bitten before
 
@@ -215,13 +224,20 @@ blueprint's 127 remaining tasks straight through.**
   manifest check were both tightened rather than relaxed when they failed.
 - Never invent an **undisclaimed** figure, date, price, capacity, partner or
   legal text. Pending states render honestly ("à confirmer", "sur devis").
-  Narrowed by owner decision: `D-026` authorises placeholder figures on the
-  website when the "données officielles publiées après validation" disclaimer
-  stays visible, and `D-027` extends the same disclosed-placeholder rule to the
-  console. Disclosed is allowed; undisclosed never is.
-- A control with no real target renders disabled or is not shown — no dead
-  navigation links. Exception, `D-026`: controls the owner's checklist marks
-  "-> #" render as staged `href="#"` links for the finalization sweep.
-- Verify against the branch you are on, not `main`. Checking `main` for public
-  routes once caused `/contact`, `/exposer` and `/salons` to be rebuilt when
-  better versions already existed on the sibling branch.
+  Console placeholders are allowed only with a visible disclaimer (`D-041`);
+  public surfaces follow the master document's §3.1, which requires
+  deterministic CMS-shaped fixtures behind the repository seam with a visible
+  `DÉMO` disclosure — never values generated at runtime.
+- A control with no real target renders disabled or is not shown. The master
+  document's §3.1 supersedes the earlier `href="#"` staging convention: use one
+  shared temporary-action pattern with no navigation, no page jump, clear focus
+  behaviour and no false success state.
+- **Decision numbers below `D-025` are shared history; `D-025`–`D-040` on this
+  branch are the Section and Phase decisions.** The console branch had its own
+  `D-025`–`D-027`; those numbers are void and were re-recorded as `D-041` and
+  `D-042`. If an old document cites `D-025`–`D-027` for console matters, it
+  predates the unification.
+- Verify against the branch you are on. Checking `main` for public routes once
+  caused `/contact`, `/exposer` and `/salons` to be rebuilt when better
+  versions already existed elsewhere; later, trusting the console branch would
+  have missed 65 commits of deployed work. One branch now removes the trap.

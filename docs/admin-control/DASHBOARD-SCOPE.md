@@ -1,6 +1,6 @@
 # Dashboard scope — what to build, what to defer
 
-Authority: `D-027` (2026-08-06). This file is the working list; the decision
+Authority: `D-041` (2026-08-06). This file is the working list; the decision
 record is the authority. The blueprint (`docs/ADMIN/`) is a **catalogue of 179
 tasks**, not a work order — do not build a wave merely because it is listed.
 
@@ -79,9 +79,13 @@ When a deferred area acquires a producer, lift it from the blueprint then.
 
 ## 5. Placeholder rule (this is the part that is easy to get wrong)
 
-`D-026` authorised placeholder figures **on the public website**, with a visible
-disclaimer. The console inherits the same rule, not a stricter one and not a
-looser one:
+This rule governs the **console**. Public surfaces are governed by the
+finalization master document's §3.1 instead, which is stricter — a shared
+temporary-action pattern with no navigation, no page jump and no false success
+state, and deterministic CMS-shaped fixtures behind the repository seam with a
+visible `DÉMO` disclosure rather than values generated at runtime.
+
+For the console:
 
 - **Allowed** — a surface built ahead of its data, showing an honest empty
   state, or showing placeholder values with a visible disclaimer naming them as

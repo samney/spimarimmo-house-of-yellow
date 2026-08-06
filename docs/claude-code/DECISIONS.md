@@ -1418,3 +1418,93 @@ price in euros, and a link check reading escaped HTML instead of the DOM. Every
 one was caught by testing the instrument rather than trusting its output. That
 is now the recorded practice: **a check is not evidence until it has been
 observed failing.**
+
+## D-041 — 2026-08-06 — Dashboard scope is value-first: build what the website actually produces or consumes
+
+**Renumbering note.** This decision was first recorded as `D-027` on
+`claude/spimar-admin-control`. That branch and `main` had both reached `D-025`
+independently, so its `D-025`–`D-027` collide with this log's Section-03, hero
+and header decisions. The admin branch's numbering is void; this entry is the
+authority, and the ported documents under `docs/admin-control/` cite it.
+
+**Context.** The blueprint under `docs/ADMIN/` lists 127 remaining console
+tasks. The owner asked whether the dashboard plan covers exactly what the
+website produces, and set the constraint plainly: no implementation work on
+mock surfaces that are not useful now and only lengthen the work, but
+frontend-only work IS welcome where it gives the product real standing.
+
+Mapping the website against the blueprint answers it. The public site **writes**
+exactly one thing — a lead, with its contact, organization, consent,
+attribution, assignment and follow-up task. It **reads** pages, salons, études
+de cas, ressources, médias, FAQ and insights. Nothing else on the site produces
+or consumes console data: there is no application, registration, booking or
+payment flow, and no connected provider (`P-2`).
+
+**Decision.** The dashboard phase builds only the two halves the website
+actually touches, in this order:
+
+1. **CRM depth** over real lead data — saved views and the preview drawer,
+   then stage transitions, organizations and contacts, and the audited export.
+2. **CMS editors** for the content types the public site renders — pages,
+   salons, études de cas, ressources, médias.
+
+**Deferred until a real flow feeds them**, not cancelled: Wave 5 event
+operations, Wave 7 analytics, appointments, integration health and notification
+preferences. Roughly 60 of the 127 remaining tasks.
+
+**Placeholder policy.** Where a console surface is built ahead of its data, an
+honest empty state is preferred, and placeholder values are permitted only with
+a visible disclaimer naming them as unvalidated. What stays forbidden is an
+undisclaimed figure — a console metric a viewer would reasonably take as
+measured when nothing measures it. This is why `VISUAL_01`'s dashboard numbers
+(2 480 000 MAD, +12.8%, 71% vs objectif) are not reproduced as-is. For public
+surfaces the finalization master document's §3.1 governs instead, and it is
+stricter than a raw `href="#"`: a shared temporary-action pattern with no
+navigation, no page jump and no false success state.
+
+**Consequence.** The dashboard phase is ~35–40 tasks of genuine value rather
+than 127. A later session must not build the deferred waves merely because the
+blueprint enumerates them; the blueprint is the catalogue, this decision is the
+scope.
+
+## D-042 — 2026-08-06 — One branch for website and console; the deployed site is the base
+
+**Context.** The work had split into two lineages that both rebuilt the public
+website. Measured before unification: `main` carried 65 commits the console
+branch lacked, the console branch carried 28 that `main` lacked, and across
+`components/public` and `app` alone 141 files differed by roughly 23,000 lines.
+`main` was the deployed lineage and the one the finalization master document
+audits. Continuing in parallel would have duplicated the website a third time.
+
+**Decision.** By owner instruction, one branch carries both from here to the
+end: `finalization/design-system-product-release`, based on `origin/main` at
+`d3e0f6a`. The console programme is ported onto the deployed website, not
+merged with it. Where a shared file existed on both sides, `main`'s version is
+the base and only the console delta is re-applied. No file under
+`components/public`, `app/[locale]/(public)`, `public/`, `messages/` or
+`app/globals.css` was modified in the port.
+
+`app/admin/**` is removed: the locale-routed console under
+`app/[locale]/(admin)/admin` supersedes it (`ADR-A1`).
+
+**Three conflicts resolved against the console branch**, recorded because each
+would otherwise be a silent regression:
+
+1. `lib/backend/seams.ts` — the console branch had dropped `demo`, `summary`,
+   `image` and `NormalizedImage`. `main`'s version is kept whole; only
+   `noticeVersion` is added. `postgres-content-repository.ts` was given the two
+   fields it then owed: `summary` from `event_translations.short_description`,
+   and `image: null` with the reason stated, since approved media reaches
+   events through asset-link tables that adapter does not join yet.
+2. `app/actions/cms.ts` — the console branch's `login` had no rate limiting.
+   `main`'s hashed, login-scoped 10-per-window guard is restored on top of the
+   console's expanded actions. The endpoint that unlocks every lead's PII keeps
+   at least the protection the public contact form has.
+3. `tests/e2e/routes.spec.ts` — the console branch's version deleted the
+   hero-modal test and added tests for its own website sweep. `main`'s version
+   is kept; none of those additions describes this site.
+
+**Consequence.** `claude/spimar-admin-control` is pushed and frozen as
+provenance; PR #34 is superseded. Parallel work, if ever needed again, uses
+short-lived branches off this one that merge back the same day — long-lived
+lineages are what produced this reconciliation.
