@@ -89,27 +89,37 @@ Blueprint = **179 tasks** (not 216 — that was an earlier miscount).
 
 ---
 
-## 5. Open issue — diagnose before adding features
+## 5. RESOLVED — the full-suite failure was environmental, not an app defect
 
-**One browser test fails only in a full-suite run:**
-`tests/e2e/integration.spec.ts` → "public enquiry is durably stored and appears
-in the CRM", at `expect(getByText("Your request has been sent.")).toBeVisible()`.
+Diagnosed 2026-08-06. The full 67-test suite passes twice consecutively
+(67/67 in 2.7 min, then 2.2 min) on a fresh production build at head.
 
-Established facts (do not re-derive):
+What the failing runs actually were:
 
-- Passes in isolation.
-- Passes with `exhibitor-slice` + `integration` together (11/11).
-- Passes with `accessibility` + `control-auth` + `integration` (28/28).
-- Passes with `control-evidence` + `exhibitor-slice` + `integration` (17/17).
-- Fails only in the complete 67-test run, reproducibly (2 runs).
-- Not the stale-server theory: reproduced after killing port 3212.
+- The two "reproducible" failures ran at ~01:00, **before** `cbe5ad3` (03:33)
+  isolated the E2E store — so the suite still read/wrote the developer's own
+  `.data/`, against a `.next` build from 22:45 that predated even `f5087f2`.
+- `test-results/` from those runs showed the failure was not confined to the
+  enquiry test: `integration › an editor cannot publish` died with
+  `browserContext.newPage: Target crashed` (Chromium renderer OOM) and the
+  `/fr` axe scan hit its 30 s test timeout with the context teardown itself
+  timing out — on this 8 GB / 4-core machine at ~0.5 GB free, that is memory
+  exhaustion, and the victim test varies with whatever is running at the peak.
+- The rate-limiter hypothesis was wrong, on three counts: `integration.spec.ts`
+  never imported `fixtures.ts` (it used `@playwright/test` directly); the
+  enquiry and contact actions hash different fallback keys ("unknown" vs
+  "local"), so they never shared a bucket; and no other spec submits the
+  enquiry form, so the failing test — first enquiry of the deterministic
+  single-worker order — had at most 1 hit in its bucket against a limit of 5.
 
-Untested hypotheses: the in-memory rate limiter (`lib/contact/rate-limit.ts`,
-5 per 10 min per hashed IP) accumulating across the run — note that only
-`integration.spec.ts` and `exhibitor-slice.spec.ts` use `tests/e2e/fixtures.ts`
-which assigns per-test IPs; other specs send no `x-forwarded-for` and share one
-bucket. Next step: capture `test-results/**/error-context.md` from a full run
-and read what the page actually rendered.
+Prevention shipped with this diagnosis: `integration.spec.ts` now uses
+`./fixtures` like the other funnel specs, so each test carries its own client
+IP and its enquiry submissions (3 per run today) can never converge on the
+shared fallback bucket as tests are added.
+
+If the full suite regresses on this machine again, check free RAM before
+suspecting the app, and rebuild before trusting the run: `next start` happily
+serves a stale `.next`.
 
 ---
 
@@ -139,7 +149,7 @@ pnpm db:bootstrap       # once, installs PGlite out of tree
 pnpm test:seams:pg      # 24 — adapters vs the real migrations
 pnpm test:routes        # 18 FR + 18 EN
 pnpm verify:migration   # 164 entries
-pnpm exec playwright test   # 66/67, see §5
+pnpm exec playwright test   # 67/67 (rebuild first; see §5)
 pnpm build
 ```
 
@@ -153,7 +163,7 @@ cleared by `global-setup.ts`. It must never read the developer's `.data/`.
 
 ## 8. Next actions, in order
 
-1. Diagnose §5, so the suite is trustworthy.
+1. ~~Diagnose §5~~ — done, suite is trustworthy (67/67 twice).
 2. Get #34 reviewed and merged — `main` has none of this.
 3. Wave 4 (CRM, 26 tasks) is the largest fully-unblocked body of work:
    saved views, lead preview drawer, organizations and contacts screens
