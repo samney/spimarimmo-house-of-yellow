@@ -85,6 +85,34 @@ test("homepage has no horizontal overflow at 390", async ({ page }) => {
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
+/* Brochure quick preview (D-026): the [01] trigger opens a modal with the
+   real PDF embedded and a genuine download action on the same file; Escape
+   closes and restores focus. */
+test("brochure preview opens with a real PDF and download action", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const trigger = page.getByRole("button", { name: "Télécharger la brochure" }).first();
+  await trigger.click();
+
+  const dialog = page.locator(".brochurePanel");
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAttribute("aria-modal", "true");
+  await expect(dialog.locator("iframe.brochureFrame")).toHaveAttribute(
+    "src",
+    /\/documents\/SPIMARIMMO_Brochure_Exposants_2026\.pdf/,
+  );
+  const download = dialog.getByRole("link", { name: "Télécharger le PDF" });
+  await expect(download).toHaveAttribute("download", "");
+  // The asset really serves — a download action must never 404.
+  const head = await page.request.get("/documents/SPIMARIMMO_Brochure_Exposants_2026.pdf");
+  expect(head.status()).toBe(200);
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
 /* The floating WhatsApp assistant (D-026): opens a pre-chat panel, a preset
    fills the draft, and — with no number supplied yet — the handoff button is
    honestly disabled with the pending note. Escape closes and restores focus

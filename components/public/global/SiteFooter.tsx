@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { SpimarWordmark, PlusIcon } from "./logos";
+import { BrochureTrigger } from "./BrochureDialog";
 
 /* Global footer — specification §17, content per owner note (D-026).
 
@@ -104,7 +105,7 @@ export function SiteFooter() {
               <p>
                 <a href="#">Demander un stand</a>
                 <br />
-                <a href="#">Télécharger la brochure</a>
+                <BrochureTrigger plain />
               </p>
             </div>
           </div>

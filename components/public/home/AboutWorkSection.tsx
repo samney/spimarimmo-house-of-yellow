@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Marquee } from "@/components/primitives/motion/Marquee";
 import { PlusIcon } from "@/components/public/global/logos";
+import { BrochureTrigger } from "@/components/public/global/BrochureDialog";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { EventsCarousel, type EventOpportunity } from "./EventsCarousel";
 import { SectionEyebrow } from "./SectionEyebrow";
@@ -111,11 +112,9 @@ export function AboutWorkSection() {
                     label="Devenir exposant"
                     variant="dark"
                   />
-                  <PillButton
-                    href="/ressources"
-                    label="Télécharger la brochure"
-                    variant="outline"
-                  />
+                  {/* Real preview + download of the owner-supplied PDF
+                      (D-026) instead of the resources placeholder route. */}
+                  <BrochureTrigger variant="outline" />
                 </div>
               </div>
               <div className="col"></div>

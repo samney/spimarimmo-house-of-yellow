@@ -1006,5 +1006,15 @@
     "draftLabel": "Your message",
     "send": "Continue on WhatsApp",
     "pending": "WhatsApp number pending activation — this button goes live once validated."
+  },
+  "brochure": {
+    "trigger": "Download the brochure",
+    "dialogLabel": "Exhibitor brochure preview",
+    "eyebrow": "Exhibitor brochure",
+    "title": "SPIMARIMMO — Exhibitor Brochure 2026",
+    "download": "Download the PDF",
+    "close": "Close the preview",
+    "frameTitle": "PDF document preview",
+    "fallback": "If the preview does not display in your browser, use “Download the PDF”."
   }
 }
