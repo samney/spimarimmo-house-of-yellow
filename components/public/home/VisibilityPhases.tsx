@@ -52,6 +52,10 @@ type Phase = {
   readonly leverIcons: readonly IconComponent[];
   readonly deliverableIcons: readonly IconComponent[];
   readonly deliverableStates: readonly DeliverableState[];
+  /* Owner note (D-026): named deliverables carry a visual artifact, not a
+     bare icon chip — an image thumb, or the drawn "sequence" mini-artifact
+     for the CRM chain. null keeps the icon chip. */
+  readonly deliverableThumbs: readonly (string | "sequence" | null)[];
   readonly flowStates: readonly ["done", "outline", "dashed"];
   readonly channels: readonly { key: string; Icon: IconComponent }[];
 };
@@ -63,6 +67,7 @@ const PHASES: readonly Phase[] = [
     leverIcons: [PlayBadgeIcon, InfinityIcon, GMarkIcon, MailIcon, MegaphoneIcon],
     deliverableIcons: [PlayBadgeIcon, ShareNodesIcon, PressIcon, MailIcon, MegaphoneIcon],
     deliverableStates: ["done", "done", "done", "planned", "done"],
+    deliverableThumbs: [null, null, null, "sequence", null],
     flowStates: ["done", "outline", "dashed"],
     channels: [
       { key: "meta", Icon: InfinityIcon },
@@ -80,6 +85,7 @@ const PHASES: readonly Phase[] = [
     leverIcons: [CameraIcon, MicIcon, ShareNodesIcon, LiveIcon, VisitorsIcon],
     deliverableIcons: [CameraIcon, MicIcon, LiveIcon, CalendarIcon, FolderIcon],
     deliverableStates: ["progress", "progress", "done", "done", "done"],
+    deliverableThumbs: [null, null, null, "/images/mre/investissement-patrimonial.jpg", null],
     flowStates: ["done", "outline", "dashed"],
     channels: [
       { key: "captation", Icon: CameraIcon },
@@ -95,6 +101,7 @@ const PHASES: readonly Phase[] = [
     leverIcons: [HandoffIcon, BarsIcon, UserCheckIcon, TrendIcon, BulbIcon],
     deliverableIcons: [VisitorsIcon, BarsIcon, SmsIcon, TrendIcon, BulbIcon],
     deliverableStates: ["done", "progress", "progress", "done", "done"],
+    deliverableThumbs: [null, null, null, null, null],
     flowStates: ["done", "outline", "dashed"],
     channels: [
       { key: "leads", Icon: HandoffIcon },
@@ -226,18 +233,34 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
             )}
 
             {phase.key === "during" && (
+              /* Rendez-vous card, redesigned per owner note (D-026): initials
+                 chip + role + time chip per row, confirmed count in the head.
+                 Fixtures stay synthetic roles, never real names. */
               <div className="visFrame visSchedule" aria-hidden="true">
                 <span className="visScheduleHead">
-                  <CalendarIcon className="visScheduleIcon" />
-                  {t("stage.scheduleTitle")}
-                </span>
-                {[0, 1, 2, 3].map((i) => (
-                  <span className="visScheduleRow" key={i}>
-                    <span className="visScheduleTime">{t(`stage.slots.${i}.time`)}</span>
-                    <span className="visScheduleWho">{t(`stage.slots.${i}.who`)}</span>
-                    <CheckCircleIcon className="visScheduleState" />
+                  <span className="visScheduleHeadLeft">
+                    <CalendarIcon className="visScheduleIcon" />
+                    {t("stage.scheduleTitle")}
                   </span>
-                ))}
+                  <span className="visScheduleCount">{t("stage.scheduleCount")}</span>
+                </span>
+                {[0, 1, 2, 3].map((i) => {
+                  const who = t(`stage.slots.${i}.who`);
+                  const initials = who
+                    .split(" ")
+                    .filter((w) => /^[A-ZÉÀ]/.test(w))
+                    .slice(0, 2)
+                    .map((w) => w[0])
+                    .join("");
+                  return (
+                    <span className="visScheduleRow" key={i}>
+                      <span className="visScheduleAvatar">{initials}</span>
+                      <span className="visScheduleWho">{who}</span>
+                      <span className="visScheduleTime">{t(`stage.slots.${i}.time`)}</span>
+                      <CheckCircleIcon className="visScheduleState" />
+                    </span>
+                  );
+                })}
               </div>
             )}
 
@@ -303,9 +326,30 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
             <ul className="visRailList">
               {phase.deliverableIcons.map((Icon, i) => (
                 <li className="visRailCard" key={i}>
-                  <span className="visRailThumb" aria-hidden="true">
-                    <Icon className="visRailThumbIcon" />
-                  </span>
+                  {phase.deliverableThumbs[i] === "sequence" ? (
+                    /* The CRM chain drawn as its own artifact: three mail
+                       steps, the first active in gold. */
+                    <span className="visRailThumb visRailThumb--sequence" aria-hidden="true">
+                      {[0, 1, 2].map((step) => (
+                        <span
+                          className="visRailSeqStep"
+                          data-active={step === 0 || undefined}
+                          key={step}
+                        >
+                          <MailIcon className="visRailSeqIcon" />
+                        </span>
+                      ))}
+                    </span>
+                  ) : phase.deliverableThumbs[i] ? (
+                    <span className="visRailThumb visRailThumb--media" aria-hidden="true">
+                      <Image src={phase.deliverableThumbs[i]} alt="" fill sizes="4vw" />
+                      <Icon className="visRailThumbBadge" />
+                    </span>
+                  ) : (
+                    <span className="visRailThumb" aria-hidden="true">
+                      <Icon className="visRailThumbIcon" />
+                    </span>
+                  )}
                   <span className="visRailText">
                     <span className="visRailLabel">
                       {t(`phases.${phase.key}.deliverables.${i}.label`)}

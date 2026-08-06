@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import {
   BadgeCheck,
   CalendarCheck,
@@ -58,17 +57,7 @@ const METHOD_ITEMS: readonly { key: string; Icon: IconComponent }[] = [
   { key: "informed", Icon: BadgeCheck },
 ];
 
-type ProofSectionProps = {
-  /* Injected like ImpactMetricsSection's methodologyHref: the routes are not
-     this section's contract to assume. */
-  readonly caseStudiesHref?: string;
-  readonly methodologyHref?: string;
-};
-
-export function ProofSection({
-  caseStudiesHref = "/etudes-de-cas",
-  methodologyHref = "/insights",
-}: ProofSectionProps) {
+export function ProofSection() {
   const t = useTranslations("proof");
 
   return (
@@ -126,10 +115,11 @@ export function ProofSection({
                   <p className="proofCaseText">{t("caseText")}</p>
                 </div>
               </div>
-              <Link className="proofCaseCta" href={caseStudiesHref}>
+              {/* Staged to "#" (D-026) until the owner re-links the section. */}
+              <a className="proofCaseCta" href="#">
                 <span>{t("caseCta")}</span>
                 <ArrowRightIcon className="proofCtaIcon" aria-hidden="true" />
-              </Link>
+              </a>
 
               <div className="proofVoices">
                 <p className="proofVoicesLabel">{t("voicesLabel")}</p>
@@ -149,10 +139,10 @@ export function ProofSection({
                   <div className="proofVoiceMeta">
                     <p className="proofVoiceTitle">{t("voiceTitle")}</p>
                     <p className="proofVoiceText">{t("voiceText")}</p>
-                    <Link className="proofVoiceLink" href={caseStudiesHref}>
+                    <a className="proofVoiceLink" href="#">
                       <span>{t("voiceCta")}</span>
                       <ArrowRightIcon className="proofCtaIcon" aria-hidden="true" />
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -187,10 +177,10 @@ export function ProofSection({
               </div>
             </div>
           ))}
-          <Link className="proofMethodLink" href={methodologyHref}>
+          <a className="proofMethodLink" href="#">
             <span>{t("methodCta")}</span>
             <ArrowRightIcon className="proofCtaIcon" aria-hidden="true" />
-          </Link>
+          </a>
         </div>
       </div>
     </section>

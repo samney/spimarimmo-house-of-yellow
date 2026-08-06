@@ -1,22 +1,43 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Link } from "@/i18n/navigation";
 import { SpimarWordmark, PlusIcon } from "./logos";
 
-/* Global footer — specification §17.
+/* Global footer — specification §17, content per owner note (D-026).
 
    The accepted footer behaviour is preserved exactly: it sits fixed behind the
    page and is revealed on scroll, which is why the page still needs a bottom
-   margin equal to the footer's measured height. Composition, columns and the
-   bottom bar are unchanged. Only the content becomes SPIMARIMMO's.
+   margin equal to the footer's measured height. The column set carries the
+   full sitemap the owner asked for — destinations, exhibitor journey,
+   resources and legal — with every nav staged to "#" until re-linked, so the
+   composition is final while the targets wait on validated pages.
 
-   §17 lists Presse and Blog in the footer. Neither route exists yet, so neither
-   is linked — a footer link that 404s is worse than an absent one. They join
-   the sitemap column when their routes are built.
+   Contact details are SPIMARIMMO's own published facts and stay live links.
+   No postal address has been supplied, so none is invented. */
 
-   Contact details are SPIMARIMMO's own published facts. No postal address has
-   been supplied, so no address column is shown rather than an invented one. */
+const COLUMNS: readonly { title: string; items: readonly string[] }[] = [
+  {
+    title: "Salons",
+    items: ["Paris", "Bruxelles", "Laval", "Abu Dhabi", "Londres", "Montréal"],
+  },
+  {
+    title: "Exposer",
+    items: [
+      "Pourquoi SPIMARIMMO",
+      "Notre méthode",
+      "Votre visibilité",
+      "Offres exposants",
+      "Devenir exposant",
+    ],
+  },
+  {
+    title: "Ressources",
+    items: ["Bibliothèque", "Ressources exposants", "Galerie", "Blog", "FAQ", "Études de cas"],
+  },
+];
+
+const LEGAL = ["Mentions légales", "Confidentialité", "Cookies"] as const;
+
 export function SiteFooter() {
   const ref = useRef<HTMLElement>(null);
 
@@ -53,36 +74,27 @@ export function SiteFooter() {
                   contact@spimarimmo.com
                 </a>
               </p>
-            </div>
-          </div>
-          <div className="col">
-            <div className="colTitle">Exposants</div>
-            <div className="text">
               <p>
-                <Link href="/salons">Salons</Link>
-                <br />
-                <Link href="/exposer">Exposer</Link>
-                <br />
-                <Link href="/etudes-de-cas">Études de cas</Link>
-                <br />
-                <Link href="/ressources">Ressources</Link>
+                Rencontrez une clientèle qualifiée, prête à concrétiser son projet immobilier au
+                Maroc.
               </p>
             </div>
           </div>
-          <div className="col">
-            <div className="colTitle">Visiteurs</div>
-            <div className="text">
-              <p>
-                <Link href="/visiteurs">Trouver un salon</Link>
-                <br />
-                <Link href="/contact">Contact</Link>
-                <br />
-                <Link href="/mentions-legales">Mentions légales</Link>
-                <br />
-                <Link href="/confidentialite">Confidentialité</Link>
-              </p>
+          {COLUMNS.map((column) => (
+            <div className="col" key={column.title}>
+              <div className="colTitle">{column.title}</div>
+              <div className="text">
+                <p>
+                  {column.items.map((item, i) => (
+                    <span key={item}>
+                      {i > 0 && <br />}
+                      <a href="#">{item}</a>
+                    </span>
+                  ))}
+                </p>
+              </div>
             </div>
-          </div>
+          ))}
           <div className="col">
             <div className="icon">
               <PlusIcon size={20} />
@@ -90,8 +102,9 @@ export function SiteFooter() {
             <div className="colTitle">Devenir exposant</div>
             <div className="text">
               <p>
-                Rencontrez une clientèle qualifiée, prête à concrétiser son projet immobilier au
-                Maroc.
+                <a href="#">Demander un stand</a>
+                <br />
+                <a href="#">Télécharger la brochure</a>
               </p>
             </div>
           </div>
@@ -100,7 +113,11 @@ export function SiteFooter() {
           <div className="left">© 2026 SPIMARIMMO</div>
           <div className="right">
             <div className="copyMenu">
-              <Link href="/cookies">Cookies</Link>
+              {LEGAL.map((item) => (
+                <a href="#" key={item}>
+                  {item}
+                </a>
+              ))}
             </div>
           </div>
         </div>

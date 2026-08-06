@@ -1,20 +1,14 @@
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { VisibilityPhases } from "./VisibilityPhases";
-import { ArrowRightIcon } from "./impactIcons";
 
 /* Section 07 — Votre visibilité.
  *
  * Server shell around the three-phase device (the client island). The header
  * follows the sibling-section hierarchy: gold eyebrow, small title, larger
- * statement. One CTA for the section, in the header — the device itself has
- * per-phase actions but no second "discover" entry point. */
+ * statement. The header CTA was removed by owner note (D-026, 2026-08-06) —
+ * the device's own per-phase action is the section's only exit. */
 
-type VisibilitySectionProps = {
-  readonly deviceHref?: string;
-};
-
-export function VisibilitySection({ deviceHref = "/exposer" }: VisibilitySectionProps) {
+export function VisibilitySection() {
   const t = useTranslations("visibility");
 
   return (
@@ -30,13 +24,9 @@ export function VisibilitySection({ deviceHref = "/exposer" }: VisibilitySection
             </h2>
             <p className="visLead">{t("lead")}</p>
           </div>
-          <Link className="visCta" href={deviceHref}>
-            <span>{t("cta")}</span>
-            <ArrowRightIcon className="visCtaIcon" aria-hidden="true" />
-          </Link>
         </header>
 
-        <VisibilityPhases deviceHref={deviceHref} />
+        <VisibilityPhases />
       </div>
     </section>
   );

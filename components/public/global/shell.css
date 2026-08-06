@@ -492,6 +492,12 @@ footer .bottomFooter {
   padding: 1.25vw 0 2.5vw;
   font-size: var(--text-base);
 }
+
+/* Legal row: three staged links (D-026) need their own rhythm. */
+footer .bottomFooter .copyMenu {
+  display: flex;
+  gap: var(--space-sm);
+}
 footer .bottomFooter a {
   color: var(--hoy-ink);
 }

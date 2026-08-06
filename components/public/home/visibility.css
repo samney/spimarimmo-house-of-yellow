@@ -56,35 +56,6 @@
   text-wrap: balance;
 }
 
-.visCta {
-  align-items: center;
-  background: var(--action-primary);
-  border-radius: var(--radius-md);
-  color: var(--action-on-primary);
-  display: inline-flex;
-  flex: none;
-  font-size: var(--text-support);
-  font-weight: 500;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-md);
-  text-decoration: none;
-  transition: background-color 160ms ease;
-}
-
-.visCta:hover {
-  background: var(--action-primary-hover);
-}
-
-.visCta:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 0.2em;
-}
-
-.visCtaIcon {
-  height: 1.1em;
-  width: 1.1em;
-}
-
 /* --- Device panel ----------------------------------------------------------- */
 
 .visPanel {
@@ -413,9 +384,43 @@
   font-size: var(--text-base);
   font-weight: 600;
   gap: var(--space-xs);
+  justify-content: space-between;
   letter-spacing: 0.14em;
   padding: var(--space-xs) var(--space-sm);
   text-transform: uppercase;
+}
+
+.visScheduleHeadLeft {
+  align-items: center;
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* Confirmed-count chip — a fixture of the decorative mock (D-026). */
+.visScheduleCount {
+  background: var(--surface-accent);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.15vw 0.6vw;
+  text-transform: none;
+}
+
+.visScheduleAvatar {
+  align-items: center;
+  background: var(--surface-inverse);
+  border-radius: 50%;
+  color: var(--on-inverse);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-base);
+  font-weight: 600;
+  height: 1.8vw;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  width: 1.8vw;
 }
 
 .visScheduleIcon {
@@ -642,6 +647,55 @@
   width: 1.4vw;
 }
 
+/* Named-deliverable artifacts (D-026): a photographic thumb with the
+   deliverable's icon badged over it, and the drawn CRM sequence chain. */
+.visRailThumb--media {
+  overflow: hidden;
+  position: relative;
+}
+
+.visRailThumb--media img {
+  object-fit: cover;
+}
+
+.visRailThumbBadge {
+  background: var(--surface-page);
+  border-radius: var(--radius-sm);
+  bottom: 0.25vw;
+  color: var(--on-surface);
+  height: 1.1vw;
+  padding: 0.15vw;
+  position: absolute;
+  right: 0.25vw;
+  width: 1.1vw;
+  z-index: 1;
+}
+
+.visRailThumb--sequence {
+  gap: 0.35vw;
+}
+
+.visRailSeqStep {
+  align-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--on-surface-muted);
+  display: inline-flex;
+  justify-content: center;
+  padding: 0.25vw;
+}
+
+.visRailSeqStep[data-active] {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.visRailSeqIcon {
+  height: 0.9vw;
+  width: 0.9vw;
+}
+
 .visRailText {
   display: flex;
   flex-direction: column;
@@ -776,7 +830,6 @@
     animation: none;
   }
 
-  .visCta,
   .visNext {
     transition: none;
   }

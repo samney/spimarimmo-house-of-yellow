@@ -8,7 +8,6 @@ import { MreMarketSection } from "@/components/public/home/MreMarketSection";
 import { VisibilitySection } from "@/components/public/home/VisibilitySection";
 import { PromotersSection } from "@/components/public/home/PromotersSection";
 import { ProofSection } from "@/components/public/home/ProofSection";
-import { OffersTeaser } from "@/components/public/home/offers/OffersTeaser";
 import { GallerySection } from "@/components/public/home/GallerySection";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -26,7 +25,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <VisibilitySection />
       <PromotersSection />
       <ProofSection />
-      <OffersTeaser />
+      {/* [10] Offres exposants leaves the homepage by owner note (D-026); the
+          full offer lives at /exposer/offres, reworked in its own slice. */}
       <GallerySection fullGalleryHref="/ressources/galerie" />
     </>
   );

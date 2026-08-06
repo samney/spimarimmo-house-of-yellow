@@ -136,7 +136,6 @@
     "eyebrow": "Votre visibilité",
     "title": "Une présence amplifiée avant, pendant et après chaque salon.",
     "lead": "Un dispositif média et commercial coordonné pour attirer, engager et convertir une audience qualifiée.",
-    "cta": "Découvrir le dispositif",
     "tabsLabel": "Phases du dispositif",
     "channelsLabel": "Canaux activés",
     "phaseCounter": "Phase {num} / 03",
@@ -326,7 +325,8 @@
         "meetings": "Rendez-vous",
         "opportunities": "Opportunités"
       },
-      "companyLabel": "Société {letter}"
+      "companyLabel": "Société {letter}",
+      "scheduleCount": "4 confirmés"
     },
     "benefits": {
       "audience": {

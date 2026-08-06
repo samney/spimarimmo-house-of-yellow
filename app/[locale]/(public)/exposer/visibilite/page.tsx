@@ -7,5 +7,5 @@ import { VisibilitySection } from "@/components/public/home/VisibilitySection";
 export default async function Visibilite({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <VisibilitySection deviceHref="/exposer/devenir-exposant" />;
+  return <VisibilitySection />;
 }

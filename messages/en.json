@@ -136,7 +136,6 @@
     "eyebrow": "Your visibility",
     "title": "An amplified presence before, during and after every exhibition.",
     "lead": "A coordinated media and commercial device to attract, engage and convert a qualified audience.",
-    "cta": "Discover the device",
     "tabsLabel": "Device phases",
     "channelsLabel": "Activated channels",
     "phaseCounter": "Phase {num} / 03",
@@ -326,7 +325,8 @@
         "meetings": "Meetings",
         "opportunities": "Opportunities"
       },
-      "companyLabel": "Company {letter}"
+      "companyLabel": "Company {letter}",
+      "scheduleCount": "4 confirmed"
     },
     "benefits": {
       "audience": {
