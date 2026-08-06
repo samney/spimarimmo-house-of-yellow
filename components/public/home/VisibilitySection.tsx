@@ -14,6 +14,9 @@ import type { SectionHeadingProps } from "./section-heading";
 
 type VisibilitySectionProps = SectionHeadingProps & {
   readonly deviceHref?: string;
+  /* Forwarded to the phase device for the parity harness only. */
+  readonly initialPhase?: "before" | "during" | "after";
+  readonly staticRender?: boolean;
 };
 
 /* When this section IS the page (`/exposer/visibilite` and friends), its
@@ -23,11 +26,18 @@ type VisibilitySectionProps = SectionHeadingProps & {
 export function VisibilitySection({
   deviceHref = "/exposer",
   headingLevel: Heading = "h2",
+  initialPhase = "before",
+  staticRender = false,
 }: VisibilitySectionProps) {
   const t = useTranslations("visibility");
 
   return (
-    <section id="visibilite" className="visSection" aria-labelledby="vis-title">
+    <section
+      id="visibilite"
+      className="visSection"
+      aria-labelledby="vis-title"
+      data-static={staticRender ? "true" : undefined}
+    >
       <div className="visInner">
         <header className="visHeader">
           <div className="visHeadings">
@@ -43,7 +53,11 @@ export function VisibilitySection({
           </Link>
         </header>
 
-        <VisibilityPhases deviceHref={deviceHref} />
+        <VisibilityPhases
+          deviceHref={deviceHref}
+          initialPhase={initialPhase}
+          staticRender={staticRender}
+        />
       </div>
     </section>
   );

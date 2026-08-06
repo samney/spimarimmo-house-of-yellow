@@ -1969,3 +1969,14 @@
   block-size: 1.6vw;
   inline-size: 100%;
 }
+
+/* --- Parity harness ---------------------------------------------------------
+   The deterministic capture state (qa/PARITY_TEST_PROTOCOL.md): every
+   transition and animation off, so a screenshot of a phase is the same frame
+   every run. Scoped to the harness attribute, never set in production. */
+.visSection[data-static="true"] *,
+.visSection[data-static="true"] *::before,
+.visSection[data-static="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
