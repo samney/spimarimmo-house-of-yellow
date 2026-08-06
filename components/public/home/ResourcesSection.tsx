@@ -60,7 +60,10 @@ const FAQ_KEYS = ["choose", "proposal", "qualified", "leads"] as const;
    heading is the document's only heading and must be an `h1` — measured
    A-02: five routes rendered no `h1` at all. On the homepage it stays an
    `h2` under the hero, which is why this is a prop and not a change. */
-export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadingProps = {}) {
+export function ResourcesSection({
+  headingLevel: Heading = "h2",
+  standalone = false,
+}: SectionHeadingProps & { standalone?: boolean } = {}) {
   const t = useTranslations("resources");
   const [open, setOpen] = useState<string | null>(null);
 
@@ -70,7 +73,14 @@ export function ResourcesSection({ headingLevel: Heading = "h2" }: SectionHeadin
         <div className="resTopGrid">
           <header className="resHeader">
             <p className="resEyebrow">
-              [ <span className="resEyebrowIndex">12</span> ] {t("eyebrow")}
+              {/* Standalone, the PageHeader owns the opening: no chapter
+                  index here (owner remark, 2026-08-06). */}
+              {!standalone && (
+                <>
+                  [ <span className="resEyebrowIndex">12</span> ]{" "}
+                </>
+              )}
+              {t("eyebrow")}
             </p>
             <Heading className="resTitle" id="res-title">
               {t("title")}

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { buildMetadata } from "@/lib/seo/page-metadata";
 import { setRequestLocale } from "next-intl/server";
 import { ResourcesSection } from "@/components/public/home/ResourcesSection";
+import { PageHeader } from "@/components/public/pages/PageHeader";
 
 /* Owner restructure (2026-08-04): the exhibitor-resources section moves off
    the homepage onto this standalone page inside the Ressources family. */
@@ -28,5 +29,13 @@ export default async function RessourcesExposants({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <ResourcesSection headingLevel="h1" />;
+  const t = await getTranslations({ locale, namespace: "resources" });
+  return (
+    <div className="pageBlocks">
+      {/* Owner note: the page opens with the shared PageHeader; the section
+          below keeps its own h2 heading and drops its chapter index. */}
+      <PageHeader label={t("eyebrow")} title={t("title")} lead={t("lead")} />
+      <ResourcesSection standalone />
+    </div>
+  );
 }

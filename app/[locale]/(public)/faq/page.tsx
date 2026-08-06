@@ -31,33 +31,28 @@ export default async function Faq({ params }: { params: Promise<{ locale: string
       <PageHeader index="17" label={t("label")} title={t("title")} lead={t("lead")} />
       <section className="spimarListPage">
         <div className="contentWrapper">
-          <div className="hoyCols">
-            <div className="colLabel" aria-hidden="true" />
-            <div className="colMain">
-              <Reveal className="faqList">
-                {QUESTIONS.map((q, i) => (
-                  <details key={q}>
-                    <summary>
-                      <span className="numIndex text medium">{String(i + 1).padStart(2, "0")}</span>
-                      <h2 className="text medium">{t(`${q}.question`)}</h2>
-                      <span className="faqMarker" aria-hidden="true">
-                        +
-                      </span>
-                    </summary>
-                    <div className="faqAnswer text medium">
-                      <p>{t(`${q}.answer`)}</p>
-                    </div>
-                  </details>
-                ))}
-              </Reveal>
-              <footer className="pageOutro">
-                <p className="text medium">
-                  {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
-                  <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-                </p>
-              </footer>
-            </div>
-          </div>
+          <Reveal className="faqList">
+            {QUESTIONS.map((q, i) => (
+              <details key={q}>
+                <summary>
+                  <span className="numIndex text medium">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 className="text medium">{t(`${q}.question`)}</h2>
+                  <span className="faqMarker" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <div className="faqAnswer text medium">
+                  <p>{t(`${q}.answer`)}</p>
+                </div>
+              </details>
+            ))}
+          </Reveal>
+          <footer className="pageOutro">
+            <p className="text medium">
+              {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
+              <Link href="/contact">{t("outroContact")}</Link>
+            </p>
+          </footer>
         </div>
       </section>
     </div>

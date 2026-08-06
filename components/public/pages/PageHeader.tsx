@@ -26,7 +26,7 @@ export function PageHeader({
   children,
 }: {
   /* Section number from the specification. Every public route has one. */
-  index: string;
+  index?: string;
   label: string;
   title: string;
   lead?: string;

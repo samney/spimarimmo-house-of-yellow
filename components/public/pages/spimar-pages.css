@@ -172,6 +172,32 @@
   flex: none;
 }
 
+/* Readability pass (owner note, D-026): questions read at title size with a
+   gold numeral; answers get reading leading and a prose measure. */
+.faqList summary .numIndex {
+  color: var(--spimar-gold-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.faqList summary h2 {
+  font-size: var(--text-small-title);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.faqList .faqAnswer {
+  max-width: var(--measure-prose);
+  padding-block-end: var(--space-md);
+}
+
+.faqList .faqAnswer p {
+  font-size: var(--text-support);
+  line-height: 1.7;
+  margin: 0;
+}
+
 .faqList summary .faqMarker {
   margin-left: auto;
   flex: none;
