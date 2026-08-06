@@ -297,7 +297,11 @@
 }
 
 .salonHero__scrim {
-  background: linear-gradient(200deg, rgb(20 20 15 / 5%) 30%, rgb(20 20 15 / 78%) 100%);
+  background: linear-gradient(
+    200deg,
+    color-mix(in srgb, var(--spimar-black) 5%, transparent) 30%,
+    color-mix(in srgb, var(--spimar-black) 78%, transparent) 100%
+  );
   inset: 0;
   position: absolute;
 }
