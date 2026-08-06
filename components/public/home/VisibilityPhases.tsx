@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -184,28 +184,100 @@ function StateIcon({ state, className }: { state: DeliverableState; className?: 
   return <DashedCircleIcon className={className} />;
 }
 
-export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: string }) {
+function isPhaseKey(value: string | null | undefined): value is Phase["key"] {
+  return value === "before" || value === "during" || value === "after";
+}
+
+/* `initialPhase` + `staticRender` exist for the deterministic parity harness
+   (qa/PARITY_TEST_PROTOCOL.md): it renders one stable phase with transitions
+   disabled so a capture is reproducible. Production ignores both. */
+export function VisibilityPhases({
+  deviceHref = "/exposer",
+  initialPhase = "before",
+  staticRender = false,
+}: {
+  deviceHref?: string;
+  initialPhase?: Phase["key"];
+  staticRender?: boolean;
+}) {
   const t = useTranslations("visibility");
-  const [activeKey, setActiveKey] = useState<Phase["key"]>("before");
+  const [activeKey, setActiveKey] = useState<Phase["key"]>(initialPhase);
   const phase = PHASES.find((p) => p.key === activeKey) ?? PHASES[0];
   const phaseIndex = PHASES.indexOf(phase);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const advance = () => setActiveKey(PHASES[(phaseIndex + 1) % PHASES.length].key);
+  /* Deep link, read once on mount. Applied through the same setter as every
+     other input, so pointer, keyboard and URL never own competing state. */
+  useEffect(() => {
+    if (staticRender) return;
+    const requested = new URLSearchParams(window.location.search).get("visibilityPhase");
+    if (!isPhaseKey(requested)) return;
+    const frame = requestAnimationFrame(() => setActiveKey(requested));
+    return () => cancelAnimationFrame(frame);
+  }, [staticRender]);
+
+  /* The spec asks the URL to follow selection with replaceState and without
+     scrolling — replaceState does not touch scroll position and does not add
+     a history entry, so Back still leaves the page rather than stepping
+     through phases. */
+  const selectPhase = useCallback(
+    (key: Phase["key"]) => {
+      setActiveKey(key);
+      if (staticRender || typeof window === "undefined") return;
+      const url = new URL(window.location.href);
+      url.searchParams.set("visibilityPhase", key);
+      window.history.replaceState(window.history.state, "", url);
+    },
+    [staticRender],
+  );
+
+  /* Roving focus across the tablist, as WAI-ARIA expects of a tablist: the
+     rail carried tab roles without arrow-key support, which announces a
+     keyboard contract it did not honour. */
+  const focusAndSelect = useCallback(
+    (index: number) => {
+      const next = (index + PHASES.length) % PHASES.length;
+      tabRefs.current[next]?.focus();
+      selectPhase(PHASES[next].key);
+    },
+    [selectPhase],
+  );
+
+  const advance = () => selectPhase(PHASES[(phaseIndex + 1) % PHASES.length].key);
 
   return (
     <div className="visPanel">
       {/* Phase tabs */}
       <div className="visTabs" role="tablist" aria-label={t("tabsLabel")}>
-        {PHASES.map((p) => (
+        {PHASES.map((p, i) => (
           <button
             key={p.key}
+            ref={(el) => {
+              tabRefs.current[i] = el;
+            }}
             type="button"
             role="tab"
             id={`vis-tab-${p.key}`}
             aria-selected={p.key === phase.key}
             aria-controls="vis-detail"
+            tabIndex={p.key === phase.key ? 0 : -1}
             className="visTab"
-            onClick={() => setActiveKey(p.key)}
+            onClick={() => selectPhase(p.key)}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                e.preventDefault();
+                focusAndSelect(i + 1);
+              } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+                e.preventDefault();
+                focusAndSelect(i - 1);
+              } else if (e.key === "Home") {
+                e.preventDefault();
+                focusAndSelect(0);
+              } else if (e.key === "End") {
+                e.preventDefault();
+                focusAndSelect(PHASES.length - 1);
+              }
+            }}
           >
             <span className="visTabNum">{p.num}</span>
             <span className="visTabText">
