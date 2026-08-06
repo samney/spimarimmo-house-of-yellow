@@ -119,7 +119,9 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 20vw;
   gap: var(--space-md);
-  align-items: start;
+  /* Owner remark (2026-08-06): the study card aligns with the explorer —
+     both columns share one height. */
+  align-items: stretch;
 }
 
 /* --- Filters --------------------------------------------------------------- */

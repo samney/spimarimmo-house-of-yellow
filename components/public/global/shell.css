@@ -983,6 +983,7 @@ a.socialLink:focus-visible {
 }
 
 /* Anchored homepage sections land below the fixed bar, not underneath it. */
+#pourquoi-spimar,
 #methode,
 #visibilite {
   scroll-margin-top: 6vw;

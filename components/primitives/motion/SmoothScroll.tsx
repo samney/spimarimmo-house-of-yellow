@@ -30,7 +30,42 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
+    /* Anchor navigation must go THROUGH Lenis: it owns the scroll position,
+       so native hash jumps are swallowed and the nav's home anchors landed
+       nowhere (owner report, 2026-08-06). Offset clears the fixed header.
+       Staged dead links (href="#") are left alone. */
+    const headerOffset = () => {
+      const bar = document.querySelector<HTMLElement>("header .headerBar");
+      return -((bar?.offsetHeight ?? 0) + 16);
+    };
+    const scrollToHash = (hash: string) => {
+      const el = document.querySelector<HTMLElement>(hash);
+      if (el) lenis.scrollTo(el, { offset: headerOffset() });
+    };
+    if (window.location.hash.length > 1) {
+      // Arriving from another page: position after the sections mount.
+      requestAnimationFrame(() => scrollToHash(window.location.hash));
+    }
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element).closest?.<HTMLAnchorElement>('a[href*="#"]');
+      if (!link) return;
+      const href = link.getAttribute("href") ?? "";
+      const hashIndex = href.indexOf("#");
+      const hash = href.slice(hashIndex);
+      if (hash.length < 2) return; // staged "#" links keep their no-op
+      const path = href.slice(0, hashIndex).replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
+      const here = window.location.pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
+      if (path !== here) return; // cross-page: let the router navigate
+      const el = document.querySelector(hash);
+      if (!el) return;
+      event.preventDefault();
+      history.pushState(null, "", hash);
+      scrollToHash(hash);
+    };
+    document.addEventListener("click", onClick);
+
     return () => {
+      document.removeEventListener("click", onClick);
       gsap.ticker.remove(raf);
       lenis.destroy();
       document.documentElement.classList.remove("lenis", "lenis-smooth");

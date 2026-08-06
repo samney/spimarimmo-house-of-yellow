@@ -1980,3 +1980,78 @@
   animation: none !important;
   transition: none !important;
 }
+
+/* --- Owner remarks 2026-08-06: refined Rendez-vous card + CRM chain -------- */
+
+.visScheduleHead {
+  justify-content: space-between;
+}
+
+.visScheduleHeadLeft {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--space-xs);
+}
+
+.visScheduleCount {
+  background: var(--surface-accent);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.12vw 0.55vw;
+  text-transform: none;
+}
+
+.visScheduleAvatar {
+  align-items: center;
+  background: var(--surface-inverse);
+  border-radius: 50%;
+  color: var(--on-inverse);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-base);
+  font-weight: 600;
+  height: 1.7vw;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  min-height: 22px;
+  min-width: 22px;
+  width: 1.7vw;
+}
+
+.visScheduleTime {
+  background: var(--surface-muted);
+  border-radius: var(--radius-pill);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  padding: 0.1vw 0.5vw;
+}
+
+.visRailSequence {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.3vw;
+}
+
+.visRailSeqStep {
+  align-items: center;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-sm);
+  color: var(--on-inverse-muted);
+  display: inline-flex;
+  justify-content: center;
+  padding: 0.22vw;
+}
+
+.visRailSeqStep[data-active] {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.visRailSeqIcon {
+  height: 0.85vw;
+  width: 0.85vw;
+}

@@ -226,7 +226,7 @@
 .proofCase {
   display: flex;
   flex-direction: column;
-  gap: 0.7vw;
+  gap: var(--space-sm);
   justify-content: space-between;
   min-block-size: 0;
   padding-block: var(--space-xs);
@@ -234,9 +234,11 @@
 
 .proofCaseHead {
   align-items: center;
+  border-block-end: 1px solid var(--border-inverse);
   display: flex;
   gap: var(--space-sm);
   justify-content: space-between;
+  padding-block-end: var(--space-2xs);
 }
 
 .proofCaseLabel,
@@ -261,28 +263,31 @@
 }
 
 .proofCaseBody {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--space-md);
 }
 
 /* Dashed slot: the client mark appears here once a case is approved. */
+/* Owner remark (2026-08-06): a definite rounded, well-spaced box that never
+   shrinks against the copy beside it — not a dashed sliver. */
 .proofLogoSlot {
   align-items: center;
-  align-self: stretch;
-  border: 1px dashed var(--action-primary);
-  border-radius: var(--radius-md);
+  align-self: flex-start;
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
   color: var(--on-inverse-muted);
   display: inline-flex;
   flex: none;
   font-size: var(--text-base);
+  inline-size: 8vw;
   justify-content: center;
   letter-spacing: 0.12em;
   min-block-size: 6.5vw;
-  padding: var(--space-xs);
+  min-inline-size: 110px;
+  padding: var(--space-sm);
   text-align: center;
   text-transform: uppercase;
-  inline-size: 6.5vw;
 }
 
 .proofCaseTitle {
@@ -302,12 +307,13 @@
 
 .proofCaseCta {
   align-items: center;
+  align-self: flex-start;
   background: var(--action-primary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   color: var(--action-on-primary);
   display: inline-flex;
   font-size: var(--text-support);
-  font-weight: 500;
+  font-weight: 600;
   gap: var(--space-xs);
   justify-content: center;
   padding: var(--space-xs) var(--space-md);
@@ -327,12 +333,13 @@
 /* --- Testimonial row ---------------------------------------------------------- */
 
 .proofVoices {
-  border-top: 1px solid var(--border-inverse);
+  border: 1px solid var(--border-inverse);
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   margin-top: var(--space-2xs);
-  padding-top: var(--space-sm);
+  padding: var(--space-sm);
 }
 
 .proofVoice {

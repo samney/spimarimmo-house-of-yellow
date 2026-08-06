@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { MreExplorer } from "./MreExplorer";
 import { SectionEyebrow } from "./SectionEyebrow";
+import { DownloadIcon } from "./mreIcons";
 import {
   ArrowRightIcon,
   CalendarIcon,
@@ -66,9 +67,13 @@ export function MreMarketSection() {
               {t("study.title")}
             </h3>
             <p className="mreStudyText">{t("study.text")}</p>
-            {/* The download CTA was removed by owner note (D-026): the étude
-                is not yet a published resource, so the card presents it
-                without promising a download. */}
+            {/* Restored on owner remark (2026-08-06), staged to "#": the card
+                keeps its action; the target goes live when the étude is a
+                published resource. */}
+            <a className="mreCta mreCtaWide" href="#">
+              <span>{t("downloadStudy")}</span>
+              <DownloadIcon className="mreCtaIcon" aria-hidden="true" />
+            </a>
             <p className="mreStudyNote">
               <ShieldCheckIcon className="mreStudyNoteIcon" aria-hidden="true" />
               <span>{t("study.note")}</span>

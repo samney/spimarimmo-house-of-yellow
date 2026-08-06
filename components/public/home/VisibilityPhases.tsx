@@ -53,7 +53,7 @@ type DeliverableState = "done" | "progress" | "planned";
    frame, a set of phones, a landing page — and only Après is a set of drawn
    glyph cards. `glyph` keeps that treatment; the rest are compositions built
    around a supplied photograph. */
-type ThumbKind = "video" | "photo" | "page" | "phones" | "glyph";
+type ThumbKind = "video" | "photo" | "page" | "phones" | "glyph" | "sequence";
 
 type Thumb = { readonly kind: ThumbKind; readonly src?: string };
 
@@ -76,7 +76,9 @@ const PHASES: readonly Phase[] = [
       { kind: "video", src: "/images/visibility/campaign-property-hero.webp" },
       { kind: "phones", src: "/images/visibility/campaign-video-production.webp" },
       { kind: "page", src: "/images/visibility/project-riviera-bay.webp" },
-      { kind: "glyph" },
+      /* Owner remark (2026-08-06): the Séquence CRM deliverable carries a
+         drawn three-step mail-chain artifact, not a bare glyph. */
+      { kind: "sequence" },
       { kind: "photo", src: "/images/visibility/investor-consultation.webp" },
     ],
     leverIcons: [PlayBadgeIcon, InfinityIcon, GMarkIcon, MailIcon, MegaphoneIcon],
@@ -100,7 +102,9 @@ const PHASES: readonly Phase[] = [
       { kind: "video", src: "/images/visibility/live-event-capture.webp" },
       { kind: "photo", src: "/images/visibility/interview.webp" },
       { kind: "phones", src: "/images/visibility/affluence.webp" },
-      { kind: "glyph" },
+      /* Owner remark (2026-08-06): Rendez-vous qualifiés shows the section's
+         own qualified-meeting photograph, like its siblings. */
+      { kind: "photo", src: "/images/visibility/rendez-vous-qualifie.webp" },
       { kind: "photo", src: "/images/visibility/stand-presentation.webp" },
     ],
     leverIcons: [CameraIcon, MicIcon, ShareNodesIcon, LiveIcon, VisitorsIcon],
@@ -466,22 +470,39 @@ export function VisibilityPhases({
                   <Image alt="" fill sizes="18vw" src={MEDIA.interview} />
                 </span>
 
+                {/* Rendez-vous card, refined on owner remark (2026-08-06):
+                    identity chip per row, day chip in the head — no more
+                    undifferentiated text runs. Fixtures stay synthetic. */}
                 <span className="visFrame visSchedule">
                   <span className="visScheduleHead">
-                    <CalendarIcon className="visScheduleIcon" />
-                    {t("stage.scheduleTitle")}
-                  </span>
-                  <span className="visScheduleDay">{t("stage.today")}</span>
-                  {[0, 1, 2, 3].map((i) => (
-                    <span className="visScheduleRow" key={i}>
-                      <span className="visScheduleTime">{t(`stage.slots.${i}.time`)}</span>
-                      <span className="visScheduleWho">{t(`stage.slots.${i}.who`)}</span>
-                      <span className="visScheduleOk">
-                        <CheckCircleIcon className="visScheduleState" />
-                        {t("stage.confirmed")}
-                      </span>
+                    <span className="visScheduleHeadLeft">
+                      <CalendarIcon className="visScheduleIcon" />
+                      {t("stage.scheduleTitle")}
                     </span>
-                  ))}
+                    <span className="visScheduleCount">{t("stage.today")}</span>
+                  </span>
+                  {[0, 1, 2, 3].map((i) => {
+                    const who = t(`stage.slots.${i}.who`);
+                    const initials = who
+                      .split(" ")
+                      .filter((w) => /^[A-ZÉÀ]/.test(w))
+                      .slice(0, 2)
+                      .map((w) => w[0])
+                      .join("");
+                    return (
+                      <span className="visScheduleRow" key={i}>
+                        <span className="visScheduleAvatar" aria-hidden="true">
+                          {initials}
+                        </span>
+                        <span className="visScheduleWho">{who}</span>
+                        <span className="visScheduleTime">{t(`stage.slots.${i}.time`)}</span>
+                        <span className="visScheduleOk">
+                          <CheckCircleIcon className="visScheduleState" />
+                          {t("stage.confirmed")}
+                        </span>
+                      </span>
+                    );
+                  })}
                 </span>
               </div>
             )}
@@ -664,6 +685,20 @@ export function VisibilityPhases({
                   >
                     {phase.deliverableThumbs[i].kind === "glyph" ? (
                       <Icon className="visRailThumbIcon" />
+                    ) : phase.deliverableThumbs[i].kind === "sequence" ? (
+                      /* The CRM chain drawn as its own artifact: three mail
+                         steps, the first active in gold (owner remark). */
+                      <span className="visRailSequence" aria-hidden="true">
+                        {[0, 1, 2].map((step) => (
+                          <span
+                            className="visRailSeqStep"
+                            data-active={step === 0 || undefined}
+                            key={step}
+                          >
+                            <MailIcon className="visRailSeqIcon" />
+                          </span>
+                        ))}
+                      </span>
                     ) : (
                       <>
                         <Image
