@@ -9,16 +9,39 @@ Written 2026-08-06. Branch `claude/spimar-admin-control`, head `cbe5ad3`.
 
 ## 1. Where the work lives
 
-There were **two parallel lineages**. They are now merged into one branch.
+> **CORRECTED 2026-08-06 — the table below was wrong and the error is the
+> expensive kind.** This section used to say "`main` has almost nothing". That
+> stopped being true. `main` is now the **deployed** lineage and the one the
+> owner's finalization master plan audits.
 
-| Branch                                      | Contains                                                                       | State                                  |
-| ------------------------------------------- | ------------------------------------------------------------------------------ | -------------------------------------- |
-| `claude/spimar-admin-control`               | **Everything.** Public site + SPIMAR Control console + the funnel between them | PR **#34** → `main`, draft, unmerged   |
-| `claude/spimar-rebuild-from-accepted-clone` | The designed public site only                                                  | merged INTO #34; still open separately |
-| `claude/spimar-cms-seam-unification`        | Slices 1–4 (seams, adapters, console v1)                                       | PR **#32** → `main`, superseded by #34 |
-| `main`                                      | 43 migrations + `seams.ts` + a stub public page. **No console.**               | 49+ commits behind the work            |
+**The two lineages diverged again — they are NOT merged into one branch.**
+Measured at `eccc122`: `git rev-list --left-right --count origin/main...HEAD`
+returns **65 28**. Sixty-five commits exist on `main` that this branch does not
+have; twenty-eight exist here that `main` does not. Across `components/public`
+and `app` alone, **141 files differ, ±23,000 lines**.
 
-**`main` has almost nothing.** Do not judge project state from `main`.
+| Branch                        | Contains                                                                                                        | State                                          |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `main` (`d3e0f6a`)            | Website rebuilt through Sections 01–07 and Phases C/P/N. Old console at `app/admin/**`. **No acquisition seam** | **Deployed on Vercel.** Owner's audit baseline |
+| `claude/spimar-admin-control` | SPIMAR Control console under `[locale]`, the acquisition/CRM programme, plus its own D-026 website sweep        | PR **#34** draft, 28 commits unpushed          |
+
+**What is unique to each side** — this is the part that matters:
+
+- **Only on this branch:** `lib/backend/admin-seams.ts`,
+  `lib/backend/acquisition-seams.ts`, the whole ADM-\* console programme, the
+  Postgres adapters, the locale-routed console (ADR-A1). `main` has only
+  `lib/backend/seams.ts` and the older `app/admin/**`.
+- **Only on `main`:** Sections 01–07, Phases C/P/N (case-study listing and
+  detail, salons listing and detail, the real contact form, sitemap, `/en`
+  fixes, per-page next steps), and the deployment.
+- **Duplicated on both, differently:** the public website. This branch's D-026
+  sweep (salons calendar, études de cas, ressources family, offers, WhatsApp,
+  home slices A/B) covers ground `main` also rebuilt. Do not assume either
+  version wins on merit — check which the owner's master plan audits.
+
+**Never judge project state from one branch.** Judging from `main` once caused
+`/contact`, `/exposer` and `/salons` to be rebuilt needlessly; judging from
+this branch would now miss 65 commits of shipped, deployed work.
 
 PRs #27, #28, #29 are already merged (into the branch lineage, not `main`).
 
