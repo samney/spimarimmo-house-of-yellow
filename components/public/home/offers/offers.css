@@ -290,10 +290,14 @@
   transform: translateY(-50%) rotate(45deg);
 }
 
+/* Owner note (D-026): the edition picker reads as a designed control, not a
+   cropped native select — generous padding, gold hover ring, the drawn
+   chevron carried by the shell. The popup list stays native (keyboard and
+   assistive tech keep the platform behaviour). */
 .offEditionSelect {
   appearance: none;
   background: var(--surface-raised);
-  border: 0;
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
   color: var(--on-surface);
   cursor: pointer;
@@ -301,12 +305,21 @@
   font-size: var(--text-support);
   font-weight: 600;
   inline-size: 100%;
-  padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-sm);
+  padding: var(--space-sm) calc(var(--space-md) + 1.2vw) var(--space-sm) var(--space-sm);
+  transition: border-color 160ms ease;
+}
+
+.offEditionSelect:hover {
+  border-color: var(--action-primary);
 }
 
 .offEditionSelect:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 0.2em;
+}
+
+.offSelectShell::after {
+  color: var(--spimar-gold-deep, currentColor);
 }
 
 .offConfigNote {
@@ -578,19 +591,23 @@
   margin: 0 0 var(--space-2xs);
 }
 
+/* Owner note (D-026): chips ride the primary gold, ink on top (AA per
+   D-A3), not the muted neutral of the earlier pass. */
 .offTierChip {
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  color: var(--on-surface-muted);
+  background: var(--surface-accent);
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
   font-size: var(--text-base);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.1em;
   padding: 0.15vw var(--space-xs);
   text-transform: uppercase;
 }
 
 .offTierChip.isInverse {
-  border-color: var(--action-primary);
+  background: transparent;
+  border: 1px solid var(--action-primary);
   color: var(--action-primary);
 }
 
@@ -647,21 +664,28 @@
   text-align: center;
 }
 
+/* Owner note (D-026): tier actions carry the site's gold pill vocabulary —
+   never the black rectangles of the earlier pass. The recommended tier
+   deepens to the bronzed gold (D-A3) for emphasis. */
 .offTierCta {
-  background: var(--surface-inverse);
+  background: var(--action-primary);
   border: 0;
-  border-radius: var(--radius-md);
-  color: var(--on-inverse);
+  border-radius: var(--radius-pill);
+  color: var(--action-on-primary);
   cursor: pointer;
   font-family: inherit;
   font-size: var(--text-support);
-  font-weight: 500;
+  font-weight: 600;
   padding: var(--space-sm);
   transition: background-color 160ms ease;
 }
 
+.offTierCta:hover {
+  background: var(--action-primary-hover);
+}
+
 .offTierCta.isGold {
-  background: var(--action-primary);
+  background: var(--spimar-gold-deep, var(--action-primary));
   color: var(--action-on-primary);
 }
 
@@ -762,12 +786,12 @@
 .offGhostBtn {
   background: transparent;
   border: 1px solid var(--action-primary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   color: var(--on-inverse);
   cursor: pointer;
   font-family: inherit;
   font-size: var(--text-support);
-  font-weight: 500;
+  font-weight: 600;
   padding: var(--space-sm);
   transition:
     background-color 160ms ease,
@@ -804,13 +828,23 @@
   margin: 0;
 }
 
+/* Owner note (D-026): the request form reads in depth — each group is its
+   own raised card instead of borderless runs of fields. */
 .offFieldset {
-  border: 0;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   margin: 0;
-  padding: var(--space-2xs) 0 0;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+.offFieldset > legend {
+  float: inline-start;
+  inline-size: 100%;
+  padding: 0 0 var(--space-2xs);
 }
 
 .offFieldset > legend {
@@ -854,7 +888,12 @@
 
 .offFieldSelect {
   cursor: pointer;
-  padding-inline-end: var(--space-md);
+  padding-inline-end: calc(var(--space-md) + 1vw);
+  transition: border-color 160ms ease;
+}
+
+.offFieldSelect:hover {
+  border-color: var(--action-primary);
 }
 
 .offFieldInput::placeholder {
@@ -946,7 +985,7 @@
   align-items: center;
   background: var(--action-primary);
   border: 0;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   color: var(--action-on-primary);
   cursor: pointer;
   display: inline-flex;
