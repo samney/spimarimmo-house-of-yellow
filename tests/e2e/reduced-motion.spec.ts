@@ -32,7 +32,9 @@ const CONTENT_ROUTES = [
   { path: "/fr/faq", list: ".faqList", item: "details" },
   { path: "/fr/insights", list: ".spimarCardList", item: "li" },
   { path: "/fr/ressources", list: ".spimarCardList", item: "li" },
-  { path: "/fr/salons", list: ".spimarCardList", item: "li" },
+  /* The salons calendar (D-026) renders .salcList rows; the contract —
+     every row fully visible, none stranded mid-reveal — is unchanged. */
+  { path: "/fr/salons", list: ".salcList", item: "li" },
   { path: "/fr/etudes-de-cas", list: ".spimarCardList", item: "li" },
 ];
 

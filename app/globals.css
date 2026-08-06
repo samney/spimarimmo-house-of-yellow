@@ -24,6 +24,7 @@
 @import "../components/public/home/become.css";
 @import "../components/public/pages/pages.css";
 @import "../components/public/pages/spimar-pages.css";
+@import "../components/public/pages/salons.css";
 /* Public reference-status page (/suivi). Scoped to its own `.status*` classes;
    the only stylesheet the console port adds to the public bundle. */
 @import "../components/public/status/status.css";

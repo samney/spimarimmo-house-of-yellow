@@ -62,6 +62,7 @@ export default async function Salons({
   const shown = selected ? events.filter((e) => e.venue?.countryCode === selected) : events;
 
   const dateFormat = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
+  const monthFormat = new Intl.DateTimeFormat(locale, { month: "long" });
 
   return (
     <div className="pageBlocks">
@@ -119,43 +120,99 @@ export default async function Salons({
                       </>
                     ) : null}
                   </p>
-                  <Reveal as="ul" className="spimarCardList" role="list">
-                    {shown.map((event) => (
-                      <li key={event.slug} className="cardItem cardItem--media">
-                        {event.image ? (
-                          <span className="cardItem__media">
-                            <Image
-                              src={event.image.src}
-                              alt={event.image.alt}
-                              width={480}
-                              height={320}
-                              sizes="(max-width: 580px) 100vw, 22vw"
-                            />
-                          </span>
-                        ) : null}
-                        <span className="cardItem__body">
-                          {event.demo ? <span className="cardItem__demo">Démo</span> : null}
-                          <span className="cardKicker text medium">
-                            {event.venue
-                              ? `${event.venue.city} — ${event.venue.countryCode}`
-                              : t("venueTbc")}
-                          </span>
-                          <h2 className="text medium">
-                            <Link href={`/salons/${event.slug}`}>{event.name || event.slug}</Link>
-                          </h2>
-                          {/* An editor may publish an edition before writing its
-                              blurb; the card must not collapse when they do. */}
-                          {event.summary ? (
-                            <span className="cardSummary text medium">{event.summary}</span>
-                          ) : null}
-                          <span className="cardNote text medium">
-                            {event.startsAt
-                              ? dateFormat.format(new Date(event.startsAt))
-                              : t("datesTbc")}
-                          </span>
-                        </span>
-                      </li>
-                    ))}
+                  {/* The calendar (owner note, D-026): a gold month rail down
+                      the inline start with the editions attached as
+                      photographic cards — the same published records, grouped
+                      by their start month; undated editions close the list
+                      under their honest pending label. */}
+                  <Reveal as="ol" className="salcList" role="list">
+                    {shown
+                      .slice()
+                      .sort((a, b) => (a.startsAt ?? "9999").localeCompare(b.startsAt ?? "9999"))
+                      .map((event) => {
+                        const start = event.startsAt ? new Date(event.startsAt) : null;
+                        const end = event.endsAt ? new Date(event.endsAt) : null;
+                        const datesLabel = start
+                          ? end
+                            ? dateFormat.formatRange(start, end)
+                            : dateFormat.format(start)
+                          : t("datesTbc");
+                        return (
+                          <li className="salcRow" key={event.slug}>
+                            <div className="salcMonth">
+                              {start ? (
+                                <>
+                                  <span className="salcMonthIndex">
+                                    {String(start.getMonth() + 1).padStart(2, "0")}
+                                  </span>
+                                  <span className="salcMonthLabel">
+                                    {monthFormat.format(start)}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="salcMonthLabel">{t("datesTbc")}</span>
+                              )}
+                            </div>
+                            <article className="salcCard">
+                              {event.image ? (
+                                <div className="salcMedia">
+                                  <Image
+                                    alt={event.image.alt}
+                                    className="salcPhoto"
+                                    fill
+                                    sizes="(max-width: 580px) 88vw, 22vw"
+                                    src={event.image.src}
+                                  />
+                                  {event.demo ? (
+                                    <span className="salcStatus salcStatus--upcoming">Démo</span>
+                                  ) : null}
+                                </div>
+                              ) : (
+                                <div className="salcMedia salcMedia--empty" aria-hidden="true">
+                                  <span className="salcMediaMark">
+                                    {(event.name || event.slug).slice(0, 1)}
+                                  </span>
+                                </div>
+                              )}
+                              <div className="salcBody">
+                                <p className="salcPlace">
+                                  <Link
+                                    className="salcCity salcTitleLink"
+                                    href={`/salons/${event.slug}`}
+                                  >
+                                    {event.name || event.slug}
+                                  </Link>
+                                  <span className="salcCountry">
+                                    {event.venue
+                                      ? `${event.venue.city} — ${event.venue.countryCode}`
+                                      : t("venueTbc")}
+                                  </span>
+                                </p>
+                                <p className="salcMeta">
+                                  <span className="salcDates">{datesLabel}</span>
+                                </p>
+                                {event.summary ? (
+                                  <p className="salcVisitors">{event.summary}</p>
+                                ) : null}
+                                <div className="salcActions">
+                                  <Link
+                                    className="salcCta salcCta--primary"
+                                    href="/exposer/devenir-exposant"
+                                  >
+                                    {t("outroCta")}
+                                  </Link>
+                                  <Link
+                                    className="salcCta salcCta--ghost"
+                                    href={`/salons/${event.slug}`}
+                                  >
+                                    {t("cardDetail")}
+                                  </Link>
+                                </div>
+                              </div>
+                            </article>
+                          </li>
+                        );
+                      })}
                   </Reveal>
                 </>
               )}
