@@ -1,0 +1,181 @@
+/* ==========================================================================
+   Brochure quick-preview dialog (D-026)
+   ==========================================================================
+   Scrim + raised panel over the page: header row with the download action,
+   the browser-rendered PDF plane below. Binds only to L2 tokens.
+   ========================================================================== */
+
+.brochureModal {
+  align-items: center;
+  background: rgb(0 0 0 / 88%);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: var(--space-md);
+  position: fixed;
+  z-index: var(--z-overlay);
+  animation: brochure-in var(--dur-fade) var(--ease-out-ref) both;
+}
+
+@keyframes brochure-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brochureModal {
+    animation: none;
+  }
+}
+
+.brochurePanel {
+  background: var(--surface-page);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+  width: min(60vw, 92vw);
+}
+
+.brochureHead {
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.brochureEyebrow {
+  color: var(--spimar-gold-text);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  margin: 0 0 0.2vw;
+  text-transform: uppercase;
+}
+
+.brochureTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+  margin: 0;
+}
+
+.brochureActions {
+  align-items: center;
+  display: flex;
+  flex: none;
+  gap: var(--space-xs);
+}
+
+.brochureDownload {
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  font-size: var(--text-support);
+  font-weight: 600;
+  padding: var(--space-2xs) var(--space-sm);
+  text-decoration: none;
+  transition: background-color var(--dur-micro);
+}
+
+.brochureDownload:hover {
+  background: var(--action-primary-hover);
+}
+
+.brochureDownload:focus-visible,
+.brochureClose:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.brochureClose {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  color: var(--on-surface);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--text-small-title);
+  height: 2.2vw;
+  justify-content: center;
+  line-height: 1;
+  min-height: 36px;
+  min-width: 36px;
+  width: 2.2vw;
+}
+
+.brochureBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.brochureFrame {
+  border: 0;
+  flex: 1;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.brochureFallback {
+  border-top: 1px solid var(--border-subtle);
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  margin: 0;
+  padding: var(--space-2xs) var(--space-md);
+  text-align: center;
+}
+
+/* Footer text-link variant of the trigger. */
+.brochureLink {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-align: start;
+}
+
+.brochureLink:hover {
+  text-decoration: underline;
+}
+
+.brochureLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 580px) {
+  .brochurePanel {
+    max-height: 94vh;
+    width: 100%;
+  }
+
+  .brochureHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .brochureFrame {
+    min-height: 55vh;
+  }
+
+  .brochureClose {
+    position: absolute;
+    inset-block-start: var(--space-2xs);
+    inset-inline-end: var(--space-2xs);
+  }
+
+  .brochurePanel {
+    position: relative;
+  }
+}

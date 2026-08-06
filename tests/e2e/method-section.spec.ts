@@ -10,12 +10,16 @@ import { expect, test } from "@playwright/test";
 
 const GOLDEN = { width: 1536, height: 1024 };
 
+/* The central dossier is one supplied editorial WebP per phase with an
+   sr-only summary (MethodDossierFigure) — the earlier drawn document layers
+   and their .methodDoc__label captions no longer exist. The spec asserts the
+   shipped contract: the phase's plate serves and its summary is exposed. */
 const PHASES = [
   {
     phase: "before",
     title: "Préparer la demande",
     chip: "Campagnes digitales",
-    document: "PLAN DE CAMPAGNE",
+    dossierSrc: "01-avant-dossier",
     deliverablesHeading: "LIVRABLES AVANT",
     deliverable: "Profils qualifiés",
     annotation: "Tout est visible avant l’ouverture du salon.",
@@ -25,7 +29,7 @@ const PHASES = [
     phase: "during",
     title: "Activer les rencontres",
     chip: "Captation des leads",
-    document: "SALON EN DIRECT",
+    dossierSrc: "02-pendant-dossier",
     deliverablesHeading: "LIVRABLES PENDANT",
     deliverable: "Leads captés",
     annotation: "Chaque interaction est structurée pendant le salon.",
@@ -35,7 +39,7 @@ const PHASES = [
     phase: "after",
     title: "Transformer et suivre",
     chip: "Analyse des performances",
-    document: "RAPPORT DE SUIVI",
+    dossierSrc: "03-apres-dossier",
     deliverablesHeading: "LIVRABLES APRÈS",
     deliverable: "Base transmise",
     annotation: "La valeur du salon continue après sa fermeture.",
@@ -55,7 +59,11 @@ test.describe("method section — three-state contract", () => {
       await expect(section).toHaveAttribute("data-method-phase", c.phase);
       await expect(page.locator(".methodCopy__title")).toHaveText(c.title);
       await expect(page.locator(".methodCopy__chip", { hasText: c.chip })).toBeVisible();
-      await expect(page.locator(".methodDoc__label", { hasText: c.document })).toBeVisible();
+      // All three plates stay mounted for the crossfade; the active one is
+      // the phase's own artwork and the caption announces it.
+      const scene = page.locator('.methodDossier__scene[data-active="true"]');
+      await expect(scene).toHaveAttribute("src", new RegExp(c.dossierSrc));
+      await expect(page.locator(".methodDossier figcaption")).toContainText(/Dossier exposant/);
       await expect(page.locator(".methodDeliverables__heading")).toHaveText(c.deliverablesHeading);
       await expect(page.locator(".methodCard__title", { hasText: c.deliverable })).toBeVisible();
       await expect(page.locator(".methodDeliverables__annotation")).toHaveText(c.annotation);
@@ -73,15 +81,29 @@ test.describe("method section — three-state contract", () => {
         await page.evaluate(() => {
           const rect = (sel: string) => {
             const b = document.querySelector(sel)!.getBoundingClientRect();
-            return { x: b.x, y: b.y, w: b.width, h: b.height };
+            // Whole pixels: the lock is against layout jumps between phases,
+            // not against sub-pixel text-rendering variance.
+            return {
+              x: Math.round(b.x),
+              y: Math.round(b.y),
+              w: Math.round(b.width),
+              h: Math.round(b.height),
+            };
+          };
+          const pos = (sel: string) => {
+            const { x, y, w } = rect(sel);
+            return { x, y, w };
           };
           return {
             stage: rect(".methodStage"),
             rail: rect(".methodRail"),
             copy: rect(".methodCopy"),
+            /* The dossier BOX is the invariant; the active plate inside it
+               carries a deliberate settle transform, so it is not measured. */
             dossier: rect(".methodDossier"),
-            dossierBase: rect(".methodDossier__base"),
-            deliverables: rect(".methodDeliverables"),
+            /* Absolutely positioned rail: its anchor is locked, its height is
+               its own per-phase content and moves nothing else. */
+            deliverables: pos(".methodDeliverables"),
             journey: rect(".methodJourney"),
           };
         }),
