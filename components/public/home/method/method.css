@@ -657,6 +657,175 @@
   color: var(--method-gold-bright);
 }
 
+/* ------------------------------------- entrance & phase choreography */
+
+/* Owner direction (2026-08-06): the section carries the same animation depth
+   as its neighbours — when it scrolls into view the dossier settles first,
+   then deals its documents out along the connector network into the
+   deliverables rail; every tab change replays the deal for the new phase
+   (the copy column and the deliverables run are phase-keyed remounts).
+
+   The whole choreography hangs off `data-anim` on the section, set by JS
+   only: no JS → no attribute → the section renders complete; reduced motion
+   never enters the state machine (belt-and-braces override below); the
+   static harness never sets it. Transforms and opacity only — nothing here
+   moves layout, so the locked stage geometry is untouched. */
+
+.methodSection[data-anim="pending"] .methodDossier,
+.methodSection[data-anim="pending"] .methodConnectors,
+.methodSection[data-anim="pending"] .methodCard,
+.methodSection[data-anim="pending"] .methodDeliverables__heading,
+.methodSection[data-anim="pending"] .methodDeliverables__annotation,
+.methodSection[data-anim="pending"] .methodCopy > *,
+.methodSection[data-anim="pending"] .methodRail__item,
+.methodSection[data-anim="pending"] .methodStage__etape,
+.methodSection[data-anim="pending"] .methodJourney {
+  opacity: 0;
+}
+
+/* The folder arrives first: a quiet settle onto the stage. */
+.methodSection[data-anim="run"] .methodDossier {
+  animation: methodDossierIn 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes methodDossierIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, calc(18 * var(--method-u)), 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The rail, the phase copy and the stage label rise in behind it. */
+.methodSection[data-anim="run"] .methodStage__etape,
+.methodSection[data-anim="run"] .methodJourney {
+  animation: methodFadeUp 480ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+}
+.methodSection[data-anim="run"] .methodRail__item {
+  animation: methodFadeUp 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(120ms + var(--anim-i, 0) * 90ms);
+}
+.methodSection[data-anim="run"] .methodCopy > * {
+  animation: methodFadeUp 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(80ms + var(--anim-i, 0) * 70ms);
+}
+.methodRail__item:nth-child(1),
+.methodCopy > :nth-child(1) {
+  --anim-i: 0;
+}
+.methodRail__item:nth-child(2),
+.methodCopy > :nth-child(2) {
+  --anim-i: 1;
+}
+.methodRail__item:nth-child(3),
+.methodCopy > :nth-child(3) {
+  --anim-i: 2;
+}
+.methodCopy > :nth-child(4) {
+  --anim-i: 3;
+}
+.methodCopy > :nth-child(5) {
+  --anim-i: 4;
+}
+@keyframes methodFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, calc(12 * var(--method-u)), 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The connector network extends from the folder toward the rail... */
+.methodSection[data-anim="run"] .methodConnectors {
+  animation: methodConnectorsReveal 520ms cubic-bezier(0.4, 0, 0.2, 1) 420ms both;
+}
+@keyframes methodConnectorsReveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ...and each document flies out of the folder mouth along it, scaling up
+   as it lands in its slot — top card first, one deal at a time. The Y term
+   converges the start points on the folder's stub band so all four read as
+   coming out of the same mouth. */
+.methodSection[data-anim="run"] .methodCard {
+  animation: methodCardDeal 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(360ms + var(--deal-i, 0) * 130ms);
+}
+.methodCard:nth-child(1) {
+  --deal-i: 0;
+}
+.methodCard:nth-child(2) {
+  --deal-i: 1;
+}
+.methodCard:nth-child(3) {
+  --deal-i: 2;
+}
+.methodCard:nth-child(4) {
+  --deal-i: 3;
+}
+@keyframes methodCardDeal {
+  from {
+    opacity: 0;
+    transform: translate3d(
+        calc(-300 * var(--method-u)),
+        calc((1.5 - var(--deal-i, 0)) * 90 * var(--method-u)),
+        0
+      )
+      scale(0.7);
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.methodSection[data-anim="run"] .methodDeliverables__heading {
+  animation: methodFadeUp 460ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
+}
+.methodSection[data-anim="run"] .methodDeliverables__annotation {
+  animation: methodFadeUp 460ms cubic-bezier(0.22, 1, 0.36, 1) 940ms both;
+}
+
+/* Stacked fallback (<1280px): the folder-relative flight path has no meaning
+   in a vertical column, so the documents keep the stagger but simply rise. */
+@media (max-width: 1279px) {
+  .methodSection[data-anim="run"] .methodCard {
+    animation-name: methodFadeUp;
+  }
+}
+
+/* Reduced motion: the choreography never runs and nothing is held hidden,
+   whatever state the attribute is in. */
+@media (prefers-reduced-motion: reduce) {
+  .methodSection[data-anim] .methodDossier,
+  .methodSection[data-anim] .methodConnectors,
+  .methodSection[data-anim] .methodCard,
+  .methodSection[data-anim] .methodDeliverables__heading,
+  .methodSection[data-anim] .methodDeliverables__annotation,
+  .methodSection[data-anim] .methodCopy > *,
+  .methodSection[data-anim] .methodRail__item,
+  .methodSection[data-anim] .methodStage__etape,
+  .methodSection[data-anim] .methodJourney {
+    animation: none !important;
+    opacity: 1;
+  }
+}
+
 /* ------------------------------------------------- static test rendering */
 
 /* The deterministic visual state disables every transition so screenshots

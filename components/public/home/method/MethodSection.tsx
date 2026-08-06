@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { METHOD_CONTENT } from "./method-content";
 import { isMethodPhaseId, METHOD_PHASE_IDS, type MethodPhaseId } from "./method-types";
 import { MethodIntroduction } from "./MethodIntroduction";
@@ -34,6 +34,34 @@ export function MethodSection({
 }) {
   const [activePhase, setActivePhase] = useState<MethodPhaseId>(initialPhase);
   const headingId = useId();
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  /* Entrance choreography (owner direction, 2026-08-06): the dossier deals
+     its documents into place when the section scrolls into view. "pending"
+     holds the animated pieces invisible, "run" plays the keyframes; both live
+     on a data attribute so the CSS carries the whole choreography. JS-gated
+     on purpose: without JS the attribute never appears and the section
+     renders complete, reduced motion never enters the state machine, and the
+     visual-test harness stays deterministic. */
+  const [animState, setAnimState] = useState<"idle" | "pending" | "run">("idle");
+  useEffect(() => {
+    if (staticRender) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const section = sectionRef.current;
+    if (!section) return;
+    setAnimState("pending");
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setAnimState("run");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(section);
+    return () => io.disconnect();
+  }, [staticRender]);
 
   useEffect(() => {
     if (staticRender) return;
@@ -55,11 +83,13 @@ export function MethodSection({
 
   return (
     <section
+      ref={sectionRef}
       id="methode"
       className="methodSection"
       aria-labelledby={headingId}
       data-static={staticRender ? "true" : undefined}
       data-method-phase={activePhase}
+      data-anim={animState === "idle" ? undefined : animState}
     >
       <MethodIntroduction
         content={METHOD_CONTENT}

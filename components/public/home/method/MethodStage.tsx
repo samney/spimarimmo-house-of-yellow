@@ -30,9 +30,14 @@ export function MethodStage({
         activePhase={phase.id}
         onSelectPhase={onSelectPhase}
       />
-      <MethodPhaseCopy phase={phase} />
+      {/* Keyed by phase: a tab change remounts the copy column and the
+          deliverables run, restarting their CSS deal-out choreography — the
+          new dossier's contents visibly take their places (owner direction,
+          2026-08-06). The dossier figure itself stays mounted for its
+          crossfade. */}
+      <MethodPhaseCopy key={`copy-${phase.id}`} phase={phase} />
       <MethodDossierFigure phases={content.phases} activePhase={phase.id} />
-      <MethodDeliverables phase={phase} />
+      <MethodDeliverables key={`deliverables-${phase.id}`} phase={phase} />
       <MethodJourneyProgress
         phases={content.phases}
         activeIndex={activeIndex}

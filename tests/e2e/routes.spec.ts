@@ -166,6 +166,31 @@ test("destinations grid expands, collapses, and keeps its hover label", async ({
   await expect(grid).toHaveClass(/is-carousel/);
 });
 
+/* Owner checklist "[ 4 ] NOTRE MÉTHODE": the dossier deals its documents
+   into place when the section scrolls into view, and every tab change
+   replays the deal for the new phase. The contract here is the state
+   machine and the settled outcomes — pixel motion is judged by eye. */
+test("method section runs its entrance and replays the deal on tab change", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const section = page.locator("#methode");
+  await expect(section).toHaveAttribute("data-anim", "pending");
+
+  await page.evaluate(() => {
+    const el = document.querySelector("#methode")!;
+    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY);
+  });
+  await expect(section).toHaveAttribute("data-anim", "run");
+  const firstCard = page.locator(".methodCard").first();
+  await expect(firstCard).toHaveCSS("opacity", "1");
+
+  await page.locator("#method-tab-during").click();
+  await expect(page.locator(".methodDeliverables__heading")).toHaveText("LIVRABLES PENDANT");
+  await expect(page.locator(".methodCard").first()).toHaveCSS("opacity", "1");
+  await expect(page.locator(".methodCard")).toHaveCount(4);
+});
+
 /* Brochure quick preview (D-026): the [01] trigger opens a modal with the
    real PDF embedded and a genuine download action on the same file; Escape
    closes and restores focus. */
