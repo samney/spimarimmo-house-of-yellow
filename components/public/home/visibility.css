@@ -493,9 +493,11 @@
 
 /* The inset gold rule the reference draws inside the card edge. */
 .visInviteFrame {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 6%;
+  gap: 4%;
   block-size: 100%;
   border: 1px solid rgb(216 178 106 / 45%);
   padding: 10% 9%;
@@ -503,7 +505,7 @@
 
 .visInviteTitle {
   color: #e3c98f;
-  font-size: 1.05vw;
+  font-size: 0.78vw;
   font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1.15;
@@ -512,25 +514,33 @@
 
 .visInviteSub {
   color: rgb(227 201 143 / 70%);
-  font-size: 0.62vw;
+  font-size: 0.5vw;
   font-weight: 500;
   letter-spacing: 0.14em;
   line-height: 1.4;
   text-transform: uppercase;
 }
 
-.visInviteLines {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35vw;
+/* Handwritten-feeling invitation copy: light, loose and small, sitting well
+   inside the gold rule as the reference sets it. */
+.visInviteBody {
+  color: rgb(240 235 225 / 62%);
+  font-size: 0.4vw;
+  font-style: italic;
+  line-height: 1.5;
 }
-.visInviteLines i {
-  background: rgb(227 201 143 / 22%);
-  block-size: 1px;
-  display: block;
-}
-.visInviteLines i:last-child {
-  inline-size: 62%;
+
+/* The frond occupies the card's lower half, rising from the lower left. It is
+   pressed into the card rather than printed on it, so it sits at low opacity
+   in the card's own gold. */
+.visInviteFrond {
+  block-size: 52%;
+  color: rgb(214 176 104 / 30%);
+  inline-size: auto;
+  inset-block-end: 6%;
+  inset-inline-start: 12%;
+  position: absolute;
+  pointer-events: none;
 }
 
 /* -- Laptop -- */
@@ -1208,10 +1218,11 @@
 }
 
 .visPipelineCols {
+  align-items: start;
   display: grid;
-  gap: var(--space-sm);
+  gap: 0.5vw;
   grid-template-columns: repeat(4, 1fr);
-  padding: var(--space-sm);
+  padding: 0.5vw;
 }
 
 .visPipelineCol {
@@ -1876,4 +1887,85 @@
     height: 10vw;
     width: 10vw;
   }
+}
+
+/* The board lives inside the 671px canvas, so its type is set for that box
+   rather than for a standalone frame: at --text-base the cards read half again
+   as large as the reference's and crowded the three panels beneath them. */
+.visPipelineColTitle {
+  font-size: 0.44vw;
+  letter-spacing: 0.1em;
+  margin-block-end: 0.35vw;
+}
+
+.visPipelineCard {
+  border-radius: 0.22vw;
+  gap: 0.3vw;
+  margin-block-end: 0.32vw;
+  padding: 0.3vw 0.32vw;
+}
+
+.visPipelineAvatar {
+  block-size: 0.85vw;
+  inline-size: 0.85vw;
+}
+
+.visPipelineLines span {
+  font-size: 0.42vw;
+}
+
+/* The anonymised contact the reference prints under each company. */
+.visPipelineLines i {
+  background: none;
+  block-size: auto;
+  color: rgb(255 255 255 / 42%);
+  font-size: 0.34vw;
+  font-style: normal;
+}
+
+/* The flow arrows between columns. Drawn on the column rather than added as
+   elements, so the four columns stay a plain grid. */
+.visPipelineCol {
+  position: relative;
+}
+.visPipelineCol:not(:last-child)::after {
+  color: rgb(255 255 255 / 34%);
+  content: "→";
+  font-size: 0.6vw;
+  inset-block-start: 2.1vw;
+  inset-inline-end: -0.42vw;
+  position: absolute;
+}
+
+/* Thread entry: role and timestamp share the top line, as the reference sets
+   them, with the message body as rules beneath. */
+.visThreadTop {
+  align-items: baseline;
+  display: flex;
+  gap: 0.3vw;
+  justify-content: space-between;
+}
+.visThreadWhen {
+  color: var(--on-surface-muted);
+  flex: none;
+  font-size: 0.36vw;
+}
+
+/* The dossier's sector line, under the company name. */
+.visDossierWho i {
+  background: none;
+  block-size: auto;
+  color: var(--on-surface-muted);
+  font-size: 0.36vw;
+  font-style: normal;
+  inline-size: auto;
+}
+
+/* The report's trend line and its footer rules — the reference draws a chart
+   above and quiet neutral bars below, not bars alone. Value-free throughout:
+   no numbers, no axis, because none is validated. */
+.visReportTrend {
+  display: block;
+  block-size: 1.6vw;
+  inline-size: 100%;
 }

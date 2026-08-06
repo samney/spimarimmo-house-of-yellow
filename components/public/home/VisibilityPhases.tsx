@@ -22,6 +22,7 @@ import {
   MegaphoneIcon,
   MicIcon,
   NetworkIcon,
+  PalmFrondIcon,
   PlayBadgeIcon,
   PressIcon,
   RefreshIcon,
@@ -275,14 +276,12 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                   <span className="visInviteFrame">
                     <span className="visInviteTitle">{t("stage.inviteTitle")}</span>
                     <span className="visInviteSub">{t("stage.inviteSub")}</span>
-                    {/* Neutral lines, not invented copy: the invitation's body
-                        paragraph is not legible in the reference, and the
-                        section forbids inventing text to fill a surface. */}
-                    <span className="visInviteLines">
-                      <i />
-                      <i />
-                      <i />
-                    </span>
+                    {/* Real copy, read off the approved reference at 3x. It was
+                        set as neutral rules while it was illegible; inventing
+                        it would have been wrong, but transcribing the approved
+                        design is not inventing. */}
+                    <span className="visInviteBody">{t("stage.inviteBody")}</span>
+                    <PalmFrondIcon className="visInviteFrond" />
                   </span>
                 </span>
 
@@ -445,7 +444,11 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                                   letter: String.fromCharCode(65 + col.offset + i),
                                 })}
                               </span>
-                              <i />
+                              <i>
+                                {t("stage.contactLabel", {
+                                  letter: String.fromCharCode(97 + col.offset + i),
+                                })}
+                              </i>
                             </span>
                           </span>
                         ))}
@@ -472,6 +475,22 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                     </span>
                     <span className="visReportDonut" />
                   </span>
+                  {/* The trend the reference draws under the bars. A shape
+                      only: no values, no axis, nothing claimed. */}
+                  <svg
+                    className="visReportTrend"
+                    viewBox="0 0 100 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 20 L18 14 L34 17 L50 9 L66 12 L82 5 L98 7"
+                      stroke="var(--action-primary)"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                   <span className="visReportLines">
                     <i />
                     <i />
@@ -487,7 +506,10 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                     <span className="visThreadMsg" key={i}>
                       <span className="visThreadAvatar" />
                       <span className="visThreadBody">
-                        <span className="visThreadRole">{t(`stage.thread.${i}.role`)}</span>
+                        <span className="visThreadTop">
+                          <span className="visThreadRole">{t(`stage.thread.${i}.role`)}</span>
+                          <span className="visThreadWhen">{t(`stage.thread.${i}.when`)}</span>
+                        </span>
                         <span className="visThreadLines">
                           <i />
                           <i />
@@ -506,10 +528,10 @@ export function VisibilityPhases({ deviceHref = "/exposer" }: { deviceHref?: str
                     </span>
                     <span className="visDossierWho">
                       <b>{t("stage.companyLabel", { letter: "D" })}</b>
-                      <i />
+                      <i>{t("stage.dossierSector")}</i>
                     </span>
                   </span>
-                  {[0, 1, 2].map((i) => (
+                  {[0, 1, 2, 3].map((i) => (
                     <span className="visDossierRow" key={i}>
                       <span className="visDossierKey">{t(`stage.dossier.${i}.key`)}</span>
                       {i === 2 ? (

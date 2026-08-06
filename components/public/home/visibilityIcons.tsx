@@ -222,3 +222,49 @@ export function DashedCircleIcon(props: IconProps) {
     </svg>
   );
 }
+
+/* The invitation card's palm frond, drawn rather than supplied: the package
+   ships no asset for it, and the manifest requires the invitation be built in
+   HTML/CSS/SVG. Reproduced from the approved reference screen, which the
+   README names as the visual authority — a single leaf rising from the lower
+   left, leaflets thinning toward the tip, in the same restrained gold the card
+   uses for its rule and its title. */
+export function PalmFrondIcon(props: IconProps) {
+  const leaflets = Array.from({ length: 22 }, (_, i) => {
+    const t = i / 21;
+    /* Along the stem, which runs bottom-left to upper-right. */
+    const x = 22 + t * 54;
+    const y = 132 - t * 112;
+    /* Leaflets shorten and steepen toward the tip. */
+    const len = 30 * (1 - t * 0.72);
+    const lift = 12 + t * 16;
+    return { x, y, len, lift };
+  });
+  return (
+    <svg viewBox="0 0 100 140" fill="none" aria-hidden="true" focusable="false" {...props}>
+      {leaflets.map(({ x, y, len, lift }, i) => (
+        <g key={i}>
+          <path
+            d={`M ${x} ${y} Q ${x - len * 0.55} ${y - lift * 0.5} ${x - len} ${y - lift}`}
+            stroke="currentColor"
+            strokeWidth="1.05"
+            strokeLinecap="round"
+          />
+          <path
+            d={`M ${x} ${y} Q ${x + len * 0.5} ${y - lift * 0.62} ${x + len * 0.86} ${y - lift * 1.15}`}
+            stroke="currentColor"
+            strokeWidth="1.05"
+            strokeLinecap="round"
+          />
+        </g>
+      ))}
+      {/* Stem last, so it reads over the leaflets as it does on the card. */}
+      <path
+        d="M 20 136 Q 44 92 78 20"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}

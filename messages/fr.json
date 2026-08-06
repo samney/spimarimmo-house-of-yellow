@@ -359,10 +359,12 @@
       "threadInput": "Ajouter une note…",
       "thread": {
         "0": {
-          "role": "Responsable développement"
+          "role": "Responsable développement",
+          "when": "Aujourd’hui"
         },
         "1": {
-          "role": "Directeur commercial"
+          "role": "Directeur commercial",
+          "when": "Hier"
         }
       },
       "dossierTitle": "Dossier lead",
@@ -378,8 +380,15 @@
         "2": {
           "key": "Statut",
           "value": "Qualifié"
+        },
+        "3": {
+          "key": "Prochain pas",
+          "value": "Rendez-vous à planifier"
         }
-      }
+      },
+      "inviteBody": "Nous avons le plaisir de vous inviter à découvrir nos nouveaux projets d’exception.",
+      "contactLabel": "contact@societe-{letter}.com",
+      "dossierSector": "Secteur industrie"
     },
     "benefits": {
       "audience": {

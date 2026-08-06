@@ -359,10 +359,12 @@
       "threadInput": "Add a note…",
       "thread": {
         "0": {
-          "role": "Development lead"
+          "role": "Development lead",
+          "when": "Today"
         },
         "1": {
-          "role": "Sales director"
+          "role": "Sales director",
+          "when": "Yesterday"
         }
       },
       "dossierTitle": "Lead record",
@@ -378,8 +380,15 @@
         "2": {
           "key": "Status",
           "value": "Qualified"
+        },
+        "3": {
+          "key": "Next step",
+          "value": "Meeting to schedule"
         }
-      }
+      },
+      "inviteBody": "We are pleased to invite you to discover our new landmark projects.",
+      "contactLabel": "contact@company-{letter}.com",
+      "dossierSector": "Industry sector"
     },
     "benefits": {
       "audience": {
