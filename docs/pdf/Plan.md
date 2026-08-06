@@ -1,305 +1,228 @@
-## ## ## Website 
+### website Notes : 
 
-# whatsap (not implimented yet) 
-    - whatsap icon should get back 
-        - no direct navigation api
-        - we should pop-up conversation like (aljaridapro.com # review this implimentaion) goals to have conversation and chat linked latter with CRM for batter connection with client issues  or potential leads ... 
 
-## navs (implimentation + UI UX + ) DONE
+# ---- Home  ----- 
 
-# Hero .. 
-    - cursur box (x text) 50%
-    - video z index 1000
-    
-
-# [ 01 ] Pourquoi SPIMARIMMO
-
-# [ 02 ] Salons par pays
-    - cards inner buttom hover issue color of text of button still appear we should resolve this problem of accesibility .
-    - cards -> date el lient a comfirme (we should make some data muock here not this static text).
-    
-
-# [ 02 ] Ils nous font confiance (not implimented)
-    - duplicated .. we should merge between the bellow versionwith this 
-        - this direction uiux was cool and good 
-        - hearchy strcuter and composition
-            - [ 08 ] Ils nous font confiance
-            - Les promoteurs au cœur de l’expérience SPIMARIMMO.
-            Un réseau de partenaires accompagné avant, pendant et après chaque salon.
-            - remove button voire toutles promotuer
-            - we should keep the cleaner versionof autoplay logs -> we should make them a bit bigger for batter visibility .
-            - instead of (button play pus .. lets have button of expand to see all companys .. (lets have more taht 20dup copnay mock to see implimentation clearly))
-            - no -> Logos affichés avec l’accord des promoteurs. and no -> Défilement automatique
-            - we should depend on the designof the first section not the second one .
-            - we should have clean spacing and earchy .. bello to much spacing we should remove it .
-
-# [ 03 ] Pourquoi exposer ?  -> DOING
-    - text hearchy and sizing should adjust 
-    - colors used inside the buttons should be as we have for our button system also the design and inner element shoudl reflect our desgn system , groupe button sizes also should havce a clean size and hearchy.
-    - splited section hearchy between (left - text sould take around 35% - and right seciton should take around 65%)
-    - size of mobile mocke should be clean and adjusted .. and all other element should be correct sizing consstance with ratio true .. (i dont want to see some card have trangle shape andother one have box shape .. )
-    - details of cards should pay attnetion -> we want clean implimentation, depth and nice ui details for batter over all look 
-    - details assets cards details we should use color brand for titles use (brown -> gold).
-    - mockup mobile should look pro .. from top bar showing details inner content varient with details and pay attention to details into button navs .
-        - mock should have border buzzels for batter look pro .
-        - bg branding assets to add dpeth and clena ui ux impliemntation or why not some auto play animations 
-    - HEARCHY SPACING OF VIEW PRT OF THE FULL SECTION IS IMPORTENT ..
-    - since our project works with Gsap we will focus on stunning animationa nd have depth using GSPA for this section composition between mockup mobile and cards
-        - this section while we scolr into it we should first display mockup phone with animation 
-        - anthen srat throwing cards from behind the phone and display them snothly  .. 
-        - maintain cads with small pop snimation move .. 
-        adding breathing and life to this section .
-    - over all this section is importent for us
-        - it convert 
-        - it explain
-        - it hook 
-        - it all for us .. 
-    - so we should pay attnetion .. perfect pixel impliemtation  , animation , resposive .. hook the user .
-
-
-
-    - wiedth space should be the same as -> Pourquoi SPIMARIMMO 
-
-# stacked section start from [ 03 ] 
-    - the same behavior of https://houseofyellow.nl/ -> stacked section animation
-    - fixed sizse of all stacked section
-    - clean spacing and hearchy ui 
-    - constanacy conposition 
-    - review the sections  stacked from houseofyellow website .. and lets applay them to our website starting from section [3]
-
-# NOTRE MÉTHODE 
-- issue of width stretch .. 
-
-# CHIFRE CLE SECTION 
-- now time to work on the next section wish will keep it as this cover the full with .. and the section after it we get back to the stacked sections scroll .. the current version of tis section [5] have some criical issues related to ux hearchy and polish UI .. row of boxes luck of depth ambinace .. right and good quality of icons .. appay the design system of our branding aspects .. lets make this section ligher white our primary color dark have some light will chine .. that the vibe .. also hearchy of text and heading should have applay the system typography of our design system .. 
-
-# CHIFRE CLE SECTION
--  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# --------------------- OLD --------------------- #
-# Pourquoi SPIMARIMMO
-    - clear text based section 
-    - clean hearchy 
-    - text speach focus section . 
-    - clean CTAs 
-    - (issue ui) -> text should expand and breath. heading + sub heading text
-    - 
-# Salons par pays
-    - heading text should breath
-    - svg assets hsould be removed (expo svg)
-    - button (voire tt salon) -> navigate to archive page 
-    - cards 
-        - data mock setup
-        - ui accecibility colors issue fix
-        - cards button hover accecibility issue
-        - card images should have branded yello overlay .. 
-
-# Ils nous font confiance
-    - we should use the same component used in https://houseofyellow.nl/
-    - play around the section 
-    - clean spacing good hearchy .. 
-
-### stacked section START
-    - all sections should have th view port full of the screen 
-    - all sections equal and content should fitwith clean hearchy and spacing.. 
-    - 
-
-# [ 1 ] Pourquoi exposer ?
-    - GSAP animation and bihaviors as we did have in the https://houseofyellow.nl/
-        - the section location [ 03 ]Beyond the Screen
-    - this section has a problem of quality of implimentation ui ux 
-        - luck context 
-        - bad ui ux implimnetation
-
-# [ 2 ] NOTRE MÉTHODE
-    - the section uiux implimentation context true 
-    - still we should enhance it optimize it and make details of assets branding well good 
-        - remove dry on details assets 
-        - add deth details (exemple: border of docs color should be shown .. )
-    - button fix
-    - text fix 
-    - spacing and hearchy .. 
-# [ 3 ] Chiffres clés
-    - section too boring ..
-    - luck of depth 
-    - we should enhance the ui ux detials .. polish and context .
-# [ 4 ] Comprendre le marché MRE ?
-    - we should fix hearcy spacing and composition
-    - button groupe shoudl has the same buttonstyle design system 
-    - also details of implimentation polish should be enhanced .
-    - section of Étude Spimarimmo -> should alignt with left section .
-    - icons should be polsih with bg and enhanced . 
-# [ 5 ] Votre visibilité ?
-    - button fix 
-    - text hearchy and spaicng fix 
-    - tabs good but inner content view to much condunce with DRY of atribuit left .. we should keep the almost left and inner remove. 
-    - we should enhance this section details ui ux element and polish .. the composition was bad ... 
-# [ 6 ] Ils nous font confiance
-    - should be lighter 
-    - spacing , text , button , 
-    - funtunality broken .. 
-        - expanding should reflect the main component not displyed another one 
-        - displayed after expand -> Logos affichés avec l’accord des promoteurs. & Défilement automatique
-    - we should polish more the component and work on details .. 
-    - button (play) should remove component
-    - 
-
-# [ 7 ] La preuve par les résultats
-
-
-
-
-
-
-
-
-
-
-
-
-
- (play) should remove component
-    - 
-
-# [ 7 ] La preuve par les résultats
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Design system foundation fix 
-    - create the full end to end design system 
-    - fix all foundation (from colors , headings , animtion .. )
-# sections
-    - reorder sections by the storytelling from the PDF boook
-    - UI UX fix -> each section end to end
-    - AB testing + fix UX of each section neeeded 
-    - Polish high end UI standers for eachpart of each section
-    - top down setion from hero to the end of footer chemistry
-# Pages
-    - child pages CMS UX UI implimentation
-    - end to end all implimentation finish
-# Features complation + test + deploy end to end
-    - CTA
-    - Forms 
-    - Features 
-# Branding Iteration
-    - assets 
-    - logo 
-    - images use
-    - overall look of the full website
-# performance & security 
-    - speed
-    - security
-    - SEO
-    - end to end finish
-
-# end to end copare the webste -> house-of-yello
-# code cleanup + documentation
-- clean up code 
-- remove all traces related to naming of house-yello
-- clean up docs 
-- remove all traces related to ai
-- clean up github commits 
-
-
-# clean up deployment 
-- clean dep
-- clean url
-- speed test > 90
-- security 90%
-
-
-# create GPT docs PDF 
-- PDF documentation (docs + sections screenshot)
-- PDF audit old website
-- PDF trnsation (whatsap) -> docs
-
-
-
-## Admin , CRM/CMS 
-
-# fast peace implimentation
-- iterationover the full website 
-    - 1 - create CMS/CRM end to end 
-- Design system (house-yello ones)
-- Refactor the full app -> UI UX (shadcn one -> with our brand)
-- end to end functunality implimentation
-
-- implimentation of all profiles
-- auth 
-- aother routes end to edn 
-
-# documentation Full (reflect the PDF specs)
-- PDF documentation (docs + sections screenshot)
-
-
-# goal of assigment (why landing page not enaph)
-- PDF show why i decide to built the Full website & app
-
-
-
-
-
-
-[ 11 ] Preuve terrain
-
-- remove the -> Médias réels uniquement
-Aucun visuel n’est publié sans droits et provenance.
-- — médias validés
-- button navigation of galery sould be funtunal .. not static .. 
-
-
-[ 09 ] La preuve par les résultats
-
-- Voir toutes les études de cas -> listing page where we have all casses 
-- remove buttom top we have 2 button cta .. we keep the inner one 
-- La parole aux décideurs -> we have the inner case page .. 
-    - so we have listing and each listing hase a details page 
-        details page hase a header where we have title bellw video and then we can have some contneton the page 
-    - here where we have the utilityof CMS .. 
-- over all the section have to much issue related to 
-    - UI UX details , cnstancy ,, hearchy spacing .. and pay attentionto details polish design  
-- icon listing at the button was to generic without life .. we should enhance them .. 
-- Voir la méthodologie -> as i geuss we should have artiles in binliothec ?? 
+# whatsap
+- should hase op up with clean UI UX with context of chat with pre existing quition that help user ask before click onto the button of whatsap .. 
+- take a look at reference inspiration (aljaridapro) i already built this feature there
+- contract dynamic color switch after reaching yello secfion colored .
 - 
+
+
+# nav 
+- drop down (anchor links) not navs
+- salon -> /#
+- salon -> /#
+- salon -> /#
+- salon -> /#
+
+# hero
+- cursor box hero removal 
+- visual auto play without interaction 
+
+# [ 2 ] Salons par pays
+- text section instead of 4 lines lets make it 2
+- routes of Salon remove .. (we have limited salon so expanding component is okey)
+- badge demo remove 
+- button of details page of selon (devourir le salon) make it right now no navigation -> #
+
+
+# [ 3 ] Pourquoi exposer
+- (voire la methode de qualification) -> http://localhost:3000/exposer/methode (CTA make it no nav -> #)
+- all other tabs should have button but no navigation -> # 
+
+
+
+# [ 4 ] NOTRE MÉTHODE
+- remove button cta (decouvrir notre accompagnement)
+- CTA of all tabs -> # .. nonavigation
+- 
+
+ 
+
+# [ 5 ] Chiffres clés
+- we should add heading number (is missing right now ) -> lets make mock data dummy random
+- cta -> # no navigation 
+- Données officielles publiées après validation des sources.
+
+
+# [ 6 ]  Comprendre le marché MRE
+
+- remove button -> telechager l'etude .
+- inside the Right CTA lets make the button no navigation -> #
+
+
+# [ 7 ] Votre visibilité
+- remove the button of  (decouvrir notre despotive)
+- Séquence CRM -> missing image 
+- Rendez-vous -> card to much slopy and not designed wel 
+- Rendez-vous qualifiés -> missing image 
+- 
+
+
+# La preuve par les résultats
+- right section hearchy problem .. logo should have a section with rounded or box not traiangle 
+- make all links -> # .. no navigation for this section
+- 
+ 
+
+
+# Offres exposants 
+- design system applayed into this section not ours .. 
+- button not including in our desgn system 
+    # /exposer/offres
+    - remove [ 10 ] Offres exposants
+    - this page should be optimized 
+    - our design system apply 
+    - enhance the ux 
+    - make is clean , smother , intuative design .
+    - choisir une edition dropdwon -> should be styled .. not cropy native one 
+    - iterate over all steps view of this implimentation les make them polish constst having consists design and applying of our design system .
+    - (Parlez-nous de votre projet.)polish -> detailed and cleaner .. optimzed version for batter and smother convertion form .-> current one was good but generic luck of depth design ..  
+    - 
+
+
+# Offres exposants 
+- drop down designed not native one
+- gride of contnet each component have inner piils using black it shoudl use our primary color yellow 
+- we should enhance the ux depth and details of this setion over all look .. this version was clean .. but it should et enhanced 
+- button should be consist with our deisgn system .. the used one not ours .. 
+    - also make button  -> # no navigation please 
+
+
+# footer 
+- lets enhance the Footer implimentation .. clean .. optimzed and very pro .. all navs -> # no navigations 
+- put all waht should be in the footer ..
+- it should feel pro , cleaner , constists and well defined
+
+
+
+
+
+
+# ---- salons ----
+- remove the [ 04 ] Salons
+- lets be creative and build a stunning look with highquality UI UX calander that have aclean and depth context with the objectives of the page .. 
+- clean CTA 
+- this page are esseintal for us 
+- ui ux should be optimzed , detailed , modern not slopy or inconsist . design brand should be applayed .. 
+- if the page linked to the backend (lets us the mock dummy data for viewsing the work before the link when i use to work on the part of the backend i will change it with data coms from db )
+- 
+
+
+
+# ---- etudes-de-cas ---- 
+- the same as other pages
+- remove the [ 09 ] Études de cas
+- same as (salons) .. the ame objectives of ui ux 
+- we should impliment end to end user flow 
+    - constsit ui implimentation , depth and details , well defined 
+- ui ux of the page 
+    - top down (clean hearchy , and polish detailed ui ux implimentation)
+    - listing  page with 
+        - row .. left image + heading + text + button (details page nav)
+        - filter and pagination
+    (over all look should be clean and respect the context of listing casestudy .. )
+
+- detaild page implimentation
+    - clean hearchy full implimentation with mockdata
+
+
+
+# ---- ressources [Bibliothèque]---- 
+# ---- ressources [Bibliothèque]---- 
+- the same as other pages
+- i dont knwo what is the best layout to use in this page 
+- but with the context we should reflect the imlimentation ui ux 
+- if it requiest listing .. the details pages should be consist layout clean and implimented 
+- mock data images should be existing .. dummy
+- ui ux consist using our design system , polish wel defined and we should not make them slopy or generic
+- pleaseunderstand the context , go deeper and impliemnt each useflfow end to end (from listing -> details pages .. )
+- CTA alwyse should be attractive and well defined with clean hearchy ui ux design
+
+# ---- ressources [Ressources_exposants]---- 
+- the same as other pages
+- This page has the same ui us design and layout of home page (sections)
+    - So the goals is to have a clean layout for child page context 
+    - Polish ui ux , well defined layout and stcurture 
+    - the page should has the Pageheader
+    - i think the buttom cta -> should redirect to the FAQ talking about the button of (voire tout les reponse)
+    - Analyses pour décider -> i dont undestand this section well .. sou we should impliment end to end userflow with high constatncy and respecting the context or it 
+        - details pages .. and every thing please be consist and complate the work 100% 
+- CTA alwyse should be attractive and well defined with clean hearchy ui ux design
+
+
+
+# ---- ressources [Galerie]----
+- the same as other pages
+- ganery has now a very generic implimentation 
+- the page luck of depth layout clean and earchy spaing using filters components and pagination .. 
+- lets built a smart creative and end to end galery page where it serv it purpose with hig effencncy .
+- CTA alwyse should be attractive and well defined with clean hearchy ui ux design
+
+# ---- ressources [Blog]---- 
+- the same as other pages
+- blog pages where we wil have a clean listing of cards of blogs 
+- the cards should have clean infos (images , pils , heading , text) 
+- CTA alwyse should be attractive and well defined with clean hearchy ui ux design
+- 
+- 
+
+# ---- ressources [FAQ]---- 
+- we wil keep using the component of accrodian 
+- we should enahcne the etxt and visibility of typgraphy to have a readble text 
+- clean ui ux design with well defined implimentation
+- CTA alwyse should be attractive and well defined with clean hearchy ui ux design
+
+# ---- Offres exposants ---- 
+- one of the most improtent pages that convert
+- we should optimize the layout 
+- we should have clean slick and well defined UIUX implimentation
+- we should iterate over the end to end flow implimenting the full conprehancing and clena ux design
+- we should pay attention to details layout hearchy and spacing of each components and theoverall look of the page
+- CTA alwyse should be attractive and well defined with clean hearchy ui ux design
+- contsintcy , design system use (font , buttons. ... patterns .. )
+
+
+
+
+
+
+
+
+
+### -------------   -------------   -------------   --------------------------  --------------------------   ------------- ###
+
+
+# ---- Importent thing ---- # 
+
+Read CLAUDE.md, then docs/claude-code/OPERATING-MODE.md, then docs/claude-code/SPIMARIMMO-FINAL-STABILIZATION-MASTER.md.SPIMARIMMO-FINAL-STABILIZATION-MASTER
+
+Treat the new master document as the latest owner direction and as an execution overlay on the existing project control plane.
+
+Do not begin broad implementation immediately.
+
+First complete the mandatory baseline phase:
+
+confirm the current branch and exact SHA;
+confirm the checkout is clean;
+compare HEAD with origin/main;
+verify which SHA is deployed publicly on Vercel;
+run all existing validation gates;
+inspect the production-rendered website at every required viewport;
+produce the delta audit and risk register described in the master document.
+
+Preserve the strong existing implementation. Do not rebuild the website, replace the design direction, or redo work that is already proven.
+
+After completing the baseline, report:
+
+Current branch and SHA.
+Deployment SHA and parity status.
+Validation results.
+The five highest-priority confirmed risks.
+The first bounded implementation slice.
+Exact files expected to change.
+
+Then proceed through the master phases in order with scoped commits, visual evidence and real validation results.
+::: ​​
