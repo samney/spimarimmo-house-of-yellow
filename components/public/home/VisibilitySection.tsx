@@ -1,8 +1,6 @@
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { SectionEyebrow } from "./SectionEyebrow";
 import { VisibilityPhases } from "./VisibilityPhases";
-import { ArrowRightIcon } from "./impactIcons";
 import type { SectionHeadingProps } from "./section-heading";
 
 /* Section 07 — Votre visibilité.
@@ -13,7 +11,6 @@ import type { SectionHeadingProps } from "./section-heading";
  * per-phase actions but no second "discover" entry point. */
 
 type VisibilitySectionProps = SectionHeadingProps & {
-  readonly deviceHref?: string;
   /* Forwarded to the phase device for the parity harness only. */
   readonly initialPhase?: "before" | "during" | "after";
   readonly staticRender?: boolean;
@@ -24,7 +21,6 @@ type VisibilitySectionProps = SectionHeadingProps & {
    A-02: five routes rendered no `h1` at all. On the homepage it stays an
    `h2` under the hero, which is why this is a prop and not a change. */
 export function VisibilitySection({
-  deviceHref = "/exposer",
   headingLevel: Heading = "h2",
   initialPhase = "before",
   staticRender = false,
@@ -51,11 +47,7 @@ export function VisibilitySection({
               own per-phase action is the section's only exit. */}
         </header>
 
-        <VisibilityPhases
-          deviceHref={deviceHref}
-          initialPhase={initialPhase}
-          staticRender={staticRender}
-        />
+        <VisibilityPhases initialPhase={initialPhase} staticRender={staticRender} />
       </div>
     </section>
   );

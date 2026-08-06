@@ -926,7 +926,7 @@
 
 /* Schedule frame (phase 02) */
 .visSchedule {
-  inline-size: 40%;
+  inline-size: 47%;
   inset-block-end: 8%;
   inset-inline-start: 0;
   position: absolute;
@@ -937,29 +937,36 @@
   flex-direction: column;
 }
 
+/* The card is part of the aria-hidden canvas illustration, so its type sits
+   on the canvas's own vw scale (0.4–1.05vw like the laptop and phone mocks)
+   — the L2 page tokens it used before were meant for page text and blew the
+   rows to two and three lines, pushing the status clean off the card (owner
+   remark, 2026-08-07). One-line rows, fixed columns, nothing clips. */
 .visScheduleHead {
   align-items: center;
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
-  font-size: var(--text-base);
+  font-size: 0.72vw;
   font-weight: 600;
   gap: var(--space-xs);
   letter-spacing: 0.14em;
-  padding: var(--space-xs) var(--space-sm);
+  padding: 0.55vw 0.7vw;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .visScheduleIcon {
-  height: 1vw;
-  width: 1vw;
+  height: 0.85vw;
+  width: 0.85vw;
 }
 
 .visScheduleRow {
   align-items: center;
-  display: flex;
-  font-size: var(--text-support);
-  gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
+  display: grid;
+  font-size: 0.76vw;
+  gap: 0.5vw;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  padding: 0.5vw 0.7vw;
 }
 
 .visScheduleRow + .visScheduleRow {
@@ -973,13 +980,28 @@
 }
 
 .visScheduleWho {
-  flex: 1;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.visScheduleOk {
+  align-items: center;
+  color: var(--feedback-positive);
+  display: inline-flex;
+  flex: none;
+  font-size: 0.62vw;
+  font-weight: 600;
+  gap: 0.25vw;
+  white-space: nowrap;
 }
 
 .visScheduleState {
   color: var(--feedback-positive);
-  height: 1.1vw;
-  width: 1.1vw;
+  flex: none;
+  height: 0.85vw;
+  width: 0.85vw;
 }
 
 /* ---- Centre canvas, phase 03 --------------------------------------------
@@ -1088,18 +1110,31 @@
   gap: 0.35vw;
 }
 .visThreadAvatar {
+  align-items: center;
   background: linear-gradient(140deg, #cbb27e, #8c7a52);
   block-size: 1vw;
   border-radius: 50%;
+  color: var(--spimar-white);
+  display: inline-flex;
   flex: none;
+  font-size: 0.36vw;
+  font-weight: 600;
   inline-size: 1vw;
+  justify-content: center;
+  letter-spacing: 0.04em;
 }
+/* Message bubble, not floating rules: the body carries its own surface so
+   each follow-up reads as a sent message (owner remark, 2026-08-07). */
 .visThreadBody {
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.28vw;
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 0.18vw;
   min-inline-size: 0;
-  flex: 1;
+  padding: 0.28vw 0.35vw;
 }
 .visThreadRole {
   color: var(--on-surface);
@@ -1120,12 +1155,26 @@
   inline-size: 70%;
 }
 .visThreadInput {
+  background: var(--surface-muted);
   border: 1px solid rgb(20 20 15 / 16%);
-  border-radius: 0.2vw;
+  border-radius: 0.3vw;
   color: var(--on-surface-muted);
   font-size: 0.42vw;
   margin-block-start: auto;
-  padding: 0.24vw 0.35vw;
+  padding: 0.24vw 0.9vw 0.24vw 0.35vw;
+  position: relative;
+}
+/* The composer's send affordance: a gold dot at the field's end. */
+.visThreadInput::after {
+  background: var(--action-primary);
+  block-size: 0.5vw;
+  border-radius: 50%;
+  content: "";
+  inline-size: 0.5vw;
+  inset-block-start: 50%;
+  inset-inline-end: 0.22vw;
+  position: absolute;
+  transform: translateY(-50%);
 }
 
 /* -- Lead dossier -- */
@@ -1136,12 +1185,19 @@
 .visDossier .visDossierHead {
   color: var(--on-surface-muted);
 }
+/* Identity band, not floating fragments: the company block sits on its own
+   muted surface with a framed photo (owner remark, 2026-08-07). */
 .visDossierTop {
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.25vw;
   display: flex;
   gap: 0.35vw;
+  padding: 0.28vw;
 }
 .visDossierShot {
   aspect-ratio: 1;
+  border: 1px solid var(--border-subtle);
   border-radius: 0.16vw;
   display: block;
   flex: none;
@@ -1184,6 +1240,10 @@
 .visDossierValue {
   font-size: 0.4vw;
   font-weight: 500;
+}
+/* The next step is the row that matters; it closes the card with weight. */
+.visDossierRow:last-child .visDossierValue {
+  font-weight: 700;
 }
 .visDossierChip {
   border: 1px solid var(--action-primary);
@@ -1518,6 +1578,187 @@
   width: 1.4vw;
 }
 
+/* --- Livrables après: drawn mini-artifacts (owner remark, 2026-08-07) ------
+   Bare glyphs read generic beside the other phases' artifact thumbs. Each
+   après deliverable now carries a drawn object in the same language: lead
+   handoff stack, report bars, CRM chain, sealed bilan, highlighted note. */
+
+/* Transmitted leads: three stacked contact cards, gold handoff arrow. */
+.visRailLeads {
+  align-items: center;
+  block-size: 100%;
+  display: flex;
+  inline-size: 100%;
+  justify-content: center;
+  position: relative;
+}
+.visRailLeadCard {
+  background: var(--surface-page);
+  block-size: 1vw;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.18vw;
+  inline-size: 2vw;
+  position: absolute;
+}
+.visRailLeadCard:nth-child(1) {
+  opacity: 0.5;
+  transform: translate(0.4vw, 0.5vw);
+}
+.visRailLeadCard:nth-child(2) {
+  opacity: 0.75;
+  transform: translate(0.15vw, 0.15vw);
+}
+.visRailLeadCard[data-front] {
+  align-items: center;
+  display: flex;
+  gap: 0.18vw;
+  padding-inline: 0.18vw;
+  transform: translate(-0.1vw, -0.25vw);
+}
+.visRailLeadDot {
+  background: var(--action-primary);
+  block-size: 0.4vw;
+  border-radius: 50%;
+  flex: none;
+  inline-size: 0.4vw;
+}
+.visRailLeadLines {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.14vw;
+}
+.visRailLeadLines i {
+  background: color-mix(in srgb, var(--on-surface) 28%, transparent);
+  block-size: 0.09vw;
+  border-radius: 0.05vw;
+  display: block;
+}
+.visRailLeadLines i:last-child {
+  inline-size: 65%;
+}
+.visRailLeadsArrow {
+  block-size: 0.8vw;
+  color: var(--action-primary);
+  inline-size: 0.8vw;
+  inset-block-start: 0.2vw;
+  inset-inline-end: 0.25vw;
+  position: absolute;
+}
+
+/* Performance report: baseline bars with gold highlights. */
+.visRailChart {
+  align-items: flex-end;
+  block-size: 1.7vw;
+  border-block-end: 1px solid color-mix(in srgb, var(--on-surface) 35%, transparent);
+  display: flex;
+  gap: 0.2vw;
+}
+.visRailChart i {
+  background: color-mix(in srgb, var(--on-surface) 30%, transparent);
+  border-radius: 0.08vw 0.08vw 0 0;
+  display: block;
+  inline-size: 0.34vw;
+}
+.visRailChart i:nth-child(1) {
+  block-size: 38%;
+}
+.visRailChart i:nth-child(2) {
+  block-size: 68%;
+}
+.visRailChart i:nth-child(3) {
+  block-size: 48%;
+}
+.visRailChart i:nth-child(4) {
+  block-size: 90%;
+}
+.visRailChart i:nth-child(5) {
+  block-size: 58%;
+}
+.visRailChart i[data-gold] {
+  background: var(--action-primary);
+}
+
+/* Consolidated bilan: a ruled document closed with a gold check seal. */
+.visRailDocument {
+  background: var(--surface-page);
+  block-size: 2vw;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.2vw;
+  inline-size: 2.5vw;
+  padding: 0.28vw;
+  position: relative;
+}
+.visRailDocLines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18vw;
+}
+.visRailDocLines i {
+  background: color-mix(in srgb, var(--on-surface) 22%, transparent);
+  block-size: 0.1vw;
+  border-radius: 0.05vw;
+  display: block;
+}
+.visRailDocLines i[data-title] {
+  background: color-mix(in srgb, var(--on-surface) 45%, transparent);
+  block-size: 0.14vw;
+  inline-size: 60%;
+}
+.visRailDocSeal {
+  align-items: center;
+  background: var(--action-primary);
+  block-size: 0.95vw;
+  border-radius: 50%;
+  color: var(--surface-inverse);
+  display: flex;
+  inline-size: 0.95vw;
+  inset-block-end: -0.3vw;
+  inset-inline-end: -0.3vw;
+  justify-content: center;
+  position: absolute;
+}
+.visRailDocSealIcon {
+  block-size: 0.55vw;
+  inline-size: 0.55vw;
+}
+
+/* Shared recommendations: the key line highlighted beside the idea mark. */
+.visRailNote {
+  align-items: center;
+  background: var(--surface-page);
+  block-size: 2vw;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.2vw;
+  display: flex;
+  gap: 0.28vw;
+  inline-size: 2.5vw;
+  padding: 0.28vw;
+}
+.visRailNoteBulb {
+  block-size: 0.85vw;
+  color: var(--action-primary);
+  flex: none;
+  inline-size: 0.85vw;
+}
+.visRailNoteLines {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.18vw;
+}
+.visRailNoteLines i {
+  background: color-mix(in srgb, var(--on-surface) 22%, transparent);
+  block-size: 0.1vw;
+  border-radius: 0.05vw;
+  display: block;
+}
+.visRailNoteLines i[data-gold] {
+  background: var(--action-primary);
+  block-size: 0.14vw;
+  inline-size: 80%;
+}
+
 .visRailText {
   display: flex;
   flex-direction: column;
@@ -1578,7 +1819,14 @@
     color 160ms ease;
 }
 
-.visNext:hover {
+/* Honestly dead until the bilan has a validated destination (D-026). */
+.visNext:disabled {
+  border-color: var(--border-inverse);
+  color: var(--on-inverse-muted);
+  cursor: not-allowed;
+}
+
+.visNext:hover:not(:disabled) {
   background: var(--action-primary);
   color: var(--action-on-primary);
 }
@@ -1616,11 +1864,15 @@
   border-inline-start: 1px solid var(--border-inverse);
 }
 
+/* Filled gold tile, not a hairline circle (owner remark, 2026-08-07): the
+   panel's accent marks — the ACTIF chip, the strip's play control, the CRM
+   chain's active step — are all solid gold carrying ink. The benefit marks
+   join that family instead of introducing a third outline treatment. */
 .visBenefitIcon {
   align-items: center;
-  border: 1px solid var(--action-primary);
-  border-radius: 50%;
-  color: var(--action-primary);
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--surface-inverse);
   display: flex;
   flex: none;
   height: 2.6vw;
@@ -1629,8 +1881,8 @@
 }
 
 .visBenefitGlyph {
-  height: 45%;
-  width: 45%;
+  height: 48%;
+  width: 48%;
 }
 
 .visBenefitTitle {
@@ -1645,6 +1897,252 @@
   font-size: var(--text-base);
 }
 
+/* --- Entrance & phase choreography --------------------------------------------------- */
+
+/* Owner direction (2026-08-07): the same animation depth as section 04. When
+   the device scrolls into view the tabs cascade in, the phase card rises,
+   the channel rail lights up left to right, the campaign artifacts assemble
+   on the canvas, and the deliverables deal into their rail; the benefits
+   band closes. Every tab change replays the detail choreography for free —
+   .visDetail is phase-keyed, so its children restart their keyframes.
+
+   All of it hangs off `data-anim` on .visPanel, set by JS only: no JS → no
+   attribute → the section renders complete; reduced motion never enters the
+   state machine (override below); the static harness never sets it.
+   Transforms and opacity only — nothing moves layout. */
+
+.visPanel[data-anim="pending"] .visTab,
+.visPanel[data-anim="pending"] .visDetail,
+.visPanel[data-anim="pending"] .visBenefit {
+  opacity: 0;
+}
+/* The detail's own mount fade would fill to visible and defeat the hold. */
+.visPanel[data-anim="pending"] .visDetail {
+  animation: none;
+}
+
+.visPanel[data-anim="run"] .visTab {
+  animation: visFadeUp 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--vi, 0) * 90ms);
+}
+.visTab:nth-child(1) {
+  --vi: 0;
+}
+.visTab:nth-child(2) {
+  --vi: 1;
+}
+.visTab:nth-child(3) {
+  --vi: 2;
+}
+
+/* The phase card reads top to bottom: counter, numeral, title, body, levers. */
+.visPanel[data-anim="run"] .visPhaseCard > * {
+  animation: visFadeUp 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(60ms + var(--vi, 0) * 70ms);
+}
+.visPhaseCard > :nth-child(1) {
+  --vi: 0;
+}
+.visPhaseCard > :nth-child(2) {
+  --vi: 1;
+}
+.visPhaseCard > :nth-child(3) {
+  --vi: 2;
+}
+.visPhaseCard > :nth-child(4) {
+  --vi: 3;
+}
+.visPhaseCard > :nth-child(5) {
+  --vi: 4;
+}
+
+/* The media network lights up: each channel fades in and its line runs out. */
+.visPanel[data-anim="run"] .visChannel {
+  animation: visFadeUp 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(140ms + var(--vi, 0) * 80ms);
+}
+.visPanel[data-anim="run"] .visChannel .visChannelLine {
+  transform-origin: left center;
+  animation: visLineGrow 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: calc(260ms + var(--vi, 0) * 80ms);
+}
+.visChannel:nth-child(1) {
+  --vi: 0;
+}
+.visChannel:nth-child(2) {
+  --vi: 1;
+}
+.visChannel:nth-child(3) {
+  --vi: 2;
+}
+.visChannel:nth-child(4) {
+  --vi: 3;
+}
+.visChannel:nth-child(5) {
+  --vi: 4;
+}
+
+/* The campaign artifacts assemble on the canvas one after another. */
+.visPanel[data-anim="run"] .visCanvas > * {
+  animation: visAssemble 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(280ms + var(--vi, 0) * 130ms);
+}
+.visCanvas > :nth-child(1) {
+  --vi: 0;
+}
+.visCanvas > :nth-child(2) {
+  --vi: 1;
+}
+.visCanvas > :nth-child(3) {
+  --vi: 2;
+}
+.visCanvas > :nth-child(4) {
+  --vi: 3;
+}
+
+/* The captured-content band slides through; its play mark pops last. */
+.visPanel[data-anim="run"] .visStripCell {
+  animation: visSlideIn 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(520ms + var(--vi, 0) * 90ms);
+}
+.visStripCell:nth-child(2) {
+  --vi: 0;
+}
+.visStripCell:nth-child(3) {
+  --vi: 1;
+}
+.visStripCell:nth-child(4) {
+  --vi: 2;
+}
+.visStripCell:nth-child(5) {
+  --vi: 3;
+}
+.visPanel[data-anim="run"] .visStripPlay {
+  animation: visPop 360ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms both;
+}
+
+.visPanel[data-anim="run"] .visFlowStep {
+  animation: visFadeUp 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(680ms + var(--vi, 0) * 110ms);
+}
+.visFlowStep:nth-child(1) {
+  --vi: 0;
+}
+.visFlowStep:nth-child(2) {
+  --vi: 1;
+}
+.visFlowStep:nth-child(3) {
+  --vi: 2;
+}
+
+/* The deliverables deal in from the stage side into their rail slots. */
+.visPanel[data-anim="run"] .visRailTitle {
+  animation: visFadeUp 420ms cubic-bezier(0.22, 1, 0.36, 1) 340ms both;
+}
+.visPanel[data-anim="run"] .visRailCard {
+  animation: visDeal 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(440ms + var(--vi, 0) * 120ms);
+}
+.visRailCard:nth-child(1) {
+  --vi: 0;
+}
+.visRailCard:nth-child(2) {
+  --vi: 1;
+}
+.visRailCard:nth-child(3) {
+  --vi: 2;
+}
+.visRailCard:nth-child(4) {
+  --vi: 3;
+}
+.visPanel[data-anim="run"] .visRailClosing,
+.visPanel[data-anim="run"] .visNext {
+  animation: visFadeUp 440ms cubic-bezier(0.22, 1, 0.36, 1) 980ms both;
+}
+
+/* The benefits band closes the entrance; it is outside the keyed detail, so
+   it plays once and stays. */
+.visPanel[data-anim="run"] .visBenefit {
+  animation: visFadeUp 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(560ms + var(--vi, 0) * 100ms);
+}
+.visBenefit:nth-child(1) {
+  --vi: 0;
+}
+.visBenefit:nth-child(2) {
+  --vi: 1;
+}
+.visBenefit:nth-child(3) {
+  --vi: 2;
+}
+.visBenefit:nth-child(4) {
+  --vi: 3;
+}
+
+@keyframes visFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.8vw, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes visAssemble {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.1vw, 0) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes visDeal {
+  from {
+    opacity: 0;
+    transform: translate3d(-2.4vw, 0, 0) scale(0.88);
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes visSlideIn {
+  from {
+    opacity: 0;
+    transform: translate3d(1.4vw, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes visLineGrow {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+@keyframes visPop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* --- Reduced motion ------------------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1655,6 +2153,26 @@
   .visCta,
   .visNext {
     transition: none;
+  }
+
+  /* The choreography never runs and nothing is held hidden, whatever state
+     the attribute is in. */
+  .visPanel[data-anim] .visTab,
+  .visPanel[data-anim] .visDetail,
+  .visPanel[data-anim] .visBenefit,
+  .visPanel[data-anim] .visPhaseCard > *,
+  .visPanel[data-anim] .visChannel,
+  .visPanel[data-anim] .visChannel .visChannelLine,
+  .visPanel[data-anim] .visCanvas > *,
+  .visPanel[data-anim] .visStripCell,
+  .visPanel[data-anim] .visStripPlay,
+  .visPanel[data-anim] .visFlowStep,
+  .visPanel[data-anim] .visRailTitle,
+  .visPanel[data-anim] .visRailCard,
+  .visPanel[data-anim] .visRailClosing,
+  .visPanel[data-anim] .visNext {
+    animation: none !important;
+    opacity: 1;
   }
 }
 
@@ -1706,6 +2224,26 @@
   .visScheduleState {
     height: 2.2vw;
     width: 2.2vw;
+  }
+
+  /* The canvas grows on tablet; its schedule type scales with it. */
+  .visScheduleHead {
+    font-size: 1.7vw;
+  }
+  .visScheduleRow {
+    font-size: 1.8vw;
+  }
+  .visScheduleOk,
+  .visScheduleCount {
+    font-size: 1.45vw;
+  }
+  .visScheduleTime {
+    font-size: 1.55vw;
+  }
+  .visScheduleAvatar {
+    font-size: 1.4vw;
+    height: 3.4vw;
+    width: 3.4vw;
   }
 
   .visPipelineAvatar {
@@ -1819,6 +2357,26 @@
   .visScheduleState {
     height: 4.5vw;
     width: 4.5vw;
+  }
+
+  /* Full-width canvas on mobile; the schedule type scales with it. */
+  .visScheduleHead {
+    font-size: 3.4vw;
+  }
+  .visScheduleRow {
+    font-size: 3.6vw;
+  }
+  .visScheduleOk,
+  .visScheduleCount {
+    font-size: 3vw;
+  }
+  .visScheduleTime {
+    font-size: 3.2vw;
+  }
+  .visScheduleAvatar {
+    font-size: 2.8vw;
+    height: 7vw;
+    width: 7vw;
   }
 
   .visPipelineCols {
@@ -1997,10 +2555,10 @@
   background: var(--surface-accent);
   border-radius: var(--radius-pill);
   color: var(--on-surface);
-  font-size: var(--text-base);
-  font-weight: 500;
+  font-size: 0.62vw;
+  font-weight: 600;
   letter-spacing: 0.04em;
-  padding: 0.12vw 0.55vw;
+  padding: 0.14vw 0.55vw;
   text-transform: none;
 }
 
@@ -2011,22 +2569,23 @@
   color: var(--on-inverse);
   display: inline-flex;
   flex: none;
-  font-size: var(--text-base);
+  font-size: 0.58vw;
   font-weight: 600;
-  height: 1.7vw;
+  height: 1.45vw;
   justify-content: center;
   letter-spacing: 0.04em;
-  min-height: 22px;
-  min-width: 22px;
-  width: 1.7vw;
+  min-height: 18px;
+  min-width: 18px;
+  width: 1.45vw;
 }
 
 .visScheduleTime {
   background: var(--surface-muted);
   border-radius: var(--radius-pill);
+  font-size: 0.66vw;
   font-variant-numeric: tabular-nums;
   font-weight: 600;
-  padding: 0.1vw 0.5vw;
+  padding: 0.14vw 0.5vw;
 }
 
 .visRailSequence {

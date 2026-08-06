@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon, VisitorsIcon } from "./impactIcons";
 import { PlaySolidIcon } from "./proofIcons";
 import {
@@ -53,7 +52,17 @@ type DeliverableState = "done" | "progress" | "planned";
    frame, a set of phones, a landing page — and only Après is a set of drawn
    glyph cards. `glyph` keeps that treatment; the rest are compositions built
    around a supplied photograph. */
-type ThumbKind = "video" | "photo" | "page" | "phones" | "glyph" | "sequence";
+type ThumbKind =
+  | "video"
+  | "photo"
+  | "page"
+  | "phones"
+  | "glyph"
+  | "sequence"
+  | "leads"
+  | "chart"
+  | "seal"
+  | "note";
 
 type Thumb = { readonly kind: ThumbKind; readonly src?: string };
 
@@ -122,14 +131,16 @@ const PHASES: readonly Phase[] = [
   {
     key: "after",
     num: "03",
-    /* Après is glyph-led in the reference: five drawn marks on warm cards,
-       not photography. */
+    /* Owner remark (2026-08-07): bare glyphs read generic next to the other
+       phases' artifact thumbs. Après now carries drawn mini-artifacts in the
+       same language — a lead handoff stack, a bar report, the CRM chain, a
+       sealed bilan document and a highlighted recommendation note. */
     deliverableThumbs: [
-      { kind: "glyph" },
-      { kind: "glyph" },
-      { kind: "glyph" },
-      { kind: "glyph" },
-      { kind: "glyph" },
+      { kind: "leads" },
+      { kind: "chart" },
+      { kind: "sequence" },
+      { kind: "seal" },
+      { kind: "note" },
     ],
     leverIcons: [HandoffIcon, BarsIcon, UserCheckIcon, TrendIcon, BulbIcon],
     deliverableIcons: [VisitorsIcon, BarsIcon, SmsIcon, TrendIcon, BulbIcon],
@@ -196,11 +207,9 @@ function isPhaseKey(value: string | null | undefined): value is Phase["key"] {
    (qa/PARITY_TEST_PROTOCOL.md): it renders one stable phase with transitions
    disabled so a capture is reproducible. Production ignores both. */
 export function VisibilityPhases({
-  deviceHref = "/exposer",
   initialPhase = "before",
   staticRender = false,
 }: {
-  deviceHref?: string;
   initialPhase?: Phase["key"];
   staticRender?: boolean;
 }) {
@@ -209,6 +218,34 @@ export function VisibilityPhases({
   const phase = PHASES.find((p) => p.key === activeKey) ?? PHASES[0];
   const phaseIndex = PHASES.indexOf(phase);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+
+  /* Entrance choreography (owner direction, 2026-08-07 — same system as
+     section 04): "pending" holds the device's pieces invisible until the
+     panel scrolls into view, "run" plays the staggered assembly. JS-gated so
+     no-JS renders complete, reduced motion never enters the state machine,
+     and the static harness stays deterministic. The tab replay needs no
+     extra wiring: .visDetail is already phase-keyed, so its children restart
+     their keyframes on every selection. */
+  const [animState, setAnimState] = useState<"idle" | "pending" | "run">("idle");
+  useEffect(() => {
+    if (staticRender) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+    setAnimState("pending");
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setAnimState("run");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(panel);
+    return () => io.disconnect();
+  }, [staticRender]);
 
   /* Deep link, read once on mount. Applied through the same setter as every
      other input, so pointer, keyboard and URL never own competing state. */
@@ -250,7 +287,11 @@ export function VisibilityPhases({
   const advance = () => selectPhase(PHASES[(phaseIndex + 1) % PHASES.length].key);
 
   return (
-    <div className="visPanel">
+    <div
+      className="visPanel"
+      ref={panelRef}
+      data-anim={animState === "idle" ? undefined : animState}
+    >
       {/* Phase tabs */}
       <div className="visTabs" role="tablist" aria-label={t("tabsLabel")}>
         {PHASES.map((p, i) => (
@@ -597,7 +638,16 @@ export function VisibilityPhases({
                   <span className="visThreadHead">{t("stage.threadTitle")}</span>
                   {[0, 1].map((i) => (
                     <span className="visThreadMsg" key={i}>
-                      <span className="visThreadAvatar" />
+                      {/* Initials from the role, like the schedule card's
+                          avatars — a plain disc read as an empty state. */}
+                      <span className="visThreadAvatar">
+                        {t(`stage.thread.${i}.role`)
+                          .split(" ")
+                          .slice(0, 2)
+                          .map((word) => word[0])
+                          .join("")
+                          .toUpperCase()}
+                      </span>
                       <span className="visThreadBody">
                         <span className="visThreadTop">
                           <span className="visThreadRole">{t(`stage.thread.${i}.role`)}</span>
@@ -699,6 +749,55 @@ export function VisibilityPhases({
                           </span>
                         ))}
                       </span>
+                    ) : phase.deliverableThumbs[i].kind === "leads" ? (
+                      /* Transmitted leads: a stack of contact cards with the
+                         gold handoff arrow — the pipeline's own language. */
+                      <span className="visRailLeads" aria-hidden="true">
+                        <span className="visRailLeadCard" />
+                        <span className="visRailLeadCard" />
+                        <span className="visRailLeadCard" data-front="true">
+                          <i className="visRailLeadDot" />
+                          <span className="visRailLeadLines">
+                            <i />
+                            <i />
+                          </span>
+                        </span>
+                        <ArrowRightIcon className="visRailLeadsArrow" />
+                      </span>
+                    ) : phase.deliverableThumbs[i].kind === "chart" ? (
+                      /* Performance report: the report frame's bars, gold
+                         carrying the highlights. */
+                      <span className="visRailChart" aria-hidden="true">
+                        <i />
+                        <i data-gold="true" />
+                        <i />
+                        <i data-gold="true" />
+                        <i />
+                      </span>
+                    ) : phase.deliverableThumbs[i].kind === "seal" ? (
+                      /* Consolidated bilan: a ruled document closed by a gold
+                         check seal. */
+                      <span className="visRailDocument" aria-hidden="true">
+                        <span className="visRailDocLines">
+                          <i data-title="true" />
+                          <i />
+                          <i />
+                        </span>
+                        <span className="visRailDocSeal">
+                          <CheckCircleIcon className="visRailDocSealIcon" />
+                        </span>
+                      </span>
+                    ) : phase.deliverableThumbs[i].kind === "note" ? (
+                      /* Shared recommendations: a note with the key line
+                         highlighted in gold beside the idea mark. */
+                      <span className="visRailNote" aria-hidden="true">
+                        <BulbIcon className="visRailNoteBulb" />
+                        <span className="visRailNoteLines">
+                          <i data-gold="true" />
+                          <i />
+                          <i />
+                        </span>
+                      </span>
                     ) : (
                       <>
                         <Image
@@ -743,10 +842,14 @@ export function VisibilityPhases({
             </ul>
             <p className="visRailClosing">{t(`phases.${phase.key}.closing`)}</p>
             {phase.key === "after" ? (
-              <Link className="visNext" href={deviceHref}>
+              /* Deactivated (owner remark, 2026-08-07): the bilan has no
+                 validated destination yet, so the control renders honestly
+                 disabled instead of navigating — the D-026 dead-control
+                 rule, same as the other staged actions. */
+              <button type="button" className="visNext" disabled>
                 <span>{t("phases.after.cta")}</span>
                 <ArrowRightIcon className="visNextIcon" aria-hidden="true" />
-              </Link>
+              </button>
             ) : (
               <button type="button" className="visNext" onClick={advance}>
                 <span>{t("nextPhase")}</span>

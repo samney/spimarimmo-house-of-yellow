@@ -191,6 +191,30 @@ test("method section runs its entrance and replays the deal on tab change", asyn
   await expect(page.locator(".methodCard")).toHaveCount(4);
 });
 
+/* Owner checklist "[ 7 ] Votre visibilité": the device assembles when it
+   scrolls into view — tabs cascade, the channel rail lights up, the canvas
+   artifacts settle, the deliverables deal into their rail — and every tab
+   change replays the detail choreography (phase-keyed remount). */
+test("visibility device runs its entrance and replays on tab change", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const panel = page.locator(".visPanel");
+  await expect(panel).toHaveAttribute("data-anim", "pending");
+
+  await page.evaluate(() => {
+    const el = document.querySelector(".visPanel")!;
+    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 200);
+  });
+  await expect(panel).toHaveAttribute("data-anim", "run");
+  await expect(page.locator(".visRailCard").first()).toHaveCSS("opacity", "1");
+
+  await page.locator("#vis-tab-during").click();
+  await expect(page.locator(".visPhaseTitle")).toContainText(/./);
+  await expect(page.locator(".visRailCard").first()).toHaveCSS("opacity", "1");
+  await expect(page.locator(".visRailCard")).toHaveCount(5);
+});
+
 /* Brochure quick preview (D-026): the [01] trigger opens a modal with the
    real PDF embedded and a genuine download action on the same file; Escape
    closes and restores focus. */

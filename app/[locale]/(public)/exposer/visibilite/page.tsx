@@ -25,5 +25,5 @@ export async function generateMetadata({
 export default async function Visibilite({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <VisibilitySection deviceHref="/exposer/devenir-exposant" headingLevel="h1" />;
+  return <VisibilitySection headingLevel="h1" />;
 }
