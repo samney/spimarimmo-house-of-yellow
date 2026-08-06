@@ -40,7 +40,7 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
                   </li>
                 ))}
               </ul>
-              <footer className="pageOutro">
+              <div className="pageOutro">
                 <p className="text medium">
                   {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
                   {" · "}
@@ -50,7 +50,7 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
                   {" · "}
                   <Link href="/insights">{t("outroInsights")}</Link>
                 </p>
-              </footer>
+              </div>
             </div>
           </div>
         </div>

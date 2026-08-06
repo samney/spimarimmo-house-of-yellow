@@ -65,13 +65,13 @@ export default async function EtudeDeCas({
                 </div>
               ) : null}
 
-              <footer className="pageOutro">
+              <div className="pageOutro">
                 <p className="text medium">
                   <Link href="/etudes-de-cas">{t("backToList")}</Link>
                   {" · "}
                   <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
                 </p>
-              </footer>
+              </div>
             </div>
           </div>
         </div>

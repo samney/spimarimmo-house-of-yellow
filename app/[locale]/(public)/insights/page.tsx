@@ -39,13 +39,13 @@ export default async function Insights({ params }: { params: Promise<{ locale: s
                   </li>
                 ))}
               </ul>
-              <footer className="pageOutro">
+              <div className="pageOutro">
                 <p className="text medium">
                   {t("outro")} <Link href="/ressources">{t("outroResources")}</Link>
                   {" · "}
                   <Link href="/salons">{t("outroSalons")}</Link>
                 </p>
-              </footer>
+              </div>
             </div>
           </div>
         </div>

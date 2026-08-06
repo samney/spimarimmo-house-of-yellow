@@ -1,0 +1,286 @@
+/* ==========================================================================
+   /salons — the 2026 calendar (owner rebuild, D-026)
+   ==========================================================================
+   Month rail down the inline start, photographic edition cards attached.
+   CMS-published editions render first through the same card. Binds only to
+   L2 tokens; `salc` prefix.
+   ========================================================================== */
+
+.salcWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-lg);
+}
+
+.salcGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.salcGroupHead {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: space-between;
+}
+
+.salcGroupTitle {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  margin: 0;
+}
+
+.salcDisclaimer {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+/* --- Rail + rows ------------------------------------------------------------ */
+
+.salcList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.salcRow {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 7vw minmax(0, 1fr);
+}
+
+.salcMonth {
+  border-inline-end: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vw;
+  padding-block-start: var(--space-2xs);
+  padding-inline-end: var(--space-sm);
+}
+
+.salcMonthIndex {
+  color: var(--spimar-gold-text);
+  font-size: var(--text-heading-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.salcMonthLabel {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* --- Card -------------------------------------------------------------------- */
+
+.salcCard {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: 19vw minmax(0, 1fr);
+  overflow: hidden;
+  transition: box-shadow var(--dur-micro) var(--ease-out-ref);
+}
+
+.salcCard:hover {
+  box-shadow: 0 0.8vw 2.4vw rgb(20 20 15 / 12%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .salcCard {
+    transition: none;
+  }
+}
+
+.salcMedia {
+  aspect-ratio: 4 / 3;
+  position: relative;
+}
+
+.salcPhoto {
+  object-fit: cover;
+}
+
+.salcMedia--empty {
+  align-items: center;
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+  display: flex;
+  justify-content: center;
+}
+
+.salcMediaMark {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+}
+
+.salcStatus {
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 600;
+  inset-block-start: var(--space-2xs);
+  inset-inline-start: var(--space-2xs);
+  letter-spacing: 0.06em;
+  padding: 0.2vw 0.7vw;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.salcStatus--open {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.salcStatus--upcoming {
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  color: var(--on-surface);
+}
+
+.salcStatus--past {
+  background: var(--surface-muted);
+  color: var(--on-surface-muted);
+}
+
+.salcBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) 0;
+}
+
+.salcPlace {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.salcCity {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.salcTitleLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.salcTitleLink:hover {
+  text-decoration: underline;
+}
+
+.salcTitleLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.salcCountry {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+}
+
+.salcMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+.salcDates {
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.salcVenue {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+}
+
+.salcVisitors {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+.salcActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-block-start: var(--space-2xs);
+}
+
+.salcCta {
+  border-radius: var(--radius-pill);
+  font-size: var(--text-support);
+  font-weight: 600;
+  padding: var(--space-2xs) var(--space-sm);
+  text-decoration: none;
+  transition: background-color var(--dur-micro);
+}
+
+.salcCta--primary {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.salcCta--primary:hover {
+  background: var(--action-primary-hover);
+}
+
+.salcCta--ghost {
+  border: 1px solid var(--border-strong);
+  color: var(--on-surface);
+}
+
+.salcCta--ghost:hover {
+  border-color: var(--action-primary);
+}
+
+.salcCta:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* --- 580 restatement ---------------------------------------------------------- */
+
+@media (max-width: 580px) {
+  .salcRow {
+    gap: var(--space-sm);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The rail folds into an inline chip above its card. */
+  .salcMonth {
+    border-inline-end: 0;
+    flex-direction: row;
+    gap: var(--space-2xs);
+    align-items: baseline;
+  }
+
+  .salcMonthIndex {
+    font-size: var(--text-small-title);
+  }
+
+  .salcCard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .salcBody {
+    padding: 0 var(--space-sm) var(--space-sm);
+  }
+}

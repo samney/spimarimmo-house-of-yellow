@@ -953,7 +953,7 @@
   "salonsPage": {
     "label": "Exhibitions",
     "title": "The destinations and the editions.",
-    "lead": "Every published edition appears here with its destination and dates. No date and no venue is published without validation.",
+    "lead": "The 2026 SPIMARIMMO calendar: six destinations to meet MRE and international demand.",
     "empty": "The calendar of upcoming editions is being validated. Destinations and dates are published here as soon as they are confirmed.",
     "datesTbc": "Dates to be confirmed",
     "venueTbc": "Venue to be confirmed",
@@ -961,7 +961,17 @@
     "detailPending": "This edition's programme, exhibitors and practical information are published here as they are validated.",
     "backToIndex": "All exhibitions",
     "outro": "Preparing to exhibit?",
-    "outroCta": "Become an exhibitor"
+    "outroCta": "Become an exhibitor",
+    "publishedTitle": "Published editions",
+    "publishedBadge": "Published",
+    "programmeTitle": "2026 programme",
+    "programmeNote": "Provisional programme — dates and venues publish after validation.",
+    "statusOpen": "Registration open",
+    "statusUpcoming": "Upcoming",
+    "statusPast": "Past edition",
+    "visitorsLabel": "{count} expected visitors",
+    "cardExhibit": "Become an exhibitor",
+    "cardDetail": "Edition details"
   },
   "galleryPage": {
     "label": "Gallery",

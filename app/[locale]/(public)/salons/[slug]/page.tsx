@@ -53,13 +53,13 @@ export default async function SalonDetail({
                 </p>
               </header>
               <p className="text medium">{t("detailPending")}</p>
-              <footer className="pageOutro">
+              <div className="pageOutro">
                 <p className="text medium">
                   <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
                   {" · "}
                   <Link href="/salons">{t("backToIndex")}</Link>
                 </p>
-              </footer>
+              </div>
             </div>
           </div>
         </div>

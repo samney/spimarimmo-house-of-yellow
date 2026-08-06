@@ -76,14 +76,16 @@ test("hero falls back to the poster under reduced motion", async ({ browser }) =
 /* The design contract's no-horizontal-overflow rule, enforced at the page
    level for the homepage at 390 — the width where implicit grid columns and
    nowrap rows have repeatedly leaked past the viewport. */
-test("homepage has no horizontal overflow at 390", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  const overflow = await page.evaluate(
-    () => document.documentElement.scrollWidth - window.innerWidth,
-  );
-  expect(overflow).toBeLessThanOrEqual(0);
-});
+for (const route of ["/", "/salons"]) {
+  test(`${route} has no horizontal overflow at 390`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(route);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+}
 
 /* Brochure quick preview (D-026): the [01] trigger opens a modal with the
    real PDF embedded and a genuine download action on the same file; Escape

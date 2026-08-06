@@ -59,11 +59,11 @@ export default async function EtudesDeCas({ params }: { params: Promise<{ locale
                   })}
                 </ul>
               )}
-              <footer className="pageOutro">
+              <div className="pageOutro">
                 <p className="text medium">
                   {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
                 </p>
-              </footer>
+              </div>
             </div>
           </div>
         </div>
