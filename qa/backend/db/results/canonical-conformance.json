@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T19:46:49.053Z",
+  "generatedAt": "2026-08-06T07:34:43.281Z",
   "authority": {
     "canonical": [
       "SPM-TECH-DATA-001",
@@ -2152,6 +2152,14 @@
   "repositorySeams": {
     "classification": "PARTIAL",
     "repositorySeamHits": [
+      "lib/spimar/repositories/contract-suites.ts",
+      "lib/spimar/repositories/demo-content-repository.ts",
+      "lib/spimar/repositories/file-content-repository.ts",
+      "lib/spimar/repositories/file-submission-repository.ts",
+      "lib/spimar/repositories/postgres-content-repository.ts",
+      "lib/spimar/repositories/postgres-submission-repository.ts",
+      "lib/spimar/repositories/seams.contract.test.ts",
+      "lib/spimar/fixtures/demo-content.ts",
       "lib/backend/seams.ts"
     ],
     "hardCodedContentMarkers": {

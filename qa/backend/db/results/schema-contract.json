@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-08-02T19:46:40.437Z",
+  "checkedAt": "2026-08-06T07:34:08.243Z",
   "migrations": [
     "202607310001_foundation.sql",
     "202607310002_cms_core.sql",
