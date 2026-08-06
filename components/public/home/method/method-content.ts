@@ -4,20 +4,16 @@ import type { MethodSectionContent } from "./method-types";
    copy from specs/03_CONTENT_CONTRACT_ALL_PHASES.md, verbatim. Do not
    paraphrase without explicit product approval.
 
-   CTA destinations: the owner decision for Phase 01 routes every method CTA to
-   /exposer (the /accompagnement page does not exist and must not be created in
-   this gate). The phase is preserved as a #fragment so the destination can be
-   split later without touching labels. */
+   CTA destinations (D-026, 2026-08-06): the owner removed the global
+   accompaniment CTA and staged every contextual CTA to "#" — they are
+   re-linked when the owner validates the destinations. Labels are unchanged
+   approved copy. */
 export const METHOD_CONTENT: MethodSectionContent = {
   eyebrowIndex: "04",
   eyebrowLabel: "NOTRE MÉTHODE",
   heading: "Avant, pendant et après le salon — rien n’est laissé au hasard.",
   description:
     "Un dispositif en trois temps pour préparer l’audience, activer les rencontres et transformer les leads en opportunités commerciales.",
-  globalCta: {
-    label: "Découvrir notre accompagnement",
-    href: "/exposer",
-  },
   phases: [
     {
       id: "before",
@@ -73,7 +69,7 @@ export const METHOD_CONTENT: MethodSectionContent = {
         { id: "exhibitor-agenda", title: "Agenda exposant", status: "Planifié" },
       ],
       annotation: "Tout est visible avant l’ouverture du salon.",
-      contextualCta: { label: "Voir la préparation", href: "/exposer#avant" },
+      contextualCta: { label: "Voir la préparation", href: "#" },
       journeyLabel: "PRÉPARER",
     },
     {
@@ -134,7 +130,7 @@ export const METHOD_CONTENT: MethodSectionContent = {
         { id: "exhibitor-support", title: "Support exposant", status: "Actif" },
       ],
       annotation: "Chaque interaction est structurée pendant le salon.",
-      contextualCta: { label: "Voir le dispositif salon", href: "/exposer#pendant" },
+      contextualCta: { label: "Voir le dispositif salon", href: "#" },
       journeyLabel: "ACTIVER",
     },
     {
@@ -194,7 +190,7 @@ export const METHOD_CONTENT: MethodSectionContent = {
         { id: "followup-plan", title: "Plan de suivi", status: "À activer" },
       ],
       annotation: "La valeur du salon continue après sa fermeture.",
-      contextualCta: { label: "Voir le processus de suivi", href: "/exposer#apres" },
+      contextualCta: { label: "Voir le processus de suivi", href: "#" },
       journeyLabel: "TRANSFORMER",
     },
   ],

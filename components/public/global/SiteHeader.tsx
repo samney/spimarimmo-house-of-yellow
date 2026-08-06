@@ -27,11 +27,11 @@ import { Marquee } from "@/components/primitives/motion/Marquee";
 type NavChild = { href: string; key: string };
 type NavItem = { href: string; key: string; children?: readonly NavChild[] };
 
-/* Owner nav contract (2026-08-04): Home first; Exposer's children ANCHOR to
-   the homepage sections (the child routes stay alive for deep links); the
-   primary CTA button covers Devenir exposant, so it leaves the dropdown;
-   Offres is a top-level item before Ressources, landing on the full-detail
-   page; Ressources keeps its standalone pages. */
+/* Owner nav contract (2026-08-04, tightened 2026-08-06 D-026): Home first;
+   ALL of Exposer's children anchor to homepage sections — no route children
+   in that menu; the primary CTA button covers Devenir exposant, so it leaves
+   the dropdown; Offres is a top-level item before Ressources, landing on the
+   full-detail page; Ressources keeps its standalone pages. */
 const NAV: readonly NavItem[] = [
   { href: "/", key: "home" },
   { href: "/salons", key: "salons" },
@@ -39,7 +39,7 @@ const NAV: readonly NavItem[] = [
     href: "/exposer",
     key: "exposer",
     children: [
-      { href: "/pourquoi-spimar", key: "pourquoiSpimar" },
+      { href: "/#pourquoi-spimar", key: "pourquoiSpimar" },
       { href: "/#methode", key: "methode" },
       { href: "/#visibilite", key: "visibilite" },
     ],

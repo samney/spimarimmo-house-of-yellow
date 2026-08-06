@@ -3,7 +3,6 @@
 import { SectionEyebrow } from "./SectionEyebrow";
 
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
 
 /* Section 03 — "Pourquoi exposer avec SPIMARIMMO ?" (§08).
 
@@ -45,7 +44,7 @@ const PILLARS: Pillar[] = [
     tab: "Clientèle qualifiée",
     title: "Une clientèle qualifiée",
     body: "Des visiteurs ayant un projet immobilier concret, identifiés avant leur arrivée au salon.",
-    cta: { label: "Voir la méthode de qualification", href: "/exposer" },
+    cta: { label: "Voir la méthode de qualification", href: "#" },
     notion: "De la pré-inscription au rendez-vous qualifié.",
     chips: ["Pré-inscription", "Projet", "Budget", "Horizon", "Intention", "Rendez-vous"],
     cards: [
@@ -85,7 +84,7 @@ const PILLARS: Pillar[] = [
     tab: "Présence internationale",
     title: "Une présence internationale",
     body: "France, Canada, Belgique, Royaume-Uni et Émirats Arabes Unis : un réseau de salons au plus près des marchés MRE.",
-    cta: { label: "Explorer les salons par pays", href: "/salons" },
+    cta: { label: "Explorer les salons par pays", href: "#" },
     notion: "Du Maroc vers les marchés MRE prioritaires.",
     chips: ["France", "Canada", "Belgique", "Royaume-Uni", "Émirats"],
     cards: [
@@ -113,7 +112,7 @@ const PILLARS: Pillar[] = [
     tab: "Campagnes massives",
     title: "Des campagnes massives",
     body: "Une présence coordonnée sur les canaux qui comptent, avec des volumes, une couverture et des créations visibles.",
-    cta: { label: "Voir l'étude de cas", href: "/etudes-de-cas" },
+    cta: { label: "Voir l'étude de cas", href: "#" },
     notion: "Du plan média aux créations diffusées.",
     chips: ["Meta", "Instagram", "Google", "YouTube", "Emailing", "SMS", "Presse", "Influence"],
     cards: [
@@ -137,7 +136,7 @@ const PILLARS: Pillar[] = [
     tab: "Accompagnement complet",
     title: "Un accompagnement complet",
     body: "Stand, communication, prise de rendez-vous, support commercial et suivi : chaque livrable est visible avant l'achat.",
-    cta: { label: "Voir les livrables inclus", href: "/exposer" },
+    cta: { label: "Voir les livrables inclus", href: "#" },
     notion: "De la préparation au suivi post-salon.",
     chips: ["Cadrage", "Stand", "Communication", "Rendez-vous", "Support", "Suivi"],
     cards: [
@@ -551,10 +550,12 @@ export function MobileShowcase() {
             {/* Foundation hierarchy: the label is the small line, the statement
               is the large one. */}
             <h3 className="normalTitle smaller pillars__leadTitle">{pillar.body}</h3>
-            <Link className="pillars__cta" href={pillar.cta.href}>
+            {/* Staged to "#" (D-026) — plain anchor, not the locale-aware
+                Link, so the href stays a bare fragment. */}
+            <a className="pillars__cta" href={pillar.cta.href}>
               {pillar.cta.label}
               <span aria-hidden="true">→</span>
-            </Link>
+            </a>
             <p className="text pillars__notion">
               <span className="pillars__dash" aria-hidden="true" />
               {pillar.notion}

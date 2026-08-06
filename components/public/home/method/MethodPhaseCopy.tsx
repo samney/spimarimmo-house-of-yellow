@@ -1,8 +1,8 @@
-import { Link } from "@/i18n/navigation";
 import type { MethodPhase } from "./method-types";
 
 /* The phase copy column: oversized gold numeral, phase heading, supporting
-   body, mechanism chips and the contextual CTA. All real DOM text. */
+   body, mechanism chips and the contextual CTA. All real DOM text. The CTA is
+   a plain anchor: its href is staged to "#" (D-026) until re-linked. */
 export function MethodPhaseCopy({ phase }: { phase: MethodPhase }) {
   const words = phase.title.split(" ");
   const firstLine = words.slice(0, phase.titleBreakAfterWord).join(" ");
@@ -31,10 +31,10 @@ export function MethodPhaseCopy({ phase }: { phase: MethodPhase }) {
           </li>
         ))}
       </ul>
-      <Link className="methodCopy__cta" href={phase.contextualCta.href}>
+      <a className="methodCopy__cta" href={phase.contextualCta.href}>
         <span>{phase.contextualCta.label}</span>
         <span aria-hidden="true">→</span>
-      </Link>
+      </a>
     </div>
   );
 }

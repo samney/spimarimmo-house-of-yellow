@@ -1,9 +1,9 @@
-import { Link } from "@/i18n/navigation";
 import type { MethodSectionContent } from "./method-types";
 
 /* Warm-ivory editorial introduction: eyebrow, two-line headline, supporting
-   sentence, gold CTA in the upper-right zone. Deliberately calm — no card,
-   no icon, no secondary CTA (specs/02, "Editorial introduction"). */
+   sentence. Deliberately calm — no card, no icon, no CTA at all: the global
+   "Découvrir notre accompagnement" action was removed by owner note
+   (D-026, 2026-08-06). */
 export function MethodIntroduction({
   content,
   headingId,
@@ -23,12 +23,6 @@ export function MethodIntroduction({
         {content.heading}
       </h2>
       <p className="methodIntro__support">{content.description}</p>
-      <Link className="methodIntro__cta" href={content.globalCta.href}>
-        <span>{content.globalCta.label}</span>
-        <span className="methodArrow" aria-hidden="true">
-          →
-        </span>
-      </Link>
     </header>
   );
 }

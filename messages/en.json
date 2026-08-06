@@ -34,27 +34,33 @@
     "indicators": {
       "events": {
         "label": "Exhibitions held",
-        "caption": "International editions"
+        "caption": "International editions",
+        "value": "12"
       },
       "visitors": {
         "label": "Visitors welcomed",
-        "caption": "Qualified audience"
+        "caption": "Qualified audience",
+        "value": "45,000"
       },
       "exhibitors": {
         "label": "Exhibitors supported",
-        "caption": "End-to-end follow-up"
+        "caption": "End-to-end follow-up",
+        "value": "320"
       },
       "countries": {
         "label": "Countries covered",
-        "caption": "International network"
+        "caption": "International network",
+        "value": "6"
       },
       "leads": {
         "label": "Leads generated",
-        "caption": "Detected intent"
+        "caption": "Detected intent",
+        "value": "12,500"
       },
       "satisfaction": {
         "label": "Satisfaction rate",
-        "caption": "Measured experience"
+        "caption": "Measured experience",
+        "value": "94%"
       }
     }
   },
@@ -62,7 +68,6 @@
     "eyebrow": "Understanding the MRE market",
     "title": "Why do Moroccans living abroad buy in Morocco?",
     "lead": "Six motivations shape the demand and point to commercial opportunities for developers.",
-    "downloadStudy": "Download the study",
     "filtersLabel": "Filter the motivations",
     "filters": {
       "all": "All drivers",
@@ -982,9 +987,6 @@
     "eyebrow": "Property developers",
     "title": "The reference partner of Moroccan property developers abroad.",
     "lead": "SPIMARIMMO runs exhibitions dedicated to Moroccans living abroad and international investors, to meet a qualified audience ready to act on its project.",
-    "playVideo": "Watch the video",
-    "playerLabel": "SPIMARIMMO presentation video",
-    "closePlayer": "Close the video",
     "proofLabel": "They exhibit with SPIMARIMMO"
   }
 }

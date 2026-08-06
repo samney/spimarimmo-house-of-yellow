@@ -73,19 +73,30 @@ test("hero falls back to the poster under reduced motion", async ({ browser }) =
   await context.close();
 });
 
-test("hero video opens in an accessible modal player", async ({ page }) => {
+/* The design contract's no-horizontal-overflow rule, enforced at the page
+   level for the homepage at 390 — the width where implicit grid columns and
+   nowrap rows have repeatedly leaked past the viewport. */
+test("homepage has no horizontal overflow at 390", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  const deny = page.getByRole("button", { name: /deny/i });
-  if (await deny.count()) await deny.first().click();
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - window.innerWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(0);
+});
 
-  await page.locator(".heroStage").click();
-  // Scoped to the player: the consent banner is also a role=dialog (non-modal).
-  const dialog = page.locator(".heroModalPanel");
-  await expect(dialog).toBeVisible();
-  await expect(dialog).toHaveAttribute("role", "dialog");
-  await expect(dialog).toHaveAttribute("aria-modal", "true");
-  await expect(dialog.locator("video")).toHaveAttribute("controls", "");
-
-  await page.keyboard.press("Escape");
-  await expect(dialog).toHaveCount(0);
+/* D-026 removed the hero's interaction entirely: no play cursor, no modal.
+   What must hold instead: the stage exposes no interactive element (a hidden
+   focusable surface would trap keyboard users on a control that does
+   nothing), and the background footage autoplays muted on its own. */
+test("hero is a non-interactive autoplaying visual", async ({ page }) => {
+  await page.goto("/");
+  const stage = page.locator(".headerBigBlock .heroStage");
+  await expect(stage).toBeVisible();
+  // The mounted <video> carries tabindex="-1" (unfocusable by design), so the
+  // claim is "nothing keyboard-reachable", not "no tabindex attribute at all".
+  await expect(stage.locator('button, a, [tabindex]:not([tabindex="-1"])')).toHaveCount(0);
+  const video = stage.locator("video");
+  await expect(video).toHaveAttribute("autoplay", "");
+  await expect(video).toHaveJSProperty("muted", true);
 });

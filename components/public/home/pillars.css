@@ -548,12 +548,16 @@
 
 @media (max-width: 1080px) {
   .pillars__grid {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr), not 1fr: a bare 1fr track's implicit minimum is
+       min-content, so one nowrap tab row could push the whole section wider
+       than the viewport. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 6vw;
   }
   .pillars__rightHead,
   .pillars__body {
     grid-column: 1;
+    min-width: 0;
   }
   .pillars__rightHead {
     flex-direction: column;
@@ -563,12 +567,17 @@
     display: none;
   }
   .pillars__body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 7vw;
     align-items: start;
   }
-  .pillarPhone {
-    justify-content: center;
+  /* Desktop places the diagram in column 2; with a single-column template
+     that placement would mint an implicit content-sized column past the
+     viewport edge. Restate both children into the one real column. */
+  .pillars__body > :first-child,
+  .pillars__body .pillars__lead {
+    grid-column: 1;
+    grid-row: auto;
   }
   .pillarPhone {
     justify-content: center;
@@ -579,11 +588,23 @@
 }
 
 @media (max-width: 580px) {
+  /* Four nowrap tabs cannot share 390px: the row becomes its own horizontal
+     scroller so the page never overflows (contract: wide content scrolls
+     inside its container). */
   .pillarTabs {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
     gap: 2vw;
     margin-block-end: 8vw;
+    padding-block-end: 1vw;
+  }
+  .pillarTabs::-webkit-scrollbar {
+    display: none;
   }
   .pillarTab {
+    flex: none;
     padding: 2vw 4vw;
     gap: 2.4vw;
   }

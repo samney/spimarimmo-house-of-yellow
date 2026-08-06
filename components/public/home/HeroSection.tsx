@@ -1,13 +1,19 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
-import { HeroVideoStage } from "./HeroVideoStage";
+import { ResilientVideo } from "@/components/primitives/media/ResilientVideo";
 
-/* Hero — owner rebuild (2026-08-04, D-024).
+/* Hero — owner rebuild (2026-08-04, D-024; interaction removed 2026-08-06,
+   D-026).
 
    Keeps the accepted fullscreen VIEW; the reference's side text columns,
    centred logo glyph, star marks and visitor quote are removed, and so is the
    oversized wordmark (the header already carries the mark).
+
+   The hero is a pure autoplaying visual by owner note: no cursor-follow play
+   box, no modal player, no interactive stage. The muted background footage
+   plays on its own; reduced motion still renders the poster with no video
+   element at all.
 
    Copy is the canonical specification §06 "Hero et première impression", not
    the mobile site's English pitch. The CTA the spec asks for lives in the
@@ -32,11 +38,17 @@ export async function HeroSection() {
     <section className="headerBigBlock noMargin scrollSection">
       <div className="innerAnimContainer">
         <div className="background playerBackground">
-          <HeroVideoStage
-            src="/videos/hero-real-estate-exhibition.mp4"
-            poster="/images/posters/hero-desktop.jpg"
-            mobilePoster="/images/posters/hero-mobile.jpg"
-          />
+          <div className="heroStage">
+            <ResilientVideo
+              className="mediaPlane--fill heroMediaPlane"
+              videoClassName="heroBackgroundVideo"
+              src="/videos/hero-real-estate-exhibition.mp4"
+              poster="/images/posters/hero-desktop.jpg"
+              mobilePoster="/images/posters/hero-mobile.jpg"
+              priority
+            />
+            <span className="heroScrim" aria-hidden="true" />
+          </div>
         </div>
 
         <div className="heroContent">

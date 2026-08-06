@@ -88,7 +88,8 @@ export function AboutWorkSection() {
       <div className="innerAnimContainer">
         <div className="grainBackground" aria-hidden="true" />
         <div className="contentWrapper">
-          <div className="aboutSection">
+          {/* Anchor target for the header's Exposer > Pourquoi SPIMARIMMO entry. */}
+          <div className="aboutSection" id="pourquoi-spimar">
             <div className="cols">
               <div className="col"></div>
               <div className="col">
@@ -126,9 +127,12 @@ export function AboutWorkSection() {
             <div className="cols" style={{ paddingBottom: "2.5vw" }}>
               <div className="col">
                 <SectionEyebrow index="02" label="Salons par pays" />
+                {/* Owner note (D-026): the statement reads in two lines, not
+                    four — the second clause of the approved §07 sentence
+                    carries the message alone. */}
                 <SplitTitle
                   className="smallTitle"
-                  text="Les salons SPIMARIMMO rendent le réseau international tangible : chaque destination réunit une clientèle qualifiée, prête à concrétiser son projet immobilier au Maroc."
+                  text="Chaque destination réunit une clientèle qualifiée, prête à concrétiser son projet immobilier au Maroc."
                 />
               </div>
               <div className="col">

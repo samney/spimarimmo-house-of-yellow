@@ -16,7 +16,6 @@ describe("method section content contract", () => {
     expect(METHOD_CONTENT.description).toBe(
       "Un dispositif en trois temps pour préparer l’audience, activer les rencontres et transformer les leads en opportunités commerciales.",
     );
-    expect(METHOD_CONTENT.globalCta.label).toBe("Découvrir notre accompagnement");
   });
 
   it("has exactly three phases with fixed ids and numbers", () => {
@@ -151,10 +150,13 @@ describe("method section content contract", () => {
     ]);
   });
 
-  it("routes every CTA to an existing destination (owner decision: /exposer)", () => {
-    expect(METHOD_CONTENT.globalCta.href).toBe("/exposer");
+  it("stages every contextual CTA to '#' (owner decision D-026, 2026-08-06)", () => {
+    /* The global accompaniment CTA is gone entirely; the three phase CTAs are
+       deliberately staged dead links until the owner re-links them. If a real
+       destination appears here, that is a contract change to record, not a
+       test to relax. */
     for (const phase of METHOD_CONTENT.phases) {
-      expect(phase.contextualCta.href.startsWith("/exposer")).toBe(true);
+      expect(phase.contextualCta.href).toBe("#");
     }
   });
 

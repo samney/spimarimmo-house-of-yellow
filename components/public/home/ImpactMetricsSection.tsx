@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import {
   ArrowRightIcon,
   CalendarIcon,
@@ -35,16 +34,7 @@ const INDICATORS = [
   { key: "satisfaction", Icon: StarIcon },
 ] as const;
 
-type ImpactMetricsSectionProps = {
-  /* The methodology destination is injected rather than hard-coded: the
-     resources route is not part of this section's contract, and a section
-     should not assume a route that may not exist yet. */
-  readonly methodologyHref?: string;
-};
-
-export function ImpactMetricsSection({
-  methodologyHref = "/ressources",
-}: ImpactMetricsSectionProps) {
+export function ImpactMetricsSection() {
   const t = useTranslations("impact");
 
   return (
@@ -71,6 +61,9 @@ export function ImpactMetricsSection({
                 <span className="impactIconRing" aria-hidden="true">
                   <Icon className="impactIcon" />
                 </span>
+                {/* Owner-authorized placeholder figure (D-026); the footer
+                    note states figures publish after source validation. */}
+                <p className="impactValue">{t(`indicators.${key}.value`)}</p>
                 <h3 className="impactLabel">{t(`indicators.${key}.label`)}</h3>
                 <p className="impactCaption">{t(`indicators.${key}.caption`)}</p>
               </li>
@@ -82,10 +75,11 @@ export function ImpactMetricsSection({
               <ShieldCheckIcon className="impactNoteIcon" aria-hidden="true" />
               <span>{t("note")}</span>
             </p>
-            <Link className="impactMethodology" href={methodologyHref}>
+            {/* Staged to "#" (D-026) until the owner re-links it. */}
+            <a className="impactMethodology" href="#">
               <span>{t("methodology")}</span>
               <ArrowRightIcon className="impactMethodologyIcon" aria-hidden="true" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>

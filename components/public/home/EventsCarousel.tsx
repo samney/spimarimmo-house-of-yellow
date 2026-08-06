@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
 import { PlusIcon } from "@/components/public/global/logos";
 import { DestinationPlaceholder } from "./DestinationPlaceholder";
 
@@ -46,12 +45,6 @@ const DESTINATION_IMAGES = new Set([
   "abu-dhabi",
   "londres",
 ]);
-
-const STATUS_LABEL: Record<EventStatus, string> = {
-  "prochaine-edition": "Prochaine édition",
-  "a-venir": "À venir",
-  historique: "Historique disponible",
-};
 
 /* Pixels per second. Slow enough to read a card title while it moves. */
 const SPEED = 22;
@@ -120,12 +113,11 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
         aria-label={expanded ? undefined : "Destinations, défilement horizontal"}
         tabIndex={expanded ? undefined : 0}
       >
+        {/* Owner note (D-026): per-salon routes are retired — the network is
+            small enough for the expanding grid to carry it. Cards are plain
+            surfaces; the reveal button is the staged action. */}
         {events.map((event) => (
-          <Link
-            key={`${event.country}-${event.slug}`}
-            className="project eventCard"
-            href={`/salons/${event.slug}`}
-          >
+          <div key={`${event.country}-${event.slug}`} className="project eventCard">
             <span className="innerProject">
               <span className="imageWrapper">
                 <span className="innerImage">
@@ -145,15 +137,12 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                   )}
                 </span>
                 <span className="tags">
-                  <span className="tag textTitle">{STATUS_LABEL[event.status]}</span>
                   <span className="tag textTitle">{event.country}</span>
                 </span>
-                {/* Revealed on hover, as in the reference: hidden at rest and
-                    offset 9px, so the media reads first. The card is a link, so
-                    this is decoration over an already-actionable surface and
-                    never the only route to the destination. */}
-                <span className="bottomButton" aria-hidden="true">
-                  <span className="button">
+                {/* Revealed on hover. Staged to "#" (D-026): the owner
+                    re-links it when the destination content is validated. */}
+                <span className="bottomButton">
+                  <a className="button" href="#">
                     <span className="icon">
                       <PlusIcon />
                     </span>
@@ -163,7 +152,7 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                     <span className="icon">
                       <PlusIcon />
                     </span>
-                  </span>
+                  </a>
                 </span>
               </span>
               <span className="projectContent">
@@ -183,7 +172,7 @@ export function EventsCarousel({ events }: { events: EventOpportunity[] }) {
                 </span>
               </span>
             </span>
-          </Link>
+          </div>
         ))}
       </div>
 

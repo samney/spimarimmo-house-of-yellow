@@ -140,6 +140,17 @@
   width: 45%;
 }
 
+/* Headline figure per indicator — owner-authorized placeholder values
+   (D-026), disclaimed by the card footer's validation note. Tabular numerals
+   so the six figures share one rhythm. */
+.impactValue {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin: 0;
+}
+
 /* Box titles carry the same label treatment as the section title
    (.text.medium: 0.875vw / 500); the caption below differs by weight and
    colour, exactly like the site's .text.medium / .text relationship. */
