@@ -49,10 +49,17 @@ omissions (Pays, CA potentiel, conversion %, sparklines, avatars, pagination).
 One editor per content type the public site actually reads. Anything the site
 does not render is not a CMS gap.
 
-- Pages (exists in v1 — needs depth)
-- Salons / events (exists in v1 — needs depth)
-- Études de cas
-- Ressources
+- Pages — exists; gained the keyed-remount repair (2026-08-07: editors never
+  prefilled after in-app navigation and silently created duplicates)
+- Salons / events — exists; same repair
+- Études de cas — **done 2026-08-07**: dedicated editor over the `etudes/`
+  page family the public site already reads; system-owned prefix, schema'd
+  slug, publish revalidates listing + detail
+- Ressources — **blocked on website wiring, not built** (2026-08-07):
+  verified that /ressources, /exposants, /galerie and insights render static
+  composition or disclaimed D-026 fixtures, with no seam read. An editor over
+  records nothing renders is the mock-work this decision forbids; it unblocks
+  when the website swaps fixtures for store reads
 - Médias — **done 2026-08-07**: src validation (public-path/https allowlist),
   FR alt required to publish, usage counts, and safe deletion that refuses by
   name while content still references the asset. Binary upload stays absent
