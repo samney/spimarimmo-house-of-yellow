@@ -8,7 +8,13 @@ rather than inherit an assertion.
 
 ---
 
-## R-1 — The canonical domain serves a different website (**critical, owner decision**)
+## R-1 — RESOLVED by `D-044` (2026-08-07): release targets `spimarimmo.vercel.app`
+
+The cutover question is deferred, not answered: the legacy Arabic site keeps
+`spimarimmo.com` for now. Release is a Vercel deployment, no DNS involved.
+The consequence recorded in `D-044` stands: on a `.vercel.app` host the site
+serves `noindex` everywhere by its own preview guard — invisible to search
+engines until the custom domain lands. What remains of the original risk:
 
 `https://spimarimmo.com` serves the legacy Arabic-language site, not this
 application. Established by fetching it: title

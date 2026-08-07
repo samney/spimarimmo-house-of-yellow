@@ -1566,3 +1566,34 @@ from it and cannot drift.
 OPERATING-MODE plus the Lock-Contract and build without re-deriving taste.
 The mechanical guards stay: token ratchet, motion-foundation test (orphan
 list must stay empty), contract e2e suites.
+
+## D-044 — 2026-08-07 — Release target is spimarimmo.vercel.app; the custom-domain cutover is deferred
+
+**Context.** Gate A found that `https://spimarimmo.com` serves the legacy
+Arabic site, making release a DNS cutover no phase covered (risk R-1). The
+owner resolved it in session: the product deploys to
+**`spimarimmo.vercel.app`**; the legacy site keeps the custom domain for now.
+
+**Decision.** Release means the Vercel deployment at `spimarimmo.vercel.app`
+serving the current release branch. No DNS change, no redirect map and no
+Arabic-content decision is required for this release. The custom-domain
+cutover becomes a **later, separate decision**, not a release gate.
+
+**Consequence that must not be discovered at launch.** The site's own SEO
+protection (`lib/seo/robots.ts`) hard-codes every `.vercel.app` hostname as a
+preview host: with this target, every route serves
+`noindex, nofollow, noarchive`, robots.txt disallows all, and no sitemap host
+is emitted. **The deployed product will be invisible to search engines by its
+own design.** That is correct behaviour for a preview host and stays as-is —
+weakening the guard to index a vercel.app domain would poison later SEO for
+the real domain and is explicitly NOT done. Indexing begins the day the
+custom domain points at the deployment and `NEXT_PUBLIC_SITE_URL` names it.
+
+Second consequence: the canonicals and `x-default` alternates the pages emit
+derive from `NEXT_PUBLIC_SITE_URL`. Until the cutover, that variable should
+simply not be set to `https://spimarimmo.com` on the deployment — naming a
+domain that serves different content would be a false claim in markup.
+
+**Effect on the risk register.** R-1 drops from release-blocking to deferred;
+R-2 (deployed-SHA visibility) remains, and shrinks to "connect the Vercel
+project / CLI".
