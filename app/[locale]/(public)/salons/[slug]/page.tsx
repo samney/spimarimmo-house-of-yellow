@@ -6,6 +6,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { getBackendSeams } from "@/lib/spimar/repositories";
+import { PageCta } from "@/components/public/pages/PageCta";
 
 /* Spec §04 /salons/{event} — the canonical edition page, rebuilt as a real
    destination page (owner remark, 2026-08-06): photographic hero with the
@@ -143,11 +144,13 @@ export default async function SalonDetail({
             </a>
           </div>
 
-          <footer className="pageOutro">
-            <p className="text medium">
-              <Link href="/salons">{t("backToIndex")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={t("outro")}
+            actions={[
+              { label: t("outroCta"), href: "/exposer/devenir-exposant" },
+              { label: t("backToIndex"), href: "/salons" },
+            ]}
+          />
         </div>
       </section>
     </div>

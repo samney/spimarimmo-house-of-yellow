@@ -56,13 +56,37 @@
   grid-template-columns: 7vw minmax(0, 1fr);
 }
 
+/* One marker per month; the gold spine runs down beside the group. */
 .salcMonth {
-  border-inline-end: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   gap: 0.2vw;
   padding-block-start: var(--space-2xs);
   padding-inline-end: var(--space-sm);
+}
+
+.salcMonthLine {
+  background: linear-gradient(
+    to bottom,
+    var(--action-primary),
+    color-mix(in srgb, var(--action-primary) 25%, transparent) 55%,
+    var(--border-subtle)
+  );
+  flex: 1;
+  inline-size: 2px;
+  margin-block-start: var(--space-xs);
+  margin-inline-start: 0.2vw;
+  min-block-size: 2vw;
+}
+
+.salcGroupCards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  list-style: none;
+  margin: 0;
+  min-inline-size: 0;
+  padding: 0;
 }
 
 .salcMonthIndex {
@@ -87,21 +111,56 @@
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
   display: grid;
   gap: var(--space-md);
   grid-template-columns: 19vw minmax(0, 1fr);
   overflow: hidden;
-  transition: box-shadow var(--dur-micro) var(--ease-out-ref);
+  transition:
+    border-color var(--dur-micro) var(--ease-out-ref),
+    box-shadow var(--dur-micro) var(--ease-out-ref),
+    transform var(--dur-micro) var(--ease-out-ref);
 }
 
 .salcCard:hover {
-  box-shadow: var(--shadow-raised);
+  border-color: color-mix(in srgb, var(--action-primary) 45%, var(--border-subtle));
+  box-shadow: 0 0.6vw 1.8vw color-mix(in srgb, var(--spimar-black) 10%, transparent);
+  transform: translateY(-0.15vw);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .salcCard {
     transition: none;
   }
+
+  .salcCard:hover {
+    transform: none;
+  }
+}
+
+/* Photographic depth: an ink scrim rising from the card edge, the country
+   mark riding it as a gold chip. */
+.salcMediaScrim {
+  background: linear-gradient(
+    200deg,
+    transparent 55%,
+    color-mix(in srgb, var(--spimar-black) 45%, transparent)
+  );
+  inset: 0;
+  position: absolute;
+}
+
+.salcMediaChip {
+  background: var(--action-primary);
+  border-radius: var(--radius-pill);
+  color: var(--action-on-primary);
+  font-size: var(--text-base);
+  font-weight: 600;
+  inset-block-end: var(--space-xs);
+  inset-inline-start: var(--space-xs);
+  letter-spacing: 0.1em;
+  padding: 0.15vw var(--space-xs);
+  position: absolute;
 }
 
 .salcMedia {
@@ -200,10 +259,15 @@
   margin: 0;
 }
 
+/* The dates read as a gold-tinted chip — the calendar's own accent. */
 .salcDates {
+  background: color-mix(in srgb, var(--action-primary) 14%, transparent);
+  border-radius: var(--radius-pill);
   color: var(--spimar-gold-text);
+  display: inline-block;
   font-size: var(--text-support);
   font-weight: 600;
+  padding: 0.15vw var(--space-sm);
 }
 
 .salcVenue {
@@ -266,10 +330,13 @@
 
   /* The rail folds into an inline chip above its card. */
   .salcMonth {
-    border-inline-end: 0;
+    align-items: baseline;
     flex-direction: row;
     gap: var(--space-2xs);
-    align-items: baseline;
+  }
+
+  .salcMonthLine {
+    display: none;
   }
 
   .salcMonthIndex {

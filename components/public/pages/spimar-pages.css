@@ -127,6 +127,14 @@
   padding-block-start: var(--space-lg);
 }
 
+/* The page rhythm is owned HERE, once for every child page (owner remark,
+   2026-08-07): the shared .hoyCols shell brings the homepage's 4.375vw band
+   padding with it, which stacked on the list-page padding into a dead band.
+   Inside a list page the columns carry no vertical padding of their own. */
+.spimarListPage .hoyCols {
+  padding-block: 0;
+}
+
 .pageHeader__plainEyebrow {
   margin: 0;
 }
@@ -263,6 +271,68 @@
    /ressources, /ressources/galerie, /insights and /faq. `100%` ties it back to
    the column it actually lives in. (`width: auto` would be the initial value
    and the build strips initial-value resets.) */
+/* --- The closing CTA band (PageCta) ------------------------------------------
+   One anatomy for every page's outro: a raised branded strip — gold rail on
+   the inline start, statement left, system pill actions right; stacks at
+   580. Replaces the ad hoc .pageOutro assemblies. */
+.pageCta {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-raised);
+  display: flex;
+  gap: var(--space-md);
+  justify-content: space-between;
+  margin-block-start: var(--space-xl);
+  overflow: hidden;
+  padding: var(--space-md) var(--space-lg);
+  position: relative;
+}
+
+.pageCta__rail {
+  background: var(--action-primary);
+  inline-size: 0.28vw;
+  inset-block: 0;
+  inset-inline-start: 0;
+  min-inline-size: 4px;
+  position: absolute;
+}
+
+.pageCta__text {
+  font-size: var(--text-small-title);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+.pageCta__actions {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+}
+
+.pageCta__button {
+  white-space: nowrap;
+}
+
+@media (max-width: 580px) {
+  .pageCta {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-md) var(--space-md) calc(var(--space-md) + 2vw);
+  }
+
+  .pageCta__actions {
+    justify-content: flex-start;
+  }
+}
+
 .pageOutro {
   position: relative;
   width: 100%;

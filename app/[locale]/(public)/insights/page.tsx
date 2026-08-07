@@ -3,6 +3,7 @@ import Image from "next/image";
 import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { PageCta } from "@/components/public/pages/PageCta";
 import { Link } from "@/i18n/navigation";
 import { INSIGHTS, type InsightCategory } from "@/components/public/pages/insights-data";
 
@@ -99,12 +100,13 @@ export default async function Insights({
             ))}
           </ul>
 
-          <footer className="pageOutro">
-            <p className="text medium">
-              {t("outro")} <Link href="/ressources">{t("outroResources")}</Link>
-              <Link href="/salons">{t("outroSalons")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={t("outro")}
+            actions={[
+              { label: t("outroResources"), href: "/ressources" },
+              { label: t("outroSalons"), href: "/salons" },
+            ]}
+          />
         </div>
       </section>
     </div>

@@ -57,6 +57,15 @@ test.describe("under prefers-reduced-motion: reduce", () => {
       await visitReduced(page, route.path);
 
       const items = page.locator(`${route.list} > ${route.item}`);
+      /* The salons calendar renders from the e2e store, which starts empty:
+         only a run that includes integration.spec has published editions by
+         the time this file executes. In an isolated run the page's honest
+         empty state IS the fully-rendered content — assert it and stop,
+         instead of failing on a test-order dependency. */
+      if (route.path === "/fr/salons" && (await items.count()) === 0) {
+        await expect(page.locator(".spimarListPage")).toContainText("validation");
+        return;
+      }
       expect(await items.count(), `${route.path} should render list items`).toBeGreaterThan(0);
 
       /* Given a moment on purpose: the point is not that it is correct before

@@ -19,13 +19,14 @@ import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
    the title sits, a fine dot field that fades out, and a hairline rule closing
    it off. All of it is paint — `aria-hidden`, no layout, no motion. */
 export function PageHeader({
-  index,
   label,
   title,
   lead,
   children,
 }: {
-  /* Section number from the specification. Every public route has one. */
+  /* DEPRECATED and never rendered (owner rule, 2026-08-07): the bracketed
+     index is HOMEPAGE wayfinding; child pages carry the label alone. The
+     prop is still accepted so stale call sites cannot break the build. */
   index?: string;
   label: string;
   title: string;
@@ -39,9 +40,11 @@ export function PageHeader({
       <span className="pageHeader__grain" aria-hidden="true" />
       <div className="contentWrapper">
         <div className="pageHeader__inner">
-          <SectionEyebrow index={index} label={label} />
+          <SectionEyebrow label={label} />
           <SplitTitle as="h1" className="pageHeader__title" text={title} />
-          {lead ? <p className="pageHeader__lead">{lead}</p> : null}
+          {lead ? (
+            <SplitTitle as="p" mode="lines" className="pageHeader__lead" text={lead} />
+          ) : null}
           {children ? <div className="pageHeader__actions">{children}</div> : null}
         </div>
       </div>

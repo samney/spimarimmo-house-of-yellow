@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { PageCta } from "@/components/public/pages/PageCta";
 import { Reveal } from "@/components/primitives/motion/Reveal";
-import { Link } from "@/i18n/navigation";
 
 /* Spec §17 — Conversion et réassurance. The seven exhibitor questions come
    from the specification verbatim; every answer states only what other
@@ -47,12 +47,13 @@ export default async function Faq({ params }: { params: Promise<{ locale: string
               </details>
             ))}
           </Reveal>
-          <footer className="pageOutro">
-            <p className="text medium">
-              {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-              <Link href="/contact">{t("outroContact")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={t("outro")}
+            actions={[
+              { label: t("outroCta"), href: "/exposer/devenir-exposant" },
+              { label: t("outroContact"), href: "/contact" },
+            ]}
+          />
         </div>
       </section>
     </div>

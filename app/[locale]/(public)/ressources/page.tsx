@@ -3,6 +3,7 @@ import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { BookOpen, CalendarDays, ClipboardCheck, FileText, Map } from "lucide-react";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { PageCta } from "@/components/public/pages/PageCta";
 import { Link } from "@/i18n/navigation";
 import { BrochureTrigger } from "@/components/public/global/BrochureDialog";
 
@@ -67,14 +68,15 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
             ))}
           </ul>
 
-          <footer className="pageOutro">
-            <p className="text medium">
-              {t("outro")} <Link href="/contact">{t("outroContact")}</Link>
-              <Link href="/ressources/exposants">{t("outroExposants")}</Link>
-              <Link href="/ressources/galerie">{t("outroGallery")}</Link>
-              <Link href="/insights">{t("outroInsights")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={t("outro")}
+            actions={[
+              { label: t("outroContact"), href: "/contact" },
+              { label: t("outroExposants"), href: "/ressources/exposants" },
+              { label: t("outroGallery"), href: "/ressources/galerie" },
+              { label: t("outroInsights"), href: "/insights" },
+            ]}
+          />
         </div>
       </section>
     </div>

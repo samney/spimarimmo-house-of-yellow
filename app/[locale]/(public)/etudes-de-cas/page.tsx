@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
-import { Link } from "@/i18n/navigation";
+import { PageCta } from "@/components/public/pages/PageCta";
 import { getBackendSeams } from "@/lib/spimar/repositories";
 import {
   CaseStudiesListing,
@@ -64,11 +64,10 @@ export default async function EtudesDeCas({
       <section className="spimarListPage">
         <div className="contentWrapper">
           <CaseStudiesListing locale={locale} cmsCases={cmsCases} filters={filters} />
-          <footer className="pageOutro">
-            <p className="text medium">
-              {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={t("outro")}
+            actions={[{ label: t("outroCta"), href: "/exposer/devenir-exposant" }]}
+          />
         </div>
       </section>
     </div>

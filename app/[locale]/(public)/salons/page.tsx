@@ -3,6 +3,7 @@ import Image from "next/image";
 import { metadataFromNamespace } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
+import { PageCta } from "@/components/public/pages/PageCta";
 import { Reveal } from "@/components/primitives/motion/Reveal";
 import { Link } from "@/i18n/navigation";
 import { getBackendSeams } from "@/lib/spimar/repositories";
@@ -119,104 +120,131 @@ export default async function Salons({
                       </>
                     ) : null}
                   </p>
-                  {/* The calendar (owner note, D-026): a gold month rail down
-                      the inline start with the editions attached as
-                      photographic cards — the same published records, grouped
-                      by their start month; undated editions close the list
+                  {/* The calendar (owner note, D-026; depth pass 2026-08-07):
+                      ONE gold month marker per group with the rail running
+                      down beside its editions — a real calendar spine, not a
+                      repeated cell per row. Undated editions close the list
                       under their honest pending label. */}
-                  <Reveal as="ol" className="salcList" role="list">
-                    {shown
-                      .slice()
-                      .sort((a, b) => (a.startsAt ?? "9999").localeCompare(b.startsAt ?? "9999"))
-                      .map((event) => {
+                  <Reveal as="ol" className="salcList" role="list" stagger={0.1}>
+                    {(() => {
+                      const sorted = shown
+                        .slice()
+                        .sort((a, b) => (a.startsAt ?? "9999").localeCompare(b.startsAt ?? "9999"));
+                      const groups = new Map<
+                        string,
+                        { index: string | null; label: string; items: typeof sorted }
+                      >();
+                      for (const event of sorted) {
                         const start = event.startsAt ? new Date(event.startsAt) : null;
-                        const end = event.endsAt ? new Date(event.endsAt) : null;
-                        const datesLabel = start
-                          ? end
-                            ? dateFormat.formatRange(start, end)
-                            : dateFormat.format(start)
-                          : t("datesTbc");
-                        return (
-                          <li className="salcRow" key={event.slug}>
-                            <div className="salcMonth">
-                              {start ? (
-                                <>
-                                  <span className="salcMonthIndex">
-                                    {String(start.getMonth() + 1).padStart(2, "0")}
-                                  </span>
-                                  <span className="salcMonthLabel">
-                                    {monthFormat.format(start)}
-                                  </span>
-                                </>
-                              ) : (
-                                <span className="salcMonthLabel">{t("datesTbc")}</span>
-                              )}
-                            </div>
-                            <article className="salcCard">
-                              {event.image ? (
-                                <div className="salcMedia">
-                                  <Image
-                                    alt={event.image.alt}
-                                    className="salcPhoto"
-                                    fill
-                                    sizes="(max-width: 580px) 88vw, 22vw"
-                                    src={event.image.src}
-                                  />
-                                </div>
-                              ) : (
-                                <div className="salcMedia salcMedia--empty" aria-hidden="true">
-                                  <span className="salcMediaMark">
-                                    {(event.name || event.slug).slice(0, 1)}
-                                  </span>
-                                </div>
-                              )}
-                              <div className="salcBody">
-                                <p className="salcPlace">
-                                  <Link
-                                    className="salcCity salcTitleLink"
-                                    href={`/salons/${event.slug}`}
-                                  >
-                                    {event.name || event.slug}
-                                  </Link>
-                                  <span className="salcCountry">
-                                    {event.venue
-                                      ? `${event.venue.city} — ${event.venue.countryCode}`
-                                      : t("venueTbc")}
-                                  </span>
-                                </p>
-                                <p className="salcMeta">
-                                  <span className="salcDates">{datesLabel}</span>
-                                </p>
-                                {event.summary ? (
-                                  <p className="salcVisitors">{event.summary}</p>
-                                ) : null}
-                                <div className="salcActions">
-                                  <Link
-                                    className="salcCta salcCta--primary"
-                                    href="/exposer/devenir-exposant"
-                                  >
-                                    {t("outroCta")}
-                                  </Link>
-                                  <Link
-                                    className="salcCta salcCta--ghost"
-                                    href={`/salons/${event.slug}`}
-                                  >
-                                    {t("cardDetail")}
-                                  </Link>
-                                </div>
-                              </div>
-                            </article>
-                          </li>
-                        );
-                      })}
+                        const key = start
+                          ? `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, "0")}`
+                          : "tbc";
+                        if (!groups.has(key)) {
+                          groups.set(key, {
+                            index: start ? String(start.getMonth() + 1).padStart(2, "0") : null,
+                            label: start ? monthFormat.format(start) : t("datesTbc"),
+                            items: [],
+                          });
+                        }
+                        groups.get(key)!.items.push(event);
+                      }
+                      return [...groups.entries()].map(([key, group]) => (
+                        <li className="salcRow" data-reveal key={key}>
+                          <div className="salcMonth">
+                            {group.index ? (
+                              <span className="salcMonthIndex">{group.index}</span>
+                            ) : null}
+                            <span className="salcMonthLabel">{group.label}</span>
+                            <span className="salcMonthLine" aria-hidden="true" />
+                          </div>
+                          <ol className="salcGroupCards" role="list">
+                            {group.items.map((event) => {
+                              const start = event.startsAt ? new Date(event.startsAt) : null;
+                              const end = event.endsAt ? new Date(event.endsAt) : null;
+                              const datesLabel = start
+                                ? end
+                                  ? dateFormat.formatRange(start, end)
+                                  : dateFormat.format(start)
+                                : t("datesTbc");
+                              return (
+                                <li key={event.slug}>
+                                  <article className="salcCard">
+                                    {event.image ? (
+                                      <div className="salcMedia">
+                                        <Image
+                                          alt={event.image.alt}
+                                          className="salcPhoto"
+                                          fill
+                                          sizes="(max-width: 580px) 88vw, 22vw"
+                                          src={event.image.src}
+                                        />
+                                        <span className="salcMediaScrim" aria-hidden="true" />
+                                        {event.venue ? (
+                                          <span className="salcMediaChip">
+                                            {event.venue.countryCode}
+                                          </span>
+                                        ) : null}
+                                      </div>
+                                    ) : (
+                                      <div
+                                        className="salcMedia salcMedia--empty"
+                                        aria-hidden="true"
+                                      >
+                                        <span className="salcMediaMark">
+                                          {(event.name || event.slug).slice(0, 1)}
+                                        </span>
+                                      </div>
+                                    )}
+                                    <div className="salcBody">
+                                      <p className="salcPlace">
+                                        <Link
+                                          className="salcCity salcTitleLink"
+                                          href={`/salons/${event.slug}`}
+                                        >
+                                          {event.name || event.slug}
+                                        </Link>
+                                        <span className="salcCountry">
+                                          {event.venue
+                                            ? `${event.venue.city} — ${event.venue.countryCode}`
+                                            : t("venueTbc")}
+                                        </span>
+                                      </p>
+                                      <p className="salcMeta">
+                                        <span className="salcDates">{datesLabel}</span>
+                                      </p>
+                                      {event.summary ? (
+                                        <p className="salcVisitors">{event.summary}</p>
+                                      ) : null}
+                                      <div className="salcActions">
+                                        <Link
+                                          className="salcCta salcCta--primary"
+                                          href="/exposer/devenir-exposant"
+                                        >
+                                          {t("outroCta")}
+                                        </Link>
+                                        <Link
+                                          className="salcCta salcCta--ghost"
+                                          href={`/salons/${event.slug}`}
+                                        >
+                                          {t("cardDetail")}
+                                        </Link>
+                                      </div>
+                                    </div>
+                                  </article>
+                                </li>
+                              );
+                            })}
+                          </ol>
+                        </li>
+                      ));
+                    })()}
                   </Reveal>
                 </>
               )}
-              <footer className="pageOutro">
-                <p className="text medium">
-                  {t("outro")} <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-                </p>
-              </footer>
+              <PageCta
+                text={t("outro")}
+                actions={[{ label: t("outroCta"), href: "/exposer/devenir-exposant" }]}
+              />
             </div>
           </div>
         </div>

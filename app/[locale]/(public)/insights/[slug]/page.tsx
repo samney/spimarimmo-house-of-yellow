@@ -6,6 +6,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { INSIGHTS } from "@/components/public/pages/insights-data";
+import { PageCta } from "@/components/public/pages/PageCta";
 
 /* Article detail (D-026 fixtures): hero image with category pill and
    reading time, the lede, claim-free body paragraphs, and the convert
@@ -80,12 +81,13 @@ export default async function InsightArticle({
             <p className="blogDisclaimer">{t("fixturesNote")}</p>
           </div>
 
-          <footer className="pageOutro">
-            <p className="text medium">
-              <Link href="/insights">{t("backToBlog")}</Link>
-              <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={t("outro")}
+            actions={[
+              { label: t("outroCta"), href: "/exposer/devenir-exposant" },
+              { label: t("backToBlog"), href: "/insights" },
+            ]}
+          />
         </div>
       </section>
     </div>

@@ -8,6 +8,7 @@ import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { getBackendSeams } from "@/lib/spimar/repositories";
 import Image from "next/image";
 import { CASE_STUDIES } from "@/components/public/pages/case-studies-data";
+import { PageCta } from "@/components/public/pages/PageCta";
 
 /* Case-study detail: header title, then the video slot, then the prose —
    served from the CMS pages seam (`etudes/` family). A draft or unknown slug
@@ -121,13 +122,13 @@ export default async function EtudeDeCas({
               </figure>
             </div>
 
-            <footer className="pageOutro">
-              <p className="text medium">
-                <Link href="/etudes-de-cas">{t("backToList")}</Link>
-
-                <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-              </p>
-            </footer>
+            <PageCta
+              text={t("outro")}
+              actions={[
+                { label: t("outroCta"), href: "/exposer/devenir-exposant" },
+                { label: t("backToList"), href: "/etudes-de-cas" },
+              ]}
+            />
           </div>
         </section>
       </div>
@@ -179,12 +180,13 @@ export default async function EtudeDeCas({
             </div>
           ) : null}
 
-          <footer className="pageOutro">
-            <p className="text medium">
-              <Link href="/exposer/devenir-exposant">{t("outroCta")}</Link>
-              <Link href="/etudes-de-cas">{t("backToList")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={t("outro")}
+            actions={[
+              { label: t("outroCta"), href: "/exposer/devenir-exposant" },
+              { label: t("backToList"), href: "/etudes-de-cas" },
+            ]}
+          />
         </div>
       </section>
     </div>

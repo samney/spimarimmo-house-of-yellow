@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageHeader } from "./PageHeader";
 import { GALLERY_CATEGORIES, MEDIA } from "@/components/public/home/galleryData";
+import { PageCta } from "@/components/public/pages/PageCta";
 
 /* /ressources/galerie — the full media library, rebuilt (owner note,
    D-026): URL-driven category filters with counts and a paginated flat
@@ -106,13 +107,13 @@ export async function GalleryListing({
             </nav>
           )}
 
-          <footer className="pageOutro">
-            <p className="text medium">
-              {tp("outro")} <Link href="/salons">{t("exploreSalons")}</Link>
-              {" · "}
-              <Link href="/ressources">{tp("outroLibrary")}</Link>
-            </p>
-          </footer>
+          <PageCta
+            text={tp("outro")}
+            actions={[
+              { label: t("exploreSalons"), href: "/salons" },
+              { label: tp("outroLibrary"), href: "/ressources" },
+            ]}
+          />
         </div>
       </section>
     </div>
