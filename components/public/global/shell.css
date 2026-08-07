@@ -874,18 +874,67 @@ footer .copyMenu a:hover {
     flex-direction: column;
     justify-content: space-between;
   }
+  /* The desktop bar's `header .menu { display: flex }` leaked into this
+     panel and laid the items out as an overflowing ROW with the sub-list
+     floating beside them (owner report, 2026-08-07). The panel owns its
+     own column layout outright. */
   .hamburgerMenu .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .hamburgerMenu .menu .menu-item {
+    display: block;
+    position: static;
+    width: 100%;
   }
   .hamburgerMenu .menu a {
     display: block;
     font-size: 6.897vw;
     font-weight: 500;
-    line-height: 2;
+    line-height: 1.9;
     color: var(--hoy-ink);
     text-decoration: none;
+  }
+  /* No desktop active-underline artifacts inside the panel. */
+  .hamburgerMenu .menu a::after {
+    content: none;
+  }
+  /* The Exposer children: an indented sub-list on a gold rail, not a
+     floating dropdown. */
+  .hamburgerMenu .mobileSubMenu {
+    border-inline-start: 2px solid var(--action-primary);
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0 0 3vw;
+    padding: 0 0 0 4.6vw;
+  }
+  .hamburgerMenu .mobileSubMenu a {
+    font-size: 4.6vw;
+    font-weight: 400;
+    line-height: 1.9;
+  }
+  /* The conversion action reads as the system's gold pill, not one more
+     text row. */
+  .hamburgerMenu .menu .mobileCtaItem {
+    margin-block-start: 4vw;
+  }
+  .hamburgerMenu .menu .mobileCtaItem a {
+    background: var(--action-primary);
+    border-radius: 12vw;
+    color: var(--action-on-primary);
+    display: inline-block;
+    font-size: 4.6vw;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    min-height: 44px;
+    padding: 3.6vw 6.5vw;
+    text-transform: uppercase;
   }
   .hamburgerMenu .footerCols {
     display: flex;

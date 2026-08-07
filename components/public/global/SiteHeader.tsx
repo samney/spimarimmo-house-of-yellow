@@ -119,6 +119,16 @@ export function SiteHeader() {
   const [light, setLight] = useState(false);
   const [hidden, setHidden] = useState(false);
 
+  /* Escape closes the mobile panel, like every other overlay on the site. */
+  useEffect(() => {
+    if (!menuOpen) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape" && !event.defaultPrevented) setMenuOpen(false);
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
   // Preserved reference behavior: header is "light" (transparent, paper text)
   // while a dark fullscreen hero (.headerBigBlock) sits under it; reverts on
   // scroll.
@@ -281,7 +291,7 @@ export function SiteHeader() {
                   ) : null}
                 </li>
               ))}
-              <li className="menu-item">
+              <li className="menu-item mobileCtaItem">
                 <Link href={PRIMARY_CTA} onClick={() => setMenuOpen(false)}>
                   {t("becomeExhibitor")}
                 </Link>
