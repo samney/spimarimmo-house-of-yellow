@@ -4,9 +4,11 @@ import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo/page-metadata";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { Reveal } from "@/components/primitives/motion/Reveal";
 import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { getBackendSeams } from "@/lib/spimar/repositories";
-import { PageCta } from "@/components/public/pages/PageCta";
+import { PageCta, PillLabel } from "@/components/public/pages/PageCta";
+import { ArrowRightIcon } from "@/components/public/home/impactIcons";
 
 /* Spec §04 /salons/{event} — the canonical edition page, rebuilt as a real
    destination page (owner remark, 2026-08-06): photographic hero with the
@@ -94,60 +96,94 @@ export default async function SalonDetail({
               <p className="salonHero__kicker">{t("detailLabel")}</p>
               <SplitTitle as="h1" className="salonHero__title" text={event.name || slug} />
               <div className="salonHero__chips">
-                <span className="etuEdition">
+                <span className="salonHeroChip salonHeroChip--gold">
                   {event.venue ? `${event.venue.city} — ${event.venue.countryCode}` : t("venueTbc")}
                 </span>
-                <span className="etuClient">{dateRange ?? t("datesTbc")}</span>
+                <span className="salonHeroChip salonHeroChip--ink">
+                  {dateRange ?? t("datesTbc")}
+                </span>
               </div>
             </div>
           </header>
 
-          {/* The facts as tiles: each independently known or independently
-              pending, so one "à confirmer" never hedges the others. */}
-          <section className="etuResults" aria-labelledby="salon-facts-title">
-            <h2 className="etuGroupTitle" id="salon-facts-title">
-              {t("detailFacts")}
-            </h2>
-            <ul className="etuTiles" role="list">
-              <li className="etuTile">
-                <span className="etuTileValue">{event.venue?.city || t("venueTbc")}</span>
-                <span className="etuTileLabel">{t("detailCity")}</span>
-              </li>
-              <li className="etuTile">
-                <span className="etuTileValue">{event.venue?.countryCode || t("venueTbc")}</span>
-                <span className="etuTileLabel">{t("detailCountry")}</span>
-              </li>
-              <li className="etuTile">
-                <span className="etuTileValue salonTileDates">{dateRange ?? t("datesTbc")}</span>
-                <span className="etuTileLabel">{t("detailDates")}</span>
-              </li>
-            </ul>
-          </section>
+          {/* Two columns give the context its power (owner direction,
+              2026-08-07): the editorial reads wide on the left; the raised
+              fact card holds the edition's identity — each fact
+              independently known or independently pending — with the
+              conversion path riding it. */}
+          <div className="salonGrid">
+            <Reveal as="section" className="salonAboutCol" aria-labelledby="salon-about-title">
+              <h2 className="etuGroupTitle" data-reveal id="salon-about-title">
+                {t("detailAbout")}
+              </h2>
+              {event.summary ? (
+                <p className="salonAboutText" data-reveal>
+                  {event.summary}
+                </p>
+              ) : null}
+              <p className="salonPendingNote" data-reveal>
+                {t("detailPending")}
+              </p>
+            </Reveal>
 
-          {event.summary ? (
-            <div className="blogArticle salonAbout">
-              <p className="blogParagraph">{event.summary}</p>
-              <p className="blogDisclaimer">{t("detailPending")}</p>
-            </div>
-          ) : (
-            <p className="blogDisclaimer salonAbout">{t("detailPending")}</p>
-          )}
-
-          {/* Action band: the conversion path live, the edition's own site
-              staged to "#" until it exists. */}
-          <div className="salcActions salonActions">
-            <Link className="salcCta salcCta--primary" href="/exposer/devenir-exposant">
-              {t("outroCta")}
-            </Link>
-            <a className="salcCta salcCta--ghost" href="#">
-              {t("salonSite")}
-            </a>
+            <Reveal as="aside" className="salonFactsCard" aria-labelledby="salon-facts-title">
+              <h2 className="salonFactsTitle" data-reveal id="salon-facts-title">
+                {t("detailBrief")}
+              </h2>
+              <dl className="salonFactsRows" data-reveal>
+                <div className="salonFactsRow">
+                  <dt>{t("detailCity")}</dt>
+                  <dd>{event.venue?.city || t("venueTbc")}</dd>
+                </div>
+                <div className="salonFactsRow">
+                  <dt>{t("detailCountry")}</dt>
+                  <dd>{event.venue?.countryCode || t("venueTbc")}</dd>
+                </div>
+                <div className="salonFactsRow">
+                  <dt>{t("detailDates")}</dt>
+                  <dd className="salonFactsDates">{dateRange ?? t("datesTbc")}</dd>
+                </div>
+              </dl>
+            </Reveal>
           </div>
 
+          {/* The branded hook (owner direction, 2026-08-07): the gold ground
+              carries the conversion moment — the edition's own name in the
+              ask, the approved audience statement beneath it, the live
+              funnel pill and the edition site staged beside it. */}
+          <Reveal as="section" className="salonHook" aria-labelledby="salon-hook-title">
+            <span className="salonHook__grain" aria-hidden="true" />
+            <div className="salonHook__copy" data-reveal>
+              <h2 className="salonHook__title" id="salon-hook-title">
+                {t("hookTitle", { place: event.venue?.city || event.name || slug })}
+              </h2>
+              <p className="salonHook__lead">{t("hookLead")}</p>
+            </div>
+            <div className="salonHook__actions" data-reveal>
+              <Link className="button dark" href="/exposer/devenir-exposant">
+                <PillLabel text={t("outroCta")} />
+                <span className="icon">
+                  <ArrowRightIcon />
+                </span>
+              </Link>
+              <a className="button outline" href="#">
+                <PillLabel text={t("salonSite")} />
+                <span className="icon">
+                  <ArrowRightIcon />
+                </span>
+              </a>
+            </div>
+          </Reveal>
+
+          {/* One action band, not two (owner review, 2026-08-07): the closing
+              PageCta carries the whole path — the live conversion CTA, the
+              edition's own site staged to "#" until it exists, and the way
+              back to the calendar. */}
           <PageCta
             text={t("outro")}
             actions={[
               { label: t("outroCta"), href: "/exposer/devenir-exposant" },
+              { label: t("salonSite"), href: "#", staged: true },
               { label: t("backToIndex"), href: "/salons" },
             ]}
           />

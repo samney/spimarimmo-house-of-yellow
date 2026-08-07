@@ -128,8 +128,16 @@
   --spimar-positive: #1f7a3d;
   --spimar-critical: #a3231d;
   --spimar-focus: #0b5cd5;
-  /* Elevation for floating panels (submenus). One place, so depth is uniform. */
-  --shadow-raised: 0 0.55vw 1.6vw rgb(20 20 15 / 10%);
+  /* Elevation. One place, so depth is uniform (owner remark, 2026-08-07:
+     light and SPREAD, never tight and dark — a single hard blob reads
+     generic). Three warm-ink layers each: a contact line, a soft body and a
+     wide ambient falloff. `-lifted` is the hover/floating tier. */
+  --shadow-raised:
+    0 0.15vw 0.5vw rgb(20 20 15 / 3%), 0 0.9vw 2.6vw rgb(20 20 15 / 5%),
+    0 2vw 5vw rgb(20 20 15 / 6%);
+  --shadow-lifted:
+    0 0.3vw 0.8vw rgb(20 20 15 / 4%), 0 1.6vw 4vw rgb(20 20 15 / 7%),
+    0 3.4vw 8vw rgb(20 20 15 / 8%);
 
   /* --- L1: spacing scale ---------------------------------------------------
      Viewport-relative like the type ladder so rhythm scales with composition

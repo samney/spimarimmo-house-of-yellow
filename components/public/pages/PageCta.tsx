@@ -17,7 +17,7 @@ export type PageCtaAction = {
   readonly staged?: boolean;
 };
 
-function PillLabel({ text }: { text: string }) {
+export function PillLabel({ text }: { text: string }) {
   return (
     <span className="label">
       <span className="fixedLabel">{text}</span>

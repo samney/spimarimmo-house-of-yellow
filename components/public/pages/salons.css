@@ -124,7 +124,7 @@
 
 .salcCard:hover {
   border-color: color-mix(in srgb, var(--action-primary) 45%, var(--border-subtle));
-  box-shadow: 0 0.6vw 1.8vw color-mix(in srgb, var(--spimar-black) 10%, transparent);
+  box-shadow: var(--shadow-lifted);
   transform: translateY(-0.15vw);
 }
 
@@ -358,8 +358,12 @@
   margin-block-end: var(--space-sm);
 }
 
+/* Contained so the identity is on screen at load — the edition name is the
+   page's first read, never below the fold (owner review, 2026-08-07). */
 .salonHero {
   aspect-ratio: 21 / 8;
+  margin-block-start: var(--space-sm);
+  max-block-size: 30vw;
   min-block-size: 18vw;
 }
 
@@ -378,10 +382,10 @@
   flex-direction: column;
   gap: var(--space-2xs);
   inset-block-end: var(--space-md);
-  inset-inline-start: var(--space-md);
+  inset-inline: var(--space-md);
   position: absolute;
   color: var(--on-inverse);
-  max-inline-size: 70%;
+  max-inline-size: 72%;
 }
 
 .salonHero__kicker {
@@ -408,19 +412,199 @@
   margin-block-start: var(--space-2xs);
 }
 
+/* The hero's own chips — the études chip inherited the hero's inverse ink
+   and rendered white-on-white. Gold carries the place, ink the dates. */
+.salonHeroChip {
+  border-radius: var(--radius-pill);
+  font-size: var(--text-support);
+  font-weight: 600;
+  padding: 0.2vw var(--space-sm);
+}
+
+.salonHeroChip--gold {
+  background: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.salonHeroChip--ink {
+  background: color-mix(in srgb, var(--spimar-black) 62%, transparent);
+  color: var(--on-inverse);
+}
+
 .salonTileDates {
   font-size: var(--text-small-title);
 }
 
-.salonAbout {
+/* --- Detail composition (owner direction, 2026-08-07) ------------------------
+   Editorial wide on the left, the raised fact card on the right, then the
+   branded hook band. */
+
+.salonGrid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: minmax(0, 1fr) 24vw;
   margin-block-start: var(--space-lg);
 }
 
-.salonActions {
-  margin-block-start: var(--space-lg);
+.salonAboutCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.salonAboutText {
+  font-size: var(--text-small-title);
+  line-height: 1.5;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+.salonPendingNote {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-inline-start: 3px solid var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.6;
+  margin: var(--space-2xs) 0 0;
+  max-width: var(--measure-prose);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.salonFactsCard {
+  align-self: start;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.salonFactsTitle {
+  border-block-end: 1px solid var(--border-subtle);
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0;
+  padding-block-end: var(--space-xs);
+  text-transform: uppercase;
+}
+
+.salonFactsRows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.salonFactsRow {
+  align-items: baseline;
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  padding-block: var(--space-xs);
+}
+
+.salonFactsRow + .salonFactsRow {
+  border-block-start: 1px dashed var(--border-subtle);
+}
+
+.salonFactsRow dt {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+}
+
+.salonFactsRow dd {
+  font-size: var(--text-support);
+  font-weight: 600;
+  margin: 0;
+  text-align: end;
+}
+
+.salonFactsDates {
+  background: color-mix(in srgb, var(--action-primary) 14%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--spimar-gold-text);
+  padding: 0.15vw var(--space-xs);
+}
+
+/* --- The branded hook --------------------------------------------------------- */
+
+.salonHook {
+  align-items: center;
+  background: var(--surface-accent);
+  border-radius: var(--radius-xl);
+  color: var(--on-surface);
+  display: flex;
+  gap: var(--space-lg);
+  isolation: isolate;
+  justify-content: space-between;
+  margin-block-start: var(--space-xl);
+  overflow: hidden;
+  padding: var(--space-lg);
+  position: relative;
+}
+
+.salonHook__grain {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--spimar-black) 16%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 1.7vw 1.7vw;
+  inset: 0;
+  mask-image: linear-gradient(115deg, #000 0%, transparent 60%);
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+.salonHook__copy {
+  max-inline-size: 46vw;
+}
+
+.salonHook__title {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 var(--space-2xs);
+  text-wrap: balance;
+}
+
+.salonHook__lead {
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.salonHook__actions {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
 }
 
 @media (max-width: 580px) {
+  .salonGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .salonHook {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+  }
+
+  .salonHook__copy {
+    max-inline-size: 100%;
+  }
+
   .salonHero {
     aspect-ratio: 4 / 3;
   }
