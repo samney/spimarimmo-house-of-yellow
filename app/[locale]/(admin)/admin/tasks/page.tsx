@@ -41,6 +41,33 @@ export default async function TasksScreen() {
     return lead ? lead.organisation || lead.name : leadId;
   };
 
+  /* ---------------------------------------------------------------- ADM-072
+     Ma journée: the operator's personal cut of the same real records. "My"
+     means the lead is assigned to session.email — tasks carry no assignee of
+     their own, they follow their lead's owner. */
+  const now = new Date();
+  const in7days = new Date(now.getTime() + 7 * 86_400_000);
+  const myLeadIds = new Set(
+    scoped.filter((lead) => lead.assignee === session.email).map((lead) => lead.id),
+  );
+  const myOpenTasks = openTasks.filter((task) => myLeadIds.has(task.leadId));
+  const overdue = myOpenTasks.filter((task) => new Date(task.dueAt) < now);
+  const upcoming = myOpenTasks.filter(
+    (task) => new Date(task.dueAt) >= now && new Date(task.dueAt) <= in7days,
+  );
+
+  /* "Newly assigned": the lead's most recent assignment entry is younger than
+     48 h. Read from the audit trail rather than guessed from updatedAt, which
+     any note would move. */
+  const newlyAssigned = scoped.filter((lead) => {
+    if (lead.assignee !== session.email) return false;
+    const lastAssignment = [...lead.activity]
+      .reverse()
+      .find((entry) => entry.kind === "assignment");
+    if (!lastAssignment) return false;
+    return now.getTime() - new Date(lastAssignment.at).getTime() < 48 * 3_600_000;
+  });
+
   const unassigned = scoped.filter((lead) => !lead.assignee);
   const mine = scoped.filter(
     (lead) => lead.assignee === session.email && lead.stage !== "won" && lead.stage !== "lost",
@@ -68,6 +95,97 @@ export default async function TasksScreen() {
         title="Tâches"
         lede="Les relances écrites par la chaîne d’acquisition, les checklists d’onboarding ouvertes par un lead gagné, et le travail dérivé de l’état réel des leads."
       />
+
+      {/* ------------------------------------------------------------ ADM-072
+          Ma journée. The operator's personal slice, first: what is late, what
+          is due, what just landed on them. Appointments are stated as not
+          connected rather than omitted (owner decision, 2026-08-07). */}
+      <section className="section" aria-labelledby="my-day-heading">
+        <div className="cluster" style={{ marginBlockEnd: 12 }}>
+          <h2 id="my-day-heading">Ma journée</h2>
+          <span className="tertiary">{session.email}</span>
+        </div>
+
+        <div className="grid grid--3">
+          <article className={`card${overdue.length > 0 ? " card--emphasis" : " card--flat"}`}>
+            <div className="card__head">
+              <span className="card__label">En retard</span>
+            </div>
+            <p className="metric metric--panel">{overdue.length}</p>
+            {overdue.length === 0 ? (
+              <p className="card__meta">Aucune relance en retard.</p>
+            ) : (
+              <ul className="taskChecklist">
+                {overdue.map((task) => (
+                  <li key={task.id} className="taskChecklist__row">
+                    <Link
+                      href={`/admin/crm/leads/${task.leadId}`}
+                      className="cell__link taskChecklist__title"
+                    >
+                      {task.title}
+                    </Link>
+                    <span className="mono taskChecklist__due">{task.dueAt.slice(0, 10)}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+
+          <article className="card card--flat">
+            <div className="card__head">
+              <span className="card__label">À venir (7 jours)</span>
+            </div>
+            <p className="metric metric--panel">{upcoming.length}</p>
+            {upcoming.length === 0 ? (
+              <p className="card__meta">Rien d’échu sous sept jours.</p>
+            ) : (
+              <ul className="taskChecklist">
+                {upcoming.slice(0, 5).map((task) => (
+                  <li key={task.id} className="taskChecklist__row">
+                    <Link
+                      href={`/admin/crm/leads/${task.leadId}`}
+                      className="cell__link taskChecklist__title"
+                    >
+                      {task.title}
+                    </Link>
+                    <span className="mono taskChecklist__due">{task.dueAt.slice(0, 10)}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+
+          <article className="card card--flat">
+            <div className="card__head">
+              <span className="card__label">Nouvellement assignés</span>
+            </div>
+            <p className="metric metric--panel">{newlyAssigned.length}</p>
+            {newlyAssigned.length === 0 ? (
+              <p className="card__meta">
+                Aucun lead ne vous a été assigné ces 48 dernières heures.
+              </p>
+            ) : (
+              <ul className="taskChecklist">
+                {newlyAssigned.slice(0, 5).map((lead) => (
+                  <li key={lead.id} className="taskChecklist__row">
+                    <Link
+                      href={`/admin/crm/leads/${lead.id}`}
+                      className="cell__link taskChecklist__title"
+                    >
+                      {lead.organisation || lead.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        </div>
+
+        <p className="tertiary" style={{ marginBlockStart: 12 }}>
+          Rendez-vous : non disponibles — aucune prise de rendez-vous n’est connectée (ADM-082,
+          différé tant qu’aucun flux public n’en produit).
+        </p>
+      </section>
 
       <section className="section" aria-labelledby="open-tasks-heading">
         <div className="cluster" style={{ marginBlockEnd: 12 }}>
