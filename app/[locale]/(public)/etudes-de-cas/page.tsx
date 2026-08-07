@@ -4,11 +4,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/public/pages/PageHeader";
 import { PageCta } from "@/components/public/pages/PageCta";
 import { getBackendSeams } from "@/lib/spimar/repositories";
-import {
-  CaseStudiesListing,
-  type CaseFilters,
-  type CmsCaseCard,
-} from "@/components/public/pages/CaseStudiesListing";
+import type { CmsCaseCard } from "@/components/public/pages/CaseStudiesListing";
+import { CaseStudiesBento } from "@/components/public/pages/CaseStudiesBento";
 import type { CaseObjective } from "@/components/public/pages/case-studies-data";
 
 /* /etudes-de-cas — the end-to-end listing (owner note, D-026): image rows,
@@ -42,12 +39,7 @@ export default async function EtudesDeCas({
   const locale = rawLocale === "en" ? ("en" as const) : ("fr" as const);
   const t = await getTranslations("caseStudies");
 
-  const { edition, objectif, page } = await searchParams;
-  const filters: CaseFilters = {
-    edition: edition || undefined,
-    objective: OBJECTIVES.find((o) => o === objectif),
-    page: Number.parseInt(page ?? "1", 10) || 1,
-  };
+  const { edition, objectif } = await searchParams;
 
   const pages = await getBackendSeams().content.listPages({ siteId: "spimar", locale });
   const cmsCases: CmsCaseCard[] = pages
@@ -63,7 +55,12 @@ export default async function EtudesDeCas({
       <PageHeader index="09" label={t("label")} title={t("title")} lead={t("lead")} />
       <section className="spimarListPage">
         <div className="contentWrapper">
-          <CaseStudiesListing locale={locale} cmsCases={cmsCases} filters={filters} />
+          <CaseStudiesBento
+            locale={locale}
+            cmsCases={cmsCases}
+            initialEdition={edition || undefined}
+            initialObjective={OBJECTIVES.find((o) => o === objectif)}
+          />
           <PageCta
             text={t("outro")}
             actions={[{ label: t("outroCta"), href: "/exposer/devenir-exposant" }]}

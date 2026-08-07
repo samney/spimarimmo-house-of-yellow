@@ -1100,7 +1100,12 @@
     },
     "readCase": "Lire l'étude de cas",
     "resultsTitle": "Résultats",
-    "paginationLabel": "Pages des études de cas"
+    "paginationLabel": "Pages des études de cas",
+    "prevCase": "Étude précédente",
+    "nextCase": "Étude suivante",
+    "closeCase": "Fermer l’étude",
+    "openFullPage": "Ouvrir la page complète",
+    "cmsBodyNote": "L’étude complète se lit sur sa page dédiée."
   },
   "hero": {
     "eyebrow": "Promoteurs immobiliers",

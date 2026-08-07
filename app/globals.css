@@ -27,6 +27,7 @@
 @import "../components/public/pages/spimar-pages.css";
 @import "../components/public/pages/salons.css";
 @import "../components/public/pages/case-studies.css";
+@import "../components/public/pages/case-bento.css";
 @import "../components/public/pages/blog.css";
 @import "../components/public/pages/library.css";
 /* Public reference-status page (/suivi). Scoped to its own `.status*` classes;
@@ -136,8 +137,7 @@
     0 0.15vw 0.5vw rgb(20 20 15 / 3%), 0 0.9vw 2.6vw rgb(20 20 15 / 5%),
     0 2vw 5vw rgb(20 20 15 / 6%);
   --shadow-lifted:
-    0 0.3vw 0.8vw rgb(20 20 15 / 4%), 0 1.6vw 4vw rgb(20 20 15 / 7%),
-    0 3.4vw 8vw rgb(20 20 15 / 8%);
+    0 0.3vw 0.8vw rgb(20 20 15 / 4%), 0 1.6vw 4vw rgb(20 20 15 / 7%), 0 3.4vw 8vw rgb(20 20 15 / 8%);
 
   /* --- L1: spacing scale ---------------------------------------------------
      Viewport-relative like the type ladder so rhythm scales with composition

@@ -1,0 +1,456 @@
+/* ==========================================================================
+   Études de cas — the bento (owner redesign, 2026-08-07)
+   ==========================================================================
+   One merged collection in a six-column bento; a case opens IN PLACE as a
+   full-row panel and the grid stretches down around it. Binds only to L2
+   tokens; `cb` prefix. Reuses the shared vocabulary where it exists
+   (etuFilter pills, etuTiles result tiles, salcCta pills, salonHeroChip). */
+
+.cbWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.cbToolbar {
+  align-items: center;
+  border-block: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  padding-block: var(--space-sm);
+}
+
+.cbFilterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.cbFilterGroup + .cbFilterGroup {
+  border-inline-start: 1px solid var(--border-subtle);
+  padding-inline-start: var(--space-md);
+}
+
+.cbDisclaimer {
+  margin-inline-start: auto;
+}
+
+/* --- The grid ---------------------------------------------------------------- */
+
+.cbGrid {
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.cbTile {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+  color: var(--on-inverse);
+  display: block;
+  grid-column: span 2;
+  min-block-size: 17vw;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+  transition:
+    box-shadow var(--dur-micro) var(--ease-out-ref),
+    transform var(--dur-micro) var(--ease-out-ref);
+}
+
+.cbTile[data-featured] {
+  grid-column: span 4;
+  min-block-size: 21vw;
+}
+
+.cbTile:hover {
+  box-shadow: var(--shadow-lifted);
+  transform: translateY(-0.15vw);
+}
+
+.cbTile:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cbTile {
+    transition: none;
+  }
+
+  .cbTile:hover {
+    transform: none;
+  }
+}
+
+.cbTilePhoto {
+  object-fit: cover;
+}
+
+.cbTileInk {
+  background:
+    radial-gradient(
+      120% 90% at 20% 0%,
+      color-mix(in srgb, var(--action-primary) 14%, transparent) 0%,
+      transparent 55%
+    ),
+    var(--surface-inverse);
+  inset: 0;
+  position: absolute;
+}
+
+.cbTileScrim {
+  background: linear-gradient(
+    200deg,
+    color-mix(in srgb, var(--spimar-black) 6%, transparent) 30%,
+    color-mix(in srgb, var(--spimar-black) 78%, transparent) 100%
+  );
+  inset: 0;
+  position: absolute;
+}
+
+.cbTileBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  inset-block-end: var(--space-sm);
+  inset-inline: var(--space-sm);
+  position: absolute;
+}
+
+.cbTileChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.cbTileChip {
+  background: var(--action-primary);
+  border-radius: var(--radius-pill);
+  color: var(--action-on-primary);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.12vw var(--space-xs);
+}
+
+.cbTileChip--soft {
+  background: color-mix(in srgb, var(--spimar-black) 55%, transparent);
+  color: var(--on-inverse);
+}
+
+.cbTileTitle {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.cbTile[data-featured] .cbTileTitle {
+  font-size: var(--text-heading-sm);
+}
+
+.cbTileKicker {
+  color: color-mix(in srgb, var(--on-inverse) 82%, transparent);
+  font-size: var(--text-support);
+}
+
+.cbTileOpen {
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-block-start: var(--space-2xs);
+  text-transform: uppercase;
+}
+
+/* --- The in-place panel -------------------------------------------------------- */
+
+.cbPanelSlot {
+  grid-column: 1 / -1;
+}
+
+.cbPanel {
+  animation: cbPanelIn 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  background: var(--surface-raised);
+  border: 1px solid color-mix(in srgb, var(--action-primary) 35%, var(--border-subtle));
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lifted);
+  overflow: hidden;
+}
+
+@keyframes cbPanelIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -0.8vw, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cbPanel {
+    animation: none;
+  }
+}
+
+.cbPanelInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+}
+
+.cbPanelHead {
+  align-items: flex-start;
+  border-block-end: 1px solid var(--border-subtle);
+  display: flex;
+  gap: var(--space-md);
+  justify-content: space-between;
+  padding-block-end: var(--space-sm);
+}
+
+.cbPanelKicker {
+  align-items: center;
+  color: var(--on-surface-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-support);
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-2xs);
+}
+
+.cbPanelEdition {
+  background: color-mix(in srgb, var(--action-primary) 14%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--spimar-gold-text);
+  font-weight: 600;
+  padding: 0.1vw var(--space-xs);
+}
+
+.cbPanelTitle {
+  font-size: var(--text-heading-sm);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cbPanelTitle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.cbPanelControls {
+  display: flex;
+  flex: none;
+  gap: var(--space-2xs);
+}
+
+.cbPanelNav {
+  align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  block-size: 2.4vw;
+  color: var(--on-surface);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--text-support);
+  inline-size: 2.4vw;
+  justify-content: center;
+  min-block-size: 38px;
+  min-inline-size: 38px;
+  transition:
+    background-color var(--dur-micro) var(--ease-out-ref),
+    border-color var(--dur-micro) var(--ease-out-ref);
+}
+
+.cbPanelNav:hover {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.cbPanelNav:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cbPanelGrid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 30vw minmax(0, 1fr);
+}
+
+.cbPanelMedia {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.cbPanelMedia .salonHeroChip {
+  inset-block-end: var(--space-xs);
+  inset-inline-start: var(--space-xs);
+  position: absolute;
+}
+
+.cbPanelPhoto {
+  object-fit: cover;
+}
+
+.cbPanelBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.cbPanelSummary {
+  font-size: var(--text-small-title);
+  line-height: 1.45;
+  margin: 0;
+  max-width: var(--measure-prose);
+}
+
+.cbPanelSection {
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.cbPanelTiles {
+  margin: 0;
+}
+
+.cbPanelQuote {
+  border-inline-start: 3px solid var(--action-primary);
+  margin: 0;
+  padding-inline-start: var(--space-sm);
+}
+
+.cbPanelQuote blockquote {
+  font-size: var(--text-small-title);
+  font-style: italic;
+  line-height: 1.4;
+  margin: 0 0 var(--space-2xs);
+}
+
+.cbPanelQuote figcaption {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+}
+
+.cbPanelMore {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  margin: 0;
+}
+
+.cbPanelActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-block-start: var(--space-2xs);
+}
+
+/* --- The next-case suggestion --------------------------------------------------- */
+
+.cbNext {
+  align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  text-align: start;
+  transition: border-color var(--dur-micro) var(--ease-out-ref);
+}
+
+.cbNext:hover {
+  border-color: var(--action-primary);
+}
+
+.cbNext:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cbNextLabel {
+  color: var(--spimar-gold-text);
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cbNextTitle {
+  flex: 1;
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.cbNextArrow {
+  color: var(--spimar-gold-text);
+  flex: none;
+  font-size: var(--text-small-title);
+}
+
+/* --- Restatements ---------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .cbGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cbTile,
+  .cbTile[data-featured] {
+    grid-column: span 1;
+    min-block-size: 34vw;
+  }
+
+  .cbPanelGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cbPanelMedia {
+    inline-size: 100%;
+  }
+}
+
+@media (max-width: 580px) {
+  .cbGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cbTile,
+  .cbTile[data-featured] {
+    min-block-size: 58vw;
+  }
+
+  .cbPanelInner {
+    padding: var(--space-md);
+  }
+
+  .cbPanelNav {
+    block-size: 10vw;
+    inline-size: 10vw;
+  }
+
+  .cbNext {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .cbDisclaimer {
+    margin-inline-start: 0;
+  }
+}

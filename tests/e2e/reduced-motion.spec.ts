@@ -35,7 +35,9 @@ const CONTENT_ROUTES = [
   /* The salons calendar (D-026) renders .salcList rows; the contract —
      every row fully visible, none stranded mid-reveal — is unchanged. */
   { path: "/fr/salons", list: ".salcList", item: "li" },
-  { path: "/fr/etudes-de-cas", list: ".etuList", item: "li" },
+  /* The bento grid (owner redesign, 2026-08-07): tiles are direct
+     children of .cbGrid. */
+  { path: "/fr/etudes-de-cas", list: ".cbGrid", item: "a" },
 ];
 
 /** Emulate the preference, navigate, and refuse to continue unless the page

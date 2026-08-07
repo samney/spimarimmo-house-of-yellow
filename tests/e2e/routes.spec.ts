@@ -234,6 +234,43 @@ test("visibility device runs its entrance and replays on tab change", async ({ p
   await expect(page.locator(".visRailCard")).toHaveCount(5);
 });
 
+/* Owner redesign 2026-08-07 — the études bento: one merged collection whose
+   cases open IN PLACE (full-row panel, layout stretches down), with smart
+   controls (next/prev/close, Escape restores focus) and the next-case
+   suggestion. Tiles stay real links to the canonical detail routes. */
+test("études bento opens cases in place with smart controls", async ({ page }) => {
+  await page.goto("/etudes-de-cas");
+  await page.getByRole("button", { name: "Deny" }).click();
+
+  const tiles = page.locator(".cbGrid > a.cbTile");
+  expect(await tiles.count()).toBeGreaterThanOrEqual(5);
+  await expect(tiles.first()).toHaveAttribute("href", /\/etudes-de-cas\/.+/);
+
+  // open the first case in place
+  await tiles.first().click();
+  const panel = page.locator(".cbPanel");
+  await expect(panel).toBeVisible();
+  await expect(tiles.first()).toHaveAttribute("aria-expanded", "true");
+  const firstTitle = await panel.locator(".cbPanelTitle").textContent();
+
+  // the next-case control moves to a different case in the same panel slot
+  await panel
+    .getByRole("button", { name: /suivante/i })
+    .first()
+    .click();
+  await expect(panel.locator(".cbPanelTitle")).not.toHaveText(firstTitle ?? "");
+
+  // Escape closes and the layout contracts back
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".cbPanel")).toHaveCount(0);
+
+  // objective filter narrows the collection
+  await page.getByRole("button", { name: "Leads" }).click();
+  const filtered = await page.locator(".cbGrid > a.cbTile").count();
+  expect(filtered).toBeLessThan(5);
+  expect(filtered).toBeGreaterThan(0);
+});
+
 /* Brochure quick preview (D-026): the [01] trigger opens a modal with the
    real PDF embedded and a genuine download action on the same file; Escape
    closes and restores focus. */

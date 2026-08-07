@@ -1100,7 +1100,12 @@
     },
     "readCase": "Read the case study",
     "resultsTitle": "Results",
-    "paginationLabel": "Case-study pages"
+    "paginationLabel": "Case-study pages",
+    "prevCase": "Previous case study",
+    "nextCase": "Next case study",
+    "closeCase": "Close the case study",
+    "openFullPage": "Open the full page",
+    "cmsBodyNote": "The full case study reads on its dedicated page."
   },
   "hero": {
     "eyebrow": "Property developers",
