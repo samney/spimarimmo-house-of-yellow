@@ -1537,3 +1537,32 @@ admin progress lived on different lineages until the unification.
 **Consequence.** Session startup is OPERATING-MODE plus the task's contract.
 Branch archaeology is over — history lives in tags. Identity drift is a
 review-blocking defect, not a taste note.
+
+## D-043 — 2026-08-07 — The design system is LOCKED; new work derives from identity
+
+**Context.** The homepage is complete: sections, choreography, the breathing
+pass (fast split-text voice, reveals, counters, page transitions), system
+buttons, accent family, honesty patterns. The owner's direction before
+iterating the remaining routes: freeze this as the product's identity so all
+further implementation — including work designed "from scratch" — derives
+from it and cannot drift.
+
+**Decision.**
+
+1. `DESIGN-CONTRACT.md` is rewritten as the **Lock-Contract**: tokens, section
+   and child-page anatomy, the one button anatomy and its three variants, the
+   gold accent family, the full motion system (engine, tokens, text voices,
+   Reveal/Counter laws, section-choreography state machine, page transitions,
+   reduced-motion law), interaction patterns, honesty rules, icons, responsive
+   regime and QA gates — with the **design-from-identity protocol** at the
+   top: reuse verbatim → compose from vocabulary → only then add a new
+   pattern, recorded in the contract in the same PR.
+2. The homepage is the reference implementation. Where no owner mock exists,
+   the Lock-Contract IS the design direction.
+3. Deviating from the contract without recording it is a review-blocking
+   defect (extends D-042's identity rule with the concrete inventory).
+
+**Consequence.** Route iteration can proceed at pace: sessions load
+OPERATING-MODE plus the Lock-Contract and build without re-deriving taste.
+The mechanical guards stay: token ratchet, motion-foundation test (orphan
+list must stay empty), contract e2e suites.

@@ -54,16 +54,21 @@ Every new implementation must carry the site's identity:
 - When a genuinely new pattern is needed, add it to
   `docs/claude-code/DESIGN-CONTRACT.md` in the same PR — that is how the
   system scales. A one-off style that lives only in one component is drift.
+- **The design system is LOCKED (D-043).** `DESIGN-CONTRACT.md` is the
+  Lock-Contract: tokens, anatomy, buttons, accent family, the full motion
+  system and the design-from-identity protocol. New routes and features are
+  designed FROM it — reuse verbatim, then compose from vocabulary, and only
+  then extend the contract itself.
 
 ## The contracts (load per task, not per session)
 
-| Task touches…      | Read                                                                  |
-| ------------------ | --------------------------------------------------------------------- |
-| Public UI          | `docs/claude-code/DESIGN-CONTRACT.md` + `docs/pdf/Plan.md`            |
-| Any code           | `docs/claude-code/ENGINEERING-CONTRACT.md`                            |
-| Admin/CRM/CMS      | `docs/admin-control/` (HANDOFF, QUEUE, ADR, DASHBOARD-SCOPE)          |
-| Release/deploy     | `docs/claude-code/SPIMARIMMO_FINAL_STABILIZATION_CLAUDE_MASTER.md`    |
-| Past decisions     | `docs/claude-code/DECISIONS.md` (append-only)                         |
+| Task touches…  | Read                                                               |
+| -------------- | ------------------------------------------------------------------ |
+| Public UI      | `docs/claude-code/DESIGN-CONTRACT.md` + `docs/pdf/Plan.md`         |
+| Any code       | `docs/claude-code/ENGINEERING-CONTRACT.md`                         |
+| Admin/CRM/CMS  | `docs/admin-control/` (HANDOFF, QUEUE, ADR, DASHBOARD-SCOPE)       |
+| Release/deploy | `docs/claude-code/SPIMARIMMO_FINAL_STABILIZATION_CLAUDE_MASTER.md` |
+| Past decisions | `docs/claude-code/DECISIONS.md` (append-only)                      |
 
 ## Session workflow
 
