@@ -129,9 +129,16 @@ export async function submitEnquiry(raw: unknown): Promise<EnquiryResult> {
     // The public reference is the id the visitor can quote; it is opaque and
     // PII-free, so it is safe to hand back to the browser.
     return { status: "success", id: receipt.publicReference };
-  } catch {
-    // Nothing durable happened, so the caller must not report success.
-    // The body is never logged — it may contain personal data.
+  } catch (error) {
+    /* Nothing durable happened, so the caller must not report success.
+       The submission body is never logged — it may contain personal data —
+       but the FAILURE CLASS is: a storage outage that only ever surfaces as
+       a generic banner is undiagnosable in production. Driver errors carry
+       host and code, never credentials. */
+    console.error(
+      "enquiry acquisition failed:",
+      error instanceof Error ? `${error.name}: ${error.message}` : String(error),
+    );
     return { status: "error" };
   }
 }
