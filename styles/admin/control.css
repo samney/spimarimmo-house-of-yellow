@@ -56,11 +56,14 @@
 .shell {
   display: grid;
   grid-template-columns: var(--rail-width) var(--sidebar-width) minmax(0, 1fr);
-  min-height: calc(100vh - var(--space-6));
-  margin: var(--space-4);
+  min-height: 100vh;
+  /* Full-bleed (owner, 2026-08-07): the blueprint's floating composition —
+     outer margin, rounded corners, drop shadow — read as a windowed demo
+     rather than a product. Mobile was already full-bleed; the desktop now
+     matches, and depth comes from the surface hierarchy alone. */
+  margin: 0;
   background: var(--admin-shell);
-  border-radius: var(--radius-shell);
-  box-shadow: var(--shadow-shell);
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -1131,9 +1134,6 @@
 @media (max-width: 860px) {
   .shell {
     grid-template-columns: minmax(0, 1fr);
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
     min-height: 100vh;
   }
 
@@ -2030,4 +2030,39 @@
   font-size: var(--text-meta);
   border-radius: var(--radius-small);
   max-inline-size: 30rem;
+}
+
+/* ------------------------------------------------------------ brand (DEMO-3)
+   The public site's own marks, reused verbatim. The glyph rides the gold
+   square the rail already had; the wordmark SVG scales to the sidebar. */
+
+.sidebar__glyph {
+  display: grid;
+  place-items: center;
+  inline-size: 34px;
+  block-size: 34px;
+  flex-shrink: 0;
+  border-radius: var(--radius-control);
+  background: var(--brand-gold);
+  color: var(--brand-ink);
+}
+
+.sidebar__glyph svg {
+  inline-size: 22px;
+  block-size: 22px;
+}
+
+.sidebar__wordmarkSvg {
+  display: block;
+  color: var(--text-primary);
+}
+
+.sidebar__wordmarkSvg svg {
+  inline-size: 132px;
+  block-size: auto;
+}
+
+.rail__mark svg {
+  inline-size: 24px;
+  block-size: 24px;
 }

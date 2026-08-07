@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Icon, SpimarMark } from "../icons";
+import { Icon } from "../icons";
+import { SpimarStandGlyph } from "@/components/public/global/logos";
 import { UTILITY_ITEMS, WORKSPACES, normalize, workspaceForPath } from "@/lib/admin/navigation";
 import type { Permission } from "@/lib/admin/permissions";
 
@@ -21,7 +22,7 @@ export function GlobalRail({ granted }: { granted: readonly Permission[] }) {
   return (
     <nav className="rail" aria-label="Espaces de travail">
       <span className="rail__mark">
-        <SpimarMark size={22} />
+        <SpimarStandGlyph />
       </span>
 
       {WORKSPACES.filter((w) => has(w.permission)).map((workspace) => {

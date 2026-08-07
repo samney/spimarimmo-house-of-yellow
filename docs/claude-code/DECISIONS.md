@@ -1575,6 +1575,9 @@ owner resolved it in session: the product deploys to
 **`spimarimmo.vercel.app`**; the legacy site keeps the custom domain for now.
 
 **Decision.** Release means the Vercel deployment at `spimarimmo.vercel.app`
+(realised as project **`spimarimmo-app`**, production URL
+`https://spimarimmo-app.vercel.app` — the bare name was taken; same decision,
+corrected hostname, 2026-08-07 later the same day)
 serving the current release branch. No DNS change, no redirect map and no
 Arabic-content decision is required for this release. The custom-domain
 cutover becomes a **later, separate decision**, not a release gate.

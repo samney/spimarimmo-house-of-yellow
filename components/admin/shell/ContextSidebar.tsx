@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SpimarMark } from "../icons";
+import { SpimarStandGlyph, SpimarWordmark } from "@/components/public/global/logos";
 import { isActive, workspaceForPath } from "@/lib/admin/navigation";
 import type { Permission } from "@/lib/admin/permissions";
 
@@ -25,11 +25,16 @@ export function ContextSidebar({
 
   return (
     <aside className="sidebar">
+      {/* The public site's mark + wordmark, verbatim (DEMO-3). The wordmark
+          stays typeset because no official logo asset exists yet — that open
+          blocker is the website's to resolve, and the console must not invent
+          a different identity while it waits. */}
       <Link href="/admin" className="sidebar__brand">
-        <SpimarMark size={26} />
-        <span className="sidebar__wordmark">
-          SPIMAR
-          <span>IMMO</span>
+        <span className="sidebar__glyph">
+          <SpimarStandGlyph />
+        </span>
+        <span className="sidebar__wordmarkSvg">
+          <SpimarWordmark title="SPIMARIMMO" />
         </span>
       </Link>
 
