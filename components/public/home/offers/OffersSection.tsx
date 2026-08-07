@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { submitEnquiry } from "@/app/actions/enquiry";
 import { DesignedSelect } from "@/components/public/global/DesignedSelect";
 import { Marquee } from "@/components/primitives/motion/Marquee";
+import { SectionEyebrow } from "../SectionEyebrow";
 import { ArrowRightIcon, ShieldCheckIcon, StarIcon, TargetIcon } from "../impactIcons";
 import { BarsIcon, CameraIcon, CheckCircleIcon, MegaphoneIcon, MicIcon } from "../visibilityIcons";
 import { EyeIcon, LeadIcon } from "../proofIcons";
@@ -254,14 +255,22 @@ export function OffersSection({
 
   return (
     <section className="offSection" aria-labelledby="off-title">
-      <div className="offInner">
-        <header className="offHeader">
-          <div className="offHeadings">
-            <p className="offEyebrow">{t("eyebrow")}</p>
-            <Heading className="offTitle" id="off-title" ref={titleRef} tabIndex={-1}>
+      {/* The shared PageHeader band (owner remark, 2026-08-07): the wizard
+          opened with its own oversized header while every other child page
+          uses one anatomy. Same classes, same band — only the behavior this
+          wizard needs is kept: the title swaps per phase and receives focus
+          on phase change, so it stays a plain heading rather than the
+          split-text island. */}
+      <header className="pageHeader">
+        <span className="pageHeader__wash" aria-hidden="true" />
+        <span className="pageHeader__grain" aria-hidden="true" />
+        <div className="contentWrapper">
+          <div className="pageHeader__inner">
+            <SectionEyebrow label={t("eyebrow")} />
+            <Heading className="pageHeader__title" id="off-title" ref={titleRef} tabIndex={-1}>
               {t(`header.${headerKey}.title`)}
             </Heading>
-            <p className="offLead">
+            <p className="pageHeader__lead">
               {headerKey === "request"
                 ? tierEntry
                   ? t("header.request.lead", { tier: t(`tiers.${tierEntry.key}.name`) })
@@ -271,13 +280,16 @@ export function OffersSection({
             {detailHref ? (
               /* Staged to "#" (owner rule, 2026-08-07): the detail route
                  awaits validation; the label holds the placement. */
-              <a className="offDetailLink" href="#">
-                {t("detailCta")}
-              </a>
+              <div className="pageHeader__actions">
+                <a className="offDetailLink" href="#">
+                  {t("detailCta")}
+                </a>
+              </div>
             ) : null}
           </div>
-        </header>
-
+        </div>
+      </header>
+      <div className="offInner">
         {/* The journey rail (owner remark, 2026-08-07): the stepper and the
             skip action no longer float in the header's dead corner — they
             share one raised strip under the title, where the progress reads

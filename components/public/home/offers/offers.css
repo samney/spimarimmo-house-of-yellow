@@ -10,58 +10,23 @@
 .offSection {
   background: var(--surface-page);
   color: var(--on-surface);
-  padding: var(--space-xl) var(--space-gutter);
+  padding: 0 0 var(--space-xl);
 }
 
+/* The shared PageHeader band opens the page full-bleed; the wizard content
+   carries the gutters itself. */
 .offInner {
   margin-inline: auto;
   max-width: 95vw;
+  padding: var(--space-md) var(--space-gutter) 0;
 }
 
 /* --- Header + stepper -------------------------------------------------------- */
 
-.offHeader {
-  align-items: flex-start;
-  display: flex;
-  gap: var(--space-lg);
-  justify-content: space-between;
-  margin-bottom: var(--space-md);
-}
-
-.offEyebrow {
-  /* WCAG AA: action gold fails at this size on paper; see --spimar-gold-text. */
-  color: var(--spimar-gold-text);
-  font-size: var(--text-support);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  margin: 0 0 var(--space-sm);
-  text-transform: uppercase;
-}
-
-.offEyebrowIndex {
-  font-variant-numeric: tabular-nums;
-}
-
-.offTitle {
-  font-size: var(--text-heading-lg);
-  font-weight: 600;
-  line-height: 1.1;
-  margin: 0 0 var(--space-sm);
-  max-width: 52vw;
-  text-wrap: balance;
-}
-
-.offTitle:focus-visible {
+/* The wizard moves focus to the page title on phase change. */
+.offSection .pageHeader__title:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 0.2em;
-}
-
-.offLead {
-  font-size: var(--text-small-title);
-  font-weight: 400;
-  line-height: 1.2;
-  margin: 0;
-  max-width: var(--measure-prose);
 }
 
 .offProgressBar {
@@ -69,6 +34,7 @@
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
   display: flex;
   gap: var(--space-md);
   justify-content: space-between;
@@ -100,11 +66,13 @@
 
 .offStepperItem:not(:last-child)::after {
   background: var(--border-subtle);
-  block-size: 1px;
+  block-size: 2px;
+  border-radius: var(--radius-pill);
   content: "";
   flex: 1;
   margin-inline: var(--space-sm);
   min-inline-size: 1.5vw;
+  transition: background-color 160ms ease;
 }
 
 .offStepperItem.isdone:not(:last-child)::after {
@@ -127,11 +95,20 @@
   justify-content: center;
   min-block-size: 34px;
   min-inline-size: 34px;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
 }
 
+/* The active step carries a quiet gold halo — ringed, tinted, unmistakable. */
 .offStepperItem.isactive .offStepperCircle {
+  background: color-mix(in srgb, var(--action-primary) 12%, var(--surface-page));
   border-color: var(--action-primary);
-  box-shadow: inset 0 0 0 1px var(--action-primary);
+  box-shadow:
+    inset 0 0 0 1px var(--action-primary),
+    0 0 0 0.22vw color-mix(in srgb, var(--action-primary) 22%, transparent);
   color: var(--on-surface);
 }
 
@@ -706,8 +683,10 @@
 
 .offOptionIcon {
   flex: none;
-  height: 1.3vw;
-  width: 1.3vw;
+  height: 1.7vw;
+  min-height: 20px;
+  min-width: 20px;
+  width: 1.7vw;
 }
 
 /* --- Request phase: recap + form ----------------------------------------------------- */
@@ -745,6 +724,24 @@
 .offSection button.button {
   border: 0;
   font-family: inherit;
+}
+
+/* Wizard CTAs read a step bolder than the base pill (owner remark):
+   heavier label, taller pill, larger icon. */
+.button.offTierCta,
+.button.offSubmit {
+  font-weight: 600;
+  line-height: 3.3vw;
+  min-block-size: 46px;
+}
+
+.button.offTierCta .icon svg,
+.button.offSubmit .icon svg,
+.button.offSkipBtn .icon svg {
+  height: 1.6vw;
+  min-height: 19px;
+  min-width: 19px;
+  width: 1.6vw;
 }
 
 .offSection .button:focus-visible {
@@ -785,10 +782,24 @@
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-raised);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  overflow: hidden;
   padding: var(--space-md);
+  position: relative;
+}
+
+/* The brand rail: a gold band closing the card's top edge. */
+.offForm::before {
+  background: var(--action-primary);
+  block-size: 0.28vw;
+  content: "";
+  inset-block-start: 0;
+  inset-inline: 0;
+  min-block-size: 4px;
+  position: absolute;
 }
 
 .offFormTitle {
@@ -799,10 +810,11 @@
   padding-block-end: var(--space-sm);
 }
 
-/* Owner note (D-026): the request form reads in depth — each group is its
-   own raised card instead of borderless runs of fields. */
+/* Each group is its own card ONE SURFACE DOWN from the form (raised-on-
+   raised read as flat — owner remark, 2026-08-07), opened by a gold-marked
+   legend. */
 .offFieldset {
-  background: var(--surface-raised);
+  background: var(--surface-page);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   display: flex;
@@ -810,6 +822,19 @@
   gap: var(--space-sm);
   margin: 0;
   padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+/* The legend's brand mark: the accent family's solid gold square. */
+.offFieldset > legend::before {
+  background: var(--action-primary);
+  block-size: 0.5vw;
+  border-radius: 0.12vw;
+  content: "";
+  display: inline-block;
+  inline-size: 0.5vw;
+  margin-inline-end: var(--space-xs);
+  min-block-size: 7px;
+  min-inline-size: 7px;
 }
 
 .offFieldset > legend {
@@ -842,7 +867,7 @@
 
 .offFieldInput {
   appearance: none;
-  background: var(--surface-page);
+  background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   color: var(--on-surface);
@@ -881,7 +906,7 @@
 
 .offOptionTile {
   align-items: center;
-  background: var(--surface-page);
+  background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   color: var(--on-surface);
@@ -932,7 +957,7 @@
 
 .offConsentRow {
   align-items: center;
-  background: var(--surface-page);
+  background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   display: flex;
@@ -1146,15 +1171,6 @@
 /* --- Mobile regime (matches the global 580 restatement) ---------------------------- */
 
 @media (max-width: 580px) {
-  .offHeader {
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .offTitle {
-    max-width: 100%;
-  }
-
   .offProgressBar {
     align-items: stretch;
     flex-direction: column;
