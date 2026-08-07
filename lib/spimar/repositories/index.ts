@@ -12,6 +12,9 @@ import { PgSqlClient } from "./pg-sql-client";
 import { PostgresContentRepository } from "./postgres-content-repository";
 import { PostgresSubmissionRepository } from "./postgres-submission-repository";
 import { PostgresAcquisitionRepository } from "./postgres-acquisition-repository";
+import { PostgresCmsRepository, PostgresCrmRepository } from "./postgres-admin-repository";
+import { SeamContentRepository } from "./seam-content-repository";
+import { SeamOverviewRepository } from "./overview-from-seams";
 
 /* Composition root for the backend seams.
 
@@ -73,11 +76,19 @@ export function getBackendSeams(): BackendSeams {
     const sql = new PgSqlClient(process.env.SUPABASE_DATABASE_URL as string);
     const siteId = configuredSiteId();
     cached = {
-      // Demo fixtures stay available for a staging preview against a real
-      // database; the guard above is what keeps them out of production.
+      /* Demo fixtures stay available for a staging preview against a real
+         database; the guard above is what keeps them out of production.
+
+         Otherwise the public site reads the R1 documents the console CMS
+         writes (`console_documents`), through the same mapping the file
+         deployment uses — so "published in the console" means "visible on the
+         site" on both backends. `PostgresContentRepository` (the canonical
+         nine-state reader) takes over when the D-021 content-model mapping
+         lands; until then the canonical content tables are empty and serving
+         them would blank the site. */
       content: demoRequested
         ? new DemoContentRepository()
-        : new PostgresContentRepository(sql, siteId),
+        : new SeamContentRepository(new PostgresCmsRepository(sql, siteId)),
       submissions: new PostgresSubmissionRepository(sql, siteId),
       // No provider is connected (`P-2`). An empty list is honest; a stub
       // adapter that reports success would not be.
@@ -100,13 +111,16 @@ export function getAdminSeams(): AdminSeams {
   if (cachedAdmin) return cachedAdmin;
 
   if (hasDatabase()) {
-    // The console's database adapter needs the R1↔canonical content-model
-    // mapping, which D-021 records as a later slice. Failing loudly beats
-    // silently running a "database" deployment's console on local files.
-    throw new Error(
-      "SUPABASE_DATABASE_URL is set but the console's database adapter is not implemented yet. " +
-        "Unset it to use the development file adapter.",
-    );
+    const sql = new PgSqlClient(process.env.SUPABASE_DATABASE_URL as string);
+    const siteId = configuredSiteId();
+    const cms = new PostgresCmsRepository(sql, siteId);
+    const crm = new PostgresCrmRepository(sql, siteId);
+    cachedAdmin = {
+      cms,
+      crm,
+      overview: new SeamOverviewRepository({ crm, cms }),
+    };
+    return cachedAdmin;
   }
 
   cachedAdmin = {
@@ -146,6 +160,10 @@ export function getAcquisitionRepository(): AcquisitionRepository {
 export {
   DemoContentRepository,
   FileContentRepository,
+  PostgresCmsRepository,
+  PostgresCrmRepository,
+  SeamContentRepository,
+  SeamOverviewRepository,
   FileSubmissionRepository,
   FileCmsRepository,
   FileCrmRepository,

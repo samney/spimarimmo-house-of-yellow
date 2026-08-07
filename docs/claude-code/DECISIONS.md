@@ -1600,3 +1600,55 @@ domain that serves different content would be a false claim in markup.
 **Effect on the risk register.** R-1 drops from release-blocking to deferred;
 R-2 (deployed-SHA visibility) remains, and shrinks to "connect the Vercel
 project / CLI".
+
+---
+
+## D-045 — 2026-08-07 — The console's database adapter: canonical CRM reads, console-owned homes for R1 facts
+
+**Context.** Leads submitted on the deployed site vanished from the console:
+Vercel gives each serverless instance a private `/tmp`, so the file store was
+never shared storage. The owner directed the permanent fix ("do hosted
+supabase do it please"), authorising hosted mutation. The blocker D-021
+records — the R1↔canonical content-model mapping — is still unbuilt, so the
+adapter had to be designed around it rather than pretend it exists.
+
+**Decision.** `getAdminSeams()` with `SUPABASE_DATABASE_URL` set now wires:
+
+1. **CRM on the canonical tables.** `PostgresCrmRepository` reads leads from
+   the same rows `acquire_lead_edge_v1` writes (leads, contacts,
+   organizations, form_submissions, consents, campaign_attribution, tasks),
+   so a website enquiry surfaces in the console with every stored detail.
+2. **R1 facts in additive `console_*` tables** (migration `202608070001`):
+   documents for the CMS collections, per-lead facts, the append-only
+   activity trail and export log (trigger-enforced), task queue tags, saved
+   views. RLS enabled, no anon/authenticated policies until Supabase Auth.
+3. **The R1 pipeline stage is a console fact** (`console_lead_facts.stage`),
+   NOT written onto `leads.stage`. The canonical fourteen-stage workflow is
+   trigger-enforced (insert at `new`, legal transitions only, `won`
+   terminal); projecting R1 moves onto it would fabricate workflow steps that
+   never happened — a `proposal_sent` history row for a proposal that does
+   not exist. Canonical `leads.stage` stays what the funnel wrote until the
+   real workflow mapping (D-021 scope) lands. The read path projects the
+   canonical stage only when the console has recorded no stage of its own.
+4. **Public content reads stay on the R1 document model** in database mode:
+   `SeamContentRepository` (one shared R1→public mapping) over
+   `PostgresCmsRepository`, so console-published content appears on the site
+   durably. `PostgresContentRepository` (canonical nine-state reader) takes
+   over with D-021; serving it today would blank the site against empty
+   canonical content tables.
+5. **One overview implementation** (`SeamOverviewRepository`) computes the
+   dashboard through the seams for both backends; SQL aggregation is a later
+   optimisation, not a contract change.
+
+**Defect found and fixed by the contract run.** `acquire_lead_v1` failed with
+`column reference "lead_id" is ambiguous` on every acquisition carrying an
+event (plpgsql substitutes the `RETURNS TABLE` out parameter into the bare
+`on conflict (lead_id, …)` column lists; the event path had never been
+exercised by a test). Migration `202608070002` re-declares the function with
+constraint-named conflict targets — the only two lines changed.
+
+**Verification.** All eight admin contract suites (41 tests) pass against
+the Postgres adapters in PGlite over the real migrations, alongside the
+existing 65 backend and 134 unit tests; plus three journey proofs: funnel
+enquiry → console with full detail across repository instances, stage work →
+won → onboarding checklist, CMS publish → public read.
