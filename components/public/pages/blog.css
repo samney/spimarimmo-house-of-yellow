@@ -156,12 +156,54 @@
   padding-block-start: var(--space-2xs);
 }
 
-/* --- Article detail ------------------------------------------------------------- */
+/* --- Article detail (reference structure, 2026-08-07) ------------------------- */
 
+/* Meta chips riding the page header's action row. */
+.blogMetaBack {
+  align-items: center;
+  color: var(--on-surface);
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.blogMetaBack:hover {
+  text-decoration: underline;
+}
+
+.blogMetaBack:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.blogMetaChip {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--on-surface);
+  display: inline-flex;
+  font-size: var(--text-support);
+  font-weight: 600;
+  padding: 0.2vw var(--space-sm);
+}
+
+.blogMetaChip--gold {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Contained banner, centred on the reading column — never a full plate. */
 .blogHero {
-  aspect-ratio: 21 / 9;
+  aspect-ratio: 21 / 8;
   border-radius: var(--radius-xl);
-  margin-block-start: var(--space-lg);
+  margin-inline: auto;
+  max-block-size: 26vw;
+  max-width: 62vw;
   overflow: hidden;
   position: relative;
 }
@@ -170,18 +212,100 @@
   object-fit: cover;
 }
 
+/* The reading column: centred measure, comfortable leading, a lead opening. */
 .blogArticle {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   margin-block-start: var(--space-lg);
-  max-width: var(--measure-prose);
+  margin-inline: auto;
+  max-width: var(--measure-document);
 }
 
 .blogParagraph {
   font-size: var(--text-support);
-  line-height: 1.7;
+  line-height: 1.75;
   margin: 0;
+}
+
+.blogArticle .blogParagraph:first-of-type {
+  color: var(--on-surface);
+  font-size: var(--text-small-title);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* The reference's callout device on the brand: gold rail, tinted ground. */
+.blogCallout {
+  background: color-mix(in srgb, var(--action-primary) 8%, var(--surface-raised));
+  border: 1px solid var(--border-subtle);
+  border-inline-start: 3px solid var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.6;
+  margin: var(--space-2xs) 0 0;
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* The next article, suggested on the reading column. */
+.blogNext {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+  color: var(--on-surface);
+  display: flex;
+  gap: var(--space-md);
+  margin-block-start: var(--space-lg);
+  margin-inline: auto;
+  max-width: var(--measure-document);
+  padding: var(--space-sm) var(--space-md);
+  text-decoration: none;
+  transition: border-color var(--dur-micro) var(--ease-out-ref);
+}
+
+.blogNext:hover {
+  border-color: var(--action-primary);
+}
+
+.blogNext:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.blogNextLabel {
+  color: var(--spimar-gold-text);
+  flex: none;
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.blogNextMeta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.15vw;
+  min-inline-size: 0;
+}
+
+.blogNextTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.blogNextSub {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+}
+
+.blogNextArrow {
+  color: var(--spimar-gold-text);
+  flex: none;
+  font-size: var(--text-small-title);
 }
 
 /* --- Responsive ------------------------------------------------------------------ */
@@ -203,5 +327,13 @@
 
   .blogHero {
     aspect-ratio: 4 / 3;
+    max-block-size: none;
+    max-width: 100%;
+  }
+
+  .blogNext {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-2xs);
   }
 }
