@@ -505,6 +505,24 @@ footer {
   mask-image: linear-gradient(115deg, #000 0%, transparent 58%);
   pointer-events: none;
 }
+
+/* The oversized brand watermark riding the bottom of the yellow ground
+   (owner remark, 2026-08-07): low-ink paint, no layout, no interaction. */
+.footerWatermark {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -2.4vw;
+  z-index: -1;
+  color: color-mix(in srgb, var(--hoy-ink) 6%, transparent);
+  font-size: 13.2vw;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  pointer-events: none;
+  text-align: center;
+  user-select: none;
+  white-space: nowrap;
+}
 main.pageContent {
   position: relative;
   z-index: 1;
@@ -512,21 +530,68 @@ main.pageContent {
   margin-bottom: var(--footer-height, 0px);
 }
 footer .contentWrapper {
-  padding-top: 2.5vw;
+  padding-top: 3vw;
 }
 footer .logo svg {
   display: block;
-  width: 10.417vw;
+  width: 12vw;
   height: auto;
 }
+
+/* Brand row: wordmark, statement and social marks facing the conversion
+   cluster — the footer opens like a section, not a link dump. */
+.footerTop {
+  align-items: flex-start;
+  display: flex;
+  gap: 2.5vw;
+  justify-content: space-between;
+}
+.footerTagline {
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 1vw 0 0;
+  max-width: 26vw;
+}
+.footerSocials {
+  display: flex;
+  gap: 0.6vw;
+  margin-top: 1.4vw;
+}
+.footerSocial {
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--hoy-ink) 40%, transparent);
+  border-radius: 50%;
+  color: var(--hoy-ink);
+  display: inline-flex;
+  height: 2.2vw;
+  justify-content: center;
+  min-height: 34px;
+  min-width: 34px;
+  opacity: 0.8;
+  width: 2.2vw;
+}
+.footerCta {
+  align-items: flex-end;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 0.9vw;
+}
+
 footer .cols {
   display: flex;
   justify-content: space-between;
   gap: 2.5vw;
-  padding: 4.375vw 0 7.5vw;
+  padding: 3.4vw 0 8.5vw;
 }
 footer .col {
   max-width: 15vw;
+}
+.footerContactStrong {
+  font-weight: 600;
+}
+.footerContactNote {
+  color: color-mix(in srgb, var(--hoy-ink) 72%, transparent);
 }
 footer .colTitle {
   font-weight: 600;
@@ -556,11 +621,22 @@ footer .bottomFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-block-start: 1px solid color-mix(in srgb, var(--hoy-ink) 25%, transparent);
   padding: 1.25vw 0 2.5vw;
+  /* The floating WhatsApp corner owns the bottom-right; the legal menu
+     stops short of it instead of disappearing beneath it. */
+  padding-inline-end: max(17vw, 340px);
   font-size: var(--text-base);
 }
 footer .bottomFooter a {
   color: var(--hoy-ink);
+}
+footer .copyMenu {
+  display: flex;
+  gap: 1.4vw;
+}
+footer .copyMenu a:hover {
+  text-decoration: underline;
 }
 
 /* ===== Consent banner (bottom-right opt-in dialog) =====
@@ -828,12 +904,48 @@ footer .bottomFooter a {
   footer .cols {
     flex-wrap: wrap;
     gap: 6.897vw;
+    padding-block-end: 16vw;
   }
   footer .col {
     max-width: 40vw;
   }
   footer .logo svg {
     width: 25.862vw;
+  }
+  .footerTop {
+    flex-direction: column;
+    gap: 6vw;
+  }
+  .footerTagline {
+    margin-top: 3vw;
+    max-width: 100%;
+  }
+  .footerSocials {
+    gap: 2.5vw;
+    margin-top: 4vw;
+  }
+  .footerSocial {
+    height: 9vw;
+    width: 9vw;
+  }
+  .footerCta {
+    align-items: flex-start;
+  }
+  .footerWatermark {
+    font-size: 19vw;
+    inset-block-end: -3.4vw;
+  }
+  footer .bottomFooter {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3vw;
+    padding-block: 4vw 6vw;
+    padding-inline-end: 0;
+  }
+  footer .copyMenu {
+    flex-wrap: wrap;
+    gap: 2.5vw 5vw;
+    padding-inline-end: 16vw;
   }
 }
 
