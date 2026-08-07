@@ -158,7 +158,12 @@ primitives (list must stay empty), and reduced-motion coverage.
 - **Tablists**: real `role="tablist"` with roving focus and full arrow-key
   support. (Sections 03, 04, 07.)
 - **Pills/tiles**: `aria-pressed`, gold active for categories, dark active
-  for context. Selects are native, styled, drawn chevron clear of the text.
+  for context.
+- **Selects**: conversion surfaces use the **DesignedSelect** listbox
+  (`components/public/global/DesignedSelect.tsx` — trigger pill + designed
+  panel, full ARIA listbox keyboard contract, gold active row and selected
+  dot; owner override 2026-08-07). Elsewhere a native select styled with the
+  drawn chevron remains acceptable until touched.
 - **Dialogs** (brochure, pre-chat): scrim, focus trap, Escape closes and
   restores focus to the trigger, `aria-modal`.
 - **Marquee bands**: CSS animation, pause control (`aria-pressed`), synced

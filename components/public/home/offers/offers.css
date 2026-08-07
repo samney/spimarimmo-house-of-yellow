@@ -273,54 +273,8 @@
   margin: 0;
 }
 
-.offSelectShell {
-  position: relative;
-}
-
-.offSelectShell::after {
-  border-inline-end: 1.5px solid currentColor;
-  border-block-end: 1.5px solid currentColor;
-  block-size: 0.55vw;
-  content: "";
-  inline-size: 0.55vw;
-  inset-block-start: 45%;
-  inset-inline-end: var(--space-sm);
-  pointer-events: none;
-  position: absolute;
-  transform: translateY(-50%) rotate(45deg);
-}
-
-/* Owner note (D-026): the edition picker reads as a designed control, not a
-   cropped native select — generous padding, gold hover ring, the drawn
-   chevron carried by the shell. The popup list stays native (keyboard and
-   assistive tech keep the platform behaviour). */
-.offEditionSelect {
-  appearance: none;
-  background: var(--surface-raised);
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  color: var(--on-surface);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: var(--text-support);
-  font-weight: 600;
-  inline-size: 100%;
-  padding: var(--space-sm) calc(var(--space-md) + 1.2vw) var(--space-sm) var(--space-sm);
-  transition: border-color 160ms ease;
-}
-
-.offEditionSelect:hover {
-  border-color: var(--action-primary);
-}
-
-.offEditionSelect:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 0.2em;
-}
-
-.offSelectShell::after {
-  color: var(--spimar-gold-deep, currentColor);
-}
+/* The edition picker is the DesignedSelect listbox (Lock-Contract) — no
+   native popup styling remains. */
 
 .offConfigNote {
   align-items: center;
@@ -667,36 +621,15 @@
 /* Owner note (D-026): tier actions carry the site's gold pill vocabulary —
    never the black rectangles of the earlier pass. The recommended tier
    deepens to the bronzed gold (D-A3) for emphasis. */
-.offTierCta {
-  background: var(--action-primary);
-  border: 0;
-  border-radius: var(--radius-pill);
-  color: var(--action-on-primary);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: var(--text-support);
-  font-weight: 600;
-  padding: var(--space-sm);
-  transition: background-color 160ms ease;
+/* System pill companions: layout only — the anatomy comes from .button. */
+.button.offTierCta {
+  inline-size: 100%;
+  justify-content: space-between;
+  margin-block-start: auto;
 }
 
-.offTierCta:hover {
-  background: var(--action-primary-hover);
-}
-
-.offTierCta.isGold {
+.button.offTierCta.isGold {
   background: var(--spimar-gold-deep, var(--action-primary));
-  color: var(--action-on-primary);
-}
-
-.offTierCta:hover {
-  background: var(--action-primary-hover);
-  color: var(--action-on-primary);
-}
-
-.offTierCta:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 0.2em;
 }
 
 .offBarNote {
@@ -783,6 +716,17 @@
   margin: 0 0 var(--space-2xs);
 }
 
+/* System buttons rendered as <button> need the local reset (Lock-Contract). */
+.offSection button.button {
+  border: 0;
+  font-family: inherit;
+}
+
+.offSection .button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
 .offGhostBtn {
   background: transparent;
   border: 1px solid var(--action-primary);
@@ -823,9 +767,11 @@
 }
 
 .offFormTitle {
+  border-block-end: 1px solid var(--border-subtle);
   font-size: var(--text-heading-sm);
   font-weight: 600;
   margin: 0;
+  padding-block-end: var(--space-sm);
 }
 
 /* Owner note (D-026): the request form reads in depth — each group is its
@@ -869,11 +815,6 @@
   font-weight: 500;
 }
 
-.offSelectShell.isLight::after {
-  color: var(--on-surface-muted);
-}
-
-.offFieldSelect,
 .offFieldInput {
   appearance: none;
   background: var(--surface-page);
@@ -886,13 +827,11 @@
   padding: var(--space-xs) var(--space-sm);
 }
 
-.offFieldSelect {
-  cursor: pointer;
-  padding-inline-end: calc(var(--space-md) + 1vw);
-  transition: border-color 160ms ease;
+.offFieldInput:hover {
+  border-color: var(--border-strong);
 }
 
-.offFieldSelect:hover {
+.offFieldInput:focus-visible {
   border-color: var(--action-primary);
 }
 
@@ -900,7 +839,6 @@
   color: var(--on-surface-muted);
 }
 
-.offFieldSelect:focus-visible,
 .offFieldInput:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 0.15em;
@@ -936,9 +874,16 @@
   border-color: var(--border-strong);
 }
 
+/* Active option: the accent family carries it — gold-tinted card, gold
+   mark — not a bare ring (owner remark: depth). */
 .offOptionTile.isActive {
+  background: color-mix(in srgb, var(--action-primary) 14%, transparent);
   border-color: var(--action-primary);
   box-shadow: inset 0 0 0 1px var(--action-primary);
+}
+
+.offOptionTile.isActive .offOptionIcon {
+  color: var(--spimar-gold-text);
 }
 
 .offOptionTile:focus-visible {
@@ -962,14 +907,20 @@
 
 .offConsentRow {
   align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
 }
 
 .offConsentBox {
   accent-color: var(--action-primary);
   block-size: 1.1vw;
   inline-size: 1.1vw;
+  min-block-size: 16px;
+  min-inline-size: 16px;
 }
 
 .offConsentBox:focus-visible {
@@ -981,35 +932,14 @@
   font-size: var(--text-support);
 }
 
-.offSubmit {
-  align-items: center;
-  background: var(--action-primary);
-  border: 0;
-  border-radius: var(--radius-pill);
-  color: var(--action-on-primary);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: inherit;
-  font-size: var(--text-support);
-  font-weight: 600;
-  gap: var(--space-xs);
-  justify-content: center;
-  padding: var(--space-sm);
-  transition: background-color 160ms ease;
+.button.offSubmit {
+  inline-size: 100%;
+  justify-content: space-between;
 }
 
-.offSubmit:hover {
-  background: var(--action-primary-hover);
-}
-
-.offSubmit:disabled {
+.button.offSubmit:disabled {
   cursor: default;
   opacity: 0.7;
-}
-
-.offSubmit:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 0.2em;
 }
 
 .offFieldError,
@@ -1255,11 +1185,6 @@
   .offRequestGrid,
   .offSentGrid {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .offSelectShell::after {
-    block-size: 2vw;
-    inline-size: 2vw;
   }
 
   .offNoteIcon {

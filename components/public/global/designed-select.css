@@ -1,0 +1,143 @@
+/* ==========================================================================
+   Designed select — the system listbox (owner direction, 2026-08-07)
+   ==========================================================================
+   One trigger pill, one designed panel; used wherever a native select popup
+   would read as a foreign control (conversion surfaces first). Binds only to
+   L2 tokens. `dselOnDark` re-inks the trigger for dark cards; the panel
+   always sits on the raised surface. */
+
+.dsel {
+  display: block;
+  position: relative;
+}
+
+.dselTrigger {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-sm);
+  inline-size: 100%;
+  justify-content: space-between;
+  padding: var(--space-sm);
+  text-align: start;
+  transition: border-color 160ms ease;
+}
+
+.dselTrigger:hover,
+.dselTrigger[aria-expanded="true"] {
+  border-color: var(--action-primary);
+}
+
+.dselTrigger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.dselValue.isPlaceholder {
+  color: var(--on-surface-muted);
+  font-weight: 500;
+}
+
+/* The drawn chevron, rotating open. */
+.dselChevron {
+  border-block-end: 1.5px solid var(--spimar-gold-text);
+  border-inline-end: 1.5px solid var(--spimar-gold-text);
+  block-size: 0.55vw;
+  flex: none;
+  inline-size: 0.55vw;
+  min-block-size: 7px;
+  min-inline-size: 7px;
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.dselTrigger[aria-expanded="true"] .dselChevron {
+  transform: rotate(225deg);
+}
+
+.dselPanel {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+  inset-block-start: calc(100% + 0.3vw);
+  inset-inline: 0;
+  list-style: none;
+  margin: 0;
+  max-block-size: 18vw;
+  min-block-size: 0;
+  overflow-y: auto;
+  padding: 0.3vw;
+  position: absolute;
+  z-index: var(--z-overlay, 30);
+}
+
+.dselPanel:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.15em;
+}
+
+.dselOption {
+  align-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--on-surface);
+  cursor: pointer;
+  display: flex;
+  font-size: var(--text-support);
+  font-weight: 500;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.dselOption.isActive {
+  background: color-mix(in srgb, var(--action-primary) 16%, transparent);
+}
+
+.dselOption[aria-selected="true"] {
+  font-weight: 600;
+}
+
+/* Selected mark: the accent family's solid gold dot. */
+.dselOptionMark {
+  background: var(--action-primary);
+  block-size: 0.5vw;
+  border-radius: 50%;
+  flex: none;
+  inline-size: 0.5vw;
+  min-block-size: 7px;
+  min-inline-size: 7px;
+}
+
+/* On dark cards the trigger re-inks; the panel stays raised paper. */
+.dselOnDark .dselTrigger {
+  background: color-mix(in srgb, var(--on-inverse) 8%, transparent);
+  border-color: var(--border-inverse);
+  color: var(--on-inverse);
+}
+
+.dselOnDark .dselTrigger:hover,
+.dselOnDark .dselTrigger[aria-expanded="true"] {
+  border-color: var(--action-primary);
+}
+
+.dselOnDark .dselValue.isPlaceholder {
+  color: var(--on-inverse-muted);
+}
+
+.dselOnDark .dselChevron {
+  border-color: var(--action-primary);
+}
+
+@media (max-width: 580px) {
+  .dselPanel {
+    max-block-size: 60vw;
+  }
+}

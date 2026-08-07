@@ -140,7 +140,18 @@ test("exposer dropdown anchors land on the deck sections' pinned frames", async 
     return el !== null && Math.abs(el.getBoundingClientRect().top) < 3;
   });
 
-  /* The header hides while deep in the page; surface it again for hop two. */
+  /* Wait for Lenis's easing tail to release the scroll before jumping back:
+     a plain scrollTo(0,0) mid-ease gets overwritten a frame later and the
+     header (hidden while deep in the page) never resurfaces for hop two. */
+  await page.waitForFunction(
+    () =>
+      new Promise((resolve) => {
+        const y = window.scrollY;
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => resolve(Math.abs(window.scrollY - y) < 1)),
+        );
+      }),
+  );
   await page.evaluate(() => window.scrollTo(0, 0));
   await expect(nav.getByRole("link", { name: "Exposer", exact: true })).toBeInViewport();
   await nav.getByRole("link", { name: "Exposer", exact: true }).hover();

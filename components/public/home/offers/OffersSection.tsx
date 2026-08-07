@@ -5,6 +5,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { submitEnquiry } from "@/app/actions/enquiry";
+import { DesignedSelect } from "@/components/public/global/DesignedSelect";
+import { Marquee } from "@/components/primitives/motion/Marquee";
 import { ArrowRightIcon, ShieldCheckIcon, StarIcon, TargetIcon } from "../impactIcons";
 import { BarsIcon, CameraIcon, CheckCircleIcon, MegaphoneIcon, MicIcon } from "../visibilityIcons";
 import { EyeIcon, LeadIcon } from "../proofIcons";
@@ -54,6 +56,19 @@ import type { SectionHeadingProps } from "../section-heading";
 
 type Phase = "edition" | "offer" | "request" | "sent";
 type TierKey = "standard" | "premium" | "sponsor";
+
+/* The design system's pill-button label: fixed text cross-fading to the
+   scrolling marquee on hover, like every .button on the site (Lock-Contract). */
+function PillLabel({ text }: { text: string }) {
+  return (
+    <span className="label">
+      <span className="fixedLabel">{text}</span>
+      <span className="innerLabel">
+        <Marquee text={text} direction="left" speed={90} />
+      </span>
+    </span>
+  );
+}
 
 type IconComponent = (props: { className?: string }) => React.JSX.Element;
 
@@ -254,9 +269,11 @@ export function OffersSection({
                 : t(`header.${headerKey}.lead`)}
             </p>
             {detailHref ? (
-              <Link className="offDetailLink" href={detailHref}>
+              /* Staged to "#" (owner rule, 2026-08-07): the detail route
+                 awaits validation; the label holds the placement. */
+              <a className="offDetailLink" href="#">
                 {t("detailCta")}
-              </Link>
+              </a>
             ) : null}
           </div>
           <ol className="offStepper" aria-label={t("stepperLabel")}>
@@ -281,13 +298,18 @@ export function OffersSection({
             })}
           </ol>
           {(phase === "edition" || phase === "offer") && (
+            /* The system outline pill (Lock-Contract) — the previous ghost
+               variant inherited inverse ink on the paper header and rendered
+               an empty-looking pill. */
             <button
-              className="offGhostBtn offSkipBtn"
+              className="button outline offSkipBtn"
               onClick={() => setPhase("request")}
               type="button"
             >
-              {t("form.skipToRequest")}
-              <ArrowRightIcon className="offBtnIcon" aria-hidden="true" />
+              <PillLabel text={t("form.skipToRequest")} />
+              <span className="icon">
+                <ArrowRightIcon />
+              </span>
             </button>
           )}
         </header>
@@ -324,21 +346,19 @@ export function OffersSection({
                 <label className="sr-only" htmlFor="off-edition">
                   {t("intro.selectLabel")}
                 </label>
-                <div className="offSelectShell">
-                  <select
-                    className="offEditionSelect"
-                    id="off-edition"
-                    onChange={(e) => chooseEdition(e.target.value)}
-                    value={edition}
-                  >
-                    <option value="">{t("intro.selectLabel")}</option>
-                    {EDITIONS.map((e) => (
-                      <option key={e.slug} value={e.slug}>
-                        {e.city} — {e.country}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {/* The designed listbox, not the native popup (owner
+                    direction, 2026-08-07; Lock-Contract "designed select"). */}
+                <DesignedSelect
+                  id="off-edition"
+                  onChange={chooseEdition}
+                  options={EDITIONS.map((e) => ({
+                    value: e.slug,
+                    label: `${e.city} — ${e.country}`,
+                  }))}
+                  placeholder={t("intro.selectLabel")}
+                  surface="dark"
+                  value={edition}
+                />
                 <p className="offConfigNote">
                   <InfoIcon className="offNoteIcon" aria-hidden="true" />
                   {t("intro.configNote")}
@@ -423,12 +443,17 @@ export function OffersSection({
                     ))}
                   </ul>
                   <p className="offTierQuote">{t("tiers.quote")}</p>
+                  {/* The system pill (Lock-Contract), full width in the card;
+                      recommended keeps the deep gold via the companion class. */}
                   <button
-                    className={`offTierCta${recommended ? " isGold" : ""}`}
+                    className={`button offTierCta${recommended ? " isGold" : ""}`}
                     onClick={() => chooseTier(key)}
                     type="button"
                   >
-                    {t(`tiers.${key}.cta`)}
+                    <PillLabel text={t(`tiers.${key}.cta`)} />
+                    <span className="icon">
+                      <ArrowRightIcon />
+                    </span>
                   </button>
                 </article>
               ))}
@@ -525,23 +550,16 @@ export function OffersSection({
                       <label className="offFieldLabel" htmlFor={`off-${field}`}>
                         {t(`form.${field}.label`)}
                       </label>
-                      <div className="offSelectShell isLight">
-                        <select
-                          className="offFieldSelect"
-                          id={`off-${field}`}
-                          onChange={(e) =>
-                            setSelects((prev) => ({ ...prev, [field]: e.target.value }))
-                          }
-                          value={selects[field]}
-                        >
-                          <option value="">{t("form.selectPlaceholder")}</option>
-                          {SELECT_CHOICES[field].map((choice) => (
-                            <option key={choice} value={choice}>
-                              {t(`form.${field}.choices.${choice}`)}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      <DesignedSelect
+                        id={`off-${field}`}
+                        onChange={(next) => setSelects((prev) => ({ ...prev, [field]: next }))}
+                        options={SELECT_CHOICES[field].map((choice) => ({
+                          value: choice,
+                          label: t(`form.${field}.choices.${choice}`),
+                        }))}
+                        placeholder={t("form.selectPlaceholder")}
+                        value={selects[field]}
+                      />
                     </div>
                   ))}
                 </div>
@@ -665,9 +683,11 @@ export function OffersSection({
                 </p>
               )}
 
-              <button className="offSubmit" disabled={pending} type="submit">
-                <span>{pending ? t("form.sending") : t("form.submit")}</span>
-                <ArrowRightIcon className="offBtnIcon" aria-hidden="true" />
+              <button className="button offSubmit" disabled={pending} type="submit">
+                <PillLabel text={pending ? t("form.sending") : t("form.submit")} />
+                <span className="icon">
+                  <ArrowRightIcon />
+                </span>
               </button>
               {formError && (
                 <p className="offFormError" role="alert">
