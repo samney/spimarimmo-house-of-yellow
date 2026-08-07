@@ -529,6 +529,24 @@ main.pageContent {
   background: var(--hoy-paper);
   margin-bottom: var(--footer-height, 0px);
 }
+
+/* Route transition: the incoming page rises in on every navigation (the
+   template remounts). From-keyframe only, so the settled state is the
+   element's own base — no lingering transform to capture fixed descendants. */
+.pageEnter {
+  animation: pageEnter 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.2vw, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pageEnter {
+    animation: none;
+  }
+}
 footer .contentWrapper {
   padding-top: 3vw;
 }

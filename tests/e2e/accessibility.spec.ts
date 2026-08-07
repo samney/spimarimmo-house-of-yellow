@@ -33,6 +33,10 @@ const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
 
 for (const route of ROUTES) {
   test(`${route} has no automated accessibility violations`, async ({ page }) => {
+    /* The homepage DOM grew legitimately with the breathing pass (SplitText
+       renders every heading as per-char spans), and a full axe sweep of it
+       brushes the default 30s budget on a loaded machine. */
+    test.setTimeout(60_000);
     await page.goto(route);
     const results = await new AxeBuilder({ page }).withTags(TAGS).analyze();
 

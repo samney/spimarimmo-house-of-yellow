@@ -2,6 +2,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { MreExplorer } from "./MreExplorer";
 import { SectionEyebrow } from "./SectionEyebrow";
+import { Reveal } from "@/components/primitives/motion/Reveal";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import { DownloadIcon } from "./mreIcons";
 import {
   ArrowRightIcon,
@@ -33,19 +35,22 @@ export function MreMarketSection() {
   return (
     <section className="mreSection" aria-labelledby="mre-title">
       <div className="mreInner">
-        <header className="mreHeader">
+        {/* Reveal sits on the header, not the headings: mreHeadings lays out
+            via display: contents, which has no box for ScrollTrigger to
+            measure. */}
+        <Reveal as="header" className="mreHeader">
           <div className="mreHeadings">
-            <SectionEyebrow index="06" label={t("eyebrow")} />
-            <h2 className="mreTitle" id="mre-title">
-              {t("title")}
-            </h2>
-            <p className="mreLead">{t("lead")}</p>
+            <SectionEyebrow data-reveal index="06" label={t("eyebrow")} />
+            <SplitTitle as="h2" className="mreTitle" id="mre-title" text={t("title")} />
+            <p data-reveal className="mreLead">
+              {t("lead")}
+            </p>
           </div>
           {/* The download CTA was removed by owner note (D-026): the étude is
               not yet a published resource, so no control promises it. */}
-        </header>
+        </Reveal>
 
-        <div className="mreLayout">
+        <Reveal className="mreLayout" stagger={0.14}>
           <MreExplorer />
 
           <aside className="mreStudyCard" aria-labelledby="mre-study-title">
@@ -79,12 +84,12 @@ export function MreMarketSection() {
               <span>{t("study.note")}</span>
             </p>
           </aside>
-        </div>
+        </Reveal>
 
         {/* Deliberately a div: shell.css styles the bare <footer> tag as the
             site-wide fixed yellow reveal footer, which would pin this strip to
             the viewport bottom. */}
-        <div className="mreFooter">
+        <Reveal className="mreFooter" stagger={0.06}>
           <p className="mreFooterLabel">{t("scope.label")}</p>
           <ul className="mreFooterFacts">
             <li className="mreFooterFact">
@@ -105,7 +110,7 @@ export function MreMarketSection() {
             <span>{t("methodology")}</span>
             <ArrowRightIcon className="mreMethodologyIcon" aria-hidden="true" />
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

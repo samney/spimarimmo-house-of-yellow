@@ -12,6 +12,9 @@ import { PlaySolidIcon, VolumeIcon, FullscreenIcon } from "./proofIcons";
 import { PinIcon } from "./offers/offersIcons";
 import { CaptionsIcon, ChevronRightIcon, GearIcon, SkipIcon } from "./galleryIcons";
 import { MEDIA, type CategoryKey } from "./galleryData";
+import { SectionEyebrow } from "./SectionEyebrow";
+import { Reveal } from "@/components/primitives/motion/Reveal";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 /* Section 11 — Preuve terrain: the salons seen from the inside.
  *
@@ -96,17 +99,17 @@ export function GallerySection({
   return (
     <section className="galSection" aria-labelledby="gal-title">
       <div className="galInner">
-        <header className="galHeader">
-          <p className="galEyebrow">
-            [ <span className="galEyebrowIndex">11</span> ] {t("eyebrow")}
+        <Reveal as="header" className="galHeader">
+          {/* The shared eyebrow component, not a hand-rolled copy (owner
+              direction, 2026-08-07: consistency pass). */}
+          <SectionEyebrow data-reveal index="11" label={t("eyebrow")} />
+          <SplitTitle as="h2" className="galTitle" id="gal-title" text={t("title")} />
+          <p data-reveal className="galLead">
+            {t("lead")}
           </p>
-          <h2 className="galTitle" id="gal-title">
-            {t("title")}
-          </h2>
-          <p className="galLead">{t("lead")}</p>
-        </header>
+        </Reveal>
 
-        <div className="galToolbar">
+        <Reveal as="div" className="galToolbar">
           <div className="galToolGroup">
             <label className="sr-only" htmlFor="gal-edition">
               {t("editionSelectLabel")}
@@ -157,10 +160,10 @@ export function GallerySection({
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
 
         {stage && (
-          <div className="galPanel">
+          <Reveal className="galPanel" stagger={0.12}>
             <div className="galStageGrid">
               <figure className="galStage">
                 <Image
@@ -289,10 +292,10 @@ export function GallerySection({
                 </span>
               </li>
             </ul>
-          </div>
+          </Reveal>
         )}
 
-        <div className="galRailRow">
+        <Reveal as="div" className="galRailRow" stagger={0.1}>
           <ul className="galRail">
             {rail.slice(0, 4).map((m, i) => (
               <li className="galRailItem" key={m.id}>
@@ -362,7 +365,7 @@ export function GallerySection({
               </span>
             </Link>
           </div>
-        </div>
+        </Reveal>
 
         <div aria-hidden={!expanded} className={`galAll${expanded ? " isOpen" : ""}`} id="gal-all">
           <div className="galAllInner">

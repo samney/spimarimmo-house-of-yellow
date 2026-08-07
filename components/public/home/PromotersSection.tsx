@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { GridIcon, PauseIcon, PlayIcon, PlusThinIcon } from "./promotersIcons";
 import { SectionEyebrow } from "./SectionEyebrow";
+import { Reveal } from "@/components/primitives/motion/Reveal";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 /* Section 08 — Ils nous font confiance.
  *
@@ -103,22 +105,25 @@ export function PromotersSection() {
   return (
     <section className="promoSection" aria-labelledby="promo-title">
       <div className="promoInner">
-        <header className="promoHeader">
-          <div className="promoHeadings">
-            {/* The shared section header, not a local re-implementation: this
-                section used to hand-roll the bracketed index and label, which
-                is how its eyebrow drifted off the site's treatment. Its ink is
-                re-tinted in CSS for the yellow surface.
+        {/* Reveal sits on the header: promoHeadings lays out via
+            display: contents, which has no box for ScrollTrigger to measure
+            and would break under an extra wrapper. */}
+        <Reveal as="header" className="promoHeader">
+          {/* The shared section header, not a local re-implementation: this
+              section used to hand-roll the bracketed index and label, which
+              is how its eyebrow drifted off the site's treatment. Its ink is
+              re-tinted in CSS for the yellow surface.
 
-                No bracketed number: the band no longer stands as its own
-                numbered section. It renders inside the yellow block, between
-                01 and 03, so an "[ 08 ]" there announced a section number out
-                of sequence — page wayfinding pointing at the wrong place. */}
-            <SectionEyebrow label={t("eyebrow")} />
-            <h2 className="promoTitle" id="promo-title">
-              {t("title")}
-            </h2>
-            <p className="promoLead">{t("lead")}</p>
+              No bracketed number: the band no longer stands as its own
+              numbered section. It renders inside the yellow block, between
+              01 and 03, so an "[ 08 ]" there announced a section number out
+              of sequence — page wayfinding pointing at the wrong place. */}
+          <div className="promoHeadings">
+            <SectionEyebrow data-reveal label={t("eyebrow")} />
+            <SplitTitle as="h2" className="promoTitle" id="promo-title" text={t("title")} />
+            <p data-reveal className="promoLead">
+              {t("lead")}
+            </p>
           </div>
           <button
             aria-controls="promo-all"
@@ -131,7 +136,7 @@ export function PromotersSection() {
             <span>{expanded ? t("hideAll") : t("showAll")}</span>
             <PlusThinIcon aria-hidden="true" className="promoTogglePlus" />
           </button>
-        </header>
+        </Reveal>
 
         {/* One stage holding both readings of the same five marks. The band
             does not stay put and push a second list below it — it collapses as

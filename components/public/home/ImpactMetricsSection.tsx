@@ -10,6 +10,9 @@ import {
   VisitorsIcon,
 } from "./impactIcons";
 import { SectionEyebrow } from "./SectionEyebrow";
+import { Counter } from "@/components/primitives/motion/Counter";
+import { Reveal } from "@/components/primitives/motion/Reveal";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 /* Section 05 — Chiffres clés.
  *
@@ -41,38 +44,49 @@ export function ImpactMetricsSection() {
   return (
     <section className="impactSection" aria-labelledby="impact-title">
       <div className="impactInner">
-        <header className="impactHeader">
+        <Reveal as="header" className="impactHeader">
           <div className="impactHeadings">
             {/* The shared section header rather than a local copy of the
                 bracketed index and label, which is how this section's eyebrow
                 drifted from the site's treatment. */}
-            <SectionEyebrow index="05" label={t("eyebrow")} />
-            <h2 className="impactTitle" id="impact-title">
-              {t("title")}
-            </h2>
-            <p className="impactLead">{t("lead")}</p>
+            <SectionEyebrow data-reveal index="05" label={t("eyebrow")} />
+            <SplitTitle as="h2" className="impactTitle" id="impact-title" text={t("title")} />
+            <p data-reveal className="impactLead">
+              {t("lead")}
+            </p>
           </div>
           {/* A state, not a control. It is not focusable and not a button. */}
-          <p className="impactStatus">{t("status")}</p>
-        </header>
+          <p data-reveal className="impactStatus">
+            {t("status")}
+          </p>
+        </Reveal>
 
-        <div className="impactCard">
+        <Reveal className="impactCard" stagger={0.08}>
           <ul className="impactGrid">
-            {INDICATORS.map(({ key, Icon }) => (
-              <li className="impactItem" key={key}>
-                <span className="impactIconRing" aria-hidden="true">
-                  <Icon className="impactIcon" />
-                </span>
-                {/* Owner-authorized placeholder figure (D-026); the footer
-                    note states figures publish after source validation. */}
-                <p className="impactValue">{t(`indicators.${key}.value`)}</p>
-                <h3 className="impactLabel">{t(`indicators.${key}.label`)}</h3>
-                <p className="impactCaption">{t(`indicators.${key}.caption`)}</p>
-              </li>
-            ))}
+            {INDICATORS.map(({ key, Icon }) => {
+              /* Owner-authorized placeholder figure (D-026); the footer note
+                 states figures publish after source validation. The count-up
+                 animates the SAME published string — digits parsed out, the
+                 unit riding as suffix — so motion never invents a value. */
+              const raw = t(`indicators.${key}.value`);
+              const numeric = Number(raw.replace(/[^\d]/g, ""));
+              const suffix = raw.replace(/[\d\s  ]/g, "");
+              return (
+                <li className="impactItem" data-reveal key={key}>
+                  <span className="impactIconRing" aria-hidden="true">
+                    <Icon className="impactIcon" />
+                  </span>
+                  <p className="impactValue">
+                    <Counter value={numeric} suffix={suffix ? ` ${suffix}` : ""} locale="fr-FR" />
+                  </p>
+                  <h3 className="impactLabel">{t(`indicators.${key}.label`)}</h3>
+                  <p className="impactCaption">{t(`indicators.${key}.caption`)}</p>
+                </li>
+              );
+            })}
           </ul>
 
-          <div className="impactFooter">
+          <div className="impactFooter" data-reveal>
             <p className="impactNote">
               <ShieldCheckIcon className="impactNoteIcon" aria-hidden="true" />
               <span>{t("note")}</span>
@@ -83,7 +97,7 @@ export function ImpactMetricsSection() {
               <ArrowRightIcon className="impactMethodologyIcon" aria-hidden="true" />
             </a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

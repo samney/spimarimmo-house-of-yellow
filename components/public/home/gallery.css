@@ -25,19 +25,6 @@
   margin-bottom: var(--space-sm);
 }
 
-.galEyebrow {
-  color: var(--spimar-gold-text); /* WCAG AA on paper */
-  font-size: var(--text-support);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  margin: 0 0 var(--space-sm);
-  text-transform: uppercase;
-}
-
-.galEyebrowIndex {
-  font-variant-numeric: tabular-nums;
-}
-
 .galTitle {
   font-size: var(--text-heading-lg);
   font-weight: 600;

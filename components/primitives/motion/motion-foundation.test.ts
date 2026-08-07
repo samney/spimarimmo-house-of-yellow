@@ -99,14 +99,10 @@ describe("the motion foundation has no orphaned primitives", () => {
      EQUALITY, not a subset: wiring one of these up fails the test and forces
      this list to be corrected, so it cannot rot into a permanent excuse.
 
-     Counter — an animated metric count-up whose only designed home is the
-     homepage impact figures. It is left unmounted rather than mounted
-     somewhere convenient because the homepage is owned by another working
-     branch. Note it is a sharper version of the Inview defect: it renders
-     `{prefix}0` as its initial DOM, so a script failure shows a literal "0"
-     instead of the real figure. F-05 resolves it — mount with a
-     server-rendered true value, or delete it. */
-  const KNOWN_ORPHANS = ["Counter"];
+     Empty since 2026-08-07: Counter found its designed home in the homepage
+     impact figures (the breathing pass), counting up to the same published
+     D-026 placeholder strings the section always rendered. */
+  const KNOWN_ORPHANS: string[] = [];
 
   it("mounts every primitive it ships", () => {
     const dir = join(ROOT, "components", "primitives", "motion");

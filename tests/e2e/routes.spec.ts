@@ -122,10 +122,17 @@ test("whatsapp widget switches contrast over the yellow footer reveal", async ({
    the natural top from the stack instead (owner report, 2026-08-06: the
    scroll-animated sections landed inaccurately). */
 test("exposer dropdown anchors land on the deck sections' pinned frames", async ({ page }) => {
+  /* Two Lenis-animated hops plus reveal choreography brush the default
+     budget when the suite runs on a loaded machine. */
+  test.setTimeout(60_000);
   await page.goto("/");
   await page.getByRole("button", { name: "Deny" }).click();
 
   const nav = page.locator("header nav");
+  /* The header hides on scroll; pin the page to the top and wait for the
+     entry to be actionable before each hop. */
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(nav.getByRole("link", { name: "Exposer", exact: true })).toBeInViewport();
   await nav.getByRole("link", { name: "Exposer", exact: true }).hover();
   await nav.getByRole("link", { name: "Méthode", exact: true }).click();
   await page.waitForFunction(() => {
@@ -135,6 +142,7 @@ test("exposer dropdown anchors land on the deck sections' pinned frames", async 
 
   /* The header hides while deep in the page; surface it again for hop two. */
   await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(nav.getByRole("link", { name: "Exposer", exact: true })).toBeInViewport();
   await nav.getByRole("link", { name: "Exposer", exact: true }).hover();
   await nav.getByRole("link", { name: "Visibilité", exact: true }).click();
   await page.waitForFunction(() => {

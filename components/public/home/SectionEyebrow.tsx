@@ -9,17 +9,21 @@
 /* `index` is optional: the bracketed number is page wayfinding, so a block
    nested inside another section's surface carries the label without it rather
    than announcing a section number out of sequence. */
+/* Extra attributes (e.g. `data-reveal` for the scroll choreography) pass
+   straight through to the <p>: several headers lay the eyebrow out via
+   `display: contents` grids, so a wrapper element would break placement. */
 export function SectionEyebrow({
   index,
   label,
   surface = "paper",
+  ...rest
 }: {
   index?: string;
   label: string;
   surface?: "paper" | "inverse";
-}) {
+} & Record<string, unknown>) {
   return (
-    <p className={`sectionEyebrow${surface === "inverse" ? " isInverse" : ""}`}>
+    <p className={`sectionEyebrow${surface === "inverse" ? " isInverse" : ""}`} {...rest}>
       {index ? (
         <span className="sectionEyebrow__index">
           [ <span className="numIndex">{index}</span> ]

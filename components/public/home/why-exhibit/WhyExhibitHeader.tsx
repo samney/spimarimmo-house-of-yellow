@@ -1,4 +1,6 @@
 import { SectionEyebrow } from "../SectionEyebrow";
+import { Reveal } from "@/components/primitives/motion/Reveal";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import type { Benefit, WhyExhibitContent } from "./why-exhibit-types";
 
 /* Header block: eyebrow, single-line H2 and subtitle.
@@ -18,12 +20,14 @@ export function WhyExhibitHeader({
   headingId: string;
 }) {
   return (
-    <header className="whyExhibit__header">
-      <SectionEyebrow index={benefit.number} label={content.eyebrowLabel} />
-      <h2 id={headingId} className="whyExhibit__heading">
-        {content.heading}
-      </h2>
-      <p className="whyExhibit__subtitle">{content.subtitle}</p>
-    </header>
+    <Reveal as="header" className="whyExhibit__header">
+      {/* The eyebrow's index follows the active benefit, so it stays outside
+          the split reveal and simply fades in once. */}
+      <SectionEyebrow data-reveal index={benefit.number} label={content.eyebrowLabel} />
+      <SplitTitle as="h2" id={headingId} className="whyExhibit__heading" text={content.heading} />
+      <p data-reveal className="whyExhibit__subtitle">
+        {content.subtitle}
+      </p>
+    </Reveal>
   );
 }

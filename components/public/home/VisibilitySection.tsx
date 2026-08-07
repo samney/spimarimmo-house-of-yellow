@@ -1,6 +1,8 @@
 import { useTranslations } from "next-intl";
 import { SectionEyebrow } from "./SectionEyebrow";
 import { VisibilityPhases } from "./VisibilityPhases";
+import { Reveal } from "@/components/primitives/motion/Reveal";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 import type { SectionHeadingProps } from "./section-heading";
 
 /* Section 07 — Votre visibilité.
@@ -35,17 +37,20 @@ export function VisibilitySection({
       data-static={staticRender ? "true" : undefined}
     >
       <div className="visInner">
-        <header className="visHeader">
+        {/* Reveal sits on the header, not the headings: visHeadings lays out
+            via display: contents, which has no box for ScrollTrigger to
+            measure. */}
+        <Reveal as="header" className="visHeader">
           <div className="visHeadings">
-            <SectionEyebrow index="07" label={t("eyebrow")} />
-            <Heading className="visTitle" id="vis-title">
-              {t("title")}
-            </Heading>
-            <p className="visLead">{t("lead")}</p>
+            <SectionEyebrow data-reveal index="07" label={t("eyebrow")} />
+            <SplitTitle as={Heading} className="visTitle" id="vis-title" text={t("title")} />
+            <p data-reveal className="visLead">
+              {t("lead")}
+            </p>
           </div>
           {/* The header CTA was removed by owner note (D-026) — the device's
               own per-phase action is the section's only exit. */}
-        </header>
+        </Reveal>
 
         <VisibilityPhases initialPhase={initialPhase} staticRender={staticRender} />
       </div>

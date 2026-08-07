@@ -12,6 +12,9 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { ArrowRightIcon } from "./impactIcons";
+import { SectionEyebrow } from "./SectionEyebrow";
+import { Reveal } from "@/components/primitives/motion/Reveal";
+import { SplitTitle } from "@/components/primitives/motion/SplitTitle";
 
 import { DataShieldIcon, FullscreenIcon, PlaySolidIcon, VolumeIcon } from "./proofIcons";
 
@@ -63,29 +66,30 @@ export function ProofSection() {
   return (
     <section className="proofSection" aria-labelledby="proof-title">
       <div className="proofInner">
-        <header className="proofHeader">
+        <Reveal as="header" className="proofHeader">
           <div className="proofHeadings">
-            <p className="proofEyebrow">
-              [ <span className="proofEyebrowIndex">09</span> ] {t("eyebrow")}
+            {/* The shared eyebrow component, not a hand-rolled copy — the one
+                place this section's treatment could drift (owner direction,
+                2026-08-07: consistency pass). */}
+            <SectionEyebrow data-reveal index="09" label={t("eyebrow")} />
+            <SplitTitle as="h2" className="proofTitle" id="proof-title" text={t("title")} />
+            <p data-reveal className="proofLead">
+              {t("lead")}
             </p>
-            <h2 className="proofTitle" id="proof-title">
-              {t("title")}
-            </h2>
-            <p className="proofLead">{t("lead")}</p>
           </div>
           {/* The section's one global action, restrained and outlined so the
               heading stays the strongest object — the gold CTA inside the
               stage belongs to the case, not to the section. */}
-          <a className="proofHeaderCta" href="#">
+          <a data-reveal className="proofHeaderCta" href="#">
             <span>{t("allCases")}</span>
             <ArrowRightIcon className="proofCtaIcon" aria-hidden="true" />
           </a>
           {/* Owner note (2026-08-04): one CTA only — the in-panel case CTA
               stays; the duplicate header CTA is removed. */}
-        </header>
+        </Reveal>
 
         <div className="proofPanel">
-          <div className="proofMain">
+          <Reveal className="proofMain" stagger={0.12}>
             {/* Inert illustration of the case-study film: chrome, fixture
                 timing and controls are one decorative plane. */}
             <figure className="proofVideo" aria-hidden="true">
@@ -153,12 +157,12 @@ export function ProofSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="proofFunnel">
+          <Reveal as="div" className="proofFunnel" stagger={0.07}>
             <ol className="proofSteps">
               {STEPS.map(({ key, Icon }) => (
-                <li className="proofStep" key={key}>
+                <li className="proofStep" data-reveal key={key}>
                   <span className="proofStepCircle" aria-hidden="true">
                     <Icon className="proofStepIcon" />
                   </span>
@@ -166,14 +170,14 @@ export function ProofSection() {
                 </li>
               ))}
             </ol>
-            <p className="proofFunnelNote">
+            <p className="proofFunnelNote" data-reveal>
               <DataShieldIcon className="proofFunnelNoteIcon" aria-hidden="true" />
               <span>{t("funnelNote")}</span>
             </p>
-          </div>
+          </Reveal>
         </div>
 
-        <div className="proofMethod">
+        <Reveal className="proofMethod" stagger={0.09}>
           {METHOD_ITEMS.map(({ key, Icon }) => (
             <div className="proofMethodItem" key={key}>
               <Icon className="proofMethodIcon" aria-hidden="true" />
@@ -187,7 +191,7 @@ export function ProofSection() {
             <span>{t("methodCta")}</span>
             <ArrowRightIcon className="proofCtaIcon" aria-hidden="true" />
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
