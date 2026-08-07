@@ -101,6 +101,7 @@ export const WORKSPACES: readonly Workspace[] = [
         label: "CMS",
         items: [
           { href: "/admin/cms/pages", label: "Pages", permission: "content.read" },
+          { href: "/admin/cms/etudes", label: "Études de cas", permission: "content.read" },
           { href: "/admin/cms/media", label: "Médias", permission: "content.read" },
         ],
       },

@@ -136,6 +136,68 @@ export async function savePageAction(
   };
 }
 
+/* ------------------------------------------------------------- études de cas
+
+   Case studies are pages in the `etudes/` family — the public listing and
+   detail already read exactly that (D-026 kept the publish → visible
+   contract). A dedicated action exists so the PREFIX is the system's job:
+   an operator types `casablanca-2026`, never a path, and cannot land a case
+   outside the family or double the prefix by pasting one in. */
+
+const CASE_PREFIX = "etudes/";
+
+const caseSlugSchema = z
+  .string()
+  .trim()
+  .transform((value) => (value.startsWith(CASE_PREFIX) ? value.slice(CASE_PREFIX.length) : value))
+  .pipe(
+    z
+      .string()
+      .min(1, "Un slug est requis.")
+      .max(80)
+      .regex(
+        /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+        "Le slug utilise des minuscules, chiffres et tirets — il devient l’URL publique.",
+      ),
+  );
+
+export async function saveCaseStudyAction(
+  _prev: ActionResult | null,
+  form: FormData,
+): Promise<ActionResult> {
+  const session = await requireEditor();
+  if (!session) return { ok: false, message: "You do not have permission to edit content." };
+
+  const parsedSlug = caseSlugSchema.safeParse(String(form.get("slug") ?? ""));
+  if (!parsedSlug.success) {
+    return { ok: false, message: parsedSlug.error.issues[0]?.message ?? "Slug invalide." };
+  }
+  const slug = parsedSlug.data;
+
+  const state = requestedState(form, canPublish(session));
+  await getAdminSeams().cms.savePage(
+    {
+      id: String(form.get("id") ?? "") || undefined,
+      slug: `${CASE_PREFIX}${slug}`,
+      state,
+      title: localizedFrom(form, "title"),
+      intro: localizedFrom(form, "intro"),
+      body: localizedFrom(form, "body"),
+    },
+    session.email,
+  );
+
+  revalidateConsole(["/admin/cms/etudes", "/admin"]);
+  revalidatePublic(["/etudes-de-cas", `/etudes-de-cas/${slug}`]);
+  return {
+    ok: true,
+    message:
+      state === "published"
+        ? `Étude publiée — visible sur /etudes-de-cas/${slug}.`
+        : "Étude enregistrée en brouillon. Les brouillons ne sont pas visibles publiquement.",
+  };
+}
+
 export async function saveEventAction(
   _prev: ActionResult | null,
   form: FormData,
