@@ -135,6 +135,18 @@
   padding-block: 0;
 }
 
+/* And no ghost column (owner remark, 2026-08-07): the homepage's editorial
+   label column travels EMPTY on child pages and shoved every composition
+   15vw right of center. Child pages have no label — the content owns the
+   full measure, centred by the contentWrapper. */
+.spimarListPage .hoyCols {
+  display: block;
+}
+
+.spimarListPage .hoyCols .colLabel {
+  display: none;
+}
+
 .pageHeader__plainEyebrow {
   margin: 0;
 }
@@ -156,6 +168,9 @@
 /* FAQ — native disclosure widgets: keyboard and reduced-motion safe. */
 .faqList {
   border-top: 1px solid var(--border-subtle);
+  /* Centred readable measure (owner remark, 2026-08-07): the column was
+     pinned left and read as off-balance beside the centred pages. */
+  margin-inline: auto;
   max-width: var(--measure-document);
 }
 
