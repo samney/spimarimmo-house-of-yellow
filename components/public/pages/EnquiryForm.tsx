@@ -4,6 +4,9 @@ import { useId, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { submitEnquiry } from "@/app/actions/enquiry";
+import { DesignedSelect } from "@/components/public/global/DesignedSelect";
+import { PillLabel } from "@/components/public/pages/PageCta";
+import { ArrowRightIcon } from "@/components/public/home/impactIcons";
 import type { EnquiryResult } from "@/lib/spimar/contact-schema";
 
 /* The public enquiry form (P-09).
@@ -26,13 +29,29 @@ import type { EnquiryResult } from "@/lib/spimar/contact-schema";
 
 type Status = "idle" | "sending" | EnquiryResult["status"];
 
-export function EnquiryForm({ kind = "contact" }: { kind?: "contact" | "exhibitor" | "visitor" }) {
+const SUBJECTS = ["general", "exposer", "ressources", "autre"] as const;
+type Subject = (typeof SUBJECTS)[number];
+
+export function EnquiryForm({
+  kind = "contact",
+  topic,
+  variant = "page",
+}: {
+  kind?: "contact" | "exhibitor" | "visitor";
+  /** Preselects the subject — Bibliothèque and other CTAs converge on the
+      one contact system with a variant instead of bespoke forms. */
+  topic?: string;
+  variant?: "page" | "modal";
+}) {
   const t = useTranslations("enquiryForm");
   const locale = useLocale();
   const pathname = usePathname();
   const formId = useId();
   const [status, setStatus] = useState<Status>("idle");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [subject, setSubject] = useState<Subject>(
+    SUBJECTS.find((key) => key === topic) ?? "general",
+  );
   const [pending, startTransition] = useTransition();
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -43,15 +62,19 @@ export function EnquiryForm({ kind = "contact" }: { kind?: "contact" | "exhibito
     setFieldErrors({});
 
     startTransition(async () => {
+      /* The subject travels inside the message field — the hardened schema
+         stays untouched, and the CRM reads the context in the first line. */
       const result = await submitEnquiry({
         name: data.get("name"),
         email: data.get("email"),
         organisation: data.get("organisation") ?? "",
-        message: data.get("message"),
+        message: `${t("subjectLabel")} : ${t(`subjects.${subject}`)}
+
+${String(data.get("message") ?? "")}`,
         consent: data.get("consent") === "on",
         locale,
         sourcePath: pathname,
-        cta: "contact-page",
+        cta: variant === "modal" ? "contact-modal" : "contact-page",
         kind,
         website: data.get("website") ?? "",
       });
@@ -80,8 +103,25 @@ export function EnquiryForm({ kind = "contact" }: { kind?: "contact" | "exhibito
               : "";
 
   return (
-    <form className="enquiryForm" onSubmit={onSubmit} noValidate={false}>
+    <form
+      className={`enquiryForm${variant === "modal" ? " enquiryForm--modal" : ""}`}
+      onSubmit={onSubmit}
+      noValidate={false}
+    >
       <p className="enquiryForm__intro text medium">{t("intro")}</p>
+
+      <div className="enquiryForm__field">
+        <label className="text medium" htmlFor={`${formId}-subject`}>
+          {t("subjectLabel")}
+        </label>
+        <DesignedSelect
+          id={`${formId}-subject`}
+          onChange={(next) => setSubject(SUBJECTS.find((key) => key === next) ?? "general")}
+          options={SUBJECTS.map((key) => ({ value: key, label: t(`subjects.${key}`) }))}
+          placeholder={t("subjects.general")}
+          value={subject}
+        />
+      </div>
 
       <div className="enquiryForm__field">
         <label className="text medium" htmlFor={`${formId}-name`}>
@@ -180,8 +220,11 @@ export function EnquiryForm({ kind = "contact" }: { kind?: "contact" | "exhibito
         />
       </div>
 
-      <button className="enquiryForm__submit" type="submit" disabled={busy}>
-        {busy ? t("sending") : t("submit")}
+      <button className="button enquiryForm__submit" type="submit" disabled={busy}>
+        <PillLabel text={busy ? t("sending") : t("submit")} />
+        <span className="icon">
+          <ArrowRightIcon />
+        </span>
       </button>
 
       <p

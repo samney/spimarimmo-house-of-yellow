@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { WhatsAppIcon } from "./logos";
+import { ContactDialog } from "./ContactDialog";
 import { WHATSAPP_NUMBER } from "@/lib/spimar/contact-details";
 
 /* Floating WhatsApp assistant — owner note (D-026), modeled on the owner's
@@ -145,6 +146,10 @@ export function WhatsAppWidget() {
         </div>
       )}
 
+      {/* The contact launcher rides the same corner, above the WhatsApp
+          trigger (owner direction, 2026-08-07): mail opens the enquiry
+          modal, gold opens the pre-chat. */}
+      <ContactDialog />
       <div className="waChip" aria-hidden="true">
         <span className="waChipTitle">{t("chipTitle")}</span>
         <span className="waChipSub">{t("chipSub")}</span>

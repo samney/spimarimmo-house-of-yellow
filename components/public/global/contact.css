@@ -1,0 +1,536 @@
+/* ==========================================================================
+   Contact system (owner direction, 2026-08-07)
+   ==========================================================================
+   The floating mail launcher above the WhatsApp trigger, the enquiry modal
+   over a blurred scrim, the upgraded enquiry form, and the /contact page's
+   two-column composition. Binds only to L2 tokens. */
+
+/* --- The launcher (rides the .waWidget corner) ------------------------------- */
+
+.contactLauncher {
+  align-items: center;
+  background: var(--surface-inverse);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: var(--shadow-raised);
+  color: var(--action-primary);
+  cursor: pointer;
+  display: inline-flex;
+  height: 3.2vw;
+  inset-block-end: calc(100% + 0.6vw);
+  inset-inline-end: 0;
+  justify-content: center;
+  min-height: 48px;
+  min-width: 48px;
+  position: absolute;
+  transition: transform var(--dur-micro) var(--ease-out-ref);
+  width: 3.2vw;
+}
+
+.contactLauncher:hover {
+  transform: translateY(-0.1vw);
+}
+
+.contactLauncher:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.contactLauncher svg {
+  height: 45%;
+  width: 45%;
+}
+
+/* Over the yellow footer reveal the pairing flips with the widget. */
+.waWidget[data-inverse] .contactLauncher {
+  background: var(--action-primary);
+  color: var(--surface-inverse);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contactLauncher {
+    transition: none;
+  }
+
+  .contactLauncher:hover {
+    transform: none;
+  }
+}
+
+/* --- The modal ----------------------------------------------------------------- */
+
+.contactModal {
+  inset: 0;
+  position: fixed;
+  z-index: var(--z-modal, 60);
+}
+
+.contactModal__scrim {
+  backdrop-filter: blur(6px);
+  background: color-mix(in srgb, var(--spimar-black) 42%, transparent);
+  inset: 0;
+  position: absolute;
+}
+
+.contactModal__panel {
+  animation: contactModalIn 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lifted);
+  display: flex;
+  flex-direction: column;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  max-block-size: 88vh;
+  inline-size: min(42vw, 640px);
+  overflow: hidden;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes contactModalIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 1vw));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contactModal__panel {
+    animation: none;
+  }
+}
+
+.contactModal__head {
+  align-items: center;
+  border-block-end: 1px solid var(--border-subtle);
+  display: flex;
+  flex: none;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* The accent family's solid gold badge. */
+.contactModal__badge {
+  align-items: center;
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  display: inline-flex;
+  flex: none;
+  height: 2.4vw;
+  justify-content: center;
+  min-height: 38px;
+  min-width: 38px;
+  width: 2.4vw;
+}
+
+.contactModal__badge svg {
+  height: 55%;
+  width: 55%;
+}
+
+.contactModal__headText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.1vw;
+  min-inline-size: 0;
+}
+
+.contactModal__title {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+}
+
+.contactModal__status {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+}
+
+.contactModal__close {
+  align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  color: var(--on-surface);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-small-title);
+  height: 2.4vw;
+  justify-content: center;
+  min-height: 38px;
+  min-width: 38px;
+  width: 2.4vw;
+}
+
+.contactModal__close:hover {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--action-on-primary);
+}
+
+.contactModal__close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.contactModal__body {
+  overflow-y: auto;
+  padding: var(--space-md);
+}
+
+.contactModal__foot {
+  align-items: center;
+  border-block-start: 1px solid var(--border-subtle);
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  font-size: var(--text-support);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.contactModal__foot a {
+  color: var(--on-surface);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contactModal__foot a:hover {
+  text-decoration: underline;
+}
+
+.contactModal__fullPage {
+  color: var(--spimar-gold-text);
+  margin-inline-start: auto;
+}
+
+/* --- The enquiry form (depth pass) ---------------------------------------------- */
+
+.enquiryForm {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-raised);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  overflow: hidden;
+  padding: var(--space-md);
+  position: relative;
+}
+
+/* The brand rail crowning the card, like the offres form. */
+.enquiryForm::before {
+  background: var(--action-primary);
+  block-size: 0.28vw;
+  content: "";
+  inset-block-start: 0;
+  inset-inline: 0;
+  min-block-size: 4px;
+  position: absolute;
+}
+
+/* Inside the modal the panel is the card — the form goes quiet. */
+.enquiryForm--modal {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.enquiryForm--modal::before {
+  content: none;
+}
+
+.enquiryForm__intro {
+  color: var(--on-surface-muted);
+  margin: 0;
+}
+
+.enquiryForm__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.enquiryForm__field > label {
+  font-weight: 500;
+}
+
+.enquiryForm__field input,
+.enquiryForm__field textarea {
+  appearance: none;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  font-family: inherit;
+  font-size: var(--text-support);
+  inline-size: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  transition: border-color 160ms ease;
+}
+
+.enquiryForm__field input:hover,
+.enquiryForm__field textarea:hover {
+  border-color: var(--border-strong);
+}
+
+.enquiryForm__field input:focus-visible,
+.enquiryForm__field textarea:focus-visible {
+  border-color: var(--action-primary);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.15em;
+}
+
+.enquiryForm__optional {
+  color: var(--on-surface-muted);
+  font-weight: 400;
+}
+
+.enquiryForm__error {
+  color: var(--feedback-critical);
+  margin: 0;
+}
+
+/* Colour AND weight — colour alone excludes anyone who cannot see it. */
+.enquiryForm [aria-invalid="true"] {
+  border-color: var(--feedback-critical);
+  border-width: 2px;
+}
+
+.enquiryForm textarea {
+  min-height: 12vw;
+  resize: vertical;
+}
+
+.enquiryForm__consent {
+  align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.enquiryForm__consent input {
+  accent-color: var(--action-primary);
+  block-size: 1.1vw;
+  inline-size: 1.1vw;
+  min-block-size: 16px;
+  min-inline-size: 16px;
+}
+
+.enquiryForm__hp {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+}
+
+.button.enquiryForm__submit {
+  border: 0;
+  font-family: inherit;
+  font-weight: 600;
+  inline-size: 100%;
+  justify-content: space-between;
+}
+
+.button.enquiryForm__submit:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.button.enquiryForm__submit:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0.2em;
+}
+
+.enquiryForm__status {
+  color: var(--on-surface-muted);
+  margin: 0;
+  min-block-size: 1.2em;
+}
+
+.enquiryForm__status:empty {
+  margin: 0;
+}
+
+.enquiryForm__status.isSuccess {
+  color: var(--feedback-positive);
+  font-weight: 600;
+}
+
+/* --- The /contact page composition ---------------------------------------------- */
+
+.contactGrid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: minmax(0, 1fr) 24vw;
+}
+
+.contactInfoCard {
+  align-self: start;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.contactInfoTitle {
+  border-block-end: 1px solid var(--border-subtle);
+  color: var(--spimar-gold-text);
+  font-size: var(--text-support);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin: 0;
+  padding-block-end: var(--space-xs);
+  text-transform: uppercase;
+}
+
+.contactChannel {
+  align-items: center;
+  color: var(--on-surface);
+  display: flex;
+  gap: var(--space-sm);
+  text-decoration: none;
+}
+
+.contactChannel:hover .contactChannel__value {
+  text-decoration: underline;
+}
+
+.contactChannel:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* The accent family's gold tile carries each channel's mark. */
+.contactChannel__icon {
+  align-items: center;
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  display: inline-flex;
+  flex: none;
+  height: 2.3vw;
+  justify-content: center;
+  min-height: 34px;
+  min-width: 34px;
+  width: 2.3vw;
+}
+
+.contactChannel__icon svg {
+  height: 52%;
+  width: 52%;
+}
+
+.contactChannel__meta {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.contactChannel__label {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.contactChannel__value {
+  font-size: var(--text-support);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.contactNote {
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-inline-start: 3px solid var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.5;
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.contactSocials {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.contactSocials__row {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.contactSocial {
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--spimar-ink) 35%, transparent);
+  border-radius: 50%;
+  color: var(--on-surface);
+  display: inline-flex;
+  height: 2.2vw;
+  justify-content: center;
+  min-height: 34px;
+  min-width: 34px;
+  opacity: 0.75;
+  width: 2.2vw;
+}
+
+.contactSocials__pending {
+  color: var(--on-surface-muted);
+  font-size: var(--text-base);
+  margin: 0;
+}
+
+/* --- Restatements ----------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .contactGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contactModal__panel {
+    inline-size: min(80vw, 640px);
+  }
+}
+
+@media (max-width: 580px) {
+  .enquiryForm textarea {
+    min-height: 40vw;
+  }
+
+  .contactModal__panel {
+    inline-size: 94vw;
+    max-block-size: 92vh;
+  }
+
+  .contactModal__badge,
+  .contactModal__close {
+    height: 10vw;
+    width: 10vw;
+  }
+
+  .contactLauncher {
+    height: 12vw;
+    width: 12vw;
+  }
+
+  .enquiryForm__consent input {
+    block-size: 4.5vw;
+    inline-size: 4.5vw;
+  }
+}

@@ -329,7 +329,12 @@
         "opportunities": "Opportunités"
       },
       "companyLabel": "Société {letter}",
-      "nav": ["Projets", "À propos", "Actualités", "Contact"],
+      "nav": [
+        "Projets",
+        "À propos",
+        "Actualités",
+        "Contact"
+      ],
       "navCta": "Nous rencontrer",
       "projectsTitle": "Nos projets",
       "projects": [
@@ -353,7 +358,11 @@
       "sponsored": "Sponsorisé",
       "postCaption": "Investissez au Maroc, progressez à l’international.",
       "postCta": "En savoir plus",
-      "postActions": ["J’aime", "Commenter", "Partager"],
+      "postActions": [
+        "J’aime",
+        "Commenter",
+        "Partager"
+      ],
       "inviteTitle": "Invitation privée",
       "inviteSub": "Salon international de l’immobilier",
       "live": "EN DIRECT",
@@ -1116,7 +1125,7 @@
     "cursorVideo": "la vidéo"
   },
   "enquiryForm": {
-    "intro": "Écrivez-nous et un conseiller vous répond sous 48 heures ouvrées.",
+    "intro": "Écrivez-nous et un conseiller vous répond sous 24 h ouvrées.",
     "name": "Nom et prénom",
     "email": "E-mail",
     "organisation": "Société",
@@ -1129,7 +1138,14 @@
     "duplicate": "Cette demande a déjà été enregistrée. Un conseiller vous recontacte.",
     "rateLimited": "Trop de demandes envoyées depuis cet appareil. Réessayez dans quelques minutes.",
     "error": "L'envoi n'a pas abouti. Réessayez ou écrivez directement à contact@spimarimmo.com.",
-    "invalid": "Certaines informations sont incomplètes. Corrigez les champs signalés."
+    "invalid": "Certaines informations sont incomplètes. Corrigez les champs signalés.",
+    "subjectLabel": "Sujet",
+    "subjects": {
+      "general": "Demande générale",
+      "exposer": "Devenir exposant",
+      "ressources": "Ressources & documentation",
+      "autre": "Autre sujet"
+    }
   },
   "pourquoiSpimar": {
     "label": "Pourquoi SPIMAR",
@@ -1163,7 +1179,20 @@
     "label": "Contact",
     "statement": "Parlez à un conseiller SPIMARIMMO.",
     "pending": "Chaque demande est enregistrée et suivie par un conseiller. La prise de rendez-vous en ligne ouvre avec le raccordement du CRM.",
-    "directTitle": "Nous joindre directement"
+    "directTitle": "Nous joindre directement",
+    "lead": "Une question, un projet de participation, une ressource à demander — notre équipe vous répond sous 24 h ouvrées.",
+    "infoTitle": "Coordonnées",
+    "infoNote": "Notre équipe vous répond sous 24 h ouvrées.",
+    "whatsappLabel": "Écrire sur WhatsApp",
+    "socialsTitle": "Réseaux sociaux",
+    "socialsPending": "Liens publiés après validation.",
+    "modalTitle": "Contactez SPIMARIMMO",
+    "modalStatus": "Réponse sous 24 h ouvrées",
+    "triggerLabel": "Ouvrir le formulaire de contact",
+    "fullPage": "Ouvrir la page contact",
+    "closeLabel": "Fermer le formulaire",
+    "phoneLabel": "Téléphone",
+    "outroCta": "Devenir exposant"
   },
   "whatsapp": {
     "chipTitle": "Besoin d'aide ?",

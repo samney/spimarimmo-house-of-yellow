@@ -58,7 +58,7 @@ export default async function Ressources({ params }: { params: Promise<{ locale:
                   ) : (
                     <>
                       <p className="bibPending">{t("availability")}</p>
-                      <Link className="bibContactLink" href="/contact">
+                      <Link className="bibContactLink" href="/contact?sujet=ressources">
                         {t("requestResource")}
                       </Link>
                     </>

@@ -329,7 +329,12 @@
         "opportunities": "Opportunities"
       },
       "companyLabel": "Company {letter}",
-      "nav": ["Projects", "About", "News", "Contact"],
+      "nav": [
+        "Projects",
+        "About",
+        "News",
+        "Contact"
+      ],
       "navCta": "Meet us",
       "projectsTitle": "Our projects",
       "projects": [
@@ -353,7 +358,11 @@
       "sponsored": "Sponsored",
       "postCaption": "Invest in Morocco, grow internationally.",
       "postCta": "Learn more",
-      "postActions": ["Like", "Comment", "Share"],
+      "postActions": [
+        "Like",
+        "Comment",
+        "Share"
+      ],
       "inviteTitle": "Private invitation",
       "inviteSub": "International real-estate show",
       "live": "LIVE",
@@ -1116,7 +1125,7 @@
     "cursorVideo": "the video"
   },
   "enquiryForm": {
-    "intro": "Write to us and an adviser will reply within two working days.",
+    "intro": "Write to us and an advisor replies within 24 business hours.",
     "name": "Full name",
     "email": "Email",
     "organisation": "Company",
@@ -1129,7 +1138,14 @@
     "duplicate": "This enquiry has already been recorded. An adviser will be in touch.",
     "rateLimited": "Too many enquiries from this device. Please try again in a few minutes.",
     "error": "The enquiry could not be sent. Please try again or write to contact@spimarimmo.com.",
-    "invalid": "Some information is incomplete. Please correct the highlighted fields."
+    "invalid": "Some information is incomplete. Please correct the highlighted fields.",
+    "subjectLabel": "Subject",
+    "subjects": {
+      "general": "General enquiry",
+      "exposer": "Becoming an exhibitor",
+      "ressources": "Resources & documentation",
+      "autre": "Something else"
+    }
   },
   "pourquoiSpimar": {
     "label": "Why SPIMAR",
@@ -1163,7 +1179,20 @@
     "label": "Contact",
     "statement": "Talk to a SPIMARIMMO adviser.",
     "pending": "Every enquiry is recorded and followed up by an adviser. Online appointment booking opens with the CRM connection.",
-    "directTitle": "Reach us directly"
+    "directTitle": "Reach us directly",
+    "lead": "A question, a participation project, a resource to request — our team replies within 24 business hours.",
+    "infoTitle": "Contact details",
+    "infoNote": "Our team replies within 24 business hours.",
+    "whatsappLabel": "Write on WhatsApp",
+    "socialsTitle": "Social media",
+    "socialsPending": "Links published after validation.",
+    "modalTitle": "Contact SPIMARIMMO",
+    "modalStatus": "Reply within 24 business hours",
+    "triggerLabel": "Open the contact form",
+    "fullPage": "Open the contact page",
+    "closeLabel": "Close the form",
+    "phoneLabel": "Phone",
+    "outroCta": "Become an exhibitor"
   },
   "whatsapp": {
     "chipTitle": "Need help?",
