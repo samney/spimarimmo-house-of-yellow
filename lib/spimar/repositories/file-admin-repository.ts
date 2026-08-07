@@ -145,10 +145,18 @@ export class FileCrmRepository implements CrmRepository {
   }
   async updateLead(
     id: string,
-    patch: Partial<Pick<Lead, "stage" | "assignee">>,
+    patch: Partial<Pick<Lead, "stage" | "assignee" | "lostReason">>,
     activity: { by: string; kind: Lead["activity"][number]["kind"]; detail: string },
   ): Promise<Lead | null> {
-    const updated = store.updateLead(id, patch, activity);
+    /* ADM-087, same ADR-A5 placement: `lostReason` is non-empty exactly while
+       the stage is `lost`. Leaving `lost` clears it HERE so every caller
+       agrees — the reason that applied to a closed episode must not survive
+       onto a reopened lead as though it still described it. The activity
+       trail keeps the history. */
+    const effective: Partial<Pick<Lead, "stage" | "assignee" | "lostReason">> =
+      patch.stage && patch.stage !== "lost" ? { ...patch, lostReason: "" } : patch;
+
+    const updated = store.updateLead(id, effective, activity);
 
     /* ADM-092, the ADR-A5 pattern: reaching `won` opens the exhibitor
        onboarding here, in the repository, so the detail workspace and the

@@ -219,8 +219,16 @@ function dedupeKeyFor(kind: string, email: string, message: string): string {
     .digest("hex");
 }
 
+/** Records written before ADM-087 carry no lostReason; "" is its honest
+    reading — the domain type stays non-optional. */
+function normalizeLead(lead: Lead): Lead {
+  return { ...lead, lostReason: lead.lostReason ?? "" };
+}
+
 export function listLeads(): Lead[] {
-  return readAll<Lead>("leads").sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  return readAll<Lead>("leads")
+    .map(normalizeLead)
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
 export function getLead(id: string): Lead | null {
@@ -252,13 +260,13 @@ export function createLead(
 
 export function updateLead(
   id: string,
-  patch: Partial<Pick<Lead, "stage" | "assignee">>,
+  patch: Partial<Pick<Lead, "stage" | "assignee" | "lostReason">>,
   activity: { by: string; kind: LeadActivityKind; detail: string },
 ): Lead | null {
   const rows = readAll<Lead>("leads");
   const index = rows.findIndex((l) => l.id === id);
   if (index < 0) return null;
-  const current = rows[index];
+  const current = normalizeLead(rows[index]);
   const next: Lead = {
     ...current,
     ...patch,
@@ -367,6 +375,7 @@ export function createAcquiredLead(input: {
     consent: input.consent,
     stage: "new",
     assignee: "",
+    lostReason: "",
     activity: [
       {
         at: now(),

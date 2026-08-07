@@ -17,7 +17,7 @@ import {
   verifyCredentials,
 } from "@/lib/spimar/auth";
 import { getAdminSeams } from "@/lib/spimar/repositories";
-import { LEAD_STAGES } from "@/lib/backend/admin-seams";
+import { LEAD_STAGES, LOST_REASONS, lostReasonLabel } from "@/lib/backend/admin-seams";
 import type { LeadStage, Localized, PublishState } from "@/lib/spimar/types";
 
 /* CMS and CRM server actions.
@@ -447,6 +447,35 @@ export async function updateLeadAction(
     const stage = String(form.get("stage") ?? "") as LeadStage;
     if (!LEAD_STAGES.includes(stage))
       return { ok: false, message: "That stage is not recognised." };
+
+    /* ADM-087: losing requires saying why, from the closed vocabulary. The
+       requirement is enforced HERE, at the boundary — a lost lead without a
+       reason is exactly the unaggregatable dead end the field exists to
+       prevent. Non-lost transitions ignore any submitted reason; the adapter
+       clears the stored one. */
+    if (stage === "lost") {
+      const reason = String(form.get("lostReason") ?? "").trim();
+      if (!LOST_REASONS.some((entry) => entry.value === reason)) {
+        return {
+          ok: false,
+          message: "Indiquez la raison de la perte — elle est requise pour clore un lead.",
+        };
+      }
+      const updated = await getAdminSeams().crm.updateLead(
+        id,
+        { stage, lostReason: reason },
+        {
+          by: session.email,
+          kind: "stage",
+          detail: `Étape perdue — raison : ${lostReasonLabel(reason)}`,
+        },
+      );
+      refresh();
+      return updated
+        ? { ok: true, message: "Stage updated." }
+        : { ok: false, message: "That lead no longer exists." };
+    }
+
     const updated = await getAdminSeams().crm.updateLead(
       id,
       { stage },
@@ -490,6 +519,13 @@ export async function moveLeadStage(form: FormData): Promise<void> {
 
   const id = String(form.get("id") ?? "");
   const stage = String(form.get("stage") ?? "") as LeadStage;
+
+  /* ADM-087: the board cannot ask why, and a silent default reason would be an
+     invented fact. Losing from the board therefore hands over to the lead's
+     workspace, which requires the reason before anything changes. */
+  if (id && stage === "lost") {
+    redirect(`/admin/crm/leads/${id}?cloture=1`);
+  }
 
   if (id && LEAD_STAGES.includes(stage)) {
     await getAdminSeams().crm.updateLead(

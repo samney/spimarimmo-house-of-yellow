@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { updateLeadAction } from "@/app/actions/cms";
-import { LEAD_STAGES } from "@/lib/backend/admin-seams";
+import { LEAD_STAGES, LOST_REASONS } from "@/lib/backend/admin-seams";
 import { leadStageLabel } from "@/components/admin/StatusBadge";
 import { Icon } from "@/components/admin/icons";
 import { EmptyState } from "@/components/admin/states";
@@ -26,14 +26,36 @@ export function LeadWorkspace({
   id,
   stage,
   assignee,
+  lostReason,
   activity,
+  preselectLost = false,
 }: {
   id: string;
   stage: LeadStage;
   assignee: string;
+  lostReason: string;
   activity: LeadActivity[];
+  /** True when the pipeline board handed over a "lost" move: the workspace
+      opens on `lost` so the operator only has to supply the reason. */
+  preselectLost?: boolean;
 }) {
   const [result, action, pending] = useActionState(updateLeadAction, null);
+  /* ADM-087: the reason field exists exactly when `lost` is the selection —
+     visibility only; the requirement itself is enforced server-side.
+
+     The select stays UNCONTROLLED, and the initial state is read from the
+     live DOM during the hydration render: a change made before hydration (a
+     fast user, or an automated one) lands in the server-rendered select
+     without firing React's onChange, and initialising from props would
+     silently disagree with what the operator sees. onChange covers
+     everything after. */
+  const [selectedStage, setSelectedStage] = useState<LeadStage>(() => {
+    if (typeof document !== "undefined") {
+      const el = document.getElementById("stage") as HTMLSelectElement | null;
+      if (el?.value) return el.value as LeadStage;
+    }
+    return preselectLost ? "lost" : stage;
+  });
 
   return (
     <div className="stack">
@@ -58,7 +80,13 @@ export function LeadWorkspace({
             <label className="field__label" htmlFor="stage">
               Étape actuelle
             </label>
-            <select className="select" id="stage" name="stage" defaultValue={stage}>
+            <select
+              className="select"
+              id="stage"
+              name="stage"
+              defaultValue={preselectLost ? "lost" : stage}
+              onChange={(event) => setSelectedStage(event.target.value as LeadStage)}
+            >
               {LEAD_STAGES.map((s) => (
                 <option key={s} value={s}>
                   {leadStageLabel(s)}
@@ -66,6 +94,32 @@ export function LeadWorkspace({
               ))}
             </select>
           </div>
+          {selectedStage === "lost" ? (
+            <div className="field">
+              <label className="field__label" htmlFor="lostReason">
+                Raison de la perte
+              </label>
+              <select
+                className="select"
+                id="lostReason"
+                name="lostReason"
+                required
+                defaultValue={lostReason || ""}
+              >
+                <option value="" disabled>
+                  Choisir une raison…
+                </option>
+                {LOST_REASONS.map((reason) => (
+                  <option key={reason.value} value={reason.value}>
+                    {reason.label}
+                  </option>
+                ))}
+              </select>
+              <p className="field__hint">
+                Requise pour clore le lead — elle alimente l’analyse des pertes.
+              </p>
+            </div>
+          ) : null}
           <button type="submit" className="btn btn--primary" disabled={pending}>
             {pending ? "Enregistrement…" : "Faire progresser l’étape"}
           </button>

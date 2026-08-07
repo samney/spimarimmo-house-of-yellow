@@ -238,6 +238,7 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
       consent: true,
       stage: "new" as const,
       assignee: "",
+      lostReason: "",
       ...overrides,
     };
   }
@@ -378,6 +379,87 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
         expect(await crm.deleteSavedView(view!.id, "a@x.test")).toBe(false);
         expect(await crm.listSavedViews("a@x.test")).toEqual([]);
       });
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ ADM-087
+
+   Lost reason. The invariant: `lostReason` is non-empty exactly while the
+   stage is `lost`. The repository owns the clearing side — a reason that
+   described a closed episode must not survive onto a reopened lead — while
+   the requirement side lives at the action boundary, where it can answer a
+   human in their language. */
+export function describeLostReasonContract(name: string, make: () => CrmRepository) {
+  function lead(overrides: Record<string, unknown> = {}) {
+    return {
+      kind: "contact" as const,
+      name: "Visitor",
+      email: "lost@example.test",
+      organisation: "Atlas",
+      message: "Bonjour",
+      locale: "fr" as const,
+      sourcePath: "/fr/contact",
+      cta: "contact",
+      eventSlug: "",
+      consent: true,
+      stage: "new" as const,
+      assignee: "",
+      lostReason: "",
+      ...overrides,
+    };
+  }
+
+  describe(`Lost-reason contract — ${name}`, () => {
+    let crm: CrmRepository;
+    beforeEach(() => {
+      crm = make();
+    });
+
+    it("stores the reason with the lost transition", async () => {
+      const created = await crm.createLead(lead());
+      const lost = await crm.updateLead(
+        created!.id,
+        { stage: "lost", lostReason: "budget" },
+        { by: "a@x.test", kind: "stage", detail: "Étape perdue — raison : Budget insuffisant" },
+      );
+      expect(lost?.stage).toBe("lost");
+      expect(lost?.lostReason).toBe("budget");
+    });
+
+    it("clears the reason when the lead leaves lost — history stays in the trail", async () => {
+      const created = await crm.createLead(lead());
+      await crm.updateLead(
+        created!.id,
+        { stage: "lost", lostReason: "timing" },
+        { by: "a@x.test", kind: "stage", detail: "perdu" },
+      );
+      const reopened = await crm.updateLead(
+        created!.id,
+        { stage: "qualified" },
+        { by: "a@x.test", kind: "stage", detail: "rouvert" },
+      );
+
+      expect(reopened?.stage).toBe("qualified");
+      // The field describes the CURRENT state; the trail keeps the episode.
+      expect(reopened?.lostReason).toBe("");
+      expect(reopened?.activity.some((a) => a.detail === "perdu")).toBe(true);
+    });
+
+    it("a non-stage patch leaves an existing reason untouched", async () => {
+      const created = await crm.createLead(lead());
+      await crm.updateLead(
+        created!.id,
+        { stage: "lost", lostReason: "concurrence" },
+        { by: "a@x.test", kind: "stage", detail: "perdu" },
+      );
+      const reassigned = await crm.updateLead(
+        created!.id,
+        { assignee: "b@x.test" },
+        { by: "a@x.test", kind: "assignment", detail: "réassigné" },
+      );
+      expect(reassigned?.stage).toBe("lost");
+      expect(reassigned?.lostReason).toBe("concurrence");
     });
   });
 }
@@ -542,6 +624,7 @@ export function describeOnboardingContract(name: string, make: () => CrmReposito
       consent: true,
       stage: "new" as const,
       assignee: "",
+      lostReason: "",
       ...overrides,
     };
   }
@@ -662,6 +745,7 @@ export function describeDirectoryContract(name: string, make: () => CrmRepositor
       consent: true,
       stage: "new" as const,
       assignee: "",
+      lostReason: "",
       ...overrides,
     };
   }
@@ -795,6 +879,7 @@ export function describeOverviewContract(
       consent: true,
       stage: "new" as const,
       assignee: "",
+      lostReason: "",
       ...overrides,
     };
   }

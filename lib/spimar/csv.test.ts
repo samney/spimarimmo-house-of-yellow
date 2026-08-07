@@ -19,6 +19,7 @@ function lead(overrides: Partial<Lead> = {}): Lead {
     consent: true,
     stage: "new",
     assignee: "",
+    lostReason: "",
     activity: [],
     dedupeKey: "k",
     ...overrides,

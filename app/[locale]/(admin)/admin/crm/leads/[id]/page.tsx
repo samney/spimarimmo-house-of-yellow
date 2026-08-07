@@ -9,7 +9,7 @@ import { LeadStatus, StatusBadge } from "@/components/admin/StatusBadge";
 import { LeadWorkspace } from "@/components/spimar/admin/LeadWorkspace";
 import { Icon } from "@/components/admin/icons";
 import type { LeadStage } from "@/lib/spimar/types";
-import { ONBOARDING_QUEUE } from "@/lib/backend/admin-seams";
+import { ONBOARDING_QUEUE, lostReasonLabel } from "@/lib/backend/admin-seams";
 import { completeTaskAction } from "@/app/actions/cms";
 
 export const dynamic = "force-dynamic";
@@ -20,11 +20,18 @@ export const dynamic = "force-dynamic";
    person came from, which page and CTA produced the action, which event and
    offer were relevant, which locale, whether consent was granted and for what
    purpose, and who owns the next action. */
-export default async function LeadDetail({ params }: { params: Promise<{ id: string }> }) {
+export default async function LeadDetail({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ cloture?: string }>;
+}) {
   const { session, denied } = await requirePermission("crm.read_assigned");
   if (denied) return <PermissionState permission="crm.read_assigned" />;
 
   const { id } = await params;
+  const { cloture } = await searchParams;
   const { crm } = getAdminSeams();
   const lead = await crm.getLead(id);
   if (!lead) notFound();
@@ -57,6 +64,9 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
         actions={
           <>
             <LeadStatus stage={lead.stage as LeadStage} />
+            {lead.stage === "lost" && lead.lostReason ? (
+              <StatusBadge tone="danger">{lostReasonLabel(lead.lostReason)}</StatusBadge>
+            ) : null}
             <StatusBadge>{lead.kind}</StatusBadge>
           </>
         }
@@ -255,7 +265,9 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
           id={lead.id}
           stage={lead.stage}
           assignee={lead.assignee}
+          lostReason={lead.lostReason}
           activity={lead.activity}
+          preselectLost={cloture === "1" && lead.stage !== "lost"}
         />
       </div>
     </>

@@ -7,6 +7,7 @@ import {
   describeCrmContract,
   describeDirectoryContract,
   describeExportLogContract,
+  describeLostReasonContract,
   describeMediaSafetyContract,
   describeOnboardingContract,
   describeOverviewContract,
@@ -36,6 +37,7 @@ describe("file-backed operational seams", () => {
   describeCrmContract("FileCrmRepository", () => new FileCrmRepository());
   describeDirectoryContract("FileCrmRepository", () => new FileCrmRepository());
   describeOnboardingContract("FileCrmRepository", () => new FileCrmRepository());
+  describeLostReasonContract("FileCrmRepository", () => new FileCrmRepository());
   describeExportLogContract("FileCrmRepository", () => new FileCrmRepository());
   describeOverviewContract("FileOverviewRepository", (now) => ({
     crm: new FileCrmRepository(),

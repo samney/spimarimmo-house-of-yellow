@@ -123,7 +123,7 @@ export interface CrmRepository {
    */
   updateLead(
     id: string,
-    patch: Partial<Pick<Lead, "stage" | "assignee">>,
+    patch: Partial<Pick<Lead, "stage" | "assignee" | "lostReason">>,
     activity: { by: string; kind: LeadActivity["kind"]; detail: string },
   ): Promise<Lead | null>;
 
@@ -599,3 +599,23 @@ export interface AdminSeams {
 
 /** Stage vocabulary, exported so UI and validation share one list. */
 export const LEAD_STAGES: readonly LeadStage[] = ["new", "qualified", "in_progress", "won", "lost"];
+
+/**
+ * Why a lead was lost (ADM-087). A closed vocabulary rather than free text:
+ * the point of recording the reason is to aggregate it later, and free text
+ * never aggregates. "autre" exists so the list cannot force a false answer.
+ */
+export const LOST_REASONS = [
+  { value: "budget", label: "Budget insuffisant" },
+  { value: "timing", label: "Calendrier inadapté" },
+  { value: "concurrence", label: "Parti à la concurrence" },
+  { value: "sans_reponse", label: "Sans réponse" },
+  { value: "hors_cible", label: "Hors cible" },
+  { value: "autre", label: "Autre raison" },
+] as const;
+
+export type LostReason = (typeof LOST_REASONS)[number]["value"];
+
+export function lostReasonLabel(value: string): string {
+  return LOST_REASONS.find((reason) => reason.value === value)?.label ?? value;
+}

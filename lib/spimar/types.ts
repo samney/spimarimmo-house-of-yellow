@@ -99,6 +99,9 @@ export type Lead = {
   /** Operational state. */
   stage: LeadStage;
   assignee: string;
+  /** Why the lead was lost — non-empty exactly while `stage === "lost"`
+      (ADM-087). History keeps every past reason in the activity trail. */
+  lostReason: string;
   activity: LeadActivity[];
   /** Stable hash of kind+email+message, used to reject obvious duplicates. */
   dedupeKey: string;
