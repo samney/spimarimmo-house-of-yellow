@@ -382,6 +382,72 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
   });
 }
 
+/* ------------------------------------------------------------------ ADM-093
+
+   The export log. An export is PII leaving the system; this record is the
+   control. Append-only, newest first, and the filter snapshot survives
+   exactly — an auditor must see the query as it was, not as it is now. */
+export function describeExportLogContract(name: string, make: () => CrmRepository) {
+  describe(`Export log contract — ${name}`, () => {
+    let crm: CrmRepository;
+    beforeEach(() => {
+      crm = make();
+    });
+
+    it("starts empty and never invents an entry", async () => {
+      expect(await crm.listExports()).toEqual([]);
+    });
+
+    it("records who, when, how many and under which filters — and keeps them verbatim", async () => {
+      const filters = { ...EMPTY_LEAD_FILTERS, stage: "qualified" as const, q: "casablanca" };
+      const entry = await crm.recordExport({
+        actor: "a@x.test",
+        format: "csv",
+        rowCount: 12,
+        view: "open",
+        filters,
+        scoped: false,
+      });
+
+      expect(entry.id).not.toBe("");
+      expect(entry.at).not.toBe("");
+
+      const listed = await crm.listExports();
+      expect(listed.length).toBe(1);
+      expect(listed[0].actor).toBe("a@x.test");
+      expect(listed[0].rowCount).toBe(12);
+      expect(listed[0].view).toBe("open");
+      // The snapshot is the filters AS USED, preserved exactly.
+      expect(listed[0].filters).toEqual(filters);
+      expect(listed[0].scoped).toBe(false);
+    });
+
+    it("lists newest first and appends only", async () => {
+      await crm.recordExport({
+        actor: "a@x.test",
+        format: "csv",
+        rowCount: 1,
+        view: "all",
+        filters: EMPTY_LEAD_FILTERS,
+        scoped: false,
+      });
+      await crm.recordExport({
+        actor: "b@x.test",
+        format: "csv",
+        rowCount: 2,
+        view: "all",
+        filters: EMPTY_LEAD_FILTERS,
+        scoped: true,
+      });
+
+      const listed = await crm.listExports();
+      expect(listed.length).toBe(2);
+      expect(listed[0].actor).toBe("b@x.test");
+      expect(listed[1].actor).toBe("a@x.test");
+    });
+  });
+}
+
 /* ------------------------------------------------------------------ ADM-092
 
    Won opens the exhibitor onboarding — in the repository, once, idempotently.

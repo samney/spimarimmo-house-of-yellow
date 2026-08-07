@@ -161,7 +161,37 @@ export interface CrmRepository {
    * than stamping a second completion time.
    */
   completeLeadTask(taskId: string, actor: string): Promise<LeadTask | null>;
+
+  /* -------------------------------------------------------------- ADM-093
+     Export audit. An export is PII leaving the system; the record that it
+     happened is the control. Append-only — there is deliberately no way to
+     edit or delete an entry through this seam. */
+
+  recordExport(input: ExportRecordInput): Promise<ExportRecord>;
+
+  /** Newest first. */
+  listExports(): Promise<readonly ExportRecord[]>;
 }
+
+/**
+ * One export event: who took data out, when, how many rows, under which
+ * filters, and whether their view was assigned-scope. The FILTERS are
+ * recorded, never the rows themselves — the log must explain an export
+ * without becoming a second copy of the exported PII.
+ */
+export type ExportRecord = {
+  readonly id: string;
+  readonly at: string;
+  readonly actor: string;
+  readonly format: "csv";
+  readonly rowCount: number;
+  readonly view: string;
+  readonly filters: LeadFilterState;
+  /** True when the actor's assigned-only scope constrained the result. */
+  readonly scoped: boolean;
+};
+
+export type ExportRecordInput = Omit<ExportRecord, "id" | "at">;
 
 export type LeadTask = {
   readonly id: string;

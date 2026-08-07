@@ -60,11 +60,34 @@ export async function GET(request: NextRequest): Promise<Response> {
   };
 
   const actor = { role: session.role, email: session.email };
-  const all = await getAdminSeams().crm.listLeads();
-  const scoped = isAssignedScopeOnly(actor)
-    ? all.filter((lead) => lead.assignee === session.email)
-    : all;
-  const leads = applyLeadFilters(applyView(scoped, url.get("view") ?? "all"), filters);
+  const crm = getAdminSeams().crm;
+  const all = await crm.listLeads();
+  const isScoped = isAssignedScopeOnly(actor);
+  const scoped = isScoped ? all.filter((lead) => lead.assignee === session.email) : all;
+  const view = url.get("view") ?? "all";
+  const leads = applyLeadFilters(applyView(scoped, view), filters);
+
+  /* ADM-093: the audit entry is written BEFORE the data leaves, and a failure
+     to write it refuses the export. Un-audited PII leaving the system is the
+     exact event this log exists to make impossible — the same durable-or-
+     nothing rule the funnel applies to its confirmations. The entry records
+     who, when, how many rows, which filters and which view — never the rows
+     themselves, so the log explains an export without becoming a second copy
+     of the exported data. */
+  try {
+    await crm.recordExport({
+      actor: session.email,
+      format: "csv",
+      rowCount: leads.length,
+      view,
+      filters,
+      scoped: isScoped,
+    });
+  } catch {
+    return new Response("The export could not be recorded, so no data was released.", {
+      status: 500,
+    });
+  }
 
   const stamp = new Date().toISOString().slice(0, 10);
 

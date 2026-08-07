@@ -6,6 +6,8 @@ import type {
   ContentCollection,
   CrmRepository,
   CrmScope,
+  ExportRecord,
+  ExportRecordInput,
   LeadAcquisitionRecord,
   LeadCreateInput,
   LeadTask,
@@ -157,6 +159,14 @@ export class FileCrmRepository implements CrmRepository {
       );
     }
     return completed;
+  }
+
+  async recordExport(input: ExportRecordInput): Promise<ExportRecord> {
+    return store.recordExport(input);
+  }
+
+  async listExports(): Promise<readonly ExportRecord[]> {
+    return store.listExports();
   }
 
   async listSavedViews(owner: string): Promise<readonly SavedLeadView[]> {

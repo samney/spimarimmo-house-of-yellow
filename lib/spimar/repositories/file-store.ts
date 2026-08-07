@@ -4,7 +4,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import type { Destination, Lead, MediaAsset, Page, PublishState, SpimarEvent } from "../types";
 import type { AcquisitionAttribution } from "@/lib/backend/acquisition-seams";
-import type { SavedLeadView, SavedLeadViewInput } from "@/lib/backend/admin-seams";
+import type { ExportRecord, SavedLeadView, SavedLeadViewInput } from "@/lib/backend/admin-seams";
 
 /* File-backed store engine.
 
@@ -32,7 +32,8 @@ type Collection =
   | "leads"
   | "acquisitions"
   | "tasks"
-  | "saved-views";
+  | "saved-views"
+  | "export-log";
 
 function file(collection: Collection): string {
   return path.join(dataDir(), `spimar-${collection}.jsonl`);
@@ -492,6 +493,24 @@ export function saveSavedView(input: SavedLeadViewInput, actor: string): SavedLe
   rows.push(created);
   writeAll("saved-views", rows);
   return created;
+}
+
+/* --------------------------------------------------------------- export log
+
+   Append-only, like the lead activity trail: an export is PII leaving the
+   system, and the record of it happening must not be editable after the
+   fact. There is deliberately no delete. */
+
+export function recordExport(entry: Omit<ExportRecord, "id" | "at">): ExportRecord {
+  const record: ExportRecord = { id: newId(), at: now(), ...entry };
+  const rows = readAll<ExportRecord>("export-log");
+  rows.push(record);
+  writeAll("export-log", rows);
+  return record;
+}
+
+export function listExports(): ExportRecord[] {
+  return readAll<ExportRecord>("export-log").sort((a, b) => b.at.localeCompare(a.at));
 }
 
 export function deleteSavedView(id: string, owner: string): boolean {

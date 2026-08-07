@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requirePermission } from "@/lib/admin/session";
+import { can } from "@/lib/admin/permissions";
 import { getAdminSeams } from "@/lib/spimar/repositories";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { EmptyState, PermissionState } from "@/components/admin/states";
@@ -20,10 +21,17 @@ const KIND_LABEL: Record<LeadActivity["kind"], string> = {
    trails — the console has no other source of activity yet, and inventing one
    would be fabricating history. */
 export default async function ActivityStream() {
-  const { denied } = await requirePermission("analytics.read");
+  const { session, denied } = await requirePermission("analytics.read");
   if (denied) return <PermissionState permission="analytics.read" />;
 
-  const leads = await getAdminSeams().crm.listLeads();
+  const crm = getAdminSeams().crm;
+  const leads = await crm.listLeads();
+
+  /* The export log is gated on the export permission itself: its filter
+     snapshots can carry a search term, and the set of people who may see what
+     left the system should not exceed the set who may take it out. */
+  const canSeeExports = can({ role: session.role, email: session.email }, "crm.export");
+  const exports = canSeeExports ? await crm.listExports() : [];
   const entries = leads
     .flatMap((lead) =>
       lead.activity.map((entry) => ({
@@ -42,6 +50,60 @@ export default async function ActivityStream() {
         title="Activité"
         lede="Les 100 dernières mutations auditées sur les leads : changements d’étape, assignations et notes, avec leur auteur."
       />
+
+      {canSeeExports ? (
+        <section className="section" aria-labelledby="exports-heading">
+          <div className="cluster" style={{ marginBlockEnd: 12 }}>
+            <h2 id="exports-heading">Exports de données</h2>
+            <span className="tertiary">{exports.length}</span>
+          </div>
+          {exports.length === 0 ? (
+            <EmptyState
+              title="Aucun export enregistré"
+              body="Chaque export CSV du CRM est consigné ici — auteur, volume et filtres — avant que le fichier ne soit remis."
+            />
+          ) : (
+            <div className="tableWrap">
+              <table className="table table--responsive">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Auteur</th>
+                    <th className="numeric">Lignes</th>
+                    <th>Vue</th>
+                    <th>Filtres</th>
+                    <th>Périmètre</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {exports.map((entry) => {
+                    const active = Object.entries(entry.filters)
+                      .filter(([, value]) => value)
+                      .map(([key, value]) => `${key}=${value}`)
+                      .join(" · ");
+                    return (
+                      <tr key={entry.id}>
+                        <td data-label="Date">
+                          <span className="mono">{entry.at.slice(0, 16).replace("T", " ")}</span>
+                        </td>
+                        <td data-label="Auteur">{entry.actor}</td>
+                        <td data-label="Lignes" className="numeric">
+                          {entry.rowCount}
+                        </td>
+                        <td data-label="Vue">{entry.view}</td>
+                        <td data-label="Filtres">
+                          {active ? <span className="mono">{active}</span> : "aucun"}
+                        </td>
+                        <td data-label="Périmètre">{entry.scoped ? "assigné" : "complet"}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      ) : null}
 
       {entries.length === 0 ? (
         <EmptyState
