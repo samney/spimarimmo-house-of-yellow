@@ -1963,3 +1963,40 @@
 .notice p + p {
   margin-block-start: var(--space-2);
 }
+
+/* ------------------------------------------------------- onboarding checklist
+   ADM-092. Work items on the lead detail and the tasks screen. */
+
+.taskChecklist {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.taskChecklist__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-block-end: var(--space-2);
+  border-block-end: 1px solid var(--border-soft);
+}
+
+.taskChecklist__title {
+  flex: 1 1 14rem;
+  font-size: var(--text-body);
+  color: var(--text-primary);
+}
+
+.taskChecklist__title.isDone {
+  color: var(--text-tertiary);
+  text-decoration: line-through;
+  text-decoration-color: var(--border-strong);
+}
+
+.taskChecklist__due {
+  font-size: var(--text-meta);
+  color: var(--text-secondary);
+}

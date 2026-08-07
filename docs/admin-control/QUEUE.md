@@ -129,7 +129,7 @@ decisions, not oversights.
 | ADM-078 | Lead detail                       | done     | `/admin/crm/leads/[id]` — message, source, follow-up, consent, contact                                                                  |
 | ADM-079 | Activity timeline                 | done     | `LeadWorkspace.tsx`; `integration.spec.ts` asserts the audit trail                                                                      |
 | ADM-080 | Notes                             | done     | same, append-only                                                                                                                       |
-| ADM-081 | Tasks (lead-level)                | partial  | the follow-up task is written and shown; no task management UI                                                                          |
+| ADM-081 | Tasks (lead-level)                | done     | list + complete on the detail and the tasks screen; completion writes lead history                                                      |
 | ADM-082 | Appointments                      | deferred | `D-041` — no booking surface exists to produce one                                                                                      |
 | ADM-083 | Attribution view                  | done     | captured at submission, rendered on the detail page                                                                                     |
 | ADM-084 | Consent view                      | done     | consent shown against its stored definition                                                                                             |
@@ -140,7 +140,7 @@ decisions, not oversights.
 | ADM-089 | Contacts list and detail          | done     | same slice — latest-consent rule; base64url route keys (raw e-mails 404ed via the proxy asset rule)                                     |
 | ADM-090 | Pipeline board                    | done     | `/admin/crm/pipeline`                                                                                                                   |
 | ADM-091 | Opportunity detail                | deferred | `D-041` — no opportunity model distinct from the lead today                                                                             |
-| ADM-092 | Won → exhibitor onboarding        | todo     | closes the funnel the public site opens                                                                                                 |
+| ADM-092 | Won → exhibitor onboarding        | done     | won writes the 6-task checklist in the repository (ADR-A5 pattern), idempotent, probe-verified; `crm-onboarding.spec.ts` 2/2            |
 | ADM-093 | CRM export with audit             | partial  | export honours the desk's filters; **the audit half is not built**                                                                      |
 | ADM-094 | CRM role browser tests            | partial  | assigned-scope deep link covered; full role matrix not                                                                                  |
 | ADM-095 | Mobile CRM workflow               | partial  | 390 no-overflow asserted on desk and drawer; no end-to-end mobile journey                                                               |

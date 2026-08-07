@@ -367,6 +367,29 @@ export async function moveLeadStage(form: FormData): Promise<void> {
   redirect("/admin/crm/pipeline");
 }
 
+/** Closes a lead task (ADM-092) — a plain form action so the onboarding
+    panel and the tasks screen need no client JS. The repository writes the
+    lead-history note; this action only authorizes and revalidates. */
+export async function completeTaskAction(form: FormData): Promise<void> {
+  const session = await readSession();
+  if (!session) redirect("/admin/login");
+  if (!canManageLeads(session)) redirect("/admin");
+
+  const taskId = String(form.get("taskId") ?? "");
+  const leadId = String(form.get("leadId") ?? "");
+  if (taskId) {
+    await getAdminSeams().crm.completeLeadTask(taskId, session.email);
+  }
+
+  revalidatePath("/admin/tasks");
+  revalidatePath("/admin");
+  if (leadId) {
+    revalidatePath(`/admin/crm/leads/${leadId}`);
+    redirect(`/admin/crm/leads/${leadId}`);
+  }
+  redirect("/admin/tasks");
+}
+
 /* --------------------------------------------------------------- saved views */
 
 /* Every field is validated against the domain, not merely coerced to a string:

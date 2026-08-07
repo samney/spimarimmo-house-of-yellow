@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import type { ContentRepository, SubmissionRepository } from "@/lib/backend/seams";
-import { EMPTY_LEAD_FILTERS } from "@/lib/backend/admin-seams";
+import {
+  EMPTY_LEAD_FILTERS,
+  ONBOARDING_CHECKLIST,
+  ONBOARDING_QUEUE,
+} from "@/lib/backend/admin-seams";
 import type { CmsRepository, CrmRepository, OverviewRepository } from "@/lib/backend/admin-seams";
 
 /* Shared contract suites.
@@ -374,6 +378,125 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
         expect(await crm.deleteSavedView(view!.id, "a@x.test")).toBe(false);
         expect(await crm.listSavedViews("a@x.test")).toEqual([]);
       });
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ ADM-092
+
+   Won opens the exhibitor onboarding — in the repository, once, idempotently.
+   The blueprint's full flow needs Wave 5 entities (packages, contracts,
+   payments); what is honest today is operator work as real tasks. The
+   properties: every caller that sets `won` produces the same checklist, a
+   re-win never duplicates it, and completing a task writes lead history. */
+export function describeOnboardingContract(name: string, make: () => CrmRepository) {
+  function lead(overrides: Record<string, unknown> = {}) {
+    return {
+      kind: "exhibitor" as const,
+      name: "Amine Visitor",
+      email: "win@example.test",
+      organisation: "Atlas Développement",
+      message: "Bonjour",
+      locale: "fr" as const,
+      sourcePath: "/fr/contact",
+      cta: "contact",
+      eventSlug: "",
+      consent: true,
+      stage: "new" as const,
+      assignee: "",
+      ...overrides,
+    };
+  }
+
+  describe(`Onboarding contract — ${name}`, () => {
+    let crm: CrmRepository;
+    beforeEach(() => {
+      crm = make();
+    });
+
+    it("winning writes the full checklist and records it in the activity trail", async () => {
+      const created = await crm.createLead(lead());
+      const won = await crm.updateLead(
+        created!.id,
+        { stage: "won" },
+        { by: "a@x.test", kind: "stage", detail: "in_progress → won" },
+      );
+
+      const tasks = await crm.listLeadTasks(created!.id);
+      const onboarding = tasks.filter((t) => t.queueKey === ONBOARDING_QUEUE);
+      expect(onboarding.length).toBe(ONBOARDING_CHECKLIST.length);
+      expect(onboarding.map((t) => t.title)).toEqual(ONBOARDING_CHECKLIST.map((i) => i.title));
+      // Due dates ascend with the declared offsets.
+      for (let i = 1; i < onboarding.length; i += 1) {
+        expect(onboarding[i - 1].dueAt <= onboarding[i].dueAt).toBe(true);
+      }
+      // The trail says it happened; nothing about payments or contracts is claimed.
+      expect(won?.activity.some((a) => a.detail.includes("Onboarding exposant ouvert"))).toBe(true);
+    });
+
+    it("does not duplicate the checklist on a repeated or re-entered won", async () => {
+      const created = await crm.createLead(lead());
+      await crm.updateLead(
+        created!.id,
+        { stage: "won" },
+        { by: "a@x.test", kind: "stage", detail: "won" },
+      );
+      // A wobble: back to in_progress, then won again.
+      await crm.updateLead(
+        created!.id,
+        { stage: "in_progress" },
+        { by: "a@x.test", kind: "stage", detail: "reopened" },
+      );
+      const rewon = await crm.updateLead(
+        created!.id,
+        { stage: "won" },
+        { by: "a@x.test", kind: "stage", detail: "won again" },
+      );
+
+      const onboarding = (await crm.listLeadTasks(created!.id)).filter(
+        (t) => t.queueKey === ONBOARDING_QUEUE,
+      );
+      expect(onboarding.length).toBe(ONBOARDING_CHECKLIST.length);
+      expect(
+        rewon?.activity.filter((a) => a.detail.includes("Onboarding exposant ouvert")).length,
+      ).toBe(1);
+    });
+
+    it("a non-won transition writes no checklist", async () => {
+      const created = await crm.createLead(lead());
+      await crm.updateLead(
+        created!.id,
+        { stage: "qualified" },
+        { by: "a@x.test", kind: "stage", detail: "qualified" },
+      );
+      const tasks = await crm.listLeadTasks(created!.id);
+      expect(tasks.filter((t) => t.queueKey === ONBOARDING_QUEUE)).toEqual([]);
+    });
+
+    it("completing a task closes it once and writes lead history", async () => {
+      const created = await crm.createLead(lead());
+      await crm.updateLead(
+        created!.id,
+        { stage: "won" },
+        { by: "a@x.test", kind: "stage", detail: "won" },
+      );
+      const [first] = await crm.listLeadTasks(created!.id);
+
+      const done = await crm.completeLeadTask(first.id, "ops@x.test");
+      expect(done?.completedAt).not.toBeNull();
+
+      // Re-completing must not move the completion time.
+      const again = await crm.completeLeadTask(first.id, "someone@x.test");
+      expect(again?.completedAt).toBe(done?.completedAt);
+
+      const after = await crm.getLead(created!.id);
+      expect(
+        after?.activity.filter((a) => a.detail.includes(`Tâche terminée : ${first.title}`)).length,
+      ).toBe(1);
+      // And it leaves the open list.
+      expect((await crm.listOpenLeadTasks()).some((t) => t.id === first.id)).toBe(false);
+
+      expect(await crm.completeLeadTask("missing", "ops@x.test")).toBeNull();
     });
   });
 }

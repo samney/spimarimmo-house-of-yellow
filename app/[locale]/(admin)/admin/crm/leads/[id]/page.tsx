@@ -9,6 +9,8 @@ import { LeadStatus, StatusBadge } from "@/components/admin/StatusBadge";
 import { LeadWorkspace } from "@/components/spimar/admin/LeadWorkspace";
 import { Icon } from "@/components/admin/icons";
 import type { LeadStage } from "@/lib/spimar/types";
+import { ONBOARDING_QUEUE } from "@/lib/backend/admin-seams";
+import { completeTaskAction } from "@/app/actions/cms";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +30,10 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
   if (!lead) notFound();
   const acquisitions = await crm.listAcquisitions(id);
   const latest = acquisitions[0];
+  const onboarding = (await crm.listLeadTasks(id)).filter(
+    (task) => task.queueKey === ONBOARDING_QUEUE,
+  );
+  const onboardingDone = onboarding.filter((task) => task.completedAt !== null).length;
 
   // An assigned-scope actor may not read a lead owned by someone else. The
   // refusal is explicit rather than a 404, which would be a different claim.
@@ -115,6 +121,45 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
               </p>
             ) : null}
           </section>
+
+          {onboarding.length > 0 ? (
+            <section className="card" aria-labelledby="onboarding-heading">
+              <div className="card__head">
+                <h2 id="onboarding-heading" className="card__label">
+                  Onboarding exposant
+                </h2>
+                <StatusBadge tone={onboardingDone === onboarding.length ? "success" : "gold"}>
+                  {onboardingDone}/{onboarding.length}
+                </StatusBadge>
+              </div>
+              {/* Operator work as real tasks. Nothing here claims a contract is
+                  signed or a payment received — the system cannot know either
+                  (P-1/P-2), so the checklist instructs rather than asserts. */}
+              <ul className="taskChecklist">
+                {onboarding.map((task) => (
+                  <li key={task.id} className="taskChecklist__row">
+                    <span className={`taskChecklist__title${task.completedAt ? " isDone" : ""}`}>
+                      {task.title}
+                    </span>
+                    <span className="mono taskChecklist__due">
+                      {task.completedAt
+                        ? `terminée le ${task.completedAt.slice(0, 10)}`
+                        : `échéance ${task.dueAt.slice(0, 10)}`}
+                    </span>
+                    {task.completedAt === null ? (
+                      <form action={completeTaskAction}>
+                        <input type="hidden" name="taskId" value={task.id} />
+                        <input type="hidden" name="leadId" value={lead.id} />
+                        <button type="submit" className="btn btn--secondary btn--sm">
+                          Terminer
+                        </button>
+                      </form>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           {latest ? (
             <section className="card" aria-labelledby="followup-heading">

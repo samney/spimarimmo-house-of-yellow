@@ -8,6 +8,7 @@ import type {
   CrmScope,
   LeadAcquisitionRecord,
   LeadCreateInput,
+  LeadTask,
   ListOptions,
   OrganizationDetail,
   OrganizationSummary,
@@ -19,6 +20,8 @@ import {
   deriveContacts,
   deriveOrganizations,
   organizationKeyOf,
+  ONBOARDING_CHECKLIST,
+  ONBOARDING_QUEUE,
 } from "@/lib/backend/admin-seams";
 import type { Destination, Lead, MediaAsset, Page, SpimarEvent } from "../types";
 import * as store from "./file-store";
@@ -89,7 +92,71 @@ export class FileCrmRepository implements CrmRepository {
     patch: Partial<Pick<Lead, "stage" | "assignee">>,
     activity: { by: string; kind: Lead["activity"][number]["kind"]; detail: string },
   ): Promise<Lead | null> {
-    return store.updateLead(id, patch, activity);
+    const updated = store.updateLead(id, patch, activity);
+
+    /* ADM-092, the ADR-A5 pattern: reaching `won` opens the exhibitor
+       onboarding here, in the repository, so the detail workspace and the
+       pipeline board produce the same consequence without knowing about it.
+       Idempotent by queue: a lead that already carries onboarding tasks —
+       re-won after a wobble, or re-saved on the same stage — gets no second
+       checklist and no duplicate activity entry. */
+    if (updated && patch.stage === "won") {
+      const existing = store
+        .listTasksForLead(id)
+        .some((task) => task.queueKey === ONBOARDING_QUEUE);
+      if (!existing) {
+        const wonAt = Date.now();
+        for (const item of ONBOARDING_CHECKLIST) {
+          store.createFollowUpTask({
+            leadId: id,
+            title: item.title,
+            dueAt: new Date(wonAt + item.dueInDays * 86_400_000).toISOString(),
+            queueKey: ONBOARDING_QUEUE,
+          });
+        }
+        return store.updateLead(
+          id,
+          {},
+          {
+            by: activity.by,
+            kind: "note",
+            detail: `Onboarding exposant ouvert — ${ONBOARDING_CHECKLIST.length} tâches créées.`,
+          },
+        );
+      }
+    }
+
+    return updated;
+  }
+
+  async listLeadTasks(leadId: string): Promise<readonly LeadTask[]> {
+    return store.listTasksForLead(leadId);
+  }
+
+  async listOpenLeadTasks(): Promise<readonly LeadTask[]> {
+    return store.listOpenTasks();
+  }
+
+  async completeLeadTask(taskId: string, actor: string): Promise<LeadTask | null> {
+    const current = store.getTask(taskId);
+    if (!current) return null;
+    // Already done: return as stored. Re-completing must not move the
+    // completion time — when work was finished is a fact, not a counter.
+    if (current.completedAt !== null) return current;
+
+    const completed = store.completeTask(taskId);
+    if (completed) {
+      store.updateLead(
+        completed.leadId,
+        {},
+        {
+          by: actor,
+          kind: "note",
+          detail: `Tâche terminée : ${completed.title}`,
+        },
+      );
+    }
+    return completed;
   }
 
   async listSavedViews(owner: string): Promise<readonly SavedLeadView[]> {

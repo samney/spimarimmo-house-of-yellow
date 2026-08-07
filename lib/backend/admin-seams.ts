@@ -87,6 +87,13 @@ export interface CrmRepository {
   /**
    * Applies the patch and appends one activity entry in the same write. The
    * trail is append-only; nothing edits or deletes past entries.
+   *
+   * ADM-092: a transition to `won` ALSO opens the exhibitor onboarding —
+   * the repository writes the `ONBOARDING_CHECKLIST` as real tasks, once,
+   * idempotently, and records that it did so in the activity trail. The rule
+   * lives here (the ADR-A5 pattern) so every caller that can set a stage —
+   * the detail workspace, the pipeline board, an import — gets the same
+   * consequence without knowing about it.
    */
   updateLead(
     id: string,
@@ -135,7 +142,63 @@ export interface CrmRepository {
   getOrganization(key: string, scope?: CrmScope): Promise<OrganizationDetail | null>;
   listContacts(scope?: CrmScope): Promise<readonly ContactSummary[]>;
   getContact(email: string, scope?: CrmScope): Promise<ContactDetail | null>;
+
+  /* -------------------------------------------------------------- ADM-092
+     Tasks, surfaced. The acquisition writes a follow-up task per lead and the
+     won transition writes the onboarding checklist (see `updateLead`'s
+     contract) — these two methods are how the console reads and closes them. */
+
+  /** Every task attached to a lead, open and done, soonest due first. */
+  listLeadTasks(leadId: string): Promise<readonly LeadTask[]>;
+
+  /** All open tasks across leads, soonest due first. */
+  listOpenLeadTasks(): Promise<readonly LeadTask[]>;
+
+  /**
+   * Marks a task done and appends a `note` activity entry on its lead in the
+   * same operation — completing work IS lead history. Null when the task is
+   * unknown; completing an already-completed task returns it unchanged rather
+   * than stamping a second completion time.
+   */
+  completeLeadTask(taskId: string, actor: string): Promise<LeadTask | null>;
 }
+
+export type LeadTask = {
+  readonly id: string;
+  readonly leadId: string;
+  readonly title: string;
+  readonly dueAt: string;
+  readonly queueKey: string;
+  readonly createdAt: string;
+  readonly completedAt: string | null;
+};
+
+/**
+ * The exhibitor onboarding checklist (ADM-092), written when a lead reaches
+ * `won`.
+ *
+ * The blueprint's full flow runs through packages, contracts, payments and
+ * booths — Wave 5 entities with no producer yet (`D-041`). What IS honest
+ * today is a checklist of operator work: each item instructs a human to do or
+ * record something, it never claims the thing happened. That is why the
+ * package item says "sur devis" and there is no payment-state item at all —
+ * a checkbox named "payment received" over a system that cannot know would be
+ * an invented fact waiting to be believed.
+ *
+ * Declared beside the seam so the adapter that writes it and the tests that
+ * assert it share one definition. `dueInDays` is counted from the transition.
+ */
+export const ONBOARDING_CHECKLIST: readonly { title: string; dueInDays: number }[] = [
+  { title: "Confirmer l’entité légale et les interlocuteurs", dueInDays: 2 },
+  { title: "Confirmer la formule d’exposition (sur devis)", dueInDays: 4 },
+  { title: "Collecter le logo et les droits médias", dueInDays: 7 },
+  { title: "Rédiger le profil exposant (FR/EN)", dueInDays: 10 },
+  { title: "Recueillir les informations de stand", dueInDays: 14 },
+  { title: "Préparer les rendez-vous salon", dueInDays: 21 },
+];
+
+/** The queue the checklist lives in — how onboarding tasks are recognised. */
+export const ONBOARDING_QUEUE = "onboarding";
 
 /** Restricts CRM reads to one assignee's leads. Absent means "all". */
 export type CrmScope = { readonly assignee: string };

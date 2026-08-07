@@ -409,6 +409,16 @@ export function listOpenTasks(): StoredTask[] {
     .sort((a, b) => a.dueAt.localeCompare(b.dueAt));
 }
 
+export function listTasksForLead(leadId: string): StoredTask[] {
+  return readAll<StoredTask>("tasks")
+    .filter((t) => t.leadId === leadId)
+    .sort((a, b) => a.dueAt.localeCompare(b.dueAt));
+}
+
+export function getTask(id: string): StoredTask | null {
+  return readAll<StoredTask>("tasks").find((t) => t.id === id) ?? null;
+}
+
 export function completeTask(id: string): StoredTask | null {
   const rows = readAll<StoredTask>("tasks");
   const index = rows.findIndex((t) => t.id === id);
