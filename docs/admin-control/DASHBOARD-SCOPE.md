@@ -53,7 +53,10 @@ does not render is not a CMS gap.
 - Salons / events (exists in v1 — needs depth)
 - Études de cas
 - Ressources
-- Médias (exists in v1 — needs upload validation and safe-deletion)
+- Médias — **done 2026-08-07**: src validation (public-path/https allowlist),
+  FR alt required to publish, usage counts, and safe deletion that refuses by
+  name while content still references the asset. Binary upload stays absent
+  and stated (no storage provider — P-1)
 
 Each editor must respect the publish guard already enforced server-side: an
 editor role saves drafts, only a publisher publishes, and the server downgrades

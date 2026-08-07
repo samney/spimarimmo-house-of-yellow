@@ -28,6 +28,10 @@ export default async function DestinationsCollection({
       editorTitle={current ? "Modifier la destination" : "Nouvelle destination"}
       editor={
         <ContentForm
+          /* Remount on record change: the editor uses uncontrolled inputs, and
+             a client-side navigation to ?edit= would otherwise keep the previous
+             record’s values on screen while silently saving over the wrong id. */
+          key={current?.id ?? "new"}
           action={saveDestinationAction}
           canPublish={granted.includes("content.publish")}
           state={current?.state ?? "draft"}

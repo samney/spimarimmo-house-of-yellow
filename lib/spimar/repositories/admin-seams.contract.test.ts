@@ -7,6 +7,7 @@ import {
   describeCrmContract,
   describeDirectoryContract,
   describeExportLogContract,
+  describeMediaSafetyContract,
   describeOnboardingContract,
   describeOverviewContract,
 } from "./contract-suites";
@@ -31,6 +32,7 @@ describe("file-backed operational seams", () => {
   });
 
   describeCmsContract("FileCmsRepository", () => new FileCmsRepository());
+  describeMediaSafetyContract("FileCmsRepository", () => new FileCmsRepository());
   describeCrmContract("FileCrmRepository", () => new FileCrmRepository());
   describeDirectoryContract("FileCrmRepository", () => new FileCrmRepository());
   describeOnboardingContract("FileCrmRepository", () => new FileCrmRepository());

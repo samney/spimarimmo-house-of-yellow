@@ -8,6 +8,8 @@ import type {
   CrmScope,
   ExportRecord,
   ExportRecordInput,
+  MediaUsage,
+  SafeDeleteResult,
   LeadAcquisitionRecord,
   LeadCreateInput,
   LeadTask,
@@ -76,6 +78,58 @@ export class FileCmsRepository implements CmsRepository {
 
   async deleteRecord(collection: ContentCollection, id: string): Promise<boolean> {
     return store.deleteRecord(collection, id);
+  }
+
+  /* ADM-147/150 — usage is computed by scanning the stored records at ask
+     time. A serialized record contains the src verbatim wherever a localized
+     field references it, so one JSON.stringify per record is an honest,
+     cache-free answer. Substring over serialized JSON can in principle
+     over-match; for deletion safety, over-matching blocks — the safe
+     direction — and never under-matches. */
+
+  async listMediaUsage(src: string): Promise<readonly MediaUsage[]> {
+    const needle = src.trim();
+    if (!needle) return [];
+    const usage: MediaUsage[] = [];
+
+    for (const page of store.listPages({ includeDrafts: true })) {
+      if (JSON.stringify([page.title, page.intro, page.body]).includes(needle)) {
+        usage.push({
+          collection: "pages",
+          id: page.id,
+          label: page.title.fr || page.title.en || page.slug,
+        });
+      }
+    }
+    for (const event of store.listEvents({ includeDrafts: true })) {
+      if (JSON.stringify([event.title, event.summary]).includes(needle)) {
+        usage.push({
+          collection: "events",
+          id: event.id,
+          label: event.title.fr || event.title.en || event.slug,
+        });
+      }
+    }
+    for (const destination of store.listDestinations({ includeDrafts: true })) {
+      if (JSON.stringify([destination.name, destination.summary]).includes(needle)) {
+        usage.push({
+          collection: "destinations",
+          id: destination.id,
+          label: destination.name.fr || destination.name.en || destination.slug,
+        });
+      }
+    }
+    return usage;
+  }
+
+  async safeDeleteMedia(id: string): Promise<SafeDeleteResult> {
+    const asset = store.listMedia({ includeDrafts: true }).find((m) => m.id === id);
+    if (!asset) return { outcome: "absent" };
+
+    const usage = await this.listMediaUsage(asset.src);
+    if (usage.length > 0) return { outcome: "in_use", usage };
+
+    return store.deleteRecord("media", id) ? { outcome: "deleted" } : { outcome: "absent" };
   }
 }
 

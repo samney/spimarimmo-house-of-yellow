@@ -27,6 +27,7 @@ export function CollectionScreen<T extends { id: string; state: PublishState }>(
   editHref,
   emptyTitle,
   emptyBody,
+  rowActions,
 }: {
   breadcrumb: readonly { label: string; href?: string }[];
   title: string;
@@ -38,6 +39,8 @@ export function CollectionScreen<T extends { id: string; state: PublishState }>(
   editHref: (row: T) => string;
   emptyTitle: string;
   emptyBody: string;
+  /** Extra per-row controls (e.g. safe deletion), rendered after Modifier. */
+  rowActions?: (row: T) => React.ReactNode;
 }) {
   return (
     <>
@@ -91,9 +94,12 @@ export function CollectionScreen<T extends { id: string; state: PublishState }>(
                         <PublicationStatus state={row.state} />
                       </td>
                       <td data-label="">
-                        <Link href={editHref(row)} className="cell__link">
-                          Modifier
-                        </Link>
+                        <span className="cluster" style={{ gap: 12 }}>
+                          <Link href={editHref(row)} className="cell__link">
+                            Modifier
+                          </Link>
+                          {rowActions?.(row)}
+                        </span>
                       </td>
                     </tr>
                   ))}

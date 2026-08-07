@@ -222,10 +222,18 @@ export async function saveMediaAction(
   const session = await requireEditor();
   if (!session) return { ok: false, message: "You do not have permission to edit content." };
 
-  const src = String(form.get("src") ?? "").trim();
+  /* ADM-149: the source path is validated against what the site can actually
+     serve — a local public/ prefix with an allowlisted extension, or an https
+     URL. A typo'd path stored today is a broken image discovered by a visitor
+     later, and an unchecked scheme is how javascript: sneaks into an src. */
+  const parsedSrc = mediaSrcSchema.safeParse(String(form.get("src") ?? "").trim());
+  if (!parsedSrc.success) {
+    return { ok: false, message: parsedSrc.error.issues[0]?.message ?? "Chemin invalide." };
+  }
+  const src = parsedSrc.data;
   const rightsOwner = String(form.get("rightsOwner") ?? "").trim();
   const provenance = String(form.get("sourceProvenance") ?? "").trim();
-  if (!src) return { ok: false, message: "A source path is required." };
+  const altFr = String(form.get("alt_fr") ?? "").trim();
 
   // Rights metadata is mandatory before an asset may be published. This is the
   // control that stops another organisation's media being served again.
@@ -234,6 +242,15 @@ export async function saveMediaAction(
     return {
       ok: false,
       message: "Rights owner and source provenance are required before publishing an asset.",
+    };
+  }
+
+  // Publishing without an FR alt text ships an inaccessible image to the
+  // default locale. Draft may stay incomplete; published may not.
+  if (wantsPublish && !altFr) {
+    return {
+      ok: false,
+      message: "Un texte alternatif (FR) est requis avant de publier un média.",
     };
   }
 
@@ -253,6 +270,25 @@ export async function saveMediaAction(
   return { ok: true, message: "Media record saved." };
 }
 
+/* What the site can actually serve: a public/ path with an allowlisted media
+   extension, or an https URL. Never javascript:, data:, or an extensionless
+   guess. */
+const MEDIA_EXTENSIONS = /\.(avif|webp|png|jpe?g|svg|mp4|webm|pdf|woff2?)$/i;
+const mediaSrcSchema = z
+  .string()
+  .min(1, "Un chemin source est requis.")
+  .max(500)
+  .refine(
+    (value) =>
+      value.startsWith("https://") ||
+      ((value.startsWith("/images/") ||
+        value.startsWith("/videos/") ||
+        value.startsWith("/documents/") ||
+        value.startsWith("/fonts/")) &&
+        MEDIA_EXTENSIONS.test(value)),
+    "Le chemin doit être une URL https ou un chemin public (/images, /videos, /documents, /fonts) avec une extension média reconnue.",
+  );
+
 export async function deleteContentAction(
   collection: "pages" | "events" | "destinations" | "media",
   id: string,
@@ -261,12 +297,52 @@ export async function deleteContentAction(
   if (!session || !canPublish(session)) {
     return { ok: false, message: "Deleting content requires an administrator." };
   }
+  /* Media never takes the blind path: even a caller of this generic action is
+     routed through the usage check, so no code path can delete an asset that
+     content still references (ADM-150). */
+  if (collection === "media") {
+    return deleteMediaById(id);
+  }
   const removed = await getAdminSeams().cms.deleteRecord(collection, id);
   revalidateConsole(["/admin/events", "/admin/cms/pages", "/admin"]);
   revalidatePublic(["/", "/salons"]);
   return removed
     ? { ok: true, message: "Deleted." }
     : { ok: false, message: "That record no longer exists." };
+}
+
+async function deleteMediaById(id: string): Promise<ActionResult> {
+  const result = await getAdminSeams().cms.safeDeleteMedia(id);
+  revalidateConsole(["/admin/cms/media", "/admin"]);
+
+  switch (result.outcome) {
+    case "deleted":
+      return { ok: true, message: "Média supprimé." };
+    case "absent":
+      return { ok: false, message: "Ce média n’existe plus." };
+    case "in_use":
+      return {
+        ok: false,
+        message:
+          `Suppression refusée : utilisé par ${result.usage.length} contenu${result.usage.length === 1 ? "" : "s"} — ` +
+          result.usage.map((u) => u.label).join(", ") +
+          ". Retirez d’abord ces références.",
+      };
+  }
+}
+
+/** Safe media deletion (ADM-150) — the form-facing wrapper. */
+export async function deleteMediaAction(
+  _prev: ActionResult | null,
+  form: FormData,
+): Promise<ActionResult> {
+  const session = await readSession();
+  if (!session || !canPublish(session)) {
+    return { ok: false, message: "Deleting content requires an administrator." };
+  }
+  const id = String(form.get("id") ?? "").trim();
+  if (!id) return { ok: false, message: "Ce média n’existe plus." };
+  return deleteMediaById(id);
 }
 
 /* ----------------------------------------------------------------------- CRM */

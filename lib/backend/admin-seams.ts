@@ -62,7 +62,33 @@ export interface CmsRepository {
 
   /** Returns false when the record was already gone; never throws for that. */
   deleteRecord(collection: ContentCollection, id: string): Promise<boolean>;
+
+  /* -------------------------------------------------------- ADM-147/150
+     Media safety. Deleting an asset that content still references breaks the
+     public site silently — the data-security rules name safe-deletion checks
+     as mandatory. Usage is computed from the stored content, never cached. */
+
+  /** Every content record whose fields reference this src. Empty = unused. */
+  listMediaUsage(src: string): Promise<readonly MediaUsage[]>;
+
+  /**
+   * Deletes only when unused. `in_use` returns the referencing records so the
+   * operator can see exactly what blocks the deletion — a refusal without the
+   * list would send them hunting.
+   */
+  safeDeleteMedia(id: string): Promise<SafeDeleteResult>;
 }
+
+export type MediaUsage = {
+  readonly collection: "pages" | "events" | "destinations";
+  readonly id: string;
+  readonly label: string;
+};
+
+export type SafeDeleteResult =
+  | { readonly outcome: "deleted" }
+  | { readonly outcome: "absent" }
+  | { readonly outcome: "in_use"; readonly usage: readonly MediaUsage[] };
 
 /**
  * Everything a caller may supply for a new lead. The repository computes the

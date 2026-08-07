@@ -2000,3 +2000,34 @@
   font-size: var(--text-meta);
   color: var(--text-secondary);
 }
+
+/* --------------------------------------------------------- media safety
+   ADM-150. The destructive row action and its inline refusal message. */
+
+.cell__link--danger {
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--danger);
+  font-weight: var(--weight-semibold);
+}
+
+.cell__link--danger:hover {
+  text-decoration: underline;
+}
+
+.cell__link--danger:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* A refusal that fits inside a table row: the notice family's colours at
+   meta size, without the block padding of the form-level notices. */
+.notice--inline {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-meta);
+  border-radius: var(--radius-small);
+  max-inline-size: 30rem;
+}

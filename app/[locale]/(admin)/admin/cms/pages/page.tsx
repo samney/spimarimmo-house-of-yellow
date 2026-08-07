@@ -31,6 +31,10 @@ export default async function PagesCollection({
       editorTitle={current ? "Modifier la page" : "Nouvelle page"}
       editor={
         <ContentForm
+          /* Remount on record change: the editor uses uncontrolled inputs, and
+             a client-side navigation to ?edit= would otherwise keep the previous
+             record’s values on screen while silently saving over the wrong id. */
+          key={current?.id ?? "new"}
           action={savePageAction}
           canPublish={granted.includes("content.publish")}
           state={current?.state ?? "draft"}

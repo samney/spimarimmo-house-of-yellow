@@ -382,6 +382,78 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
   });
 }
 
+/* -------------------------------------------------------------- ADM-147/150
+
+   Media safe-deletion. The property: an asset still referenced by content
+   CANNOT be deleted, and the refusal names what blocks it. Deleting media a
+   page still embeds breaks the public site silently — the data-security rules
+   list this check as mandatory. */
+export function describeMediaSafetyContract(name: string, make: () => CmsRepository) {
+  describe(`Media safety contract — ${name}`, () => {
+    let cms: CmsRepository;
+    beforeEach(() => {
+      cms = make();
+    });
+
+    it("refuses to delete an asset a page still references, naming the blocker", async () => {
+      const media = await cms.saveMedia(
+        { src: "/images/salon-hero.webp", alt: { fr: "Salon" } },
+        "a@x.test",
+      );
+      await cms.savePage(
+        {
+          slug: "salons-2026",
+          title: { fr: "Salons 2026" },
+          body: { fr: "Voir /images/salon-hero.webp pour l’affiche." },
+        },
+        "a@x.test",
+      );
+
+      const result = await cms.safeDeleteMedia(media.id);
+      expect(result.outcome).toBe("in_use");
+      if (result.outcome === "in_use") {
+        expect(result.usage.length).toBe(1);
+        expect(result.usage[0].collection).toBe("pages");
+        expect(result.usage[0].label).toBe("Salons 2026");
+      }
+      // Refused means UNTOUCHED: the asset is still there.
+      expect((await cms.listMedia({ includeDrafts: true })).some((m) => m.id === media.id)).toBe(
+        true,
+      );
+    });
+
+    it("deletes an unused asset, and reports an unknown one as absent", async () => {
+      const media = await cms.saveMedia(
+        { src: "/images/unused.webp", alt: { fr: "Libre" } },
+        "a@x.test",
+      );
+
+      expect(await cms.safeDeleteMedia(media.id)).toEqual({ outcome: "deleted" });
+      expect((await cms.listMedia({ includeDrafts: true })).length).toBe(0);
+      expect(await cms.safeDeleteMedia(media.id)).toEqual({ outcome: "absent" });
+      expect(await cms.safeDeleteMedia("missing")).toEqual({ outcome: "absent" });
+    });
+
+    it("usage answers every referencing collection, not just the first", async () => {
+      await cms.saveMedia({ src: "/images/shared.webp", alt: { fr: "Partagé" } }, "a@x.test");
+      await cms.savePage(
+        { slug: "p1", title: { fr: "Page une" }, body: { fr: "/images/shared.webp" } },
+        "a@x.test",
+      );
+      await cms.saveEvent(
+        { slug: "e1", title: { fr: "Salon un" }, summary: { fr: "/images/shared.webp" } },
+        "a@x.test",
+      );
+
+      const usage = await cms.listMediaUsage("/images/shared.webp");
+      expect(usage.map((u) => u.collection).sort()).toEqual(["events", "pages"]);
+      // And an unreferenced src answers empty — never a guess.
+      expect(await cms.listMediaUsage("/images/nowhere.webp")).toEqual([]);
+      expect(await cms.listMediaUsage("")).toEqual([]);
+    });
+  });
+}
+
 /* ------------------------------------------------------------------ ADM-093
 
    The export log. An export is PII leaving the system; this record is the
