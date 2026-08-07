@@ -454,6 +454,7 @@
   align-items: center;
   display: flex;
   gap: var(--space-sm);
+  padding-block: var(--space-2xs);
 }
 
 .galMetaCell + .galMetaCell {
@@ -461,11 +462,20 @@
   padding-inline-start: var(--space-md);
 }
 
+/* Solid gold tile carrying an ink glyph — the accent family the panels
+   already speak (section 07's benefit marks, the play controls), instead of
+   four bare outlines with the pin doing double duty (owner remark,
+   2026-08-07). */
 .galMetaIcon {
-  color: var(--action-primary);
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
   flex: none;
-  height: 1.4vw;
-  width: 1.4vw;
+  height: 2.3vw;
+  min-height: 30px;
+  min-width: 30px;
+  padding: 0.55vw;
+  width: 2.3vw;
 }
 
 .galMetaLabel {
@@ -473,13 +483,14 @@
   display: block;
   font-size: var(--text-base);
   letter-spacing: 0.12em;
+  margin-block-end: 0.15vw;
   text-transform: uppercase;
 }
 
 .galMetaValue {
   display: block;
   font-size: var(--text-support);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* --- Thumbnail rail + actions ----------------------------------------------------------- */
@@ -560,54 +571,16 @@
 
 /* Owner remark (2026-08-06): the section's actions carry the site's pill
    button vocabulary, not their own rectangles. */
-.galCtaGold,
-.galCtaGhost {
-  align-items: center;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: inherit;
-  font-size: var(--text-support);
-  font-weight: 600;
-  gap: var(--space-xs);
-  justify-content: center;
-  padding: var(--space-sm) var(--space-md);
-  text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    color 160ms ease;
-}
-
-.galCtaGold {
-  background: var(--action-primary);
+/* The actions are the design system's .button pills (owner remark,
+   2026-08-07); only the button-element reset and the focus ring are local. */
+.galActions button.button {
   border: 0;
-  color: var(--action-on-primary);
+  font-family: inherit;
 }
 
-.galCtaGold:hover {
-  background: var(--action-primary-hover);
-}
-
-.galCtaGhost {
-  background: transparent;
-  border: 1px solid var(--border-strong);
-  color: var(--on-surface);
-}
-
-.galCtaGhost:hover {
-  background: var(--surface-inverse);
-  color: var(--on-inverse);
-}
-
-.galCtaGold:focus-visible,
-.galCtaGhost:focus-visible {
+.galActions .button:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 0.2em;
-}
-
-.galBtnIcon {
-  height: 1.1em;
-  width: 1.1em;
 }
 
 /* --- Expandable full gallery -------------------------------------------------------------- */
@@ -687,8 +660,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .galPill,
-  .galCtaGold,
-  .galCtaGhost {
+  .galActions .button {
     transition: none;
   }
 

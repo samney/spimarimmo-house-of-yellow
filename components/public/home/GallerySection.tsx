@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { Building2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon, VisitorsIcon } from "./impactIcons";
-import { CameraIcon, CheckCircleIcon, MicIcon } from "./visibilityIcons";
+import { Marquee } from "@/components/primitives/motion/Marquee";
+import { ArrowRightIcon, CalendarIcon, ShieldCheckIcon } from "./impactIcons";
+import { CheckCircleIcon } from "./visibilityIcons";
 import { PlaySolidIcon, VolumeIcon, FullscreenIcon } from "./proofIcons";
 import { PinIcon } from "./offers/offersIcons";
 import { CaptionsIcon, ChevronRightIcon, GearIcon, SkipIcon } from "./galleryIcons";
@@ -34,6 +36,19 @@ import { MEDIA, type CategoryKey } from "./galleryData";
  *   disclosure pattern as section 08. "Explorer les salons" goes to /salons.
  * - The design's grid/list view toggle has no designed list state, so it is
  *   deliberately not built rather than invented. */
+
+/* The design system's pill-button label: fixed text that cross-fades to the
+   scrolling marquee on hover, like every other .button on the site. */
+function PillLabel({ text }: { text: string }) {
+  return (
+    <span className="label">
+      <span className="fixedLabel">{text}</span>
+      <span className="innerLabel">
+        <Marquee text={text} direction="left" speed={90} />
+      </span>
+    </span>
+  );
+}
 
 const CITIES = ["paris", "montreal", "bruxelles", "abu-dhabi"] as const;
 const CATEGORIES: readonly ("all" | CategoryKey)[] = [
@@ -258,7 +273,9 @@ export function GallerySection({
                 </span>
               </li>
               <li className="galMetaCell">
-                <PinIcon className="galMetaIcon" aria-hidden="true" />
+                {/* Its own mark — the pin was doing double duty for city AND
+                    venue (owner remark, 2026-08-07). */}
+                <Building2 className="galMetaIcon" aria-hidden="true" />
                 <span>
                   <span className="galMetaLabel">{t("meta.venue")}</span>
                   <span className="galMetaValue">{t("meta.pending")}</span>
@@ -313,27 +330,36 @@ export function GallerySection({
               <ChevronRightIcon className="galCtlIcon" aria-hidden="true" />
             </button>
           )}
+          {/* System pill buttons (owner remark, 2026-08-07): the section's
+              actions carry the same anatomy as every .button — marquee label
+              crossfade plus icon — gold primary, outlined secondary. */}
           <div className="galActions">
             {fullGalleryHref ? (
-              <Link className="galCtaGold" href={fullGalleryHref}>
-                <span>{t("showGallery")}</span>
-                <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
+              <Link className="button" href={fullGalleryHref} title={t("showGallery")}>
+                <PillLabel text={t("showGallery")} />
+                <span className="icon">
+                  <ArrowRightIcon />
+                </span>
               </Link>
             ) : (
               <button
                 aria-controls="gal-all"
                 aria-expanded={expanded}
-                className="galCtaGold"
+                className="button"
                 onClick={() => setExpanded((open) => !open)}
                 type="button"
               >
-                <span>{expanded ? t("hideGallery") : t("showGallery")}</span>
-                <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
+                <PillLabel text={expanded ? t("hideGallery") : t("showGallery")} />
+                <span className="icon">
+                  <ArrowRightIcon />
+                </span>
               </button>
             )}
-            <Link className="galCtaGhost" href="/salons">
-              <span>{t("exploreSalons")}</span>
-              <ArrowRightIcon className="galBtnIcon" aria-hidden="true" />
+            <Link className="button outline" href="/salons" title={t("exploreSalons")}>
+              <PillLabel text={t("exploreSalons")} />
+              <span className="icon">
+                <ArrowRightIcon />
+              </span>
             </Link>
           </div>
         </div>
