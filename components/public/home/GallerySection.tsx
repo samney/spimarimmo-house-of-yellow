@@ -104,9 +104,7 @@ export function GallerySection({
               direction, 2026-08-07: consistency pass). */}
           <SectionEyebrow data-reveal index="11" label={t("eyebrow")} />
           <SplitTitle as="h2" className="galTitle" id="gal-title" text={t("title")} />
-          <p data-reveal className="galLead">
-            {t("lead")}
-          </p>
+          <SplitTitle as="p" mode="lines" className="galLead" text={t("lead")} />
         </Reveal>
 
         <Reveal as="div" className="galToolbar">

@@ -25,9 +25,7 @@ export function WhyExhibitHeader({
           the split reveal and simply fades in once. */}
       <SectionEyebrow data-reveal index={benefit.number} label={content.eyebrowLabel} />
       <SplitTitle as="h2" id={headingId} className="whyExhibit__heading" text={content.heading} />
-      <p data-reveal className="whyExhibit__subtitle">
-        {content.subtitle}
-      </p>
+      <SplitTitle as="p" mode="lines" className="whyExhibit__subtitle" text={content.subtitle} />
     </Reveal>
   );
 }

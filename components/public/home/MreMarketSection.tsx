@@ -42,9 +42,7 @@ export function MreMarketSection() {
           <div className="mreHeadings">
             <SectionEyebrow data-reveal index="06" label={t("eyebrow")} />
             <SplitTitle as="h2" className="mreTitle" id="mre-title" text={t("title")} />
-            <p data-reveal className="mreLead">
-              {t("lead")}
-            </p>
+            <SplitTitle as="p" mode="lines" className="mreLead" text={t("lead")} />
           </div>
           {/* The download CTA was removed by owner note (D-026): the étude is
               not yet a published resource, so no control promises it. */}

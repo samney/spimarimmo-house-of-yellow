@@ -73,9 +73,7 @@ export function ProofSection() {
                 2026-08-07: consistency pass). */}
             <SectionEyebrow data-reveal index="09" label={t("eyebrow")} />
             <SplitTitle as="h2" className="proofTitle" id="proof-title" text={t("title")} />
-            <p data-reveal className="proofLead">
-              {t("lead")}
-            </p>
+            <SplitTitle as="p" mode="lines" className="proofLead" text={t("lead")} />
           </div>
           {/* The section's one global action, restrained and outlined so the
               heading stays the strongest object — the gold CTA inside the

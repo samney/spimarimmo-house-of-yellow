@@ -128,6 +128,7 @@ export function AboutWorkSection() {
                 />
                 {/* §06 approved supporting message. */}
                 <SplitTitle
+                  mode="lines"
                   className="smallTitle"
                   text="Nos salons réunissent une clientèle qualifiée, prête à concrétiser son projet immobilier au Maroc."
                 />
@@ -155,6 +156,7 @@ export function AboutWorkSection() {
                     four — the second clause of the approved §07 sentence
                     carries the message alone. */}
                 <SplitTitle
+                  mode="lines"
                   className="smallTitle"
                   text="Chaque destination réunit une clientèle qualifiée, prête à concrétiser son projet immobilier au Maroc."
                 />

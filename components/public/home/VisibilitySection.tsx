@@ -44,9 +44,7 @@ export function VisibilitySection({
           <div className="visHeadings">
             <SectionEyebrow data-reveal index="07" label={t("eyebrow")} />
             <SplitTitle as={Heading} className="visTitle" id="vis-title" text={t("title")} />
-            <p data-reveal className="visLead">
-              {t("lead")}
-            </p>
+            <SplitTitle as="p" mode="lines" className="visLead" text={t("lead")} />
           </div>
           {/* The header CTA was removed by owner note (D-026) — the device's
               own per-phase action is the section's only exit. */}

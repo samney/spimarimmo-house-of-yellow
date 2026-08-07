@@ -121,9 +121,7 @@ export function PromotersSection() {
           <div className="promoHeadings">
             <SectionEyebrow data-reveal label={t("eyebrow")} />
             <SplitTitle as="h2" className="promoTitle" id="promo-title" text={t("title")} />
-            <p data-reveal className="promoLead">
-              {t("lead")}
-            </p>
+            <SplitTitle as="p" mode="lines" className="promoLead" text={t("lead")} />
           </div>
           <button
             aria-controls="promo-all"

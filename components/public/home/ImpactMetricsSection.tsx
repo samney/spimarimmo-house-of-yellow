@@ -51,9 +51,7 @@ export function ImpactMetricsSection() {
                 drifted from the site's treatment. */}
             <SectionEyebrow data-reveal index="05" label={t("eyebrow")} />
             <SplitTitle as="h2" className="impactTitle" id="impact-title" text={t("title")} />
-            <p data-reveal className="impactLead">
-              {t("lead")}
-            </p>
+            <SplitTitle as="p" mode="lines" className="impactLead" text={t("lead")} />
           </div>
           {/* A state, not a control. It is not focusable and not a button. */}
           <p data-reveal className="impactStatus">
