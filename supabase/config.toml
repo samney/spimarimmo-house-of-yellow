@@ -6,12 +6,16 @@ sql_paths = ["./seed.sql"]
 
 [functions.lead-acquisition]
 verify_jwt = false
+import_map = "./functions/deno.json"
 
 [functions.integration-worker]
 verify_jwt = false
+import_map = "./functions/deno.json"
 
 [functions.cms-admin]
 verify_jwt = true
+import_map = "./functions/deno.json"
 
 [functions.crm-admin]
 verify_jwt = true
+import_map = "./functions/deno.json"

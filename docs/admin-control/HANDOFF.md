@@ -173,11 +173,27 @@ serves a stale `.next`.
   migrations applied Local↔Remote. Do not re-diagnose this: `supabase inspect db
 table-stats` returns zero rows for never-queried tables and does **not** mean
   the project is empty — that misreading already cost one session.
-  Still open: `supabase/seed.sql` not applied; the 4 Edge Functions not
-  deployed; adapter contract suites not yet run against the hosted DB (the Wave
-  3 "RLS verified in browser context" criterion); Supabase **Auth** not wired,
-  which is what still blocks ADM-039 password reset, ADM-040 invitations and
-  ADM-042 MFA.
+  **Advanced 2026-08-07 (F4):** `seed.sql` applied and verified on the hosted
+  project (site `reference-foundation` active; en/fr enabled, ar disabled per
+  ADR-A6). All 4 Edge Functions deployed ACTIVE v1 (`config.toml` gained
+  per-function `import_map` — the remote bundler does not pick up
+  `functions/deno.json` on its own). Function config provisioned per `D-044`:
+  `*_ALLOWED_ORIGINS` = the vercel target, `FORM_HASH_SECRET` and
+  `WORKER_SHARED_SECRET` generated and set without ever entering the
+  transcript.
+
+  **Still open, owner-only:** `lead-acquisition` 500s at boot by its own
+  guard — `TURNSTILE_SECRET_KEY` is required while `TURNSTILE_REQUIRED`
+  defaults true. Either supply Cloudflare Turnstile keys
+  (`TURNSTILE_SECRET_KEY`, `TURNSTILE_EXPECTED_HOSTNAME`) or explicitly
+  authorize `TURNSTILE_REQUIRED=false` — weakening the bot gate is not a
+  decision a session takes alone. `integration-worker` additionally needs
+  `RESEND_API_KEY` / `EMAIL_FROM` / `CRM_NOTIFICATION_TO` (P-2). Supabase
+  **Auth** remains unwired (blocks ADM-039/040/042). The PGlite contract
+  suites are deliberately NOT pointed at the hosted DB — CRUD suites against
+  production tables would trash real data; hosted durability gets proven by a
+  marked smoke acquisition once the function boots.
+
 - **P-2 — no email/CRM provider.** Delivery is queued in `integration_jobs` and
   never reported as sent.
 - **Merge authority is the owner's.** PR #34 is a draft and is always-review
