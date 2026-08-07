@@ -78,15 +78,54 @@
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lifted);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 17vw minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  max-block-size: 88vh;
-  inline-size: min(42vw, 640px);
+  /* Breathing space is guaranteed, never incidental: the panel can only
+     grow to the viewport minus a margin on every side. */
+  max-block-size: calc(100vh - 2 * var(--space-xl));
+  inline-size: min(58vw, 980px);
   overflow: hidden;
   position: absolute;
   transform: translate(-50%, -50%);
+}
+
+/* The ink identity rail beside the form. */
+.contactModal__aside {
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.contactModal__aside a {
+  color: var(--on-inverse);
+  font-size: var(--text-support);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.contactModal__aside a:hover {
+  text-decoration: underline;
+}
+
+.contactModal__rule {
+  background: var(--border-inverse);
+  block-size: 1px;
+  inline-size: 100%;
+  margin-block: var(--space-2xs);
+}
+
+.contactModal__main {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  position: relative;
 }
 
 @keyframes contactModalIn {
@@ -100,15 +139,6 @@
   .contactModal__panel {
     animation: none;
   }
-}
-
-.contactModal__head {
-  align-items: center;
-  border-block-end: 1px solid var(--border-subtle);
-  display: flex;
-  flex: none;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
 }
 
 /* The accent family's solid gold badge. */
@@ -145,7 +175,7 @@
 }
 
 .contactModal__status {
-  color: var(--on-surface-muted);
+  color: var(--on-inverse-muted);
   font-size: var(--text-support);
 }
 
@@ -160,10 +190,14 @@
   flex: none;
   font-size: var(--text-small-title);
   height: 2.4vw;
+  inset-block-start: var(--space-sm);
+  inset-inline-end: var(--space-sm);
   justify-content: center;
   min-height: 38px;
   min-width: 38px;
+  position: absolute;
   width: 2.4vw;
+  z-index: 1;
 }
 
 .contactModal__close:hover {
@@ -178,34 +212,18 @@
 }
 
 .contactModal__body {
+  flex: 1;
+  min-block-size: 0;
+  overscroll-behavior: contain;
   overflow-y: auto;
-  padding: var(--space-md);
-}
-
-.contactModal__foot {
-  align-items: center;
-  border-block-start: 1px solid var(--border-subtle);
-  display: flex;
-  flex: none;
-  flex-wrap: wrap;
-  gap: var(--space-sm) var(--space-md);
-  font-size: var(--text-support);
-  padding: var(--space-sm) var(--space-md);
-}
-
-.contactModal__foot a {
-  color: var(--on-surface);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.contactModal__foot a:hover {
-  text-decoration: underline;
+  padding: var(--space-md) var(--space-md) var(--space-md);
+  padding-inline-end: calc(var(--space-md) + 2.6vw);
 }
 
 .contactModal__fullPage {
-  color: var(--spimar-gold-text);
-  margin-inline-start: auto;
+  color: var(--action-primary);
+  font-size: var(--text-support);
+  margin-block-start: auto;
 }
 
 /* --- The enquiry form (depth pass) ---------------------------------------------- */
@@ -504,7 +522,19 @@
   }
 
   .contactModal__panel {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
     inline-size: min(80vw, 640px);
+    max-block-size: calc(100vh - 2 * var(--space-lg));
+  }
+
+  .contactModal__aside {
+    gap: var(--space-2xs);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .contactModal__rule {
+    display: none;
   }
 }
 
@@ -515,7 +545,7 @@
 
   .contactModal__panel {
     inline-size: 94vw;
-    max-block-size: 92vh;
+    max-block-size: calc(100vh - 8vw);
   }
 
   .contactModal__badge,

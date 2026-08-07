@@ -95,6 +95,9 @@ export function DesignedSelect({
       if (activeIndex >= 0) choose(activeIndex);
     } else if (event.key === "Escape") {
       event.preventDefault();
+      /* The listbox consumes its own Escape — inside a dialog, letting it
+         bubble closed the WHOLE modal (owner bug hunt, 2026-08-07). */
+      event.stopPropagation();
       close(true);
     } else if (event.key === "Tab") {
       close(false);

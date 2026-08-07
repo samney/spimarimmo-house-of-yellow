@@ -55,7 +55,10 @@ export function ContactDialog() {
   useEffect(() => {
     if (!open) return;
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") close();
+      /* A child that consumed Escape (the designed select's listbox) marks
+         it via preventDefault — the dialog must not also close on it,
+         whatever the listener ordering. */
+      if (event.key === "Escape" && !event.defaultPrevented) close();
       /* A light trap: Tab cycles inside the panel. */
       if (event.key === "Tab" && panelRef.current) {
         const focusables = panelRef.current.querySelectorAll<HTMLElement>(
@@ -100,14 +103,21 @@ export function ContactDialog() {
       {open && (
         <div className="contactModal" role="presentation">
           <div className="contactModal__scrim" aria-hidden="true" onClick={close} />
+          {/* data-lenis-prevent: the smooth-scroll engine owns the wheel
+              globally; without the opt-out, scrolling over the modal drove
+              the PAGE behind it (owner bug report, 2026-08-07). */}
           <div
             aria-labelledby="contact-modal-title"
             aria-modal="true"
             className="contactModal__panel"
+            data-lenis-prevent=""
             ref={panelRef}
             role="dialog"
           >
-            <header className="contactModal__head">
+            {/* Row shape (owner remark, 2026-08-07): the identity rail sits
+                BESIDE the form instead of stacking everything into one tall
+                column that met the header. */}
+            <aside className="contactModal__aside">
               <span className="contactModal__badge" aria-hidden="true">
                 <MailGlyph />
               </span>
@@ -117,21 +127,7 @@ export function ContactDialog() {
                 </span>
                 <span className="contactModal__status">{t("modalStatus")}</span>
               </span>
-              <button
-                aria-label={t("closeLabel")}
-                className="contactModal__close"
-                onClick={close}
-                type="button"
-              >
-                ×
-              </button>
-            </header>
-
-            <div className="contactModal__body">
-              <EnquiryForm kind="contact" variant="modal" />
-            </div>
-
-            <footer className="contactModal__foot">
+              <span className="contactModal__rule" aria-hidden="true" />
               <a href={`tel:${CONTACT_PHONE}`} rel="noopener">
                 {CONTACT_PHONE_DISPLAY}
               </a>
@@ -143,7 +139,21 @@ export function ContactDialog() {
               <Link className="contactModal__fullPage" href="/contact" onClick={close}>
                 {t("fullPage")}
               </Link>
-            </footer>
+            </aside>
+
+            <div className="contactModal__main">
+              <button
+                aria-label={t("closeLabel")}
+                className="contactModal__close"
+                onClick={close}
+                type="button"
+              >
+                ×
+              </button>
+              <div className="contactModal__body">
+                <EnquiryForm kind="contact" variant="modal" />
+              </div>
+            </div>
           </div>
         </div>
       )}
