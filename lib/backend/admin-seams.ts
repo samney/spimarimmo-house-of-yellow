@@ -113,6 +113,158 @@ export interface CrmRepository {
 
   /** False when it was already gone or belongs to someone else; never throws. */
   deleteSavedView(id: string, owner: string): Promise<boolean>;
+
+  /* ----------------------------------------------------------- ADM-088/089
+     Organizations and contacts.
+
+     In the R1 domain these are READ MODELS derived from the leads: the file
+     store keeps identity denormalised on each lead, and the grouping keys are
+     the acquisition dedupe's own normalisers, so the console groups exactly
+     the way the funnel deduplicates. The canonical schema holds real
+     `organizations` and `contacts` tables; a database adapter answers these
+     same methods from those tables, and nothing in a caller changes.
+
+     `scope` mirrors the assigned-scope rule everywhere else in the CRM, and it
+     lives HERE rather than in the page for the saved-views reason: a derived
+     roster of people is PII, and hiding rows in the UI is never the control.
+     A scoped actor gets organizations and contacts derived from THEIR leads
+     only — and a scoped detail lookup of someone else's record answers null,
+     exactly like an out-of-scope drawer deep link. */
+
+  listOrganizations(scope?: CrmScope): Promise<readonly OrganizationSummary[]>;
+  getOrganization(key: string, scope?: CrmScope): Promise<OrganizationDetail | null>;
+  listContacts(scope?: CrmScope): Promise<readonly ContactSummary[]>;
+  getContact(email: string, scope?: CrmScope): Promise<ContactDetail | null>;
+}
+
+/** Restricts CRM reads to one assignee's leads. Absent means "all". */
+export type CrmScope = { readonly assignee: string };
+
+/**
+ * One organization, as evidenced by its leads. `key` is the dedupe's
+ * normalised name — the same identity the funnel groups on — and `name` is the
+ * most recently seen spelling.
+ */
+export type OrganizationSummary = {
+  readonly key: string;
+  readonly name: string;
+  readonly leadCount: number;
+  readonly openLeadCount: number;
+  readonly wonLeadCount: number;
+  readonly contactCount: number;
+  readonly firstSeenAt: string;
+  readonly lastActivityAt: string;
+};
+
+export type OrganizationDetail = OrganizationSummary & {
+  /** Newest first. */
+  readonly leads: readonly Lead[];
+  readonly contacts: readonly ContactSummary[];
+};
+
+/** One person, keyed by normalised e-mail — the funnel's contact identity. */
+export type ContactSummary = {
+  readonly email: string;
+  readonly name: string;
+  readonly organisation: string;
+  readonly organisationKey: string;
+  readonly leadCount: number;
+  readonly openLeadCount: number;
+  /** The most recent lead's consent decision — never an aggregate guess. */
+  readonly consent: boolean;
+  readonly firstSeenAt: string;
+  readonly lastActivityAt: string;
+};
+
+export type ContactDetail = ContactSummary & {
+  /** Newest first. */
+  readonly leads: readonly Lead[];
+};
+
+/**
+ * The dedupe's normalisers, re-exported as THE grouping identity. Living
+ * beside the contract for the `applyLeadFilters` reason: if the console
+ * grouped on a different key than the funnel dedupes on, the same company
+ * could appear twice depending on capitalisation, and the two surfaces would
+ * disagree about how many organizations exist.
+ */
+export function organizationKeyOf(name: string): string {
+  return name.trim().toLowerCase();
+}
+
+export function contactKeyOf(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+const OPEN_STAGES: readonly LeadStage[] = ["new", "qualified", "in_progress"];
+
+function newestFirst(leads: readonly Lead[]): Lead[] {
+  return [...leads].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
+/** Derives the organization read model from a set of leads. Pure, shared by
+    the file adapter and the contract tests so they cannot drift apart. */
+export function deriveOrganizations(leads: readonly Lead[]): OrganizationSummary[] {
+  const groups = new Map<string, Lead[]>();
+  for (const lead of leads) {
+    const key = organizationKeyOf(lead.organisation);
+    // A lead without an organisation is a person, not a company: it belongs to
+    // the contacts roster and must not create a nameless organization row.
+    if (!key) continue;
+    groups.set(key, [...(groups.get(key) ?? []), lead]);
+  }
+
+  return [...groups.entries()]
+    .map(([key, rows]) => {
+      const ordered = newestFirst(rows);
+      return {
+        key,
+        /* The FIRST recorded spelling, trimmed — not the newest. A later
+           submitter typing "  atlas développement " must not rename the
+           company header; the name it was first recorded under is stable. */
+        name: ordered[ordered.length - 1].organisation.trim(),
+        leadCount: rows.length,
+        openLeadCount: rows.filter((l) => OPEN_STAGES.includes(l.stage)).length,
+        wonLeadCount: rows.filter((l) => l.stage === "won").length,
+        contactCount: new Set(rows.map((l) => contactKeyOf(l.email))).size,
+        firstSeenAt: ordered[ordered.length - 1].createdAt,
+        lastActivityAt: ordered
+          .map((l) => l.updatedAt)
+          .sort()
+          .at(-1) as string,
+      };
+    })
+    .sort((a, b) => b.lastActivityAt.localeCompare(a.lastActivityAt));
+}
+
+/** Derives the contact read model from a set of leads. Same sharing rule. */
+export function deriveContacts(leads: readonly Lead[]): ContactSummary[] {
+  const groups = new Map<string, Lead[]>();
+  for (const lead of leads) {
+    const key = contactKeyOf(lead.email);
+    if (!key) continue;
+    groups.set(key, [...(groups.get(key) ?? []), lead]);
+  }
+
+  return [...groups.entries()]
+    .map(([email, rows]) => {
+      const ordered = newestFirst(rows);
+      return {
+        email,
+        name: ordered[0].name,
+        organisation: ordered[0].organisation,
+        organisationKey: organizationKeyOf(ordered[0].organisation),
+        leadCount: rows.length,
+        openLeadCount: rows.filter((l) => OPEN_STAGES.includes(l.stage)).length,
+        consent: ordered[0].consent,
+        firstSeenAt: ordered[ordered.length - 1].createdAt,
+        lastActivityAt: ordered
+          .map((l) => l.updatedAt)
+          .sort()
+          .at(-1) as string,
+      };
+    })
+    .sort((a, b) => b.lastActivityAt.localeCompare(a.lastActivityAt));
 }
 
 /**

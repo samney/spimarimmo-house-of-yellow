@@ -378,6 +378,134 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
   });
 }
 
+/* --------------------------------------------------------------- ADM-088/089
+
+   Organizations and contacts as read models. The property that matters most:
+   the console must group on the SAME identity the acquisition dedupe uses, so
+   "Atlas Développement" and "  atlas développement " are one organization here
+   exactly as they are one organization to the funnel. And scope is a data
+   boundary, not a display filter: a scoped actor's roster is derived from
+   their leads alone, and a scoped lookup of someone else's record is null. */
+export function describeDirectoryContract(name: string, make: () => CrmRepository) {
+  function lead(overrides: Record<string, unknown> = {}) {
+    return {
+      kind: "contact" as const,
+      name: "Amine Visitor",
+      email: "amine@example.test",
+      organisation: "Atlas Développement",
+      message: "Bonjour",
+      locale: "fr" as const,
+      sourcePath: "/fr/contact",
+      cta: "contact",
+      eventSlug: "",
+      consent: true,
+      stage: "new" as const,
+      assignee: "",
+      ...overrides,
+    };
+  }
+
+  describe(`Directory contract (organizations + contacts) — ${name}`, () => {
+    let crm: CrmRepository;
+    beforeEach(() => {
+      crm = make();
+    });
+
+    it("groups organizations on the dedupe's normalised key, not the spelling", async () => {
+      await crm.createLead(lead());
+      await crm.createLead(
+        lead({
+          organisation: "  atlas développement ",
+          email: "sara@example.test",
+          message: "Deux",
+        }),
+      );
+      await crm.createLead(lead({ organisation: "Autre Groupe", message: "Trois" }));
+
+      const orgs = await crm.listOrganizations();
+      expect(orgs.length).toBe(2);
+
+      const atlas = orgs.find((o) => o.key === "atlas développement");
+      expect(atlas).toBeDefined();
+      expect(atlas?.leadCount).toBe(2);
+      expect(atlas?.contactCount).toBe(2);
+      // Display name is the FIRST recorded spelling — a later sloppy
+      // submission must not rename the company.
+      expect(atlas?.name).toBe("Atlas Développement");
+    });
+
+    it("keeps a lead without an organisation out of the organizations roster", async () => {
+      await crm.createLead(lead({ organisation: "", message: "Solo" }));
+      expect(await crm.listOrganizations()).toEqual([]);
+      // …but its person is a real contact.
+      expect((await crm.listContacts()).map((c) => c.email)).toEqual(["amine@example.test"]);
+    });
+
+    it("keys contacts by normalised e-mail and reports the latest consent", async () => {
+      await crm.createLead(lead({ consent: true }));
+      await crm.createLead(
+        lead({ email: " AMINE@example.test ", message: "Deux", consent: false }),
+      );
+
+      const contacts = await crm.listContacts();
+      expect(contacts.length).toBe(1);
+      expect(contacts[0].email).toBe("amine@example.test");
+      expect(contacts[0].leadCount).toBe(2);
+      // The newest lead's decision, not an OR over history: a person who
+      // withdrew consent must not read as consenting.
+      expect(contacts[0].consent).toBe(false);
+    });
+
+    it("answers a detail with its leads newest first and its distinct people", async () => {
+      await crm.createLead(lead());
+      await crm.createLead(lead({ email: "sara@example.test", message: "Deux" }));
+
+      const org = await crm.getOrganization("Atlas Développement");
+      expect(org).not.toBeNull();
+      expect(org?.leads.length).toBe(2);
+      expect(org?.contacts.map((c) => c.email).sort()).toEqual([
+        "amine@example.test",
+        "sara@example.test",
+      ]);
+      for (let i = 1; i < (org?.leads.length ?? 0); i += 1) {
+        expect(org!.leads[i - 1].createdAt >= org!.leads[i].createdAt).toBe(true);
+      }
+
+      const contact = await crm.getContact(" AMINE@example.test ");
+      expect(contact?.leadCount).toBe(1);
+      expect(contact?.organisationKey).toBe("atlas développement");
+    });
+
+    it("resolves null for an unknown key rather than inventing a record", async () => {
+      expect(await crm.getOrganization("missing")).toBeNull();
+      expect(await crm.getContact("nobody@example.test")).toBeNull();
+      expect(await crm.getOrganization("")).toBeNull();
+      expect(await crm.getContact("")).toBeNull();
+    });
+
+    it("scope is a data boundary: a scoped actor derives from their leads only", async () => {
+      await crm.createLead(lead({ assignee: "a@x.test" }));
+      await crm.createLead(
+        lead({ email: "sara@example.test", message: "Deux", assignee: "b@x.test" }),
+      );
+
+      const scoped = { assignee: "a@x.test" };
+      const orgs = await crm.listOrganizations(scoped);
+      // Same organization, but the scoped view counts ONLY the scoped leads.
+      expect(orgs.length).toBe(1);
+      expect(orgs[0].leadCount).toBe(1);
+      expect(orgs[0].contactCount).toBe(1);
+
+      expect((await crm.listContacts(scoped)).map((c) => c.email)).toEqual(["amine@example.test"]);
+
+      // A deep link to someone else's contact answers null, not a redacted row.
+      expect(await crm.getContact("sara@example.test", scoped)).toBeNull();
+      const org = await crm.getOrganization("Atlas Développement", scoped);
+      expect(org?.leadCount).toBe(1);
+    });
+  });
+}
+
 /* ------------------------------------------------------------------ ADM-070
 
    The overview contract. Every implementation must agree on one thing above

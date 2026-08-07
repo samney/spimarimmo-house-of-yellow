@@ -64,10 +64,12 @@ export const WORKSPACES: readonly Workspace[] = [
         items: [
           { href: "/admin/crm/leads", label: "Leads", permission: "crm.read_assigned" },
           { href: "/admin/crm/pipeline", label: "Pipeline", permission: "crm.read_assigned" },
-          /* Entreprises (ADM-088) and Contacts (ADM-089) belong to Wave 4 and
-             have no route yet. They are deliberately absent rather than listed
-             as dead links: a navigation item that goes nowhere is exactly the
-             "dead control" the contract forbids. */
+          {
+            href: "/admin/crm/organizations",
+            label: "Entreprises",
+            permission: "crm.read_assigned",
+          },
+          { href: "/admin/crm/contacts", label: "Contacts", permission: "crm.read_assigned" },
         ],
       },
     ],
@@ -142,9 +144,14 @@ export function workspaceForPath(pathname: string): Workspace {
 }
 
 function workspaceBase(workspace: Workspace): string {
-  // "/admin/crm/leads" → "/admin/crm"; "/admin/events" stays as-is.
+  /* "/admin/crm/leads" → "/admin/crm"; "/admin/events" stays as-is.
+
+     Was `slice(0, 3)`, which keeps all three segments of "/admin/crm/leads" —
+     so the "base" WAS the leads path, and every other CRM route fell through
+     to Overview. Latent since the pipeline shipped (its sidebar showed the
+     Activité group), surfaced when the directory routes made it obvious. */
   const segments = workspace.href.split("/").filter(Boolean);
-  return segments.length > 2 ? `/${segments.slice(0, 3).join("/")}` : workspace.href;
+  return segments.length > 2 ? `/${segments.slice(0, 2).join("/")}` : workspace.href;
 }
 
 /** Strips the locale prefix so matching works on both `/admin` and `/en/admin`. */

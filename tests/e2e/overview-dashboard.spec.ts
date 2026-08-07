@@ -67,12 +67,14 @@ test("a fresh store declines a trend rather than rendering +100%", async ({ page
 
   /* One window of history is not a trend: BOTH windowed metrics — the monthly
      count and the qualified card — must decline the comparison. Asserting the
-     count rather than `.first()` is the stronger claim. */
+     count rather than `.first()` is the stronger claim.
+
+     Deliberately NOT asserted: that this test's own lead appears among the
+     top relances. Under the full suite other specs' leads legitimately fill
+     the top five, so that claim is order-dependent; the funnel writing a
+     follow-up at all is exhibitor-slice.spec.ts's property. */
   await expect(page.getByText("Pas encore d’historique comparable")).toHaveCount(2);
   await expect(page.getByText(/[+-]\d+%/)).toHaveCount(0);
-
-  // The funnel's follow-up task surfaces as the next relance.
-  await expect(page.getByText(`Trend Co ${id}`).first()).toBeVisible();
 });
 
 test("the dashboard fits a 390 viewport without horizontal overflow", async ({ page }) => {

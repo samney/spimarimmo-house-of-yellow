@@ -1,13 +1,24 @@
 import "server-only";
 import type {
   CmsRepository,
+  ContactDetail,
+  ContactSummary,
   ContentCollection,
   CrmRepository,
+  CrmScope,
   LeadAcquisitionRecord,
   LeadCreateInput,
   ListOptions,
+  OrganizationDetail,
+  OrganizationSummary,
   SavedLeadView,
   SavedLeadViewInput,
+} from "@/lib/backend/admin-seams";
+import {
+  contactKeyOf,
+  deriveContacts,
+  deriveOrganizations,
+  organizationKeyOf,
 } from "@/lib/backend/admin-seams";
 import type { Destination, Lead, MediaAsset, Page, SpimarEvent } from "../types";
 import * as store from "./file-store";
@@ -89,6 +100,51 @@ export class FileCrmRepository implements CrmRepository {
   }
   async deleteSavedView(id: string, owner: string): Promise<boolean> {
     return store.deleteSavedView(id, owner);
+  }
+
+  /* ADM-088/089 — derived read models over the scoped leads. The derivation
+     is the seam's own (shared with the contract tests), so the only job here
+     is applying the scope BEFORE deriving: a scoped actor's roster must be
+     computed from their leads, not filtered down from everyone's. */
+
+  private scopedLeads(scope?: CrmScope): Lead[] {
+    const leads = store.listLeads();
+    return scope ? leads.filter((l) => l.assignee === scope.assignee) : leads;
+  }
+
+  async listOrganizations(scope?: CrmScope): Promise<readonly OrganizationSummary[]> {
+    return deriveOrganizations(this.scopedLeads(scope));
+  }
+
+  async getOrganization(key: string, scope?: CrmScope): Promise<OrganizationDetail | null> {
+    const wanted = organizationKeyOf(key);
+    if (!wanted) return null;
+    const leads = this.scopedLeads(scope).filter(
+      (l) => organizationKeyOf(l.organisation) === wanted,
+    );
+    const summary = deriveOrganizations(leads)[0];
+    if (!summary) return null;
+    return {
+      ...summary,
+      leads: [...leads].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+      contacts: deriveContacts(leads),
+    };
+  }
+
+  async listContacts(scope?: CrmScope): Promise<readonly ContactSummary[]> {
+    return deriveContacts(this.scopedLeads(scope));
+  }
+
+  async getContact(email: string, scope?: CrmScope): Promise<ContactDetail | null> {
+    const wanted = contactKeyOf(email);
+    if (!wanted) return null;
+    const leads = this.scopedLeads(scope).filter((l) => contactKeyOf(l.email) === wanted);
+    const summary = deriveContacts(leads)[0];
+    if (!summary) return null;
+    return {
+      ...summary,
+      leads: [...leads].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    };
   }
 
   async listAcquisitions(leadId: string): Promise<readonly LeadAcquisitionRecord[]> {

@@ -136,8 +136,8 @@ decisions, not oversights.
 | ADM-085 | Assignment                        | done     | written in the acquisition transaction (`ADR-A5`) and editable                                                                          |
 | ADM-086 | Stage transitions                 | done     | `integration.spec.ts` drives stage, assignment and note                                                                                 |
 | ADM-087 | Lost reason                       | blocked  | needs a `Lead` field + both adapters + a contract test — a slice of its own                                                             |
-| ADM-088 | Organizations list and detail     | **next** | rows already exist: the acquisition dedupe writes them                                                                                  |
-| ADM-089 | Contacts list and detail          | **next** | same                                                                                                                                    |
+| ADM-088 | Organizations list and detail     | done     | read model on the dedupe key; 6 contract tests, scope probe-verified; `crm-directory.spec.ts` 3/3; evidence 1440/768/390                |
+| ADM-089 | Contacts list and detail          | done     | same slice — latest-consent rule; base64url route keys (raw e-mails 404ed via the proxy asset rule)                                     |
 | ADM-090 | Pipeline board                    | done     | `/admin/crm/pipeline`                                                                                                                   |
 | ADM-091 | Opportunity detail                | deferred | `D-041` — no opportunity model distinct from the lead today                                                                             |
 | ADM-092 | Won → exhibitor onboarding        | todo     | closes the funnel the public site opens                                                                                                 |
