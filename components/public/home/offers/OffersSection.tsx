@@ -276,6 +276,13 @@ export function OffersSection({
               </a>
             ) : null}
           </div>
+        </header>
+
+        {/* The journey rail (owner remark, 2026-08-07): the stepper and the
+            skip action no longer float in the header's dead corner — they
+            share one raised strip under the title, where the progress reads
+            as the page's spine and the shortcut sits in context. */}
+        <div className="offProgressBar">
           <ol className="offStepper" aria-label={t("stepperLabel")}>
             {(["edition", "offer", "request"] as const).map((step, i) => {
               const state = i < stepIndex ? "done" : i === stepIndex ? "active" : "next";
@@ -298,9 +305,7 @@ export function OffersSection({
             })}
           </ol>
           {(phase === "edition" || phase === "offer") && (
-            /* The system outline pill (Lock-Contract) — the previous ghost
-               variant inherited inverse ink on the paper header and rendered
-               an empty-looking pill. */
+            /* The system outline pill (Lock-Contract). */
             <button
               className="button outline offSkipBtn"
               onClick={() => setPhase("request")}
@@ -312,7 +317,7 @@ export function OffersSection({
               </span>
             </button>
           )}
-        </header>
+        </div>
 
         {(phase === "offer" || phase === "request") && (
           <div className="offSummaryBar">

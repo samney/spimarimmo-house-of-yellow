@@ -64,32 +64,47 @@
   max-width: var(--measure-prose);
 }
 
-.offStepper {
+.offProgressBar {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
   display: flex;
-  flex: none;
+  gap: var(--space-md);
+  justify-content: space-between;
+  margin-block-end: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* The journey reads left to right as one line: step, growing connector,
+   step — done steps solid gold, the active one ringed, the rest quiet. */
+.offStepper {
+  align-items: center;
+  display: flex;
+  flex: 1;
   list-style: none;
-  margin: var(--space-xs) 0 0;
+  margin: 0;
+  min-inline-size: 0;
   padding: 0;
 }
 
 .offStepperItem {
   align-items: center;
   display: flex;
-  flex-direction: column;
   gap: var(--space-xs);
-  position: relative;
-  width: 8vw;
 }
 
-/* Connector between stepper circles. */
+.offStepperItem:not(:last-child) {
+  flex: 1;
+}
+
 .offStepperItem:not(:last-child)::after {
   background: var(--border-subtle);
   block-size: 1px;
   content: "";
-  inset-block-start: 1.25vw;
-  inset-inline-start: calc(50% + 1.7vw);
-  inline-size: calc(100% - 3.4vw);
-  position: absolute;
+  flex: 1;
+  margin-inline: var(--space-sm);
+  min-inline-size: 1.5vw;
 }
 
 .offStepperItem.isdone:not(:last-child)::after {
@@ -98,38 +113,48 @@
 
 .offStepperCircle {
   align-items: center;
+  background: var(--surface-page);
   border: 1px solid var(--border-subtle);
   border-radius: 50%;
-  block-size: 2.5vw;
+  block-size: 2.3vw;
   color: var(--on-surface-muted);
   display: inline-flex;
+  flex: none;
   font-size: var(--text-support);
   font-variant-numeric: tabular-nums;
-  font-weight: 500;
-  inline-size: 2.5vw;
+  font-weight: 600;
+  inline-size: 2.3vw;
   justify-content: center;
+  min-block-size: 34px;
+  min-inline-size: 34px;
 }
 
 .offStepperItem.isactive .offStepperCircle {
   border-color: var(--action-primary);
+  box-shadow: inset 0 0 0 1px var(--action-primary);
   color: var(--on-surface);
 }
 
 .offStepperItem.isdone .offStepperCircle {
+  background: var(--action-primary);
   border-color: var(--action-primary);
-  color: var(--action-primary);
+  color: var(--action-on-primary);
 }
 
 .offStepperCheck {
-  height: 1.2vw;
-  width: 1.2vw;
+  height: 1.1vw;
+  min-height: 16px;
+  min-width: 16px;
+  width: 1.1vw;
 }
 
 .offStepperLabel {
   color: var(--on-surface-muted);
   font-size: var(--text-base);
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .offStepperItem.isactive .offStepperLabel,
@@ -1130,29 +1155,37 @@
     max-width: 100%;
   }
 
-  .offStepper {
-    inline-size: 100%;
-    justify-content: space-between;
-  }
-
-  .offStepperItem {
-    width: 30%;
-  }
-
-  .offStepperItem:not(:last-child)::after {
-    inset-block-start: 5vw;
-    inset-inline-start: calc(50% + 6.5vw);
-    inline-size: calc(100% - 13vw);
+  .offProgressBar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
   }
 
   .offStepperCircle {
-    block-size: 10vw;
-    inline-size: 10vw;
+    block-size: 8vw;
+    inline-size: 8vw;
+    min-block-size: 28px;
+    min-inline-size: 28px;
   }
 
   .offStepperCheck {
-    height: 4.5vw;
-    width: 4.5vw;
+    height: 3.6vw;
+    width: 3.6vw;
+  }
+
+  .offStepperItem {
+    gap: 1.2vw;
+  }
+
+  .offStepperItem:not(:last-child)::after {
+    margin-inline: 1.2vw;
+    min-inline-size: 1vw;
+  }
+
+  .offStepperLabel {
+    font-size: 2.7vw;
+    letter-spacing: 0.08em;
   }
 
   .offSummaryBar {
@@ -1597,7 +1630,7 @@
 
 /* --- Combined conversion section (flexible path) --------------------------- */
 .offSkipBtn {
-  margin-top: var(--space-sm);
+  flex: none;
 }
 .offFieldWide {
   margin-top: var(--space-sm);
