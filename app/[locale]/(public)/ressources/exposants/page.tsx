@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { buildMetadata } from "@/lib/seo/page-metadata";
 import { setRequestLocale } from "next-intl/server";
-import { ResourcesSection } from "@/components/public/home/ResourcesSection";
+import { ExhibitorResources } from "@/components/public/pages/ExhibitorResources";
+import { PageCta } from "@/components/public/pages/PageCta";
 import { PageHeader } from "@/components/public/pages/PageHeader";
 
 /* Owner restructure (2026-08-04): the exhibitor-resources section moves off
@@ -32,10 +33,27 @@ export default async function RessourcesExposants({
   const t = await getTranslations({ locale, namespace: "resources" });
   return (
     <div className="pageBlocks">
-      {/* Owner note: the page opens with the shared PageHeader; the section
-          below keeps its own h2 heading and drops its chapter index. */}
+      {/* ONE header (owner remark, 2026-08-07): the shared PageHeader only —
+          the old homepage section brought a second header beside its feature
+          card. The four-box grid below is the child-page composition. */}
       <PageHeader label={t("eyebrow")} title={t("title")} lead={t("lead")} />
-      <ResourcesSection standalone />
+      <section className="spimarListPage">
+        <div className="contentWrapper">
+          <div className="hoyCols">
+            <div className="colLabel" aria-hidden="true" />
+            <div className="colMain">
+              <ExhibitorResources />
+              <PageCta
+                text={t("faq.label")}
+                actions={[
+                  { label: t("faq.all"), href: "/faq" },
+                  { label: t("feature.cta"), href: "/ressources" },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -29,6 +29,7 @@
 @import "../components/public/pages/salons.css";
 @import "../components/public/pages/case-studies.css";
 @import "../components/public/pages/case-bento.css";
+@import "../components/public/pages/exhibitor-resources.css";
 @import "../components/public/pages/blog.css";
 @import "../components/public/pages/library.css";
 /* Public reference-status page (/suivi). Scoped to its own `.status*` classes;

@@ -1,0 +1,462 @@
+/* ==========================================================================
+   /ressources/exposants — the four-box grid (owner redesign, 2026-08-07)
+   ==========================================================================
+   One 2x2 grid of raised boxes: Dossiers marché, Votre boîte à outils,
+   Analyses pour décider, Vos questions avant d'exposer. Binds only to L2
+   tokens; `rx` prefix. Reuses the shared vocabulary (salcCta pills, token
+   elevation, accent-family marks). */
+
+.rxGrid {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.rxBox {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-raised);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  overflow: hidden;
+  padding: var(--space-md);
+}
+
+.rxBoxTitle {
+  font-size: var(--text-small-title);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Marked titles open the utility boxes: gold icon tile + ruled baseline. */
+.rxBoxTitle--marked {
+  align-items: center;
+  border-block-end: 1px solid var(--border-subtle);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-sm);
+  letter-spacing: 0.12em;
+  padding-block-end: var(--space-sm);
+  text-transform: uppercase;
+}
+
+.rxTitleIcon {
+  background: var(--action-primary);
+  border-radius: var(--radius-md);
+  color: var(--action-on-primary);
+  flex: none;
+  height: 2.1vw;
+  min-height: 30px;
+  min-width: 30px;
+  padding: 0.5vw;
+  width: 2.1vw;
+}
+
+/* --- Box 1: the feature ------------------------------------------------------- */
+
+.rxBox--feature {
+  padding: 0;
+}
+
+.rxFeatureMedia {
+  aspect-ratio: 21 / 9;
+  position: relative;
+}
+
+.rxFeatureImg {
+  object-fit: cover;
+}
+
+.rxFeatureScrim {
+  background: linear-gradient(
+    200deg,
+    transparent 45%,
+    color-mix(in srgb, var(--spimar-black) 55%, transparent)
+  );
+  inset: 0;
+  position: absolute;
+}
+
+.rxFeatureChip {
+  background: var(--action-primary);
+  border-radius: var(--radius-pill);
+  color: var(--action-on-primary);
+  font-size: var(--text-base);
+  font-weight: 600;
+  inset-block-end: var(--space-xs);
+  inset-inline-start: var(--space-sm);
+  letter-spacing: 0.1em;
+  margin: 0;
+  padding: 0.15vw var(--space-xs);
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.rxBoxBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.rxPendingNote {
+  align-items: center;
+  color: var(--on-surface-muted);
+  display: flex;
+  font-size: var(--text-support);
+  gap: var(--space-2xs);
+  margin: 0;
+}
+
+.rxNoteIcon {
+  flex: none;
+  height: 1vw;
+  min-height: 14px;
+  min-width: 14px;
+  width: 1vw;
+}
+
+.rxBoxCta {
+  align-items: center;
+  align-self: flex-start;
+  display: inline-flex;
+  gap: var(--space-2xs);
+  margin-block-start: auto;
+}
+
+.rxCtaIcon {
+  height: 1em;
+  width: 1em;
+}
+
+/* --- Box 2: the toolbox --------------------------------------------------------- */
+
+.rxTools {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rxTool {
+  align-items: center;
+  display: flex;
+  gap: var(--space-sm);
+  padding-block: var(--space-xs);
+}
+
+.rxTool + .rxTool {
+  border-block-start: 1px dashed var(--border-subtle);
+}
+
+.rxToolIcon {
+  align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  flex: none;
+  height: 2.4vw;
+  justify-content: center;
+  min-height: 36px;
+  min-width: 36px;
+  width: 2.4vw;
+}
+
+.rxToolGlyph {
+  height: 50%;
+  width: 50%;
+}
+
+.rxToolMeta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.1vw;
+  min-inline-size: 0;
+}
+
+.rxToolName {
+  font-size: var(--text-support);
+  font-weight: 600;
+}
+
+.rxToolState {
+  align-items: center;
+  color: var(--on-surface-muted);
+  display: flex;
+  font-size: var(--text-base);
+  gap: 0.3vw;
+}
+
+.rxToolStateIcon {
+  flex: none;
+  height: 1vw;
+  min-height: 13px;
+  min-width: 13px;
+  width: 1vw;
+}
+
+.rxToolDownload {
+  align-items: center;
+  background: var(--action-primary);
+  border: 0;
+  border-radius: 50%;
+  color: var(--action-on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: 2.3vw;
+  justify-content: center;
+  min-height: 36px;
+  min-width: 36px;
+  transition: background-color var(--dur-micro) var(--ease-out-ref);
+  width: 2.3vw;
+}
+
+.rxToolDownload:hover {
+  background: var(--action-primary-hover);
+}
+
+.rxToolDownload:disabled {
+  background: var(--surface-muted);
+  color: var(--on-surface-muted);
+  cursor: not-allowed;
+}
+
+.rxToolDownload:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.rxToolDownloadIcon {
+  height: 45%;
+  width: 45%;
+}
+
+/* --- Box 3: the analyses --------------------------------------------------------- */
+
+.rxAnalysisFeature {
+  align-items: center;
+  background: var(--surface-page);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--on-surface);
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-xs);
+  text-decoration: none;
+  transition: border-color var(--dur-micro) var(--ease-out-ref);
+}
+
+.rxAnalysisFeature:hover {
+  border-color: var(--action-primary);
+}
+
+.rxAnalysisFeature:focus-visible,
+.rxAnalysisRow:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.rxAnalysisThumb {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  flex: none;
+  inline-size: 6.5vw;
+  min-inline-size: 84px;
+  overflow: hidden;
+  position: relative;
+}
+
+.rxAnalysisMeta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.2vw;
+  min-inline-size: 0;
+}
+
+.rxAnalysisTitle {
+  font-size: var(--text-support);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.rxAnalysisRead {
+  color: var(--spimar-gold-text);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rxAnalysisList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rxAnalysisRow {
+  align-items: center;
+  color: var(--on-surface);
+  display: flex;
+  gap: var(--space-sm);
+  padding-block: var(--space-xs);
+  text-decoration: none;
+}
+
+.rxAnalysisRow:hover .rxAnalysisRowTitle {
+  text-decoration: underline;
+}
+
+.rxAnalysisList li + li .rxAnalysisRow {
+  border-block-start: 1px dashed var(--border-subtle);
+}
+
+.rxRowIcon {
+  color: var(--spimar-gold-text);
+  flex: none;
+  height: 1.2vw;
+  min-height: 16px;
+  min-width: 16px;
+  width: 1.2vw;
+}
+
+.rxAnalysisRowTitle {
+  flex: 1;
+  font-size: var(--text-support);
+  font-weight: 500;
+  min-inline-size: 0;
+}
+
+.rxRowChevron {
+  color: var(--on-surface-muted);
+  flex: none;
+  height: 1vw;
+  min-height: 14px;
+  min-width: 14px;
+  width: 1vw;
+}
+
+/* --- Box 4: the FAQ teaser -------------------------------------------------------- */
+
+.rxFaq {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rxFaqItem + .rxFaqItem {
+  border-block-start: 1px dashed var(--border-subtle);
+}
+
+.rxFaqQuestion {
+  align-items: center;
+  background: none;
+  border: 0;
+  color: var(--on-surface);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: var(--text-support);
+  font-weight: 600;
+  gap: var(--space-sm);
+  inline-size: 100%;
+  justify-content: space-between;
+  padding: var(--space-xs) 0;
+  text-align: start;
+}
+
+.rxFaqQuestion:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.rxFaqPlus {
+  color: var(--spimar-gold-text);
+  flex: none;
+  height: 1.1vw;
+  min-height: 15px;
+  min-width: 15px;
+  transition: transform var(--dur-micro) var(--ease-out-ref);
+  width: 1.1vw;
+}
+
+.rxFaqPlus.isOpen {
+  transform: rotate(45deg);
+}
+
+/* The contract's expand-down disclosure. */
+.rxFaqAnswer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-fade) var(--ease-out-ref);
+  visibility: hidden;
+}
+
+.rxFaqAnswer.isOpen {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.rxFaqAnswerText {
+  color: var(--on-surface-muted);
+  font-size: var(--text-support);
+  line-height: 1.6;
+  margin: 0;
+  min-block-size: 0;
+  overflow: hidden;
+  padding-block-end: var(--space-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rxFaqPlus,
+  .rxFaqAnswer,
+  .rxToolDownload,
+  .rxAnalysisFeature {
+    transition: none;
+  }
+}
+
+/* --- Restatements ------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .rxGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .rxBox {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .rxTitleIcon {
+    height: 8vw;
+    padding: 1.8vw;
+    width: 8vw;
+  }
+
+  .rxToolIcon {
+    height: 9vw;
+    width: 9vw;
+  }
+
+  .rxToolDownload {
+    height: 9vw;
+    width: 9vw;
+  }
+
+  .rxAnalysisThumb {
+    inline-size: 20vw;
+  }
+}
