@@ -2,8 +2,13 @@ import { afterEach, beforeEach, describe } from "vitest";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { describeCmsContract, describeCrmContract } from "./contract-suites";
+import {
+  describeCmsContract,
+  describeCrmContract,
+  describeOverviewContract,
+} from "./contract-suites";
 import { FileCmsRepository, FileCrmRepository } from "./file-admin-repository";
+import { FileOverviewRepository } from "./file-overview-repository";
 
 /* The development implementations of the operational seams, held to the shared
    contracts in contract-suites.ts. A database adapter must pass the same
@@ -24,4 +29,8 @@ describe("file-backed operational seams", () => {
 
   describeCmsContract("FileCmsRepository", () => new FileCmsRepository());
   describeCrmContract("FileCrmRepository", () => new FileCrmRepository());
+  describeOverviewContract("FileOverviewRepository", (now) => ({
+    crm: new FileCrmRepository(),
+    overview: new FileOverviewRepository(now),
+  }));
 });

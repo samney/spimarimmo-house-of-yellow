@@ -1690,3 +1690,276 @@
     gap: var(--space-1) 0;
   }
 }
+
+/* ---------------------------------------------------------- overview
+   ADM-071. Composed from the existing card, grid, status and table
+   primitives; only the pieces the brief adds — the hero metric, the pipeline
+   strip and two small list shapes — are declared here. Every value binds to
+   the admin token layer. */
+
+.card--primaryMetric {
+  padding: var(--space-6);
+}
+
+.metric--hero {
+  font-size: 44px;
+  line-height: 1.05;
+}
+
+/* A card whose value is a name rather than a number: the metric type stays,
+   the size drops so a long organisation still fits on one line. */
+.metric--sm {
+  font-size: var(--text-card);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+/* A slot the blueprint specifies that the data cannot fill. Deliberately
+   muted and outlined rather than solid: it must read as a stated absence,
+   never as a card still loading. */
+.card--unavailable {
+  background: var(--surface-1);
+  border-style: dashed;
+}
+
+.delta {
+  font-weight: var(--weight-semibold);
+}
+
+.delta--up {
+  color: var(--success);
+}
+
+.delta--down {
+  color: var(--danger);
+}
+
+/* ---- pipeline strip ---- */
+
+.pipelineStrip__wrap {
+  margin-block-start: var(--space-5);
+}
+
+.pipelineStrip {
+  display: flex;
+  gap: 2px;
+  block-size: 10px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+}
+
+.pipelineStrip__seg {
+  min-inline-size: 2px;
+  background: var(--neutral-soft);
+}
+
+/* An empty stage keeps a hairline presence so the strip still reads as five
+   stages rather than silently losing one. */
+.pipelineStrip__seg[data-empty="true"] {
+  flex-grow: 0;
+  inline-size: 4px;
+  opacity: 0.45;
+}
+
+.pipelineStrip__seg--new {
+  background: var(--text-primary);
+}
+.pipelineStrip__seg--qualified {
+  background: var(--info);
+}
+.pipelineStrip__seg--in_progress {
+  background: var(--brand-gold);
+}
+.pipelineStrip__seg--won {
+  background: var(--success);
+}
+.pipelineStrip__seg--lost {
+  background: var(--danger);
+}
+
+.pipelineLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pipelineLegend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-meta);
+  color: var(--text-secondary);
+}
+
+.pipelineLegend__item .numeric {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.dot {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--neutral-soft);
+}
+
+.dot--new {
+  background: var(--text-primary);
+}
+.dot--qualified {
+  background: var(--info);
+}
+.dot--in_progress {
+  background: var(--brand-gold);
+}
+.dot--won {
+  background: var(--success);
+}
+.dot--lost {
+  background: var(--danger);
+}
+
+/* ---- counted list (acquisition, leads per event) ---- */
+
+.countedList {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.countedList__row {
+  display: grid;
+  grid-template-columns: minmax(6rem, 9rem) 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-meta);
+}
+
+.countedList__label {
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.countedList__bar {
+  block-size: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.countedList__bar > span {
+  display: block;
+  block-size: 100%;
+  background: var(--brand-gold-deep);
+}
+
+.countedList__count {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+/* ---- priority tasks ---- */
+
+.taskList {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.taskList__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block-end: var(--space-2);
+  border-block-end: 1px solid var(--border-soft);
+  font-size: var(--text-meta);
+}
+
+.isOverdue {
+  color: var(--danger);
+  font-weight: var(--weight-semibold);
+}
+
+@media (max-width: 700px) {
+  .metric--hero {
+    font-size: 34px;
+  }
+
+  .countedList__row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .countedList__bar {
+    grid-column: 1 / -1;
+  }
+}
+
+/* -------------------------------------------------------------- layout stack
+   The rhythm fix behind the "floating spacing" review (owner, 2026-08-07).
+
+   Before this, vertical space between dashboard regions was accidental:
+   `.section` carried its own margin, bare `.grid` rows carried none, and the
+   gaps depended on which wrapper a region happened to use — patched over with
+   inline `style={{ marginBlockEnd }}` magic numbers that bypassed the token
+   scale.
+
+   `.stack` makes the PARENT own the rhythm: one grid, one gap, and children
+   are forbidden their own vertical margins. A region is a region regardless
+   of whether it is a section, a grid row or a single card — which is what
+   makes the composition read as one designed page instead of parts placed
+   near each other. Screens adopt it by wrapping their regions; `.section`
+   keeps its margin elsewhere so unmigrated screens are unaffected. */
+
+.stack {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.stack > .section {
+  margin-block-start: 0;
+}
+
+/* A card heading is a LABEL, whatever element carries it. Without this, the
+   global `.spimarControl h2` (section size) overrode `card__label` on h2
+   headings inside cards, so "Acquisition des leads" rendered at 22px beside
+   sibling cards labelled at 11px — two label sizes in one row. Semantics stay
+   h2 for the outline; the size comes from the role. */
+.spimarControl h2.card__label {
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+}
+
+/* Standard heading row for a dashboard region: title at the baseline, one
+   optional action at the end. Replaces ad-hoc `cluster` + inline margins so
+   every region head sits at the same distance from its content. */
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-4);
+}
+
+.sectionHead h2 {
+  font-size: var(--text-section);
+}
+
+/* Mid-size figure for compact stat panels — the tokenised replacement for
+   the inline `fontSize: 28` that floated between .metric (36) and body. */
+.metric--panel {
+  font-size: 28px;
+}
+
+/* Paragraph rhythm inside notices, so body copy never needs inline margins. */
+.notice p + p {
+  margin-block-start: var(--space-2);
+}

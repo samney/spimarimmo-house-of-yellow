@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import type { ContentRepository, SubmissionRepository } from "@/lib/backend/seams";
 import { EMPTY_LEAD_FILTERS } from "@/lib/backend/admin-seams";
-import type { CmsRepository, CrmRepository } from "@/lib/backend/admin-seams";
+import type { CmsRepository, CrmRepository, OverviewRepository } from "@/lib/backend/admin-seams";
 
 /* Shared contract suites.
 
@@ -374,6 +374,139 @@ export function describeCrmContract(name: string, makeRepository: () => CrmRepos
         expect(await crm.deleteSavedView(view!.id, "a@x.test")).toBe(false);
         expect(await crm.listSavedViews("a@x.test")).toEqual([]);
       });
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ ADM-070
+
+   The overview contract. Every implementation must agree on one thing above
+   all: it may not invent a comparison. A dashboard showing a trend it cannot
+   support is worse than one showing none, because the reader cannot tell the
+   difference.
+
+   The factory takes a clock so period arithmetic is exercised through the
+   public API rather than by writing rows behind it. A database adapter is
+   expected to accept the same injection. */
+export function describeOverviewContract(
+  name: string,
+  make: (now?: () => Date) => { crm: CrmRepository; overview: OverviewRepository },
+) {
+  function lead(overrides: Record<string, unknown> = {}) {
+    return {
+      kind: "contact" as const,
+      name: "Visitor",
+      email: "visitor@example.test",
+      organisation: "Atlas",
+      message: "Bonjour",
+      locale: "fr" as const,
+      sourcePath: "/fr/contact",
+      cta: "contact",
+      eventSlug: "",
+      consent: true,
+      stage: "new" as const,
+      assignee: "",
+      ...overrides,
+    };
+  }
+
+  describe(`OverviewRepository contract — ${name}`, () => {
+    it("an empty deployment reports zeros and nulls, never a placeholder", async () => {
+      const { overview } = make();
+      const m = await overview.getOverview();
+
+      expect(m.totalLeads).toBe(0);
+      expect(m.unassigned).toBe(0);
+      expect(m.nextFollowUp).toBeNull();
+      expect(m.nextEvent).toBeNull();
+      expect(m.leadsThisMonth).toEqual({ current: 0, previous: null, changePercent: null });
+      expect(m.acquisitionBySource).toEqual([]);
+      expect(m.priorityTasks).toEqual([]);
+    });
+
+    it("always reports every pipeline stage, so a stage never silently vanishes", async () => {
+      const { overview } = make();
+      const m = await overview.getOverview();
+      expect(m.pipeline.map((p) => p.stage)).toEqual([
+        "new",
+        "qualified",
+        "in_progress",
+        "won",
+        "lost",
+      ]);
+      expect(m.pipeline.every((p) => p.count === 0)).toBe(true);
+    });
+
+    it("counts what is stored, and scopes unassigned to a truly empty owner", async () => {
+      const { crm, overview } = make();
+      await crm.createLead(lead());
+      await crm.createLead(lead({ message: "Deux", assignee: "ops@x.test" }));
+      await crm.createLead(lead({ message: "Trois", stage: "qualified" }));
+
+      const m = await overview.getOverview();
+      expect(m.totalLeads).toBe(3);
+      expect(m.unassigned).toBe(2);
+      expect(m.pipeline.find((p) => p.stage === "qualified")?.count).toBe(1);
+      expect(m.leadsThisMonth.current).toBe(3);
+    });
+
+    it("REFUSES a month-over-month comparison when it holds no earlier history", async () => {
+      const { crm, overview } = make();
+      await crm.createLead(lead());
+
+      const m = await overview.getOverview();
+      // One window of history is not a trend. `previous` must stay null rather
+      // than default to zero, which would render as "+100%".
+      expect(m.leadsThisMonth.current).toBe(1);
+      expect(m.leadsThisMonth.previous).toBeNull();
+      expect(m.leadsThisMonth.changePercent).toBeNull();
+    });
+
+    it("computes a real comparison once a previous window exists", async () => {
+      const now = new Date();
+      const nextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 15));
+
+      const seed = make();
+      await seed.crm.createLead(lead());
+      await seed.crm.createLead(lead({ message: "Deux" }));
+
+      // Same store, read from a month later: the two leads are now history.
+      const { overview } = make(() => nextMonth);
+      const m = await overview.getOverview();
+
+      expect(m.leadsThisMonth.current).toBe(0);
+      expect(m.leadsThisMonth.previous).toBe(2);
+      expect(m.leadsThisMonth.changePercent).toBe(-100);
+    });
+
+    it("withholds a percentage when the previous window was zero", async () => {
+      const now = new Date();
+      const twoMonthsOn = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 2, 15));
+
+      const seed = make();
+      await seed.crm.createLead(lead());
+
+      // Two months on the previous month holds nothing, but earlier history
+      // exists — so the comparison is attempted and must decline a rate.
+      const { overview } = make(() => twoMonthsOn);
+      const m = await overview.getOverview();
+
+      expect(m.leadsThisMonth.current).toBe(0);
+      expect(m.leadsThisMonth.previous).toBe(0);
+      expect(m.leadsThisMonth.changePercent).toBeNull();
+    });
+
+    it("orders follow-ups soonest first and pads nothing", async () => {
+      const { crm, overview } = make();
+      await crm.createLead(lead());
+
+      const m = await overview.getOverview();
+      // The console's own createLead writes no follow-up task — only the
+      // acquisition path does — so an empty list here is correct.
+      expect(Array.isArray(m.priorityTasks)).toBe(true);
+      for (let i = 1; i < m.priorityTasks.length; i += 1) {
+        expect(m.priorityTasks[i - 1].dueAt <= m.priorityTasks[i].dueAt).toBe(true);
+      }
     });
   });
 }

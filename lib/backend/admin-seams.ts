@@ -191,6 +191,107 @@ export function applyLeadFilters(leads: readonly Lead[], filters: LeadFilterStat
   });
 }
 
+/* ------------------------------------------------------------- ADM-070
+   Overview dashboard data contract.
+
+   Declared as its own seam rather than computed in the page, for one concrete
+   reason: the file adapter can afford to load every lead and count in memory,
+   and a database adapter must not. Expressing the dashboard as ONE method
+   returning ONE shape lets Postgres answer it with aggregates while the screen
+   stays identical.
+
+   What is deliberately absent is as important as what is here. `VISUAL_01`
+   specifies a monetary primary metric (2 480 000 MAD), a best opportunity by
+   value (420 000 MAD) and an exhibitor capacity ratio (37/52). SPIMAR stores
+   no monetary field, no opportunity entity and no capacity model — so those
+   figures cannot be measured, only invented, and `D-041` forbids an
+   undisclaimed metric a viewer would read as real. The slots they occupy are
+   re-pointed at values the system genuinely holds, and anything with no
+   honest answer is reported as unavailable ON SCREEN rather than dropped. */
+
+/**
+ * A count over a period, with the comparable previous period.
+ *
+ * `previous` is `null` when the store does not reach back a full window —
+ * which is a different statement from "zero last month" and must render
+ * differently. A dashboard that shows `+100%` because it only has one window
+ * of history is lying with arithmetic.
+ */
+export type MetricWindow = {
+  readonly current: number;
+  readonly previous: number | null;
+  /** Rounded percentage change, or `null` when it cannot be computed honestly. */
+  readonly changePercent: number | null;
+};
+
+/** The next follow-up falling due — the operational replacement for the mock's
+    "best opportunity by value", which needs money the schema does not store. */
+export type NextFollowUp = {
+  readonly leadId: string;
+  readonly label: string;
+  readonly dueAt: string;
+  readonly overdue: boolean;
+};
+
+/** The next edition by start date. `startDate` is `""` when the owner has not
+    confirmed dates; surfaces must say so rather than guess. */
+export type NextEvent = {
+  readonly slug: string;
+  readonly title: string;
+  readonly city: string;
+  readonly startDate: string;
+  readonly endDate: string;
+  /** Whole days until `startDate`, or `null` when undated. */
+  readonly daysUntil: number | null;
+};
+
+export type CountedLabel = { readonly label: string; readonly count: number };
+
+export type CollectionCount = {
+  readonly collection: string;
+  readonly published: number;
+  readonly total: number;
+};
+
+export type CmsActivityEntry = {
+  readonly collection: string;
+  readonly label: string;
+  readonly updatedAt: string;
+  readonly updatedBy: string;
+};
+
+export type OverviewMetrics = {
+  /** Primary metric — leads received in the current calendar month. */
+  readonly leadsThisMonth: MetricWindow;
+  /** Pipeline strip, in canonical stage order. */
+  readonly pipeline: readonly { readonly stage: LeadStage; readonly count: number }[];
+  /** Card 01 — qualified leads, with the week-over-week movement. */
+  readonly qualified: MetricWindow;
+  /** Card 02 — replaces the mock's monetary "best opportunity". */
+  readonly nextFollowUp: NextFollowUp | null;
+  /** Card 03 — replaces the mock's exhibitor capacity ratio. */
+  readonly unassigned: number;
+  /** Card 04 — as the brief specifies. */
+  readonly nextEvent: NextEvent | null;
+  /** §7.1 — where leads came from, from stored attribution. */
+  readonly acquisitionBySource: readonly CountedLabel[];
+  /** §7.3 — leads per edition. Counts only: no revenue exists to rank by. */
+  readonly leadsByEvent: readonly CountedLabel[];
+  /** §7.5 — open follow-ups, soonest first. */
+  readonly priorityTasks: readonly NextFollowUp[];
+  /** §7.6 — most recently edited content. */
+  readonly cmsActivity: readonly CmsActivityEntry[];
+  /** Publication counts per collection. */
+  readonly content: readonly CollectionCount[];
+  /** Total leads ever stored — the denominator every other figure is read against. */
+  readonly totalLeads: number;
+};
+
+export interface OverviewRepository {
+  /** One round trip. A screen must never assemble this from several reads. */
+  getOverview(): Promise<OverviewMetrics>;
+}
+
 /**
  * What the acquisition transaction recorded alongside a lead: the consent
  * decisions, the attribution captured at submission time, the assignment and
@@ -222,6 +323,7 @@ export interface LeadAcquisitionRecord {
 export interface AdminSeams {
   readonly cms: CmsRepository;
   readonly crm: CrmRepository;
+  readonly overview: OverviewRepository;
 }
 
 /** Stage vocabulary, exported so UI and validation share one list. */

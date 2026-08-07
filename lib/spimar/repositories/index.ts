@@ -6,6 +6,7 @@ import { DemoContentRepository } from "./demo-content-repository";
 import { FileContentRepository } from "./file-content-repository";
 import { FileSubmissionRepository } from "./file-submission-repository";
 import { FileCmsRepository, FileCrmRepository } from "./file-admin-repository";
+import { FileOverviewRepository } from "./file-overview-repository";
 import { FileAcquisitionRepository } from "./file-acquisition-repository";
 import { PgSqlClient } from "./pg-sql-client";
 import { PostgresContentRepository } from "./postgres-content-repository";
@@ -111,6 +112,7 @@ export function getAdminSeams(): AdminSeams {
   cachedAdmin = {
     cms: new FileCmsRepository(),
     crm: new FileCrmRepository(),
+    overview: new FileOverviewRepository(),
   };
   return cachedAdmin;
 }
@@ -147,6 +149,7 @@ export {
   FileSubmissionRepository,
   FileCmsRepository,
   FileCrmRepository,
+  FileOverviewRepository,
   FileAcquisitionRepository,
   PostgresContentRepository,
   PostgresSubmissionRepository,

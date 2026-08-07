@@ -116,34 +116,34 @@ export` and others — written without reading
 All 26 Wave 4 IDs, so nothing is silently dropped. `deferred` rows are `D-041`
 decisions, not oversights.
 
-| ID      | Blueprint item                    | Status   | Evidence / reason                                                           |
-| ------- | --------------------------------- | -------- | --------------------------------------------------------------------------- |
-| ADM-070 | Overview dashboard data contract  | partial  | `/admin` reads real counts through the seam; no metric contract doc         |
-| ADM-071 | Overview dashboard implementation | partial  | ships, but `VISUAL_01`'s figures are refused as unmeasured (`D-041`)        |
-| ADM-072 | My Day                            | todo     | —                                                                           |
-| ADM-073 | Activity stream                   | done     | `/admin/activity`                                                           |
-| ADM-074 | Team tasks                        | done     | `/admin/tasks`                                                              |
-| ADM-075 | Leads list                        | done     | `/admin/crm/leads`, five URL-driven views with counts                       |
-| ADM-076 | Saved views                       | done     | 5 contract tests + `crm-leads.spec.ts` save / replay / delete               |
-| ADM-077 | Lead preview drawer               | done     | `crm-leads.spec.ts` open, tablist, Escape, deep link, axe, 390              |
-| ADM-078 | Lead detail                       | done     | `/admin/crm/leads/[id]` — message, source, follow-up, consent, contact      |
-| ADM-079 | Activity timeline                 | done     | `LeadWorkspace.tsx`; `integration.spec.ts` asserts the audit trail          |
-| ADM-080 | Notes                             | done     | same, append-only                                                           |
-| ADM-081 | Tasks (lead-level)                | partial  | the follow-up task is written and shown; no task management UI              |
-| ADM-082 | Appointments                      | deferred | `D-041` — no booking surface exists to produce one                          |
-| ADM-083 | Attribution view                  | done     | captured at submission, rendered on the detail page                         |
-| ADM-084 | Consent view                      | done     | consent shown against its stored definition                                 |
-| ADM-085 | Assignment                        | done     | written in the acquisition transaction (`ADR-A5`) and editable              |
-| ADM-086 | Stage transitions                 | done     | `integration.spec.ts` drives stage, assignment and note                     |
-| ADM-087 | Lost reason                       | blocked  | needs a `Lead` field + both adapters + a contract test — a slice of its own |
-| ADM-088 | Organizations list and detail     | **next** | rows already exist: the acquisition dedupe writes them                      |
-| ADM-089 | Contacts list and detail          | **next** | same                                                                        |
-| ADM-090 | Pipeline board                    | done     | `/admin/crm/pipeline`                                                       |
-| ADM-091 | Opportunity detail                | deferred | `D-041` — no opportunity model distinct from the lead today                 |
-| ADM-092 | Won → exhibitor onboarding        | todo     | closes the funnel the public site opens                                     |
-| ADM-093 | CRM export with audit             | partial  | export honours the desk's filters; **the audit half is not built**          |
-| ADM-094 | CRM role browser tests            | partial  | assigned-scope deep link covered; full role matrix not                      |
-| ADM-095 | Mobile CRM workflow               | partial  | 390 no-overflow asserted on desk and drawer; no end-to-end mobile journey   |
+| ID      | Blueprint item                    | Status   | Evidence / reason                                                                                                                       |
+| ------- | --------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ADM-070 | Overview dashboard data contract  | done     | `OverviewRepository.getOverview()` — one shape, 7 contract tests incl. the no-invented-comparison rule, probe-verified                  |
+| ADM-071 | Overview dashboard implementation | done     | brief §5–§7 composition on measured data; unavailable slot stated on screen; `overview-dashboard.spec.ts` 3/3; evidence at 1440/768/390 |
+| ADM-072 | My Day                            | todo     | —                                                                                                                                       |
+| ADM-073 | Activity stream                   | done     | `/admin/activity`                                                                                                                       |
+| ADM-074 | Team tasks                        | done     | `/admin/tasks`                                                                                                                          |
+| ADM-075 | Leads list                        | done     | `/admin/crm/leads`, five URL-driven views with counts                                                                                   |
+| ADM-076 | Saved views                       | done     | 5 contract tests + `crm-leads.spec.ts` save / replay / delete                                                                           |
+| ADM-077 | Lead preview drawer               | done     | `crm-leads.spec.ts` open, tablist, Escape, deep link, axe, 390                                                                          |
+| ADM-078 | Lead detail                       | done     | `/admin/crm/leads/[id]` — message, source, follow-up, consent, contact                                                                  |
+| ADM-079 | Activity timeline                 | done     | `LeadWorkspace.tsx`; `integration.spec.ts` asserts the audit trail                                                                      |
+| ADM-080 | Notes                             | done     | same, append-only                                                                                                                       |
+| ADM-081 | Tasks (lead-level)                | partial  | the follow-up task is written and shown; no task management UI                                                                          |
+| ADM-082 | Appointments                      | deferred | `D-041` — no booking surface exists to produce one                                                                                      |
+| ADM-083 | Attribution view                  | done     | captured at submission, rendered on the detail page                                                                                     |
+| ADM-084 | Consent view                      | done     | consent shown against its stored definition                                                                                             |
+| ADM-085 | Assignment                        | done     | written in the acquisition transaction (`ADR-A5`) and editable                                                                          |
+| ADM-086 | Stage transitions                 | done     | `integration.spec.ts` drives stage, assignment and note                                                                                 |
+| ADM-087 | Lost reason                       | blocked  | needs a `Lead` field + both adapters + a contract test — a slice of its own                                                             |
+| ADM-088 | Organizations list and detail     | **next** | rows already exist: the acquisition dedupe writes them                                                                                  |
+| ADM-089 | Contacts list and detail          | **next** | same                                                                                                                                    |
+| ADM-090 | Pipeline board                    | done     | `/admin/crm/pipeline`                                                                                                                   |
+| ADM-091 | Opportunity detail                | deferred | `D-041` — no opportunity model distinct from the lead today                                                                             |
+| ADM-092 | Won → exhibitor onboarding        | todo     | closes the funnel the public site opens                                                                                                 |
+| ADM-093 | CRM export with audit             | partial  | export honours the desk's filters; **the audit half is not built**                                                                      |
+| ADM-094 | CRM role browser tests            | partial  | assigned-scope deep link covered; full role matrix not                                                                                  |
+| ADM-095 | Mobile CRM workflow               | partial  | 390 no-overflow asserted on desk and drawer; no end-to-end mobile journey                                                               |
 
 **Honest omissions from `VISUAL_04`, unchanged:** no Pays column or filter
 (`Lead` has no country field), no trend %, CA potentiel, conversion rate or
